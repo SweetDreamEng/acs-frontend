@@ -13,7 +13,7 @@
         ></sales-card>
       </v-col>
 
-      <v-col cols="8">
+      <v-col sm="12" md="8">
         <machines-table-card
           class="h-full"
           style="min-height: 380px"
@@ -21,16 +21,23 @@
           :loading="isLoading1"
         ></machines-table-card>
       </v-col>
-      <v-col cols="4">
-        <status-card>
-          
-        </status-card>
-
-<!--         <total-runtime
+      <v-col sm="12" md="4">
+        <total-runtime
           :series="series"
+          label="Total Runtime"
         >
-          
-        </total-runtime> -->
+        </total-runtime>
+        <br>
+        <status-card></status-card>
+      </v-col>
+
+      <v-col cols="12">
+        <overview-card
+          label="Overview"
+          :loading="isLoading1"
+          :markers="markers"
+        >
+        </overview-card>
       </v-col>
     </v-row>
   </div>
@@ -41,11 +48,12 @@
 import SalesCard from '../../components/dashboard/SalesCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
 import StatusCard from '../../components/dashboard/StatusCard'
-// import TotalRuntime from '../../components/dashboard/TotalRuntime'
+import TotalRuntime from '../../components/dashboard/TotalRuntime'
+import OverviewCard from '../../components/dashboard/OverviewCard'
 
 export default {
   components: {
-    SalesCard, MachinesTableCard, StatusCard
+    SalesCard, MachinesTableCard, StatusCard, TotalRuntime, OverviewCard
   },
   data() {
     return {
@@ -53,9 +61,39 @@ export default {
 
       isLoading1: true,
 
-      series: [
+      series: [44, 55],
 
-      ]
+      markers: [{
+        position: {
+          lat: 25.44,
+          lng: -80.47
+        }
+      }, {
+        position: {
+          lat: 40.66,
+          lng: -73.94
+        }
+      }, {
+        position: {
+          lat: 31.89,
+          lng: -97.08
+        }
+      }, {
+        position: {
+          lat: 37.9,
+          lng: -122.08
+        }
+      }, {
+        position: {
+          lat: 31.99,
+          lng: -83.31
+        }
+      }, {
+        position: {
+          lat: 39.42,
+          lng: -74.49
+        }
+      }]
     }
   },
   mounted() {

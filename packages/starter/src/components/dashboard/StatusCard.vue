@@ -7,59 +7,53 @@
         <v-spacer></v-spacer>
         <div>
           <v-btn icon class="ml-auto">
-            <v-icon>mdi-dots-vertical</v-icon>
+            <v-icon>mdi-dots-horizontal</v-icon>
           </v-btn>
         </div>
       </v-card-title>
 
       <v-card-text>
-        <div class="">
-          <v-row class="align-center">
-            <v-col cols="6" class="pa-1">
-              <div class="display-2 text-right">
-                6
-              </div>
-            </v-col>
-            <v-col cols="6" class="pa-1">
-              <div>
-                <div class="grey--text">Outline</div>
-                <div>70%</div>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <v-row class="align-center" justify="space-around">
+          <v-col cols="4" class="pa-1">
+            <div class="display-2 text-right">
+              6
+            </div>
+          </v-col>
+          <v-col cols="4" class="pa-1">
+            <div>
+              <div class="grey--text">Outline</div>
+              <div>70%</div>
+            </div>
+          </v-col>
+        </v-row>
 
-        <div class="">
-          <v-row class="align-center">
-            <v-col cols="6" class="pa-1">
-              <div class="display-2 text-right">
-                3
-              </div>
-            </v-col>
-            <v-col cols="6" class="pa-1">
-              <div>
-                <div class="grey--text">Near Threshold</div>
-                <div>30%</div>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <v-row class="align-center" justify="space-around">
+          <v-col cols="4" class="pa-1">
+            <div class="display-2 text-right">
+              3
+            </div>
+          </v-col>
+          <v-col cols="4" class="pa-1">
+            <div>
+              <div class="grey--text">Near Threshold</div>
+              <div>30%</div>
+            </div>
+          </v-col>
+        </v-row>
 
-        <div class="">
-          <v-row class="align-center">
-            <v-col cols="6" class="pa-1">
-              <div class="display-2 text-right">
-                1
-              </div>
-            </v-col>
-            <v-col cols="6" class="pa-1">
-              <div>
-                <div class="grey--text">outline</div>
-                <div>10%</div>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <v-row class="align-center" justify="space-around">
+          <v-col cols="4" class="pa-1">
+            <div class="display-2 text-right">
+              1
+            </div>
+          </v-col>
+          <v-col cols="4" class="pa-1">
+            <div>
+              <div class="grey--text">outline</div>
+              <div>10%</div>
+            </div>
+          </v-col>
+        </v-row>
       </v-card-text>
     </div>
   </v-card>

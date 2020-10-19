@@ -1,61 +1,62 @@
-<style scoped>
-  .v-data-table {
-    color: #011a33 !important;
-  }
-  .v-data-table-header tr th {
-    color: #011a33 !important;
-  }
-</style>
 <template>
-  <v-card>
-    <v-card-title>
-      {{ label }}
-      <v-btn icon class="ml-auto">
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-    </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="items"
-      hide-default-footer
-    >
-      <template v-slot:header.machinename="{ header }">
-        <v-icon small>mdi-wrench</v-icon>
-        {{ header.text }}
-      </template>
-      <template v-slot:header.capacity="{ header }">
-        <v-icon>mdi-trending-up</v-icon>
-        {{ header.text }}
-      </template>
-      <template v-slot:header.consumption="{ header }">
-        <v-icon>mdi-battery-low</v-icon>
-        {{ header.text }}
-      </template>
-      <template v-slot:header.factory="{ header }">
-        <v-icon>mdi-map-marker</v-icon>
-        {{ header.text }}
-      </template>
-      <template v-slot:header.department="{ header }">
-        <v-icon>mdi-factory</v-icon>
-        {{ header.text }}
-      </template>
-      <template v-slot:item.status="{ item }">
-        <v-chip
-          label
-          :color="getColor(item.status)"
-          dark
-          class="justify-center font-weight-bold"
-          style="width: 80px;">
-          {{ item.status }}
-        </v-chip>
-      </template>
+  <div>
+    <v-card>
+      <v-card-title>
+        {{ label }}
+        <v-spacer></v-spacer>
+        <v-btn icon>
+          <v-icon>mdi-dots-horizontal</v-icon>
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
+          <v-progress-circular indeterminate color="primary"></v-progress-circular>
+        </div>
+        <v-data-table
+          v-else
+          :headers="headers"
+          :items="items"
+          hide-default-footer
+        >
+          <template v-slot:header.machinename="{ header }">
+            <v-icon small>mdi-wrench</v-icon>
+            {{ header.text }}
+          </template>
+          <template v-slot:header.capacity="{ header }">
+            <v-icon>mdi-trending-up</v-icon>
+            {{ header.text }}
+          </template>
+          <template v-slot:header.consumption="{ header }">
+            <v-icon class="mdi-rotate-90">mdi-battery-30</v-icon>
+            {{ header.text }}
+          </template>
+          <template v-slot:header.factory="{ header }">
+            <v-icon>mdi-map-marker</v-icon>
+            {{ header.text }}
+          </template>
+          <template v-slot:header.department="{ header }">
+            <v-icon>mdi-factory</v-icon>
+            {{ header.text }}
+          </template>
+          <template v-slot:item.status="{ item }">
+            <v-chip
+              label
+              :color="getColor(item.status)"
+              dark
+              class="justify-center font-weight-bold"
+              style="width: 80px;">
+              {{ item.status }}
+            </v-chip>
+          </template>
 
-      <template v-slot:item.department="{ item }">
-        {{ item.department }}
-      </template>
+          <template v-slot:item.department="{ item }">
+            {{ item.department }}
+          </template>
 
-    </v-data-table>
-  </v-card>
+        </v-data-table>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -75,6 +76,10 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
