@@ -65,7 +65,7 @@
             :key="provider.id"
             :loading="provider.isLoading"
             :disabled="isSignUpDisabled"
-            class="mb-2 primary lighten-2 primary--text text--darken-3"
+            class="mb-2 primary lighten-2 dark text--darken-3"
             block
             x-large
             @click="signInProvider(provider)"
