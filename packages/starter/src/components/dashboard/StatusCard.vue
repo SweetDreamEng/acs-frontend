@@ -3,57 +3,11 @@
 
     <div class="d-flex flex-column flex-grow-1">
       <v-card-title>
-        <div>Status</div>
-        <v-spacer></v-spacer>
-        <div>
-          <v-btn icon class="ml-auto">
-            <v-icon>mdi-dots-horizontal</v-icon>
-          </v-btn>
-        </div>
+        <div>{{ label }}</div>
       </v-card-title>
 
       <v-card-text>
-        <v-row class="align-center" justify="space-around">
-          <v-col cols="4" class="pa-1">
-            <div class="display-2 text-right">
-              6
-            </div>
-          </v-col>
-          <v-col cols="4" class="pa-1">
-            <div>
-              <div class="grey--text">Outline</div>
-              <div>70%</div>
-            </div>
-          </v-col>
-        </v-row>
-
-        <v-row class="align-center" justify="space-around">
-          <v-col cols="4" class="pa-1">
-            <div class="display-2 text-right">
-              3
-            </div>
-          </v-col>
-          <v-col cols="4" class="pa-1">
-            <div>
-              <div class="grey--text">Near Threshold</div>
-              <div>30%</div>
-            </div>
-          </v-col>
-        </v-row>
-
-        <v-row class="align-center" justify="space-around">
-          <v-col cols="4" class="pa-1">
-            <div class="display-2 text-right">
-              1
-            </div>
-          </v-col>
-          <v-col cols="4" class="pa-1">
-            <div>
-              <div class="grey--text">outline</div>
-              <div>10%</div>
-            </div>
-          </v-col>
-        </v-row>
+        <apexchart type="bar" height="220" :options="chartOptions" :series="series"></apexchart>
       </v-card-text>
     </div>
   </v-card>
@@ -79,6 +33,67 @@ export default {
   },
   data() {
     return {
+      series: [{
+        name: '0.00 to 20.00',
+        data: [8.2]
+      }, {
+        name: '20.00 to 40.00',
+        data: [10.8]
+      }, {
+        name: '40.00 to 60.00',
+        data: [10.6]
+      }, {
+        name: '60.00 to 80.00',
+        data: [10.8]
+      }, {
+        name: '80.00 to 100.00',
+        data: [10.6]
+      }],
+      colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B'],
+      stroke: {
+        width: 1,
+        colors: ['#fff']
+      },
+      chartOptions: {
+        chart: {
+          type: 'bar',
+          width: 180
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            dataLabels: {
+              position: 'top'
+            }
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          offsetX: 0,
+          offsetY: -20,
+          style: {
+            fontSize: '14px',
+            colors: ['#000']
+          },
+          formatter: function (val) {
+            return val + 'k'
+          }
+        },
+        xaxis: {
+          categories: [0]
+        },
+        yaxis: {
+          seriesName: ['a', 'b', 'c', 'd'],
+          categories: [0, 5, 10, 15],
+          title: {
+            text: 'Count - Quantity',
+            style: {
+              fontWeight: 500,
+              fontSize: 18
+            }
+          }
+        }
+      }
     }
   },
   computed: {

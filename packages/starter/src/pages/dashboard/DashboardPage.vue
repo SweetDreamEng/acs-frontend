@@ -13,7 +13,7 @@
         ></sales-card>
       </v-col>
 
-      <v-col sm="12" md="9">
+      <v-col sm="12" md="8">
         <machines-table-card
           class="h-full"
           style="min-height: 380px"
@@ -22,14 +22,16 @@
           :loading="isLoading1"
         ></machines-table-card>
       </v-col>
-      <v-col sm="12" md="3">
+      <v-col sm="12" md="4">
         <total-runtime
           :series="series"
           label="Total Runtime"
         >
         </total-runtime>
         <br>
-        <status-card></status-card>
+        <status-card
+          label="Transaction Amount"
+        ></status-card>
       </v-col>
 
       <v-col cols="12">

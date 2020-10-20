@@ -16,13 +16,18 @@
       </v-card-title>
       <v-card-text>
         <!-- information -->
-        <gmap-map :center="center" :zoom="4" style="width: 100%; height: 500px">
+        <gmap-map
+          :center="center"
+          :zoom="4"
+          style="width: 100%; height: 500px"
+          icon="https://www.google.dk/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png">
           <gmap-marker
             v-for="(m, index) in markers"
             :key="index"
             :position="m.position"
             :clickable="true"
             :draggable="true"
+            :icon="markerOptions"
             @click="center=m.position"
           ></gmap-marker>
         </gmap-map>
@@ -54,6 +59,11 @@ export default {
       center: {
         lat: 41.14961,
         lng: -87.6500523
+      },
+      markerOptions: {
+        url: require('../../assets/svg/factory.png'),
+        size: { width: 60, height: 90, f: 'px', b: 'px' },
+        scaledSize: { width: 20, height: 30, f: 'px', b: 'px' }
       }
     }
   }
