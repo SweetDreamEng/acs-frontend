@@ -10,40 +10,32 @@
 
       <div class="d-flex flex-column flex-grow-1">
         <div class="px-2 pb-2">
-          <div class="d-flex align-center">
-            <div class="text-h4">{{ value }}</div>
-            <v-spacer></v-spacer>
-            <div class="d-flex flex-column text-right">
-              <div class="font-weight-bold">
-                <trend-percent :value="percentage" />
-              </div>
-              <div class="caption">{{ percentageLabel }}</div>
-            </div>
+          <div class="">
+            <v-progress-linear
+              color="primary"
+              rounded
+              value="100"
+              height="16"
+            >
+              <template v-slot="{ }">
+                <strong style="color:white;">7h10m</strong>
+              </template>
+            </v-progress-linear>
+            <e-charts
+              ref="line"
+              autoresize
+              style="width: 100%"
+              :options="line"
+              auto-resize
+            />
           </div>
         </div>
-
-        <v-spacer></v-spacer>
-
-        <apexchart
-          type="area"
-          height="60"
-          :options="chartOptions"
-          :series="series"
-        ></apexchart>
       </div>
     </div>
   </v-card>
 </template>
 
 <script>
-import moment from 'moment'
-import VueApexCharts from 'vue-apexcharts'
-import TrendPercent from '../common/TrendPercent'
-
-function formatDate(date) {
-  return date ? moment(date).format('D MMM') : ''
-}
-
 /*
 |---------------------------------------------------------------------
 | DEMO Dashboard Card Component
@@ -55,88 +47,59 @@ function formatDate(date) {
 */
 export default {
   components: {
-    TrendPercent
   },
   props: {
-    series: {
-      type: Array,
-      default: () => ([])
-    },
     label: {
       type: String,
       default: ''
     },
-    color: {
-      type: String,
-      default: '#333333'
-    },
     value: {
       type: Number,
       default: 0
-    },
-    percentage: {
-      type: Number,
-      default: 0
-    },
-    percentageLabel: {
-      type: String,
-      default: 'vs. last week'
-    },
-    options: {
-      type: Object,
-      default: () => ({})
     },
     loading: {
       type: Boolean,
       default: false
     }
   },
-  computed: {
-    chartOptions() {
-      return {
-        chart: {
-          animations: {
-            speed: 400,
-            animateGradually: {
-              enabled: false
-            }
-          },
-          width: '100%',
-          height: 60,
-          type: 'area',
-          sparkline: {
-            enabled: true
-          }
-        },
-        colors: [this.color],
-        fill: {
-          type: 'solid',
-          colors: [this.color],
-          opacity: 0.15
-        },
-        stroke: {
-          curve: 'smooth',
-          width: 2
-        },
-        xaxis: {
-          type: 'datetime'
-        },
-        tooltip: {
-          followCursor: true,
-          theme: 'dark', //this.$vuetify.theme.isDark ? 'light' : 'dark',
-          custom: function({ ctx, series, seriesIndex, dataPointIndex, w }) {
-            const seriesName = w.config.series[seriesIndex].name
-            const dataPoint = w.config.series[seriesIndex].data[dataPointIndex]
+  data() {
+    const data = [['2020-10-05',0],['2020-10-06',0],['2020-10-07',0],['2020-10-08',14],['2020-10-09',17],['2020-10-10',19]
+    ]
 
-            return `<div class="rounded-lg pa-1 caption">
-              <div class="font-weight-bold">${formatDate(dataPoint[0])}</div>
-              <div>${dataPoint[1]} ${seriesName}</div>
-            </div>`
-          }
+    const dateList = data.map((item) => {
+      return item[0]
+    })
+    const valueList = data.map((item) => {
+      return item[1]
+    })
+
+    return {
+      line: {
+        visualMap: [{
+          show: false,
+          type: 'continuous',
+          seriesIndex: 0,
+          min: 12,
+          max: 19
+        }],
+        tooltip: {
+          trigger: 'axis'
         },
-        ...this.options
+        xAxis: {
+          data: dateList
+        },
+        yAxis: {
+          splitLine: { show: false }
+        },
+        series: {
+          type: 'line',
+          showSymbol: false,
+          data: valueList
+        }
       }
     }
+  },
+  computed: {
   }
 }
 </script>

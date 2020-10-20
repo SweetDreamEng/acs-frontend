@@ -40,12 +40,20 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 // DEMO Cards for dashboard
 import ProductDetails from '../../components/dashboard/ProductDetails'
 
 export default {
   components: {
     ProductDetails
+  },
+  props: {
+    machine: {
+      type: Object,
+      default: () => ({
+      })
+    }
   },
   data() {
     return {
@@ -65,6 +73,11 @@ export default {
   },
   beforeDestroy() {
     this.clear()
+  },
+  computed: {
+    ...mapGetters([
+      'selectedProduct'
+    ])
   },
   methods: {
     clear() {
