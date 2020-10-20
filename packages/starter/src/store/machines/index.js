@@ -9,7 +9,8 @@ const module = {
         capacity: 89,
         consumption: '80 Watts',
         factory: '30 Elm Street, NY',
-        department: 'Division 1'
+        department: 'Division 1',
+        note: ''
       },
       {
         id: 2,
@@ -19,7 +20,8 @@ const module = {
         capacity: 30,
         consumption: '30 Watts',
         factory: '45 Main street, FL',
-        department: 'Division 2'
+        department: 'Division 2',
+        note: ''
       },
       {
         id: 3,
@@ -29,7 +31,8 @@ const module = {
         capacity: 57,
         consumption: '20 Watts',
         factory: '50 Gracy Street, TX',
-        department: 'Division 3'
+        department: 'Division 3',
+        note: ''
       },
       {
         id: 4,
@@ -39,7 +42,8 @@ const module = {
         capacity: 99,
         consumption: '90 Watts',
         factory: '44 Main Street, GA',
-        department: 'Division 4'
+        department: 'Division 4',
+        note: ''
       },
       {
         id: 5,
@@ -49,7 +53,8 @@ const module = {
         capacity: 32,
         consumption: '10 Watts',
         factory: '33 One Drive, MA',
-        department: 'Division 1'
+        department: 'Division 1',
+        note: ''
       },
       {
         id: 6,
@@ -59,7 +64,8 @@ const module = {
         capacity: 27,
         consumption: '10 Watts',
         factory: '29 Georgia Ave, CA',
-        department: 'Division 4'
+        department: 'Division 4',
+        note: ''
       },
       {
         id: 7,
@@ -69,7 +75,8 @@ const module = {
         capacity: 38,
         consumption: '40 Watts',
         factory: '746 Macon, CO',
-        department: 'Division 5'
+        department: 'Division 5',
+        note: ''
       },
       {
         id: 8,
@@ -79,7 +86,8 @@ const module = {
         capacity: 74,
         consumption: '20 Watts',
         factory: '1 Cantance Street, UT',
-        department: 'Division 1'
+        department: 'Division 1',
+        note: ''
       },
       {
         id: 9,
@@ -89,7 +97,8 @@ const module = {
         capacity: '',
         consumption: 'OFF',
         factory: '45 Spring Street, NY',
-        department: 'Division 5'
+        department: 'Division 5',
+        note: ''
       },
       {
         id: 10,
@@ -99,7 +108,8 @@ const module = {
         capacity: '52',
         consumption: '30 Watts',
         factory: '69 Borden Rd, IL',
-        department: 'Division 3'
+        department: 'Division 3',
+        note: ''
       }
     ],
     selectedId: 0

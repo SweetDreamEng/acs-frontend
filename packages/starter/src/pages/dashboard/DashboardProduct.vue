@@ -75,7 +75,6 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
-            
           </div>
         </v-col>
         <v-col
@@ -91,6 +90,74 @@
             :loading="isLoading1"
           >
           </product-chart>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col xs="12" sm="6" md="6">
+          <v-card
+          >
+            <v-card-title>
+              <span class="primary--text">Add Time Schedule</span>
+<!--               <v-btn
+                icon
+                @click="showTimeLine = !showTimeLine"
+              >
+                <v-icon>{{ showTimeLine ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+              </v-btn> -->
+            </v-card-title>
+            <v-card-text>
+              <v-expand-transition>
+                <div v-show="showTimeLine">
+                  <v-divider></v-divider>
+
+                  <v-card-text>
+                    <v-form
+                      ref="form"
+                      v-model="valid"
+                      lazy-validation
+                    >
+                      <v-textarea
+                        v-model="note"
+                        :rules="nameRules"
+                        label="Note"
+                        required
+                      ></v-textarea>
+
+                      <v-btn
+                        :disabled="!valid"
+                        color="grey"
+                        class="mr-4"
+                        @click="clearNote"
+                      >
+                        <v-icon dark>
+                          mdi-minus
+                        </v-icon>
+                        Reset
+                      </v-btn>
+                      <v-btn
+                        :disabled="!valid"
+                        color="success"
+                        class="mr-4"
+                        @click="addNote"
+                      >
+                        <v-icon dark>
+                          mdi-plus
+                        </v-icon>
+                        Add
+                      </v-btn>
+                    </v-form>
+                  </v-card-text>
+                </div>
+              </v-expand-transition>
+            </v-card-text>
+        </v-card>
+        </v-col>
+        <v-col xs="12" sm="6" md="6">
+          <v-timeline>
+            <v-timeline-item>timeline item</v-timeline-item>
+            <v-timeline-item class="text-right">timeline item</v-timeline-item>
+            <v-timeline-item>timeline item</v-timeline-item>
+          </v-timeline>
         </v-col>
       </v-row>
     </div>
@@ -113,6 +180,10 @@ export default {
       loadingInterval: null,
       isLoading1: false,
       dialog: false,
+
+      showTimeLine: true,
+      valid: true,
+      note: '',
 
       selections: []
     }
@@ -143,7 +214,8 @@ export default {
   methods: {
     ...mapActions([
       'selectMachine',
-      'updateSelections'
+      'updateSelections',
+      'addProductNote'
     ]),
     clear() {
       clearInterval(this.loadingInterval)
@@ -151,6 +223,12 @@ export default {
     onMachineUpdate() {
       this.updateSelections(this.selections)
       this.dialog = false
+    },
+    addNote() {
+      this.addProductNote(this.note)
+    },
+    clearNote() {
+      this.note = ''
     }
   }
 }

@@ -49,8 +49,9 @@ export default {
   light: {
     background: '#ffffff',
     surface: '#f2f5f8', //background on screen behind chart
-    primary: '009add', // darker accent color
-    secondary: '#002855', //lighter color
+    // primary: '009add', // darker accent color
+    primary: '#092954', // darker accent color
+    secondary: '#002855', //lighter color // 508FF0
     accent: '#003066', //almost same as primary
     error: '#ef476f',
     info: '#2196F3',

@@ -72,13 +72,14 @@ export default {
       series: [{
         name: 'series1',
         data: [
+          // {
+          //   x: 'Dec 23 2017',
+          //   y: null
+          // },{
+          //   x: 'Dec 24 2017',
+          //   y: null
+          // },
           {
-            x: 'Dec 23 2017',
-            y: null
-          },{
-            x: 'Dec 24 2017',
-            y: null
-          },{
             x: 'Dec 25 2017',
             y: 14
           },{
@@ -86,7 +87,7 @@ export default {
             y: 16
           },{
             x: 'Dec 27 2017',
-            y: 16
+            y: 18
           }
         ]
       }],
@@ -105,49 +106,49 @@ export default {
           curve: 'smooth'
         },
         fill: {
-          type: 'gradient',
-          gradient: {
-            type: 'vertical',
-            shadeIntensity: 0.5,
-            inverseColors: true,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [0, 50, 100],
-            colorStops: [ 
-              [
-                {
-                  offset: 0,
-                  color: '#002855',
-                  opacity: 1
-                },
-                {
-                  offset: 20,
-                  color: '#005583',
-                  opacity: 1
-                },
-                {
-                  offset: 40,
-                  color: '#008499',
-                  opacity: 1
-                },
-                {
-                  offset: 60,
-                  color: '#00B192',
-                  opacity: 1
-                },
-                {
-                  offset: 80,
-                  color: '#7FDA7C',
-                  opacity: 0.75
-                },
-                {
-                  offset: 100,
-                  color: '#F9F871',
-                  opacity: 1
-                }
-              ]
-            ]
-          }
+          type: 'gradient'
+          // gradient: {
+          //   type: 'vertical',
+          //   shadeIntensity: 0.5,
+          //   inverseColors: true,
+          //   opacityFrom: 1,
+          //   opacityTo: 1,
+          //   stops: [0, 50, 100],
+          //   colorStops: [ 
+          //     [
+          //       {
+          //         offset: 0,
+          //         color: '#002855',
+          //         opacity: 1
+          //       },
+          //       {
+          //         offset: 20,
+          //         color: '#005583',
+          //         opacity: 1
+          //       },
+          //       {
+          //         offset: 40,
+          //         color: '#008499',
+          //         opacity: 1
+          //       },
+          //       {
+          //         offset: 60,
+          //         color: '#00B192',
+          //         opacity: 1
+          //       },
+          //       {
+          //         offset: 80,
+          //         color: '#7FDA7C',
+          //         opacity: 0.75
+          //       },
+          //       {
+          //         offset: 100,
+          //         color: '#F9F871',
+          //         opacity: 1
+          //       }
+          //     ]
+          //   ]
+          // }
         },
         xaxis: {
           type: 'datetime',
