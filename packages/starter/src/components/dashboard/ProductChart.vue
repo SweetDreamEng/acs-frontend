@@ -12,7 +12,7 @@
         <div class="px-2 pb-2">
           <div class="">
             <v-progress-linear
-              color="primary"
+              color="secondary"
               rounded
               value="100"
               height="16"
@@ -23,9 +23,9 @@
             </v-progress-linear>
             <div class="text-right"><small>10/16/2020 20:00</small></div>
             <div>
-              <v-icon small color="primary">mdi-magnify</v-icon><small class="mx-1">Zoom</small>
-              <v-icon small color="primary">mdi-flag</v-icon><small class="mx-1">Marker</small>
-              <v-icon small color="primary">mdi-chart-areaspline</v-icon><small class="mx-1">Lines</small>
+              <v-icon small color="secondary">mdi-magnify</v-icon><small class="mx-1">Zoom</small>
+              <v-icon small color="secondary">mdi-flag</v-icon><small class="mx-1">Marker</small>
+              <v-icon small color="secondary">mdi-chart-areaspline</v-icon><small class="mx-1">Lines</small>
             </div>
             <apexchart
               type="area"
@@ -72,13 +72,6 @@ export default {
       series: [{
         name: 'series1',
         data: [
-          // {
-          //   x: 'Dec 23 2017',
-          //   y: null
-          // },{
-          //   x: 'Dec 24 2017',
-          //   y: null
-          // },
           {
             x: 'Dec 25 2017',
             y: 14
@@ -104,51 +97,6 @@ export default {
         },
         stroke: {
           curve: 'smooth'
-        },
-        fill: {
-          type: 'gradient'
-          // gradient: {
-          //   type: 'vertical',
-          //   shadeIntensity: 0.5,
-          //   inverseColors: true,
-          //   opacityFrom: 1,
-          //   opacityTo: 1,
-          //   stops: [0, 50, 100],
-          //   colorStops: [ 
-          //     [
-          //       {
-          //         offset: 0,
-          //         color: '#002855',
-          //         opacity: 1
-          //       },
-          //       {
-          //         offset: 20,
-          //         color: '#005583',
-          //         opacity: 1
-          //       },
-          //       {
-          //         offset: 40,
-          //         color: '#008499',
-          //         opacity: 1
-          //       },
-          //       {
-          //         offset: 60,
-          //         color: '#00B192',
-          //         opacity: 1
-          //       },
-          //       {
-          //         offset: 80,
-          //         color: '#7FDA7C',
-          //         opacity: 0.75
-          //       },
-          //       {
-          //         offset: 100,
-          //         color: '#F9F871',
-          //         opacity: 1
-          //       }
-          //     ]
-          //   ]
-          // }
         },
         xaxis: {
           type: 'datetime',

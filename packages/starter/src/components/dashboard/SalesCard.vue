@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex flex-grow-1 primary darken-4" dark>
+  <v-card class="d-flex primary flex-grow-1 darken-2" dark>
 
     <!-- loading spinner -->
     <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
@@ -130,8 +130,8 @@ export default {
   computed: {
     chartOptions() {
       const primaryColor = this.$vuetify.theme.isDark
-        ? this.$vuetify.theme.themes.dark.primary
-        : this.$vuetify.theme.themes.light.primary
+        ? this.$vuetify.theme.themes.dark.secondary
+        : this.$vuetify.theme.themes.light.secondary
 
       return {
         chart: {

@@ -67,7 +67,6 @@
                   <v-spacer></v-spacer>
                   <v-btn
                     color="primary"
-                    text
                     @click="onMachineUpdate"
                   >
                     Submit
@@ -93,7 +92,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col xs="12" sm="6" md="6">
+        <v-col xs="12" sm="12" md="6">
           <v-card
           >
             <v-card-title>
@@ -118,7 +117,6 @@
                     >
                       <v-textarea
                         v-model="note"
-                        :rules="nameRules"
                         label="Note"
                         required
                       ></v-textarea>
@@ -152,11 +150,20 @@
             </v-card-text>
         </v-card>
         </v-col>
-        <v-col xs="12" sm="6" md="6">
+        <v-col xs="12" sm="12" md="6">
           <v-timeline>
-            <v-timeline-item>timeline item</v-timeline-item>
-            <v-timeline-item class="text-right">timeline item</v-timeline-item>
-            <v-timeline-item>timeline item</v-timeline-item>
+            <v-timeline-item
+              v-for="(note, i) in selectedMachine.notes"
+              :key="i"
+              color="secondary"
+            >
+              <v-card
+              >
+                <v-card-text class="white text--primary">
+                  {{ note }}
+                </v-card-text>
+              </v-card>
+            </v-timeline-item>
           </v-timeline>
         </v-col>
       </v-row>

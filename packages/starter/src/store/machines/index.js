@@ -10,7 +10,7 @@ const module = {
         consumption: '80 Watts',
         factory: '30 Elm Street, NY',
         department: 'Division 1',
-        note: ''
+        notes: []
       },
       {
         id: 2,
@@ -21,7 +21,7 @@ const module = {
         consumption: '30 Watts',
         factory: '45 Main street, FL',
         department: 'Division 2',
-        note: ''
+        notes: []
       },
       {
         id: 3,
@@ -32,7 +32,7 @@ const module = {
         consumption: '20 Watts',
         factory: '50 Gracy Street, TX',
         department: 'Division 3',
-        note: ''
+        notes: []
       },
       {
         id: 4,
@@ -43,7 +43,7 @@ const module = {
         consumption: '90 Watts',
         factory: '44 Main Street, GA',
         department: 'Division 4',
-        note: ''
+        notes: []
       },
       {
         id: 5,
@@ -54,7 +54,7 @@ const module = {
         consumption: '10 Watts',
         factory: '33 One Drive, MA',
         department: 'Division 1',
-        note: ''
+        notes: []
       },
       {
         id: 6,
@@ -65,7 +65,7 @@ const module = {
         consumption: '10 Watts',
         factory: '29 Georgia Ave, CA',
         department: 'Division 4',
-        note: ''
+        notes: []
       },
       {
         id: 7,
@@ -76,7 +76,7 @@ const module = {
         consumption: '40 Watts',
         factory: '746 Macon, CO',
         department: 'Division 5',
-        note: ''
+        notes: []
       },
       {
         id: 8,
@@ -87,7 +87,7 @@ const module = {
         consumption: '20 Watts',
         factory: '1 Cantance Street, UT',
         department: 'Division 1',
-        note: ''
+        notes: []
       },
       {
         id: 9,
@@ -98,7 +98,7 @@ const module = {
         consumption: 'OFF',
         factory: '45 Spring Street, NY',
         department: 'Division 5',
-        note: ''
+        notes: []
       },
       {
         id: 10,
@@ -109,7 +109,7 @@ const module = {
         consumption: '30 Watts',
         factory: '69 Borden Rd, IL',
         department: 'Division 3',
-        note: ''
+        notes: []
       }
     ],
     selectedId: 0
@@ -125,6 +125,11 @@ const module = {
       commit
     }, selections) {
       commit('updateSelections', selections)
+    },
+    addProductNote({
+      commit
+    }, note) {
+      commit('addProductNote', note)
     }
   },
 
@@ -136,6 +141,13 @@ const module = {
       state.data.forEach( (_data) => {
         if (_data.id === state.selectedId) {
           _data.selections = selections
+        }
+      })
+    },
+    addProductNote: (state, note) => {
+      state.data.forEach( (_data) => {
+        if (_data.id === state.selectedId) {
+          _data.notes.push(note)
         }
       })
     }
