@@ -96,7 +96,7 @@
           <v-card
           >
             <v-card-title>
-              <span class="primary--text">Add Time Schedule</span>
+              <span class="primary--text">Add a note</span>
 <!--               <v-btn
                 icon
                 @click="showTimeLine = !showTimeLine"
@@ -118,6 +118,7 @@
                       <v-textarea
                         v-model="note"
                         label="Note"
+                        outlined
                         required
                       ></v-textarea>
 
@@ -151,20 +152,25 @@
         </v-card>
         </v-col>
         <v-col xs="12" sm="12" md="6">
-          <v-timeline>
-            <v-timeline-item
-              v-for="(note, i) in selectedMachine.notes"
-              :key="i"
-              color="secondary"
-            >
-              <v-card
-              >
-                <v-card-text class="white text--primary">
-                  {{ note }}
-                </v-card-text>
-              </v-card>
-            </v-timeline-item>
-          </v-timeline>
+          <v-card>
+            <v-card-title class="primary--text display-1">Notes & Timeline</v-card-title>
+            <v-card-text>
+              <v-timeline>
+                <v-timeline-item
+                  v-for="(note, i) in selectedMachine.notes"
+                  :key="i"
+                  color="secondary"
+                >
+                  <v-card
+                  >
+                    <v-card-text class="white text--primary">
+                      {{ note }}
+                    </v-card-text>
+                  </v-card>
+                </v-timeline-item>
+              </v-timeline>
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
     </div>

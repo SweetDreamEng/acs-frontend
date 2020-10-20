@@ -62,10 +62,17 @@ export default {
 }
 </script>
 
+@font-face {
+  font-family: "Museo Sans 500";
+  src: local("Museo Sans 500"),
+   url(./fonts/Fonts/MeriendaSans_500s.otf) format("truetype");
+}
+
 <style scoped>
 /**
  * Transition animation between pages
  */
+
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.2s;

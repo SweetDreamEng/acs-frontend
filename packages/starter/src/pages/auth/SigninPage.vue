@@ -43,25 +43,6 @@
             @click="submit"
           >{{ $t('login.button') }}</v-btn>
 
-          <div class="caption font-weight-bold text-uppercase my-3">{{ $t('login.orsign') }}</div>
-
-          <!-- external providers list -->
-          <v-btn
-            v-for="provider in providers"
-            :key="provider.id"
-            :loading="provider.isLoading"
-            :disabled="isSignInDisabled"
-            class="mb-2 primary lighten-2 dark text--darken-3"
-            block
-            x-large
-            to="/"
-          >
-            <v-icon small left>mdi-{{ provider.id }}</v-icon>
-            {{ provider.label }}
-          </v-btn>
-
-          <div v-if="errorProvider" class="error--text">{{ errorProviderMessages }}</div>
-
           <div class="mt-5">
             <router-link to="/auth/forgot-password">
               {{ $t('login.forgot') }}
