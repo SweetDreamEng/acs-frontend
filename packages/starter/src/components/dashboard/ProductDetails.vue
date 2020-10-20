@@ -4,7 +4,7 @@
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </div>
     <div v-else class="d-flex flex-column flex-grow-1">
-      <v-card-title>
+      <v-card-title class="primary--text">
         {{ label }}
       </v-card-title>
 
@@ -24,7 +24,7 @@
             <e-charts
               ref="line"
               autoresize
-              style="width: 100%"
+              style="width: 100%; height: 300px"
               :options="line"
               auto-resize
             />

@@ -104,8 +104,8 @@ export default {
       else return 'green'
     },
     getIcon(item) {
-      if (item.status === 'Warning') return 'mdi-bell'
-      else if (item.status === 'Alarm') return 'mdi-bell-ring'
+      if (item.status === 'Warning') return 'mdi-alert'
+      else if (item.status === 'Alarm') return 'mdi-bell-circle'
       else if (item.status === 'Not') return 'mdi-close'
       else return 'mdi-check'
     },

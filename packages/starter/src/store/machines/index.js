@@ -3,6 +3,7 @@ const module = {
     data: [
       {
         id: 1,
+        selections: [1, 3, 4],
         status: 'Warning',
         machinename: 'BD Batch Blender',
         capacity: 89,
@@ -12,6 +13,7 @@ const module = {
       },
       {
         id: 2,
+        selections: [1, 3, 4],
         status: 'Normal',
         machinename: 'Accumeter Ovation Continuous',
         capacity: 30,
@@ -21,6 +23,7 @@ const module = {
       },
       {
         id: 3,
+        selections: [1, 3, 4],
         status: 'Normal',
         machinename: 'GH Gravimetric Extrusion Control',
         capacity: 57,
@@ -30,6 +33,7 @@ const module = {
       },
       {
         id: 4,
+        selections: [1, 3, 4],
         status: 'Alarm',
         machinename: 'GH-F Gravimetric Additive',
         capacity: 99,
@@ -39,6 +43,7 @@ const module = {
       },
       {
         id: 5,
+        selections: [1, 3, 4],
         status: 'Normal',
         machinename: 'VTC Plus Conveying',
         capacity: 32,
@@ -48,6 +53,7 @@ const module = {
       },
       {
         id: 6,
+        selections: [1, 3, 4],
         status: 'Normal',
         machinename: 'NGX',
         capacity: 27,
@@ -57,6 +63,7 @@ const module = {
       },
       {
         id: 7,
+        selections: [1, 3, 4],
         status: 'Normal',
         machinename: 'NGX Nomad',
         capacity: 38,
@@ -66,6 +73,7 @@ const module = {
       },
       {
         id: 8,
+        selections: [1, 3, 4],
         status: 'Warning',
         machinename: 'Truetemp',
         capacity: 74,
@@ -75,6 +83,7 @@ const module = {
       },
       {
         id: 9,
+        selections: [1, 3, 4],
         status: 'Not',
         machinename: 'GP & HE Central',
         capacity: '',
@@ -84,6 +93,7 @@ const module = {
       },
       {
         id: 10,
+        selections: [1, 3, 4],
         status: 'Normal',
         machinename: 'T50 Central',
         capacity: '52',
