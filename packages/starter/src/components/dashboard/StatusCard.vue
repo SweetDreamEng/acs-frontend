@@ -34,62 +34,62 @@ export default {
   data() {
     return {
       series: [{
-        name: '0.00 to 20.00',
-        data: [8.2]
-      }, {
-        name: '20.00 to 40.00',
-        data: [10.8]
-      }, {
-        name: '40.00 to 60.00',
-        data: [10.6]
-      }, {
-        name: '60.00 to 80.00',
-        data: [10.8]
-      }, {
-        name: '80.00 to 100.00',
-        data: [10.6]
+        name: 'A',
+        data: [8.2, 10.8, 10.6, 10.8, 10.6]
       }],
-      colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#fff'],
-      stroke: {
-        width: 1,
-        colors: ['#fff']
-      },
       chartOptions: {
         chart: {
-          type: 'bar',
-          width: 180
+          type: 'bar'
         },
         plotOptions: {
           bar: {
-            horizontal: false,
+            distributed: true,
+            colors: {
+            },
             dataLabels: {
-              position: 'top'
+              offsetX: 0,
+              position: 'top',
+              style: {
+                fontSize: '14px',
+                colors: ['#000']
+              },
+              formatter: function (val) {
+                return val + 'k'
+              }
             }
           }
         },
         dataLabels: {
-          enabled: true,
-          offsetX: 0,
-          offsetY: -20,
           style: {
             fontSize: '14px',
             colors: ['#000']
-          },
-          formatter: function (val) {
-            return val + 'k'
           }
         },
         xaxis: {
-          categories: [0]
+          categories: [
+            '0.00 to 20.00',
+            '20.00 to 40.00',
+            '40.00 to 60.00',
+            '60.00 to 80.00',
+            '80.00 to 100.00'
+          ],
+          labels: {
+            formatter: function (value) {
+              return ''
+            }
+          }
         },
         yaxis: {
-          seriesName: ['a', 'b', 'c', 'd'],
-          categories: [0, 5, 10, 15],
           title: {
             text: 'Count - Quantity',
             style: {
               fontWeight: 500,
               fontSize: 18
+            }
+          },
+          labels: {
+            formatter: function (value) {
+              return value + 'k'
             }
           }
         }
@@ -100,6 +100,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>
