@@ -96,13 +96,26 @@ const module = {
   },
 
   actions: {
+    selectMachine({
+      commit
+    }, id) {
+      commit('selectData', id)
+    }
   },
 
   mutations: {
+    selectData: (state, id) => {
+      state.selectedId = parseInt(id)
+    }
   },
+
   getters: {
-    machine: (state) => {
-      return () => state.machines.find((machine) => machine.id === state.selectedId)
+    selectedMachine: (state) => {
+      if (state.selectedId) {
+        const _machine = state.data.find((machine) => machine.id === state.selectedId)
+        
+        return _machine
+      }
     }
   }
 }

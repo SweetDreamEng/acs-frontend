@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 /*
 |---------------------------------------------------------------------
 | DEMO Dashboard Card Component
@@ -92,6 +93,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'selectMachine'
+    ]),
     open(item) { },
     getColor (item) {
       if (item.status === 'Warning') return 'orange'
@@ -113,7 +117,10 @@ export default {
     },
     productView(item) {
       this.$router.push({
-        name: 'dashboard-product'
+        name: 'dashboard-product',
+        params: {
+          id: item.id
+        }
       })
     }
   }
