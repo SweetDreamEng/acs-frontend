@@ -7,28 +7,28 @@
           <v-btn text color="primary">Add charts</v-btn>
         </div>
       </v-col>
-      <v-col sm="12" md=6>
+      <v-col sm="12" md="6">
         <product-details
           label="Runtime"
           :loading="isLoading1"
         >
         </product-details>
       </v-col>
-      <v-col sm="12" md=6>
+      <v-col sm="12" md="6">
         <product-details
           label="Feeder Calibration"
           :loading="isLoading1"
         >
         </product-details>
       </v-col>
-      <v-col sm="12" md=6>
+      <v-col sm="12" md="6">
         <product-details
           label="Blender Capability"
           :loading="isLoading1"
         >
         </product-details>
       </v-col>
-      <v-col sm="12" md=6>
+      <v-col sm="12" md="6">
         <product-details
           label="Accumulated Hopper inventory"
           :loading="isLoading1"

@@ -26,7 +26,7 @@
           </template>
           <template v-slot:header.capacity="{ header }">
             <v-icon>mdi-trending-up</v-icon>
-            {{ header.text }}
+            {{ header.text | formatPercentage }}
           </template>
           <template v-slot:header.consumption="{ header }">
             <v-icon class="mdi-rotate-90">mdi-battery-30</v-icon>
@@ -42,16 +42,7 @@
           </template>
 
           <template v-slot:item.status="{ item }">
-            <v-icon v-if="invalidItem(item)">mdi-close</v-icon>
-            <v-chip
-              v-else
-              label
-              :color="getColor(item.status)"
-              dark
-              class="justify-center font-weight-bold"
-              style="width: 80px;">
-              {{ item.status }}
-            </v-chip>
+            <v-icon :color="getColor(item)">{{ getIcon(item) }}</v-icon>
           </template>
         </v-data-table>
       </v-card-text>
@@ -102,11 +93,17 @@ export default {
   },
   methods: {
     open(item) { },
-    getColor (status) {
-      if (status === 'Warning') return 'orange'
-      else if (status === 'Alarm') return 'red'
-      else if (status === 'Not') return 'red'
+    getColor (item) {
+      if (item.status === 'Warning') return 'orange'
+      else if (item.status === 'Alarm') return 'red'
+      else if (item.status === 'Not') return 'black'
       else return 'green'
+    },
+    getIcon(item) {
+      if (item.status === 'Warning') return 'mdi-bell'
+      else if (item.status === 'Alarm') return 'mdi-bell-ring'
+      else if (item.status === 'Not') return 'mdi-close'
+      else return 'mdi-check'
     },
     itemRowBackground(item) {
       return item.status === 'Not' ? 'background-alert' : ''

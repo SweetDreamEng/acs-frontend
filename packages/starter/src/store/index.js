@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 // Global vuex
 import AppModule from './app'
+import machines from './machines'
 
 Vue.use(Vuex)
 
@@ -11,7 +12,8 @@ Vue.use(Vuex)
  */
 const store = new Vuex.Store({
   modules: {
-    app: AppModule
+    app: AppModule,
+    machines
   }
 })
 
