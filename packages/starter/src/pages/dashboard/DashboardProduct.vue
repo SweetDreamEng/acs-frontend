@@ -29,31 +29,36 @@
 
                 <v-card-text>
                   <v-row>
-                    <v-col cols="12" sm="4" md="4">
-                      <v-checkbox v-model="selections" label="batch size" value="1"></v-checkbox>
-                      <v-checkbox v-model="selections" label="batch targets and action weights" value="2"></v-checkbox>
+                    <v-col xs="12" sm="6" md="4" class="py-1">
+                      <v-checkbox class="mt-1" v-model="selections" label="batch size" value="1"></v-checkbox>
+                      <v-checkbox class="mt-1" v-model="selections" label="batch targets and action weights" value="2"></v-checkbox>
                     </v-col>
-                    <v-col cols="12" sm="4" md="4">
-                      <v-checkbox v-model="selections" label="blender capability" value="3"></v-checkbox>
-                      <v-checkbox v-model="selections" label="process rate" value="4"></v-checkbox>
+                    <v-col xs="12" sm="6" md="4" class="py-1">
+                      <v-checkbox class="mt-1" v-model="selections" label="blender capability" value="3"></v-checkbox>
+                      <v-checkbox class="mt-1" v-model="selections" label="process rate" value="4"></v-checkbox>
                     </v-col>
-                    <v-col cols="12" sm="4" md="4">
-                      <v-checkbox v-model="selections" label="hopper stable" value="5"></v-checkbox>
-                      <v-checkbox v-model="selections" label="station conveying" value="6"></v-checkbox>
+                    <v-col xs="12" sm="6" md="4" class="py-1">
+                      <v-checkbox class="mt-1" v-model="selections" label="hopper stable" value="5"></v-checkbox>
+                      <v-checkbox class="mt-1" v-model="selections" label="station conveying" value="6"></v-checkbox>
                     </v-col>
                   </v-row>
 
-                  <div class="d-flex flex-wrap">
-                    <product-details
+                  <v-row>
+                    <v-col
+                      xs="12"
+                      sm="6"
+                      md="4"
+                      class="py-1"
                       v-for="selection in selections"
                       :key="selection"
-                      :machine="selectMachine"
-                      label="Runtime"
-                      :loading="isLoading1"
-                      style="width: 33.33%;"
                     >
-                    </product-details>
-                  </div>
+                      <product-chart
+                        :machine="selectMachine"
+                        label="Runtime"
+                      >
+                      </product-chart>
+                    </v-col>
+                  </v-row>
                 </v-card-text>
 
                 <v-divider></v-divider>
@@ -74,17 +79,18 @@
           </div>
         </v-col>
         <v-col
-          sm="12"
+          xs="12"
+          sm="6"
           md="4"
           v-for="(selection, i) in selectedMachine.selections"
           :key="i"
         >
-          <product-details
+          <product-chart
             :machine="selectedMachine"
             label="Runtime"
             :loading="isLoading1"
           >
-          </product-details>
+          </product-chart>
         </v-col>
       </v-row>
     </div>
@@ -94,11 +100,11 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 // DEMO Cards for dashboard
-import ProductDetails from '../../components/dashboard/ProductDetails'
+import ProductChart from '../../components/dashboard/ProductChart'
 
 export default {
   components: {
-    ProductDetails
+    ProductChart
   },
   props: {
   },
