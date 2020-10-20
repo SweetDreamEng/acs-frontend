@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="test-machine">
     <v-card>
       <v-card-title>
         {{ label }}
@@ -16,7 +16,9 @@
           v-else
           :headers="headers"
           :items="items"
+          :item-class="itemRowBackground"
           hide-default-footer
+          @click:row="productView"
         >
           <template v-slot:header.machinename="{ header }">
             <v-icon small>mdi-wrench</v-icon>
@@ -38,8 +40,11 @@
             <v-icon>mdi-factory</v-icon>
             {{ header.text }}
           </template>
+
           <template v-slot:item.status="{ item }">
+            <v-icon v-if="invalidItem(item)">mdi-close</v-icon>
             <v-chip
+              v-else
               label
               :color="getColor(item.status)"
               dark
@@ -48,11 +53,6 @@
               {{ item.status }}
             </v-chip>
           </template>
-
-          <template v-slot:item.department="{ item }">
-            {{ item.department }}
-          </template>
-
         </v-data-table>
       </v-card-text>
     </v-card>
@@ -80,99 +80,23 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    items: {
+      type: Array,
+      default: () => {
+        []
+      }
     }
   },
   data () {
     return {
       headers: [
-        { text: 'Status', align: 'start', value: 'status' },
+        { text: 'Status', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'machinename' },
         { text: 'Capacity Utilization', align: 'center', value: 'capacity' },
         { text: 'Consumption', align: 'center', value: 'consumption' },
         { text: 'Factory', align: 'start', value: 'factory' },
         { text: 'Department', align: 'center', value: 'department' }
-      ],
-      items: [
-        {
-          status: 'Warning',
-          machinename: 'BD Batch Blender',
-          capacity: '89%',
-          consumption: '80 Watts',
-          factory: '30 Elm Street, NY',
-          department: 'Division 1'
-        },
-        {
-          status: 'Normal',
-          machinename: 'Accumeter Ovation Continuous',
-          capacity: '30%',
-          consumption: '30 Watts',
-          factory: '45 Main street, FL',
-          department: 'Division 2'
-        },
-        {
-          status: 'Normal',
-          machinename: 'GH Gravimetric Extrusion Control',
-          capacity: '57%',
-          consumption: '20 Watts',
-          factory: '50 Gracy Street, TX',
-          department: 'Division 3'
-        },
-        {
-          status: 'Alarm',
-          machinename: 'GH-F Gravimetric Additive',
-          capacity: '99%',
-          consumption: '90 Watts',
-          factory: '44 Main Street, GA',
-          department: 'Division 4'
-        },
-        {
-          status: 'Normal',
-          machinename: 'VTC Plus Conveying',
-          capacity: '32%',
-          consumption: '10 Watts',
-          factory: '33 One Drive, MA',
-          department: 'Division 1'
-        },
-        {
-          status: 'Normal',
-          machinename: 'NGX',
-          capacity: '27%',
-          consumption: '10 Watts',
-          factory: '29 Georgia Ave, CA',
-          department: 'Division 4'
-        },
-        {
-          status: 'Normal',
-          machinename: 'NGX Nomad',
-          capacity: '38%',
-          consumption: '40 Watts',
-          factory: '746 Macon, CO',
-          department: 'Division 5'
-        },
-        {
-          status: 'Warning',
-          machinename: 'Truetemp',
-          capacity: '74%',
-          consumption: '20 Watts',
-          factory: '1 Cantance Street, UT',
-          department: 'Division 1'
-        },
-        {
-          status: 'Not',
-          machinename: 'GP & HE Central',
-          capacity: '',
-          consumption: 'OFF',
-          factory: '45 Spring Street, NY',
-          department: 'Division 5'
-        },
-        {
-          status: 'Normal',
-          machinename: 'T50 Central',
-          capacity: '52%',
-          consumption: '30 Watts',
-          factory: '69 Borden Rd, IL',
-          department: 'Division 3'
-        }
       ]
     }
   },
@@ -183,7 +107,23 @@ export default {
       else if (status === 'Alarm') return 'red'
       else if (status === 'Not') return 'red'
       else return 'green'
+    },
+    itemRowBackground(item) {
+      return item.status === 'Not' ? 'background-alert' : ''
+    },
+    invalidItem(item) {
+      return item.status === 'Not' ? true : false
+    },
+    productView(item) {
+      this.$router.push({
+        name: 'dashboard-product'
+      })
     }
   }
 }
 </script>
+<style>
+  table tbody tr.background-alert {
+    background: #f98787 !important;
+  }
+</style>
