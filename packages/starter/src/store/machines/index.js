@@ -110,12 +110,24 @@ const module = {
       commit
     }, id) {
       commit('selectData', id)
+    },
+    updateSelections({
+      commit
+    }, selections) {
+      commit('updateSelections', selections)
     }
   },
 
   mutations: {
     selectData: (state, id) => {
       state.selectedId = parseInt(id)
+    },
+    updateSelections: (state, selections) => {
+      state.data.forEach( (_data) => {
+        if (_data.id === state.selectedId) {
+          _data.selections = selections
+        }
+      })
     }
   },
 

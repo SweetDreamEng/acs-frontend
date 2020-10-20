@@ -49,7 +49,7 @@ export default {
         name: '80.00 to 100.00',
         data: [10.6]
       }],
-      colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B'],
+      colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#fff'],
       stroke: {
         width: 1,
         colors: ['#fff']

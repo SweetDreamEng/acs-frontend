@@ -2,7 +2,7 @@
   <div class="d-flex flex-grow-1 flex-column">
 
     <!-- loading spinner -->
-    <div v-if="isLoading1" class="d-flex flex-grow-1 align-center justify-center">
+    <div v-if="isLoading1 || !selectedMachine" class="d-flex flex-grow-1 align-center justify-center">
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </div>
 
@@ -10,7 +10,7 @@
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
           <div class="d-flex justify-space-between align-center">
-            <div class="display-1" v-if="selectedMachine">{{ selectedMachine.machinename }}</div>
+            <div class="display-1">{{ selectedMachine.machinename }}</div>
             <v-dialog
               v-model="dialog"
               max-width="1000"
@@ -30,16 +30,16 @@
                 <v-card-text>
                   <v-row>
                     <v-col xs="12" sm="6" md="4" class="py-1">
-                      <v-checkbox class="mt-1" v-model="selections" label="batch size" value="1"></v-checkbox>
-                      <v-checkbox class="mt-1" v-model="selections" label="batch targets and action weights" value="2"></v-checkbox>
+                      <v-checkbox class="mt-1" v-model="selections" label="batch size" :value="1"></v-checkbox>
+                      <v-checkbox class="mt-1" v-model="selections" label="batch targets and action weights" :value="2"></v-checkbox>
                     </v-col>
                     <v-col xs="12" sm="6" md="4" class="py-1">
-                      <v-checkbox class="mt-1" v-model="selections" label="blender capability" value="3"></v-checkbox>
-                      <v-checkbox class="mt-1" v-model="selections" label="process rate" value="4"></v-checkbox>
+                      <v-checkbox class="mt-1" v-model="selections" label="blender capability" :value="3"></v-checkbox>
+                      <v-checkbox class="mt-1" v-model="selections" label="process rate" :value="4"></v-checkbox>
                     </v-col>
                     <v-col xs="12" sm="6" md="4" class="py-1">
-                      <v-checkbox class="mt-1" v-model="selections" label="hopper stable" value="5"></v-checkbox>
-                      <v-checkbox class="mt-1" v-model="selections" label="station conveying" value="6"></v-checkbox>
+                      <v-checkbox class="mt-1" v-model="selections" label="hopper stable" :value="5"></v-checkbox>
+                      <v-checkbox class="mt-1" v-model="selections" label="station conveying" :value="6"></v-checkbox>
                     </v-col>
                   </v-row>
 
@@ -49,8 +49,8 @@
                       sm="6"
                       md="4"
                       class="py-1"
-                      v-for="selection in selections"
-                      :key="selection"
+                      v-for="(selection, i) in selections"
+                      :key="i"
                     >
                       <product-chart
                         :machine="selectMachine"
@@ -114,7 +114,7 @@ export default {
       isLoading1: false,
       dialog: false,
 
-      selections: this.selectedMachine ? this.selectedMachine.selections : []
+      selections: []
     }
   },
   created () {
@@ -124,14 +124,13 @@ export default {
 
     this.selectMachine(this.$route.params.id)
 
-    console.log(this.selectedMachine)
     // DEMO delay for loading graphics
     this.loadingInterval = setInterval(() => {
       this[`isLoading${count++}`] = false
       if (count === 4) this.clear()
     }, 400)
 
-    console.log(this.selectedMachine)
+    this.selections = this.selectedMachine.selections
   },
   beforeDestroy() {
     this.clear()
@@ -139,19 +138,18 @@ export default {
   computed: {
     ...mapGetters([
       'selectedMachine'
-    ]),
-    propertySelections() {
-      return this.selectedMachine ? this.selectedMachine.selections : []
-    }
+    ])
   },
   methods: {
     ...mapActions([
-      'selectMachine'
+      'selectMachine',
+      'updateSelections'
     ]),
     clear() {
       clearInterval(this.loadingInterval)
     },
     onMachineUpdate() {
+      this.updateSelections(this.selections)
       this.dialog = false
     }
   }
