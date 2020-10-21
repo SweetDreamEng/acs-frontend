@@ -15,37 +15,17 @@
 
           <v-col cols="12" md="6">
             <v-text-field value="+8484548112" label="Phone"></v-text-field>
-            <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
+            <v-select
+              :items="departments"
+              value="Department2"
+              label="Department"
+            ></v-select>
+            <v-select
+              :items="divisions"
+              value="Division3"
+              label="Division"
             >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="date"
-                  label="Birthday date"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                ref="picker"
-                v-model="date"
-                :max="new Date().toISOString().substr(0, 10)"
-                min="1950-01-01"
-                @change="save"
-              ></v-date-picker>
-            </v-menu>
-            <v-text-field value="https://" label="Website"></v-text-field>
-            <v-radio-group v-model="gender" label="Gender">
-              <v-radio label="Male" value="male"></v-radio>
-              <v-radio label="Female" value="female"></v-radio>
-              <v-radio label="Other" value="other"></v-radio>
-            </v-radio-group>
+            </v-select>
           </v-col>
         </v-row>
 
@@ -64,7 +44,10 @@ export default {
   data: () => ({
     date: '1990-10-09',
     menu: false,
-    gender: 'male'
+    gender: 'male',
+
+    departments: ['Department1', 'Department2', 'Department3'],
+    divisions: ['Division1', 'Division2', 'Division3', 'Division4']
   }),
   watch: {
     menu (val) {
