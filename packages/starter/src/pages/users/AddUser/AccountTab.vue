@@ -16,8 +16,12 @@
             </div>
             <div class="flex-grow-1 pt-2 pa-sm-2">
               <v-text-field v-model="user.name" label="Display name" placeholder="name"></v-text-field>
-              <v-text-field v-model="user.email" label="Email" hide-details></v-text-field>
-
+              <v-text-field v-model="user.email" label="Email"></v-text-field>
+              <v-select
+                :items="roles"
+                label="Role"
+              >
+              </v-select>
               <div class="mt-2">
                 <v-btn color="primary" @click>Save</v-btn>
               </div>
@@ -26,7 +30,7 @@
         </v-card-text>
       </v-card>
     </div>
-    
+
     <!-- disable modal -->
     <v-dialog v-model="disableDialog" max-width="290">
       <v-card>
@@ -67,7 +71,9 @@ export default {
     return {
       panel: [1],
       deleteDialog: false,
-      disableDialog: false
+      disableDialog: false,
+
+      roles: ['Admin', 'Manager', 'Operator']
     }
   },
   methods: {

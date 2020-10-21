@@ -16,28 +16,39 @@
         <v-card-text>
           <div class="d-flex flex-column flex-sm-row">
             <div>
-              <v-img
+<!--               <v-img
                 :src="user.avatar"
                 aspect-ratio="1"
                 class="blue-grey lighten-4 rounded elevation-3"
                 max-width="90"
                 max-height="90"
-              ></v-img>
-              <v-btn class="mt-1" small>Edit Avatar</v-btn>
+              ></v-img> -->
+              <v-avatar
+                v-if="user.name"
+                color="primary"
+                size="68"
+              >
+                <span class="white--text headline">{{ initializedName(user.name) }}</span>
+              </v-avatar>
+              <!-- <v-btn class="mt-1" small>Edit Avatar</v-btn> -->
             </div>
             <div class="flex-grow-1 pt-2 pa-sm-2">
               <v-text-field v-model="user.name" label="Display name" placeholder="name"></v-text-field>
-              <v-text-field v-model="user.email" label="Email" hide-details></v-text-field>
-
+              <v-text-field v-model="user.email" label="Email"></v-text-field>
+              <v-select
+                :items="roles"
+                label="Role"
+              >
+              </v-select>
               <div class="d-flex flex-column">
                 <!-- <v-checkbox v-model="user.verified" dense label="Email Verified"></v-checkbox> -->
-                <!-- <div>
+                <div class="mt-2">
                   <v-btn
                     v-if="!user.verified"
                   >
                     <v-icon left small>mdi-email</v-icon>Send Verification Email
                   </v-btn>
-                </div> -->
+                </div>
               </div>
 
               <div class="mt-2">
@@ -60,16 +71,6 @@
                 @click
               >
                 <v-icon left small>mdi-email</v-icon>Send Reset Password Email
-              </v-btn>
-            </div>
-
-            <v-divider></v-divider>
-
-            <div class="my-2">
-              <div class="title">Export Account Data</div>
-              <div class="subtitle mb-2">Export all the platform metadata for this user.</div>
-              <v-btn class="mb-2">
-                <v-icon left small>mdi-clipboard-account</v-icon>Export User Data
               </v-btn>
             </div>
 
@@ -132,12 +133,6 @@
             {{ user.lastSignIn | formatDate('lll') }}
           </v-expansion-panel-content>
         </v-expansion-panel>
-        <v-expansion-panel>
-          <v-expansion-panel-header class="title">Raw Data</v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <pre class="body-2">{{ user }}</pre>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
       </v-expansion-panels>
     </div>
 
@@ -181,7 +176,17 @@ export default {
     return {
       panel: [1],
       deleteDialog: false,
-      disableDialog: false
+      disableDialog: false,
+
+      roles: ['Admin', 'Manager', 'Operator']
+    }
+  },
+  methods: {
+    initializedName(username) {
+      const name = 'Foo Bar 1Name too Long'
+      const initials = username.match(/\b\w/g) || []
+
+      return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
     }
   }
 }
