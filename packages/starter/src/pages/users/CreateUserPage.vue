@@ -11,65 +11,31 @@
       </v-btn>
     </div>
 
-    <div class="my-2">
-      <div>
-        <v-card>
-          <v-card-title>Basic Information</v-card-title>
-          <v-card-text>
-            <div class="d-flex flex-column flex-sm-row">
-              <div>
-                <!-- <v-img
-                  :src="user.avatar"
-                  aspect-ratio="1"
-                  class="blue-grey lighten-4 rounded elevation-3"
-                  max-width="90"
-                  max-height="90"
-                ></v-img> -->
-                <v-avatar
-                  v-if="user.name"
-                  color="primary"
-                  size="68"
-                >
-                  <span class="white--text headline">{{ initializedName(user.name) }}</span>
-                </v-avatar>
-              </div>
-              <div class="flex-grow-1 pt-2 pa-sm-2">
-                <v-text-field v-model="user.name" label="Display name" placeholder="name"></v-text-field>
-                <v-text-field v-model="user.email" label="Email" hide-details></v-text-field>
+    <v-tabs v-model="tab" :show-arrows="false" background-color="transparent">
+      <v-tab to="#tabs-account">Account</v-tab>
+      <v-tab to="#tabs-information">Information</v-tab>
+    </v-tabs>
 
-                <div class="d-flex flex-column">
-                  <!-- <v-checkbox v-model="user.verified" dense label="Email Verified"></v-checkbox> -->
-                  <!-- <div>
-                    <v-btn
-                      v-if="!user.verified"
-                    >
-                      <v-icon left small>mdi-email</v-icon>Send Verification Email
-                    </v-btn>
-                  </div> -->
-                </div>
+    <v-tabs-items v-model="tab">
+      <v-tab-item value="tabs-account">
+        <account-tab ref="tabs-account" :user="user"></account-tab>
+      </v-tab-item>
 
-                <div class="mt-2">
-                  <v-btn color="primary" @click>Save</v-btn>
-                </div>
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </div>
-    </div>
+      <v-tab-item value="tabs-information">
+        <information-tab ref="tabs-information" :user="user"></information-tab>
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
 <script>
-// import CopyLabel from '../../components/common/CopyLabel'
-// import AccountTab from './EditUser/AccountTab'
-// import InformationTab from './EditUser/InformationTab'
+import AccountTab from './AddUser/AccountTab'
+import InformationTab from './AddUser/InformationTab'
 
 export default {
   components: {
-    // CopyLabel,
-    // AccountTab,
-    // InformationTab
+    AccountTab,
+    InformationTab
   },
   data() {
     return {
