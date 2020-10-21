@@ -69,12 +69,26 @@
       <v-card>
         <v-card-title class="headline">Add New Division</v-card-title>
         <v-card-text>
-          <v-text-field label="New Division" v-model="newDivision"></v-text-field>
+          <v-form
+            ref="divisionForm"
+            v-model="validDivision"
+            lazy-validation
+          >
+            <v-text-field
+              v-model="newDivision"
+              :rules="divisionRules"
+              label="Division"
+              required
+            ></v-text-field>
+            <v-btn
+              :disabled="!validDivision"
+              color="success"
+              @click="addNewDivision"
+            >
+              Ok
+            </v-btn>
+          </v-form>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="addNewDivision()">Ok</v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
 
@@ -83,12 +97,26 @@
       <v-card>
         <v-card-title class="headline">Add New Department</v-card-title>
         <v-card-text>
-          <v-text-field label="New Department" v-model="newDepartment"></v-text-field>
+          <v-form
+            ref="departmentForm"
+            v-model="validDepartment"
+            lazy-validation
+          >
+            <v-text-field
+              v-model="newDepartment"
+              :rules="departmentRules"
+              label="Department"
+              required
+            ></v-text-field>
+            <v-btn
+              :disabled="!validDepartment"
+              color="success"
+              @click="addNewDepartment"
+            >
+              Ok
+            </v-btn>
+          </v-form>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="addNewDepartment()">Ok</v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
@@ -101,6 +129,9 @@ export default {
     menu: false,
     gender: 'male',
 
+    validDivision: true,
+    validDepartment: true,
+
     newDepartment: '',
     newDivision: '',
 
@@ -108,8 +139,14 @@ export default {
     divisions: ['Division1', 'Division2', 'Division3', 'Division4'],
 
     addDepartmentDialog: false,
-    addDivisionDialog: false
+    addDivisionDialog: false,
 
+    divisionRules: [
+      (v) => !!v || 'Division is required'
+    ],
+    departmentRules: [
+      (v) => !!v || 'Department is required'
+    ]
   }),
   watch: {
     menu (val) {
@@ -124,15 +161,19 @@ export default {
       this.addDepartmentDialog = true
     },
     addNewDepartment() {
-      this.departments.push(this.newDepartment)
-      this.addDepartmentDialog = false
+      if (this.$refs.departmentForm.validate()) {
+        this.departments.push(this.newDepartment)
+        this.addDepartmentDialog = false
+      }
     },
     addNewDivisionDialog() {
       this.addDivisionDialog = true
     },
     addNewDivision() {
-      this.divisions.push(this.newDivision)
-      this.addDivisionDialog = false
+      if (this.$refs.divisionForm.validate()) {
+        this.divisions.push(this.newDivision)
+        this.addDivisionDialog = false
+      }
     }
   }
 }
