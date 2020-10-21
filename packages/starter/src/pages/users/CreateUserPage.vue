@@ -18,7 +18,7 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item value="tabs-account">
-        <account-tab ref="tabs-account" :user="user"></account-tab>
+        <account-tab :roles="roles" ref="tabs-account" :user="user"></account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import roles from './content/roles'
+
 import AccountTab from './AddUser/AccountTab'
 import InformationTab from './AddUser/InformationTab'
 
@@ -60,7 +62,8 @@ export default {
         {
           text: 'Add New User'
         }
-      ]
+      ],
+      roles
     }
   },
   methods: {

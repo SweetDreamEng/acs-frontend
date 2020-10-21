@@ -41,7 +41,7 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item value="tabs-account">
-        <account-tab ref="tabs-account" :user="user"></account-tab>
+        <account-tab :roles="roles" ref="tabs-account" :user="user"></account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import roles from './content/roles'
+
 import CopyLabel from '../../components/common/CopyLabel'
 import AccountTab from './EditUser/AccountTab'
 import InformationTab from './EditUser/InformationTab'
@@ -85,7 +87,8 @@ export default {
         {
           text: 'Edit User'
         }
-      ]
+      ],
+      roles
     }
   }
 }

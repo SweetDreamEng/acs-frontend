@@ -170,15 +170,17 @@ export default {
     user: {
       type: Object,
       default: () => ({})
+    },
+    roles: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
       panel: [1],
       deleteDialog: false,
-      disableDialog: false,
-
-      roles: ['Admin', 'Manager', 'Operator']
+      disableDialog: false
     }
   },
   methods: {
