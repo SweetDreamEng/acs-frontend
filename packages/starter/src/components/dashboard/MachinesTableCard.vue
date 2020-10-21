@@ -8,7 +8,7 @@
           <v-icon>mdi-dots-horizontal</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card-subtitle class="d-flex flex-wrap">
+      <v-card-subtitle class="d-flex flex-wrap" style="height: 38px;">
         <span class="mr-2 font-weight-bold" style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
         <v-slider
           v-model="hours"
