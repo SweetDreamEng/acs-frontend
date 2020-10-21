@@ -24,13 +24,14 @@
       </v-col>
       <v-col sm="12" md="4">
         <total-runtime
+          :loading="isLoading1"
           :series="series"
           label="Total Runtime"
         >
         </total-runtime>
         <br>
         <status-card
-          label="Transaction Amount"
+          label="Run time Categories"
         ></status-card>
       </v-col>
 

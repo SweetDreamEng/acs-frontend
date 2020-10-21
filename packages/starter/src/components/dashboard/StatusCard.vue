@@ -1,13 +1,24 @@
 <template>
   <v-card class="d-flex flex-column flex-grow-1">
 
-    <div class="d-flex flex-column flex-grow-1">
+    <!-- loading spinner -->
+    <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div>
+
+    <div v-else class="d-flex flex-column flex-grow-1">
       <v-card-title>
         <div>{{ label }}</div>
       </v-card-title>
 
       <v-card-text>
-        <apexchart type="bar" height="220" :options="chartOptions" :series="series"></apexchart>
+        <apexchart
+          v-if="!isLoading1"
+          type="bar"
+          height="260"
+          :options="chartOptions"
+          :series="series">
+        </apexchart>
       </v-card-text>
     </div>
   </v-card>
@@ -29,10 +40,17 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
+      loadingInterval: null,
+      isLoading1: true,
+
       series: [{
         name: 'A',
         data: [8.2, 10.8, 10.6, 10.8, 10.6]
@@ -63,6 +81,10 @@ export default {
           style: {
             fontSize: '14px',
             colors: ['#000']
+          },
+          offsetY: -20,
+          formatter: function (val) {
+            return val + 'k'
           }
         },
         xaxis: {
@@ -81,7 +103,7 @@ export default {
         },
         yaxis: {
           title: {
-            text: 'Count - Quantity',
+            text: 'Count - Quantity - Hours',
             style: {
               fontWeight: 500,
               fontSize: 18
@@ -97,6 +119,20 @@ export default {
     }
   },
   computed: {
+  },
+  mounted() {
+    let count = 0
+
+    // DEMO delay for loading graphics
+    this.loadingInterval = setInterval(() => {
+      this[`isLoading${count++}`] = false
+      if (count === 4) this.clear()
+    }, 400)
+  },
+  methods: {
+    clear() {
+      clearInterval(this.loadingInterval)
+    }
   }
 }
 </script>

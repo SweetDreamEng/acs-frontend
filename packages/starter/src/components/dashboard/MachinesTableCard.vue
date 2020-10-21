@@ -3,6 +3,15 @@
     <v-card>
       <v-card-title>
         {{ label }}
+        <v-slider
+          v-model="hours"
+          max="24"
+          min="8"
+          step="1"
+          thumb-label
+          ticks
+          class="ml-2 mb-n3"
+        ></v-slider>
         <v-spacer></v-spacer>
         <v-btn icon>
           <v-icon>mdi-dots-horizontal</v-icon>
@@ -89,7 +98,9 @@ export default {
         { text: 'Consumption', align: 'center', value: 'consumption' },
         { text: 'Factory', align: 'start', value: 'factory' },
         { text: 'Department', align: 'center', value: 'department' }
-      ]
+      ],
+
+      hours: 8
     }
   },
   methods: {

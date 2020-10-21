@@ -18,7 +18,7 @@
               height="16"
             >
               <template v-slot="{ }">
-                <strong style="color:white;">7h10m</strong>
+                <strong class="white--text">7h10m</strong>
               </template>
             </v-progress-linear>
             <div class="text-right"><small>10/16/2020 20:00</small></div>
