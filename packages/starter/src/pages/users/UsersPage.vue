@@ -97,7 +97,7 @@
             label
             small
             class="font-weight-bold"
-            :color="item.role === 'ADMIN' ? 'primary' : undefined"
+            :color="roleColor(item.role)"
           >{{ item.role | capitalize }}</v-chip>
         </template>
 
@@ -168,6 +168,11 @@ export default {
       const initials = username.match(/\b\w/g) || []
 
       return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+    },
+    roleColor(role) {
+      if (role === 'ADMIN') return '#005583'
+      else if (role === 'Manager') return '#008499'
+      else return undefined
     }
   }
 }
