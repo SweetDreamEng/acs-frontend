@@ -92,9 +92,9 @@
         </v-col>
       </v-row>
       <v-row>
+        
         <v-col xs="12" sm="12" md="6">
-          <v-card
-          >
+          <v-card>
             <v-card-title>
               <span class="primary--text">Add a note</span>
 <!--               <v-btn
@@ -153,7 +153,9 @@
         </v-col>
         <v-col xs="12" sm="12" md="6">
           <v-card>
-            <v-card-title class="primary--text display-1">Notes & Timeline</v-card-title>
+            <v-card-title>
+              <span class="primary--text">Notes & Timeline</span>
+            </v-card-title>
             <v-card-text>
               <v-timeline>
                 <v-timeline-item
@@ -161,8 +163,7 @@
                   :key="i"
                   color="secondary"
                 >
-                  <v-card
-                  >
+                  <v-card>
                     <v-card-text class="white text--primary">
                       {{ note }}
                     </v-card-text>
