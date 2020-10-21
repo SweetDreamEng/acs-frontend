@@ -140,6 +140,8 @@ export default {
     errorPages: 'Error Pages',
     errorNotFound: 'Not Found / 404',
     errorUnexpected: 'Unexpected / 500',
+    userPages: 'User Pages',
+    allUsers: 'All Users',
     utilityPages: 'Utility Pages',
     utilityMaintenance: 'Maintenance',
     utilitySoon: 'Coming Soon',

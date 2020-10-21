@@ -1,7 +1,7 @@
 <template>
   <v-menu offset-y left transition="slide-y-transition">
     <template v-slot:activator="{ on }">
-      <v-btn icon class="elevation-2" v-on="on">
+      <!-- <v-btn icon class="elevation-2" v-on="on">
         <v-badge
           color="success"
           dot
@@ -13,10 +13,21 @@
             <v-img src="/images/avatars/avatar1.svg"></v-img>
           </v-avatar>
         </v-badge>
+      </v-btn> -->
+      <v-btn
+        icon
+        v-on="on"
+        small
+      >
+        <v-avatar
+          color="primary"
+          size="28"
+        >
+          <span class="white--text">JD</span>
+        </v-avatar>
       </v-btn>
     </template>
 
-    <!-- user menu list -->
     <v-list dense nav>
       <v-list-item
         v-for="(item, index) in menu"
@@ -61,7 +72,8 @@ import config from '../../configs'
 export default {
   data() {
     return {
-      menu: config.toolbar.user
+      menu: config.toolbar.user,
+      username: 'John Doe'
     }
   }
 }

@@ -77,26 +77,19 @@
 
         <template v-slot:item.email="{ item }">
           <div class="d-flex align-center py-1">
-            <v-avatar size="32" class="elevation-1 grey lighten-3">
+            <!-- <v-avatar size="32" class="elevation-1 grey lighten-3">
               <v-img :src="item.avatar" />
+            </v-avatar> -->
+            <v-avatar
+              color="primary"
+              size="28"
+            >
+              <span class="white--text">{{ initializedName(item.name) }}</span>
             </v-avatar>
             <div class="ml-1 caption font-weight-bold">
               <copy-label :text="item.email" />
             </div>
           </div>
-        </template>
-
-        <template v-slot:item.verified="{ item }">
-          <v-icon v-if="item.verified" small color="success">
-            mdi-check-circle
-          </v-icon>
-          <v-icon v-else small>
-            mdi-circle-outline
-          </v-icon>
-        </template>
-
-        <template v-slot:item.disabled="{ item }">
-          <div>{{ item.disabled.toString() | capitalize }}</div>
         </template>
 
         <template v-slot:item.role="{ item }">
@@ -152,12 +145,10 @@ export default {
       headers: [
         { text: 'Id', align: 'left', value: 'id' },
         { text: 'Email', value: 'email' },
-        { text: 'Verified', value: 'verified' },
         { text: 'Name', align: 'left', value: 'name' },
         { text: 'Role', value: 'role' },
         { text: 'Created', value: 'created' },
         { text: 'Last SignIn', value: 'lastSignIn' },
-        { text: 'Disabled', value: 'disabled' },
         { text: '', sortable: false, align: 'right', value: 'action' }
       ],
 
@@ -171,7 +162,13 @@ export default {
   },
   methods: {
     searchUser() {},
-    open() {}
+    open() {},
+    initializedName(username) {
+      const name = 'Foo Bar 1Name too Long'
+      const initials = username.match(/\b\w/g) || []
+
+      return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+    }
   }
 }
 </script>
