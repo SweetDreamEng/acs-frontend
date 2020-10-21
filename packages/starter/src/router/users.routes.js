@@ -9,4 +9,8 @@ export default [{
   path: '/users/edit',
   name: 'users-edit',
   component: () => import(/* webpackChunkName: "users-edit" */ '@/pages/users/EditUserPage.vue')
+}, {
+  path: '/users/add',
+  name: 'users-add',
+  component: () => import(/* webpackChunkName: "users-add" */ '@/pages/users/CreateUserPage.vue')
 }]

@@ -6,7 +6,7 @@
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
       <v-spacer></v-spacer>
-      <v-btn color="primary">
+      <v-btn color="primary" to="/users/add">
         Create User
       </v-btn>
     </div>
@@ -25,9 +25,9 @@
               </transition>
             </template>
             <v-list dense>
-<!--               <v-list-item @click>
+              <v-list-item @click>
                 <v-list-item-title>Verify</v-list-item-title>
-              </v-list-item> -->
+              </v-list-item>
               <v-list-item @click>
                 <v-list-item-title>Disable</v-list-item-title>
               </v-list-item>
@@ -97,6 +97,7 @@
             label
             small
             class="font-weight-bold"
+            :dark="item.role === 'ADMIN' || item.role === 'Manager'"
             :color="roleColor(item.role)"
           >{{ item.role | capitalize }}</v-chip>
         </template>
@@ -169,9 +170,9 @@ export default {
 
       return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
     },
-    roleColor(role) {
-      if (role === 'ADMIN') return '#005583'
-      else if (role === 'Manager') return '#008499'
+    roleColor(rolename) {
+      if (rolename === 'ADMIN') return '#4CAF50'
+      else if (rolename === 'Manager') return '#F79803'
       else return undefined
     }
   }
