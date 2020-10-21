@@ -102,8 +102,10 @@ export default {
           }
         },
         yaxis: {
+          // min: 6,
+          // max: 100,
           title: {
-            text: 'Count - Quantity - Hours',
+            text: 'Hours',
             style: {
               fontWeight: 500,
               fontSize: 18
@@ -111,7 +113,7 @@ export default {
           },
           labels: {
             formatter: function (value) {
-              return value + 'k'
+              return value * 10
             }
           }
         }
