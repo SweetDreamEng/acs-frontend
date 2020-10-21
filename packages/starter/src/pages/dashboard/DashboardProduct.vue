@@ -157,13 +157,15 @@
               <span class="primary--text">Notes & Timeline</span>
             </v-card-title>
             <v-card-text>
-              <v-timeline>
+              <v-timeline align-top>
                 <v-timeline-item
                   v-for="(note, i) in selectedMachine.notes"
                   :key="i"
-                  color="secondary"
+                  color="primary"
+                  fill-dot
                 >
-                  <v-card>
+                  <v-card color="secondary lighten-1" dark>
+                    <v-card-title class="title">Lorem Ipsum Dolor</v-card-title>
                     <v-card-text class="white text--primary">
                       {{ note }}
                     </v-card-text>
