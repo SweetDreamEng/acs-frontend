@@ -84,7 +84,7 @@ export default {
           },
           offsetY: -20,
           formatter: function (val) {
-            return val + 'k'
+            return val * 10
           }
         },
         xaxis: {
@@ -103,7 +103,7 @@ export default {
         },
         yaxis: {
           // min: 6,
-          // max: 100,
+          max: 16.8,
           title: {
             text: 'Hours',
             style: {
@@ -113,7 +113,7 @@ export default {
           },
           labels: {
             formatter: function (value) {
-              return value * 10
+              return parseInt(value * 10)
             }
           }
         }

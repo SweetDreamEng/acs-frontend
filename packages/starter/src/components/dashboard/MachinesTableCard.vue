@@ -9,6 +9,7 @@
         </v-btn>
       </v-card-title>
       <v-card-subtitle class="d-flex flex-wrap">
+        <span class="mr-2 font-weight-bold" style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
         <v-slider
           v-model="hours"
           max="24"
@@ -19,7 +20,6 @@
           prepend-icon="mdi-clock"
           class=""
         ></v-slider>
-        <span style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
       </v-card-subtitle>
       <v-card-text>
         <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
