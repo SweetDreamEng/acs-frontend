@@ -30,14 +30,14 @@
               <v-text-field v-model="user.email" label="Email" hide-details></v-text-field>
 
               <div class="d-flex flex-column">
-                <v-checkbox v-model="user.verified" dense label="Email Verified"></v-checkbox>
-                <div>
+                <!-- <v-checkbox v-model="user.verified" dense label="Email Verified"></v-checkbox> -->
+                <!-- <div>
                   <v-btn
                     v-if="!user.verified"
                   >
                     <v-icon left small>mdi-email</v-icon>Send Verification Email
                   </v-btn>
-                </div>
+                </div> -->
               </div>
 
               <div class="mt-2">

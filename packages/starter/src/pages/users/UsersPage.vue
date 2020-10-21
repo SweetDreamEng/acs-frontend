@@ -25,9 +25,9 @@
               </transition>
             </template>
             <v-list dense>
-              <v-list-item @click>
+<!--               <v-list-item @click>
                 <v-list-item-title>Verify</v-list-item-title>
-              </v-list-item>
+              </v-list-item> -->
               <v-list-item @click>
                 <v-list-item-title>Disable</v-list-item-title>
               </v-list-item>

@@ -41,11 +41,11 @@
               ></v-date-picker>
             </v-menu>
             <v-text-field value="https://" label="Website"></v-text-field>
-            <v-radio-group v-model="gender" label="Gender">
+<!--             <v-radio-group v-model="gender" label="Gender">
               <v-radio label="Male" value="male"></v-radio>
               <v-radio label="Female" value="female"></v-radio>
               <v-radio label="Other" value="other"></v-radio>
-            </v-radio-group>
+            </v-radio-group> -->
           </v-col>
         </v-row>
 
