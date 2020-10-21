@@ -10,11 +10,7 @@ const module = {
         consumption: '80 Watts',
         factory: '30 Elm Street, NY',
         department: 'Division 1',
-        notes: [
-          ' quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo',
-          'Lorem ipsum dolor sit amet, Ut enim ad minim veniam, ut aliquip ex ea commodo',
-          'Lorem ipsum dolor lit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        ]
+        notes: []
       },
       {
         id: 2,
@@ -151,7 +147,12 @@ const module = {
     addProductNote: (state, note) => {
       state.data.forEach( (_data) => {
         if (_data.id === state.selectedId) {
-          _data.notes.push(note)
+          const currentTime = new Date()
+
+          _data.notes.push({
+            text: note,
+            time: currentTime
+          })
         }
       })
     }

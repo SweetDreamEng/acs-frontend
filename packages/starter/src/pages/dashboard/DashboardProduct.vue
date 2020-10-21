@@ -92,88 +92,14 @@
         </v-col>
       </v-row>
       <v-row>
-        
         <v-col xs="12" sm="12" md="6">
-          <v-card>
-            <v-card-title>
-              <span class="primary--text">Add a note</span>
-<!--               <v-btn
-                icon
-                @click="showTimeLine = !showTimeLine"
-              >
-                <v-icon>{{ showTimeLine ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-              </v-btn> -->
-            </v-card-title>
-            <v-card-text>
-              <v-expand-transition>
-                <div v-show="showTimeLine">
-                  <v-divider></v-divider>
-
-                  <v-card-text>
-                    <v-form
-                      ref="form"
-                      v-model="valid"
-                      lazy-validation
-                    >
-                      <v-textarea
-                        v-model="note"
-                        label="Note"
-                        outlined
-                        required
-                      ></v-textarea>
-
-                      <v-btn
-                        :disabled="!valid"
-                        color="grey"
-                        class="mr-4"
-                        @click="clearNote"
-                      >
-                        <v-icon dark>
-                          mdi-minus
-                        </v-icon>
-                        Reset
-                      </v-btn>
-                      <v-btn
-                        :disabled="!valid"
-                        color="success"
-                        class="mr-4"
-                        @click="addNote"
-                      >
-                        <v-icon dark>
-                          mdi-plus
-                        </v-icon>
-                        Add
-                      </v-btn>
-                    </v-form>
-                  </v-card-text>
-                </div>
-              </v-expand-transition>
-            </v-card-text>
-        </v-card>
+          <note-form></note-form>
         </v-col>
         <v-col xs="12" sm="12" md="6">
-          <v-card>
-            <v-card-title>
-              <span class="primary--text">Notes & Timeline</span>
-            </v-card-title>
-            <v-card-text>
-              <v-timeline align-top>
-                <v-timeline-item
-                  v-for="(note, i) in selectedMachine.notes"
-                  :key="i"
-                  color="primary"
-                  fill-dot
-                >
-                  <v-card color="secondary lighten-1" dark>
-                    <v-card-title class="title">Lorem Ipsum Dolor</v-card-title>
-                    <v-card-text class="white text--primary">
-                      {{ note }}
-                    </v-card-text>
-                  </v-card>
-                </v-timeline-item>
-              </v-timeline>
-            </v-card-text>
-          </v-card>
+          <notes-timeline
+            :machine="selectedMachine"
+          >
+          </notes-timeline>
         </v-col>
       </v-row>
     </div>
@@ -184,10 +110,12 @@
 import { mapGetters, mapActions } from 'vuex'
 // DEMO Cards for dashboard
 import ProductChart from '../../components/dashboard/ProductChart'
+import NotesTimeline from '../../components/dashboard/NotesTimeline'
+import NoteForm from '../../components/dashboard/NoteForm'
 
 export default {
   components: {
-    ProductChart
+    ProductChart, NotesTimeline, NoteForm
   },
   props: {
   },
@@ -196,10 +124,6 @@ export default {
       loadingInterval: null,
       isLoading1: false,
       dialog: false,
-
-      showTimeLine: true,
-      valid: true,
-      note: '',
 
       selections: []
     }
@@ -230,8 +154,7 @@ export default {
   methods: {
     ...mapActions([
       'selectMachine',
-      'updateSelections',
-      'addProductNote'
+      'updateSelections'
     ]),
     clear() {
       clearInterval(this.loadingInterval)
@@ -239,12 +162,6 @@ export default {
     onMachineUpdate() {
       this.updateSelections(this.selections)
       this.dialog = false
-    },
-    addNote() {
-      this.addProductNote(this.note)
-    },
-    clearNote() {
-      this.note = ''
     }
   }
 }
