@@ -6,16 +6,16 @@
         <v-form>
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field value="First and two on el street" label="Address Line 1"></v-text-field>
+              <v-text-field value="" label="Address Line 1"></v-text-field>
               <v-text-field value="" label="Address Line 2"></v-text-field>
-              <v-text-field value="1231" label="Zip Code"></v-text-field>
-              <v-text-field value="Los Angeles" label="City"></v-text-field>
-              <v-text-field value="California" label="State"></v-text-field>
-              <v-text-field value="United States" label="Country"></v-text-field>
+              <v-text-field value="" label="Zip Code"></v-text-field>
+              <v-text-field value="" label="City"></v-text-field>
+              <v-text-field value="" label="State"></v-text-field>
+              <v-text-field value="" label="Country"></v-text-field>
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-text-field value="+8484548112" label="Phone"></v-text-field>
+              <v-text-field value="" label="Phone"></v-text-field>
               <v-select
                 :items="departments"
                 label="Department"
