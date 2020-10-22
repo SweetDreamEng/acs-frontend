@@ -7,120 +7,134 @@
     </div>
     <v-card>
       <v-card-text>
-        <v-expansion-panels v-model="panel" multiple class="mt-3">
-          <v-expansion-panel>
-            <v-expansion-panel-header class="title">Target Devices</v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <div>
-                <div class="">Select the target device template your rule will use. If you need to narrow the rule's scope, add filters.</div>
+        <div>
+          <h2 class="my-2">Target Devices</h2>
+          <div class="">Select the target device template your rule will use. If you need to narrow the rule's scope, add filters.</div>
+          <v-select
+            :items="products"
+            label="Product"
+          >
+          </v-select>
+        </div>
+        <div>
+          <h2 class="my-2">Conditions</h2>
+          <div class="">Conditions define when you rule is triggered. Aggregation is optional - use it to cluster your data and trigger rules based on a time window.</div>
+          <br>
+          <v-form>
+            <v-row
+              v-for="(filter, i) in filters"
+              :key="i"
+            >
+              <v-col
+                cols="12"
+                sm="4"
+                class="py-0"
+              >
                 <v-select
-                  :items="products"
-                  label="Product"
+                  :items="telemetries"
+                  v-model="filter.telemetry"
+                  label="Select a telemetry"
+                  required
                 >
                 </v-select>
-              </div>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header class="title">Conditions</v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <div>
-                <div class="">Conditions define when you rule is triggered. Aggregation is optional - use it to cluster your data and trigger rules based on a time window.</div>
-                <br>
-                <v-form>
-                  <v-row
-                    v-for="(filter, i) in filters"
-                    :key="i"
-                  >
-                    <v-col
-                      cols="12"
-                      sm="4"
-                    >
-                      <v-select
-                        :items="telemetries"
-                        v-model="filter.telemetry"
-                        label="Select a telemetry"
-                        required
-                      >
-                      </v-select>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="4"
-                    >
-                      <v-select
-                        :items="operators"
-                        v-model="filter.operator"
-                        label="Select an operator"
-                        required
-                      >
-                      </v-select>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="4"
-                    >
-                      <v-text-field
-                        type="number"
-                        v-model="filter.value"
-                        label="Select or enter a value"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-form>
-                <v-btn
-                  @click="addFilter"
+              </v-col>
+              <v-col
+                cols="12"
+                sm="4"
+                class="py-0"
+              >
+                <v-select
+                  :items="operators"
+                  v-model="filter.operator"
+                  label="Select an operator"
+                  required
                 >
-                  <v-icon left>mdi-plus</v-icon>Condition
-                </v-btn>
-              </div>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header class="title">Actions</v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <div>
-                <div class="">Send an email when your rule is triggered. Emails will only be sent to users who have been added to this application and have signed-in at least once.</div>
-                <v-form>
-                  <v-text-field
-                    v-model="emailForm.name"
-                    label="Display name"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    v-model="emailForm.to"
-                    label="To"
-                    placeholder="ex: msft@microsoft.com"
-                    required
-                  ></v-text-field>
-                  <v-textarea
-                    v-model="emailForm.note"
-                    label="Note"
-                    required
-                    placeholder="Add a note to include in the email."
-                  ></v-textarea>
-                  <div class="d-flex">
-                    <v-checkbox
-                      v-model="emailForm.media"
-                      label="SMS"
-                      value="sms"
-                      class="mr-2"
-                    ></v-checkbox>
-                    <v-checkbox
-                      v-model="emailForm.media"
-                      label="Email"
-                      value="email"
-                    ></v-checkbox>
-                  </div>
-                </v-form>
-                <v-btn color="primary">
-                  Done
-                </v-btn>
-              </div>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
+                </v-select>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="4"
+                class="py-0"
+              >
+                <v-text-field
+                  type="number"
+                  v-model="filter.value"
+                  label="Select or enter a value"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
+          <v-btn
+            @click="addFilter"
+          >
+            <v-icon left>mdi-plus</v-icon>Condition
+          </v-btn>
+        </div>
+        <div>
+          <h2 class="my-2">Actions</h2>
+          <div class="">Send an email when your rule is triggered. Emails will only be sent to users who have been added to this application and have signed-in at least once.</div>
+          <v-tabs v-model="tab" :show-arrows="false" background-color="transparent">
+            <v-tab to="#tabs-sms">SMS</v-tab>
+            <v-tab to="#tabs-email">Email</v-tab>
+          </v-tabs>
+
+          <v-tabs-items v-model="tab">
+            <v-tab-item value="tabs-sms">
+              <v-form
+                ref="smsForm"
+                v-model="smsValid"
+                lazy-validation
+              >
+                <v-text-field
+                  v-model="smsForm.name"
+                  label="Display name"
+                  :rules="nameRules"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  v-model="smsForm.to"
+                  label="To"
+                  placeholder="1234567890"
+                  :rules="phoneRules"
+                  required
+                ></v-text-field>
+              </v-form>
+            </v-tab-item>
+
+            <v-tab-item value="tabs-email">
+              <v-form
+                ref="emailForm"
+                v-model="emailValid"
+                lazy-validation
+              >
+                <v-text-field
+                  v-model="emailForm.name"
+                  label="Display name"
+                  :rules="nameRules"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  v-model="emailForm.to"
+                  label="To"
+                  placeholder="ex: msft@microsoft.com"
+                  :rules="emailRules"
+                  required
+                ></v-text-field>
+                <v-textarea
+                  v-model="emailForm.note"
+                  label="Note"
+                  required
+                  placeholder="Add a note to include in the email."
+                ></v-textarea>
+              </v-form>
+            </v-tab-item>
+          </v-tabs-items>
+          
+          <v-btn color="primary mt-2">
+            Done
+          </v-btn>
+        </div>
       </v-card-text>
     </v-card>
   </div>
@@ -187,13 +201,33 @@ export default {
           value: ''
         }
       ],
+
       emailForm: {
         name: '',
         to: '',
-        note: '',
-        media: []
+        note: ''
       },
-      panel: [0]
+      smsForm: {
+        name: '',
+        to: ''
+      },
+
+      tab: null,
+
+      emailValid: true,
+      smsValid: true,
+
+      nameRules: [
+        (v) => !!v || 'Name is required'
+      ],
+      emailRules: [
+        (v) => !!v || 'Email is required',
+        (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
+      ],
+      phoneRules: [
+        (v) => !!v || 'Phone number is required',
+        (v) => /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(v) || 'Phone number must be valid'
+      ]
     }
   },
   methods: {
