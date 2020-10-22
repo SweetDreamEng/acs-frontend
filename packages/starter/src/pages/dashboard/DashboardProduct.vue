@@ -92,10 +92,10 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col xs="12" sm="12" md="6">
+        <v-col xs="12" sm="12" md="5">
           <note-form></note-form>
         </v-col>
-        <v-col xs="12" sm="12" md="6">
+        <v-col xs="12" sm="12" md="7">
           <notes-timeline
             :machine="selectedMachine"
           >

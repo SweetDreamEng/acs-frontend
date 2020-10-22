@@ -4,42 +4,19 @@
       <span class="primary--text">Notes & Timeline</span>
     </v-card-title>
     <v-card-text>
-      <v-timeline align-top>
+      <v-timeline>
         <v-timeline-item
           v-for="(note, i) in machine.notes"
           :key="i"
           color="success"
         >
-          <v-card color="secondary lighten-1 elevation-1" dark>
-            <v-card-title class="py-1">
-            {{  formatDate(note.time) }}
-            <v-spacer></v-spacer>
-            <v-menu offset-y>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  icon
-                  v-bind="attrs"
-                  v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                >
-                  <v-list-item-title>Edit</v-list-item-title>
-                </v-list-item>
-                <v-list-item
-                >
-                  <v-list-item-title>Delete</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-            
-            </v-card-title>
-            <v-card-text class="white text--primary">
-              {{ note.text }}
-            </v-card-text>
-          </v-card>
+          <template v-slot:opposite>
+            <span
+              :class="`subtitle font-weight-bold cyan--text`"
+              v-text="formatDate(note.time)"
+            ></span>
+          </template>
+          {{ note.text }}
         </v-timeline-item>
       </v-timeline>
     </v-card-text>
@@ -71,7 +48,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return date ? moment(date).format('D MMM H:m:s') : ''
+      return date ? moment(date).format('MMMM Do, YYYY H:m A ') + 'EST' : ''
     }
   }
 }
