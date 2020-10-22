@@ -103,12 +103,14 @@
                   <v-text-field
                     v-model="emailForm.to"
                     label="To"
+                    placeholder="ex: msft@microsoft.com"
                     required
                   ></v-text-field>
                   <v-textarea
                     v-model="emailForm.note"
                     label="Note"
                     required
+                    placeholder="Add a note to include in the email."
                   ></v-textarea>
                 </v-form>
                 <v-btn color="primary">
