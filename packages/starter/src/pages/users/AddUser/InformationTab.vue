@@ -31,7 +31,7 @@
                       </v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-divider class="mt-2"></v-divider>
+                  <v-divider></v-divider>
                 </template>
               </v-select>
               <v-select
@@ -49,7 +49,7 @@
                       </v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-divider class="mt-2"></v-divider>
+                  <v-divider></v-divider>
                 </template>
               </v-select>
             </v-col>
@@ -172,3 +172,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .theme--light.v-divider {
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+</style>
