@@ -18,8 +18,7 @@
           thumb-label
           ticks
           prepend-icon="mdi-clock"
-          class=""
-          style="max-width: 260px;"
+          style="min-width: 140px; max-width: 260px;"
         ></v-slider>
       </v-card-subtitle>
       <v-card-text>
@@ -43,19 +42,19 @@
           @click:row="productView"
         >
           <template v-slot:header.status="{ header }">
-            <v-icon small>mdi-chevron-double-right</v-icon>
+            <v-icon color="primary">mdi-chevron-double-right</v-icon>
             {{ header.text }}
           </template>
           <template v-slot:header.machinename="{ header }">
-            <v-icon small>mdi-wrench</v-icon>
+            <v-icon small color="primary">mdi-wrench</v-icon>
             {{ header.text }}
           </template>
           <template v-slot:header.capacity="{ header }">
-            <v-icon>mdi-trending-up</v-icon>
+            <v-icon color="primary">mdi-trending-up</v-icon>
             {{ header.text | formatPercentage }}
           </template>
           <template v-slot:header.consumption="{ header }">
-            <v-icon class="mdi-rotate-90">mdi-battery-30</v-icon>
+            <v-icon class="mdi-rotate-90" color="primary">mdi-battery-30</v-icon>
             {{ header.text }}
           </template>
 <!--           <template v-slot:header.factory="{ header }">
@@ -63,7 +62,7 @@
             {{ header.text }}
           </template> -->
           <template v-slot:header.department="{ header }">
-            <v-icon>mdi-factory</v-icon>
+            <v-icon small color="primary">mdi-factory</v-icon>
             {{ header.text }}
           </template>
 

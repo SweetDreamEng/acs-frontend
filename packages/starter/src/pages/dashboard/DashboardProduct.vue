@@ -9,6 +9,13 @@
     <div v-else>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
+          <alarm-table
+            label="Alarms"
+            :loading="isLoading1"            
+          >
+          </alarm-table>
+        </v-col>
+        <v-col cols="12">
           <div class="d-flex justify-space-between align-center">
             <div class="display-1">{{ selectedMachine.machinename }}</div>
             <v-dialog
@@ -109,13 +116,14 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 // DEMO Cards for dashboard
+import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductChart from '../../components/dashboard/ProductChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
 import NoteForm from '../../components/dashboard/NoteForm'
 
 export default {
   components: {
-    ProductChart, NotesTimeline, NoteForm
+    ProductChart, NotesTimeline, NoteForm, AlarmTable
   },
   props: {
   },
