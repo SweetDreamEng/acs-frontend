@@ -65,4 +65,8 @@ export default [{
   path: '/utility/help',
   name: 'utility-help',
   component: () => import(/* webpackChunkName: "utility-help" */ '@/pages/utility/HelpPage.vue')
+}, {
+  path: '/threshold',
+  name: 'threshold',
+  component: () => import(/* webpackChunkName: "threshold" */ '@/pages/threshold/Threshold.vue')
 }]

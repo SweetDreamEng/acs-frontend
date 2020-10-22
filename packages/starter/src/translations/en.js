@@ -150,7 +150,8 @@ export default {
     disabled: 'Menu Disabled',
     parent: 'Parent Web site',
     feedback: 'Feedback',
-    support: 'Support'
+    support: 'Support',
+    threshold: 'Threshold'
   },
   // Vuetify components translations
   $vuetify: {
