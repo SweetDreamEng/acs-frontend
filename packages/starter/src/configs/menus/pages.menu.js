@@ -21,5 +21,4 @@ export default [
   //     { icon: 'mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
   //   ]
   // }
-  { icon: 'mdi-account-multiple', key: 'menu.userPages', text: 'User Access', link: '/users/list' }
 ]
