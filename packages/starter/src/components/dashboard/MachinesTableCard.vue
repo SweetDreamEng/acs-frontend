@@ -8,18 +8,32 @@
           <v-icon>mdi-dots-horizontal</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card-subtitle class="d-flex flex-wrap justify-space-between mb-n4">
-        <span class="mr-2 font-weight-bold" style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
-        <v-slider
-          v-model="hours"
-          max="24"
-          min="8"
-          step="1"
-          thumb-label
-          ticks
-          prepend-icon="mdi-clock"
-          style="min-width: 140px; max-width: 260px;"
-        ></v-slider>
+      <v-card-subtitle class="">
+        <div class="d-flex flex-wrap justify-space-between">
+          <span class="mr-2 font-weight-bold" style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
+          <v-slider
+            v-model="hours"
+            max="24"
+            min="8"
+            step="1"
+            thumb-label
+            ticks
+            prepend-icon="mdi-clock"
+            style="min-width: 140px; max-width: 260px;"
+            hide-details
+          ></v-slider>
+        </div>
+        <div>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            class="ml-auto"
+            style="max-width: 300px;"
+          ></v-text-field>
+        </div>
       </v-card-subtitle>
       <v-card-text>
         <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
@@ -116,7 +130,8 @@ export default {
         { text: 'Department', align: 'center', value: 'department' }
       ],
 
-      hours: 8
+      hours: 8,
+      search: ''
     }
   },
   methods: {
