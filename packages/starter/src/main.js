@@ -21,6 +21,7 @@ import './plugins/clipboard'
 import './plugins/moment'
 
 // FILTERS
+import './filters/initials'
 import './filters/capitalize'
 import './filters/lowercase'
 import './filters/uppercase'

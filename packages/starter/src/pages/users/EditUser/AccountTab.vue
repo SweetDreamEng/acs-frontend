@@ -28,7 +28,7 @@
                 color="primary"
                 size="68"
               >
-                <span class="white--text headline">{{ initializedName(user.name) }}</span>
+                <span class="white--text headline">{{ user.name | initials }}</span>
               </v-avatar>
               <!-- <v-btn class="mt-1" small>Edit Avatar</v-btn> -->
             </div>
@@ -184,12 +184,6 @@ export default {
     }
   },
   methods: {
-    initializedName(username) {
-      const name = 'Foo Bar 1Name too Long'
-      const initials = username.match(/\b\w/g) || []
-
-      return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
-    }
   }
 }
 </script>

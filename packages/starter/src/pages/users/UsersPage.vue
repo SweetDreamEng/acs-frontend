@@ -84,7 +84,7 @@
               color="primary"
               size="28"
             >
-              <span class="white--text">{{ initializedName(item.name) }}</span>
+              <span class="white--text">{{ item.name | initials }}</span>
             </v-avatar>
             <div class="ml-1 caption font-weight-bold">
               <copy-label :text="item.email" />
@@ -164,12 +164,6 @@ export default {
   methods: {
     searchUser() {},
     open() {},
-    initializedName(username) {
-      const name = 'Foo Bar 1Name too Long'
-      const initials = username.match(/\b\w/g) || []
-
-      return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
-    },
     roleColor(rolename) {
       if (rolename === 'ADMIN') return '#4CAF50'
       else if (rolename === 'Manager') return '#F79803'
