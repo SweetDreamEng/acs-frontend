@@ -7,6 +7,7 @@
     </div>
 
     <div v-else>
+      <div class="display-1">{{ selectedMachine.machinename }}</div>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
           <alarm-table
@@ -17,15 +18,20 @@
         </v-col>
         <v-col cols="12">
           <div class="d-flex justify-space-between align-center">
-            <div class="display-1">{{ selectedMachine.machinename }}</div>
             <v-dialog
               v-model="dialog"
               max-width="1000"
             >
               <template v-slot:activator="{ on, attrs }">
-                <v-btn v-bind="attrs" v-on="on" text color="primary">Add charts</v-btn>
+                <v-btn
+                  class="ml-auto"
+                  v-bind="attrs"
+                  v-on="on"
+                  text
+                  color="primary">
+                  Add charts
+                </v-btn>
               </template>
-
               <v-card>
                 <v-card-title
                   class="headline grey lighten-2"
@@ -82,6 +88,9 @@
               </v-card>
             </v-dialog>
           </div>
+        </v-col>
+        <v-col cols="12">
+          <div class="display-1">Parameters & Points</div>
         </v-col>
         <v-col
           xs="12"
