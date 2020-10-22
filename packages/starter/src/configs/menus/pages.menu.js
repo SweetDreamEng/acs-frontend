@@ -21,9 +21,5 @@ export default [
   //     { icon: 'mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
   //   ]
   // }
-  { icon: 'mdi-account-multiple', key: 'menu.userPages', text: 'Users', regex: /^\/users/,
-    items: [
-      { icon: 'mdi-file-outline', key: 'menu.allUsers', text: 'All Users', link: '/users/list' }
-    ]
-  }
+  { icon: 'mdi-account-multiple', key: 'menu.userPages', text: 'User Access', link: '/users/list' }
 ]

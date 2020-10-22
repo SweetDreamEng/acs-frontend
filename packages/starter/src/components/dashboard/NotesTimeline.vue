@@ -12,7 +12,7 @@
         >
           <template v-slot:opposite>
             <span
-              :class="`subtitle font-weight-bold cyan--text`"
+              :class="`subtitle font-weight-bold secondary--text`"
               v-text="formatDate(note.time)"
             ></span>
           </template>
