@@ -66,7 +66,11 @@ export default [{
   name: 'utility-help',
   component: () => import(/* webpackChunkName: "utility-help" */ '@/pages/utility/HelpPage.vue')
 }, {
-  path: '/threshold',
-  name: 'threshold',
-  component: () => import(/* webpackChunkName: "threshold" */ '@/pages/threshold/Threshold.vue')
+  path: '/threshold/list',
+  name: 'threshold-list',
+  component: () => import(/* webpackChunkName: "threshold-list" */ '@/pages/threshold/ListThreshold.vue')
+}, {
+  path: '/threshold/add',
+  name: 'threshold-add',
+  component: () => import(/* webpackChunkName: "threshold" */ '@/pages/threshold/AddThreshold.vue')
 }]

@@ -151,7 +151,9 @@ export default {
     parent: 'Parent Web site',
     feedback: 'Feedback',
     support: 'Support',
-    threshold: 'Threshold'
+    threshold: 'Threshold',
+    thresholdList: 'Thresholds',
+    thresholdAdd: 'Add Threshold'
   },
   // Vuetify components translations
   $vuetify: {

@@ -27,18 +27,6 @@
               <div>
                 <div class="">Conditions define when you rule is triggered. Aggregation is optional - use it to cluster your data and trigger rules based on a time window.</div>
                 <br>
-                <h4>Time aggregation</h4>
-                <div class="d-flex">
-                  <v-switch
-                    v-model="switch1"
-                    inset
-                  ></v-switch>
-                  <v-select
-                    :items="[]"
-                    label="Select a time window"
-                  >
-                  </v-select>
-                </div>
                 <v-form>
                   <v-row
                     v-for="(filter, i) in filters"
@@ -112,6 +100,19 @@
                     required
                     placeholder="Add a note to include in the email."
                   ></v-textarea>
+                  <div class="d-flex">
+                    <v-checkbox
+                      v-model="emailForm.media"
+                      label="SMS"
+                      value="sms"
+                      class="mr-2"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="emailForm.media"
+                      label="Email"
+                      value="email"
+                    ></v-checkbox>
+                  </div>
                 </v-form>
                 <v-btn color="primary">
                   Done
@@ -189,9 +190,10 @@ export default {
       emailForm: {
         name: '',
         to: '',
-        note: ''
+        note: '',
+        media: []
       },
-      panel: [1]
+      panel: [0]
     }
   },
   methods: {
