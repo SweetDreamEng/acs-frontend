@@ -23,7 +23,7 @@
                 <template v-slot:prepend-item>
                   <v-list-item
                     ripple
-                    @click="addNewDepartmentDialog()"
+                    @click="addDepartmentDialog = true"
                   >
                     <v-list-item-content>
                       <v-list-item-title>
@@ -41,7 +41,7 @@
                 <template v-slot:prepend-item>
                   <v-list-item
                     ripple
-                    @click="addNewDivisionDialog()"
+                    @click="addDivisionDialog = true"
                   >
                     <v-list-item-content>
                       <v-list-item-title>
@@ -157,17 +157,11 @@ export default {
     save (date) {
       this.$refs.menu.save(date)
     },
-    addNewDepartmentDialog() {
-      this.addDepartmentDialog = true
-    },
     addNewDepartment() {
       if (this.$refs.departmentForm.validate()) {
         this.departments.push(this.newDepartment)
         this.addDepartmentDialog = false
       }
-    },
-    addNewDivisionDialog() {
-      this.addDivisionDialog = true
     },
     addNewDivision() {
       if (this.$refs.divisionForm.validate()) {
