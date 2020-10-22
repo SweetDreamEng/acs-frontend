@@ -193,7 +193,7 @@ export default {
         note: '',
         media: []
       },
-      panel: [0]
+      panel: [0, 1, 2]
     }
   },
   methods: {
