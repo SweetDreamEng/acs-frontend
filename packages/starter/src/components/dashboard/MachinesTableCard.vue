@@ -8,7 +8,7 @@
           <v-icon>mdi-dots-horizontal</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card-subtitle class="d-flex flex-wrap justify-space-between" style="height: 38px;">
+      <v-card-subtitle class="d-flex flex-wrap justify-space-between mb-n4">
         <span class="mr-2 font-weight-bold" style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
         <v-slider
           v-model="hours"
@@ -42,6 +42,10 @@
           hide-default-footer
           @click:row="productView"
         >
+          <template v-slot:header.status="{ header }">
+            <v-icon small>mdi-chevron-double-right</v-icon>
+            {{ header.text }}
+          </template>
           <template v-slot:header.machinename="{ header }">
             <v-icon small>mdi-wrench</v-icon>
             {{ header.text }}
