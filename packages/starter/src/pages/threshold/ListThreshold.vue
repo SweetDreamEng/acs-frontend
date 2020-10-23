@@ -17,12 +17,10 @@
         </template>
 
         <template v-slot:item.companyMail="{ item }">
-          <v-icon v-if="item.companyMail.status" color="green">mdi-check</v-icon>
           {{ item.companyMail.email }}
         </template>
 
         <template v-slot:item.sms="{ item }">
-          <v-icon v-if="item.sms.status" color="green">mdi-check</v-icon>
           {{ item.sms.sms }}
         </template>
 
@@ -95,7 +93,7 @@ export default {
           date: '2020-05-10',
           company: 'BlobHill',
           sms: {
-            sms: '5281224377',
+            sms: '528-122-4377',
             status: true
           },
           status: 'true'
@@ -110,7 +108,7 @@ export default {
           date: '2020-05-11',
           company: 'Caprimooner',
           sms: {
-            sms: '212122433',
+            sms: '212-122-4331',
             status: false
           },
           status: 'true'
@@ -125,7 +123,7 @@ export default {
           date: '2020-05-11',
           company: 'CatLovers',
           sms: {
-            sms: '1231224313',
+            sms: '123-122-4313',
             status: false
           },
           status: 'true'
@@ -140,7 +138,7 @@ export default {
           date: '2020-05-12',
           company: 'IndieCoolers',
           sms: {
-            sms: '987122433',
+            sms: '987-122-4338',
             status: true
           },
           status: 'true'
@@ -155,7 +153,7 @@ export default {
           date: '2020-05-13',
           company: 'CandyLooove',
           sms: {
-            sms: '2951224373',
+            sms: '295-122-4373',
             status: true
           },
           status: 'true'
