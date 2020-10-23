@@ -44,7 +44,7 @@
             outlined
             type="info"
           >
-            Agency Average Utilization: 44%
+            Average Utilization: 44%
           </v-alert>
           <v-alert
             dense
@@ -90,7 +90,7 @@ export default {
       markerOptions: {
         url: require('../../assets/svg/gmap-icon.png'),
         size: { width: 90, height: 90, f: 'px', b: 'px' },
-        scaledSize: { width: 46, height: 46, f: 'px', b: 'px' }
+        scaledSize: { width: 36, height: 36, f: 'px', b: 'px' }
       },
       dialog: false,
       
