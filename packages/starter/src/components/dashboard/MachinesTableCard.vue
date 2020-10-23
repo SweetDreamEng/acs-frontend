@@ -8,7 +8,7 @@
           <v-icon>mdi-dots-horizontal</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card-subtitle class="">
+      <v-card-subtitle>
         <div class="d-flex flex-wrap justify-space-between">
           <span class="mr-2 font-weight-bold" style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
           <v-slider
@@ -27,7 +27,6 @@
           <v-text-field
             v-model="searchQuery"
             append-icon="mdi-magnify"
-            class="flex-grow-1 mr-md-2"
             solo
             hide-details
             dense
@@ -46,6 +45,7 @@
           :items="items"
           :item-class="itemRowBackground"
           hide-default-footer
+          :search="searchQuery"
           @click:row="productView"
         >
           <template v-slot:header.status="{ header }">
