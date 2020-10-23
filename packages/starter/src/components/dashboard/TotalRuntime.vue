@@ -20,7 +20,7 @@
     <!-- modal -->
     <v-dialog v-model="dialog" max-width="400">
       <v-card>
-        <v-card-title class="headline">Uptime Percentage</v-card-title>
+        <v-card-title>Uptime Percentage</v-card-title>
         <v-card-text>
           <v-alert
             border="top"

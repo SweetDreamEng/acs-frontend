@@ -37,21 +37,21 @@
     <!-- modal -->
     <v-dialog v-model="dialog" max-width="350">
       <v-card>
-        <v-card-title class="headline">Overview</v-card-title>
+        <v-card-title>Overview</v-card-title>
         <v-card-text>
           <v-alert
             dense
             outlined
             type="info"
           >
-            Average Utilization: 44%
+            <small>Average Utilization: 44%</small>
           </v-alert>
           <v-alert
             dense
             outlined
             type="success"
           >
-            No Alarms Reported
+            <small>No Alarms Reported</small>
           </v-alert>
         </v-card-text>
         <v-card-actions>

@@ -42,6 +42,7 @@
             <v-chip
               :color="item.status === 'Normal' ? 'green' : 'red'"
               dark
+              small
             >
               {{ item.status }}
             </v-chip>
