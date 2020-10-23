@@ -12,10 +12,6 @@
         :items="items"
         hide-default-footer
       >
-        <template v-slot:item.id="{ item }">
-          <div class="font-weight-bold"># <copy-label :text="item.id" /></div>
-        </template>
-
         <template v-slot:item.date="{ item }">
           <div>{{ item.date | formatDate }}</div>
         </template>
@@ -60,7 +56,6 @@
 </template>
 
 <script>
-import CopyLabel from '../../components/common/CopyLabel'
 
 /*
 |---------------------------------------------------------------------
@@ -72,7 +67,6 @@ import CopyLabel from '../../components/common/CopyLabel'
 */
 export default {
   components: {
-    CopyLabel
   },
   props: {
     label: {
@@ -83,7 +77,6 @@ export default {
   data () {
     return {
       headers: [
-        { text: 'Id', align: 'start', value: 'id' },
         { text: 'Condition', sortable: false, value: 'condition' },
         { text: 'Email', value: 'companyMail' },
         { text: 'Date', value: 'date' },

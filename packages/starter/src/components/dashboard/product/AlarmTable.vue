@@ -28,7 +28,7 @@
           </template>
           <template v-slot:header.createdAt="{ header }">
             <v-icon color="primary">mdi-clock</v-icon>
-            <span v-text="formatDate(header.text)"></span>
+            <span v-text="header.text"></span>
             
           </template>
 
