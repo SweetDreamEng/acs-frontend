@@ -47,9 +47,9 @@
           </div>
         </template>
 
-        <template v-slot:item.action="{ item }">
+        <template v-slot:item.action="{ }">
           <div class="actions">
-            <v-btn icon @click="open(item)">
+            <v-btn icon to="/threshold/edit">
               <v-icon>mdi-open-in-new</v-icon>
             </v-btn>
           </div>
@@ -171,7 +171,6 @@ export default {
     }
   },
   methods: {
-    open(item) { }
   }
 }
 </script>

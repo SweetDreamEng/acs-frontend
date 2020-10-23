@@ -88,9 +88,9 @@ export default {
         lng: -87.6500523
       },
       markerOptions: {
-        url: require('../../assets/svg/factory.jpg'),
-        size: { width: 60, height: 90, f: 'px', b: 'px' },
-        scaledSize: { width: 20, height: 30, f: 'px', b: 'px' }
+        url: require('../../assets/svg/d.png'),
+        size: { width: 90, height: 90, f: 'px', b: 'px' },
+        scaledSize: { width: 30, height: 30, f: 'px', b: 'px' }
       },
       dialog: false,
       

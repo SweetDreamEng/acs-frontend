@@ -13,6 +13,7 @@
           <v-select
             :items="products"
             label="Product"
+            v-model="product"
           >
           </v-select>
         </div>
@@ -147,13 +148,9 @@ import operators from './content/operators'
 
 export default {
   props: {
-    user: {
+    threshold: {
       type: Object,
       default: () => ({})
-    },
-    roles: {
-      type: Array,
-      default: () => []
     }
   },
   data() {
@@ -164,6 +161,8 @@ export default {
 
       switch1: true,
 
+      product: 'NGX Nomad',
+      
       defaultFilter: {
         telemetry: '',
         operator: '',
@@ -171,23 +170,23 @@ export default {
       },
       filters: [
         {
-          telemetry: '',
-          operator: '',
-          value: ''
+          telemetry: 'Power Loss',
+          operator: 'Equals',
+          value: 5
         }
       ],
 
       emailForm: {
-        name: '',
-        to: '',
-        note: ''
+        name: 'John Doe',
+        to: 'example@gmail.com',
+        note: 'Example note ....'
       },
       smsForm: {
-        name: '',
-        to: ''
+        name: 'John Doe',
+        to: '123-456-7890'
       },
 
-      tab: null,
+      tab: 'tabs-email',
 
       emailValid: true,
       smsValid: true,

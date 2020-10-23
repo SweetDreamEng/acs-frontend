@@ -72,5 +72,9 @@ export default [{
 }, {
   path: '/threshold/add',
   name: 'threshold-add',
-  component: () => import(/* webpackChunkName: "threshold" */ '@/pages/threshold/AddThreshold.vue')
+  component: () => import(/* webpackChunkName: "threshold-add" */ '@/pages/threshold/AddThreshold.vue')
+}, {
+  path: '/threshold/edit',
+  name: 'threshold-edit',
+  component: () => import(/* webpackChunkName: "threshold-edit" */ '@/pages/threshold/EditThreshold.vue')
 }]
