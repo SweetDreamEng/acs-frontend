@@ -3,10 +3,6 @@
     <v-card>
       <v-card-title>
         {{ label }}
-        <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-dots-horizontal</v-icon>
-        </v-btn>
       </v-card-title>
       <v-card-subtitle>
         <div class="d-flex flex-wrap justify-space-between">
@@ -31,7 +27,7 @@
             hide-details
             dense
             clearable
-            placeholder="e.g. filter for id, email, name, etc"
+            placeholder="Search"
           ></v-text-field>
         </div>
       </v-card-subtitle>

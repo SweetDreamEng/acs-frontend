@@ -1,39 +1,66 @@
 <template>
-  <v-card>
+  <div>
+    <v-card>
+      <!-- loading spinner -->
+      <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
+        <v-progress-circular indeterminate color="primary"></v-progress-circular>
+      </div>
 
-    <!-- loading spinner -->
-    <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </div>
+      <div v-else>
+        <v-card-title>
+          {{ label }}
+          <v-spacer></v-spacer>
+          <v-btn icon>
+            <v-icon>mdi-dots-horizontal</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <!-- information -->
+          <gmap-map
+            :center="center"
+            :zoom="4"
+            style="width: 100%; height: 500px"
+            icon="https://www.google.dk/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png">
+            <gmap-marker
+              v-for="(m, index) in markers"
+              :key="index"
+              :position="m.position"
+              :clickable="true"
+              :icon="markerOptions"
+              @click="onMarkerClick"
+            ></gmap-marker>
+          </gmap-map>
+        </v-card-text>
+      </div>
+    </v-card>
 
-    <div v-else>
-      <v-card-title>
-        {{ label }}
-        <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-dots-horizontal</v-icon>
-        </v-btn>
-      </v-card-title>
-      <v-card-text>
-        <!-- information -->
-        <gmap-map
-          :center="center"
-          :zoom="4"
-          style="width: 100%; height: 500px"
-          icon="https://www.google.dk/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png">
-          <gmap-marker
-            v-for="(m, index) in markers"
-            :key="index"
-            :position="m.position"
-            :clickable="true"
-            :draggable="true"
-            :icon="markerOptions"
-            @click="center=m.position"
-          ></gmap-marker>
-        </gmap-map>
-      </v-card-text>
-    </div>
-  </v-card>
+    <!-- modal -->
+    <v-dialog v-model="dialog" max-width="350">
+      <v-card>
+        <v-card-title class="headline">Overview</v-card-title>
+        <v-card-text>
+          <v-alert
+            dense
+            outlined
+            type="info"
+          >
+            Agency Average Utilization: 44%
+          </v-alert>
+          <v-alert
+            dense
+            outlined
+            type="success"
+          >
+            No Alarms Reported
+          </v-alert>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="dialog = false">Ok</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -64,7 +91,26 @@ export default {
         url: require('../../assets/svg/factory.png'),
         size: { width: 60, height: 90, f: 'px', b: 'px' },
         scaledSize: { width: 20, height: 30, f: 'px', b: 'px' }
+      },
+      dialog: false,
+      
+      // form
+      hours: '',
+      isFormValid: true,
+
+      // form error
+      error: false,
+      errorMessages: '',
+
+      // input rules
+      rules: {
+        required: (value) => (value && Boolean(value)) || 'Required'
       }
+    }
+  },
+  methods: {
+    onMarkerClick() {
+      this.dialog = true
     }
   }
 }

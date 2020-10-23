@@ -7,7 +7,6 @@ export default {
     key: '',
     items: [
       { icon: 'mdi-view-dashboard-outline', key: 'menu.dashboard', text: 'Machines', link: '/dashboard/analytics' },
-      { icon: 'mdi-file-outline', key: 'menu.blank', text: 'Alarms', link: '/blank' },
       { icon: 'mdi-account-multiple', key: 'menu.userPages', text: 'User Access', link: '/users/list' },
       { icon: 'mdi-speedometer', key: 'menu.threshold', text: 'Threshold', regex: /^\/threshold/,
         items: [

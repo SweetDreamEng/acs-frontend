@@ -26,7 +26,7 @@
         <total-runtime
           :loading="isLoading1"
           :series="series"
-          label="Total Runtime"
+          label="Uptime Percentage"
         >
         </total-runtime>
         <br>

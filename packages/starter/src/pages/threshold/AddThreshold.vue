@@ -17,7 +17,7 @@
           </v-select>
         </div>
         <div>
-          <h2 class="my-2">Conditions</h2>
+          <h2 class="my-3">Conditions</h2>
           <div class="">Conditions define when you rule is triggered. Aggregation is optional - use it to cluster your data and trigger rules based on a time window.</div>
           <br>
           <v-form>
@@ -72,7 +72,7 @@
           </v-btn>
         </div>
         <div>
-          <h2 class="my-2">Actions</h2>
+          <h2 class="mt-4 mb-2">Actions</h2>
           <div class="">Send an email when your rule is triggered. Emails will only be sent to users who have been added to this application and have signed-in at least once.</div>
           <v-tabs v-model="tab" :show-arrows="false" background-color="transparent">
             <v-tab to="#tabs-sms">SMS</v-tab>
@@ -95,7 +95,7 @@
                 <v-text-field
                   v-model="smsForm.to"
                   label="To"
-                  placeholder="1234567890"
+                  placeholder="123-456-7890"
                   :rules="phoneRules"
                   required
                 ></v-text-field>
@@ -132,7 +132,7 @@
           </v-tabs-items>
           
           <v-btn color="primary mt-2">
-            Done
+            Submit
           </v-btn>
         </div>
       </v-card-text>
@@ -226,7 +226,7 @@ export default {
       ],
       phoneRules: [
         (v) => !!v || 'Phone number is required',
-        (v) => /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(v) || 'Phone number must be valid'
+        (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
       ]
     }
   },

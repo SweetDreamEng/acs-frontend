@@ -26,10 +26,25 @@
             <v-icon color="primary">mdi-chart-bar</v-icon>
             {{ header.text }}
           </template>
+          <template v-slot:header.createdAt="{ header }">
+            <v-icon color="primary">mdi-clock</v-icon>
+            <span v-text="formatDate(header.text)"></span>
+            
+          </template>
 
           <!-- custom table row -->
+          <template v-slot:item.createdAt="{ item }">
+            <span v-if="item.status === 'Alarm'">
+              {{ item.createdAt }}
+            </span>
+          </template>
           <template v-slot:item.status="{ item }">
-            <v-icon :color="item.color">{{ item.icon }}</v-icon>
+            <v-chip
+              :color="item.status === 'Normal' ? 'green' : 'red'"
+              dark
+            >
+              {{ item.status }}
+            </v-chip>
           </template>
         </v-data-table>
       </v-card-text>
@@ -47,6 +62,8 @@
 | your own dashboard component
 |
 */
+import moment from 'moment'
+import store from '../../../store'
 export default {
   components: {
   },
@@ -65,70 +82,70 @@ export default {
       headers: [
         { text: 'Alarm', align: 'start', value: 'alarm' },
         { text: 'Status', align: 'start', value: 'status' },
-        { text: 'Value', align: 'start', value: 'value' }
+        { text: 'Value', align: 'start', value: 'value' },
+        { text: 'Alarm activated at', align: 'start', value: 'createdAt' }
       ],
-
       alarms: [
         {
           id: 1,
           alarm: 'Power Loss',
-          icon: 'mdi-check-circle-outline',
+          status: 'Normal',
           value: 0,
-          color: 'green'
+          createdAt: 'October 23rd, 2020 6:0 AM EST'
         },{
           id: 2,
           alarm: 'Out of Material',
-          icon: 'mdi-alert',
+          status: 'Normal',
           value: 0,
-          color: 'red'
+          createdAt: 'October 23rd, 2020 6:0 AM EST'
         },
         {
           id: 3,
           alarm: 'Hopper Unstable',
-          icon: 'mdi-check-circle-outline',
+          status: 'Alarm',
           value: 1,
-          color: 'green'
+          createdAt: 'October 23rd, 2020 6:0 AM EST'
         },
         {
           id: 4,
           alarm: 'Hopper Overfeed',
-          icon: 'mdi-check-circle-outline',
+          status: 'Normal',
           value: 1,
-          color: 'green'
+          createdAt: 'October 23rd, 2020 6:0 AM EST'
         },
         {
           id: 5,
           alarm: 'Hopper Over Max',
-          icon: 'mdi-check-circle-outline',
+          status: 'Normal',
           value: 55,
-          color: 'green'
+          createdAt: 'October 23rd, 2020 6:0 AM EST'
         },
         {
           id: 6,
           alarm: 'Max Empty Weight',
-          icon: 'mdi-check-circle-outline',
+          status: 'Normal',
           value: 233,
-          color: 'green'
+          createdAt: 'October 23rd, 2020 6:0 AM EST'
         },
         {
           id: 7,
           alarm: 'Mixer Failure',
-          icon: 'mdi-check-circle-outline',
+          status: 'Alarm',
           value: 1,
-          color: 'green'
+          createdAt: 'October 23rd, 2020 6:0 AM EST'
         },{
           id: 8,
           alarm: 'Unable to make rate',
-          icon: 'mdi-check-circle-outline',
+          status: 'Alarm',
           value: 1,
-          color: 'green'
+          createdAt: 'October 23rd, 2020 6:0 AM EST'
         },
         {
           id: 9,
           alarm: 'Pump Starter Fault',
-          icon: 'mdi-check-circle-outline',
+          status: 'Normal',
           value: 885,
-          color: 'green'
+          createdAt: 'October 23rd, 2020 6:0 AM EST'
         }
       ]
     }
