@@ -28,8 +28,7 @@
             type="info"
             elevation="2"
           >
-            <small>Total Runtime Hours are based on 168 hours. Please enter a different value to customize this</small><br>
-            <small>[Fro ex: If Machines run 8 hours for 5 days a week, 40 hours would be the baseline]</small>
+            <small>Total Runtime Hours are based on 168 hours. Please enter a different value to customize this. [For ex: If Machines run 8 hours for 5 days a week, 40 hours would be the baseline]</small>
           </v-alert>
           <v-form ref="form" v-model="isFormValid" lazy-validation>
             <v-text-field
