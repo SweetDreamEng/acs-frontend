@@ -15,7 +15,7 @@
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-text-field value="" label="Phone"></v-text-field>
+              <v-text-field value="" label="Phone" placeholder="123-456-7890"></v-text-field>
               <v-select
                 :items="departments"
                 label="Department"
