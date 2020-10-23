@@ -14,7 +14,7 @@
           </v-col>
 
           <v-col cols="12" md="6">
-            <v-text-field value="+8484548112" label="Phone"></v-text-field>
+            <v-text-field value="+848-454-8112" label="Phone"></v-text-field>
             <v-select
               :items="departments"
               value="Department2"
