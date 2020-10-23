@@ -32,10 +32,12 @@
               </v-row>
             </div>
           </v-expand-transition>
-          <div>
-            <v-icon small color="secondary">mdi-magnify</v-icon><small class="mx-1">Zoom</small>
-            <v-icon small color="secondary">mdi-flag</v-icon><small class="mx-1">Marker</small>
-            <v-icon small color="secondary">mdi-chart-areaspline</v-icon><small class="mx-1">Lines</small>
+
+          <v-divider></v-divider>
+          <div class="mt-2">
+            <v-icon color="secondary">mdi-magnify</v-icon><span class="mx-1">Zoom</span>
+            <v-icon color="secondary">mdi-flag</v-icon><span class="mx-1">Marker</span>
+            <v-icon color="secondary">mdi-chart-areaspline</v-icon><span class="mx-1">Lines</span>
           </div>
           <apexchart
             type="area"
