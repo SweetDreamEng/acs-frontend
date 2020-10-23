@@ -25,13 +25,14 @@
         </div>
         <div>
           <v-text-field
-            v-model="search"
+            v-model="searchQuery"
             append-icon="mdi-magnify"
-            label="Search"
-            single-line
+            class="flex-grow-1 mr-md-2"
+            solo
             hide-details
-            class="ml-auto"
-            style="max-width: 300px;"
+            dense
+            clearable
+            placeholder="e.g. filter for id, email, name, etc"
           ></v-text-field>
         </div>
       </v-card-subtitle>
@@ -39,14 +40,6 @@
         <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
-        <!-- <v-data-table
-          v-else
-          :headers="headers"
-          :items="items"
-          :item-class="itemRowBackground"
-          hide-default-footer
-          @click:row="productView"
-        > -->
         <v-data-table
           v-else
           :headers="headers"
@@ -65,16 +58,12 @@
           </template>
           <template v-slot:header.capacity="{ header }">
             <v-icon color="primary">mdi-trending-up</v-icon>
-            {{ header.text | formatPercentage }}
+            {{ header.text | percentageLabel }}
           </template>
           <template v-slot:header.consumption="{ header }">
             <v-icon class="mdi-rotate-90" color="primary">mdi-battery-30</v-icon>
             {{ header.text }}
           </template>
-<!--           <template v-slot:header.factory="{ header }">
-            <v-icon>mdi-map-marker</v-icon>
-            {{ header.text }}
-          </template> -->
           <template v-slot:header.department="{ header }">
             <v-icon small color="primary">mdi-factory</v-icon>
             {{ header.text }}
@@ -126,12 +115,11 @@ export default {
         { text: 'Machine Name', align: 'start', value: 'machinename' },
         { text: 'Capacity Utilization', align: 'center', value: 'capacity' },
         { text: 'Consumption', align: 'center', value: 'consumption' },
-        // { text: 'Factory', align: 'start', value: 'factory' },
         { text: 'Department', align: 'center', value: 'department' }
       ],
 
       hours: 8,
-      search: ''
+      searchQuery: ''
     }
   },
   methods: {

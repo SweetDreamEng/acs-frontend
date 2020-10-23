@@ -30,7 +30,8 @@
           <div class="title mb-1">{{ $t('dashboard.weeklyUtil') }}</div>
           <div class="d-flex align-center">
             <div class="text-h4">
-              {{ value | formatPercentage }}
+              <!-- {{ value | formatPercentage }} -->
+              {{ value }}
             </div>
             <v-spacer></v-spacer>
             <div class="d-flex flex-column text-right">

@@ -27,6 +27,7 @@ import './filters/lowercase'
 import './filters/uppercase'
 import './filters/formatCurrency'
 import './filters/formatDate'
+import './filters/percentableLabel'
 
 // STYLES
 // Main Theme SCSS
