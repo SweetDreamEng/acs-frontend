@@ -44,7 +44,7 @@
               dark
               small
             >
-              {{ item.status }}
+              <b>{{ item.status }}</b>
             </v-chip>
           </template>
         </v-data-table>
