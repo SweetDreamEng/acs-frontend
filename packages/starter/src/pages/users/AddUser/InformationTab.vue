@@ -15,7 +15,13 @@
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-text-field value="" label="Phone" placeholder="123-456-7890"></v-text-field>
+              <v-text-field
+                value=""
+                label="Phone"
+                placeholder="123-456-7890"
+                :rules="phoneRules"
+                >
+                </v-text-field>
               <v-select
                 :items="departments"
                 label="Department"
@@ -146,6 +152,10 @@ export default {
     ],
     departmentRules: [
       (v) => !!v || 'Department is required'
+    ],
+    phoneRules: [
+      (v) => !!v || 'Phone number is required',
+      (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
     ]
   }),
   watch: {

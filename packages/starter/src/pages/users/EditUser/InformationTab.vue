@@ -14,7 +14,12 @@
           </v-col>
 
           <v-col cols="12" md="6">
-            <v-text-field value="+848-454-8112" label="Phone"></v-text-field>
+            <v-text-field
+              value="848-454-8112"
+              label="Phone"
+              :rules="phoneRules"
+              >
+              </v-text-field>
             <v-select
               :items="departments"
               value="Department2"
@@ -47,7 +52,12 @@ export default {
     gender: 'male',
 
     departments: ['Department1', 'Department2', 'Department3'],
-    divisions: ['Division1', 'Division2', 'Division3', 'Division4']
+    divisions: ['Division1', 'Division2', 'Division3', 'Division4'],
+
+    phoneRules: [
+      (v) => !!v || 'Phone number is required',
+      (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
+    ]
   }),
   watch: {
     menu (val) {
