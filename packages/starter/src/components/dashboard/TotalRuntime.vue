@@ -18,9 +18,9 @@
     </v-card>
 
     <!-- modal -->
-    <v-dialog v-model="dialog" max-width="600">
+    <v-dialog v-model="dialog" max-width="400">
       <v-card>
-        <v-card-title class="headline">Uptime Percentable</v-card-title>
+        <v-card-title class="headline">Uptime Percentage</v-card-title>
         <v-card-text>
           <v-alert
             border="top"
@@ -28,7 +28,8 @@
             type="info"
             elevation="2"
           >
-            Total Runtime Hours are based on 168 hours. Please enter a different value to customize this.
+            <small>Total Runtime Hours are based on 168 hours. Please enter a different value to customize this</small><br>
+            <small>[Fro ex: If Machines run 8 hours for 5 days a week, 40 hours would be the baseline]</small>
           </v-alert>
           <v-form ref="form" v-model="isFormValid" lazy-validation>
             <v-text-field
