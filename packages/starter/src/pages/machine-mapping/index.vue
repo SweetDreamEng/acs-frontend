@@ -139,7 +139,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 import maps from './content/maps'
 
@@ -184,10 +184,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      departments: 'departments/departments',
-      divisions: 'divisions/divisions'
-    })
+    ...mapState({ departments: (state) => state.departments.data }),
+    ...mapState({ divisions: (state) => state.divisions.data })
   },
   watch: {
     selectedUsers(val) {

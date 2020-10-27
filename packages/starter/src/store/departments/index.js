@@ -22,9 +22,6 @@ const module = {
   },
 
   getters: {
-    departments: (state) => {
-      return state.data
-    }
   }
 }
 

@@ -22,9 +22,6 @@ const module = {
   },
 
   getters: {
-    divisions: (state) => {
-      return state.data
-    }
   }
 }
 
