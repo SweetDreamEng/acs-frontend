@@ -153,7 +153,8 @@ export default {
     support: 'Support',
     threshold: 'Threshold',
     thresholdList: 'Thresholds',
-    thresholdAdd: 'Add Threshold'
+    thresholdAdd: 'Add Threshold',
+    machineMapping: 'Machine Mapping'
   },
   // Vuetify components translations
   $vuetify: {

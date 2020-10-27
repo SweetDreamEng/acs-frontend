@@ -77,4 +77,8 @@ export default [{
   path: '/threshold/edit',
   name: 'threshold-edit',
   component: () => import(/* webpackChunkName: "threshold-edit" */ '@/pages/threshold/EditThreshold.vue')
+}, {
+  path: '/machine-mapping',
+  name: 'machine-mapping',
+  component: () => import(/* webpackChunkName: "machine-mapping" */ '@/pages/machine-mapping/index.vue')
 }]
