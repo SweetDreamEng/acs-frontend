@@ -49,6 +49,12 @@
           </div>
         </template>
 
+        <template v-slot:item.data-table-expand="{ expand, isExpanded }">
+          <div class="d-flex align-center">
+            <span class="text-no-wrap">Show meta data</span><v-icon class="ml-1" @click="expand(!isExpanded)" v-text="isExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"></v-icon>
+          </div>
+        </template>
+
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length" class="px-4">
             {{ `User A registered device to customer ${item.customer_name} on Oct 1st 2020` }}
@@ -72,7 +78,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="headline">Edit</span>
+          <span class="headline">Register</span>
         </v-card-title>
 
         <v-card-text>
