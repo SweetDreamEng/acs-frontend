@@ -23,53 +23,13 @@
 
         <!-- custom table rows -->
         <template v-slot:item.customer_name="{ item }">
-          <v-select
-            :items="userNames"
-            label="Choose Customer"
-            v-model="item.customer_name"
-            outlined
-            dense
-            hide-details
-          >
-            <template v-slot:prepend-item>
-              <v-list-item
-                ripple
-                @click="addDivisionDialog = true"
-              >
-                <v-list-item-content>
-                  <v-list-item-title>
-                    Add New
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider></v-divider>
-            </template>
-          </v-select>
+          <span v-if="item.customer_name">{{ item.customer_name }}</span>
+          <span v-else>Not assigned</span>
         </template>
 
         <template v-slot:item.product_category="{ item }">
-          <v-select
-            :items="machineNames"
-            label="Choose Product Category"
-            v-model="item.product_category"
-            outlined
-            dense
-            hide-details
-          >
-            <template v-slot:prepend-item>
-              <v-list-item
-                ripple
-                @click="addDepartmentDialog = true"
-              >
-                <v-list-item-content>
-                  <v-list-item-title>
-                    Add New
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider></v-divider>
-            </template>
-          </v-select>
+          <span v-if="item.product_category">{{ item.product_category }}</span>
+          <span v-else>Not assigned</span>
         </template>
 
         <template v-slot:item.device_registration="{ item }">
@@ -94,62 +54,64 @@
             {{ `User A registered device to customer ${item.customer_name} on Oct 1st 2020` }}
           </td>
         </template>
+        <template v-slot:item.actions="{ item }">
+          <v-icon
+            small
+            class="mr-2"
+            @click="editItem(item)"
+          >
+            mdi-pencil
+          </v-icon>
+        </template>
       </v-data-table>
     </v-card>
 
-    <!-- add division modal -->
-    <v-dialog v-model="addDivisionDialog" max-width="290">
+    <v-dialog
+      v-model="editDialog"
+      max-width="400px"
+    >
       <v-card>
-        <v-card-title>Add New</v-card-title>
-        <v-card-text>
-          <v-form
-            ref="divisionForm"
-            v-model="validDivision"
-            lazy-validation
-            @submit.prevent="addNewDivision"
-          >
-            <v-text-field
-              v-model="newDivision"
-              :rules="[rules.required]"
-              label="Customer Name"
-              required
-            ></v-text-field>
-            <v-btn
-              :disabled="!validDivision"
-              color="success"
-              type="submit"
-            >
-              Ok
-            </v-btn>
-          </v-form>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+        <v-card-title>
+          <span class="headline">Edit</span>
+        </v-card-title>
 
-    <!-- add department modal -->
-    <v-dialog v-model="addDepartmentDialog" max-width="290">
-      <v-card>
-        <v-card-title>Add New</v-card-title>
         <v-card-text>
-          <v-form
-            ref="departmentForm"
-            v-model="validDepartment"
-            lazy-validation
-            @submit.prevent="addNewDepartment"
-          >
-            <v-text-field
-              v-model="newDepartment"
+          <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
+            <v-select
+              :items="userNames"
+              label="Choose Customer"
+              v-model="editedItem.customer_name"
               :rules="[rules.required]"
-              label="Product Category"
-              required
-            ></v-text-field>
-            <v-btn
-              :disabled="!validDepartment"
-              color="success"
-              type="submit"
+              outlined
+              dense
             >
-              Ok
-            </v-btn>
+            </v-select>
+            <v-select
+              :items="machineNames"
+              label="Choose Machine"
+              v-model="editedItem.product_category"
+              :rules="[rules.required]"
+              outlined
+              dense
+            >
+            </v-select>
+
+            <div class="d-flex">
+              <v-spacer></v-spacer>
+              <v-btn
+                color="primary"
+                text
+                @click="close"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                color="primary"
+                type="submit"
+              >
+                Save
+              </v-btn>
+            </div>
           </v-form>
         </v-card-text>
       </v-card>
@@ -182,20 +144,26 @@ export default {
         { text: 'Customer Name', value: 'customer_name' },
         { text: 'Product category', value: 'product_category' },
         { text: 'Device Registration', value: 'device_registration' },
-        { text: '', value: 'data-table-expand' }
+        { text: '', value: 'data-table-expand' },
+        { text: 'Actions', value: 'actions' }
       ],
       expanded: [],
 
-      addDivisionDialog: false,
-      addDepartmentDialog: false,
-
-      newDivision: '',
-      newDepartment: '',
-
-      validDepartment: true,
-      validDivision: true,
-      
       customerAssigns,
+
+      editedIndex: -1,
+      editedItem: {
+        customer_name: '',
+        product_category: ''
+      },
+      defaultItem: {
+        customer_name: '',
+        product_category: ''
+      },
+      editDialog: false,
+
+      isEditFormValid: true,
+      isNewFormValid: true,
 
       // input rules
       rules: {
@@ -215,16 +183,23 @@ export default {
     ])
   },
   methods: {
-    addNewDepartment() {
-      if (this.$refs.departmentForm.validate()) {
-        this.machineNames.push(this.newDepartment)
-        this.addDepartmentDialog = false
-      }
+    editItem (item) {
+      this.editedIndex = this.customerAssigns.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.editDialog = true
     },
-    addNewDivision() {
-      if (this.$refs.divisionForm.validate()) {
-        this.userNames.push(this.newDivision)
-        this.addDivisionDialog = false
+    close () {
+      this.editDialog = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+    save () {
+      console.log(this.editedItem)
+      if (this.$refs.editForm.validate()) {
+        Object.assign(this.customerAssigns[this.editedIndex], this.editedItem)
+        this.close()
       }
     }
   }

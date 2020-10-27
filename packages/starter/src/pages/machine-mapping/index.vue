@@ -100,7 +100,7 @@
             </div>
           </v-form>
 
-          <div class="d-flex my-2">
+<!--           <div class="d-flex my-2">
             <div>
               Please add department and/or division if not found above
             </div>
@@ -151,7 +151,7 @@
                 </div>
               </v-form>
             </div>
-          </v-expand-transition>
+          </v-expand-transition> -->
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -217,9 +217,12 @@ export default {
     ...mapState({ divisions: (state) => state.divisions.data })
   },
   watch: {
+    editDialog (val) {
+      console.log(val)
+      val || this.close()
+    }
   },
   methods: {
-    searchUser() {},
     open() {},
     editItem (item) {
       this.editedIndex = this.maps.indexOf(item)
@@ -238,14 +241,14 @@ export default {
         Object.assign(this.maps[this.editedIndex], this.editedItem)
         this.close()
       }
-    },
-    addNewOptions() {
-      if (this.$refs.newForm.validate()) {
-        this.departments.push(this.newItem.department)
-        this.divisions.push(this.newItem.division)
-        this.newMode = false
-      }
     }
+    // addNewOptions() {
+    //   if (this.$refs.newForm.validate()) {
+    //     this.departments.push(this.newItem.department)
+    //     this.divisions.push(this.newItem.division)
+    //     this.newMode = false
+    //   }
+    // }
   }
 }
 </script>
