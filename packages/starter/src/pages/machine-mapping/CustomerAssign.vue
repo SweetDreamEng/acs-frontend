@@ -38,7 +38,7 @@
               <v-btn
                 color="warning"
                 @click="item.device_registration = !item.device_registration"
-              >Registere Device</v-btn>
+              >Register Device</v-btn>
             </div>
             <div v-else class="success--text">
               <v-btn
