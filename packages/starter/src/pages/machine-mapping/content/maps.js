@@ -1,13 +1,63 @@
 export default
 [
-  { 'id':'be2702955e72','product_name':'BD Batch Blender','division':'Bartel Fitchew','verified':false,'created':'2019-08-09T03:14:12Z','lastSignIn':'2019-08-14T20:00:53Z','disabled':true,'department':'Manager','avatar':'/images/avatars/avatar19.svg' },
-  { 'id':'8b867dd0d4de','product_name':'Accumeter Ovation Continuous Blender','division':'Tymon Scherme','verified':false,'created':'2019-11-07T06:47:53Z','lastSignIn':'2019-09-20T01:11:13Z','disabled':true,'department':'Manager','avatar':'/images/avatars/avatar1.svg' },
-  { 'id':'6d58cbae1e30','product_name':'GH Gravimetric Extrusion Control Hopper','division':'Danette Gowan','verified':false,'created':'2020-05-23T06:46:40Z','lastSignIn':'2019-06-05T10:03:10Z','disabled':true,'department':'ADMIN','avatar':'/images/avatars/avatar14.svg' },
-  { 'id':'a4e340987d7d','product_name':'GH-F Gravimetric Additive Feeder','division':'Bing Broomfield','verified':true,'created':'2020-03-13T08:39:07Z','lastSignIn':'2019-09-21T04:56:23Z','disabled':true,'department':'Manager','avatar':'/images/avatars/avatar6.svg' },
-  { 'id':'8eac069a2e45','product_name':'VTC Plus Conveying System','division':'Ruy Pitman','verified':false,'created':'2019-11-24T22:18:43Z','lastSignIn':'2020-05-23T15:07:18Z','disabled':true,'department':'Operator','avatar':'/images/avatars/avatar1.svg' },
-  { 'id':'702720e5e08a','product_name':'NGX Dryer','division':'Lucilia Dedon','verified':true,'created':'2020-03-21T19:04:42Z','lastSignIn':'2020-05-19T20:12:01Z','disabled':false,'department':'Operator','avatar':'/images/avatars/avatar7.svg' },
-  { 'id':'d02db9896198','product_name':'NGX Nomad Dryer','division':'Gerti Rusted','verified':true,'created':'2019-07-05T02:44:05Z','lastSignIn':'2019-07-05T11:55:38Z','disabled':true,'department':'Manager','avatar':'/images/avatars/avatar6.svg' },
-  { 'id':'eebc141deb48','product_name':'Truetemp TCU','division':'Imelda Meconi','verified':false,'created':'2019-08-19T11:10:08Z','lastSignIn':'2019-07-03T07:40:23Z','disabled':true,'department':'Manager','avatar':'/images/avatars/avatar3.svg' },
-  { 'id':'957621d35cc1','product_name':'GP & HE Central Chiller','division':'Benoite Berthon','verified':true,'created':'2019-05-31T22:33:05Z','lastSignIn':'2020-02-17T08:31:17Z','disabled':false,'department':'ADMIN','avatar':'/images/avatars/avatar1.svg' },
-  { 'id':'0ba455aeddbc','product_name':'T50 Central Granulator','division':'Benoite Berthon','verified':true,'created':'2019-05-31T22:33:05Z','lastSignIn':'2020-02-17T08:31:17Z','disabled':false,'department':'ADMIN','avatar':'/images/avatars/avatar1.svg' }
+  {
+    'id':'be2702955e72',
+    'product_name':'BD Batch Blender',
+    'division':'',
+    'department':''
+  },
+  {
+    'id':'8b867dd0d4de',
+    'product_name':'Accumeter Ovation Continuous Blender',
+    'division':'',
+    'department':''
+  },
+  {
+    'id':'6d58cbae1e30',
+    'product_name':'GH Gravimetric Extrusion Control Hopper',
+    'division':'Division 2',
+    'department':'Department 1'
+  },
+  {
+    'id':'a4e340987d7d',
+    'product_name':'GH-F Gravimetric Additive Feeder',
+    'division':'Division 2',
+    'department':'Department 2'
+  },
+  {
+    'id':'8eac069a2e45',
+    'product_name':'VTC Plus Conveying System',
+    'division':'',
+    'department':''
+  },
+  {
+    'id':'702720e5e08a',
+    'product_name':'NGX Dryer',
+    'division':'',
+    'department':''
+  },
+  {
+    'id':'d02db9896198',
+    'product_name':'NGX Nomad Dryer',
+    'division':'',
+    'department':''
+  },
+  {
+    'id':'eebc141deb48',
+    'product_name':'Truetemp TCU',
+    'division':'Division 3',
+    'department':'Department 3'
+  },
+  {
+    'id':'957621d35cc1',
+    'product_name':'GP & HE Central Chiller',
+    'division':'',
+    'department':''
+  },
+  {
+    'id':'0ba455aeddbc',
+    'product_name':'T50 Central Granulator',
+    'division':'',
+    'department':''
+  }
 ]

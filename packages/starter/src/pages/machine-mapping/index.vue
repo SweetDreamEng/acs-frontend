@@ -11,12 +11,12 @@
       <p class="pa-2">Please assign machine names to your ACS Digital Solution product and map them to the department and division.</p>
       <!-- maps list -->
       <v-data-table
-        v-model="selectedUsers"
         :headers="headers"
         :items="maps"
         class="flex-grow-1"
         hide-default-footer
       >
+
         <!-- custom table header -->
         <template v-slot:header.department="{ header }">
           <v-icon color="primary">mdi-account-multiple-plus</v-icon>
@@ -28,110 +28,130 @@
         </template>
 
         <!-- custom table rows -->
-        <template v-slot:item.division="{  }">
-          <v-select
-            :items="divisions"
-            label="Choose Division"
-            outlined
-            dense
-            hide-details
-          >
-            <template v-slot:prepend-item>
-              <v-list-item
-                ripple
-                @click="addDivisionDialog = true"
-              >
-                <v-list-item-content>
-                  <v-list-item-title>
-                    Add New
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider></v-divider>
-            </template>
-          </v-select>
+        <template v-slot:item.division="{ item }">
+          <span v-if="item.division">{{ item.division }}</span>
+          <span v-else>Not assigned</span>
         </template>
 
-        <template v-slot:item.department="{  }">
-          <v-select
-            :items="departments"
-            label="Choose Department"
-            outlined
-            dense
-            hide-details
+        <template v-slot:item.department="{ item }">
+          <span v-if="item.department">{{ item.department }}</span>
+          <span v-else>Not assigned</span>
+        </template>
+
+        <template v-slot:item.actions="{ item }">
+          <v-icon
+            small
+            class="mr-2"
+            @click="editItem(item)"
           >
-            <template v-slot:prepend-item>
-              <v-list-item
-                ripple
-                @click="addDepartmentDialog = true"
-              >
-                <v-list-item-content>
-                  <v-list-item-title>
-                    Add New
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider></v-divider>
-            </template>
-          </v-select>
+            mdi-pencil
+          </v-icon>
         </template>
       </v-data-table>
     </v-card>
 
-    <!-- add division modal -->
-    <v-dialog v-model="addDivisionDialog" max-width="290">
+    <v-dialog
+      v-model="editDialog"
+      max-width="400px"
+    >
       <v-card>
-        <v-card-title>Add New Division</v-card-title>
-        <v-card-text>
-          <v-form
-            ref="divisionForm"
-            v-model="validDivision"
-            lazy-validation
-            @submit.prevent="addNewDivision"
-          >
-            <v-text-field
-              v-model="newDivision"
-              :rules="[rules.required]"
-              label="Division"
-              required
-            ></v-text-field>
-            <v-btn
-              :disabled="!validDivision"
-              color="success"
-              type="submit"
-            >
-              Ok
-            </v-btn>
-          </v-form>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+        <v-card-title>
+          <span class="headline">Edit</span>
+        </v-card-title>
 
-    <!-- add department modal -->
-    <v-dialog v-model="addDepartmentDialog" max-width="290">
-      <v-card>
-        <v-card-title>Add New Department</v-card-title>
         <v-card-text>
-          <v-form
-            ref="departmentForm"
-            v-model="validDepartment"
-            lazy-validation
-            @submit.prevent="addNewDepartment"
-          >
-            <v-text-field
-              v-model="newDepartment"
+          <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
+            <v-select
+              :items="divisions"
+              label="Choose Division"
+              v-model="editedItem.division"
               :rules="[rules.required]"
-              label="Department"
-              required
-            ></v-text-field>
-            <v-btn
-              :disabled="!validDepartment"
-              color="success"
-              type="submit"
+              outlined
+              dense
             >
-              Ok
-            </v-btn>
+            </v-select>
+            <v-select
+              :items="departments"
+              label="Choose Department"
+              v-model="editedItem.department"
+              :rules="[rules.required]"
+              outlined
+              dense
+            >
+            </v-select>
+
+            <div class="d-flex">
+              <v-spacer></v-spacer>
+              <v-btn
+                color="primary"
+                text
+                :disabled="newMode"
+                @click="close"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                color="primary"
+                type="submit"
+                :disabled="newMode"
+              >
+                Save
+              </v-btn>
+            </div>
           </v-form>
+
+          <div class="d-flex my-2">
+            <div>
+              Please add department and/or division if not found above
+            </div>
+            <v-spacer></v-spacer>
+            <v-btn
+              icon
+              class="ml-2"
+              @click="newMode = !newMode"
+            >
+              <v-icon>{{ newMode ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+            </v-btn>
+          </div>
+          <v-expand-transition>
+            <div v-show="newMode">
+              <v-form ref="newForm" v-model="isNewFormValid" lazy-validation @submit.prevent="addNewOptions">
+                <v-text-field
+                  label="New Division Name"
+                  v-model="newItem.division"
+                  :rules="[rules.required]"
+                  outlined
+                  dense
+                >
+                </v-text-field>
+                <v-text-field
+                  label="New Department Name"
+                  v-model="newItem.department"
+                  :rules="[rules.required]"
+                  outlined
+                  dense
+                >
+                </v-text-field>
+
+                <div class="d-flex">
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="newMode = false"
+                  >
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    color="primary"
+                    type="submit"
+                  >
+                    Add
+                  </v-btn>
+                </div>
+              </v-form>
+            </div>
+          </v-expand-transition>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -157,25 +177,34 @@ export default {
         text: 'List'
       }],
 
-      searchQuery: '',
-      selectedUsers: [],
       headers: [
         { text: 'Serial Number', value: 'id' },
         { text: 'Machine Name', value: 'product_name' },
         { text: 'Division', value: 'division' },
-        { text: 'Department', value: 'department' }
+        { text: 'Department', value: 'department' },
+        { text: 'Actions', value: 'actions' }
       ],
-
-      addDivisionDialog: false,
-      addDepartmentDialog: false,
-
-      newDivision: '',
-      newDepartment: '',
 
       maps,
 
-      validDepartment: true,
-      validDivision: true,
+      newMode: false,
+      editedIndex: -1,
+      editedItem: {
+        department: '',
+        division: ''
+      },
+      defaultItem: {
+        department: '',
+        division: ''
+      },
+      editDialog: false,
+      newItem: {
+        department: '',
+        division: ''
+      },
+
+      isEditFormValid: true,
+      isNewFormValid: true,
 
       // input rules
       rules: {
@@ -188,23 +217,33 @@ export default {
     ...mapState({ divisions: (state) => state.divisions.data })
   },
   watch: {
-    selectedUsers(val) {
-
-    }
   },
   methods: {
     searchUser() {},
     open() {},
-    addNewDepartment() {
-      if (this.$refs.departmentForm.validate()) {
-        this.departments.push(this.newDepartment)
-        this.addDepartmentDialog = false
+    editItem (item) {
+      this.editedIndex = this.maps.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.editDialog = true
+    },
+    close () {
+      this.editDialog = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+    save () {
+      if (this.$refs.editForm.validate()) {
+        Object.assign(this.maps[this.editedIndex], this.editedItem)
+        this.close()
       }
     },
-    addNewDivision() {
-      if (this.$refs.divisionForm.validate()) {
-        this.divisions.push(this.newDivision)
-        this.addDivisionDialog = false
+    addNewOptions() {
+      if (this.$refs.newForm.validate()) {
+        this.departments.push(this.newItem.department)
+        this.divisions.push(this.newItem.division)
+        this.newMode = false
       }
     }
   }
