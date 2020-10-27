@@ -14,7 +14,12 @@ export default {
           { key: 'menu.thresholdAdd', text: 'Add Threshold', link: '/threshold/add' }
         ]
       },
-      { icon: 'mdi-swap-horizontal', key: 'menu.machineMapping', text: '', link: '/machine-mapping' }
+      { icon: 'mdi-swap-horizontal', key: 'menu.machineMapping', text: 'Machine Mapping',
+        items: [
+          { key: 'menu.machineMapping', text: 'Machine Mapping', link: '/machine-mapping' },
+          { key: 'menu.customerAssign', text: 'Add Threshold', link: '/customer-assign' }
+        ]
+      }
     ]
   }
   // {

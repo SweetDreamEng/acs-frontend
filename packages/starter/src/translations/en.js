@@ -154,7 +154,8 @@ export default {
     threshold: 'Threshold',
     thresholdList: 'Thresholds',
     thresholdAdd: 'Add Threshold',
-    machineMapping: 'Machine Mapping'
+    machineMapping: 'Machine Mapping',
+    customerAssign: 'Customer Assign'
   },
   // Vuetify components translations
   $vuetify: {

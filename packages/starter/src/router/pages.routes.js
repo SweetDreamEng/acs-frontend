@@ -81,4 +81,8 @@ export default [{
   path: '/machine-mapping',
   name: 'machine-mapping',
   component: () => import(/* webpackChunkName: "machine-mapping" */ '@/pages/machine-mapping/index.vue')
+}, {
+  path: '/customer-assign',
+  name: 'customer-assign',
+  component: () => import(/* webpackChunkName: "customer-assign" */ '@/pages/machine-mapping/CustomerAssign.vue')
 }]
