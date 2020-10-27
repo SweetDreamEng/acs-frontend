@@ -34,6 +34,7 @@
             label="Choose Division"
             outlined
             dense
+            hide-details
           >
             <template v-slot:prepend-item>
               <v-list-item
@@ -57,6 +58,7 @@
             label="Choose Department"
             outlined
             dense
+            hide-details
           >
             <template v-slot:prepend-item>
               <v-list-item
@@ -137,9 +139,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import maps from './content/maps'
-import divisions from './content/divisions'
-import departments from './content/departments'
 
 export default {
   components: {
@@ -171,8 +173,6 @@ export default {
       newDepartment: '',
 
       maps,
-      divisions,
-      departments,
 
       validDepartment: true,
       validDivision: true,
@@ -182,6 +182,12 @@ export default {
         required: (value) => (value && Boolean(value)) || 'Required'
       }
     }
+  },
+  computed: {
+    ...mapGetters({
+      departments: 'departments/departments',
+      divisions: 'divisions/divisions'
+    })
   },
   watch: {
     selectedUsers(val) {

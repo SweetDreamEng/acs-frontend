@@ -5,6 +5,8 @@ import Vuex from 'vuex'
 import AppModule from './app'
 import machines from './machines'
 import users from './users'
+import departments from './departments'
+import divisions from './divisions'
 
 Vue.use(Vuex)
 
@@ -15,7 +17,9 @@ const store = new Vuex.Store({
   modules: {
     app: AppModule,
     machines,
-    users
+    users,
+    departments,
+    divisions
   }
 })
 
