@@ -7,6 +7,7 @@ import machines from './machines'
 import users from './users'
 import departments from './departments'
 import divisions from './divisions'
+import customers from './customers'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,8 @@ const store = new Vuex.Store({
     machines,
     users,
     departments,
-    divisions
+    divisions,
+    customers
   }
 })
 

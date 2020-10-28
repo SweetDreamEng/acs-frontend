@@ -17,8 +17,20 @@
         show-expand
         :expanded.sync="expanded"
         :single-expand="true"
-        hide-default-footer
+        :search="searchQuery"
       >
+        <template v-slot:top>
+          <v-text-field
+            v-model="searchQuery"
+            append-icon="mdi-magnify"
+            solo
+            hide-details
+            dense
+            clearable
+            placeholder="Search"
+            class="mx-1"
+          ></v-text-field>
+        </template>
         <!-- custom table header -->
 
         <!-- custom table rows -->
@@ -37,8 +49,9 @@
             <v-btn
               :color="item.device_registration ? 'green' : 'red'"
               dark
-              @click="item.device_registration = !item.device_registration"
-            >{{ item.device_registration ? 'Register Device' : 'Revoke Device' }}</v-btn>
+              @click="onRegisterChange(item)"
+              style="width: 80px;"
+            >{{ item.device_registration ? 'Register' : 'Revoke' }}</v-btn>
           </div>
         </template>
 
@@ -77,7 +90,7 @@
         <v-card-text>
           <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
             <v-select
-              :items="userNames"
+              :items="customers"
               label="Choose Customer"
               v-model="editedItem.customer_name"
               :rules="[rules.required]"
@@ -86,7 +99,7 @@
             >
             </v-select>
             <v-select
-              :items="machineNames"
+              :items="extendedMachineNames"
               label="Choose Machine"
               v-model="editedItem.product_category"
               :rules="[rules.required]"
@@ -115,11 +128,36 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <v-dialog
+      v-model="confirmDialog"
+      max-width="400px"
+    >
+      <v-card>
+        <v-card-title>
+          Confirm
+        </v-card-title>
+        <v-card-text>
+          <v-alert
+            border="top"
+            outlined
+            type="info"
+            elevation="2"
+          >
+            <small>{{ confirmationMessage() }}</small>
+          </v-alert>
+          <div class="d-flex justify-end">
+            <v-btn color="primary" text @click="confirmDialog = false">Cancel</v-btn>
+            <v-btn color="green" dark @click="onConfirmClicked()">{{ confirmBtnText() }}</v-btn>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import customerAssigns from './content/customer-assigns'
 
 export default {
@@ -142,9 +180,9 @@ export default {
         { text: 'Serial Number', value: 'id' },
         { text: 'Customer Name', value: 'customer_name' },
         { text: 'Product category', value: 'product_category' },
-        { text: 'Device Registration', value: 'device_registration' },
-        { text: '', value: 'data-table-expand' },
-        { text: 'Actions', value: 'actions' }
+        { text: 'Device Registration', value: 'device_registration', sortable: false },
+        { text: '', value: 'data-table-expand', sortable: false },
+        { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
       expanded: [],
 
@@ -164,6 +202,9 @@ export default {
       isEditFormValid: true,
       isNewFormValid: true,
 
+      confirmDialog: false,
+      selectedItem: null,
+
       // input rules
       rules: {
         required: (value) => (value && Boolean(value)) || 'Required field'
@@ -176,10 +217,25 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      customers: (state) => {
+        const _customers = state.customers.data
+
+        _customers.unshift('Not assigned')
+
+        return _customers
+      }
+    }),
     ...mapGetters([
-      'userNames',
       'machineNames'
-    ])
+    ]),
+    extendedMachineNames() {
+      const _machineNames = this.machineNames
+
+      _machineNames.unshift('Not assigned')
+
+      return _machineNames
+    }
   },
   methods: {
     editItem (item) {
@@ -195,11 +251,38 @@ export default {
       })
     },
     save () {
-      console.log(this.editedItem)
       if (this.$refs.editForm.validate()) {
         Object.assign(this.customerAssigns[this.editedIndex], this.editedItem)
         this.close()
       }
+    },
+    confirmBtnText() {
+      if (this.selectedItem) {
+        if (this.selectedItem.device_registration)
+          return 'Confirm Registration'
+        else
+          return 'Confirm Revocation'
+      } else {
+        return ''
+      }
+    },
+    confirmationMessage() {
+      if (this.selectedItem) {
+        if (this.selectedItem.device_registration)
+          return `Device xxxxx assigned to customer ${this.selectedItem.customer_name} will be configured with product ${this.selectedItem.product_category}. Please confirm registration`
+        else
+          return `Device xxxx assigned to customer ${this.selectedItem.customer_name} will be reset and product ${this.selectedItem.product_category} configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
+      } else {
+        return ''
+      }
+    },
+    onRegisterChange(item) {
+      this.selectedItem = item
+      this.confirmDialog = true
+    },
+    onConfirmClicked() {
+      this.selectedItem.device_registration = !this.selectedItem.device_registration
+      this.confirmDialog = false
     }
   }
 }
