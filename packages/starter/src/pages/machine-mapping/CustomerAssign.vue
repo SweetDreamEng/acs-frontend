@@ -34,20 +34,11 @@
 
         <template v-slot:item.device_registration="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
-            <div v-if="item.device_registration">
-              <v-btn
-                color="green"
-                dark
-                @click="item.device_registration = !item.device_registration"
-              >Register Device</v-btn>
-            </div>
-            <div v-else>
-              <v-btn
-                dark
-                color="red"
-                @click="item.device_registration = !item.device_registration"
-              >Revoke Device</v-btn>
-            </div>
+            <v-btn
+              :color="item.device_registration ? 'green' : 'red'"
+              dark
+              @click="item.device_registration = !item.device_registration"
+            >{{ item.device_registration ? 'Register Device' : 'Revoke Device' }}</v-btn>
           </div>
         </template>
 
@@ -175,7 +166,7 @@ export default {
 
       // input rules
       rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
+        required: (value) => (value && Boolean(value)) || 'Required field'
       }
     }
   },

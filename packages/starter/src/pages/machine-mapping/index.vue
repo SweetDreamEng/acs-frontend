@@ -29,13 +29,11 @@
 
         <!-- custom table rows -->
         <template v-slot:item.division="{ item }">
-          <span v-if="item.division">{{ item.division }}</span>
-          <span v-else>Not assigned</span>
+          <span>{{ item.division ? item.division : 'Not assigned' }}</span>
         </template>
 
         <template v-slot:item.department="{ item }">
-          <span v-if="item.department">{{ item.department }}</span>
-          <span v-else>Not assigned</span>
+          <span>{{ item.department ? item.department : 'Not assigned' }}</span>
         </template>
 
         <template v-slot:item.actions="{ item }">
@@ -208,7 +206,7 @@ export default {
 
       // input rules
       rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
+        required: (value) => (value && Boolean(value)) || 'Required field'
       }
     }
   },
@@ -242,13 +240,6 @@ export default {
         this.close()
       }
     }
-    // addNewOptions() {
-    //   if (this.$refs.newForm.validate()) {
-    //     this.departments.push(this.newItem.department)
-    //     this.divisions.push(this.newItem.division)
-    //     this.newMode = false
-    //   }
-    // }
   }
 }
 </script>
