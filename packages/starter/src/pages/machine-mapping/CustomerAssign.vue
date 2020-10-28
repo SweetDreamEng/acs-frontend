@@ -200,7 +200,6 @@ export default {
       editDialog: false,
 
       isEditFormValid: true,
-      isNewFormValid: true,
 
       confirmDialog: false,
       selectedItem: null,
@@ -241,6 +240,7 @@ export default {
     editItem (item) {
       this.editedIndex = this.customerAssigns.indexOf(item)
       this.editedItem = Object.assign({}, item)
+      this.isEditFormValid = true
       this.editDialog = true
     },
     close () {
@@ -269,9 +269,9 @@ export default {
     confirmationMessage() {
       if (this.selectedItem) {
         if (this.selectedItem.device_registration)
-          return `Device xxxxx assigned to customer ${this.selectedItem.customer_name} will be configured with product ${this.selectedItem.product_category}. Please confirm registration`
+          return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be configured with product ${this.selectedItem.product_category}. Please confirm registration`
         else
-          return `Device xxxx assigned to customer ${this.selectedItem.customer_name} will be reset and product ${this.selectedItem.product_category} configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
+          return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be reset and product ${this.selectedItem.product_category} configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
       } else {
         return ''
       }
