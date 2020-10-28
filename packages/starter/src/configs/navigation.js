@@ -19,7 +19,8 @@ export default {
           { key: 'menu.machineMapping', text: 'Machine Mapping', link: '/machine-mapping' },
           { key: 'menu.customerAssign', text: 'Add Threshold', link: '/customer-assign' }
         ]
-      }
+      },
+      { icon: 'mdi-account-multiple', key: 'menu.customerPages', text: 'Customers', link: '/customers/list' }
     ]
   }
   // {

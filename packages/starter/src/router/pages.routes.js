@@ -85,4 +85,16 @@ export default [{
   path: '/customer-assign',
   name: 'customer-assign',
   component: () => import(/* webpackChunkName: "customer-assign" */ '@/pages/machine-mapping/CustomerAssign.vue')
+}, {
+  path: '/customers/list',
+  name: 'customers-list',
+  component: () => import(/* webpackChunkName: "customers-list" */ '@/pages/customers/Index.vue')
+}, {
+  path: '/customers/add',
+  name: 'customers-add',
+  component: () => import(/* webpackChunkName: "customers-add" */ '@/pages/customers/AddCustomer.vue')
+}, {
+  path: '/customers/edit',
+  name: 'customers-edit',
+  component: () => import(/* webpackChunkName: "customers-edit" */ '@/pages/customers/EditCustomer.vue')
 }]

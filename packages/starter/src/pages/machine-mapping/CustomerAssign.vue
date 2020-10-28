@@ -90,7 +90,7 @@
         <v-card-text>
           <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
             <v-select
-              :items="customers"
+              :items="extendedCustomerNames"
               label="Choose Customer"
               v-model="editedItem.customer_name"
               :rules="[rules.required]"
@@ -158,7 +158,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import customerAssigns from './content/customer-assigns'
 
 export default {
@@ -212,20 +212,11 @@ export default {
     }
   },
   watch: {
-    selectedUsers(val) {
-
-    }
   },
   computed: {
-    ...mapState({
-      customers: (state) => {
-        const _customers = state.customers.data
-
-        _customers.unshift('Not assigned')
-
-        return _customers
-      }
-    }),
+    ...mapGetters('customers', [
+      'customerNames'
+    ]),
     ...mapGetters([
       'machineNames'
     ]),
@@ -235,6 +226,13 @@ export default {
       _machineNames.unshift('Not assigned')
 
       return _machineNames
+    },
+    extendedCustomerNames() {
+      const _customerNames = this.machineNames
+
+      _customerNames.unshift('Not assigned')
+
+      return _customerNames
     }
   },
   methods: {
