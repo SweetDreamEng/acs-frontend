@@ -34,17 +34,19 @@
 
         <template v-slot:item.device_registration="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
-            <div v-if="item.device_registration" class="warning--text">
+            <div v-if="item.device_registration">
               <v-btn
-                color="warning"
+                color="green"
+                dark
                 @click="item.device_registration = !item.device_registration"
               >Register Device</v-btn>
             </div>
-            <div v-else class="success--text">
+            <div v-else>
               <v-btn
-                color="success"
+                dark
+                color="red"
                 @click="item.device_registration = !item.device_registration"
-              >Unregister Device</v-btn>
+              >Revoke Device</v-btn>
             </div>
           </div>
         </template>
