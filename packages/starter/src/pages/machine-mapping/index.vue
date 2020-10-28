@@ -14,9 +14,20 @@
         :headers="headers"
         :items="maps"
         class="flex-grow-1"
-        hide-default-footer
+        :search="searchQuery"
       >
-
+        <template v-slot:top>
+          <v-text-field
+            v-model="searchQuery"
+            append-icon="mdi-magnify"
+            solo
+            hide-details
+            dense
+            clearable
+            placeholder="Search"
+            class="mx-1"
+          ></v-text-field>
+        </template>
         <!-- custom table header -->
         <template v-slot:header.department="{ header }">
           <v-icon color="primary">mdi-account-multiple-plus</v-icon>
@@ -180,7 +191,7 @@ export default {
         { text: 'Machine Name', value: 'product_name' },
         { text: 'Division', value: 'division' },
         { text: 'Department', value: 'department' },
-        { text: 'Actions', value: 'actions' }
+        { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
 
       maps,
@@ -192,8 +203,8 @@ export default {
         division: ''
       },
       defaultItem: {
-        department: '',
-        division: ''
+        department: 'Not assigned',
+        division: 'Not assigned'
       },
       editDialog: false,
       newItem: {
@@ -204,6 +215,8 @@ export default {
       isEditFormValid: true,
       isNewFormValid: true,
 
+      searchQuery: '',
+
       // input rules
       rules: {
         required: (value) => (value && Boolean(value)) || 'Required field'
@@ -211,12 +224,25 @@ export default {
     }
   },
   computed: {
-    ...mapState({ departments: (state) => state.departments.data }),
-    ...mapState({ divisions: (state) => state.divisions.data })
+    ...mapState({
+      departments: (state) => {
+        const _departments = state.departments.data
+
+        _departments.unshift('Not assigned')
+
+        return _departments
+      },
+      divisions: (state) => {
+        const _divisions = state.divisions.data
+
+        _divisions.unshift('Not assigned')
+
+        return _divisions
+      }
+    })
   },
   watch: {
     editDialog (val) {
-      console.log(val)
       val || this.close()
     }
   },
