@@ -143,12 +143,13 @@
             outlined
             type="info"
             elevation="2"
+            color="primary"
           >
             <small>{{ confirmationMessage() }}</small>
           </v-alert>
           <div class="d-flex justify-end">
             <v-btn color="primary" text @click="confirmDialog = false">Cancel</v-btn>
-            <v-btn color="green" dark @click="onConfirmClicked()">{{ confirmBtnText() }}</v-btn>
+            <v-btn :color="confirmBtnColor()" dark @click="onConfirmClicked()">{{ confirmBtnText() }}</v-btn>
           </div>
         </v-card-text>
       </v-card>
@@ -264,6 +265,16 @@ export default {
           return 'Confirm Registration'
         else
           return 'Confirm Revocation'
+      } else {
+        return ''
+      }
+    },
+    confirmBtnColor() {
+      if (this.selectedItem) {
+        if (this.selectedItem.device_registration)
+          return 'green'
+        else
+          return 'red'
       } else {
         return ''
       }
