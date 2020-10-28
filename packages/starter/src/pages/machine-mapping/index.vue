@@ -252,6 +252,9 @@ export default {
       this.editedIndex = this.maps.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.editDialog = true
+      this.$nextTick(() => {
+        this.$refs.editForm.resetValidation()
+      })
     },
     close () {
       this.editDialog = false

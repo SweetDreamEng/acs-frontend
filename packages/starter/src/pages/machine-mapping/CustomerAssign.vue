@@ -240,8 +240,10 @@ export default {
     editItem (item) {
       this.editedIndex = this.customerAssigns.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      this.isEditFormValid = true
       this.editDialog = true
+      this.$nextTick(() => {
+        this.$refs.editForm.resetValidation()
+      })
     },
     close () {
       this.editDialog = false
