@@ -56,11 +56,10 @@
 <script>
 /*
 |---------------------------------------------------------------------
-| DEMO Dashboard Card Component
+| Product Alarm Card Component
 |---------------------------------------------------------------------
 |
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
+| Table that lists alarms of a certain product
 |
 */
 import moment from 'moment'

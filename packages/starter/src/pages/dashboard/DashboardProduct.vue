@@ -45,6 +45,16 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Product Page Component
+| url: dashboard/product/:id
+|---------------------------------------------------------------------
+|
+| Product detail page
+*/
+
+// import vuex helper functions
 import { mapGetters, mapActions } from 'vuex'
 
 import AlarmTable from '../../components/dashboard/product/AlarmTable'

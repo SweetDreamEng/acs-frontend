@@ -29,6 +29,15 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Edit Customer Page Component
+| url: /customers/edit/:id
+|---------------------------------------------------------------------
+|
+| Edit certain customer
+*/
+
 import AccountTab from '../../components/customers/edit/AccountTab'
 import InformationTab from '../../components/customers/edit/InformationTab'
 

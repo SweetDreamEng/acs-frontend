@@ -42,6 +42,14 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Customers List Page Component
+| url: /customers/list
+|---------------------------------------------------------------------
+|
+| List all customers and customer add/edit options
+*/
 import { mapState } from 'vuex'
 export default {
   data() {

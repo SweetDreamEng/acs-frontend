@@ -56,6 +56,14 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Uptime Percentage Card Component
+|---------------------------------------------------------------------
+|
+| RadialBar chart to display uptime percentable
+|
+*/
 export default {
   props: {
     label: {

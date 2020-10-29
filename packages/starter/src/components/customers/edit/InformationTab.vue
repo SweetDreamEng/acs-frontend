@@ -37,6 +37,13 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Information Tab Component
+|---------------------------------------------------------------------
+|
+| Information tab in customer edit page
+*/
 export default {
   data: () => ({
     customer: {

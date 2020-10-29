@@ -78,11 +78,10 @@
 import { mapActions } from 'vuex'
 /*
 |---------------------------------------------------------------------
-| DEMO Dashboard Card Component
+| Machines Table Card Component
 |---------------------------------------------------------------------
 |
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
+| Machines table card to list machines and their properties
 |
 */
 export default {

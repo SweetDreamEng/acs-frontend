@@ -168,6 +168,15 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Machine mapping Page Component
+| url: /machine-mapping
+|---------------------------------------------------------------------
+|
+| List all mappings between machines and division/department
+*/
+
 import { mapState } from 'vuex'
 
 import maps from './content/maps'

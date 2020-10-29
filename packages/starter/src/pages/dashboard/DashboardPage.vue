@@ -48,6 +48,15 @@
 </template>
 
 <script>
+
+/*
+|---------------------------------------------------------------------
+| Dashboard Page Component
+| url: /dashboard/analytics
+|---------------------------------------------------------------------
+|
+*/
+
 // import vuex helper functions
 import { mapState } from 'vuex'
 

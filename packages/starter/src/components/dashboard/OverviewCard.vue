@@ -64,6 +64,14 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Overview Card Component
+|---------------------------------------------------------------------
+|
+| Google map with locations of machines
+|
+*/
 export default {
   props: {
     loading: {

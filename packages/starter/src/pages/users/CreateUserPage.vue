@@ -29,6 +29,15 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| User Create Page Component
+| url: /users/add
+|---------------------------------------------------------------------
+|
+| Create a new user
+*/
+
 import roles from './content/roles'
 
 import AccountTab from './AddUser/AccountTab'

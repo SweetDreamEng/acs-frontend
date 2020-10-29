@@ -23,6 +23,14 @@
   </v-card>
 </template>
 <script>
+/*
+|---------------------------------------------------------------------
+| Note and Timeline Card Component
+|---------------------------------------------------------------------
+|
+| Timeline and notes for the timeline component
+|
+*/
 import moment from 'moment'
 export default {
   props: {

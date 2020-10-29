@@ -37,6 +37,13 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Information Tab Component
+|---------------------------------------------------------------------
+|
+| Information tab in customer add page
+*/
 export default {
   data: () => ({
     phoneRules: [

@@ -141,6 +141,15 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Threshold Add Page Component
+| url: /threshold/add
+|---------------------------------------------------------------------
+|
+| Add a new threshold
+*/
+
 import products from './content/products'
 import telemetries from './content/telemetries'
 import operators from './content/operators'

@@ -57,11 +57,11 @@
 
 /*
 |---------------------------------------------------------------------
-| Threshold List Page
+| Threshold List Page Component
+| url: /threshold/list
 |---------------------------------------------------------------------
 |
-| List all thresholds
-|
+| List thresholds
 */
 export default {
   components: {

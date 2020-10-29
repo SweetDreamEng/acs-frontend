@@ -54,10 +54,11 @@
 <script>
 /*
 |---------------------------------------------------------------------
-| Product Parameter Component
+| Product Parameters Card Component
 |---------------------------------------------------------------------
 |
-| ---
+| Product parameters component
+| where update parameters of a certain product
 |
 */
 export default {

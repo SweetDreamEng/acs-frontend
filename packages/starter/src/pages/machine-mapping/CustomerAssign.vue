@@ -158,6 +158,15 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Customer Assignment Page Component
+| url: /customer-assign
+|---------------------------------------------------------------------
+|
+| List all customers and machines assigned
+*/
+
 import { mapGetters } from 'vuex'
 import customerAssigns from './content/customer-assigns'
 

@@ -29,6 +29,14 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Add Customer Page Component
+| url: /customers/add
+|---------------------------------------------------------------------
+|
+| Create a new customer
+*/
 import AccountTab from '../../components/customers/add/AccountTab'
 import InformationTab from '../../components/customers/add/InformationTab'
 

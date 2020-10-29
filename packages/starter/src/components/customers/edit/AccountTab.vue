@@ -88,6 +88,13 @@
   </div>
 </template>
 <script>
+/*
+|---------------------------------------------------------------------
+| Account Tab Component
+|---------------------------------------------------------------------
+|
+| Account tab in customer edit page
+*/
 export default {
   data() {
     return {

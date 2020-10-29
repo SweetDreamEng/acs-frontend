@@ -120,6 +120,15 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| User Access Page Component
+| url: /users/list
+|---------------------------------------------------------------------
+|
+| List all users and give create/edit user options
+*/
+
 import users from './content/users'
 import CopyLabel from '../../components/common/CopyLabel'
 

@@ -142,6 +142,15 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Threshold Edit Page Component
+| url: /threshold/edit/:id
+|---------------------------------------------------------------------
+|
+| Edit threshold
+*/
+
 import products from './content/products'
 import telemetries from './content/telemetries'
 import operators from './content/operators'

@@ -52,6 +52,15 @@
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| User Edit Page Component
+| url: /users/edit/:id
+|---------------------------------------------------------------------
+|
+| Edit user details and manage user priviliges
+*/
+
 import roles from './content/roles'
 
 import CopyLabel from '../../components/common/CopyLabel'
