@@ -3,8 +3,30 @@
     <v-card>
       <v-card-title>
         {{ label }}
+        <v-btn
+          text
+          class="ml-auto"
+          @click="showColumnFilter = !showColumnFilter"
+        >Table columns</v-btn>
       </v-card-title>
       <v-card-subtitle>
+        <v-expand-transition>
+          <div v-show="showColumnFilter">
+            <v-row>
+              <v-col xs="12" sm="6" md="4" class="py-1">
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Running" value="status"></v-checkbox>
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Machine Names" value="machinename"></v-checkbox>
+              </v-col>
+              <v-col xs="12" sm="6" md="4" class="py-1">
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Capacity Utilization" value="capacity"></v-checkbox>
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Consumption" value="consumption"></v-checkbox>
+              </v-col>
+              <v-col xs="12" sm="6" md="4" class="py-1">
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Zones" value="department"></v-checkbox>
+              </v-col>
+            </v-row>
+          </div>
+        </v-expand-transition>
         <div class="d-flex flex-wrap justify-space-between">
           <span class="mr-2 font-weight-bold" style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
           <v-slider
@@ -37,7 +59,7 @@
         </div>
         <v-data-table
           v-else
-          :headers="headers"
+          :headers="filtedHeaders"
           :items="items"
           :item-class="itemRowBackground"
           hide-default-footer
@@ -114,7 +136,16 @@ export default {
       ],
 
       hours: 8,
-      searchQuery: ''
+      searchQuery: '',
+      showColumnFilter: false,
+      parameterIds: ['status', 'machinename', 'capacity', 'consumption', 'department']
+    }
+  },
+  computed: {
+    filtedHeaders() {
+      return this.headers.filter((header) => {
+        return this.parameterIds.includes(header.value)
+      })
     }
   },
   methods: {
