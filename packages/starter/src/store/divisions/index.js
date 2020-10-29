@@ -2,16 +2,26 @@ const module = {
   namespaced: true,
   state: {
     data: [
-      'Division 1',
-      'Division 2',
-      'Division 3',
-      'Division 4',
-      'Division 5',
-      'Division 6',
-      'Division 7',
-      'Division 8',
-      'Division 9',
-      'Division 10'
+      {
+        id: 1,
+        divisionName: 'Division 1'
+      },
+      {
+        id: 2,
+        divisionName: 'Division 2'
+      },
+      {
+        id: 3,
+        divisionName: 'Division 3'
+      },
+      {
+        id: 4,
+        divisionName: 'Division 4'
+      },
+      {
+        id: 5,
+        divisionName: 'Division 5'
+      }
     ]
   },
 
@@ -22,6 +32,16 @@ const module = {
   },
 
   getters: {
+    divisionNames: (state) => {
+      return state.data.map((division) => division.divisionName)
+    },
+    exDivisionNames: (state, getters) => {
+      const _divisionsNames = getters.divisionNames
+
+      _divisionsNames.unshift('Not assigned')
+
+      return _divisionsNames
+    }
   }
 }
 

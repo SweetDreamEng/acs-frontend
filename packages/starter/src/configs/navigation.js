@@ -20,7 +20,8 @@ export default {
           { key: 'menu.customerAssign', text: 'Add Threshold', link: '/customer-assign' }
         ]
       },
-      { icon: 'mdi-account-multiple', key: 'menu.customerPages', text: 'Customers', link: '/customers/list' }
+      { icon: 'mdi-account-multiple', key: 'menu.customerPages', text: 'Customers', link: '/customers/list' },
+      { icon: 'mdi-account-multiple', key: 'menu.divisionZonesPage', text: 'Division/Zones', link: '/division-zones' }
     ]
   }
   // {

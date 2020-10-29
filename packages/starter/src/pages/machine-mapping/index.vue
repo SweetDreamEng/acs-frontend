@@ -71,7 +71,7 @@
         <v-card-text>
           <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
             <v-select
-              :items="divisions"
+              :items="exDivisionNames"
               label="Choose Division"
               v-model="editedItem.division"
               :rules="[rules.required]"
@@ -80,7 +80,7 @@
             >
             </v-select>
             <v-select
-              :items="departments"
+              :items="exZoneNames"
               label="Choose Zones"
               v-model="editedItem.department"
               :rules="[rules.required]"
@@ -177,7 +177,7 @@
 | List all mappings between machines and division/department
 */
 
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 import maps from './content/maps'
 
@@ -240,15 +240,14 @@ export default {
         _departments.unshift('Not assigned')
 
         return _departments
-      },
-      divisions: (state) => {
-        const _divisions = state.divisions.data
-
-        _divisions.unshift('Not assigned')
-
-        return _divisions
       }
-    })
+    }),
+    ...mapGetters('divisions', [
+      'exDivisionNames'
+    ]),
+    ...mapGetters('departments', [
+      'exZoneNames'
+    ])
   },
   watch: {
     editDialog (val) {

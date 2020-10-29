@@ -97,4 +97,8 @@ export default [{
   path: '/customers/edit',
   name: 'customers-edit',
   component: () => import(/* webpackChunkName: "customers-edit" */ '@/pages/customers/EditCustomer.vue')
+}, {
+  path: '/division-zones',
+  name: 'division-zones',
+  component: () => import(/* webpackChunkName: "division-zones" */ '@/pages/division-zones/DivisionZones.vue')
 }]
