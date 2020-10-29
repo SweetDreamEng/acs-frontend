@@ -7,7 +7,7 @@
           text
           class="ml-auto"
           @click="showColumnFilter = !showColumnFilter"
-        >Table columns</v-btn>
+        >{{ showColumnFilter ? 'Close' : 'Add/Remove Columns' }}</v-btn>
       </v-card-title>
       <v-card-subtitle>
         <v-expand-transition>
