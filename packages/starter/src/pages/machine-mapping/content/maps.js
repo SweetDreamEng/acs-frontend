@@ -16,13 +16,13 @@ export default
     'id':'6d58cbae1e30',
     'product_name':'GH Gravimetric Extrusion Control Hopper',
     'division':'Division 2',
-    'department':'Department 1'
+    'department':'Zone 1'
   },
   {
     'id':'a4e340987d7d',
     'product_name':'GH-F Gravimetric Additive Feeder',
     'division':'Division 2',
-    'department':'Department 2'
+    'department':'Zone 2'
   },
   {
     'id':'8eac069a2e45',
@@ -46,7 +46,7 @@ export default
     'id':'eebc141deb48',
     'product_name':'Truetemp TCU',
     'division':'Division 3',
-    'department':'Department 3'
+    'department':'Zone 3'
   },
   {
     'id':'957621d35cc1',

@@ -2,16 +2,16 @@ const module = {
   namespaced: true,
   state: {
     data: [
-      'Department 1',
-      'Department 2',
-      'Department 3',
-      'Department 4',
-      'Department 5',
-      'Department 6',
-      'Department 7',
-      'Department 8',
-      'Department 9',
-      'Department 10'
+      'Zone 1',
+      'Zone 2',
+      'Zone 3',
+      'Zone 4',
+      'Zone 5',
+      'Zone 6',
+      'Zone 7',
+      'Zone 8',
+      'Zone 9',
+      'Zone 10'
     ]
   },
 

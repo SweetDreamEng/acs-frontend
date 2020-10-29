@@ -9,7 +9,7 @@ const module = {
         capacity: 89,
         consumption: '80 Watts',
         factory: '30 Elm Street, NY',
-        department: 'Division 1',
+        department: 'Zone 1',
         notes: []
       },
       {
@@ -20,7 +20,7 @@ const module = {
         capacity: 30,
         consumption: '30 Watts',
         factory: '45 Main street, FL',
-        department: 'Division 2',
+        department: 'Zone 2',
         notes: []
       },
       {
@@ -31,7 +31,7 @@ const module = {
         capacity: 57,
         consumption: '20 Watts',
         factory: '50 Gracy Street, TX',
-        department: 'Division 3',
+        department: 'Zone 3',
         notes: []
       },
       {
@@ -42,7 +42,7 @@ const module = {
         capacity: 99,
         consumption: '90 Watts',
         factory: '44 Main Street, GA',
-        department: 'Division 4',
+        department: 'Zone 4',
         notes: []
       },
       {
@@ -53,7 +53,7 @@ const module = {
         capacity: 32,
         consumption: '10 Watts',
         factory: '33 One Drive, MA',
-        department: 'Division 1',
+        department: 'Zone 1',
         notes: []
       },
       {
@@ -64,7 +64,7 @@ const module = {
         capacity: 27,
         consumption: '10 Watts',
         factory: '29 Georgia Ave, CA',
-        department: 'Division 4',
+        department: 'Zone 4',
         notes: []
       },
       {
@@ -75,7 +75,7 @@ const module = {
         capacity: 38,
         consumption: '40 Watts',
         factory: '746 Macon, CO',
-        department: 'Division 5',
+        department: 'Zone 5',
         notes: []
       },
       {
@@ -86,7 +86,7 @@ const module = {
         capacity: 74,
         consumption: '20 Watts',
         factory: '1 Cantance Street, UT',
-        department: 'Division 1',
+        department: 'Zone 1',
         notes: []
       },
       {
@@ -97,7 +97,7 @@ const module = {
         capacity: '',
         consumption: 'OFF',
         factory: '45 Spring Street, NY',
-        department: 'Division 5',
+        department: 'Zone 5',
         notes: []
       },
       {
@@ -108,7 +108,7 @@ const module = {
         capacity: '52',
         consumption: '30 Watts',
         factory: '69 Borden Rd, IL',
-        department: 'Division 3',
+        department: 'Zone 3',
         notes: []
       }
     ],

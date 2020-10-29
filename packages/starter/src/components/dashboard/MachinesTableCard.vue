@@ -110,7 +110,7 @@ export default {
         { text: 'Machine Name', align: 'start', value: 'machinename' },
         { text: 'Capacity Utilization', align: 'center', value: 'capacity' },
         { text: 'Consumption', align: 'center', value: 'consumption' },
-        { text: 'Department', align: 'center', value: 'department' }
+        { text: 'Zones', align: 'center', value: 'department' }
       ],
 
       hours: 8,

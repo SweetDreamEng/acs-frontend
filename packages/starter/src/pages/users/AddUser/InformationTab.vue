@@ -24,7 +24,7 @@
                 </v-text-field>
               <v-select
                 :items="departments"
-                label="Department"
+                label="Zones"
               >
                 <template v-slot:prepend-item>
                   <v-list-item
@@ -101,7 +101,7 @@
     <!-- add department modal -->
     <v-dialog v-model="addDepartmentDialog" max-width="290">
       <v-card>
-        <v-card-title class="headline">Add New Department</v-card-title>
+        <v-card-title class="headline">Add New Zone</v-card-title>
         <v-card-text>
           <v-form
             ref="departmentForm"
@@ -111,7 +111,7 @@
             <v-text-field
               v-model="newDepartment"
               :rules="departmentRules"
-              label="Department"
+              label="Zones"
               required
             ></v-text-field>
             <v-btn
@@ -141,7 +141,7 @@ export default {
     newDepartment: '',
     newDivision: '',
 
-    departments: ['Department1', 'Department2', 'Department3'],
+    departments: ['Zone 1', 'Zone 2', 'Zone 3'],
     divisions: ['Division1', 'Division2', 'Division3', 'Division4'],
 
     addDepartmentDialog: false,
@@ -151,7 +151,7 @@ export default {
       (v) => !!v || 'Division is required'
     ],
     departmentRules: [
-      (v) => !!v || 'Department is required'
+      (v) => !!v || 'Zones is required'
     ],
     phoneRules: [
       (v) => !!v || 'Phone number is required',

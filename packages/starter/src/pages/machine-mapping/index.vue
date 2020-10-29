@@ -8,7 +8,7 @@
     </div>
 
     <v-card>
-      <p class="pa-2">Please assign machine names to your ACS Digital Solution product and map them to the department and division.</p>
+      <p class="pa-2">Please assign machine names to your ACS Digital Solution product and map them to the zones and division.</p>
       <!-- maps list -->
       <v-data-table
         :headers="headers"
@@ -81,7 +81,7 @@
             </v-select>
             <v-select
               :items="departments"
-              label="Choose Department"
+              label="Choose Zones"
               v-model="editedItem.department"
               :rules="[rules.required]"
               outlined
@@ -199,7 +199,7 @@ export default {
         { text: 'Serial Number', value: 'id' },
         { text: 'Machine Name', value: 'product_name' },
         { text: 'Division', value: 'division' },
-        { text: 'Department', value: 'department' },
+        { text: 'Zones', value: 'department' },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
 

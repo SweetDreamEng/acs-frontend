@@ -22,8 +22,8 @@
               </v-text-field>
             <v-select
               :items="departments"
-              value="Department2"
-              label="Department"
+              value="Zone 2"
+              label="Zones"
             ></v-select>
             <v-select
               :items="divisions"
@@ -51,7 +51,7 @@ export default {
     menu: false,
     gender: 'male',
 
-    departments: ['Department1', 'Department2', 'Department3'],
+    departments: ['Zone 1', 'Zone 2', 'Zone 3'],
     divisions: ['Division1', 'Division2', 'Division3', 'Division4'],
 
     phoneRules: [
