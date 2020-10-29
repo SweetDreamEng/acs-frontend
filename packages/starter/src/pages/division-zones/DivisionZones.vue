@@ -187,7 +187,7 @@ export default {
     return {
       isLoading: false,
       breadcrumbs: [{
-        text: 'Machine Maping',
+        text: 'Division/Zones',
         disabled: false,
         href: '#'
       }, {
