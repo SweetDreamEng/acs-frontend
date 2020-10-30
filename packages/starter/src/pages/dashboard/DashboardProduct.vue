@@ -95,15 +95,15 @@ export default {
     this.clear()
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('machines', [
       'selectedMachine'
     ])
   },
   methods: {
-    ...mapActions([
-      'selectMachine',
-      'updateSelections'
-    ]),
+    ...mapActions({
+      'selectMachine': 'machines/selectMachine',
+      'updateSelections': 'machines/updateSelections'
+    }),
     clear() {
       clearInterval(this.loadingInterval)
     },
