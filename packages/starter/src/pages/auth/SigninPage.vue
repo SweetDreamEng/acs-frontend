@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="text-center pa-1">
+    <v-card class="pa-1">
       <v-card-title class="justify-center display-1 mb-2">Welcome</v-card-title>
       <v-card-subtitle>Sign in to your account</v-card-subtitle>
 
@@ -16,7 +16,7 @@
             name="email"
             outlined
             @keyup.enter="submit"
-            @change="resetErrors"
+            @input="resetErrors"
           ></v-text-field>
 
           <v-text-field
@@ -25,18 +25,26 @@
             :rules="[rules.required]"
             :type="showPassword ? 'text' : 'password'"
             :error="error"
-            :error-messages="errorMessages"
             :label="$t('login.password')"
             name="password"
             outlined
-            @change="resetErrors"
+            @input="resetErrors"
             @keyup.enter="submit"
             @click:append="showPassword = !showPassword"
           ></v-text-field>
 
+          <v-alert
+            v-if="errorMessages"
+            dense
+            outlined
+            type="error"
+          >
+            {{ errorMessages }}
+          </v-alert>
+
           <v-btn
             :loading="isLoading"
-            :disabled="isSignInDisabled"
+            :disabled="isLoading"
             block
             x-large
             color="primary"
@@ -70,13 +78,10 @@
 | Sign in template for user authentication into the application
 |
 */
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      // sign in buttons
-      isLoading: false,
-      isSignInDisabled: false,
-
       // form
       isFormValid: true,
       email: '',
@@ -84,7 +89,6 @@ export default {
 
       // form error
       error: false,
-      errorMessages: '',
 
       errorProvider: false,
       errorProviderMessages: '',
@@ -92,40 +96,37 @@ export default {
       // show password field
       showPassword: false,
 
-      providers: [{
-        id: 'google',
-        label: 'Google',
-        isLoading: false
-      }, {
-        id: 'facebook',
-        label: 'Facebook',
-        isLoading: false
-      }],
-
       // input rules
       rules: {
         required: (value) => (value && Boolean(value)) || 'Required'
       }
     }
   },
+  computed: {
+    ...mapState({
+      isLoading: (state) => state.auth.button_loading,
+      errorMessages: (state) => state.auth.error
+    })
+  },
+  mounted() {
+    this.clearError()
+  },
   methods: {
+    ...mapActions({
+      'signIn': 'auth/signIn',
+      'clearError': 'auth/clearError'
+    }),
     submit() {
       if (this.$refs.form.validate()) {
-        this.isLoading = true
-        this.isSignInDisabled = true
-        this.signIn(this.email, this.password)
+        this.signIn({
+          email: this.email,
+          password: this.password
+        })
       }
-    },
-    signIn(email, password) {
-      this.$router.push('/')
     },
     signInProvider(provider) {},
     resetErrors() {
-      this.error = false
-      this.errorMessages = ''
-
-      this.errorProvider = false
-      this.errorProviderMessages = ''
+      this.clearError()
     }
   }
 }

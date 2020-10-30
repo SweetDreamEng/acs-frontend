@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+// packages
+import Auth from './packages/Auth'
+Vue.use(Auth)
+
 // VUEX - https://vuex.vuejs.org/
 import store from './store'
 
@@ -35,6 +39,32 @@ import './assets/scss/theme.scss'
 
 // Animation library - https://animate.style/
 import 'animate.css/animate.min.css'
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.userNotAuth)) {
+    return Vue.auth.check().then((response) => {
+      if (response) {
+        return next({
+          name: 'dashboard-analytics'
+        })
+      }
+
+      return next()
+    })
+  } else if (to.matched.some((record) => record.meta.userAuth)) {
+    return Vue.auth.check().then((response) => {
+      if (!response) {
+        return next({
+          name: 'auth-signin'
+        })
+      }
+
+      return next()
+    })
+  } else {
+    return next()
+  }
+})
 
 // Set this to false to prevent the production tip on Vue startup.
 Vue.config.productionTip = false

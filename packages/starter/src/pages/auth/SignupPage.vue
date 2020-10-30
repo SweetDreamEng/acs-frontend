@@ -17,7 +17,7 @@
             name="name"
             outlined
             @keyup.enter="submit"
-            @change="resetErrors"
+            @input="resetErrors"
           ></v-text-field>
 
           <v-text-field
@@ -30,7 +30,7 @@
             name="email"
             outlined
             @keyup.enter="submit"
-            @change="resetErrors"
+            @input="resetErrors"
           ></v-text-field>
 
           <v-text-field
@@ -43,14 +43,23 @@
             :label="$t('register.password')"
             name="password"
             outlined
-            @change="resetErrors"
+            @input="resetErrors"
             @keyup.enter="submit"
             @click:append="showPassword = !showPassword"
           ></v-text-field>
 
+          <v-alert
+            v-if="errorMessages"
+            dense
+            outlined
+            type="error"
+          >
+            {{ errorMessages }}
+          </v-alert>
+
           <v-btn
             :loading="isLoading"
-            :disabled="isSignUpDisabled"
+            :disabled="isLoading"
             block
             x-large
             color="primary"
@@ -88,13 +97,10 @@
 | Template for user sign up with external providers buttons
 |
 */
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      // sign up buttons
-      isLoading: false,
-      isSignUpDisabled: false,
-
       // form
       isFormValid: true,
       email: '',
@@ -115,43 +121,47 @@ export default {
       // show password field
       showPassword: false,
 
-      // external providers
-      providers: [{
-        id: 'google',
-        label: 'Google',
-        isLoading: false
-      }, {
-        id: 'facebook',
-        label: 'Facebook',
-        isLoading: false
-      }],
-
       // input rules
       rules: {
         required: (value) => (value && Boolean(value)) || 'Required'
       }
     }
   },
+  computed: {
+    ...mapState({
+      isLoading: (state) => state.auth.button_loading,
+      errorMessages: (state) => state.auth.error
+    })
+  },
+  mounted() {
+    this.clearError()
+  },
   methods: {
+    ...mapActions({
+      'signup': 'auth/signup',
+      'clearError': 'auth/clearError'
+    }),
     submit() {
       if (this.$refs.form.validate()) {
-        this.isLoading = true
-        this.isSignUpDisabled = true
-        this.signUp(this.email, this.password)
+        this.signup({
+          name: this.name,
+          email: this.email,
+          password: this.password
+        })
       }
     },
-    signUp(email, password) {},
     signInProvider(provider) {},
     resetErrors() {
-      this.errorName = false
-      this.errorEmail = false
-      this.errorPassword = false
-      this.errorNameMessage = ''
-      this.errorEmailMessage = ''
-      this.errorPasswordMessage = ''
+      this.clearError()
+      // this.errorName = false
+      // this.errorEmail = false
+      // this.errorPassword = false
+      // this.errorNameMessage = ''
+      // this.errorEmailMessage = ''
+      // this.errorPasswordMessage = ''
 
-      this.errorProvider = false
-      this.errorProviderMessages = ''
+      // this.errorProvider = false
+      // this.errorProviderMessages = ''
     }
   }
 }
