@@ -15,6 +15,18 @@
           :search="searchQuery"
           @click:row="productView"
         >
+          <template v-slot:top>
+            <v-text-field
+              v-model="searchQuery"
+              append-icon="mdi-magnify"
+              solo
+              hide-details
+              dense
+              clearable
+              placeholder="Search"
+              class="mx-1"
+            ></v-text-field>
+          </template>
           <template v-slot:header.status="{ header }">
             <v-icon color="primary">mdi-chevron-double-right</v-icon>
             {{ header.text }}
