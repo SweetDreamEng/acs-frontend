@@ -1,8 +1,10 @@
 const module = {
+  namespaced: true,
   state: {
     data: [
       {
         id: 1,
+        customerId: 3,
         parameters: [],
         status: 'Warning',
         machinename: 'BD Batch Blender',
@@ -14,6 +16,7 @@ const module = {
       },
       {
         id: 2,
+        customerId: 3,
         parameters: [],
         status: 'Normal',
         machinename: 'Accumeter Ovation Continuous',
@@ -25,6 +28,7 @@ const module = {
       },
       {
         id: 3,
+        customerId: 3,
         parameters: [],
         status: 'Normal',
         machinename: 'GH Gravimetric Extrusion Control',
@@ -36,6 +40,7 @@ const module = {
       },
       {
         id: 4,
+        customerId: 3,
         parameters: [],
         status: 'Alarm',
         machinename: 'GH-F Gravimetric Additive',
@@ -47,6 +52,7 @@ const module = {
       },
       {
         id: 5,
+        customerId: 2,
         parameters: [],
         status: 'Normal',
         machinename: 'VTC Plus Conveying',
@@ -58,6 +64,7 @@ const module = {
       },
       {
         id: 6,
+        customerId: 2,
         parameters: [],
         status: 'Normal',
         machinename: 'NGX',
@@ -69,6 +76,7 @@ const module = {
       },
       {
         id: 7,
+        customerId: 2,
         parameters: [],
         status: 'Normal',
         machinename: 'NGX Nomad',
@@ -80,6 +88,7 @@ const module = {
       },
       {
         id: 8,
+        customerId: 1,
         parameters: [],
         status: 'Warning',
         machinename: 'Truetemp',
@@ -91,6 +100,7 @@ const module = {
       },
       {
         id: 9,
+        customerId: 1,
         parameters: [],
         status: 'Not',
         machinename: 'GP & HE Central',
@@ -102,6 +112,7 @@ const module = {
       },
       {
         id: 10,
+        customerId: 1,
         parameters: [],
         status: 'Normal',
         machinename: 'T50 Central',

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // Routes
+import ACSMachines from './acs-machines.routes'
 import PagesRoutes from './pages.routes'
 import UsersRoutes from './users.routes'
 
@@ -19,6 +20,7 @@ export const routes = [{
   name: 'dashboard-product',
   component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/DashboardProduct.vue')
 },
+...ACSMachines,
 ...PagesRoutes,
 ...UsersRoutes,
 {

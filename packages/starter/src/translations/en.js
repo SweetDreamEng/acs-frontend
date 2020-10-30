@@ -118,6 +118,7 @@ export default {
   },
   menu: {
     search: 'Search (press \'ctrl + /\' to focus)',
+    ACSMachines: 'ACS Machines',
     dashboard: 'Machines',
     logout: 'Logout',
     profile: 'Profile',

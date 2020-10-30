@@ -6,6 +6,7 @@ export default {
     text: '',
     key: '',
     items: [
+      { icon: 'mdi-view-dashboard-outline', key: 'menu.ACSMachines', text: 'ACS Machines', link: '/acs-machines' },
       { icon: 'mdi-view-dashboard-outline', key: 'menu.dashboard', text: 'Machines', link: '/dashboard/analytics' },
       { icon: 'mdi-account-multiple', key: 'menu.userPages', text: 'User Access', link: '/users/list' },
       { icon: 'mdi-speedometer', key: 'menu.threshold', text: 'Threshold', regex: /^\/threshold/,
