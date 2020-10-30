@@ -122,12 +122,12 @@ export default {
       return item.status === 'Not' ? true : false
     },
     productView(item) {
-      // this.$router.push({
-      //   name: 'dashboard-product',
-      //   params: {
-      //     id: item.id
-      //   }
-      // })
+      this.$router.push({
+        name: 'dashboard-product',
+        params: {
+          id: item.id
+        }
+      })
     },
     customerName(id) {
       return this.customers.find((customer) => customer.id === id).name
