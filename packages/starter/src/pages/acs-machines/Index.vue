@@ -3,14 +3,39 @@
     <v-card>
       <v-card-title>
         ACS Machines
+        <v-btn
+          text
+          class="ml-auto"
+          @click="showColumnFilter = !showColumnFilter"
+        >{{ showColumnFilter ? 'Close' : 'Add/Remove Columns' }}</v-btn>
       </v-card-title>
+      <v-card-subtitle>
+        <v-expand-transition>
+          <div v-show="showColumnFilter">
+            <v-row>
+              <v-col xs="12" sm="6" md="4" class="py-1">
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Customer Name" value="customerName"></v-checkbox>
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Running" value="status"></v-checkbox>
+              </v-col>
+              <v-col xs="12" sm="6" md="4" class="py-1">
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Machine Names" value="machinename"></v-checkbox>
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Capacity Utilization" value="capacity"></v-checkbox>
+              </v-col>
+              <v-col xs="12" sm="6" md="4" class="py-1">
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Consumption" value="consumption"></v-checkbox>
+                <v-checkbox class="mt-1" v-model="parameterIds" label="Zones" value="department"></v-checkbox>
+              </v-col>
+            </v-row>
+          </div>
+        </v-expand-transition>
+      </v-card-subtitle>
       <v-card-text>
         <div v-if="isLoading1" class="d-flex flex-grow-1 align-center justify-center">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
         <v-data-table
           v-else
-          :headers="headers"
+          :headers="filtedHeaders"
           :items="machines"
           :search="searchQuery"
           @click:row="productView"
@@ -86,21 +111,22 @@ export default {
       ],
 
       // hours: 8,
-      searchQuery: ''
-      // showColumnFilter: false,
-      // parameterIds: ['status', 'machinename', 'capacity', 'consumption', 'department']
+      searchQuery: '',
+      showColumnFilter: false,
+      parameterIds: ['customerName', 'status', 'machinename', 'capacity', 'consumption', 'department']
     }
   },
   computed: {
-    // filtedHeaders() {
-    //   return this.headers.filter((header) => {
-    //     return this.parameterIds.includes(header.value)
-    //   })
-    // }
     ...mapState({
       machines: (state) => state.machines.data,
       customers: (state) => state.customers.data
-    })  },
+    }),
+    filtedHeaders() {
+      return this.headers.filter((header) => {
+        return this.parameterIds.includes(header.value)
+      })
+    }
+  },
   mounted() {
     let count = 0
 

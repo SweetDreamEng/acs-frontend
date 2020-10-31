@@ -4,7 +4,7 @@ export default [
     name: 'acs-machines',
     component: () => import(/* webpackChunkName: "acs-machines" */ '@/pages/acs-machines/Index.vue'),
     meta: {
-      userAuth: true
+      // userAuth: true
     }
   }
 ]
