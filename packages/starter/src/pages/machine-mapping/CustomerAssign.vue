@@ -226,7 +226,7 @@ export default {
     ...mapGetters('customers', [
       'customerNames'
     ]),
-    ...mapGetters([
+    ...mapGetters('machines', [
       'machineNames'
     ]),
     extendedMachineNames() {
