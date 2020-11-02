@@ -7,7 +7,7 @@
           <div class="flex-grow-1 pt-2 pa-sm-2">
             <v-form ref="accountForm" v-model="isAccountFormValid" lazy-validation @submit.prevent="submit">
               <v-text-field
-                v-model="customer.name"
+                v-model="customer.companyName"
                 :rules="[rules.required]"
                 :validate-on-blur="false"
                 label="Customer/Company Name"
@@ -42,11 +42,12 @@
 |
 | Account tab in customer add page
 */
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
       customer: {
-        'name': '',
+        'companyName': '',
         'administratorName': '',
         'administratorEmail': ''
       },
@@ -58,9 +59,17 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      button_loading: (state) => state.customers.button_loading
+    })
+  },
   methods: {
+    ...mapActions({
+      addCustomer: 'customers/addCustomer'
+    }),
     submit() {
-
+      this.addCustomer(this.customer)
     }
   }
 }
