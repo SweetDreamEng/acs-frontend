@@ -22,6 +22,18 @@ const module = {
   },
 
   actions: {
+    getCustomers({
+      commit
+    }) {
+      this.$axios.get('/customers')
+        .then((response) => {
+          console.log(response.data)
+          commit('SET_DATA', response.data.companies)
+        })
+        .catch((error) => {
+          console.log(error.response.data)
+        })
+    },
     addCustomer({
       commit
     }, {
@@ -60,6 +72,10 @@ const module = {
 
     BUTTON_CLEAR(state) {
       state.button_loading = false
+    },
+
+    SET_DATA(state, customers) {
+      state.data = customers
     }
   },
 

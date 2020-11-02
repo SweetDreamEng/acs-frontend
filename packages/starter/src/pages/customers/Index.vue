@@ -21,8 +21,8 @@
         <template v-slot:item.id="{ item }">
           <div># {{ item.id }}</div>
         </template>
-        <template v-slot:item.created="{ item }">
-          <div>{{ item.created | formatDate('ll') }}</div>
+        <template v-slot:item.created_at="{ item }">
+          <div>{{ item.created_at | formatDate('ll') }}</div>
         </template>
 
         <template v-slot:item.lastSignIn="{ item }">
@@ -50,7 +50,7 @@
 |
 | List all customers and customer add/edit options
 */
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -68,7 +68,7 @@ export default {
         { text: 'Id', align: 'left', value: 'id' },
         { text: 'Customer Name', value: 'name' },
         { text: 'Administrator Name', value: 'administratorName' },
-        { text: 'Created At', value: 'created' },
+        { text: 'Created At', value: 'created_at' },
         { text: 'Last SignIn', value: 'lastSignIn' },
         { text: '', sortable: false, align: 'right', value: 'action' }
       ]
@@ -81,9 +81,16 @@ export default {
   },
   watch: {
   },
+  mounted() {
+    this.open()
+  },
   methods: {
-    searchUser() {},
-    open() {}
+    ...mapActions({
+      getCustomers: 'customers/getCustomers'
+    }),
+    open() {
+      this.getCustomers()
+    }
   }
 }
 </script>

@@ -11,21 +11,28 @@
                 :rules="[rules.required]"
                 :validate-on-blur="false"
                 label="Customer/Company Name"
+                placeholder="Ex: Acme Inc"
               ></v-text-field>
               <v-text-field
                 v-model="customer.administratorName"
                 :rules="[rules.required]"
                 :validate-on-blur="false"
                 label="Administrator Name"
+                placeholder="Jane Doe"
               ></v-text-field>
               <v-text-field
                 v-model="customer.administratorEmail"
                 :rules="[rules.required]"
                 :validate-on-blur="false"
                 label="Administrator Email"
+                placeholder="jane.doe@example.com"
               ></v-text-field>
               <div class="mt-2">
-                <v-btn type="submit" color="primary">Save</v-btn>
+                <v-btn
+                  type="submit"
+                  color="primary"
+                  :loading="button_loading"
+                >Save</v-btn>
               </div>
             </v-form>
           </div>
@@ -69,7 +76,9 @@ export default {
       addCustomer: 'customers/addCustomer'
     }),
     submit() {
-      this.addCustomer(this.customer)
+      if (this.$refs.accountForm.validate()) {
+        this.addCustomer(this.customer)
+      }
     }
   }
 }
