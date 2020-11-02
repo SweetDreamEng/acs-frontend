@@ -27,8 +27,8 @@ const module = {
 
       this.$axios.post('/auth/signup', data)
         .then((response) => {
-          commit('SET_TOKEN', response.data.token)
-          Vue.auth.setToken(response.data.token)
+          commit('SET_TOKEN', response.data.access_token)
+          Vue.auth.setToken(response.data.access_token)
           this.$axios.post('/auth/check')
             .then((response) => {
               commit('BUTTON_CLEAR')
@@ -68,8 +68,8 @@ const module = {
 
       this.$axios.post('/auth/signin', data)
         .then((response) => {
-          commit('SET_TOKEN', response.data.token)
-          Vue.auth.setToken(response.data.token)
+          commit('SET_TOKEN', response.data.access_token)
+          Vue.auth.setToken(response.data.access_token)
           this.$axios.post('/auth/check')
             .then((response) => {
               commit('BUTTON_CLEAR')
@@ -86,7 +86,7 @@ const module = {
         })
         .catch((error) => {
           commit('BUTTON_CLEAR')
-          if (error.response.status === 401) {
+          if (error.response.status === 400) {
             commit('SET_ERROR', {
               'error': 'Email and password incorrect.'
             })

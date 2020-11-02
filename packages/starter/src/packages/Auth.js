@@ -19,7 +19,7 @@ export default function (Vue) {
       return axios.post('/auth/check')
         .then((response) =>  {
           // store.dispatch('SET_TOKEN', )
-          return (response.data !== null)
+          return (response.data)
         })
         .catch(() => {
           this.removeToken('token')
