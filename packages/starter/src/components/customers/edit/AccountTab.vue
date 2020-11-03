@@ -7,20 +7,20 @@
           <div class="flex-grow-1 pt-2 pa-sm-2">
             <v-form ref="accountForm" v-model="isAccountFormValid" lazy-validation @submit.prevent="submit">
               <v-text-field
-                v-model="customer.name"
+                v-model="customerAccount.name"
                 :rules="[rules.required]"
                 :validate-on-blur="false"
                 label="Customer/Company Name"
               ></v-text-field>
               <v-text-field
-                v-model="customer.administratorName"
+                v-model="customerAccount.administratorName"
                 :rules="[rules.required]"
                 :validate-on-blur="false"
                 label="Administrator Name"
               ></v-text-field>
               <v-text-field
-                v-model="customer.administratorEmail"
-                :rules="[rules.required]"
+                v-model="customerAccount.administratorEmail"
+                :rules="[rules.required, rules.emailFormat]"
                 :validate-on-blur="false"
                 label="Administrator Email"
               ></v-text-field>
@@ -95,14 +95,20 @@
 |
 | Account tab in customer edit page
 */
+import { mapActions } from 'vuex'
 export default {
+  props: {
+    customerAccount: {
+      type: Object,
+      default: () => ({
+        name: '',
+        administratorName: '',
+        administratorEmail: ''
+      })
+    }
+  },
   data() {
     return {
-      customer: {
-        'name': 'Customer name',
-        'administratorName': 'Administrator name',
-        'administratorEmail': 'admin@gmail.com'
-      },
       isAccountFormValid: true,
 
       panel: [1],
@@ -114,13 +120,19 @@ export default {
 
       // input rules
       rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
+        required: (value) => (value && Boolean(value)) || 'Required',
+        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
       }
     }
   },
   methods: {
+    ...mapActions({
+      updateAccount: 'customers/updateAccount'
+    }),
     submit() {
-
+      if (this.$refs.accountForm.validate()) {
+        this.updateAccount(this.customerAccount)
+      }
     }
   }
 }

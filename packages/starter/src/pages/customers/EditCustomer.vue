@@ -18,11 +18,11 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item value="tabs-account">
-        <account-tab></account-tab>
+        <account-tab :customer-account="customerAccount"></account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
-        <information-tab></information-tab>
+        <information-tab :customer-profile="customerProfile"></information-tab>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -37,6 +37,7 @@
 |
 | Edit certain customer
 */
+import { mapState, mapActions } from 'vuex'
 
 import AccountTab from '../../components/customers/edit/AccountTab'
 import InformationTab from '../../components/customers/edit/InformationTab'
@@ -61,8 +62,22 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState({
+      customerAccount: (state) => state.customers.customerAccount,
+      customerProfile: (state) => state.customers.customerProfile
+    })
+  },
+  mounted() {
+    this.open()
+  },
   methods: {
-    
+    ...mapActions({
+      getCustomer: 'customers/getCustomer'
+    }),
+    open() {
+      this.getCustomer(this.$route.params.id)
+    }
   }
 }
 </script>

@@ -25,13 +25,13 @@
           <div>{{ item.created_at | formatDate('ll') }}</div>
         </template>
 
-        <template v-slot:item.lastSignIn="{ item }">
+<!--         <template v-slot:item.lastSignIn="{ item }">
           <div>{{ item.lastSignIn | formatDate('lll') }}</div>
-        </template>
+        </template> -->
 
-        <template v-slot:item.action="{ }">
+        <template v-slot:item.action="{ item }">
           <div class="actions">
-            <v-btn icon to="/customers/edit">
+            <v-btn icon :to="editLink(item)">
               <v-icon>mdi-open-in-new</v-icon>
             </v-btn>
           </div>
@@ -69,7 +69,7 @@ export default {
         { text: 'Customer Name', value: 'name' },
         { text: 'Administrator Name', value: 'administratorName' },
         { text: 'Created At', value: 'created_at' },
-        { text: 'Last SignIn', value: 'lastSignIn' },
+        // { text: 'Last SignIn', value: 'lastSignIn' },
         { text: '', sortable: false, align: 'right', value: 'action' }
       ]
     }
@@ -90,6 +90,9 @@ export default {
     }),
     open() {
       this.getCustomers()
+    },
+    editLink(item) {
+      return '/customers/edit/' + item.id
     }
   }
 }

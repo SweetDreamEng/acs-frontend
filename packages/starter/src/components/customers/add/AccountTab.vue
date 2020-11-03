@@ -22,7 +22,7 @@
               ></v-text-field>
               <v-text-field
                 v-model="customer.administratorEmail"
-                :rules="[rules.required]"
+                :rules="[rules.required, rules.emailFormat]"
                 :validate-on-blur="false"
                 label="Administrator Email"
                 placeholder="jane.doe@example.com"
@@ -62,7 +62,8 @@ export default {
 
       // input rules
       rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
+        required: (value) => (value && Boolean(value)) || 'Required',
+        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
       }
     }
   },

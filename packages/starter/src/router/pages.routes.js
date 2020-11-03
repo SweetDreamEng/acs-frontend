@@ -6,15 +6,17 @@ export default [{
     layout: 'auth',
     userNotAuth: true
   }
-}, {
-  path: '/auth/signup',
-  name: 'auth-signup',
-  component: () => import(/* webpackChunkName: "auth-signup" */ '@/pages/auth/SignupPage.vue'),
-  meta: {
-    layout: 'auth',
-    userNotAuth: true
-  }
-}, {
+},
+//{
+//  path: '/auth/signup',
+//  name: 'auth-signup',
+//  component: () => import(/* webpackChunkName: "auth-signup" */ '@/pages/auth/SignupPage.vue'),
+//  meta: {
+//    layout: 'auth',
+//    userNotAuth: true
+//  }
+//},
+{
   path: '/auth/verify-email',
   name: 'auth-verify-email',
   component: () => import(/* webpackChunkName: "auth-verify-email" */ '@/pages/auth/VerifyEmailPage.vue'),
@@ -90,15 +92,24 @@ export default [{
 }, {
   path: '/customers/list',
   name: 'customers-list',
-  component: () => import(/* webpackChunkName: "customers-list" */ '@/pages/customers/Index.vue')
+  component: () => import(/* webpackChunkName: "customers-list" */ '@/pages/customers/Index.vue'),
+  meta: {
+    userAuth: true
+  }
 }, {
   path: '/customers/add',
   name: 'customers-add',
-  component: () => import(/* webpackChunkName: "customers-add" */ '@/pages/customers/AddCustomer.vue')
+  component: () => import(/* webpackChunkName: "customers-add" */ '@/pages/customers/AddCustomer.vue'),
+  meta: {
+    userAuth: true
+  }
 }, {
-  path: '/customers/edit',
+  path: '/customers/edit/:id',
   name: 'customers-edit',
-  component: () => import(/* webpackChunkName: "customers-edit" */ '@/pages/customers/EditCustomer.vue')
+  component: () => import(/* webpackChunkName: "customers-edit" */ '@/pages/customers/EditCustomer.vue'),
+  meta: {
+    userAuth: true
+  }
 }, {
   path: '/division-zones',
   name: 'division-zones',

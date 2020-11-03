@@ -168,7 +168,8 @@ export default {
       })
     },
     customerName(id) {
-      return this.customers.find((customer) => customer.id === id).name
+      // return this.customers.find((customer) => customer.id === id).name
+      return 'Customer Name'
     }
   }
 }

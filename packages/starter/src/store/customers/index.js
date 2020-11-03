@@ -18,7 +18,9 @@ const module = {
       // { id: 12, name: 'Pegatron', created:'2019-05-02T21:01:49Z', lastSignIn:'2019-09-03T20:54:17Z', administratorName: 'Dorian Brendeke' },
       // { id: 13, name: 'AB Volvo', created:'2019-12-21T04:53:45Z', lastSignIn:'2020-06-05T19:04:53Z', administratorName: 'Clifford Meron' },
       // { id: 14, name: 'Magna International', created:'2020-03-28T18:59:34Z', lastSignIn:'2019-10-08T13:59:08Z', administratorName: 'Neile Juanes' }
-    ]
+    ],
+    customerAccount: null,
+    customerProfile: null
   },
 
   actions: {
@@ -27,8 +29,7 @@ const module = {
     }) {
       this.$axios.get('/customers')
         .then((response) => {
-          console.log(response.data)
-          commit('SET_DATA', response.data.companies)
+          commit('SET_CUSTOMERS', response.data.companies)
         })
         .catch((error) => {
           console.log(error.response.data)
@@ -54,6 +55,54 @@ const module = {
           commit('BUTTON_CLEAR')
           console.log(error.response.data)
         })
+    },
+    getCustomer({
+      commit
+    }, id) {
+      this.$axios.get(`/customers/${id}`)
+        .then((response) => {
+          commit('SET_CUSTOMER_ACCOUNT', response.data.company)
+          commit('SET_CUSTOMER_PROFILE', response.data.profile)
+        })
+        .catch((error) => {
+          console.log(error.response.data)
+        })
+    },
+    updateAccount({
+      commit
+    }, account) {
+      this.$axios.post(`/customers/update-account/${account.id}`, {
+        name: account.name,
+        administrator_name: account.administratorName,
+        administrator_email: account.administratorEmail
+      })
+        .then((response) => {
+          console.log(response.data)
+          // commit('SET_CUSTOMER', response.data.company)
+        })
+        .catch((error) => {
+          // console.log(error.response.data)
+        })
+    },
+    updateProfile({
+      commit
+    }, data) {
+      this.$axios.post(`/customers/update-profile/${data.id}`, {
+        address_1: data.address_1,
+        address_2: data.address_2,
+        zip: data.zip,
+        state: data.state,
+        city: data.city,
+        country: data.country,
+        phone: data.phone
+      })
+        .then((response) => {
+          console.log(response.data)
+          // commit('SET_CUSTOMER', response.data.company)
+        })
+        .catch((error) => {
+          // console.log(error.response.data)
+        })
     }
   },
 
@@ -74,8 +123,15 @@ const module = {
       state.button_loading = false
     },
 
-    SET_DATA(state, customers) {
+    SET_CUSTOMERS(state, customers) {
       state.data = customers
+    },
+
+    SET_CUSTOMER_ACCOUNT(state, customerAccount) {
+      state.customerAccount = customerAccount
+    },
+    SET_CUSTOMER_PROFILE(state, customerProfile) {
+      state.customerProfile = customerProfile
     }
   },
 
