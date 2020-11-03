@@ -60,12 +60,12 @@
       </v-card-text>
     </v-card>
 
-    <div class="text-center mt-6">
+<!--     <div class="text-center mt-6">
       {{ $t('login.noaccount') }}
       <router-link to="/auth/signup" class="font-weight-bold">
         {{ $t('login.create') }}
       </router-link>
-    </div>
+    </div> -->
   </div>
 </template>
 

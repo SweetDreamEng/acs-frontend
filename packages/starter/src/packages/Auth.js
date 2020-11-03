@@ -18,7 +18,9 @@ export default function (Vue) {
     check() {
       return axios.post('/auth/check')
         .then((response) =>  {
-          // store.dispatch('SET_TOKEN', )
+          // store.dispatch('SET_USER', response.data.user)
+          console.log(response.data)
+
           return (response.data)
         })
         .catch(() => {

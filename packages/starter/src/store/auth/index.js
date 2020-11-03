@@ -5,8 +5,11 @@ const module = {
   namespaced: true,
   state: {
     token: null,
-    email: null,
-    username: null,
+    user: {
+      role: null,
+      email: null,
+      username: null
+    },
     error: null,
     loading: true,
     button_loading: false
@@ -57,8 +60,7 @@ const module = {
     signIn({
       commit
     }, {
-      email,
-      password
+      email, password
     }) {
       commit('BUTTON_LOAD')
       const data = {
@@ -124,6 +126,40 @@ const module = {
           }
         })
     },
+    updatePassword({
+      commit
+    }, {
+      currentPassword, newPassword
+    }) {
+      commit('BUTTON_LOAD')
+      const data = {
+        current_password: currentPassword,
+        new_password: newPassword
+      }
+
+      this.$axios.post('/auth/update-password', data)
+        .then((response) => {
+          commit('BUTTON_CLEAR')
+        })
+        .catch((error) => {
+          commit('BUTTON_CLEAR')
+          if (error.response.status === 401) {
+            commit('SET_ERROR', {
+              'error': 'Email and password incorrect.'
+            })
+          } else if (error.response.status === 400) {
+            commit('SET_ERROR', {
+              'error': error.response.data.error
+            })
+          } else if (error.response.status === 422) {
+            const errors = Object.values(error.response.data.error).flat()
+
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
+          }
+        })
+    },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     }
@@ -140,8 +176,9 @@ const module = {
       state.token = token
     },
     SET_AUTH_DATA(state, user) {
-      state.email = user.email
-      state.username = user.username
+      state.user.email = user.email
+      state.user.username = user.username
+      state.user.role = user.role
     },
     SET_LOGOUT_ATUH(state) {
       state.token = null
@@ -162,10 +199,7 @@ const module = {
       return state.token
     },
     profile: (state) => {
-      return {
-        email: state.email,
-        username: state.username
-      }
+      return state.user
     }
   }
 }

@@ -1,9 +1,10 @@
 <template>
   <div>
     <!-- menu level 1 -->
-    <nav-menu-item v-for="(level1Item, level1Index) in menu" :key="level1Index" :menu-item="level1Item">
-      <template v-if="level1Item.items">
+    <nav-menu-item v-for="(level1Item, level1Index) in menuForRoles" :key="level1Index" :menu-item="level1Item">
 
+      <template v-if="level1Item.items">
+        {{ level1Item.text }}
         <!-- menu level 2 -->
         <nav-menu-item
           v-for="(level2Item, level2Index) in level1Item.items"
@@ -29,6 +30,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import NavMenuItem from './NavMenuItem'
 
 /*
@@ -59,6 +61,16 @@ export default {
     menu: {
       type: Array,
       default: () => []
+    }
+  },
+  computed: {
+    ...mapState({
+      role: (state) => state.auth.user.role
+    }),
+    menuForRoles() {
+      return this.menu.filter((menu_item) => {
+        return menu_item.visibleFor ? menu_item.visibleFor.includes(this.role) : true
+      })
     }
   }
 }

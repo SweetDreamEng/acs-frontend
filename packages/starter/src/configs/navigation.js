@@ -6,7 +6,7 @@ export default {
     text: '',
     key: '',
     items: [
-      { icon: 'mdi-view-dashboard-outline', key: 'menu.ACSMachines', text: 'ACS Machines', link: '/acs-machines' },
+      { icon: 'mdi-view-dashboard-outline', key: 'menu.ACSMachines', text: 'ACS Machines', link: '/acs-machines', visibleFor: ['acs_admin'] },
       { icon: 'mdi-view-dashboard-outline', key: 'menu.dashboard', text: 'Machines', link: '/dashboard/analytics' },
       { icon: 'mdi-account-multiple', key: 'menu.userPages', text: 'User Access', link: '/users/list' },
       { icon: 'mdi-speedometer', key: 'menu.threshold', text: 'Threshold', regex: /^\/threshold/,
@@ -21,7 +21,7 @@ export default {
           { key: 'menu.customerAssign', text: 'Add Threshold', link: '/customer-assign' }
         ]
       },
-      { icon: 'mdi-account-multiple', key: 'menu.customerPages', text: 'Customers', link: '/customers/list' },
+      { icon: 'mdi-account-multiple', key: 'menu.customerPages', text: 'Customers', link: '/customers/list', visibleFor: ['acs_admin'] },
       { icon: 'mdi-account-multiple', key: 'menu.divisionZonesPage', text: 'Division/Zones', link: '/division-zones' }
     ]
   }
