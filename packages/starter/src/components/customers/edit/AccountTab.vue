@@ -25,7 +25,7 @@
                 label="Administrator Email"
               ></v-text-field>
               <div class="mt-2">
-                <v-btn type="submit" color="primary">Save</v-btn>
+                <v-btn type="submit" color="primary" :loading="isLoading">Save</v-btn>
               </div>
             </v-form>
           </div>
@@ -95,7 +95,7 @@
 |
 | Account tab in customer edit page
 */
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   props: {
     customerAccount: {
@@ -124,6 +124,11 @@ export default {
         emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
       }
     }
+  },
+  computed: {
+    ...mapState({
+      isLoading: (state) => state.customers.button_loading
+    })
   },
   methods: {
     ...mapActions({

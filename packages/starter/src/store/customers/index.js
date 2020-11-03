@@ -71,22 +71,26 @@ const module = {
     updateAccount({
       commit
     }, account) {
+      commit('BUTTON_LOAD')
       this.$axios.post(`/customers/update-account/${account.id}`, {
         name: account.name,
         administrator_name: account.administratorName,
         administrator_email: account.administratorEmail
       })
         .then((response) => {
-          console.log(response.data)
+          commit('BUTTON_CLEAR')
+          // console.log(response.data)
           // commit('SET_CUSTOMER', response.data.company)
         })
         .catch((error) => {
+          commit('BUTTON_CLEAR')
           // console.log(error.response.data)
         })
     },
     updateProfile({
       commit
     }, data) {
+      commit('BUTTON_LOAD')
       this.$axios.post(`/customers/update-profile/${data.id}`, {
         address_1: data.address_1,
         address_2: data.address_2,
@@ -97,10 +101,12 @@ const module = {
         phone: data.phone
       })
         .then((response) => {
-          console.log(response.data)
+          commit('BUTTON_CLEAR')
+          // console.log(response.data)
           // commit('SET_CUSTOMER', response.data.company)
         })
         .catch((error) => {
+          commit('BUTTON_CLEAR')
           // console.log(error.response.data)
         })
     }

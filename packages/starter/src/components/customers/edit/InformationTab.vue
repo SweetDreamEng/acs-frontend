@@ -28,7 +28,7 @@
           <div class="d-flex">
             <v-btn>Reset</v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" type="submit">Save</v-btn>
+            <v-btn color="primary" type="submit" :loading="isLoading">Save</v-btn>
           </div>
         </v-form>
       </v-card-text>
@@ -44,7 +44,7 @@
 |
 | Information tab in customer edit page
 */
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   props: {
     customerProfile: {
@@ -68,6 +68,11 @@ export default {
       (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
     ]
   }),
+  computed: {
+    ...mapState({
+      isLoading: (state) => state.customers.button_loading
+    })
+  },
   methods: {
     ...mapActions({
       updateProfile: 'customers/updateProfile'
