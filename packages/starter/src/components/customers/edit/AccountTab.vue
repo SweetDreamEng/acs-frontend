@@ -11,19 +11,25 @@
                 :rules="[rules.required]"
                 :validate-on-blur="false"
                 label="Customer/Company Name"
+                @input="resetErrors"
               ></v-text-field>
               <v-text-field
                 v-model="customerAccount.administratorName"
                 :rules="[rules.required]"
                 :validate-on-blur="false"
                 label="Administrator Name"
+                @input="resetErrors"
               ></v-text-field>
               <v-text-field
                 v-model="customerAccount.administratorEmail"
                 :rules="[rules.required, rules.emailFormat]"
                 :validate-on-blur="false"
                 label="Administrator Email"
+                @input="resetErrors"
               ></v-text-field>
+
+              <error-component :error="error"></error-component>
+
               <div class="mt-2">
                 <v-btn type="submit" color="primary" :loading="isLoading">Save</v-btn>
               </div>
@@ -96,7 +102,12 @@
 | Account tab in customer edit page
 */
 import { mapState, mapActions } from 'vuex'
+import ErrorComponent from '../../common/ErrorComponent'
+
 export default {
+  components: {
+    ErrorComponent
+  },
   props: {
     customerAccount: {
       type: Object,
@@ -127,17 +138,25 @@ export default {
   },
   computed: {
     ...mapState({
-      isLoading: (state) => state.customers.button_loading
+      isLoading: (state) => state.customers.button_loading,
+      error: (state) => state.customers.error
     })
+  },
+  destroyed() {
+    this.resetErrors()
   },
   methods: {
     ...mapActions({
-      updateAccount: 'customers/updateAccount'
+      updateAccount: 'customers/updateAccount',
+      clearError: 'customers/clearError'
     }),
     submit() {
       if (this.$refs.accountForm.validate()) {
         this.updateAccount(this.customerAccount)
       }
+    },
+    resetErrors() {
+      this.clearError()
     }
   }
 }

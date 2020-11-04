@@ -21,14 +21,7 @@
                 @input="resetErrors"
               ></v-text-field>
 
-              <v-alert
-                v-if="error"
-                dense
-                outlined
-                type="error"
-              >
-                {{ error }}
-              </v-alert>
+              <error-component :error="error"></error-component>
 
               <div class="mt-2">
                 <v-btn type="submit" color="primary" :loading="isLoading">Save</v-btn>
@@ -48,7 +41,12 @@
 |
 */
 import { mapState, mapActions } from 'vuex'
+import ErrorComponent from '../../components/common/ErrorComponent'
+
 export default {
+  components: {
+    ErrorComponent
+  },
   data() {
     return {
       isPasswordFormValid: true,
@@ -69,6 +67,9 @@ export default {
       isLoading: (state) => state.auth.button_loading,
       error: (state) => state.auth.error
     })
+  },
+  destroyed() {
+    this.resetErrors()
   },
   methods: {
     ...mapActions({

@@ -2,7 +2,7 @@ const module = {
   namespaced: true,
   state: {
     button_loading: false,
-    error: '',
+    error: null,
     data: [
       // { id: 1, name: 'Mitsui', created:'2019-08-09T03:14:12Z', lastSignIn:'2019-08-14T20:00:53Z', administratorName: 'Cheryl Jerzycowski' },
       // { id: 2, name: 'Wilmar International', created:'2019-11-07T06:47:53Z', lastSignIn:'2019-09-20T01:11:13Z', administratorName: 'Merline Tuson' },
@@ -32,7 +32,6 @@ const module = {
           commit('SET_CUSTOMERS', response.data.companies)
         })
         .catch((error) => {
-          console.log(error.response.data)
         })
     },
     addCustomer({
@@ -85,7 +84,13 @@ const module = {
         })
         .catch((error) => {
           commit('BUTTON_CLEAR')
-          // console.log(error.response.data)
+          if (error.response.status === 422) {
+            const errors = Object.values(error.response.data.error).flat()
+
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
+          }
         })
     },
     updateProfile({
@@ -110,6 +115,9 @@ const module = {
           commit('BUTTON_CLEAR')
           // console.log(error.response.data)
         })
+    },
+    clearError({ commit }) {
+      commit('CLEAR_ERROR')
     }
   },
 
