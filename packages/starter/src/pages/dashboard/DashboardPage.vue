@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
     <v-row class="flex-grow-0" dense>
-      <v-col sm="12" md="5">
+      <v-col cols="12" sm="12" md="5">
         <top-level-details
           class="h-full"
           style="min-height: 380px"
@@ -12,7 +12,7 @@
           :action-label="$t('dashboard.viewReport')"
         ></top-level-details>
       </v-col>
-      <v-col sm="12" md="7">
+      <v-col cols="12" sm="12" md="7">
         <sales-card
           class="h-full"
           style="min-height: 380px"
@@ -160,7 +160,7 @@ export default {
       const remainding = this.total - parseInt(this.page - 1) * 4
 
       console.log(remainding)
-      
+
       return remainding >= 4 ? 4 : remainding
     },
     pageLen() {

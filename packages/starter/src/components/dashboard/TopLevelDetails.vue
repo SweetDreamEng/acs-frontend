@@ -3,7 +3,7 @@
     <v-card>
       <v-card-text>
         <v-row dense>
-          <v-col sm="12" md="6">
+          <v-col cols="12" sm="6" md="6">
             <v-card outlined tile class="elevation-2">
               <v-card-title>Today's Production</v-card-title>
               <v-card-text class="primary--text">
@@ -13,7 +13,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col sm="12" md="6">
+          <v-col cols="12" sm="6" md="6">
             <v-card outlined tile class="elevation-2">
               <v-card-title>First Pass Yield</v-card-title>
               <v-card-text class="primary--text">
@@ -23,7 +23,7 @@
           </v-col>
         </v-row>
         <v-row dense>
-          <v-col sm="12" md="6">
+          <v-col cols="12" sm="6" md="6">
             <v-card outlined tile class="elevation-2">
               <v-card-title>Average Daily Production(this wk)</v-card-title>
               <v-card-text class="primary--text">
@@ -31,7 +31,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col sm="12" md="6">
+          <v-col cols="12" sm="6" md="6">
             <v-card outlined tile class="elevation-2">
               <v-card-title>Avg First Past Yield (this wk)</v-card-title>
               <v-card-text class="primary--text">
