@@ -36,7 +36,7 @@ const module = {
         })
     },
     addCustomer({
-      commit
+      commit, dispatch
     }, {
       companyName, administratorName, administratorEmail
     }) {
@@ -50,6 +50,7 @@ const module = {
       this.$axios.post('/customers/add', data)
         .then((response) => {
           commit('BUTTON_CLEAR')
+          dispatch('app/showSuccess', response.data, { root: true })
         })
         .catch((error) => {
           commit('BUTTON_CLEAR')
@@ -69,7 +70,7 @@ const module = {
         })
     },
     updateAccount({
-      commit
+      commit, dispatch
     }, account) {
       commit('BUTTON_LOAD')
       this.$axios.post(`/customers/update-account/${account.id}`, {
@@ -78,8 +79,8 @@ const module = {
         administrator_email: account.administratorEmail
       })
         .then((response) => {
+          dispatch('app/showSuccess', response.data, { root: true })
           commit('BUTTON_CLEAR')
-          // console.log(response.data)
           // commit('SET_CUSTOMER', response.data.company)
         })
         .catch((error) => {

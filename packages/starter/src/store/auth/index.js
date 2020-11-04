@@ -130,7 +130,7 @@ const module = {
         })
     },
     updatePassword({
-      commit
+      commit, dispatch
     }, {
       currentPassword, newPassword
     }) {
@@ -142,6 +142,7 @@ const module = {
 
       this.$axios.post('/auth/update-password', data)
         .then((response) => {
+          dispatch('app/showSuccess', response.data.message, { root: true })
           commit('BUTTON_CLEAR')
         })
         .catch((error) => {
