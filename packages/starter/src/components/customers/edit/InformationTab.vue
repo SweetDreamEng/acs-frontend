@@ -6,12 +6,12 @@
         <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation @submit.prevent="submit">
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field label="Address Line 1" v-model="customerProfile.address_1"></v-text-field>
-              <v-text-field label="Address Line 2" v-model="customerProfile.address_2"></v-text-field>
-              <v-text-field label="Zip Code" v-model="customerProfile.zip"></v-text-field>
-              <v-text-field label="City" v-model="customerProfile.city"></v-text-field>
-              <v-text-field label="State" v-model="customerProfile.state"></v-text-field>
-              <v-text-field label="Country" v-model="customerProfile.country"></v-text-field>
+              <v-text-field v-model="customerProfile.address_1" label="Address Line 1"></v-text-field>
+              <v-text-field v-model="customerProfile.address_2" label="Address Line 2"></v-text-field>
+              <v-text-field v-model="customerProfile.zip" label="Zip Code"></v-text-field>
+              <v-text-field v-model="customerProfile.city" label="City"></v-text-field>
+              <v-text-field v-model="customerProfile.state" label="State"></v-text-field>
+              <v-text-field v-model="customerProfile.country" label="Country"></v-text-field>
             </v-col>
 
             <v-col cols="12" md="6">

@@ -77,6 +77,9 @@ const module = {
               commit('BUTTON_CLEAR')
               commit('CLEAR_ERROR')
               commit('SET_AUTH_DATA', response.data)
+              
+              console.log(response.data)
+
               router.push({
                 name: 'acs-machines'
               })
