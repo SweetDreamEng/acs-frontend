@@ -1,7 +1,18 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
     <v-row class="flex-grow-0" dense>
-      <v-col cols="12">
+      <v-col sm="12" md="5">
+        <top-level-details
+          class="h-full"
+          style="min-height: 380px"
+          :value="1.832"
+          :percentage="3.2"
+          :loading="isLoading1"
+          :percentage-label="$t('dashboard.lastweek')"
+          :action-label="$t('dashboard.viewReport')"
+        ></top-level-details>
+      </v-col>
+      <v-col sm="12" md="7">
         <sales-card
           class="h-full"
           style="min-height: 380px"
@@ -12,8 +23,21 @@
           :action-label="$t('dashboard.viewReport')"
         ></sales-card>
       </v-col>
-
-      <v-col sm="12" md="8">
+      <v-col cols="12">
+        <location
+          v-for="i in locationCountInPage"
+          :key="i"
+          class="my-1"
+          :title="locationTitle(i)"
+        ></location>
+        <div class="text-center pt-2">
+          <v-pagination
+            v-model="page"
+            :length="pageLen"
+          ></v-pagination>
+        </div>
+      </v-col>
+      <v-col cols="12">
         <machines-table-card
           class="h-full"
           style="min-height: 380px"
@@ -22,17 +46,16 @@
           :loading="isLoading1"
         ></machines-table-card>
       </v-col>
-      <v-col sm="12" md="4">
-        <total-runtime
+      <v-col cols="12">
+<!--         <total-runtime
           :loading="isLoading1"
           :series="series"
           label="Uptime Percentage"
         >
-        </total-runtime>
-        <br>
-        <status-card
+        </total-runtime> -->
+<!--         <status-card
           label="Run time Categories"
-        ></status-card>
+        ></status-card> -->
       </v-col>
 
       <v-col cols="12">
@@ -63,13 +86,15 @@ import { mapState } from 'vuex'
 // DEMO Cards for dashboard
 import SalesCard from '../../components/dashboard/SalesCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
-import StatusCard from '../../components/dashboard/StatusCard'
-import TotalRuntime from '../../components/dashboard/TotalRuntime'
+import TopLevelDetails from '../../components/dashboard/TopLevelDetails'
+import Location from '../../components/dashboard/Location'
+// import StatusCard from '../../components/dashboard/StatusCard'
+// import TotalRuntime from '../../components/dashboard/TotalRuntime'
 import OverviewCard from '../../components/dashboard/OverviewCard'
 
 export default {
   components: {
-    SalesCard, MachinesTableCard, StatusCard, TotalRuntime, OverviewCard
+    SalesCard, MachinesTableCard, OverviewCard, TopLevelDetails, Location
   },
   data() {
     return {
@@ -78,6 +103,9 @@ export default {
       isLoading1: true,
 
       series: [44, 55],
+
+      page: 1,
+      total: 9,
 
       markers: [{
         position: {
@@ -127,11 +155,26 @@ export default {
   computed: {
     ...mapState({
       machines: (state) => state.machines.data
-    })
+    }),
+    locationCountInPage() {
+      const remainding = this.total - parseInt(this.page - 1) * 4
+
+      console.log(remainding)
+      
+      return remainding >= 4 ? 4 : remainding
+    },
+    pageLen() {
+      return parseInt(this.total / 4) + 1
+    }
   },
   methods: {
     clear() {
       clearInterval(this.loadingInterval)
+    },
+    locationTitle(i) {
+      const num = parseInt(i) + parseInt(this.page - 1) * 4
+
+      return 'Location ' + num
     }
   }
 }

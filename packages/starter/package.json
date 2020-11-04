@@ -28,6 +28,7 @@
     "vue-i18n": "^8.18.1",
     "vue-router": "^3.2.0",
     "vue-shortkey": "^3.1.7",
+    "vue-speedometer": "^1.7.0",
     "vue2-google-maps": "^0.10.7",
     "vuedraggable": "^2.24.0",
     "vuetify": "^2.3.9",

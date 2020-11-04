@@ -16,6 +16,7 @@ Vue.use(Vuex)
 const axios = require('axios')
 
 axios.defaults.baseURL = 'http://localhost/acs-api/public/api'
+// console.log(process.env.SERVER_API_ENDPOINT)
 
 axios.interceptors.request.use(
   (config) => {

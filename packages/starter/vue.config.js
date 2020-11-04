@@ -27,5 +27,6 @@ module.exports = {
     'vue-echarts',
     'resize-detector',
     'vuetify'
-  ]
+  ],
+  runtimeCompiler: true
 }
