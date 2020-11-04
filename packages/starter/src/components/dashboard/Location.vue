@@ -13,22 +13,22 @@
       <v-card-text>
         <v-row dense>
           <v-col xs="12" sm="6" md="3">
-            <v-card outlined>
+            <v-card outlined height="300">
               <v-card-text>
-                <div class="subtitle-1">Machine status: <span class="green--text">Running</span></div>
-                <div class="subtitle-1">Energy usage/cycle: <span class="primary--text">0.07kw</span></div>
-                <div class="subtitle-1">Operational efficiency: <span class="primary--text">75</span></div>
+                <div class="">Machine status: <span class="subtitle-1 green--text">Running</span></div>
+                <div class="">Energy usage/cycle: <span class="subtitle-1 primary--text">0.07kw</span></div>
+                <div class="">Operational efficiency: <span class="subtitle-1 primary--text">75</span></div>
               </v-card-text>
             </v-card>
           </v-col>
           <v-col xs="12" sm="6" md="3">
-            <v-card outlined>
+            <v-card outlined height="300">
               <v-card-text>
                 <div class="title text-center">Capacity utilization</div>
                 <vue-speedometer
                   :maxSegmentLabels="0"
                   :width="200"
-                  :height="200"
+                  :height="190"
                   :ringWidth="25"
                   :needleHeightRatio="0.7"
                   :segments="70"
@@ -42,13 +42,13 @@
             </v-card>
           </v-col>
           <v-col xs="12" sm="6" md="4">
-            <v-card outlined>
+            <v-card outlined height="300">
               <v-card-text class="d-flex">
                 <div>
                   <div class="title text-center">Cycle Time</div>
                   <vue-speedometer
                     :width="200"
-                    :height="200"
+                    :height="140"
                     :ringWidth="25"
                     :needleHeightRatio="0.7"
                     :maxSegmentLabels="0"
@@ -61,12 +61,12 @@
                     style="text-align: center"
                     :forceRender="true"
                   />
+                  <div class="title text-center">
+                    Actual Target
+                    <v-icon color="green" style="font-size: 50px;">mdi-menu-down</v-icon>
+                  </div>
                 </div>
                 <div class="">
-                  <div class="title">
-                    Actual Target
-                    <v-icon large color="green">mdi-menu-down</v-icon>
-                  </div>
                   <div class="text-right">
                     <div class="title">6.18</div>
                     <div class="title">6.20</div>
@@ -77,7 +77,7 @@
             </v-card>
           </v-col>
           <v-col xs="12" sm="6" md="2">
-            <v-card outlined>
+            <v-card outlined height="300">
               <v-card-text>
                 <div class="title text-center">Uptime percentage</div>
                 <apexchart type="radialBar" height="200" :options="chartOptions" :series="series"></apexchart>

@@ -37,8 +37,8 @@
     <!-- modal -->
     <v-dialog v-model="dialog" max-width="350">
       <v-card>
-        <v-card-title>Overview</v-card-title>
-        <v-card-text>
+        <v-card-title class="primary white--text">Overview</v-card-title>
+        <v-card-text class="mt-4">
           <v-alert
             dense
             outlined
