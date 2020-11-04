@@ -13,7 +13,7 @@
       <v-card-text>
         <v-row dense>
           <v-col xs="12" sm="6" md="3">
-            <v-card outlined height="300">
+            <v-card outlined height="260">
               <v-card-text>
                 <div class="">Machine status: <span class="subtitle-1 green--text">Running</span></div>
                 <div class="">Energy usage/cycle: <span class="subtitle-1 primary--text">0.07kw</span></div>
@@ -22,7 +22,7 @@
             </v-card>
           </v-col>
           <v-col xs="12" sm="6" md="3">
-            <v-card outlined height="300">
+            <v-card outlined height="260">
               <v-card-text>
                 <div class="title text-center">Capacity utilization</div>
                 <vue-speedometer
@@ -42,7 +42,7 @@
             </v-card>
           </v-col>
           <v-col xs="12" sm="6" md="4">
-            <v-card outlined height="300">
+            <v-card outlined height="260">
               <v-card-text>
                 <div class="title text-center">Cycle Time</div>
                 <div class="d-flex">
@@ -79,7 +79,7 @@
             </v-card>
           </v-col>
           <v-col xs="12" sm="6" md="2">
-            <v-card outlined height="300">
+            <v-card outlined height="260">
               <v-card-text>
                 <div class="title text-center">Uptime percentage</div>
                 <apexchart type="radialBar" height="200" :options="chartOptions" :series="series"></apexchart>
