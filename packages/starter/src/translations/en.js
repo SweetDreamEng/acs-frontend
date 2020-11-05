@@ -51,11 +51,11 @@ export default {
   },
   dashboard: {
     activity: 'Activity',
-    weeklyUtil: 'Weekly Utlization',
+    weeklyUtil: 'Targeted Utilization',
     capacity: 'Capacity Utilization',
     recentOrders: 'Recent Orders',
     sources: 'Traffic Sources',
-    lastweek: 'vs last week',
+    lastweek: 'vs target',
     orders: 'Orders',
     customers: 'Customers',
     tickets: 'Support Tickets',

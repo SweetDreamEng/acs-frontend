@@ -94,22 +94,22 @@ export default {
           data: [17, 26, 25, 15, 32]
         },
         {
-          id: 2,
+          id: 3,
           name: 'blender capability',
           data: [8, 22, 15, 20, 15]
         },
         {
-          id: 3,
+          id: 4,
           name: 'process rate',
           data: [32, 9, 9, 38, 35]
         },
         {
-          id: 4,
+          id: 5,
           name: 'hopper stable',
           data: [18, 6, 18, 18, 12]
         },
         {
-          id: 5,
+          id: 6,
           name: 'station conveying',
           data: [22, 32, 12, 8, 10]
         }

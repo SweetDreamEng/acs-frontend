@@ -19,8 +19,8 @@
           <div class="text-h4">
             {{ 58.49 | percentageLabel }}
           </div>
-          <div class="primary--text text--lighten-1 mt-1">
-            {{ 3.21 | percentageLabel }} {{ $t('dashboard.lastweek') }}
+          <div class="primary--text text--lighten-4 mt-1">
+            {{ 1.04 | percentageLabel }} {{ $t('dashboard.lastweek') }}
           </div>
         </div>
 
@@ -31,7 +31,7 @@
           <div class="d-flex align-center">
             <div class="text-h4">
               <!-- {{ value | formatPercentage }} -->
-              {{ value }}
+              {{ 55 | percentageLabel }}
             </div>
             <v-spacer></v-spacer>
             <div class="d-flex flex-column text-right">
@@ -87,14 +87,17 @@ export default {
     },
     percentageLabel: {
       type: String,
-      default: 'vs. last week'
+      default: 'vs. target'
     },
     series: {
       type: Array,
-      default: () => [{
-        name: 'Hours',
-        data: [11, 32, 45, 32, 34, 52, 41]
-      }]
+      default: () => [
+        {
+          id: 1,
+          name: 'Ours',
+          data: [14, 30, 16, 32, 56]
+        }
+      ]
     },
     xaxis: {
       type: Object,
@@ -105,9 +108,7 @@ export default {
           '2018-09-20T00:00:00.000Z',
           '2018-09-21T00:00:00.000Z',
           '2018-09-22T00:00:00.000Z',
-          '2018-09-23T00:00:00.000Z',
-          '2018-09-24T00:00:00.000Z',
-          '2018-09-25T00:00:00.000Z'
+          '2018-09-23T00:00:00.000Z'
         ]
       })
     },
