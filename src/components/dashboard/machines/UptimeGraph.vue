@@ -3,6 +3,7 @@
     v-if="!isLoading1"
     type="radialBar"
     height="150"
+    width="180"
     :options="chartOptions"
     :series="series"
   >

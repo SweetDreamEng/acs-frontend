@@ -53,13 +53,14 @@
               </v-list>
               <div class="text-center"><span class="red--text">2%</span> decline today</div> -->
               <v-card-actions>
+                <v-spacer></v-spacer>
                 <v-btn
                   text
                   color="red accent-4"
+                  @click="alarmReports=true"
                 >
                   Alarms reported
                 </v-btn>
-                <v-spacer></v-spacer>
                 <v-btn icon>
                   <v-icon color="red darken-2">mdi-bell</v-icon>
                 </v-btn>
@@ -119,13 +120,13 @@
               </v-list>
               <div class="text-center"><span class="green--text">11%</span> increase today</div> -->
               <v-card-actions>
+                <v-spacer></v-spacer>
                 <v-btn
                   text
                   color="green accent-4"
                 >
                   View Report
                 </v-btn>
-                <v-spacer></v-spacer>
                 <v-btn icon>
                   <v-icon color="green ">mdi-chart-bar</v-icon>
                 </v-btn>
@@ -135,11 +136,19 @@
         </v-col>
       </v-row>
     </div>
+
+    <v-dialog v-model="alarmReports" max-width="400">
+      <alarm-reports @close="alarmReports=false"></alarm-reports>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import AlarmReports from './AlarmReports'
 export default {
+  components: {
+    AlarmReports
+  },
   data() {
     return {
       showChart: false,
@@ -236,7 +245,9 @@ export default {
       // },
       viewOptions: [
         'Daily', 'Weekly', 'Monthly'
-      ]
+      ],
+
+      alarmReports: false
     }
   },
   mounted() {
