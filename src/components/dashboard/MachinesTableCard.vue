@@ -11,7 +11,7 @@
           multiple
           class="flex-grow-0 ml-auto"
         >
-          <template v-slot:selection="{ item }">
+          <template v-slot:selection="{ attrs, item }">
             <v-chip
               v-bind="attrs"
               close
@@ -24,19 +24,16 @@
         </v-combobox>
       </v-card-title>
       <v-card-subtitle>
-        <div class="d-flex flex-wrap justify-space-between">
-          <span class="mr-2 font-weight-bold" style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
-          <v-slider
-            v-model="hours"
-            max="24"
-            min="8"
-            step="1"
-            thumb-label
-            ticks
-            prepend-icon="mdi-clock"
-            style="min-width: 140px; max-width: 260px;"
-            hide-details
-          ></v-slider>
+        <div class="">
+          <v-btn
+            rounded
+            outlined
+            color="primary"
+            dark
+            @click="timeRageDlg=true"
+          >
+            Local Time: {{ timeRangeLabel }}
+          </v-btn>
         </div>
         <div>
           <v-text-field
@@ -90,6 +87,165 @@
         </v-data-table>
       </v-card-text>
     </v-card>
+    <v-dialog v-model="timeRageDlg" width="400">
+      <v-card>
+        <v-card-title class="primary white--text">Time Range
+        </v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col
+              cols="12"
+              sm="6"
+              md="6"
+            >
+              <v-radio-group
+                v-model="timeRange"
+              >
+                <v-radio
+                  v-for="(item, i) in timeRageOptions1"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                ></v-radio>
+              </v-radio-group>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="6"
+              md="6"
+            >
+              <v-radio-group
+                v-model="timeRange"
+              >
+                <v-radio
+                  v-for="(item, i) in timeRageOptions2"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                ></v-radio>
+              </v-radio-group>
+            </v-col>
+          </v-row>
+
+          <v-divider></v-divider>
+
+          <v-expand-transition>
+            <div v-show="timeRange==='custom'">
+              <div class="d-flex">
+                <v-menu
+                  ref="dateFrom"
+                  v-model="dateFromMenu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  width="250px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="dateFrom"
+                      label="Picker in menu"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="dateFrom"
+                    no-title
+                    scrollable
+                    @input="dateFromMenu = false"
+                  >
+                  </v-date-picker>
+                </v-menu>
+                <v-menu
+                  ref="timeFrom"
+                  v-model="timeFromMenu"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="timeFrom"
+                  transition="scale-transition"
+                  offset-y
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="timeFrom"
+                      label="Picker in menu"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="timeFromMenu"
+                    v-model="timeFrom"
+                    @click:minute="$refs.timeFrom.save(timeFrom)"
+                  ></v-time-picker>
+                </v-menu>
+              </div>
+
+              <div class="d-flex">
+                <v-menu
+                  ref="dateTo"
+                  v-model="dateToMenu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  width="250px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="dateTo"
+                      label="Picker in menu"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="dateTo"
+                    no-title
+                    scrollable
+                    @input="dateToMenu = false"
+                  >
+                  </v-date-picker>
+                </v-menu>
+                <v-menu
+                  ref="timeTo"
+                  v-model="timeToMenu"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="timeTo"
+                  transition="scale-transition"
+                  offset-y
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="timeTo"
+                      label="Picker in menu"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="timeToMenu"
+                    v-model="timeTo"
+                    @click:minute="$refs.timeTo.save(timeTo)"
+                  ></v-time-picker>
+                </v-menu>
+              </div>
+            </div>
+          </v-expand-transition>
+          <div class="text-right">
+            <v-btn color="primary" @click="timeRageDlg = false">Apply</v-btn>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -134,8 +290,63 @@ export default {
 
       hours: 8,
       searchQuery: '',
-      showColumnFilter: false,
-      headerColumnValues: []
+      timeRageDlg: false,
+      row: '',
+      headerColumnValues: ['Running', 'Machine Name', 'Capacity Utilization', 'Consumption', 'Zones'],
+
+      timeRageOptions1: [
+        {
+          label: 'Last 30 minutes',
+          value: 'last30Min'
+        },
+        {
+          label: 'Last hour',
+          value: 'lastHour'
+        },
+        {
+          label: 'Last 4 hours',
+          value: 'last4Hours'
+        },
+        {
+          label: 'Last 12 hours',
+          value: 'last12Hours'
+        },
+        {
+          label: 'Last 24 hours',
+          value: 'last24Hours'
+        }
+      ],
+      timeRageOptions2: [
+        {
+          label: 'Last 48 hours',
+          value: 'last48Hours'
+        },
+        {
+          label: 'Last 3 dasy',
+          value: 'last3Days'
+        },
+        {
+          label: 'Last 7 days',
+          value: 'last7Days'
+        },
+        {
+          label: 'Last 24 days',
+          value: 'last24Days'
+        },
+        {
+          label: 'Custom',
+          value: 'custom'
+        }
+      ],
+      timeRange: 'last24Hours',
+      dateFromMenu: false,
+      dateFrom: '',
+      timeFromMenu: false,
+      timeFrom: '',
+      dateToMenu: false,
+      dateTo: '',
+      timeToMenu: false,
+      timeTo: ''
     }
   },
   computed: {
@@ -146,6 +357,9 @@ export default {
     },
     headerColumns() {
       return this.headers.map((header) => header.text)
+    },
+    timeRangeLabel() {
+      return this.timeRageOptions1.concat(this.timeRageOptions2).find((range) => range.value === this.timeRange).label
     }
   },
   methods: {
@@ -186,8 +400,3 @@ export default {
   }
 }
 </script>
-<style>
-  /*table tbody tr.background-alert {
-    background: #f98787 !important;
-  }*/
-</style>
