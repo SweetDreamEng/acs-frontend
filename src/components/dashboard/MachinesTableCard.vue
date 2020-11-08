@@ -3,30 +3,27 @@
     <v-card>
       <v-card-title>
         {{ label }}
-        <v-btn
-          text
-          class="ml-auto"
-          @click="showColumnFilter = !showColumnFilter"
-        >{{ showColumnFilter ? 'Close' : 'Add/Remove Columns' }}</v-btn>
+        <v-combobox
+          v-model="headerColumnValues"
+          :items="headerColumns"
+          chips
+          label="Add/Remove Coloumns"
+          multiple
+          class="flex-grow-0 ml-auto"
+        >
+          <template v-slot:selection="{ item }">
+            <v-chip
+              v-bind="attrs"
+              close
+              small
+              @click:close="remove(item)"
+            >
+              {{ item }}
+            </v-chip>
+          </template>
+        </v-combobox>
       </v-card-title>
       <v-card-subtitle>
-        <v-expand-transition>
-          <div v-show="showColumnFilter">
-            <v-row>
-              <v-col xs="12" sm="6" md="4" class="py-1">
-                <v-checkbox v-model="parameterIds" class="mt-1" label="Running" value="status"></v-checkbox>
-                <v-checkbox v-model="parameterIds" class="mt-1" label="Machine Names" value="machinename"></v-checkbox>
-              </v-col>
-              <v-col xs="12" sm="6" md="4" class="py-1">
-                <v-checkbox v-model="parameterIds" class="mt-1" label="Capacity Utilization" value="capacity"></v-checkbox>
-                <v-checkbox v-model="parameterIds" class="mt-1" label="Consumption" value="consumption"></v-checkbox>
-              </v-col>
-              <v-col xs="12" sm="6" md="4" class="py-1">
-                <v-checkbox v-model="parameterIds" class="mt-1" label="Zones" value="department"></v-checkbox>
-              </v-col>
-            </v-row>
-          </div>
-        </v-expand-transition>
         <div class="d-flex flex-wrap justify-space-between">
           <span class="mr-2 font-weight-bold" style="margin-top: 4px">Use slider to adjust time period for 8-24 hours</span>
           <v-slider
@@ -138,14 +135,17 @@ export default {
       hours: 8,
       searchQuery: '',
       showColumnFilter: false,
-      parameterIds: ['status', 'machinename', 'capacity', 'consumption', 'department']
+      headerColumnValues: []
     }
   },
   computed: {
     filtedHeaders() {
       return this.headers.filter((header) => {
-        return this.parameterIds.includes(header.value)
+        return this.headerColumnValues.includes(header.text)
       })
+    },
+    headerColumns() {
+      return this.headers.map((header) => header.text)
     }
   },
   methods: {
@@ -178,6 +178,10 @@ export default {
           id: item.id
         }
       })
+    },
+    remove (item) {
+      this.headerColumnValues.splice(this.headerColumnValues.indexOf(item), 1)
+      this.headerColumnValues = [...this.headerColumnValues]
     }
   }
 }

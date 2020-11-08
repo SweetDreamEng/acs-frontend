@@ -56,13 +56,11 @@
                 <v-spacer></v-spacer>
                 <v-btn
                   text
-                  color="red accent-4"
+                  color="red"
                   @click="alarmReports=true"
                 >
                   Alarms reported
-                </v-btn>
-                <v-btn icon>
-                  <v-icon color="red darken-2">mdi-bell</v-icon>
+                  <v-icon right>mdi-bell</v-icon>
                 </v-btn>
               </v-card-actions>
             </div>
@@ -126,9 +124,7 @@
                   color="green accent-4"
                 >
                   View Report
-                </v-btn>
-                <v-btn icon>
-                  <v-icon color="green ">mdi-chart-bar</v-icon>
+                  <v-icon right>mdi-chart-bar</v-icon>
                 </v-btn>
               </v-card-actions>
             </div>

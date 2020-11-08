@@ -84,4 +84,7 @@ export default {
 .fade-leave-active {
   opacity: 0;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 </style>
