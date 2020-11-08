@@ -7,6 +7,7 @@
           v-model="headerColumnValues"
           :items="headerColumns"
           chips
+          solo
           label="Add/Remove Coloumns"
           multiple
           class="flex-grow-0 ml-auto"
@@ -24,7 +25,7 @@
         </v-combobox>
       </v-card-title>
       <v-card-subtitle>
-        <div class="">
+        <div class="text-right">
           <v-btn
             rounded
             outlined
@@ -241,6 +242,7 @@
             </div>
           </v-expand-transition>
           <div class="text-right">
+            <v-btn color="primary" text @click="timeRageDlg = false">Cancel</v-btn>
             <v-btn color="primary" @click="timeRageDlg = false">Apply</v-btn>
           </div>
         </v-card-text>
@@ -322,7 +324,7 @@ export default {
           value: 'last48Hours'
         },
         {
-          label: 'Last 3 dasy',
+          label: 'Last 3 days',
           value: 'last3Days'
         },
         {

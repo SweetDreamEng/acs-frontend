@@ -8,12 +8,14 @@
         class="d-flex align-center justify-space-between my-1"
       >
         <span>{{ alarm.productName }}</span>
-        <v-chip
-          color="red"
-          dark
+        <v-alert
+          type="error"
+          dense
+          outlined
+          class="mb-0"
         >
-          {{ alarm.message }}
-        </v-chip>
+          <small>{{ alarm.message }}</small>
+        </v-alert>
       </div>
     </v-card-text>
     <v-card-actions>
