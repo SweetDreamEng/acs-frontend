@@ -19,7 +19,7 @@
         <div class="pa-2">
           <!--div class="title font-weight-bold text-uppercase primary--text">{{ product.name }}</div>
           <div class="overline grey--text">{{ product.version }}</div-->
-          <v-img :src="require('../../public/images/logo-aec.png')" > </v-img>
+          <v-img :src="require('../assets/imgs/logo-aec.png')" > </v-img>
         </div>
       </template>
 

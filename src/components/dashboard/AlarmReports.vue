@@ -9,12 +9,9 @@
       >
         <span>{{ alarm.productName }}</span>
         <v-chip
-          color="pink"
+          color="red"
           dark
         >
-          <v-icon left>
-            mdi-alert-circle
-          </v-icon>
           {{ alarm.message }}
         </v-chip>
       </div>

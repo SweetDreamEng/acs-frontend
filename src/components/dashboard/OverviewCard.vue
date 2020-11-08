@@ -97,7 +97,7 @@ export default {
         lng: -87.6500523
       },
       markerOptions: {
-        url: require('../../assets/svg/gmap-icon.png'),
+        url: require('../../assets/imgs/gmap-icon.png'),
         size: { width: 90, height: 90, f: 'px', b: 'px' },
         scaledSize: { width: 36, height: 36, f: 'px', b: 'px' }
       },
