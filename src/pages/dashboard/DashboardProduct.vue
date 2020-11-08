@@ -10,6 +10,9 @@
       <div class="display-1">{{ selectedMachine.machinename }}</div>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
+          <product-analytics></product-analytics>
+        </v-col>
+        <v-col cols="12">
           <alarm-table
             label="Alarms"
             :loading="isLoading1"
@@ -57,6 +60,7 @@
 // import vuex helper functions
 import { mapGetters, mapActions } from 'vuex'
 
+import ProductAnalytics from '../../components/dashboard/product/ProductAnalytics'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
@@ -64,7 +68,7 @@ import NoteForm from '../../components/dashboard/NoteForm'
 
 export default {
   components: {
-    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable
+    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics
   },
   props: {
   },

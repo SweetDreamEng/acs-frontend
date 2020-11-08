@@ -11,6 +11,8 @@
         <v-data-table
           :headers="headers"
           :items="alarms"
+          :expanded.sync="expanded"
+          show-expand
           hide-default-footer
         >
           <!-- custom table header -->
@@ -46,6 +48,12 @@
             >
               <b>{{ item.status }}</b>
             </v-chip>
+          </template>
+          <template v-slot:expanded-item="{ headers, item }">
+            <td :colspan="headers.length" class="px-4">
+              <div>Alarm generated at {{ item.createdAt }} time</div>
+              <div>Alarm cleared at {{ item.createdAt }} time</div>
+            </td>
           </template>
         </v-data-table>
       </v-card-text>
@@ -83,20 +91,21 @@ export default {
         { text: 'Alarm', align: 'start', value: 'alarm' },
         { text: 'Status', align: 'start', value: 'status' },
         { text: 'Value', align: 'start', value: 'value' },
-        { text: 'Alarm activated at', align: 'start', value: 'createdAt' }
+        { text: 'Alarm activated at', align: 'start', value: 'createdAt' },
+        { text: '', value: 'data-table-expand' }
       ],
       alarms: [
         {
           id: 1,
           alarm: 'Power Loss',
-          status: 'Normal',
-          value: 0,
+          status: 'Alarm',
+          value: 76,
           createdAt: 'October 23rd, 2020 6:0 AM EST'
         },{
           id: 2,
           alarm: 'Out of Material',
-          status: 'Normal',
-          value: 0,
+          status: 'Alarm',
+          value: 27,
           createdAt: 'October 23rd, 2020 6:0 AM EST'
         },
         {
@@ -104,27 +113,6 @@ export default {
           alarm: 'Hopper Unstable',
           status: 'Alarm',
           value: 1,
-          createdAt: 'October 23rd, 2020 6:0 AM EST'
-        },
-        {
-          id: 4,
-          alarm: 'Hopper Overfeed',
-          status: 'Normal',
-          value: 1,
-          createdAt: 'October 23rd, 2020 6:0 AM EST'
-        },
-        {
-          id: 5,
-          alarm: 'Hopper Over Max',
-          status: 'Normal',
-          value: 55,
-          createdAt: 'October 23rd, 2020 6:0 AM EST'
-        },
-        {
-          id: 6,
-          alarm: 'Max Empty Weight',
-          status: 'Normal',
-          value: 233,
           createdAt: 'October 23rd, 2020 6:0 AM EST'
         },
         {
@@ -139,15 +127,9 @@ export default {
           status: 'Alarm',
           value: 1,
           createdAt: 'October 23rd, 2020 6:0 AM EST'
-        },
-        {
-          id: 9,
-          alarm: 'Pump Starter Fault',
-          status: 'Normal',
-          value: 885,
-          createdAt: 'October 23rd, 2020 6:0 AM EST'
         }
-      ]
+      ],
+      expanded: []
     }
   },
   methods: {
