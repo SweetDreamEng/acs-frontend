@@ -235,7 +235,7 @@ export default {
       return _machineNames
     },
     extendedCustomerNames() {
-      const _customerNames = this.machineNames
+      const _customerNames = this.customerNames
 
       _customerNames.unshift('Not assigned')
 
