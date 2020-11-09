@@ -56,10 +56,6 @@ export default {
             horizontal: false
           }
         },
-        fill: {
-          type: 'solid',
-          colors: ['#689F38']
-        },
         grid: {
           show: false
         },

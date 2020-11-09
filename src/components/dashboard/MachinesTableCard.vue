@@ -144,7 +144,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="dateFrom"
-                      label="Picker in menu"
+                      label="From Date"
                       prepend-icon="mdi-calendar"
                       readonly
                       v-bind="attrs"
@@ -171,7 +171,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="timeFrom"
-                      label="Picker in menu"
+                      label="From Time"
                       prepend-icon="mdi-clock-time-four-outline"
                       readonly
                       v-bind="attrs"
@@ -198,7 +198,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="dateTo"
-                      label="Picker in menu"
+                      label="To Date"
                       prepend-icon="mdi-calendar"
                       readonly
                       v-bind="attrs"
@@ -225,7 +225,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="timeTo"
-                      label="Picker in menu"
+                      label="To Time"
                       prepend-icon="mdi-clock-time-four-outline"
                       readonly
                       v-bind="attrs"

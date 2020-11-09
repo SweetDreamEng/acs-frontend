@@ -51,8 +51,8 @@
           </template>
           <template v-slot:expanded-item="{ headers, item }">
             <td :colspan="headers.length" class="px-4">
-              <div>Alarm generated at {{ item.createdAt }} time</div>
-              <div>Alarm cleared at {{ item.createdAt }} time</div>
+              <div class="pa-1">Alarm generated at {{ item.createdAt }} time</div>
+              <div class="pa-1">Alarm cleared at {{ item.createdAt }} time</div>
             </td>
           </template>
         </v-data-table>

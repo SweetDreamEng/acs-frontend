@@ -140,12 +140,6 @@ export default {
             speed: 400
           }
         },
-        colors: ['#689F38'],
-        fill: {
-          type: 'solid',
-          colors: ['#689F38'],
-          opacity: 0.15
-        },
         stroke: {
           curve: 'smooth',
           width: 2

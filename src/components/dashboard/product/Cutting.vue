@@ -4,7 +4,7 @@
       <strong>MC 1 Cutting</strong>
       <small class="ml-auto">1 Mon</small>
     </v-card-subtitle>
-    <v-card-text>
+    <v-card-text height="100%" class="d-flex align-center">
       <apexchart
         v-if="!isLoading1"
         type="radialBar"
