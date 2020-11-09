@@ -27,10 +27,10 @@
             <v-icon color="primary">mdi-information</v-icon>
             {{ header.text }}
           </template>
-          <template v-slot:header.value="{ header }">
+<!--           <template v-slot:header.value="{ header }">
             <v-icon color="primary">mdi-chart-bar</v-icon>
             {{ header.text }}
-          </template>
+          </template> -->
           <template v-slot:header.createdAt="{ header }">
             <v-icon color="primary">mdi-clock</v-icon>
             <span v-text="header.text"></span>
@@ -96,7 +96,7 @@ export default {
       headers: [
         { text: 'Alarm', align: 'start', value: 'alarm' },
         { text: 'Status', align: 'start', value: 'status' },
-        { text: 'Value', align: 'start', value: 'value' },
+        // { text: 'Value', align: 'start', value: 'value' },
         { text: 'Alarm activated at', align: 'start', value: 'createdAt' },
         { text: '', value: 'data-table-expand' }
       ],

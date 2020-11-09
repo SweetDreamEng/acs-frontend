@@ -25,9 +25,14 @@
         <cycle-graph></cycle-graph>
       </div>
       <v-divider class="my-2"></v-divider>
-      <div>
-        <div class="text-body-2">Energy usage/cycle: <span class="font-weight-bold">{{ card.energy || '0.07kW' }}</span></div>
-        <div class="text-body-2">Operational Efficiency: <span class="font-weight-bold">{{ card.efficiency || '75' }}</span></div>
+      <div class="d-flex flex-wrap justify-space-between">
+        <div>
+          <div class="text-body-2">Energy usage/cycle: <span class="font-weight-bold">{{ card.energy || '0.07kW' }}</span></div>
+          <div class="text-body-2">Operational Efficiency: <span class="font-weight-bold">{{ card.efficiency || '75' }}</span></div>
+        </div>
+        <div>
+          <v-btn text color="primary" class="ml-auto" to="/dashboard/product/1">View Details</v-btn>
+        </div>
       </div>
     </div>
   </v-card>
