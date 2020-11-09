@@ -25,17 +25,7 @@
         </v-combobox>
       </v-card-title>
       <v-card-subtitle>
-        <div class="text-right">
-          <v-btn
-            rounded
-            outlined
-            color="primary"
-            dark
-            @click="timeRageDlg=true"
-          >
-            Local Time: {{ timeRangeLabel }}
-          </v-btn>
-        </div>
+        <TimeRangeChooser />
         <div>
           <v-text-field
             v-model="searchQuery"
@@ -88,16 +78,6 @@
         </v-data-table>
       </v-card-text>
     </v-card>
-
-    <v-dialog v-model="timeRageDlg" width="400">
-      <TimeRangeChooser
-        :timeRange="timeRange"
-        :timeRageOptions="timeRageOptions"
-        @cancel="timeRageDlg = false"
-        @apply="applyTimeRange"
-      >
-      </TimeRangeChooser>
-    </v-dialog>
   </div>
 </template>
 
@@ -111,7 +91,7 @@ import { mapActions } from 'vuex'
 | Machines table card to list machines and their properties
 |
 */
-import TimeRangeChooser from './TimeRangeChooser'
+import TimeRangeChooser from './TimeRangeChooser1'
 export default {
   components: {
     TimeRangeChooser
@@ -248,7 +228,7 @@ export default {
     },
     applyTimeRange(timeRange) {
       console.log(timeRange)
-      
+
       this.timeRange = timeRange
       this.timeRageDlg = false
     }

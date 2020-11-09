@@ -1,7 +1,7 @@
 <template>
   <v-card height="100%">
     <v-card-subtitle class="d-flex justify-space-between">
-      <strong>Utilization & Availability</strong>
+      <strong>Inventory & Fractional Inventory</strong>
       <small class="ml-auto">1 Mon</small>
     </v-card-subtitle>
     <v-card-text class="d-flex align-center">
@@ -92,12 +92,12 @@ export default {
       default: () => [
         {
           id: 1,
-          name: 'Utilization',
+          name: 'Inventory',
           data: [88, 71, 84, 0, 0, 88, 88, 82, 88, 88, 0, 0, 48, 0, 88]
         },
         {
           id: 2,
-          name: 'Availability',
+          name: 'Fractional Inventory',
           data: [78, 61, 74, 0, 0, 78, 78, 72, 78, 78, 0, 0, 38, 0, 78]
         }
       ]

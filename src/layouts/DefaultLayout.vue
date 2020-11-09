@@ -148,7 +148,7 @@ export default {
   },
   data() {
     return {
-      drawer: null,
+      drawer: true,
       showSearch: false,
 
       navigation: config.navigation
