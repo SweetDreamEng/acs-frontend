@@ -19,7 +19,10 @@ export default [{
 {
   path: '/profile',
   name: 'profile',
-  component: () => import(/* webpackChunkName: "profile" */ '@/pages/profile/Index.vue')
+  component: () => import(/* webpackChunkName: "profile" */ '@/pages/profile/Index.vue'),
+  meta: {
+    userAuth: true
+  }
 }, {
   path: '/auth/verify-email',
   name: 'auth-verify-email',

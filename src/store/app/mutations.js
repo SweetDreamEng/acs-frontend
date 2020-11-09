@@ -5,9 +5,10 @@ export default {
    * Main Toast
    */
   showToast: (state, toast) => {
-    const { color, timeout, message } = toast
+    const { icon, color, timeout, message } = toast
 
     state.toast = {
+      icon,
       message,
       color,
       timeout,
@@ -19,6 +20,7 @@ export default {
   },
   resetToast: (state) => {
     state.toast = {
+      icon: '',
       show: false,
       color: 'black',
       message: '',

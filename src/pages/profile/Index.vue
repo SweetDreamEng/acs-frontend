@@ -10,6 +10,7 @@
                 v-model="passwordForm.currentPassword"
                 :rules="[rules.required]"
                 label="Current Password"
+                outlined
                 type="password"
                 @input="resetErrors"
               ></v-text-field>
@@ -17,6 +18,7 @@
                 v-model="passwordForm.newPassword"
                 :rules="[rules.required]"
                 label="New Password"
+                outlined
                 type="password"
                 @input="resetErrors"
               ></v-text-field>

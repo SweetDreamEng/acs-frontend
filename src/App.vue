@@ -7,9 +7,27 @@
       </transition>
     </component>
 
-    <v-snackbar v-model="toast.show" :timeout="toast.timeout" :color="toast.color" bottom>
-      {{ toast.message }}
-      <v-btn v-if="toast.timeout === 0" color="white" text @click="toast.show = false">{{ $t('common.close') }}</v-btn>
+    <v-snackbar
+      v-model="toast.show"
+      :timeout="toast.timeout"
+      :color="toast.color"
+      outlined
+      top
+      right
+    >
+      <div class="d-flex align-center">
+        <v-icon color="success" class="mr-2">{{ toast.icon }}</v-icon>
+        <span>{{ toast.message }}</span>
+      </div>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          icon
+          v-bind="attrs"
+          @click="toast.show = false"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
     </v-snackbar>
   </v-app>
 </template>
