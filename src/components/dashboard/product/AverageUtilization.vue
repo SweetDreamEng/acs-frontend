@@ -1,15 +1,21 @@
 <template>
-  <v-card height="100%">
-    <v-card-subtitle>
-      <v-card-subtitle class="d-flex justify-space-between">
-        <strong>Average runtime by week</strong>
-        <MonthlyWeekly />
+  <div>
+    <!-- loading spinner -->
+    <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
+      <v-progress-circular indeterminate color="secondary"></v-progress-circular>
+    </div>
+    <v-card height="100%">
+      <v-card-subtitle>
+        <v-card-subtitle class="d-flex justify-space-between">
+          <strong>Average runtime by week</strong>
+          <MonthlyWeekly />
+        </v-card-subtitle>
       </v-card-subtitle>
-    </v-card-subtitle>
-    <v-card-text>
-      <apexchart type="bar" height="150" :options="chartOptions" :series="series"></apexchart>
-    </v-card-text>
-  </v-card>
+      <v-card-text>
+        <apexchart type="bar" height="150" :options="chartOptions" :series="series"></apexchart>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>

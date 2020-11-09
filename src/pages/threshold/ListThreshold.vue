@@ -44,7 +44,7 @@
         <template v-slot:item.action="{ }">
           <div class="actions">
             <v-btn icon to="/threshold/edit">
-              <v-icon>mdi-open-in-new</v-icon>
+              <v-icon small>mdi-pencil</v-icon>
             </v-btn>
           </div>
         </template>
@@ -80,7 +80,7 @@ export default {
         { text: 'Date', value: 'date' },
         { text: 'SMS', value: 'sms' },
         { text: 'Status', value: 'status' },
-        { text: '', sortable: false, align: 'right', value: 'action' }
+        { text: '', sortable: false, align: 'center', value: 'action' }
       ],
       items: [
         {

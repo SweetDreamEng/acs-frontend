@@ -32,7 +32,7 @@
         <template v-slot:item.action="{ item }">
           <div class="actions">
             <v-btn icon :to="editLink(item)">
-              <v-icon>mdi-open-in-new</v-icon>
+              <v-icon small>mdi-pencil</v-icon>
             </v-btn>
           </div>
         </template>
