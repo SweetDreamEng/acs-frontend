@@ -6,6 +6,7 @@ export default {
     text: '',
     key: '',
     items: [
+      { icon: 'mdi-login', key: 'menu.authLogin', text: 'Sign In', link: '/auth/signin' },
       { icon: 'mdi-view-dashboard-outline', key: 'menu.ACSMachines', text: 'ACS Machines', link: '/acs-machines', visibleFor: ['acs_admin'] },
       { icon: 'mdi-view-dashboard-outline', key: 'menu.dashboard', text: 'Machines', link: '/dashboard/analytics' },
       { icon: 'mdi-account-multiple', key: 'menu.userPages', text: 'User Access', link: '/users/list' },
