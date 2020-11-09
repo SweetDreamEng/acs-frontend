@@ -5,34 +5,30 @@
     </div>
     <div v-else class="d-flex flex-column flex-grow-1">
       <v-card-title class="primary--text">
-        <v-btn
-          text
-          class="ml-auto"
-          @click="showChecks = !showChecks"
-        >Add Graph</v-btn>
+        <v-combobox
+          v-model="parameters"
+          :items="parameterOptions"
+          chips
+          solo
+          label="Add/Remove parameters"
+          multiple
+          class="flex-grow-0 ml-auto"
+        >
+          <template v-slot:selection="{ attrs, item }">
+            <v-chip
+              v-bind="attrs"
+              close
+              small
+              @click:close="remove(item)"
+            >
+              {{ item }}
+            </v-chip>
+          </template>
+        </v-combobox>
       </v-card-title>
 
       <v-card-text>
         <div class="px-2 pb-2">
-          <v-expand-transition>
-            <div v-show="showChecks">
-              <v-row>
-                <v-col xs="12" sm="6" md="4" class="py-1">
-                  <v-checkbox v-model="parameterIds" class="mt-1" label="batch size" :value="1"></v-checkbox>
-                  <v-checkbox v-model="parameterIds" class="mt-1" label="batch targets and action weights" :value="2"></v-checkbox>
-                </v-col>
-                <v-col xs="12" sm="6" md="4" class="py-1">
-                  <v-checkbox v-model="parameterIds" class="mt-1" label="blender capability" :value="3"></v-checkbox>
-                  <v-checkbox v-model="parameterIds" class="mt-1" label="process rate" :value="4"></v-checkbox>
-                </v-col>
-                <v-col xs="12" sm="6" md="4" class="py-1">
-                  <v-checkbox v-model="parameterIds" class="mt-1" label="hopper stable" :value="5"></v-checkbox>
-                  <v-checkbox v-model="parameterIds" class="mt-1" label="station conveying" :value="6"></v-checkbox>
-                </v-col>
-              </v-row>
-            </div>
-          </v-expand-transition>
-
           <v-divider></v-divider>
           <div class="mt-2">
             <v-icon color="secondary">mdi-magnify</v-icon><span class="mx-1">Zoom</span>
@@ -81,8 +77,10 @@ export default {
   },
   data() {
     return {
-      showChecks: false,
-      parameterIds: [],
+      parameters: [],
+      parameterOptions: [
+        'batch size', 'batch targets and action weights', 'blender capability', 'process rate', 'hopper stable', 'station conveying'
+      ],
       parameterSeries: [
         {
           id: 1,
@@ -146,8 +144,13 @@ export default {
   computed: {
     computedParameters() {
       return this.parameterSeries.filter( (param) => {
-        return this.parameterIds.includes(param.id) 
+        return this.parameters.includes(param.name) 
       })
+    }
+  },
+  methods: {
+    remove (item) {
+      this.parameters.splice(this.parameters.indexOf(item), 1)
     }
   }
 }
