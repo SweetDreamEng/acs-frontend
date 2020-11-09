@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-subtitle class="d-flex justify-space-between">
-      <strong>MC 1 Utilization</strong>
+      <strong>Utilization</strong>
       <small class="ml-auto">1 Mon</small>
     </v-card-subtitle>
     <v-card-text>

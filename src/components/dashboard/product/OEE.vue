@@ -1,7 +1,7 @@
 <template>
   <v-card height="100%">
     <v-card-subtitle class="d-flex justify-space-between">
-      <strong>Machine 1 Utilization & Availability</strong>
+      <strong>Utilization & Availability</strong>
       <small class="ml-auto">1 Mon</small>
     </v-card-subtitle>
     <v-card-text class="d-flex align-center">
@@ -13,37 +13,43 @@
         :series="series0"
       >
       </apexchart>
-      <div>
-        <v-chip
-          class="mt-1"
-          outlined
-          style="width: 68px;"
-          color="primary lighten-2"
-          label
-          dark
-        >
-          A: 100
-        </v-chip>
-        <v-chip
-          class="mt-1"
-          outlined
-          style="width: 68px;"
-          color="grey"
-          label
-          dark
-        >
-          P: 60
-        </v-chip>
-        <v-chip
-          class="mt-1"
-          outlined
-          style="width: 68px;"
-          color="orange"
-          label
-          dark
-        >
-          Q: 100
-        </v-chip>
+      <div class="d-flex flex-column mr-2">
+        <div>
+          <v-chip
+            class="mt-1"
+            outlined
+            style="width: 68px;"
+            color="primary lighten-2"
+            label
+            dark
+          >
+            A: 100
+          </v-chip>
+        </div>
+        <div>
+          <v-chip
+            class="mt-1"
+            outlined
+            style="width: 68px;"
+            color="grey"
+            label
+            dark
+          >
+            P: 60
+          </v-chip>
+        </div>
+        <div>
+          <v-chip
+            class="mt-1"
+            outlined
+            style="width: 68px;"
+            color="orange"
+            label
+            dark
+          >
+            Q: 100
+          </v-chip>
+        </div>
       </div>
       <apexchart
         type="area"
@@ -86,12 +92,12 @@ export default {
       default: () => [
         {
           id: 1,
-          name: 'Products',
+          name: 'Utilization',
           data: [88, 71, 84, 0, 0, 88, 88, 82, 88, 88, 0, 0, 48, 0, 88]
         },
         {
           id: 2,
-          name: 'Products',
+          name: 'Availability',
           data: [78, 61, 74, 0, 0, 78, 78, 72, 78, 78, 0, 0, 38, 0, 78]
         }
       ]

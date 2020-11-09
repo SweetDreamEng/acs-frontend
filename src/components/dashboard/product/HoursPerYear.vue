@@ -1,5 +1,9 @@
 <template>
-	<v-card height="100%" class="d-flex align-center">
+	<v-card height="100%">
+    <v-card-subtitle class="d-flex justify-space-between">
+      <strong>Operational Efficiency</strong>
+      <small class="ml-auto">1 Mon</small>
+    </v-card-subtitle>
 		<v-card-text>
       <apexchart
         v-if="!isLoading1"

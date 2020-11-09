@@ -191,7 +191,7 @@ export default {
       series: [44, 55],
 
       ordersSeries: [{
-        name: 'Orders',
+        name: 'FPY',
         data: [
           ['2020-02-02', 34],
           ['2020-02-03', 43],
@@ -201,7 +201,7 @@ export default {
       }],
 
       customersSeries: [{
-        name: 'Customers',
+        name: 'Avg FPY',
         data: [
           ['2020-02-02', 13],
           ['2020-02-03', 11],
