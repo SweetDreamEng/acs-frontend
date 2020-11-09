@@ -7,6 +7,9 @@
       <v-card-title color="primary">
         {{ label }}
       </v-card-title>
+      <v-card-subtitle>
+        <TimeRangeChooser1 />
+      </v-card-subtitle>
       <v-card-text>
         <v-data-table
           :headers="headers"
@@ -72,8 +75,11 @@
 */
 import moment from 'moment'
 import store from '../../../store'
+import TimeRangeChooser1 from '../TimeRangeChooser1'
+
 export default {
   components: {
+    TimeRangeChooser1
   },
   props: {
     label: {
