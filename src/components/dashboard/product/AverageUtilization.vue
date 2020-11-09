@@ -3,7 +3,7 @@
     <v-card-subtitle>
       <v-card-subtitle class="d-flex justify-space-between">
         <strong>Average runtime by week</strong>
-        <small class="ml-auto">1 Mon</small>
+        <MonthlyWeekly />
       </v-card-subtitle>
     </v-card-subtitle>
     <v-card-text>
@@ -23,7 +23,11 @@
 | your own dashboard component
 |
 */
+import MonthlyWeekly from '../MonthlyWeekly'
 export default {
+  components: {
+    MonthlyWeekly
+  },
   props: {
     label: {
       type: String,

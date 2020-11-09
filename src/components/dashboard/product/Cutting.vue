@@ -2,7 +2,7 @@
   <v-card height="100%">
     <v-card-subtitle class="d-flex justify-space-between">
       <strong>Current Recipe</strong>
-      <small class="ml-auto">1 Mon</small>
+      <MonthlyWeekly />
     </v-card-subtitle>
     <v-card-text height="100%" class="d-flex align-center">
       <apexchart
@@ -28,7 +28,11 @@
 | your own dashboard component
 |
 */
+import MonthlyWeekly from '../MonthlyWeekly'
 export default {
+  components: {
+    MonthlyWeekly
+  },
   props: {
     label: {
       type: String,
