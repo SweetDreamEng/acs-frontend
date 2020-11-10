@@ -9,13 +9,13 @@
           >
         </v-avatar>
         <h2 class="my-2 primary--text">{{ username }}</h2>
-        <div class="text-h5">{{ userRole }}</div>
+        <div class="text-h6">{{ roleName(userRole) }}</div>
       </v-card-text>
     </v-card>
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -25,8 +25,10 @@ export default {
     ...mapState({
       username: (state) => state.auth.user.username,
       userRole: (state) => state.auth.user.role
+    }),
+    ...mapGetters({
+      roleName: 'auth/roleName'
     })
   }
-
 }
 </script>

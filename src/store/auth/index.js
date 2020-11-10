@@ -10,6 +10,24 @@ const module = {
       email: null,
       username: null
     },
+    roles: [
+      {
+        'key': 'acs_admin',
+        'name': 'ACS Administrator'
+      }, {
+        'key': 'acs_manager',
+        'name': 'ACS Manager'
+      }, {
+        'key': 'customer_admin',
+        'name': 'Customer Administrator'
+      }, {
+        'key': 'customer_manager',
+        'name': 'Customer Manager'
+      }, {
+        'key': 'customer_operator',
+        'name': 'Customer Operator'
+      }
+    ],
     error: null,
     loading: true,
     button_loading: false
@@ -204,6 +222,9 @@ const module = {
     },
     profile: (state) => {
       return state.user
+    },
+    roleName: (state) => (role_key) => {
+      return state.roles.find((role) => role.key === role_key).name
     }
   }
 }
