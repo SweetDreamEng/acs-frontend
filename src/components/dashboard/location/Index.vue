@@ -15,7 +15,7 @@
           <v-col cols="6">
             <v-row dense>
               <v-col cols="6">
-                <production-rate class="ml-n2" />
+                <production-rate class="ml-n4" />
               </v-col>
               <v-col cols="6">
                 <OEE class="ml-n4"/>

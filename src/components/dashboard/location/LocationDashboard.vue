@@ -35,8 +35,6 @@
 </template>
 
 <script>
-// import VueSpeedometer from 'vue-speedometer'
-
 import ProductionRate from './ProductionRate'
 import OEE from './OEE'
 import AvgTrack from './AvgTrack'

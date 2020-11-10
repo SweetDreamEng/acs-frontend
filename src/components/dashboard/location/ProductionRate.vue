@@ -1,13 +1,18 @@
 <template>
-  <apexchart
-    v-if="!isLoading1"
-    type="radialBar"
-    height="180"
-    width="180"
-    :options="chartOptions"
-    :series="series"
-  >
-  </apexchart>
+  <div>
+    <div class="text-center">
+      Production Rate
+    </div>
+    <apexchart
+      v-if="!isLoading1"
+      type="radialBar"
+      height="180"
+      width="180"
+      :options="chartOptions"
+      :series="series"
+    >
+    </apexchart>
+  </div>
 </template>
 
 <script>
@@ -38,22 +43,10 @@ export default {
         },
         plotOptions: {
           radialBar: {
-            startAngle: -135,
-            endAngle: 135,
+            startAngle: -90,
+            endAngle: 90,
             dataLabels: {
-              name: {
-                fontSize: '12px',
-                color: '#222',
-                offsetY: 70
-              },
-              value: {
-                offsetY: -10,
-                fontSize: '24px',
-                color: '#092954',
-                formatter: function (val) {
-                  return val + '%'
-                }
-              }
+              show: false
             },
             track: {
               background: '#ccc'

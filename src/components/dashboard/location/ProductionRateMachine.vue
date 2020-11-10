@@ -1,11 +1,13 @@
 <template>
-  <apexchart
-    v-if="!isLoading1"
-    height="180"
-    :series="series"
-    :options="chartOptions"
-  >
-  </apexchart>
+  <div>
+    <apexchart
+      v-if="!isLoading1"
+      height="180"
+      :series="series"
+      :options="chartOptions"
+    >
+    </apexchart>
+  </div>
 </template>
 
 <script>
@@ -36,7 +38,10 @@ export default {
       chartOptions: {
         chart: {
           type: 'bar',
-          height: 430
+          height: 430,
+          toolbar: {
+            show: false
+          }
         },
         plotOptions: {
           bar: {
@@ -60,7 +65,7 @@ export default {
           colors: ['#fff']
         },
         xaxis: {
-          categories: [2001, 2002, 2003, 2004, 2005, 2006, 2007]
+          categories: [2001]
         }
       }
     }
