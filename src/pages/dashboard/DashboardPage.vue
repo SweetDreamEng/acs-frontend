@@ -84,7 +84,7 @@
     <v-card v-else>
       <v-card-title>
         Location 1
-        <v-btn text color="primary" @click="locationDetailsView = false" class="ml-auto">View Locations</v-btn>
+        <v-btn text color="primary" @click="locationDetailsView = false" class="ml-auto">Back to all locations</v-btn>
       </v-card-title>
       <v-card-text>
         <locations-section></locations-section>
