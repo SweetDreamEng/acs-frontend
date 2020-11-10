@@ -66,6 +66,7 @@ export default {
         },
         fill: {
           type: 'gradient',
+          colors: ['#092954'],
           gradient: {
             shade: 'light',
             shadeIntensity: 0.4,
