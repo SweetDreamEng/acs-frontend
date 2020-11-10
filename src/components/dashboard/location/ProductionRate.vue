@@ -43,7 +43,7 @@ export default {
             startAngle: -90,
             endAngle: 90,
             track: {
-              background: '#999'
+              background: '#d6d93d'
               // strokeWidth: '97%',
               // dropShadow: {
               //   enabled: true,
@@ -67,7 +67,7 @@ export default {
         },
         fill: {
           // type: 'gradient',
-          // colors: ['#092954'],
+          // colors: ['#092954',],
           gradient: {
             shade: 'light',
             shadeIntensity: 0.4,

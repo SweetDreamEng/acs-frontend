@@ -210,9 +210,9 @@ export default {
         dataLabels: {
           enabled: false
         },
-        colors: ['#d6d93d', '#3da5d9', '#999'],
+        colors: ['#d6d93d', '#219ae2', '#999'],
         fill: {
-          colors: ['#d6d93d', '#3da5d9', '#999']
+          colors: ['#d6d93d', '#219ae2', '#999']
         },
         legend: {
           offsetY: 40,
