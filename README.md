@@ -9,4 +9,4 @@
 > Compiles and minifies for production
 
 #### Create .env file and config api end point
-#### VUE_APP_SERVER_API_ENDPOINT="http://localhost/acs-api/public/api"
+> ex: VUE_APP_SERVER_API_ENDPOINT="http://localhost/acs-api/public/api"
