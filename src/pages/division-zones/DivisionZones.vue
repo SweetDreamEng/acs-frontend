@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <v-card>
+<!--     <v-card>
       <v-card-title>
         Divisions
         <v-dialog
@@ -78,7 +78,7 @@
           </template>
         </v-data-table>
       </v-card-text>
-    </v-card>
+    </v-card> -->
 
     <v-card class="mt-2">
       <v-card-title>
@@ -304,12 +304,12 @@ export default {
     },
     divisionNameOfZone(item) {
       if (item.divisionId === 0) return 'Not Assinged'
-      // const _division = this.divisions.find((division) => {
-      //   division.id === 3
-      // })
+      const _division = this.divisions.find((division) => {
+        return division.id === item.divisionId
+      })
 
-      // return _division.divisionName
-      return this.divisions.find((x) => x.id === item.divisionId).divisionName
+      return _division ? _division.divisionName : 'Not Assigned'
+      // return this.divisions.find((x) => x.id === item.divisionId).divisionName
     }
   }
 }

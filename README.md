@@ -1,15 +1,3 @@
-<p align="center">Lux - Vue Admin Dashboard Template</p>
-
-- Vue js Admin with dark mode + RTL + Demo Apps
-- Vuetify - Number #1 UI Vue Component Library
-- Integrated with Vue CLI + Vuex + Vue-Router
-
-<br/>
-
-### Documentation
-
-See - `LuxAdminPro-Documentation.pdf`
-
 ## Commands
 #### `npm install`
 > Installs package dependencies
