@@ -181,7 +181,7 @@ const module = {
     },
     SET_AUTH_DATA(state, user) {
       state.user.email = user.email
-      state.user.username = user.username
+      state.user.username = 'Jone Doe'
       state.user.role = user.role
     },
     SET_LOGOUT_ATUH(state) {

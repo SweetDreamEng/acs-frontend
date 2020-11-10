@@ -1,15 +1,14 @@
 <template>
   <div>
-    <v-tabs :show-arrows="false" background-color="transparent" class="mt-3">
-      <v-tab @click="tab=0">Location 1</v-tab>
-      <v-tab @click="tab=1">Location 2</v-tab>
+    <v-tabs class="mt-3" v-model="tab">
+      <v-tab>Zone 1</v-tab>
+      <v-tab>Zone 2</v-tab>
     </v-tabs>
 
-    <v-tabs-items>
-      <div v-if="tab===0">
+    <v-tabs-items v-model="tab">
+      <v-tab-item>
+        <location-dashboard />
         <div style="border: 4px dashed #e3e7eb" class="pa-2 mt-2 rounded">
-          <div class="title text-uppercase font-weight-bold text-body-2 mb-2">Zone A</div>
-
           <!-- draggable cards -->
           <vue-draggable
             v-model="cardsA"
@@ -23,12 +22,11 @@
               <machine-card :card="card"></machine-card>
             </div>
           </vue-draggable>
-
         </div>
-
+      </v-tab-item>
+      <v-tab-item>
+        <location-dashboard />
         <div style="border: 4px dashed #e3e7eb" class="pa-2 mt-2 rounded">
-          <div class="title text-uppercase font-weight-bold text-body-2 mb-2">Zone B</div>
-
           <!-- draggable cards -->
           <vue-draggable
             v-model="cardsB"
@@ -42,64 +40,26 @@
               <machine-card :card="card"></machine-card>
             </div>
           </vue-draggable>
-
         </div>
-      </div>
-      <div v-if="tab===1">
-        <div style="border: 4px dashed #e3e7eb" class="pa-2 mt-2 rounded">
-          <div class="title text-uppercase font-weight-bold text-body-2 mb-2">Zone C</div>
-
-          <!-- draggable cards -->
-          <vue-draggable
-            v-model="cardsA"
-            :delay="sortDelay"
-            v-bind="dragOptions"
-            animation="250"
-            class="d-flex flex-wrap"
-            group="cardsGroup"
-          >
-            <div v-for="card in cardsA" :key="card.id" class="board-item pa-1 w-full w-lg-half">
-              <machine-card :card="card"></machine-card>
-            </div>
-          </vue-draggable>
-
-        </div>
-
-        <div style="border: 4px dashed #e3e7eb" class="pa-2 mt-2 rounded">
-          <div class="title text-uppercase font-weight-bold text-body-2 mb-2">Zone D</div>
-
-          <!-- draggable cards -->
-          <vue-draggable
-            v-model="cardsB"
-            :delay="sortDelay"
-            v-bind="dragOptions"
-            animation="250"
-            class="d-flex flex-wrap"
-            group="cardsGroup"
-          >
-            <div v-for="card in cardsB" :key="card.id" class="board-item pa-1 w-full w-lg-half">
-              <machine-card :card="card"></machine-card>
-            </div>
-          </vue-draggable>
-
-        </div>
-      </div>
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
 
 <script>
+import LocationDashboard from './location/LocationDashboard'
 import MachineCard from '../../components/dashboard/machines/MachineCard'
 import VueDraggable from 'vuedraggable'
 
 export default {
   components: {
     MachineCard,
-    VueDraggable
+    VueDraggable,
+    LocationDashboard
   },
   data() {
     return {
-      tab: 0,
+      tab: null,
 
       // time in milliseconds to define when the sorting should start
       sortDelay: 0,

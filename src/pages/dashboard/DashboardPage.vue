@@ -76,7 +76,15 @@
     </v-row>
 
     <!-- Locations -->
-    <locations-section></locations-section>
+    <div class="text-right">
+      <v-btn v-if="locationDetailsView" text color="primary" @click="locationDetailsView = false">View Locations</v-btn>
+    </div>
+    <v-row dense v-if="!locationDetailsView">
+      <v-col cols="6" v-for="n in 3" :key="n">
+        <location :title="`Location ${n}`" @viewDetails="locationDetailsView = true"></location>
+      </v-col>
+    </v-row>
+    <locations-section v-else></locations-section>
 
     <!-- <v-col cols="6" md="3">
         <v-card class="d-flex flex-column flex-grow-1 text-center px-3 py-6">
@@ -164,23 +172,24 @@ import { mapState } from 'vuex'
 import SalesCard from '../../components/dashboard/SalesCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
 import TopLevelDetails from '../../components/dashboard/TopLevelDetails'
-// import Location from '../../components/dashboard/Location'
+import LocationsSection from '../../components/dashboard/LocationsSection'
 // import StatusCard from '../../components/dashboard/StatusCard'
 // import TotalRuntime from '../../components/dashboard/TotalRuntime'
 import OverviewCard from '../../components/dashboard/OverviewCard'
 import TrackCard from '../../components/dashboard/TrackCard'
 
-import LocationsSection from '../../components/dashboard/LocationsSection'
+import Location from '../../components/dashboard/location/Index'
 
 export default {
   components: {
-    LocationsSection,
+    Location,
     TrackCard,
     // GaugeCard
     SalesCard,
     MachinesTableCard,
     OverviewCard,
-    TopLevelDetails
+    TopLevelDetails,
+    LocationsSection
   },
   data() {
     return {
@@ -211,6 +220,7 @@ export default {
       }],
 
       tab: 0,
+      locationDetailsView: false,
 
       page: 1,
       total: 9,
