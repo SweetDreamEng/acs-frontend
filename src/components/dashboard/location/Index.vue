@@ -27,7 +27,7 @@
           </v-col>
         </v-row>
       </div>
-      <div class="text-right">
+      <div class="text-right mt-n4">
         <v-btn text color="primary" @click="$emit('viewDetails')">View Details</v-btn>
       </div>
     </v-card-text>

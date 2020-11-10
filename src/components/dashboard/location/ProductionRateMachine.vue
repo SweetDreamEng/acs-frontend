@@ -66,7 +66,11 @@ export default {
         },
         xaxis: {
           categories: [2001]
-        }
+        },
+        bar: {
+          distributed: true
+        },
+        colors: ['#46E27A', '#293450', '#87D4F9']
       }
     }
   },

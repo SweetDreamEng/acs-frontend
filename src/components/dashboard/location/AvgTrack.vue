@@ -114,12 +114,10 @@ export default {
             enabled: true
           }
         },
-        colors: [this.color],
-        fill: {
-          type: 'solid',
-          colors: [this.color],
-          opacity: 0.15
-        },
+        // colors: [this.color],
+        // fill: {
+        //   colors: [this.color]
+        // },
         stroke: {
           curve: 'smooth',
           width: 2

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-center primary--text">OEE</div>
+    <div class="text-center primary--text font-weight-bold">OEE</div>
     <apexchart
       v-if="!isLoading1"
       type="radialBar"
@@ -42,16 +42,16 @@ export default {
             startAngle: 0,
             endAngle: 359,
             track: {
-              background: '#E6EE9C',
-              strokeWidth: '97%',
-              dropShadow: {
-                enabled: true,
-                top: 2,
-                left: 0,
-                color: '#999',
-                opacity: 1,
-                blur: 2
-              }
+              background: '#999'
+              // strokeWidth: '97%',
+              // dropShadow: {
+              //   enabled: true,
+              //   top: 2,
+              //   left: 0,
+              //   color: '#999',
+              //   opacity: 1,
+              //   blur: 2
+              // }
             },
             dataLabels: {
               name: {
@@ -64,8 +64,8 @@ export default {
           }
         },
         fill: {
-          type: 'gradient',
-          colors: ['#092954'],
+          // type: 'gradient',
+          // colors: ['#092954'],
           gradient: {
             shade: 'light',
             shadeIntensity: 0.4,
