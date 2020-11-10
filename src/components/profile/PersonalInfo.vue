@@ -8,6 +8,7 @@
             :rules="[rules.required]"
             label="Email"
             outlined
+            dense
             type="email"
             @input="resetErrors"
           ></v-text-field>
@@ -16,6 +17,7 @@
             :rules="[rules.required]"
             label="Full name"
             outlined
+            dense
             @input="resetErrors"
           ></v-text-field>
 

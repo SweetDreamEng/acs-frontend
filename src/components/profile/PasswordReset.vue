@@ -7,6 +7,7 @@
             v-model="passwordForm.currentPassword"
             :rules="[rules.required]"
             label="Current Password"
+            dense
             outlined
             type="password"
             @input="resetErrors"
@@ -15,6 +16,7 @@
             v-model="passwordForm.newPassword"
             :rules="[rules.required]"
             label="New Password"
+            dense
             outlined
             type="password"
             @input="resetErrors"

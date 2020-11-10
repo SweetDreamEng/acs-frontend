@@ -10,6 +10,8 @@
                 v-model="customerAccount.name"
                 :rules="[rules.required]"
                 :validate-on-blur="false"
+                dense
+                outlined
                 label="Customer/Company Name"
                 @input="resetErrors"
               ></v-text-field>
@@ -17,6 +19,8 @@
                 v-model="customerAccount.administratorName"
                 :rules="[rules.required]"
                 :validate-on-blur="false"
+                dense
+                outlined
                 label="Administrator Name"
                 @input="resetErrors"
               ></v-text-field>
@@ -24,6 +28,8 @@
                 v-model="customerAccount.administratorEmail"
                 :rules="[rules.required, rules.emailFormat]"
                 :validate-on-blur="false"
+                dense
+                outlined
                 label="Administrator Email"
                 @input="resetErrors"
               ></v-text-field>

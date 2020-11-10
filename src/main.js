@@ -5,6 +5,9 @@ import App from './App.vue'
 import Auth from './packages/Auth'
 Vue.use(Auth)
 
+import VueMask from 'v-mask'
+Vue.use(VueMask)
+
 // VUEX - https://vuex.vuejs.org/
 import store from './store'
 

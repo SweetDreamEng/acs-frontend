@@ -20,6 +20,7 @@
                 value=""
                 placeholder="123-456-7890"
                 :rules="phoneRules"
+                v-mask="'###-###-####'"
               >
               </v-text-field>
             </v-col>

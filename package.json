@@ -19,6 +19,7 @@
     "moment-timezone": "^0.5.31",
     "tiptap": "^1.27.1",
     "tiptap-extensions": "^1.29.1",
+    "v-mask": "^2.2.3",
     "vue": "^2.6.11",
     "vue-apexcharts": "^1.5.3",
     "vue-echarts": "^5.0.0-beta.0",

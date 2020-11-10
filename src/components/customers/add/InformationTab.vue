@@ -16,10 +16,11 @@
 
             <v-col cols="12" md="6">
               <v-text-field
-                value=""
+                v-model="customerProfileForm.phone"
                 label="Phone"
                 placeholder="123-456-7890"
                 :rules="phoneRules"
+                v-mask="'###-###-####'"
               >
               </v-text-field>
             </v-col>
@@ -46,6 +47,9 @@
 */
 export default {
   data: () => ({
+    customerProfileForm: {
+      phone: ''
+    },
     phoneRules: [
       (v) => !!v || 'Phone number is required',
       (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'

@@ -12,6 +12,8 @@
                 :validate-on-blur="false"
                 label="Customer/Company Name"
                 placeholder="Ex: Acme Inc"
+                outlined
+                dense
               ></v-text-field>
               <v-text-field
                 v-model="customer.administratorName"
@@ -19,6 +21,8 @@
                 :validate-on-blur="false"
                 label="Administrator Name"
                 placeholder="Jane Doe"
+                outlined
+                dense
               ></v-text-field>
               <v-text-field
                 v-model="customer.administratorEmail"
@@ -26,6 +30,8 @@
                 :validate-on-blur="false"
                 label="Administrator Email"
                 placeholder="jane.doe@example.com"
+                outlined
+                dense
               ></v-text-field>
               <div class="mt-2">
                 <v-btn
