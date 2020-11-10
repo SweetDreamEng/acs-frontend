@@ -12,17 +12,17 @@
     <v-card-text>
       <div class="d-flex mt-n3">
         <v-row dense>
-          <v-col cols="6">
+          <v-col cols="7">
             <v-row dense>
               <v-col cols="6">
-                <production-rate class="ml-n4" />
+                <production-rate />
               </v-col>
               <v-col cols="6">
-                <OEE class="ml-n4"/>
+                <OEE/>
               </v-col>
             </v-row>
           </v-col>
-          <v-col cols="6">
+          <v-col cols="5">
             <avg-track />
           </v-col>
         </v-row>

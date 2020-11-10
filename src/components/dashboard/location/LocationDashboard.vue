@@ -15,10 +15,10 @@
           <v-col cols="4">
             <v-row dense>
               <v-col cols="6">
-                <production-rate class="ml-n2" />
+                <production-rate />
               </v-col>
               <v-col cols="6">
-                <OEE class="ml-n4"/>
+                <OEE/>
               </v-col>
             </v-row>
           </v-col>

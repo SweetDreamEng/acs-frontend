@@ -1,13 +1,10 @@
 <template>
   <div>
-    <div class="text-center">
-      Production Rate
-    </div>
+    <div class="text-center primary--text">Production Rate</div>
     <apexchart
       v-if="!isLoading1"
       type="radialBar"
-      height="180"
-      width="180"
+      height="160"
       :options="chartOptions"
       :series="series"
     >
@@ -25,10 +22,6 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    },
-    series: {
-      type: Array,
-      default: () => [56]
     }
   },
   data() {
@@ -36,30 +29,54 @@ export default {
       loadingInterval: null,
       isLoading1: true,
 
+      series: [56],
       chartOptions: {
         chart: {
-          height: 350,
-          type: 'radialBar'
+          type: 'radialBar',
+          sparkline: {
+            enabled: true
+          }
         },
         plotOptions: {
           radialBar: {
             startAngle: -90,
             endAngle: 90,
-            dataLabels: {
-              show: false
-            },
             track: {
-              background: '#ccc'
+              background: '#E6EE9C',
+              strokeWidth: '97%',
+              dropShadow: {
+                enabled: true,
+                top: 2,
+                left: 0,
+                color: '#999',
+                opacity: 1,
+                blur: 2
+              }
+            },
+            dataLabels: {
+              name: {
+                show: false
+              },
+              value: {
+                offsetY: 0,
+                fontSize: '22px'
+              }
             }
           }
         },
-        labels: ['Production Rate']
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shade: 'light',
+            shadeIntensity: 0.4,
+            inverseColors: false,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 50, 53, 91]
+          }
+        },
+        labels: ['Results']
       }
-    }
-  },
-  computed: {
-    primaryColor() {
-      return this.$vuetify.theme.themes.light.secondary
     }
   },
   mounted() {

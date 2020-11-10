@@ -1,13 +1,15 @@
 <template>
-  <apexchart
-    v-if="!isLoading1"
-    type="radialBar"
-    height="180"
-    width="180"
-    :options="chartOptions"
-    :series="series"
-  >
-  </apexchart>
+  <div>
+    <apexchart
+      v-if="!isLoading1"
+      type="radialBar"
+      height="160"
+      width="160"
+      :options="chartOptions"
+      :series="series"
+    >
+    </apexchart>
+  </div>
 </template>
 
 <script>
@@ -20,10 +22,6 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    },
-    series: {
-      type: Array,
-      default: () => [65]
     }
   },
   data() {
@@ -31,42 +29,58 @@ export default {
       loadingInterval: null,
       isLoading1: true,
 
+      series: [65],
       chartOptions: {
         chart: {
-          height: 350,
-          type: 'radialBar'
+          type: 'radialBar',
+          sparkline: {
+            enabled: true
+          }
         },
         plotOptions: {
           radialBar: {
             startAngle: 0,
             endAngle: 359,
-            dataLabels: {
-              name: {
-                fontSize: '12px',
-                color: '#222',
-                offsetY: 70
-              },
-              value: {
-                offsetY: -10,
-                fontSize: '24px',
-                color: '#092954',
-                formatter: function (val) {
-                  return val + '%'
-                }
+            track: {
+              background: '#E6EE9C',
+              strokeWidth: '97%',
+              dropShadow: {
+                enabled: true,
+                top: 2,
+                left: 0,
+                color: '#999',
+                opacity: 1,
+                blur: 2
               }
             },
-            track: {
-              background: '#ccc'
+            dataLabels: {
+              name: {
+                show: true
+              },
+              value: {
+                fontSize: '22px'
+              }
             }
+          }
+        },
+        grid: {
+          padding: {
+            top: -10
+          }
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shade: 'light',
+            shadeIntensity: 0.4,
+            inverseColors: false,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 50, 53, 91]
           }
         },
         labels: ['OEE']
       }
-    }
-  },
-  computed: {
-    primaryColor() {
-      return this.$vuetify.theme.themes.light.secondary
     }
   },
   mounted() {
