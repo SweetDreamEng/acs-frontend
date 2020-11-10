@@ -6,6 +6,7 @@
     <div v-else class="d-flex flex-column flex-grow-1">
       <div class="d-flex flex-column flex-grow-1">
         <div class="px-2 pb-2">
+          <div class="text-center mb-2 primary--text font-weight-bold">Average number of units produced/month</div>
           <div class="d-flex align-center">
             <div class="text-h4">{{ 84 }}</div>
             <v-spacer></v-spacer>

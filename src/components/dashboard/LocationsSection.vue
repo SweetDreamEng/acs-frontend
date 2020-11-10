@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-tabs class="mt-3" v-model="tab">
+    <v-tabs v-model="tab">
       <v-tab>Zone 1</v-tab>
       <v-tab>Zone 2</v-tab>
     </v-tabs>

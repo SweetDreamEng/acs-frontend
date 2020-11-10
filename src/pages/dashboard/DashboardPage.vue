@@ -76,15 +76,20 @@
     </v-row>
 
     <!-- Locations -->
-    <div class="text-right">
-      <v-btn v-if="locationDetailsView" text color="primary" @click="locationDetailsView = false">View Locations</v-btn>
-    </div>
     <v-row dense v-if="!locationDetailsView">
       <v-col cols="6" v-for="n in 3" :key="n">
         <location :title="`Location ${n}`" @viewDetails="locationDetailsView = true"></location>
       </v-col>
     </v-row>
-    <locations-section v-else></locations-section>
+    <v-card v-else>
+      <v-card-title>
+        Location 1
+        <v-btn text color="primary" @click="locationDetailsView = false" class="ml-auto">View Locations</v-btn>
+      </v-card-title>
+      <v-card-text>
+        <locations-section></locations-section>
+      </v-card-text>
+    </v-card>
 
     <!-- <v-col cols="6" md="3">
         <v-card class="d-flex flex-column flex-grow-1 text-center px-3 py-6">
