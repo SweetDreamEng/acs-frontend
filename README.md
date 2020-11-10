@@ -8,5 +8,5 @@
 #### `npm run build`
 > Compiles and minifies for production
 
-#### `npm run lint`
-> Lints and fixes files
+#### Create .env file and config api end point
+#### VUE_APP_SERVER_API_ENDPOINT="http://localhost/acs-api/public/api"
