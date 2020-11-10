@@ -1,10 +1,10 @@
 <template>
   <div>
+    <div class="text-center primary--text">OEE</div>
     <apexchart
       v-if="!isLoading1"
       type="radialBar"
       height="160"
-      width="160"
       :options="chartOptions"
       :series="series"
     >
@@ -55,17 +55,12 @@ export default {
             },
             dataLabels: {
               name: {
-                show: true
+                show: false
               },
               value: {
                 fontSize: '22px'
               }
             }
-          }
-        },
-        grid: {
-          padding: {
-            top: -10
           }
         },
         fill: {
