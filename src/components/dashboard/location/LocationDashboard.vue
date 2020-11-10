@@ -23,7 +23,11 @@
             </v-row>
           </v-col>
           <v-col cols="4">
-            <avg-track />
+            <v-row dense>
+              <v-col xs="12" sm="12" md="12">
+                <avg-track />
+              </v-col>
+            </v-row>
           </v-col>
           <v-col cols="4">
             <production-rate-machine />

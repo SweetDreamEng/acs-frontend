@@ -77,7 +77,13 @@
 
     <!-- Locations -->
     <v-row dense v-if="!locationDetailsView">
-      <v-col cols="6" v-for="n in 3" :key="n">
+      <v-col
+        xs="12"
+        sm="12"
+        md="6"
+        v-for="n in 3"
+        :key="n"
+      >
         <location :title="`Location ${n}`" @viewDetails="locationDetailsView = true"></location>
       </v-col>
     </v-row>

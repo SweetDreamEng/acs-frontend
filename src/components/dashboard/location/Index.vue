@@ -12,23 +12,27 @@
     <v-card-text>
       <div class="d-flex mt-n3">
         <v-row dense>
-          <v-col cols="7">
+          <v-col xs="12" sm="7" md="7">
             <v-row dense>
-              <v-col cols="6">
+              <v-col xs="12" sm="6" md="6">
                 <production-rate />
               </v-col>
-              <v-col cols="6">
+              <v-col xs="12" sm="6" md="6">
                 <OEE/>
               </v-col>
             </v-row>
           </v-col>
-          <v-col cols="5">
-            <avg-track />
+          <v-col xs="12" sm="5" md="5">
+            <v-row dense>
+              <v-col xs="12" sm="12" md="12">
+                <avg-track></avg-track>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
       </div>
       <div class="text-right mt-n2">
-        <v-btn text color="primary" @click="$emit('viewDetails')">View Details</v-btn>
+        <v-btn outlined color="primary" @click="$emit('viewDetails')">View Details</v-btn>
       </div>
     </v-card-text>
   </v-card>

@@ -28,10 +28,13 @@ export default {
       isLoading1: true,
 
       series: [{
+        name: 'zone 1',
         data: [44]
       }, {
+        name: 'zone 2',
         data: [53]
       }, {
+        name: 'zone 3',
         data: [23]
       }],
 
