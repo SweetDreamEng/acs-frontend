@@ -73,6 +73,14 @@
           :action-label="$t('dashboard.viewReport')"
         ></top-level-details>
       </v-col>
+
+      <v-col cols="12">
+        <OeeBoxes />
+      </v-col>
+
+      <v-col cols="12">
+        <location-table />
+      </v-col>      
     </v-row>
 
     <!-- Locations -->
@@ -190,6 +198,8 @@ import OverviewCard from '../../components/dashboard/OverviewCard'
 import TrackCard from '../../components/dashboard/TrackCard'
 
 import Location from '../../components/dashboard/location/Index'
+import OeeBoxes from '../../components/dashboard/boxes/Index'
+import LocationTable from '../../components/dashboard/location-table/Index'
 
 export default {
   components: {
@@ -200,7 +210,9 @@ export default {
     MachinesTableCard,
     OverviewCard,
     TopLevelDetails,
-    LocationsSection
+    LocationsSection,
+    OeeBoxes,
+    LocationTable
   },
   data() {
     return {

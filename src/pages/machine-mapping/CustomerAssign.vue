@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
-    <div class="d-flex align-center py-3">
+    <div class="d-flex align-center">
       <div>
         <div class="display-1">Customer Assign</div>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
@@ -10,7 +10,7 @@
     <!-- import devices from excel file -->
     <device-import></device-import>
 
-    <br>
+    <div class="pt-1"></div>
     
     <!-- customer assignment table -->
     <v-card>
