@@ -60,6 +60,14 @@
           </div>
         </template>
 
+        <template v-slot:item.device_status="{ item }">
+          <v-icon
+            :color="item.device_status ? 'green' : 'red'"
+          >
+            mdi-checkbox-blank-circle
+          </v-icon>
+        </template>
+
         <template v-slot:item.data-table-expand="{ expand, isExpanded }">
           <div class="d-flex align-center">
             <span class="text-no-wrap">Show meta data</span><v-icon class="ml-1" @click="expand(!isExpanded)" v-text="isExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"></v-icon>
@@ -71,6 +79,7 @@
             {{ `User A registered device to customer ${item.customer_name} on Oct 1st 2020` }}
           </td>
         </template>
+        
         <template v-slot:item.actions="{ item }">
           <v-icon
             small
@@ -198,6 +207,7 @@ export default {
         { text: 'Customer Name', value: 'customer_name' },
         { text: 'Product category', value: 'product_category' },
         { text: 'Device Registration', value: 'device_registration', sortable: false },
+        { text: 'Device Status', value: 'device_status' },
         { text: '', value: 'data-table-expand', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],

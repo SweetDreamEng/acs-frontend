@@ -23,7 +23,8 @@ const module = {
 
               o.customer_name = ''
               o.product_category = ''
-              o.device_registration = false
+              o.device_registration = false,
+              o.device_status = false
 
               return o
             })
@@ -58,7 +59,8 @@ const module = {
 
               o.customer_name = ''
               o.product_category = ''
-              o.device_registration = false
+              o.device_registration = false,
+              o.device_status = false
 
               return o
             })
