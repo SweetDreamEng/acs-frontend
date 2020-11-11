@@ -11,6 +11,7 @@
     <device-import></device-import>
 
     <br>
+    
     <!-- customer assignment table -->
     <v-card>
       <v-card-title>Customer Device Assignment</v-card-title>
