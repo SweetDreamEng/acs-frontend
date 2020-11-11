@@ -95,7 +95,10 @@ export default [{
 }, {
   path: '/customer-assign',
   name: 'customer-assign',
-  component: () => import(/* webpackChunkName: "customer-assign" */ '@/pages/machine-mapping/CustomerAssign.vue')
+  component: () => import(/* webpackChunkName: "customer-assign" */ '@/pages/machine-mapping/CustomerAssign.vue'),
+  meta: {
+    userAuth: true
+  }
 }, {
   path: '/customers/list',
   name: 'customers-list',
