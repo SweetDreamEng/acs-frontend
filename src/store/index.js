@@ -10,6 +10,7 @@ import users from './users'
 import departments from './departments'
 import divisions from './divisions'
 import customers from './customers'
+import devices from './devices'
 
 Vue.use(Vuex)
 
@@ -46,7 +47,8 @@ const dataState = createPersistedState({
     'users',
     'departments',
     'divisions',
-    'customers'
+    'customers',
+    'devices'
   ]
 })
 
@@ -58,7 +60,8 @@ const store = new Vuex.Store({
     users,
     departments,
     divisions,
-    customers
+    customers,
+    devices
   },
   plugins: [axiosPlugin, dataState]
 })

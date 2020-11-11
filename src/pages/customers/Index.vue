@@ -2,12 +2,12 @@
   <div class="d-flex flex-column flex-grow-1">
     <div class="d-flex align-center py-3">
       <div>
-        <div class="display-1">Customers</div>
+        <div class="display-1">Companies</div>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
       <v-spacer></v-spacer>
       <v-btn color="primary" to="/customers/add">
-        Create Customer
+        Create Company
       </v-btn>
     </div>
 
@@ -18,9 +18,9 @@
         :search="searchQuery"
         class="flex-grow-1"
       >
-        <template v-slot:item.id="{ item }">
+<!--         <template v-slot:item.id="{ item }">
           <div># {{ item.id }}</div>
-        </template>
+        </template> -->
         <template v-slot:item.created_at="{ item }">
           <div>{{ item.created_at | formatDate('ll') }}</div>
         </template>
@@ -56,7 +56,7 @@ export default {
     return {
       isLoading: false,
       breadcrumbs: [{
-        text: 'Customers',
+        text: 'Companies',
         disabled: false,
         href: '#'
       }, {
@@ -65,8 +65,8 @@ export default {
 
       searchQuery: '',
       headers: [
-        { text: 'Id', align: 'left', value: 'id' },
-        { text: 'Customer Name', value: 'name' },
+        // { text: 'Id', align: 'left', value: 'id' },
+        { text: 'Company Name', value: 'name' },
         { text: 'Administrator Name', value: 'administratorName' },
         { text: 'Created At', value: 'created_at' },
         // { text: 'Last SignIn', value: 'lastSignIn' },
@@ -97,17 +97,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.slide-fade-enter-active {
-  transition: all 0.3s ease;
-}
-.slide-fade-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.slide-fade-enter,
-.slide-fade-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
-}
-</style>

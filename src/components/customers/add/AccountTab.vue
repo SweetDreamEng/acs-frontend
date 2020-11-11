@@ -10,7 +10,7 @@
                 v-model="customer.companyName"
                 :rules="[rules.required]"
                 :validate-on-blur="false"
-                label="Customer/Company Name"
+                label="Company Name"
                 placeholder="Ex: Acme Inc"
                 outlined
                 dense

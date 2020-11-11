@@ -2,7 +2,7 @@
   <div class="flex-grow-1">
     <div class="d-flex align-center py-3">
       <div>
-        <div class="display-1">Add New Customer</div>
+        <div class="display-1">Add New Company</div>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
       <v-spacer></v-spacer>
@@ -50,12 +50,12 @@ export default {
 
       breadcrumbs: [
         {
-          text: 'Customers',
+          text: 'Companies',
           to: '/customers/list',
           exact: true
         },
         {
-          text: 'Add New Customer'
+          text: 'Add New Company'
         }
       ]
     }

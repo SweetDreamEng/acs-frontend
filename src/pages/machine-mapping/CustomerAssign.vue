@@ -7,12 +7,17 @@
       </div>
     </div>
 
+    <!-- import devices from excel file -->
+    <device-import></device-import>
+
+    <br>
+    <!-- customer assignment table -->
     <v-card>
       <v-card-title>Customer Device Assignment</v-card-title>
       <v-data-table
         v-model="selectedUsers"
         :headers="tableHeaders"
-        :items="customerAssigns"
+        :items="devices"
         class="flex-grow-1"
         show-expand
         :expanded.sync="expanded"
@@ -167,11 +172,13 @@
 | List all customers and machines assigned
 */
 
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import customerAssigns from './content/customer-assigns'
+import DeviceImport from '../../components/machine-mapping/DeviceImport'
 
 export default {
   components: {
+    DeviceImport
   },
   data() {
     return {
@@ -187,7 +194,7 @@ export default {
       searchQuery: '',
       selectedUsers: [],
       tableHeaders: [
-        { text: 'Serial Number', value: 'id' },
+        { text: 'Serial Number', value: 'serial_number' },
         { text: 'Customer Name', value: 'customer_name' },
         { text: 'Product category', value: 'product_category' },
         { text: 'Device Registration', value: 'device_registration', sortable: false },
@@ -221,6 +228,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      devices: (state) => state.devices.data
+    }),
     ...mapGetters('customers', [
       'customerNames'
     ]),
@@ -242,9 +252,15 @@ export default {
       return _customerNames
     }
   },
+  mounted() {
+    this.getDevices()
+  },
   methods: {
+    ...mapActions({
+      'getDevices': 'devices/getDevices'
+    }),
     editItem (item) {
-      this.editedIndex = this.customerAssigns.indexOf(item)
+      this.editedIndex = this.devices.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.editDialog = true
       this.$nextTick(() => {
@@ -260,7 +276,7 @@ export default {
     },
     save () {
       if (this.$refs.editForm.validate()) {
-        Object.assign(this.customerAssigns[this.editedIndex], this.editedItem)
+        Object.assign(this.devices[this.editedIndex], this.editedItem)
         this.close()
       }
     },

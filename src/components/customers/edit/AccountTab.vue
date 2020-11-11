@@ -12,7 +12,7 @@
                 :validate-on-blur="false"
                 dense
                 outlined
-                label="Customer/Company Name"
+                label="Company Name"
                 @input="resetErrors"
               ></v-text-field>
               <v-text-field
