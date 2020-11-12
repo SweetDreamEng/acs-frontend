@@ -73,13 +73,21 @@
 
         <template v-slot:item.data-table-expand="{ expand, isExpanded }">
           <div class="d-flex align-center">
-            <span class="text-no-wrap">Show meta data</span><v-icon class="ml-1" @click="expand(!isExpanded)" v-text="isExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"></v-icon>
+            <span class="text-no-wrap">Actions</span><v-icon class="ml-1" @click="expand(!isExpanded)" v-text="isExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"></v-icon>
           </div>
         </template>
 
         <template v-slot:expanded-item="{ headers, item }">
-          <td :colspan="headers.length" class="px-4">
-            {{ `User A registered device to customer ${item.customer_name} on Oct 1st 2020` }}
+          <td :colspan="headers.length" class="px-4 py-2">
+            <div class="mb-2">
+              SIM Status: <span class="green--text font-weight-bold">Activated</span>
+              <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ item.public_ip_sim }}</span></span>
+            </div>
+            <div>
+              <v-btn small color="primary" class="mr-2" @click="">Refresh SIM Status</v-btn>
+              <v-btn small color="primary" class="mr-2" @click="activateSIM(item)">Activate SIM</v-btn>
+              <v-btn small color="primary" class="mr-2" @click="deactivateSIM(item)">Deactivate SIM</v-btn>
+            </div>
           </td>
         </template>
         
@@ -215,9 +223,9 @@ export default {
         { text: 'Serial Number', value: 'serial_number' },
         { text: 'Customer Name', value: 'customer_name' },
         { text: 'Product category', value: 'product_category' },
-        { text: 'Device Registration', value: 'device_registration', sortable: false },
+        { text: 'Device Registration', align: 'center', value: 'device_registration', sortable: false },
         { text: 'Device Status', align: 'center', value: 'device_status' },
-        { text: '', value: 'data-table-expand', sortable: false },
+        { text: 'Administration', value: 'data-table-expand', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
       expanded: [],
@@ -251,6 +259,9 @@ export default {
   computed: {
     ...mapState({
       table_loading: (state) => state.devices.table_loading,
+      activate_button_loading: (state) => state.devices.activate_button_loading,
+      deactivate_button_loading: (state) => state.devices.deactivate_button_loading,
+
       devices: (state) => state.devices.data,
       pageCount: (state) => state.devices.pageCount,
       page: (state) => state.devices.page
@@ -282,7 +293,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      'getDevices': 'devices/getDevices'
+      'getDevices': 'devices/getDevices',
+      'activateSIM': 'devices/activateSIM',
+      'deactivateSIM': 'devices/deactivateSIM'
     }),
     editItem (item) {
       this.editedIndex = this.devices.indexOf(item)

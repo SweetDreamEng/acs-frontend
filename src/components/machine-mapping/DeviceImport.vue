@@ -69,6 +69,9 @@
   </div>
 </template>
 <script>
+/*
+  Component to upload devices from excel file
+*/
 import { mapState, mapActions } from 'vuex'
 export default {
   data() {
@@ -76,6 +79,7 @@ export default {
       show: false,
 
       isFormValid: true,
+
       // input rules
       rules: {
         required: (value) => (value && Boolean(value)) || 'Required'
@@ -94,6 +98,7 @@ export default {
   },
   mounted() {
     this.resetStatus()
+    this.resetError()
   },
   methods: {
     ...mapActions({

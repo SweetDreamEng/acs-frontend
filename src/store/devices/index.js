@@ -1,18 +1,19 @@
 const module = {
   namespaced: true,
   state: {
-    data: [
-    ],
+    data: [],                           // paginated devices fetched from backend
 
-    numAdded: 0,
-    numDuplicates: 0,
+    numAdded: 0,                        // number of added devices when uploading devices in excel file
+    numDuplicates: 0,                   // number of duplicate devices when uploading devices in excel file
 
-    pageCount: 0,
-    page: 1,
+    pageCount: 0,                       // total pages for devices
+    page: 1,                            // current page of pagination
 
     error: null,
-    table_loading: false,
-    button_loading: false
+    table_loading: false,               // status of loading devices into the table
+    button_loading: false,              // status of uploading devices from excel file
+    activate_button_loading: false,     // status of activating SIM
+    deactivate_button_loading: false    // status of deactivating SIM
   },
 
   actions: {
@@ -87,6 +88,15 @@ const module = {
             reject(error)
           })
       })
+    },
+    activateSIM({
+      commit
+    }, device) {
+    },
+    deactivateSIM({
+      commit
+    }, device) {
+
     },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
