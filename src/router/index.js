@@ -20,6 +20,10 @@ export const routes = [{
   name: 'location-dashboard',
   component: () => import(/* webpackChunkName: "location-dashboard" */ '@/pages/dashboard/LocationDashboard.vue')
 }, {
+  path: '/dashboard/:location/:zone',
+  name: 'zone-dashboard',
+  component: () => import(/* webpackChunkName: "zone-dashboard" */ '@/pages/dashboard/ZoneDashboard.vue')
+}, {
   path: '/dashboard/product/:id',
   name: 'dashboard-product',
   component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/DashboardProduct.vue')

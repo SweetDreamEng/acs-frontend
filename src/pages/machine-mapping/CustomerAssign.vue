@@ -21,6 +21,7 @@
         :items="devices"
         class="flex-grow-1"
         show-expand
+        hide-default-footer
         :expanded.sync="expanded"
         :single-expand="true"
         :search="searchQuery"
@@ -93,8 +94,10 @@
       </v-data-table>
       <div class="text-center py-2">
         <v-pagination
-          v-model="page"
+          v-model="loc_page"
           :length="pageCount"
+          :total-visible="7"
+          @input="onPageChange"
         ></v-pagination>
       </div>
     </v-card>
@@ -238,18 +241,19 @@ export default {
       confirmDialog: false,
       selectedItem: null,
 
-      page: 0,
-
       // input rules
       rules: {
         required: (value) => (value && Boolean(value)) || 'Required field'
-      }
+      },
+
+      loc_page: this.page
     }
   },
   computed: {
     ...mapState({
       devices: (state) => state.devices.data,
-      pageCount: (state) => state.devices.pageCount
+      pageCount: (state) => state.devices.pageCount,
+      page: (state) => state.devices.page
     }),
     ...mapGetters('customers', [
       'customerNames'
@@ -273,7 +277,8 @@ export default {
     }
   },
   mounted() {
-    this.getDevices()
+    this.loc_page = this.page
+    this.getDevices(this.page)
   },
   methods: {
     ...mapActions({
@@ -337,6 +342,9 @@ export default {
     onConfirmClicked() {
       this.selectedItem.device_registration = !this.selectedItem.device_registration
       this.confirmDialog = false
+    },
+    onPageChange() {
+      this.getDevices(this.loc_page)
     }
   }
 }

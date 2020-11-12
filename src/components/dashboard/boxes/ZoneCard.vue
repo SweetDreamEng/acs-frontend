@@ -11,7 +11,7 @@
             :key="n"
           >
             <v-card
-              :color="box.color"
+              :color="box.value < 60 ? 'red' : 'green'"
               dark
               width="100"
               height="140"
@@ -30,7 +30,7 @@
                 type="area"
                 height="40"
                 :options="chartOptions"
-                :series="customersSeries"
+                :series="box.series"
               ></apexchart>
             </v-card>
           </v-slide-item>
@@ -129,22 +129,58 @@ export default {
         {
           zone: 'Zone 1',
           color: 'green',
-          value: 75
+          value: 75,
+          series: [{
+            name: 'Avg FPY',
+            data: [
+              ['2020-02-02', 13],
+              ['2020-02-03', 11],
+              ['2020-02-04', 13],
+              ['2020-02-05', 12]
+            ]
+          }]
         },
         {
           zone: 'Zone 2',
           color: 'green',
-          value: 52
+          value: 52,
+          series: [{
+            name: 'Avg FPY',
+            data: [
+              ['2020-02-02', 13],
+              ['2020-02-03', 11],
+              ['2020-02-04', 13],
+              ['2020-02-05', 12]
+            ]
+          }]
         },
         {
           zone: 'Zone 3',
           color: 'red',
-          value: 78
+          value: 78,
+          series: [{
+            name: 'Avg FPY',
+            data: [
+              ['2020-02-02', 13],
+              ['2020-02-03', 11],
+              ['2020-02-04', 13],
+              ['2020-02-05', 12]
+            ]
+          }]
         },
         {
           zone: 'Zone 4',
           color: 'green',
-          value: 75
+          value: 75,
+          series: [{
+            name: 'Avg FPY',
+            data: [
+              ['2020-02-02', 13],
+              ['2020-02-03', 11],
+              ['2020-02-04', 13],
+              ['2020-02-05', 12]
+            ]
+          }]
         }
       ]
     }

@@ -43,6 +43,21 @@
           </apexchart>
         </template>
       </v-data-table>
+
+      <div class="d-flex justify-end mr-4">
+        <div>
+          <v-icon class="ml-2 mr-0" color="#269ffb">mdi-checkbox-blank</v-icon>
+          Name 1
+        </div>
+        <div>
+          <v-icon class="ml-2 mr-0" color="#26e7a5">mdi-checkbox-blank</v-icon>
+          Name 2
+        </div>
+        <div>
+          <v-icon class="ml-2 mr-0" color="#febb3b">mdi-checkbox-blank</v-icon>
+          Name 3
+        </div>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -83,12 +98,13 @@ export default {
       headers: [
         { text: 'Location', value: 'location' },
         { text: 'Utilization', align: 'center', value: 'utilization' },
-        { text: 'OEE', align: 'start', value: 'oee' },
-        { text: 'MR', value: 'mean_runtime' },
-        { text: 'Deviations', align: 'center', value: 'deviations' },
+        { text: 'OEE', align: 'center', value: 'oee' },
+        { text: 'Actual Performance', align: 'center', value: 'performance' },
         { text: 'Prod Rate', value: 'rate', align: 'center' },
         { text: 'Downtime Distrubton', align: 'center', value: 'downtime_distribution', sortable: false }
       ],
+
+      selected: ['name1', 'name2', 'name3'],
 
       locations: [
         {
@@ -100,10 +116,22 @@ export default {
           color: 'green',
           value: 75,
           oee: '93.1%',
-          mean_runtime: '07:08',
-          deviations: 7,
+          performance: '78%',
           rate: 56,
-          downtime_distribution: series
+          downtime_distribution: [
+            {
+              name: 'Name',
+              data: [14]
+            },
+            {
+              name: 'Name',
+              data: [53]
+            },
+            {
+              name: 'Name',
+              data: [22]
+            }
+          ]
         },
         {
           location: {
@@ -114,10 +142,22 @@ export default {
           color: 'green',
           value: 52,
           oee: '89.8%',
-          mean_runtime: '02:08',
-          deviations: 34,
+          performance: '28%',
           rate: 65,
-          downtime_distribution: series
+          downtime_distribution: [
+            {
+              name: 'Name',
+              data: [44]
+            },
+            {
+              name: 'Name',
+              data: [53]
+            },
+            {
+              name: 'Name',
+              data: [12]
+            }
+          ]
         },
         {
           location: {
@@ -128,10 +168,22 @@ export default {
           color: 'red',
           value: 78,
           oee: '78.2%',
-          mean_runtime: '23:25',
-          deviations: 12,
+          performance: '25%',
           rate: 34,
-          downtime_distribution: series
+          downtime_distribution: [
+            {
+              name: 'Name',
+              data: [41]
+            },
+            {
+              name: 'Name',
+              data: [33]
+            },
+            {
+              name: 'Name',
+              data: [12]
+            }
+          ]
         }
       ],
 
@@ -142,6 +194,7 @@ export default {
           type: 'bar',
           height: 350,
           stacked: true,
+          stackType: '100%',
           toolbar: {
             show: false
           }
@@ -191,7 +244,7 @@ export default {
       }],
       utilizationChartOptions: {
         chart: {
-          height: 350,
+          height: '100%',
           type: 'line',
           zoom: {
             enabled: false
@@ -229,6 +282,14 @@ export default {
         },
         tooltip: {
           enabled: false
+        },
+        annotations: {
+          yaxis: [
+            {
+              y: 25,
+              borderColor: '#00E396'
+            }
+          ]
         }
       }
     }
@@ -236,6 +297,9 @@ export default {
   computed: {
   },
   methods: {
+    toggleSeries() {
+
+    }
   }
 }
 </script>

@@ -8,6 +8,7 @@ const module = {
     numDuplicates: 0,
 
     pageCount: 0,
+    page: 1,
 
     error: null,
     button_loading: false
@@ -16,10 +17,16 @@ const module = {
   actions: {
     getDevices({
       commit
-    }) {
-      this.$axios.get('/devices')
+    }, pageNum) {
+      commit('SET_PAGINATION_DATA', {
+        page: pageNum
+      })
+
+      this.$axios.get(`/devices/${pageNum}`)
         .then((response) => {
-          commit('SET_PAGINATION_DATA', response.data)
+          commit('SET_PAGINATION_DATA', {
+            pageCount: response.data.last_page
+          })
           commit('SET_DATA',
             response.data.data.map((device) => {
               const o = Object.assign({}, device)
@@ -118,8 +125,11 @@ const module = {
       state.numAdded = 0
       state.numDuplicates = 0
     },
-    SET_PAGINATION_DATA(state, responseData) {
-      state.pageCount = responseData.last_page
+    SET_PAGINATION_DATA(state, data) {
+      Object.assign(state, data)
+      // for (const [key, value] of Object.entries(data)) {
+      //   state[key] = value
+      // }
     }
   },
 

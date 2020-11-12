@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <apexchart
-      v-if="!isLoading1"
-      type="radialBar"
-      :width="width"
-      :height="height"
-      :options="chartOptions"
-      :series="series"
-    >
-    </apexchart>
-  </div>
+  <apexchart
+    v-if="!isLoading1"
+    type="radialBar"
+    :width="width"
+    :height="height"
+    :options="chartOptions"
+    :series="series"
+  >
+  </apexchart>
 </template>
 
 <script>
