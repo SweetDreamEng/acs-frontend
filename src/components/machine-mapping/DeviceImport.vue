@@ -98,7 +98,7 @@ export default {
   },
   mounted() {
     this.resetStatus()
-    this.resetError()
+    this.resetErrors()
   },
   methods: {
     ...mapActions({

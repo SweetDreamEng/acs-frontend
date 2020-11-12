@@ -69,6 +69,7 @@ export default {
     })
   },
   mounted() {
+    // get customer information on mounted
     this.open()
   },
   methods: {

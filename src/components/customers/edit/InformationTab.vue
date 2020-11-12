@@ -27,7 +27,6 @@
           </v-row>
 
           <div class="d-flex">
-            <v-btn>Reset</v-btn>
             <v-spacer></v-spacer>
             <v-btn color="primary" type="submit" :loading="isLoading">Save</v-btn>
           </div>

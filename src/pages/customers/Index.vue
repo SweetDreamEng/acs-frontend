@@ -17,6 +17,7 @@
         :items="customers"
         :search="searchQuery"
         class="flex-grow-1"
+        hide-default-footer
       >
 <!--         <template v-slot:item.id="{ item }">
           <div># {{ item.id }}</div>

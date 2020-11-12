@@ -36,7 +36,8 @@
 
               <error-component :error="error"></error-component>
 
-              <div class="mt-2">
+              <div class="d-flex mt-2">
+                <v-spacer></v-spacer>
                 <v-btn type="submit" color="primary" :loading="isLoading">Save</v-btn>
               </div>
             </v-form>
