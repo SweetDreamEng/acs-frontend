@@ -76,27 +76,14 @@
         ></top-level-details>
       </v-col>
 
-      <v-col cols="12">
+<!--       <v-col cols="12">
         <zone-cards></zone-cards>
-      </v-col>
+      </v-col> -->
     </v-row>
 
-    <!-- Locations -->
-    <v-row dense v-if="!locationDetailsView">
-      <v-col
-        xs="12"
-        sm="12"
-        md="6"
-        v-for="n in 3"
-        :key="n"
-      >
-        <location :title="`Location ${n}`" @viewDetails="locationDetailsView = true"></location>
-      </v-col>
-    </v-row>
-    <v-card v-else>
+    <v-card>
       <v-card-title>
-        Location 1
-        <v-btn text color="primary" @click="locationDetailsView = false" class="ml-auto">Back to all locations</v-btn>
+        Zone 1
       </v-card-title>
       <v-card-text>
         <locations-section></locations-section>
@@ -147,16 +134,6 @@
           :action-label="$t('dashboard.viewReport')"
         ></sales-card>
       </v-col> -->
-    <v-row dense class="mt-4">
-      <v-col cols="12">
-        <overview-card
-          label="Overview"
-          :loading="isLoading1"
-          :markers="markers"
-        >
-        </overview-card>
-      </v-col>
-    </v-row>
   </div>
 </template>
 
@@ -179,22 +156,22 @@ import TopLevelDetails from '../../components/dashboard/TopLevelDetails'
 import LocationsSection from '../../components/dashboard/LocationsSection'
 // import StatusCard from '../../components/dashboard/StatusCard'
 // import TotalRuntime from '../../components/dashboard/TotalRuntime'
-import OverviewCard from '../../components/dashboard/OverviewCard'
+// import OverviewCard from '../../components/dashboard/OverviewCard'
 import TrackCard from '../../components/dashboard/TrackCard'
 
-import Location from '../../components/dashboard/location/Index'
-import ZoneCards from '../../components/dashboard/boxes/ZoneCard'
+// import Location from '../../components/dashboard/location/Index'
+// import ZoneCards from '../../components/dashboard/boxes/ZoneCard'
 
 export default {
   components: {
-    Location,
+    // Location,
     TrackCard,
     // GaugeCard
     SalesCard,
-    OverviewCard,
+    // OverviewCard,
     TopLevelDetails,
-    LocationsSection,
-    ZoneCards
+    LocationsSection
+    // ZoneCards
   },
   data() {
     return {

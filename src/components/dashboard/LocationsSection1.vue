@@ -1,21 +1,48 @@
 <template>
   <div>
-    <location-dashboard />
-    <div style="border: 4px dashed #e3e7eb" class="pa-2 mt-2 rounded">
-      <!-- draggable cards -->
-      <vue-draggable
-        v-model="cardsA"
-        :delay="sortDelay"
-        v-bind="dragOptions"
-        animation="250"
-        class="d-flex flex-wrap"
-        group="cardsGroup"
-      >
-        <div v-for="card in cardsA" :key="card.id" class="board-item pa-1 w-full w-lg-half">
-          <machine-card :card="card"></machine-card>
+    <v-tabs v-model="tab">
+      <v-tab>Zone 1</v-tab>
+      <v-tab>Zone 2</v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item>
+        <location-dashboard />
+        <div style="border: 4px dashed #e3e7eb" class="pa-2 mt-2 rounded">
+          <!-- draggable cards -->
+          <vue-draggable
+            v-model="cardsA"
+            :delay="sortDelay"
+            v-bind="dragOptions"
+            animation="250"
+            class="d-flex flex-wrap"
+            group="cardsGroup"
+          >
+            <div v-for="card in cardsA" :key="card.id" class="board-item pa-1 w-full w-lg-half">
+              <machine-card :card="card"></machine-card>
+            </div>
+          </vue-draggable>
         </div>
-      </vue-draggable>
-    </div>
+      </v-tab-item>
+      <v-tab-item>
+        <location-dashboard />
+        <div style="border: 4px dashed #e3e7eb" class="pa-2 mt-2 rounded">
+          <!-- draggable cards -->
+          <vue-draggable
+            v-model="cardsB"
+            :delay="sortDelay"
+            v-bind="dragOptions"
+            animation="250"
+            class="d-flex flex-wrap"
+            group="cardsGroup"
+          >
+            <div v-for="card in cardsB" :key="card.id" class="board-item pa-1 w-full w-lg-half">
+              <machine-card :card="card"></machine-card>
+            </div>
+          </vue-draggable>
+        </div>
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 

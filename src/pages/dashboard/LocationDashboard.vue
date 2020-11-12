@@ -163,15 +163,6 @@
       </v-col>
       <v-col cols="12">
       </v-col>
-
-      <v-col cols="12">
-        <overview-card
-          label="Overview"
-          :loading="isLoading1"
-          :markers="markers"
-        >
-        </overview-card>
-      </v-col>
     </v-row>
   </div>
 </template>
@@ -196,7 +187,7 @@ import TopLevelDetails from '../../components/dashboard/TopLevelDetails'
 // import LocationsSection from '../../components/dashboard/LocationsSection'
 // import StatusCard from '../../components/dashboard/StatusCard'
 // import TotalRuntime from '../../components/dashboard/TotalRuntime'
-import OverviewCard from '../../components/dashboard/OverviewCard'
+// import OverviewCard from '../../components/dashboard/OverviewCard'
 import TrackCard from '../../components/dashboard/TrackCard'
 
 // import Location from '../../components/dashboard/location/Index'
@@ -210,7 +201,7 @@ export default {
     // GaugeCard
     SalesCard,
     MachinesTableCard,
-    OverviewCard,
+    // OverviewCard,
     TopLevelDetails,
     // LocationsSection,
     ZoneCards,
