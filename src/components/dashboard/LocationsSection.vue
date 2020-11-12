@@ -1,6 +1,5 @@
 <template>
   <div>
-    <location-dashboard />
     <div style="border: 4px dashed #e3e7eb" class="pa-2 mt-2 rounded">
       <!-- draggable cards -->
       <vue-draggable
@@ -20,15 +19,13 @@
 </template>
 
 <script>
-import LocationDashboard from './location/LocationDashboard'
 import MachineCard from '../../components/dashboard/machines/MachineCard'
 import VueDraggable from 'vuedraggable'
 
 export default {
   components: {
     MachineCard,
-    VueDraggable,
-    LocationDashboard
+    VueDraggable
   },
   data() {
     return {

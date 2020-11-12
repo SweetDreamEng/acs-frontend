@@ -83,7 +83,7 @@
 
     <v-card>
       <v-card-title>
-        Zone 1
+        Machines
       </v-card-title>
       <v-card-text>
         <locations-section></locations-section>

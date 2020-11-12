@@ -11,6 +11,7 @@ const module = {
     page: 1,
 
     error: null,
+    table_loading: false,
     button_loading: false
   },
 
@@ -21,9 +22,10 @@ const module = {
       commit('SET_PAGINATION_DATA', {
         page: pageNum
       })
-
+      commit('TABLE_LOAD')
       this.$axios.get(`/devices/${pageNum}`)
         .then((response) => {
+          commit('TABLE_LOAD_CLEAR')
           commit('SET_PAGINATION_DATA', {
             pageCount: response.data.last_page
           })
@@ -59,40 +61,32 @@ const module = {
     uploadDevices({
       commit
     }, myForm) {
-      commit('BUTTON_LOAD')
-      this.$axios.post('/devices/upload', myForm)
-        .then((response) => {
-          commit('BUTTON_CLEAR')
-          commit('SET_DATA',
-            response.data.devices.map((device) => {
-              const o = Object.assign({}, device)
-
-              o.customer_name = ''
-              o.product_category = ''
-              o.device_registration = false,
-              o.device_status = false
-
-              return o
-            })
-          )
-          commit('SET_ADDED', response.data.numAdded)
-          commit('SET_DUPLICATES', response.data.numDuplicates)
-        })
-        .catch((error) => {
-          commit('BUTTON_CLEAR')
-          if (error.response.status === 401) {
-            console.log(error.response.data)
-          } else if (error.response.status === 400) {
-            console.log(error.response)
-            commit('SET_ERROR', {
-              'error': 'Validation error.'
-            })
-          } else {
-            commit('SET_ERROR', {
-              'error': 'Server Error'
-            })
-          }
-        })
+      return new Promise((resolve, reject) => {
+        commit('BUTTON_LOAD')
+        this.$axios.post('/devices/upload', myForm)
+          .then((response) => {
+            commit('BUTTON_CLEAR')
+            commit('SET_ADDED', response.data.numAdded)
+            commit('SET_DUPLICATES', response.data.numDuplicates)
+            resolve(response)
+          })
+          .catch((error) => {
+            commit('BUTTON_CLEAR')
+            if (error.response.status === 401) {
+              console.log(error.response.data)
+            } else if (error.response.status === 400) {
+              console.log(error.response)
+              commit('SET_ERROR', {
+                'error': 'Validation error.'
+              })
+            } else {
+              commit('SET_ERROR', {
+                'error': 'Server Error'
+              })
+            }
+            reject(error)
+          })
+      })
     },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
@@ -112,6 +106,12 @@ const module = {
     BUTTON_CLEAR(state) {
       state.button_loading = false
     },
+    TABLE_LOAD(state) {
+      state.table_loading = true
+    },
+    TABLE_LOAD_CLEAR(state) {
+      state.table_loading = false
+    },
     SET_DATA(state, devices) {
       state.data = devices
     },
@@ -127,9 +127,6 @@ const module = {
     },
     SET_PAGINATION_DATA(state, data) {
       Object.assign(state, data)
-      // for (const [key, value] of Object.entries(data)) {
-      //   state[key] = value
-      // }
     }
   },
 

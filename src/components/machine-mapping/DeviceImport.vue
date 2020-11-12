@@ -17,8 +17,8 @@
           <v-form ref="form" v-model="isFormValid" lazy-validation>
             <v-file-input
               label="File input"
-              accept=".xlsx"
               v-model="devicesFile"
+              accept=".xlsx"
               outlined
               dense
               :rules="[rules.required]"
@@ -98,6 +98,7 @@ export default {
   methods: {
     ...mapActions({
       'uploadDevices': 'devices/uploadDevices',
+      'getDevices': 'devices/getDevices',
       'clearError': 'devices/clearError',
       'resetStatus': 'devices/resetStatus'
     }),
@@ -106,6 +107,9 @@ export default {
 
       form.append('devicesFile', this.devicesFile)
       this.uploadDevices(form)
+        .then((response) => {
+          this.getDevices(1)
+        })
     },
     resetErrors() {
       this.clearError()

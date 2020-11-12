@@ -25,6 +25,7 @@
         :expanded.sync="expanded"
         :single-expand="true"
         :search="searchQuery"
+        :loading="table_loading"
       >
         <template v-slot:top>
           <v-text-field
@@ -107,11 +108,9 @@
       max-width="400px"
     >
       <v-card>
-        <v-card-title>
-          <span class="headline">Register</span>
-        </v-card-title>
+        <v-card-title class="primary white--text">Register</v-card-title>
 
-        <v-card-text>
+        <v-card-text class="mt-2">
           <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
             <v-select
               v-model="editedItem.customer_name"
@@ -251,6 +250,7 @@ export default {
   },
   computed: {
     ...mapState({
+      table_loading: (state) => state.devices.table_loading,
       devices: (state) => state.devices.data,
       pageCount: (state) => state.devices.pageCount,
       page: (state) => state.devices.page
