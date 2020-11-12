@@ -20,7 +20,7 @@
               <div class="pa-1">
                 <div class="">{{ box.location }} </div>
                 <div class="pl-2">
-                  <div class="">OEE </div>
+                  <small>OEE </small>
                   <div class="display-1">{{ box.value }}</div>
                 </div>
               </div>
@@ -40,21 +40,6 @@
   </v-card>
 </template>
 <script>
-import moment from 'moment'
-
-function formatDate(date) {
-  return date ? moment(date).format('D MMM') : ''
-}
-
-/*
-|---------------------------------------------------------------------
-| DEMO Dashboard Card Component
-|---------------------------------------------------------------------
-|
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
-|
-*/
 export default {
   components: {
   },
@@ -111,7 +96,7 @@ export default {
             enabled: true
           }
         },
-        // colors: [this.color],
+        colors: ['#fff'],
         fill: {
           type: 'solid',
           colors: [this.color],
@@ -119,7 +104,7 @@ export default {
         },
         stroke: {
           curve: 'smooth',
-          width: 2
+          width: 1
         },
         xaxis: {
           type: 'datetime'

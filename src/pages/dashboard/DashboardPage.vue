@@ -84,7 +84,7 @@
     </v-row>
 
     <!-- Locations -->
-    <v-row dense v-if="!locationDetailsView">
+<!--     <v-row dense v-if="!locationDetailsView">
       <v-col
         xs="12"
         sm="12"
@@ -103,7 +103,7 @@
       <v-card-text>
         <locations-section></locations-section>
       </v-card-text>
-    </v-card>
+    </v-card> -->
 
     <!-- <v-col cols="6" md="3">
         <v-card class="d-flex flex-column flex-grow-1 text-center px-3 py-6">
@@ -191,26 +191,26 @@ import { mapState } from 'vuex'
 import SalesCard from '../../components/dashboard/SalesCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
 import TopLevelDetails from '../../components/dashboard/TopLevelDetails'
-import LocationsSection from '../../components/dashboard/LocationsSection'
+// import LocationsSection from '../../components/dashboard/LocationsSection'
 // import StatusCard from '../../components/dashboard/StatusCard'
 // import TotalRuntime from '../../components/dashboard/TotalRuntime'
 import OverviewCard from '../../components/dashboard/OverviewCard'
 import TrackCard from '../../components/dashboard/TrackCard'
 
-import Location from '../../components/dashboard/location/Index'
+// import Location from '../../components/dashboard/location/Index'
 import OeeBoxes from '../../components/dashboard/boxes/Index'
 import LocationTable from '../../components/dashboard/location-table/Index'
 
 export default {
   components: {
-    Location,
+    // Location,
     TrackCard,
     // GaugeCard
     SalesCard,
     MachinesTableCard,
     OverviewCard,
     TopLevelDetails,
-    LocationsSection,
+    // LocationsSection,
     OeeBoxes,
     LocationTable
   },

@@ -1,101 +1,67 @@
 <template>
-  <div class="test-machine">
-    <v-card>
-      <v-card-title>
-      </v-card-title>
-      <v-card-subtitle>
-        <div>
-          <v-text-field
-            v-model="searchQuery"
-            append-icon="mdi-magnify"
-            solo
-            hide-details
-            dense
-            clearable
-            placeholder="Search"
-          ></v-text-field>
-        </div>
-      </v-card-subtitle>
-      <v-card-text>
-        <v-data-table
-          :headers="headers"
-          :items="locations"
-          hide-default-footer
-          :search="searchQuery"
-        >
-          <!-- <template v-slot:header.status="{ header }">
-            <v-icon color="primary">mdi-chevron-double-right</v-icon>
-            {{ header.text }}
-          </template>
-          <template v-slot:header.machinename="{ header }">
-            <v-icon small color="primary">mdi-wrench</v-icon>
-            {{ header.text }}
-          </template>
-          <template v-slot:header.capacity="{ header }">
-            <v-icon color="primary">mdi-trending-up</v-icon>
-            {{ header.text | percentageLabel }}
-          </template>
-          <template v-slot:header.consumption="{ header }">
-            <v-icon class="mdi-rotate-90" color="primary">mdi-battery-30</v-icon>
-            {{ header.text }}
-          </template>
-          <template v-slot:header.department="{ header }">
-            <v-icon small color="primary">mdi-factory</v-icon>
-            {{ header.text }}
-          </template> -->
-          <template v-slot:item.utilization="{ item }">
-            <div class="d-flex align-center">
-              <apexchart
-                type="line"
-                width="200"
-                height="100"
-                :options="utilizationChartOptions"
-                :series="utilizationSeries"
-              >
-              </apexchart>
-              {{ item.utilization }}
-            </div>
-          </template>
-          <template v-slot:item.location="{ item }">
-            <v-icon>mdi-home-map-marker</v-icon>
-            <div class="title text-no-wrap">{{ item.location }}</div>
-          </template>
-          <template v-slot:item.downtime_distribution="{ item }">
+  <v-card>
+    <v-card-title>
+    </v-card-title>
+    <v-card-text>
+      <v-data-table
+        :headers="headers"
+        :items="locations"
+        hide-default-footer
+      >
+        <template v-slot:item.utilization="{ item }">
+          <div class="d-flex align-center">
             <apexchart
-              type="bar"
-              width="200"
+              type="line"
+              width="160"
               height="100"
-              :options="chartOptions"
-              :series="item.downtime_distribution"
+              :options="utilizationChartOptions"
+              :series="utilizationSeries"
             >
             </apexchart>
-          </template>
-        </v-data-table>
-      </v-card-text>
-    </v-card>
-  </div>
+            {{ item.utilization }}
+          </div>
+        </template>
+        <template v-slot:item.location="{ item }">
+          <div class="d-flex align-center">
+            <v-icon>mdi-google-maps</v-icon>
+            <span class="title text-no-wrap ml-1">{{ item.location }}</span>
+          </div>
+        </template>
+        <template v-slot:item.downtime_distribution="{ item }">
+          <apexchart
+            type="bar"
+            width="240"
+            height="80"
+            :options="chartOptions"
+            :series="item.downtime_distribution"
+          >
+          </apexchart>
+        </template>
+      </v-data-table>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
 const series = [
   {
-    name: 'Marine Sprite',
+    name: 'Name',
     data: [44]
   },
   {
-    name: 'Striking Calf',
+    name: 'Name',
     data: [53]
   },
   {
-    name: 'Tank Picture',
+    name: 'Name',
     data: [12]
   },
   {
-    name: 'Bucket Slope',
+    name: 'Name',
     data: [9]
   },
   {
-    name: 'Reborn Kid',
+    name: 'Name',
     data: [25]
   }
 ]
@@ -117,12 +83,12 @@ export default {
     return {
       headers: [
         { text: 'Location', value: 'location' },
-        { text: 'Utilization', value: 'utilization' },
+        { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'start', value: 'oee' },
-        { text: 'Mean Runtime', value: 'mean_runtime' },
+        { text: 'MR', value: 'mean_runtime' },
         { text: 'Deviations', align: 'center', value: 'deviations' },
-        { text: 'Production Rate', value: 'rate' },
-        { text: 'Downtime Distrubton', value: 'downtime_distribution' }
+        { text: 'PR', value: 'rate' },
+        { text: 'Downtime Distrubton', align: 'center', value: 'downtime_distribution', sortable: false }
       ],
 
       locations: [
@@ -185,12 +151,11 @@ export default {
           colors: ['#fff']
         },
         xaxis: {
-          categories: [2008, 2009, 2010, 2011, 2012, 2013, 2014],
+          axisBorder: {
+            show: false
+          },
           labels: {
-            show: false,
-            formatter: function (val) {
-              return val + 'K'
-            }
+            show: false
           }
         },
         yaxis: {
@@ -202,20 +167,13 @@ export default {
           }
         },
         tooltip: {
-          y: {
-            formatter: function (val) {
-              return val + 'K'
-            }
-          }
-        },
-        fill: {
-          opacity: 1
+          enabled: false
         },
         legend: {
-          show: false,
-          position: 'top',
-          horizontalAlign: 'left',
-          offsetX: 40
+          show: false
+        },
+        grid: {
+          show: false
         }
       },
 
@@ -237,9 +195,6 @@ export default {
         dataLabels: {
           enabled: false
         },
-        stroke: {
-          curve: 'smooth'
-        },
         title: {
           text: '',
           align: 'left'
@@ -248,7 +203,9 @@ export default {
           labels: {
             show: false
           },
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+          axisBorder: {
+            show: false
+          }
         },
         yaxis: {
           labels: {
@@ -257,6 +214,13 @@ export default {
         },
         grid: {
           show: false
+        },
+        stroke: {
+          curve: 'smooth',
+          width: 2
+        },
+        tooltip: {
+          enabled: false
         }
       }
     }
