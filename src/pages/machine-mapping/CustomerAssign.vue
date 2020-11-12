@@ -91,6 +91,12 @@
           </v-icon>
         </template>
       </v-data-table>
+      <div class="text-center py-2">
+        <v-pagination
+          v-model="page"
+          :length="pageCount"
+        ></v-pagination>
+      </div>
     </v-card>
 
     <v-dialog
@@ -208,7 +214,7 @@ export default {
         { text: 'Customer Name', value: 'customer_name' },
         { text: 'Product category', value: 'product_category' },
         { text: 'Device Registration', value: 'device_registration', sortable: false },
-        { text: 'Device Status', value: 'device_status' },
+        { text: 'Device Status', align: 'center', value: 'device_status' },
         { text: '', value: 'data-table-expand', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
@@ -232,6 +238,8 @@ export default {
       confirmDialog: false,
       selectedItem: null,
 
+      page: 0,
+
       // input rules
       rules: {
         required: (value) => (value && Boolean(value)) || 'Required field'
@@ -240,7 +248,8 @@ export default {
   },
   computed: {
     ...mapState({
-      devices: (state) => state.devices.data
+      devices: (state) => state.devices.data,
+      pageCount: (state) => state.devices.pageCount
     }),
     ...mapGetters('customers', [
       'customerNames'

@@ -7,6 +7,8 @@ const module = {
     numAdded: 0,
     numDuplicates: 0,
 
+    pageCount: 0,
+
     error: null,
     button_loading: false
   },
@@ -17,8 +19,9 @@ const module = {
     }) {
       this.$axios.get('/devices')
         .then((response) => {
+          commit('SET_PAGINATION_DATA', response.data)
           commit('SET_DATA',
-            response.data.map((device) => {
+            response.data.data.map((device) => {
               const o = Object.assign({}, device)
 
               o.customer_name = ''
@@ -114,6 +117,9 @@ const module = {
     RESET_STATUS(state) {
       state.numAdded = 0
       state.numDuplicates = 0
+    },
+    SET_PAGINATION_DATA(state, responseData) {
+      state.pageCount = responseData.last_page
     }
   },
 

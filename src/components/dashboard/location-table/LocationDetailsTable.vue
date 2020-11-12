@@ -1,9 +1,11 @@
 <template>
   <v-card>
+    <v-card-title>
+    </v-card-title>
     <v-card-text>
       <v-data-table
         :headers="headers"
-        :items="locations"
+        :items="zones"
         hide-default-footer
       >
         <template v-slot:item.rate="{ item }">
@@ -26,11 +28,11 @@
             {{ item.utilization }}
           </div>
         </template>
-        <template v-slot:item.location="{ item }">
-          <router-link :to="item.location.to" class="d-flex align-center">
+        <template v-slot:item.zone="{ item }">
+          <div class="d-flex align-center">
             <v-icon>mdi-google-maps</v-icon>
-            <span class="title text-no-wrap ml-1">{{ item.location.label }}</span>
-          </router-link>
+            <span class="title text-no-wrap ml-1">{{ item.zone }}</span>
+          </div>
         </template>
         <template v-slot:item.downtime_distribution="{ item }">
           <apexchart
@@ -81,7 +83,7 @@ export default {
   data () {
     return {
       headers: [
-        { text: 'Location', value: 'location' },
+        { text: 'Zone', value: 'zone' },
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'start', value: 'oee' },
         { text: 'MR', value: 'mean_runtime' },
@@ -90,12 +92,9 @@ export default {
         { text: 'Downtime Distrubton', align: 'center', value: 'downtime_distribution', sortable: false }
       ],
 
-      locations: [
+      zones: [
         {
-          location: {
-            label: 'Location 1',
-            to: 'loc1'
-          },
+          zone: 'Zone 1',
           utilization: '32%',
           color: 'green',
           value: 75,
@@ -106,10 +105,7 @@ export default {
           downtime_distribution: series
         },
         {
-          location: {
-            label: 'Location 2',
-            to: 'loc2'
-          },
+          zone: 'Zone 2',
           utilization: '36%',
           color: 'green',
           value: 52,
@@ -120,10 +116,7 @@ export default {
           downtime_distribution: series
         },
         {
-          location: {
-            label: 'Location 3',
-            to: 'loc3'
-          },
+          zone: 'Zone 3',
           utilization: '82%',
           color: 'red',
           value: 78,
@@ -239,8 +232,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  a {
-    text-decoration: none;
-  }
-</style>
