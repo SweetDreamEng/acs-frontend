@@ -1,3 +1,5 @@
+import deviceAPI from '@/services/api/device'
+
 const module = {
   namespaced: true,
   state: {
@@ -28,28 +30,22 @@ const module = {
       commit('TABLE_LOAD')
 
       return new Promise((resolve, reject) => {
-        this.$axios.get(`/devices/${pageNum}`)
+        deviceAPI.getDevices(pageNum)
           .then((response) => {
-            commit('TABLE_LOAD_CLEAR')
             commit('SET_PAGINATION_DATA', {
               pageCount: response.data.last_page
             })
             commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
             commit('machines/SET_MACHINES', response.data.machines, { root: true })
-            commit('SET_DATA',
-              response.data.devices.map((device) => {
-                const o = Object.assign({}, device)
-
-                o.sim_status = false
-
-                return o
-              })
-            )
+            commit('SET_DATA', response.data.devices)
             resolve(response)
           })
           .catch((error) => {
             console.log(error.response)
             reject(error)
+          })
+          .finally(() => {
+            commit('TABLE_LOAD_CLEAR')
           })
       })
     },
@@ -57,18 +53,11 @@ const module = {
       commit
     }, devices) {
       for (let i = 0; i < devices.length; i++) {
-        this.$axios.post('https://cors-anywhere.herokuapp.com/https://prismproapi.koretelematics.com/4/TransactionalAPI.svc/json/queryDevice', {
-          deviceNumber: devices[i].iccid.slice(0, -1)
-        }, {
-          auth: {
-            username: 'ACSGroup_API',
-            password: 'HBSMYJM2'
-          }
-        })
+        deviceAPI.getDeviceStatus(devices[i])
           .then((response) => {
             commit('SET_DEVICE_STATUS', {
               device_id: devices[i].id,
-              status: response.data.d.status
+              status: response.data.d.status === 'Active'
             })
           })
       }
@@ -79,28 +68,17 @@ const module = {
       commit('BUTTON_LOAD')
       
       return new Promise((resolve, reject) => {
-        this.$axios.post('/devices/upload', myForm)
+        deviceAPI.uploadDevices(myForm)
           .then((response) => {
-            commit('BUTTON_CLEAR')
             commit('SET_ADDED', response.data.numAdded)
             commit('SET_DUPLICATES', response.data.numDuplicates)
             resolve(response)
           })
           .catch((error) => {
-            commit('BUTTON_CLEAR')
-            if (error.response.status === 401) {
-              console.log(error.response.data)
-            } else if (error.response.status === 400) {
-              console.log(error.response)
-              commit('SET_ERROR', {
-                'error': 'Validation error.'
-              })
-            } else {
-              commit('SET_ERROR', {
-                'error': 'Server Error'
-              })
-            }
             reject(error)
+          })
+          .finally(() => {
+            commit('BUTTON_CLEAR')
           })
       })
     },
@@ -110,31 +88,18 @@ const module = {
       commit('ASSIGN_LOAD')
 
       return new Promise((resolve, reject) => {
-        this.$axios.post('/devices/device-assigned', data)
+        deviceAPI.deviceAssigned(data)
           .then((response) => {
-            commit('ASSIGN_CLEAR')
             commit('DEVICE_ASSIGN', data)
             dispatch('app/showSuccess', response.data, { root: true })
             resolve(response)
-            // commit('SET_PAGINATION_DATA', {
-            //   pageCount: response.data.last_page
-            // })
-            // commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
-            // commit('machines/SET_MACHINES', response.data.machines, { root: true })
-            // commit('SET_DATA',
-            //   response.data.devices.map((device) => {
-            //     const o = Object.assign({}, device)
-
-            //     o.device_status = false
-
-            //     return o
-            //   })
-            // )
           })
           .catch((error) => {
-            commit('ASSIGN_CLEAR')
             console.log(error.response)
             reject(error)
+          })
+          .finally(() => {
+            commit('ASSIGN_CLEAR')
           })
       })
     },
@@ -144,31 +109,18 @@ const module = {
       commit('REGISTER_BTN_LOAD')
 
       return new Promise((resolve, reject) => {
-        this.$axios.post('/devices/device-register-update', data)
+        deviceAPI.updateRegistered(data)
           .then((response) => {
-            commit('REGISTER_BTN_CLEAR')
             commit('SET_REGISTERED', data)
             dispatch('app/showSuccess', response.data, { root: true })
             resolve(response)
-            // commit('SET_PAGINATION_DATA', {
-            //   pageCount: response.data.last_page
-            // })
-            // commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
-            // commit('machines/SET_MACHINES', response.data.machines, { root: true })
-            // commit('SET_DATA',
-            //   response.data.devices.map((device) => {
-            //     const o = Object.assign({}, device)
-
-            //     o.device_status = false
-
-            //     return o
-            //   })
-            // )
           })
           .catch((error) => {
-            commit('REGISTER_BTN_CLEAR')
             console.log(error.response)
             reject(error)
+          })
+          .finally(() => {
+            commit('REGISTER_BTN_CLEAR')
           })
       })
     },
@@ -179,22 +131,6 @@ const module = {
     deactivateSIM({
       commit, dispatch
     }, device) {
-      // commit('DEACTIVATE_BTN_LOAD')
-
-      // return new Promise((resolve, reject) => {
-      //   this.$axios.post('/devices/device-assigned', data)
-      //     .then((response) => {
-      //       commit('ASSIGN_CLEAR')
-      //       commit('DEVICE_ASSIGN', data)
-      //       dispatch('app/showSuccess', response.data, { root: true })
-      //       resolve(response)
-      //     })
-      //     .catch((error) => {
-      //       commit('ASSIGN_CLEAR')
-      //       console.log(error.response)
-      //       reject(error)
-      //     })
-      // })
     },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
@@ -267,7 +203,7 @@ const module = {
     SET_DEVICE_STATUS(state, data) {
       const _device = state.data.find((device) => device.id === data.device_id)
       
-      _device.sim_status = data.status === 'Active'
+      _device.sim_status = data.status
     },
     RESET_STATUS(state) {
       state.numAdded = 0

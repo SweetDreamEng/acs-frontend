@@ -109,6 +109,7 @@ const module = {
         })
         .catch((error) => {
           commit('BUTTON_CLEAR')
+          console.log(error.response)
           if (error.response.status === 400) {
             commit('SET_ERROR', {
               'error': 'Email and password incorrect.'
