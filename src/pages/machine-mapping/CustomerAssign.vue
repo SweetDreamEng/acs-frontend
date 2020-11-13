@@ -179,7 +179,14 @@
           </v-alert>
           <div class="d-flex justify-end">
             <v-btn color="primary" text @click="confirmDialog = false">Cancel</v-btn>
-            <v-btn :color="confirmBtnColor()" dark @click="onConfirmClicked()">{{ confirmBtnText() }}</v-btn>
+            <v-btn
+              :color="confirmBtnColor()"
+              dark
+              @click="onConfirmClicked()"
+              :loading="register_button_loading"
+            >
+              {{ confirmBtnText() }}
+            </v-btn>
           </div>
         </v-card-text>
       </v-card>
@@ -261,7 +268,8 @@ export default {
       assign_loading: (state) => state.devices.assign_loading,
       activate_button_loading: (state) => state.devices.activate_button_loading,
       deactivate_button_loading: (state) => state.devices.deactivate_button_loading,
-
+      register_button_loading: (state) => state.devices.register_button_loading,
+      
       devices: (state) => state.devices.data,
 
       pageCount: (state) => state.devices.pageCount,
@@ -280,6 +288,7 @@ export default {
     ...mapActions({
       'getDevices': 'devices/getDevices',
       'deviceAssigned': 'devices/deviceAssigned',
+      'updateRegistered': 'devices/updateRegistered',
       'activateSIM': 'devices/activateSIM',
       'deactivateSIM': 'devices/deactivateSIM'
     }),
@@ -345,8 +354,13 @@ export default {
       this.confirmDialog = true
     },
     onConfirmClicked() {
-      this.selectedItem.device_registration = !this.selectedItem.device_registration
-      this.confirmDialog = false
+      this.updateRegistered({
+        device_id: this.selectedItem.id,
+        register: !this.selectedItem.registered
+      })
+        .then((response) => {
+          this.confirmDialog = false
+        })
     },
     onPageChange() {
       this.getDevices(this.loc_page)

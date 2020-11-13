@@ -14,7 +14,8 @@ const module = {
     button_loading: false,              // status of uploading devices from excel file
     activate_button_loading: false,     // status of activating SIM
     deactivate_button_loading: false,   // status of deactivating SIM
-    assign_loading: false               // status of uploading devices from excel file
+    assign_loading: false,               // status of uploading devices from excel file
+    register_button_loading: false
   },
 
   actions: {
@@ -99,8 +100,8 @@ const module = {
         this.$axios.post('/devices/device-assigned', data)
           .then((response) => {
             commit('ASSIGN_CLEAR')
-            dispatch('app/showSuccess', response.data, { root: true })
             commit('DEVICE_ASSIGN', data)
+            dispatch('app/showSuccess', response.data, { root: true })
             resolve(response)
             // commit('SET_PAGINATION_DATA', {
             //   pageCount: response.data.last_page
@@ -119,6 +120,40 @@ const module = {
           })
           .catch((error) => {
             commit('ASSIGN_CLEAR')
+            console.log(error.response)
+            reject(error)
+          })
+      })
+    },
+    updateRegistered({
+      commit, dispatch
+    }, data) {
+      commit('REGISTER_BTN_LOAD')
+
+      return new Promise((resolve, reject) => {
+        this.$axios.post('/devices/device-register-update', data)
+          .then((response) => {
+            commit('REGISTER_BTN_CLEAR')
+            commit('SET_REGISTERED', data)
+            dispatch('app/showSuccess', response.data, { root: true })
+            resolve(response)
+            // commit('SET_PAGINATION_DATA', {
+            //   pageCount: response.data.last_page
+            // })
+            // commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
+            // commit('machines/SET_MACHINES', response.data.machines, { root: true })
+            // commit('SET_DATA',
+            //   response.data.devices.map((device) => {
+            //     const o = Object.assign({}, device)
+
+            //     o.device_status = false
+
+            //     return o
+            //   })
+            // )
+          })
+          .catch((error) => {
+            commit('REGISTER_BTN_CLEAR')
             console.log(error.response)
             reject(error)
           })
@@ -163,6 +198,12 @@ const module = {
     TABLE_LOAD_CLEAR(state) {
       state.table_loading = false
     },
+    REGISTER_BTN_LOAD(state) {
+      state.register_button_loading = true
+    },
+    REGISTER_BTN_CLEAR(state) {
+      state.register_button_loading = false
+    },
     SET_DATA(state, devices) {
       state.data = devices
     },
@@ -177,6 +218,11 @@ const module = {
       
       _device.company_id = data.company_id
       _device.machine_id = data.machine_id
+    },
+    SET_REGISTERED(state, data) {
+      const _device = state.data.find((device) => device.id === data.device_id)
+      
+      _device.registered = data.register
     },
     RESET_STATUS(state) {
       state.numAdded = 0
