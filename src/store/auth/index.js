@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import router from '../../router'
+import authAPI from '@/services/api/auth'
 
 const module = {
   namespaced: true,
@@ -34,92 +35,40 @@ const module = {
   },
 
   actions: {
-    signup({
-      commit
-    }, {
-      name, email, password
-    }) {
-      commit('BUTTON_LOAD')
-      const data = {
-        name,
-        email,
-        password
-      }
-
-      this.$axios.post('/auth/signup', data)
-        .then((response) => {
-          commit('SET_TOKEN', response.data.access_token)
-          Vue.auth.setToken(response.data.access_token)
-          this.$axios.post('/auth/check')
-            .then((response) => {
-              commit('BUTTON_CLEAR')
-              commit('SET_AUTH_DATA', response.data)
-              router.push('/acs-machines')
-            })
-            .catch((error) => {
-              commit('BUTTON_CLEAR')
-              console.log(error.response.data)
-            })
-        })
-        .catch((error) => {
-          commit('BUTTON_CLEAR')
-          if (error.response.status === 401) {
-            commit('SET_ERROR', {
-              'error': 'Email and password incorrect.'
-            })
-          } else if (error.response.status === 400) {
-            console.log(error.response)
-            commit('SET_ERROR', {
-              'error': 'Some validation error.'
-            })
-          }
-        })
-    },
     signIn({
       commit
     }, {
       email, password
     }) {
       commit('BUTTON_LOAD')
-      const data = {
-        email,
-        password
-      }
-
-      this.$axios.post('/auth/signin', data)
-        .then((response) => {
-          commit('SET_TOKEN', response.data.access_token)
-          Vue.auth.setToken(response.data.access_token)
-          this.$axios.post('/auth/check')
-            .then((response) => {
-              commit('BUTTON_CLEAR')
-              commit('CLEAR_ERROR')
-              commit('SET_AUTH_DATA', response.data)
-              
-              console.log(response.data)
-
-              router.push({
-                name: 'acs-machines'
-              })
-            })
-            .catch((error) => {
-              commit('BUTTON_CLEAR')
-              console.log(error)
-            })
+      authAPI.signIn(email, password).then((response) => {
+        commit('SET_TOKEN', response.data.access_token)
+        Vue.auth.setToken(response.data.access_token)
+        authAPI.check().then((response) => {
+          commit('CLEAR_ERROR')
+          commit('SET_AUTH_DATA', response.data)
+          
+          router.push({
+            name: 'acs-machines'
+          })
         })
+          .catch((error) => {
+            console.log(error)
+          })
+      })
         .catch((error) => {
-          commit('BUTTON_CLEAR')
-          console.log(error.response)
           if (error.response.status === 400) {
             commit('SET_ERROR', {
               'error': 'Email and password incorrect.'
             })
           } else if (error.response.status === 400) {
-            console.log(error.response)
             commit('SET_ERROR', {
               'error': 'Some validation error.'
             })
           }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
         })
     },
 
@@ -130,21 +79,17 @@ const module = {
      * @param {*} param0
      */
     signOut({ commit }) {
-      // commit('SPINER_LOAD')
-      this.$axios.get('/auth/logout')
-        .then((response) => {
-          if (response.status === 200) {
-            commit('SET_LOGOUT_ATUH')
-            router.push({
-              name: 'auth-signin'
-            })
-            // commit('SPINER_CLEAN')
-          }
-        })
+      authAPI.signOut().then((response) => {
+        if (response.status === 200) {
+          commit('SET_LOGOUT_ATUH')
+          router.push({
+            name: 'auth-signin'
+          })
+        }
+      })
         .catch((error) => {
           if (error.response.status === 401) {
             localStorage.removeItem('token')
-            // location.reload()
           }
         })
     },
@@ -154,18 +99,10 @@ const module = {
       currentPassword, newPassword
     }) {
       commit('BUTTON_LOAD')
-      const data = {
-        current_password: currentPassword,
-        new_password: newPassword
-      }
-
-      this.$axios.post('/auth/update-password', data)
-        .then((response) => {
-          dispatch('app/showSuccess', response.data.message, { root: true })
-          commit('BUTTON_CLEAR')
-        })
+      authAPI.updatePassword(currentPassword, newPassword).then((response) => {
+        dispatch('app/showSuccess', response.data.message, { root: true })
+      })
         .catch((error) => {
-          commit('BUTTON_CLEAR')
           if (error.response.status === 401) {
             commit('SET_ERROR', {
               'error': 'Email and password incorrect.'
@@ -181,6 +118,9 @@ const module = {
               'error': errors[0]
             })
           }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
         })
     },
     clearError({ commit }) {
@@ -206,9 +146,7 @@ const module = {
     SET_LOGOUT_ATUH(state) {
       state.token = null
       localStorage.removeItem('token')
-      // router.go('/')
     },
-    // BUTTON load
     BUTTON_LOAD(state) {
       state.button_loading = true
     },

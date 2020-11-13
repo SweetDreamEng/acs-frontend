@@ -111,9 +111,6 @@ const module = {
   },
 
   getters: {
-    customerNames: (state) => {
-      return state.data.map((customer) => customer.name)
-    },
     extendedCompanies: (state) => {
       const _companies = state.data.slice()
 

@@ -174,9 +174,6 @@ const module = {
   },
 
   getters: {
-    machineNames: (state) => {
-      return state.data.map((machine) => machine.machinename)
-    },
     selectedMachine: (state) => {
       if (state.selectedId) {
         const _machine = state.data.find((machine) => machine.id === state.selectedId)
