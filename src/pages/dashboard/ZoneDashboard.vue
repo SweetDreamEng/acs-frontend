@@ -76,7 +76,7 @@
         ></top-level-details>
       </v-col>
 
-<!--       <v-col cols="12">
+      <!--       <v-col cols="12">
         <zone-cards></zone-cards>
       </v-col> -->
     </v-row>

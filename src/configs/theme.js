@@ -24,7 +24,7 @@ export default {
     primary: '#0096c7',
     secondary: '#829099',
     accent: '#82B1FF',
-    error: '#FF5252',
+    error: '#ea344e',
     info: '#2196F3',
     success: '#4CAF50',
     warning: '#FFC107'
@@ -53,7 +53,7 @@ export default {
     primary: '#092954', // darker accent color
     secondary: '#508FF0', //lighter color // 002855
     accent: '#003066', //almost same as primary
-    error: '#ef476f',
+    error: '#ea344e',
     info: '#2196F3',
     success: '#06d6a0',
     warning: '#ffd166'

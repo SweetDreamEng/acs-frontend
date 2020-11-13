@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex flex-column flex-grow-1">
+  <v-card class="d-flex flex-column flex-grow-1" light>
     <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
       <v-progress-circular indeterminate color="secondary"></v-progress-circular>
     </div>
@@ -61,6 +61,10 @@ export default {
     series: {
       type: Array,
       default: () => ([])
+    },
+    isFlat: {
+      type: Boolean,
+      default: false
     },
     label: {
       type: String,
