@@ -26,39 +26,52 @@ const module = {
         page: pageNum
       })
       commit('TABLE_LOAD')
-      this.$axios.get(`/devices/${pageNum}`)
-        .then((response) => {
-          commit('TABLE_LOAD_CLEAR')
-          commit('SET_PAGINATION_DATA', {
-            pageCount: response.data.last_page
-          })
-          commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
-          commit('machines/SET_MACHINES', response.data.machines, { root: true })
-          commit('SET_DATA',
-            response.data.devices.map((device) => {
-              const o = Object.assign({}, device)
 
-              o.device_status = false
-
-              return o
+      return new Promise((resolve, reject) => {
+        this.$axios.get(`/devices/${pageNum}`)
+          .then((response) => {
+            commit('TABLE_LOAD_CLEAR')
+            commit('SET_PAGINATION_DATA', {
+              pageCount: response.data.last_page
             })
-          )
+            commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
+            commit('machines/SET_MACHINES', response.data.machines, { root: true })
+            commit('SET_DATA',
+              response.data.devices.map((device) => {
+                const o = Object.assign({}, device)
+
+                o.sim_status = false
+
+                return o
+              })
+            )
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+      })
+    },
+    getDevicesStatus({
+      commit
+    }, devices) {
+      for (let i = 0; i < devices.length; i++) {
+        this.$axios.post('https://cors-anywhere.herokuapp.com/https://prismproapi.koretelematics.com/4/TransactionalAPI.svc/json/queryDevice', {
+          deviceNumber: devices[i].iccid.slice(0, -1)
+        }, {
+          auth: {
+            username: 'ACSGroup_API',
+            password: 'HBSMYJM2'
+          }
         })
-        .catch((error) => {
-          console.log(error.response)
-          // if (error.response.status === 401) {
-          //   console.log(error.response.data)
-          // } else if (error.response.status === 400) {
-          //   console.log(error.response)
-          //   commit('SET_ERROR', {
-          //     'error': 'Validation error.'
-          //   })
-          // } else {
-          //   commit('SET_ERROR', {
-          //     'error': 'Server Error'
-          //   })
-          // }
-        })
+          .then((response) => {
+            commit('SET_DEVICE_STATUS', {
+              device_id: devices[i].id,
+              status: response.data.d.status
+            })
+          })
+      }
     },
     uploadDevices({
       commit
@@ -164,9 +177,24 @@ const module = {
     }, device) {
     },
     deactivateSIM({
-      commit
+      commit, dispatch
     }, device) {
+      // commit('DEACTIVATE_BTN_LOAD')
 
+      // return new Promise((resolve, reject) => {
+      //   this.$axios.post('/devices/device-assigned', data)
+      //     .then((response) => {
+      //       commit('ASSIGN_CLEAR')
+      //       commit('DEVICE_ASSIGN', data)
+      //       dispatch('app/showSuccess', response.data, { root: true })
+      //       resolve(response)
+      //     })
+      //     .catch((error) => {
+      //       commit('ASSIGN_CLEAR')
+      //       console.log(error.response)
+      //       reject(error)
+      //     })
+      // })
     },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
@@ -204,6 +232,18 @@ const module = {
     REGISTER_BTN_CLEAR(state) {
       state.register_button_loading = false
     },
+    ACTIVATE_BTN_LOAD(state) {
+      state.activate_button_loading = true
+    },
+    ACTIVATE_BTN_CLEAR(state) {
+      state.activate_button_loading = false
+    },
+    DEACTIVATE_BTN_LOAD(state) {
+      state.deactivate_button_loading = true
+    },
+    DEACTIVATE_BTN_CLEAR(state) {
+      state.deactivate_button_loading = false
+    },
     SET_DATA(state, devices) {
       state.data = devices
     },
@@ -223,6 +263,11 @@ const module = {
       const _device = state.data.find((device) => device.id === data.device_id)
       
       _device.registered = data.register
+    },
+    SET_DEVICE_STATUS(state, data) {
+      const _device = state.data.find((device) => device.id === data.device_id)
+      
+      _device.sim_status = data.status === 'Active'
     },
     RESET_STATUS(state) {
       state.numAdded = 0

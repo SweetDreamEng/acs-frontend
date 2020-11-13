@@ -141,7 +141,7 @@ const module = {
       return state.data.map((customer) => customer.name)
     },
     extendedCompanies: (state) => {
-      const _companies = state.data
+      const _companies = state.data.slice()
 
       _companies.unshift({
         id: 0,

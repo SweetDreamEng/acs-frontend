@@ -14,7 +14,7 @@
     <v-card>
       <v-data-table
         :headers="headers"
-        :items="customers"
+        :items="companies"
         :search="searchQuery"
         class="flex-grow-1"
         hide-default-footer
@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     ...mapState({
-      customers: (state) => state.customers.data
+      companies: (state) => state.customers.data
     })
   },
   watch: {

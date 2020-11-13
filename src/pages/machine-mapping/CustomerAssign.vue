@@ -59,9 +59,9 @@
           </div>
         </template>
 
-        <template v-slot:item.device_status="{ item }">
+        <template v-slot:item.sim_status="{ item }">
           <v-icon
-            :color="item.device_status ? 'green' : 'red'"
+            :color="item.sim_status ? 'green' : 'red'"
           >
             mdi-checkbox-blank-circle
           </v-icon>
@@ -76,7 +76,9 @@
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length" class="px-4 py-2">
             <div class="mb-2">
-              SIM Status: <span class="green--text font-weight-bold">Activated</span>
+              SIM Status: 
+              <span v-if="item.sim_status" class="green--text font-weight-bold">Activated</span>
+              <span v-else class="red--text font-weight-bold">Deactivated</span>
               <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ item.public_ip_sim }}</span></span>
             </div>
             <div>
@@ -230,7 +232,7 @@ export default {
         { text: 'Company Name', value: 'company_id' },
         { text: 'Machine Name', value: 'machine_id' },
         { text: 'Device Registration', align: 'center', value: 'registered', sortable: false },
-        { text: 'Device Status', align: 'center', value: 'device_status' },
+        { text: 'SIM Status', align: 'center', value: 'sim_status' },
         { text: 'Administration', value: 'data-table-expand', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
@@ -283,12 +285,16 @@ export default {
   mounted() {
     this.loc_page = this.page
     this.getDevices(this.page)
+      .then((response) => {
+        this.getDevicesStatus(this.devices)
+      })
   },
   methods: {
     ...mapActions({
       'getDevices': 'devices/getDevices',
       'deviceAssigned': 'devices/deviceAssigned',
       'updateRegistered': 'devices/updateRegistered',
+      'getDevicesStatus': 'devices/getDevicesStatus',
       'activateSIM': 'devices/activateSIM',
       'deactivateSIM': 'devices/deactivateSIM'
     }),
@@ -364,6 +370,9 @@ export default {
     },
     onPageChange() {
       this.getDevices(this.loc_page)
+        .then((response) => {
+          this.getDevicesStatus(this.devices)
+        })
     },
     companyName(company_id) {
       const _company = this.companies.find((company) => company.id === company_id)
