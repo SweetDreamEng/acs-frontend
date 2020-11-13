@@ -50,14 +50,14 @@
           <span v-else>Not assigned</span>
         </template>
 
-        <template v-slot:item.device_registration="{ item }">
+        <template v-slot:item.registered="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <v-btn
-              :color="item.device_registration ? 'green' : 'red'"
+              :color="item.registered ? 'green' : 'red'"
               dark
               style="width: 80px;"
               @click="onRegisterChange(item)"
-            >{{ item.device_registration ? 'Register' : 'Revoke' }}</v-btn>
+            >{{ item.registered ? 'Register' : 'Revoke' }}</v-btn>
           </div>
         </template>
 
@@ -115,23 +115,24 @@
     >
       <v-card>
         <v-card-title class="primary white--text">Register</v-card-title>
-
         <v-card-text class="mt-2">
           <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
             <v-select
               v-model="editedItem.customer_name"
-              :items="extendedCustomerNames"
+              :items="companies"
               label="Choose Customer"
-              :rules="[rules.required]"
+              item-text="name"
+              item-value="id"
               outlined
               dense
             >
             </v-select>
             <v-select
               v-model="editedItem.product_category"
-              :items="extendedMachineNames"
+              :items="machines"
               label="Choose Machine"
-              :rules="[rules.required]"
+              item-text="name"
+              item-value="id"
               outlined
               dense
             >
@@ -221,7 +222,7 @@ export default {
         { text: 'Serial Number', value: 'serial_number' },
         { text: 'Customer Name', value: 'customer_name' },
         { text: 'Product category', value: 'product_category' },
-        { text: 'Device Registration', align: 'center', value: 'device_registration', sortable: false },
+        { text: 'Device Registration', align: 'center', value: 'registered', sortable: false },
         { text: 'Device Status', align: 'center', value: 'device_status' },
         { text: 'Administration', value: 'data-table-expand', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
@@ -261,12 +262,18 @@ export default {
       deactivate_button_loading: (state) => state.devices.deactivate_button_loading,
 
       devices: (state) => state.devices.data,
+      // companies: (state) => state.companies.data,
+
       pageCount: (state) => state.devices.pageCount,
       page: (state) => state.devices.page
     }),
     ...mapGetters('customers', [
       'customerNames'
     ]),
+    ...mapGetters({
+      companies: 'customers/extendedCompanies',
+      machines: 'machines/extendedMachines'
+    }),
     ...mapGetters('machines', [
       'machineNames'
     ]),
@@ -276,13 +283,6 @@ export default {
       _machineNames.unshift('Not assigned')
 
       return _machineNames
-    },
-    extendedCustomerNames() {
-      const _customerNames = this.customerNames
-
-      _customerNames.unshift('Not assigned')
-
-      return _customerNames
     }
   },
   mounted() {

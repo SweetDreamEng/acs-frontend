@@ -30,13 +30,12 @@ const module = {
           commit('SET_PAGINATION_DATA', {
             pageCount: response.data.last_page
           })
+          commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
+          commit('machines/SET_MACHINES', response.data.machines, { root: true })
           commit('SET_DATA',
-            response.data.data.map((device) => {
+            response.data.devices.map((device) => {
               const o = Object.assign({}, device)
 
-              o.customer_name = ''
-              o.product_category = ''
-              o.device_registration = false,
               o.device_status = false
 
               return o

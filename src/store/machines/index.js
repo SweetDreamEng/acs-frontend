@@ -123,6 +123,7 @@ const module = {
         notes: []
       }
     ],
+    machines: [],
     selectedId: 0
   },
 
@@ -166,6 +167,9 @@ const module = {
           })
         }
       })
+    },
+    SET_MACHINES: (state, machines) => {
+      state.machines = machines
     }
   },
 
@@ -181,6 +185,16 @@ const module = {
       }
 
       return {}
+    },
+    extendedMachines: (state) => {
+      const _machines = state.machines
+
+      _machines.unshift({
+        id: -1,
+        name: 'Not Assigned'
+      })
+
+      return _machines
     }
   }
 }
