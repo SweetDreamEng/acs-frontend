@@ -190,7 +190,7 @@ const module = {
       const _machines = state.machines
 
       _machines.unshift({
-        id: -1,
+        id: 0,
         name: 'Not Assigned'
       })
 

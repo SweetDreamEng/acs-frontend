@@ -40,14 +40,12 @@
         <!-- custom table header -->
 
         <!-- custom table rows -->
-        <template v-slot:item.customer_name="{ item }">
-          <span v-if="item.customer_name">{{ item.customer_name }}</span>
-          <span v-else>Not assigned</span>
+        <template v-slot:item.company_id="{ item }">
+          <span>{{ companyName(item.company_id) }}</span>
         </template>
 
-        <template v-slot:item.product_category="{ item }">
-          <span v-if="item.product_category">{{ item.product_category }}</span>
-          <span v-else>Not assigned</span>
+        <template v-slot:item.machine_id="{ item }">
+          <span>{{ machineName(item.machine_id) }}</span>
         </template>
 
         <template v-slot:item.registered="{ item }">
@@ -118,7 +116,7 @@
         <v-card-text class="mt-2">
           <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
             <v-select
-              v-model="editedItem.customer_name"
+              v-model="editedItem.company_id"
               :items="companies"
               label="Choose Customer"
               item-text="name"
@@ -128,7 +126,7 @@
             >
             </v-select>
             <v-select
-              v-model="editedItem.product_category"
+              v-model="editedItem.machine_id"
               :items="machines"
               label="Choose Machine"
               item-text="name"
@@ -150,6 +148,8 @@
               <v-btn
                 color="primary"
                 type="submit"
+                :loading="assign_loading"
+                :disabled="assign_loading"
               >
                 Save
               </v-btn>
@@ -220,8 +220,8 @@ export default {
       selectedUsers: [],
       tableHeaders: [
         { text: 'Serial Number', value: 'serial_number' },
-        { text: 'Customer Name', value: 'customer_name' },
-        { text: 'Product category', value: 'product_category' },
+        { text: 'Company Name', value: 'company_id' },
+        { text: 'Machine Name', value: 'machine_id' },
         { text: 'Device Registration', align: 'center', value: 'registered', sortable: false },
         { text: 'Device Status', align: 'center', value: 'device_status' },
         { text: 'Administration', value: 'data-table-expand', sortable: false },
@@ -233,12 +233,12 @@ export default {
 
       editedIndex: -1,
       editedItem: {
-        customer_name: '',
-        product_category: ''
+        company_id: '',
+        machine_id: ''
       },
       defaultItem: {
-        customer_name: '',
-        product_category: ''
+        company_id: '',
+        machine_id: ''
       },
       editDialog: false,
 
@@ -258,32 +258,19 @@ export default {
   computed: {
     ...mapState({
       table_loading: (state) => state.devices.table_loading,
+      assign_loading: (state) => state.devices.assign_loading,
       activate_button_loading: (state) => state.devices.activate_button_loading,
       deactivate_button_loading: (state) => state.devices.deactivate_button_loading,
 
       devices: (state) => state.devices.data,
-      // companies: (state) => state.companies.data,
 
       pageCount: (state) => state.devices.pageCount,
       page: (state) => state.devices.page
     }),
-    ...mapGetters('customers', [
-      'customerNames'
-    ]),
     ...mapGetters({
       companies: 'customers/extendedCompanies',
       machines: 'machines/extendedMachines'
-    }),
-    ...mapGetters('machines', [
-      'machineNames'
-    ]),
-    extendedMachineNames() {
-      const _machineNames = this.machineNames
-
-      _machineNames.unshift('Not assigned')
-
-      return _machineNames
-    }
+    })
   },
   mounted() {
     this.loc_page = this.page
@@ -292,6 +279,7 @@ export default {
   methods: {
     ...mapActions({
       'getDevices': 'devices/getDevices',
+      'deviceAssigned': 'devices/deviceAssigned',
       'activateSIM': 'devices/activateSIM',
       'deactivateSIM': 'devices/deactivateSIM'
     }),
@@ -312,8 +300,14 @@ export default {
     },
     save () {
       if (this.$refs.editForm.validate()) {
-        Object.assign(this.devices[this.editedIndex], this.editedItem)
-        this.close()
+        this.deviceAssigned({
+          device_id: this.devices[this.editedIndex].id,
+          company_id: this.editedItem.company_id,
+          machine_id: this.editedItem.machine_id
+        })
+          .then((response) => {
+            this.close()
+          })
       }
     },
     confirmBtnText() {
@@ -356,6 +350,16 @@ export default {
     },
     onPageChange() {
       this.getDevices(this.loc_page)
+    },
+    companyName(company_id) {
+      const _company = this.companies.find((company) => company.id === company_id)
+
+      return _company ? _company.name : 'Not Assinged'
+    },
+    machineName(machine_id) {
+      const _machine = this.machines.find((machine) => machine.id === machine_id)
+
+      return _machine ? _machine.name : 'Not Assinged'
     }
   }
 }

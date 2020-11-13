@@ -144,7 +144,7 @@ const module = {
       const _companies = state.data
 
       _companies.unshift({
-        id: -1,
+        id: 0,
         name: 'Not Assigned'
       })
 

@@ -13,7 +13,8 @@ const module = {
     table_loading: false,               // status of loading devices into the table
     button_loading: false,              // status of uploading devices from excel file
     activate_button_loading: false,     // status of activating SIM
-    deactivate_button_loading: false    // status of deactivating SIM
+    deactivate_button_loading: false,   // status of deactivating SIM
+    assign_loading: false               // status of uploading devices from excel file
   },
 
   actions: {
@@ -61,8 +62,9 @@ const module = {
     uploadDevices({
       commit
     }, myForm) {
+      commit('BUTTON_LOAD')
+      
       return new Promise((resolve, reject) => {
-        commit('BUTTON_LOAD')
         this.$axios.post('/devices/upload', myForm)
           .then((response) => {
             commit('BUTTON_CLEAR')
@@ -84,6 +86,40 @@ const module = {
                 'error': 'Server Error'
               })
             }
+            reject(error)
+          })
+      })
+    },
+    deviceAssigned({
+      commit, dispatch
+    }, data) {
+      commit('ASSIGN_LOAD')
+
+      return new Promise((resolve, reject) => {
+        this.$axios.post('/devices/device-assigned', data)
+          .then((response) => {
+            commit('ASSIGN_CLEAR')
+            dispatch('app/showSuccess', response.data, { root: true })
+            commit('DEVICE_ASSIGN', data)
+            resolve(response)
+            // commit('SET_PAGINATION_DATA', {
+            //   pageCount: response.data.last_page
+            // })
+            // commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
+            // commit('machines/SET_MACHINES', response.data.machines, { root: true })
+            // commit('SET_DATA',
+            //   response.data.devices.map((device) => {
+            //     const o = Object.assign({}, device)
+
+            //     o.device_status = false
+
+            //     return o
+            //   })
+            // )
+          })
+          .catch((error) => {
+            commit('ASSIGN_CLEAR')
+            console.log(error.response)
             reject(error)
           })
       })
@@ -115,6 +151,12 @@ const module = {
     BUTTON_CLEAR(state) {
       state.button_loading = false
     },
+    ASSIGN_LOAD(state) {
+      state.assign_loading = true
+    },
+    ASSIGN_CLEAR(state) {
+      state.assign_loading = false
+    },
     TABLE_LOAD(state) {
       state.table_loading = true
     },
@@ -129,6 +171,12 @@ const module = {
     },
     SET_DUPLICATES(state, numDuplicates) {
       state.numDuplicates = numDuplicates
+    },
+    DEVICE_ASSIGN(state, data) {
+      const _device = state.data.find((device) => device.id === data.device_id)
+      
+      _device.company_id = data.company_id
+      _device.machine_id = data.machine_id
     },
     RESET_STATUS(state) {
       state.numAdded = 0
