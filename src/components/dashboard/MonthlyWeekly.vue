@@ -1,5 +1,5 @@
 <template>
-	<div>
+  <div>
     <v-menu offset-y left transition="slide-y-transition">
       <template v-slot:activator="{ on }">
         <v-btn

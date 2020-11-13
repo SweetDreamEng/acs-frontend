@@ -17,10 +17,10 @@
             <v-col cols="12" md="6">
               <v-text-field
                 v-model="customerProfileForm.phone"
+                v-mask="'###-###-####'"
                 label="Phone"
                 placeholder="123-456-7890"
                 :rules="phoneRules"
-                v-mask="'###-###-####'"
               >
               </v-text-field>
             </v-col>

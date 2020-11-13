@@ -1,5 +1,5 @@
 <template>
-	<v-card>
+  <v-card>
     <div class="pa-2">
       <div class="d-flex flex-wrap justify-center">
         <v-slide-group

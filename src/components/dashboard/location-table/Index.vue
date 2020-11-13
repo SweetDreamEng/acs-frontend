@@ -7,11 +7,13 @@
         hide-default-footer
       >
         <template v-slot:item.rate="{ item }">
-          <production-rate-chart
-            :height="120"
-            :series="[item.rate]"
-          >
-          </production-rate-chart>
+          <div style="max-width: 100px" class="d-flex align-center justify-center mx-auto">
+            <production-rate-chart
+              :height="120"
+              :series="[item.rate]"
+            >
+            </production-rate-chart>
+          </div>
         </template>
         <template v-slot:item.utilization="{ item }">
           <div class="d-flex align-center">
@@ -33,14 +35,16 @@
           </router-link>
         </template>
         <template v-slot:item.downtime_distribution="{ item }">
-          <apexchart
-            type="bar"
-            width="240"
-            height="80"
-            :options="chartOptions"
-            :series="item.downtime_distribution"
-          >
-          </apexchart>
+          <div class="d-flex align-end justify-end">
+            <apexchart
+              type="bar"
+              width="240"
+              height="80"
+              :options="chartOptions"
+              :series="item.downtime_distribution"
+            >
+            </apexchart>
+          </div>
         </template>
       </v-data-table>
 
@@ -101,7 +105,7 @@ export default {
         { text: 'OEE', align: 'center', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },
         { text: 'Prod Rate', value: 'rate', align: 'center' },
-        { text: 'Downtime Distrubton', align: 'center', value: 'downtime_distribution', sortable: false }
+        { text: 'Downtime Distrubton', align: 'right', value: 'downtime_distribution', sortable: false }
       ],
 
       selected: ['name1', 'name2', 'name3'],

@@ -27,14 +27,14 @@
             <v-icon color="primary">mdi-information</v-icon>
             {{ header.text }}
           </template>
-<!--           <template v-slot:header.value="{ header }">
+          <!--           <template v-slot:header.value="{ header }">
             <v-icon color="primary">mdi-chart-bar</v-icon>
             {{ header.text }}
           </template> -->
           <template v-slot:header.createdAt="{ header }">
             <v-icon color="primary">mdi-clock</v-icon>
             <span v-text="header.text"></span>
-            
+
           </template>
 
           <!-- custom table row -->
@@ -52,7 +52,7 @@
               <b>{{ item.status }}</b>
             </v-chip>
           </template>
-          <template v-slot:expanded-item="{ headers, item }">
+          <template v-slot:expanded-item="{ item }">
             <td :colspan="headers.length" class="px-4">
               <div class="pa-1">Alarm generated at {{ item.createdAt }} time</div>
               <div class="pa-1">Alarm cleared at {{ item.createdAt }} time</div>

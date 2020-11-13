@@ -16,8 +16,8 @@
         <v-card-text>
           <v-form ref="form" v-model="isFormValid" lazy-validation>
             <v-file-input
-              label="File input"
               v-model="devicesFile"
+              label="File input"
               accept=".xlsx"
               outlined
               dense

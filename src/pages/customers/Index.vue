@@ -19,7 +19,7 @@
         class="flex-grow-1"
         hide-default-footer
       >
-<!--         <template v-slot:item.id="{ item }">
+        <!--         <template v-slot:item.id="{ item }">
           <div># {{ item.id }}</div>
         </template> -->
         <template v-slot:item.created_at="{ item }">
