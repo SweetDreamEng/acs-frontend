@@ -102,7 +102,7 @@ export default {
         scaledSize: { width: 36, height: 36, f: 'px', b: 'px' }
       },
       dialog: false,
-      
+
       // form
       hours: '',
       isFormValid: true,

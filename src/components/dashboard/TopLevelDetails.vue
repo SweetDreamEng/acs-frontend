@@ -6,6 +6,7 @@
           <v-card
             class="d-flex flex-column justify-space-between"
             height="100%"
+            light
           >
             <v-card-title>
               Operational Efficiency (OEE)
@@ -70,6 +71,7 @@
           <v-card
             class="d-flex flex-column justify-space-between"
             height="100%"
+            light
           >
             <v-card-title>
               Downtime
@@ -167,7 +169,8 @@ export default {
           enabled: false
         },
         stroke: {
-          curve: 'smooth'
+          curve: 'smooth',
+          width: '2'
         },
         title: {
           text: '',

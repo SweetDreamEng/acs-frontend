@@ -86,7 +86,7 @@
     </v-row>
 
     <!-- Locations -->
-<!--     <v-row dense v-if="!locationDetailsView">
+    <!--     <v-row dense v-if="!locationDetailsView">
       <v-col
         xs="12"
         sm="12"

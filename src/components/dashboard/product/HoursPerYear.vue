@@ -1,10 +1,10 @@
 <template>
-	<v-card height="100%">
+  <v-card height="100%">
     <v-card-subtitle class="d-flex justify-space-between">
       <strong>Operational Efficiency</strong>
       <MonthlyWeekly />
     </v-card-subtitle>
-		<v-card-text>
+    <v-card-text>
       <apexchart
         v-if="!isLoading1"
         type="radialBar"
@@ -13,7 +13,7 @@
       >
       </apexchart>
     </v-card-text>
-	</v-card>
+  </v-card>
 </template>
 
 <script>

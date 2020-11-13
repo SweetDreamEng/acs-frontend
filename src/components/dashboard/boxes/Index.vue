@@ -1,17 +1,20 @@
 <template>
-	<v-card>
+  <v-card light>
     <div class="pa-2">
-      <div class="d-flex flex-wrap justify-center">
+      <div class="d-flex flex-wrap align-center justify-center" style="min-height: 140px;">
+        <v-progress-circular v-if="loading" indeterminate color="secondary"></v-progress-circular>
         <v-slide-group
+          v-if="!loading"
           multiple
           show-arrows
+          class="d-flex flex-grow-1"
         >
           <v-slide-item
             v-for="(box, n) in boxes"
             :key="n"
           >
             <v-card
-              :color="box.value < 60 ? 'red' : 'green'"
+              :color="box.value < 60 ? 'error' : 'success darken-1'"
               dark
               width="100"
               height="140"
@@ -36,7 +39,7 @@
           </v-slide-item>
         </v-slide-group>
       </div>
-    </div> 
+    </div>
   </v-card>
 </template>
 <script>
