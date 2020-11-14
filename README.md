@@ -2,7 +2,7 @@
 #### `npm install`
 > Installs package dependencies
 
-#### Create .env file and config api end point
+#### Create .env file and config api end point, prismproapi credentials
 > ex: VUE_APP_SERVER_API_ENDPOINT="http://localhost:8000/api"
 
 #### `npm run dev` or `npm run serve` 
