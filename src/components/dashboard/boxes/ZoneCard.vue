@@ -11,7 +11,7 @@
             :key="n"
           >
             <v-card
-              :color="box.value < 60 ? 'red' : 'green'"
+              :color="box.value < 60 ? 'error' : 'success darken-1'"
               dark
               width="100"
               height="140"
@@ -128,7 +128,6 @@ export default {
       boxes: [
         {
           zone: 'Zone 1',
-          color: 'green',
           value: 75,
           series: [{
             name: 'Avg FPY',
@@ -142,7 +141,6 @@ export default {
         },
         {
           zone: 'Zone 2',
-          color: 'green',
           value: 52,
           series: [{
             name: 'Avg FPY',
@@ -156,7 +154,6 @@ export default {
         },
         {
           zone: 'Zone 3',
-          color: 'red',
           value: 78,
           series: [{
             name: 'Avg FPY',
@@ -170,7 +167,6 @@ export default {
         },
         {
           zone: 'Zone 4',
-          color: 'green',
           value: 75,
           series: [{
             name: 'Avg FPY',

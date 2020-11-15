@@ -16,13 +16,6 @@
                   :percentage-label="$t('dashboard.lastweek')"
                   :series="ordersSeries"
                 ></track-card>
-              <!-- <v-card class="d-flex flex-column flex-grow-1 text-center px-3 py-6 pb-7" light>
-                <div class="font-weight-bold text-body-2 text-uppercase">Today's Production</div>
-                <div class="d-flex align-center mt-3 justify-center">
-                  <div class="text-h4 number">80</div>
-                  <div class="grey--text text--darken-1 text-h5 number ml-1">/ 140</div>
-                </div>
-              </v-card> -->
               </v-col>
               <v-col cols="6" class="pt-0">
                 <downtime-card></downtime-card>
@@ -38,21 +31,9 @@
                   :percentage-label="$t('dashboard.lastweek')"
                   :series="customersSeries"
                 ></track-card>
-              <!-- <v-card class="d-flex flex-column flex-grow-1 text-center px-3 py-6 pb-7" light>
-                <div class="font-weight-bold text-body-2 text-uppercase">Avg Daily Production /wk</div>
-                <div class="d-flex align-center mt-3 justify-center">
-                  <div class="text-h4 number">152</div>
-                </div>
-              </v-card> -->
               </v-col>
               <v-col cols="6" class="pb-0">
                 <oee-card></oee-card>
-                <!-- <v-card class="d-flex flex-column flex-grow-1 text-center px-3 py-6 pb-7">
-              <div class="font-weight-bold text-body-2 text-uppercase">Avg First Past Yield /wk</div>
-              <div class="d-flex align-center mt-3 justify-center">
-                <div class="text-h4 number">84%</div>
-              </div>
-            </v-card> -->
               </v-col>
             </v-row>
           </v-col>
@@ -199,17 +180,7 @@ export default {
   computed: {
     ...mapState({
       machines: (state) => state.machines.data
-    }),
-    locationCountInPage() {
-      const remainding = this.total - parseInt(this.page - 1) * 4
-
-      console.log(remainding)
-
-      return remainding >= 4 ? 4 : remainding
-    },
-    pageLen() {
-      return parseInt(this.total / 4) + 1
-    }
+    })
   },
   mounted() {
     let count = 0
@@ -226,11 +197,6 @@ export default {
   methods: {
     clear() {
       clearInterval(this.loadingInterval)
-    },
-    locationTitle(i) {
-      const num = parseInt(i) + parseInt(this.page - 1) * 4
-
-      return 'Location ' + num
     }
   }
 }

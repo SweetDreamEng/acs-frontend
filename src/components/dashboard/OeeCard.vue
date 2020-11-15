@@ -42,13 +42,6 @@
     </div>
     <div>
       <v-divider></v-divider>
-      <!-- <v-list class="transparent">
-                <v-list-item>
-                  <v-list-item-title>First pass yield</v-list-item-title>
-                  <v-list-item-subtitle class="text-h4 primary--text">92%</v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
-              <div class="text-center"><span class="red--text">2%</span> decline today</div> -->
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
