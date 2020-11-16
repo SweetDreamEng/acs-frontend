@@ -2,20 +2,11 @@
   <div class="d-flex flex-grow-1 flex-column">
     <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
       <v-container class="pb-0">
+        <v-breadcrumbs :items="breadcrumbItems" class="mt-0 mb-n1" dark></v-breadcrumbs>
         <top-card></top-card>
         <v-row dense>
           <v-col cols="12">
             <OeeBoxes></OeeBoxes>
-          </v-col>
-          <v-col cols="12">
-            <top-level-details
-              class="h-full"
-              :value="1.832"
-              :percentage="3.2"
-              :loading="isLoading1"
-              :percentage-label="$t('dashboard.lastweek')"
-              :action-label="$t('dashboard.viewReport')"
-            ></top-level-details>
           </v-col>
         </v-row>
       </v-container>
@@ -48,13 +39,11 @@ import { mapState } from 'vuex'
 
 // DEMO Cards for dashboard
 import SalesCard from '../../components/dashboard/SalesCard'
-import TopLevelDetails from '../../components/dashboard/TopLevelDetails'
 import LocationsSection from '../../components/dashboard/LocationsSection'
 import TopCard from '../../components/dashboard/TopCard'
 
 export default {
   components: {
-    TopLevelDetails,
     LocationsSection,
     TopCard
   },
