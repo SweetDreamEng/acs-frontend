@@ -49,15 +49,15 @@
       <div class="d-flex justify-end mr-4">
         <div>
           <v-icon class="ml-2 mr-0" color="#269ffb">mdi-checkbox-blank</v-icon>
-          Name 1
+          Unplanned
         </div>
         <div>
           <v-icon class="ml-2 mr-0" color="#26e7a5">mdi-checkbox-blank</v-icon>
-          Name 2
+          Planned
         </div>
         <div>
           <v-icon class="ml-2 mr-0" color="#febb3b">mdi-checkbox-blank</v-icon>
-          Name 3
+          Idle
         </div>
       </div>
     </v-card-text>

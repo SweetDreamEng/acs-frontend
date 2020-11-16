@@ -21,15 +21,6 @@
         :items="machines"
         :loading="isLoading1"
       ></machines-table-card>
-
-      <br>
-
-      <overview-card
-        label="Overview"
-        :loading="isLoading1"
-        :markers="markers"
-      >
-      </overview-card>
     </v-container>
   </div>
 </template>
@@ -48,14 +39,12 @@ import { mapState } from 'vuex'
 
 import TopCard from '../../components/dashboard/TopCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
-import OverviewCard from '../../components/dashboard/OverviewCard'
 import LocationTable from '../../components/dashboard/location-table/Index'
 import OeeBoxes from '../../components/dashboard/boxes/Index'
 
 export default {
   components: {
     MachinesTableCard,
-    OverviewCard,
     LocationTable,
     TopCard,
     OeeBoxes
