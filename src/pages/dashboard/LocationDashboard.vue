@@ -16,7 +16,6 @@
       <br>
 
       <machines-table-card
-        class="h-full"
         style="min-height: 380px"
         label="Machines"
         :items="machines"
