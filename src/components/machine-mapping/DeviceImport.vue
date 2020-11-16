@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-right">
-      <span class="mr-1">{{ show ? 'Hide Import' : 'Show Import' }}</span>
+      <span class="mr-1">{{ show ? 'Hide' : 'Import Devices' }}</span>
       <v-btn
         icon
         color="primary"
