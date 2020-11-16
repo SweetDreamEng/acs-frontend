@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="primary lighten-1" class="ma-n4 mb-n8 pb-8 px-2">
+    <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
       <v-container class="pb-0">
         <top-card></top-card>
         <v-row dense>
@@ -11,24 +11,26 @@
       </v-container>
     </v-sheet>
 
-    <location-table></location-table>
+    <v-container>
+      <location-table></location-table>
 
-    <br>
+      <br>
 
-    <machines-table-card
-      label="Machines"
-      :items="machines"
-      :loading="isLoading1"
-    ></machines-table-card>
+      <machines-table-card
+        label="Machines"
+        :items="machines"
+        :loading="isLoading1"
+      ></machines-table-card>
 
-    <br>
+      <br>
 
-    <overview-card
-      label="Overview"
-      :loading="isLoading1"
-      :markers="markers"
-    >
-    </overview-card>
+      <overview-card
+        label="Overview"
+        :loading="isLoading1"
+        :markers="markers"
+      >
+      </overview-card>
+    </v-container>
   </div>
 </template>
 

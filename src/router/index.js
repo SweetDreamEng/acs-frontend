@@ -14,15 +14,24 @@ export const routes = [{
 }, {
   path: '/dashboard/analytics',
   name: 'dashboard-analytics',
-  component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/dashboard/DashboardPage.vue')
+  component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/dashboard/DashboardPage.vue'),
+  meta: {
+    layout: 'dashboard'
+  }
 }, {
   path: '/dashboard/:location',
   name: 'location-dashboard',
-  component: () => import(/* webpackChunkName: "location-dashboard" */ '@/pages/dashboard/LocationDashboard.vue')
+  component: () => import(/* webpackChunkName: "location-dashboard" */ '@/pages/dashboard/LocationDashboard.vue'),
+  meta: {
+    layout: 'dashboard'
+  }
 }, {
   path: '/dashboard/:location/:zone',
   name: 'zone-dashboard',
-  component: () => import(/* webpackChunkName: "zone-dashboard" */ '@/pages/dashboard/ZoneDashboard.vue')
+  component: () => import(/* webpackChunkName: "zone-dashboard" */ '@/pages/dashboard/ZoneDashboard.vue'),
+  meta: {
+    layout: 'dashboard'
+  }
 }, {
   path: '/dashboard/product/:id',
   name: 'dashboard-product',

@@ -42,7 +42,6 @@
       </div>
     </div>
     <div>
-      <v-divider></v-divider>
       <v-card-actions class="mt-n4">
         <v-spacer></v-spacer>
         <v-btn
@@ -95,6 +94,14 @@ export default {
         colors: ['#d6d93d', '#219ae2', '#999'],
         fill: {
           colors: ['#d6d93d', '#219ae2', '#999']
+        },
+        xaxis: {
+          labels: {
+            show: false
+          },
+          axisBorder: {
+            show: false
+          }
         },
         legend: {
           offsetY: 20,

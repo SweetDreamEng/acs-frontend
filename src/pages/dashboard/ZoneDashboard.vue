@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="primary lighten-1" class="mx-n4 mb-n8 pb-8 px-2 mt-n3">
+    <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
       <v-container class="pb-0">
         <top-card></top-card>
         <v-row dense>
@@ -20,14 +20,16 @@
         </v-row>
       </v-container>
     </v-sheet>
-    <v-card>
-      <v-card-title>
-        Machines
-      </v-card-title>
-      <v-card-text>
-        <locations-section></locations-section>
-      </v-card-text>
-    </v-card>
+    <v-container>
+      <v-card>
+        <v-card-title>
+          Machines
+        </v-card-title>
+        <v-card-text>
+          <locations-section></locations-section>
+        </v-card-text>
+      </v-card>
+    </v-container>
   </div>
 </template>
 

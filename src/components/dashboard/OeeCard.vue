@@ -17,7 +17,6 @@
       </apexchart>
     </div>
     <div>
-      <v-divider></v-divider>
       <v-card-actions class="mt-n4">
         <v-spacer></v-spacer>
         <v-btn
@@ -73,6 +72,9 @@ export default {
           align: 'left'
         },
         xaxis: {
+          axisBorder: {
+            show: false
+          },
           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
         },
         yaxis: {

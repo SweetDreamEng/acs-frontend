@@ -39,6 +39,7 @@ import config from './configs'
 
 // Layouts
 import defaultLayout from './layouts/DefaultLayout'
+import dashboardLayout from './layouts/DashboardLayout'
 import simpleLayout from './layouts/SimpleLayout'
 import authLayout from './layouts/AuthLayout'
 import errorLayout from './layouts/ErrorLayout'
@@ -56,7 +57,8 @@ export default {
     defaultLayout,
     simpleLayout,
     authLayout,
-    errorLayout
+    errorLayout,
+    dashboardLayout
   },
   computed: {
     ...mapState('app', ['toast']),

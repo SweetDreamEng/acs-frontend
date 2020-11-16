@@ -93,12 +93,8 @@ export default {
   },
   data() {
     return {
-      loading: true
-    }
-  },
-  computed: {
-    chartOptions() {
-      return {
+      loading: true,
+      chartOptions: {
         chart: {
           animations: {
             speed: 400,
@@ -142,6 +138,9 @@ export default {
         ...this.options
       }
     }
+  },
+  computed: {
+    
   },
   mounted() {
     setTimeout(() => {
