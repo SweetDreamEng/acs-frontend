@@ -1,57 +1,11 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="#e2e8ee" class="ma-n4 mb-n8 pb-8 px-2">
+    <v-sheet color="primary lighten-1" class="ma-n4 mb-n8 pb-8 px-2">
       <v-container class="pb-0">
-        <v-row class="flex-grow-0" dense>
-          <v-col cols="12" lg="6">
-            <v-row dense>
-              <v-col cols="6" class="pt-0">
-                <track-card
-                  is-flat
-                  label="First Past Yield"
-                  class="h-full"
-                  color="#8c9eff"
-                  value="87%"
-                  :percentage="1.7"
-                  :percentage-label="$t('dashboard.lastweek')"
-                  :series="ordersSeries"
-                ></track-card>
-              </v-col>
-              <v-col cols="6" class="pt-0">
-                <downtime-card></downtime-card>
-              </v-col>
-              <v-col cols="6" class="pb-0">
-                <track-card
-                  is-flat
-                  label="Avg First Past Yield"
-                  class="h-full"
-                  color="#06d6a0"
-                  value="84%"
-                  :percentage="4.3"
-                  :percentage-label="$t('dashboard.lastweek')"
-                  :series="customersSeries"
-                ></track-card>
-              </v-col>
-              <v-col cols="6" class="pb-0">
-                <oee-card></oee-card>
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <div class="d-flex flex-column h-full flex-grow-1">
-              <sales-card
-                class="h-full"
-                style="min-height: 350px"
-                :value="1.832"
-                :percentage="3.2"
-                :loading="isLoading1"
-                :percentage-label="$t('dashboard.lastweek')"
-                :action-label="$t('dashboard.viewReport')"
-              ></sales-card>
-            </div>
-          </v-col>
+        <top-card></top-card>
+        <v-row dense>
           <v-col cols="12">
-            <OeeBoxes />
+            <OeeBoxes></OeeBoxes>
           </v-col>
         </v-row>
       </v-container>
@@ -90,25 +44,19 @@
 
 import { mapState } from 'vuex'
 
-import SalesCard from '../../components/dashboard/SalesCard'
+import TopCard from '../../components/dashboard/TopCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
-import DowntimeCard from '../../components/dashboard/DowntimeCard'
-import OeeCard from '../../components/dashboard/OeeCard'
 import OverviewCard from '../../components/dashboard/OverviewCard'
-import TrackCard from '../../components/dashboard/TrackCard'
-import OeeBoxes from '../../components/dashboard/boxes/Index'
 import LocationTable from '../../components/dashboard/location-table/Index'
+import OeeBoxes from '../../components/dashboard/boxes/Index'
 
 export default {
   components: {
-    TrackCard,
-    SalesCard,
-    DowntimeCard,
-    OeeCard,
     MachinesTableCard,
     OverviewCard,
-    OeeBoxes,
-    LocationTable
+    LocationTable,
+    TopCard,
+    OeeBoxes
   },
   data() {
     return {

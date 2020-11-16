@@ -20,7 +20,6 @@
             <apexchart
               type="line"
               width="160"
-              height="100"
               :options="utilizationChartOptions"
               :series="utilizationSeries"
             >
@@ -248,13 +247,18 @@ export default {
       }],
       utilizationChartOptions: {
         chart: {
-          height: '100%',
           type: 'line',
           zoom: {
             enabled: false
           },
           toolbar: {
             show: false
+          }
+        },
+        layout: {
+          padding: {
+            top: -30,
+            bottom: -30
           }
         },
         dataLabels: {
@@ -278,7 +282,11 @@ export default {
           }
         },
         grid: {
-          show: false
+          show: false,
+          padding: {
+            top: 0,
+            bottom: 0
+          }
         },
         stroke: {
           curve: 'smooth',

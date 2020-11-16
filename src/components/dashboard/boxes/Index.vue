@@ -1,44 +1,41 @@
 <template>
-  <v-card light>
-    <div class="pa-2">
-      <div class="d-flex flex-wrap align-center justify-center" style="min-height: 140px;">
-        <v-progress-circular v-if="loading" indeterminate color="secondary"></v-progress-circular>
-        <v-slide-group
-          v-if="!loading"
-          multiple
-          show-arrows
-          class="d-flex flex-grow-1"
+  <v-card light class="elevation-0">
+    <div class="d-flex flex-wrap align-center justify-center pa-2">
+      <v-progress-circular v-if="loading" indeterminate color="secondary"></v-progress-circular>
+      <v-slide-group
+        v-if="!loading"
+        multiple
+        show-arrows
+      >
+        <v-slide-item
+          v-for="(box, n) in boxes"
+          :key="n"
         >
-          <v-slide-item
-            v-for="(box, n) in boxes"
-            :key="n"
+          <v-card
+            :color="box.value < 60 ? 'error' : 'success darken-1'"
+            dark
+            max-width="100"
+            height="100"
+            class="d-flex flex-column flex-grow-1 mx-1"
           >
-            <v-card
-              :color="box.value < 60 ? 'error' : 'success darken-1'"
-              dark
-              width="100"
-              height="140"
-              class="d-flex flex-column flex-grow-1 mx-1"
-            >
-              <div class="pa-1">
-                <div class="">{{ box.location }} </div>
-                <div class="pl-2">
-                  <small>OEE </small>
-                  <div class="display-1">{{ box.value }}</div>
-                </div>
+            <div class="pa-1 pb-0">
+              <div class="caption">{{ box.location }} </div>
+              <div class="pl-2">
+                <small>OEE </small>
+                <div class="">{{ box.value }}</div>
               </div>
-              <v-spacer></v-spacer>
+            </div>
+            <v-spacer></v-spacer>
 
-              <apexchart
-                type="area"
-                height="40"
-                :options="chartOptions"
-                :series="box.series"
-              ></apexchart>
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
-      </div>
+            <apexchart
+              type="area"
+              height="30"
+              :options="chartOptions"
+              :series="box.series"
+            ></apexchart>
+          </v-card>
+        </v-slide-item>
+      </v-slide-group>
     </div>
   </v-card>
 </template>

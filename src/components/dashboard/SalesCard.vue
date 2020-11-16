@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex primary flex-grow-1 darken-2" dark>
+  <v-card class="d-flex primary flex-grow-1 darken-2 elevation-0" dark height="100%">
 
     <!-- loading spinner -->
     <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">

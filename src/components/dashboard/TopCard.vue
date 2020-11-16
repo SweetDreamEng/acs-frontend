@@ -1,30 +1,52 @@
 <template>
-  <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="primary lighten-1" class="mx-n4 mb-n8 pb-8 px-2 mt-n3">
-      <v-container class="pb-0">
-        <top-card></top-card>
+  <div>
+    <v-row class="flex-grow-0" dense>
+      <v-col xs="12" sm="12" md="6" lg="6">
         <v-row dense>
-          <v-col cols="12">
-            <ZoneCards></ZoneCards>
+          <v-col cols="6" class="pt-0">
+            <track-card
+              label="First Past Yield"
+              class="elevation-0"
+              color="#8c9eff"
+              value="87%"
+              :percentage="1.7"
+              :percentage-label="$t('dashboard.lastweek')"
+              :series="ordersSeries"
+            ></track-card>
+          </v-col>
+          <v-col cols="6" class="pt-0">
+            <downtime-card></downtime-card>
+          </v-col>
+          <v-col cols="6" class="pb-0">
+            <track-card
+              label="Avg First Past Yield"
+              class="elevation-0"
+              color="#06d6a0"
+              value="84%"
+              :percentage="4.3"
+              :percentage-label="$t('dashboard.lastweek')"
+              :series="customersSeries"
+            ></track-card>
+          </v-col>
+          <v-col cols="6" class="pb-0">
+            <oee-card></oee-card>
           </v-col>
         </v-row>
-      </v-container>
-    </v-sheet>
-      
-    <location-details-table />
-
-    <br>
-
-    <machines-table-card
-      class="h-full"
-      style="min-height: 380px"
-      label="Machines"
-      :items="machines"
-      :loading="isLoading1"
-    ></machines-table-card>
+      </v-col>
+      <v-col xs="12" sm="12" md="6" lg="6">
+        <div class="d-flex flex-column flex-grow-1" style="height: 100%">
+          <sales-card
+            :value="1.832"
+            :percentage="3.2"
+            :loading="isLoading1"
+            :percentage-label="$t('dashboard.lastweek')"
+            :action-label="$t('dashboard.viewReport')"
+          ></sales-card>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
-
 <script>
 
 /*
@@ -35,38 +57,25 @@
 |
 */
 
-// import vuex helper functions
 import { mapState } from 'vuex'
 
-import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
-import LocationDetailsTable from '../../components/dashboard/location-table/LocationDetailsTable'
-import TopCard from '../../components/dashboard/TopCard'
-import ZoneCards from '../../components/dashboard/boxes/ZoneCard'
+import SalesCard from '../../components/dashboard/SalesCard'
+import DowntimeCard from '../../components/dashboard/DowntimeCard'
+import OeeCard from '../../components/dashboard/OeeCard'
+import TrackCard from '../../components/dashboard/TrackCard'
 
 export default {
   components: {
-    MachinesTableCard,
-    LocationDetailsTable,
-    TopCard,
-    ZoneCards
+    TrackCard,
+    SalesCard,
+    DowntimeCard,
+    OeeCard
   },
   data() {
     return {
       loadingInterval: null,
 
       isLoading1: true,
-
-      breadcrumbItems: [
-        {
-          text: 'Dashboard',
-          disabled: false,
-          href: '/dashboard/analytics'
-        },
-        {
-          text: 'Location 1',
-          disabled: true
-        }
-      ],
 
       series: [44, 55],
 

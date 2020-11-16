@@ -31,11 +31,11 @@
         </v-list>
       </v-menu>
     </v-card-title>
-    <div class="d-flex align-center justify-center">
+    <div class="d-flex align-center justify-center mt-n2">
       <div v-if="showChart" style="width: 400px">
         <apexchart
           type="donut"
-          height="160"
+          height="110"
           :options="chartOptions2"
           :series="series2"
         ></apexchart>
@@ -43,14 +43,7 @@
     </div>
     <div>
       <v-divider></v-divider>
-      <!-- <v-list class="transparent">
-                <v-list-item>
-                  <v-list-item-title>Cycle time</v-list-item-title>
-                  <v-list-item-subtitle class="text-h4 primary--text">11.83<span class="caption">seconds</span></v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
-              <div class="text-center"><span class="green--text">11%</span> increase today</div> -->
-      <v-card-actions>
+      <v-card-actions class="mt-n4">
         <v-spacer></v-spacer>
         <v-btn
           text
@@ -104,7 +97,7 @@ export default {
           colors: ['#d6d93d', '#219ae2', '#999']
         },
         legend: {
-          offsetY: 40,
+          offsetY: 20,
           fontSize: '13px',
           fontFamily: 'Quicksand',
           fontWeight: 700

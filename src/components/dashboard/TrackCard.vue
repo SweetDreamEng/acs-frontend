@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex flex-column flex-grow-1" light>
+  <v-card class="d-flex flex-column flex-grow-1" light height="220">
     <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
       <v-progress-circular indeterminate color="secondary"></v-progress-circular>
     </div>
