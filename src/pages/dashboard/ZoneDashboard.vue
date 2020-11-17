@@ -12,14 +12,7 @@
       </v-container>
     </v-sheet>
     <v-container>
-      <v-card>
-        <v-card-title>
-          Machines
-        </v-card-title>
-        <v-card-text>
-          <locations-section></locations-section>
-        </v-card-text>
-      </v-card>
+      <machines-table></machines-table>
     </v-container>
   </div>
 </template>
@@ -38,13 +31,13 @@
 import { mapState } from 'vuex'
 
 // DEMO Cards for dashboard
+import MachinesTable from '../../components/dashboard/dashboard-tables/MachinesTable'
 import SalesCard from '../../components/dashboard/SalesCard'
-import LocationsSection from '../../components/dashboard/LocationsSection'
 import TopCard from '../../components/dashboard/TopCard'
 
 export default {
   components: {
-    LocationsSection,
+    MachinesTable,
     TopCard
   },
   data() {
@@ -155,3 +148,8 @@ export default {
   }
 }
 </script>
+<style>
+  .v-breadcrumbs a {
+    color: white;
+  }
+</style>

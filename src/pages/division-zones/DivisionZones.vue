@@ -6,80 +6,6 @@
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
     </div>
-
-    <!--     <v-card>
-      <v-card-title>
-        Divisions
-        <v-dialog
-          v-model="editDivisionDialog"
-          max-width="400px"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="primary"
-              class="ml-auto"
-              v-bind="attrs"
-              v-on="on"
-            >
-              Add
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">Edit Division</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-form ref="editDivisionForm" v-model="isEditDivisionFormValid" lazy-validation @submit.prevent="saveDivision">
-                <v-text-field
-                  v-model="editedDivision.divisionName"
-                  label="Division"
-                  :rules="[rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-
-                <div class="d-flex">
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="primary"
-                    text
-                    @click="closeDivision"
-                  >
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    color="primary"
-                    type="submit"
-                  >
-                    Save
-                  </v-btn>
-                </div>
-              </v-form>
-            </v-card-text>
-          </v-card>
-        </v-dialog>
-      </v-card-title>
-      <v-card-text>
-        <v-data-table
-          :headers="divisionHeader"
-          :items="divisions"
-          class="flex-grow-1"
-        >
-          <template v-slot:item.actions="{ item }">
-            <v-icon
-              small
-              class="mr-2"
-              @click="editDivision(item)"
-            >
-              mdi-pencil
-            </v-icon>
-          </template>
-        </v-data-table>
-      </v-card-text>
-    </v-card> -->
-
     <v-card class="mt-2">
       <v-card-title>
         Zones
@@ -97,7 +23,7 @@
               Add
             </v-btn>
           </template>
-          <v-card>
+          <!-- <v-card>
             <v-card-title>
               <span class="headline">Edit Zone</span>
             </v-card-title>
@@ -115,8 +41,6 @@
                 <v-select
                   v-model="editedZone.divisionId"
                   :items="divisions"
-                  item-text="divisionName"
-                  item-value="id"
                   label="Choose Division"
                   :rules="[rules.required]"
                   outlined
@@ -142,7 +66,7 @@
                 </div>
               </v-form>
             </v-card-text>
-          </v-card>
+          </v-card> -->
         </v-dialog>
       </v-card-title>
       <v-card-text>
@@ -151,8 +75,11 @@
           :items="zones"
           class="flex-grow-1"
         >
-          <template v-slot:item.divisionId="{ item }">
+          <!-- <template v-slot:item.divisionId="{ item }">
             {{ divisionNameOfZone(item) }}
+          </template> -->
+          <template v-slot:item.location_id="{ item }">
+            <span>{{ locationName(item.location_id) }}</span>
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
@@ -178,7 +105,7 @@
 |
 */
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -199,8 +126,8 @@ export default {
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
       zoneHeader: [
-        { text: 'Zone', value: 'zoneName' },
-        { text: 'Division', value: 'divisionId' },
+        { text: 'Zone', value: 'zone_name' },
+        { text: 'Location', value: 'location_id' },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
 
@@ -245,19 +172,28 @@ export default {
   },
   computed: {
     ...mapState({
-      divisions: (state) => state.divisions.data,
-      zones: (state) => state.departments.data
+      locations: (state) => state.locations.data,
+      zones: (state) => state.zones.data
     })
   },
+  mounted() {
+    this.open()
+  },
   methods: {
-    open() {},
+    ...mapActions({
+      getZones: 'zones/getZones'
+    }),
+
+    open() {
+      this.getZones()
+    },
     editDivision(item) {
-      this.editedIndex = this.divisions.indexOf(item)
-      this.editedDivision = Object.assign({}, item)
-      this.editDivisionDialog = true
-      this.$nextTick(() => {
-        this.$refs.editDivisionForm.resetValidation()
-      })
+      // this.editedIndex = this.divisions.indexOf(item)
+      // this.editedDivision = Object.assign({}, item)
+      // this.editDivisionDialog = true
+      // this.$nextTick(() => {
+      //   this.$refs.editDivisionForm.resetValidation()
+      // })
     },
     closeDivision () {
       this.editDivisionDialog = false
@@ -266,24 +202,24 @@ export default {
         this.editedIndex = -1
       })
     },
-    saveDivision() {
-      if (this.$refs.editDivisionForm.validate()) {
-        if (this.editedIndex > -1) {
-          Object.assign(this.divisions[this.editedIndex], this.editedDivision)
-        } else {
-          this.divisions.push(this.editedDivision)
-        }
-        this.closeDivision()
-      }
-    },
+    // saveDivision() {
+    //   if (this.$refs.editDivisionForm.validate()) {
+    //     if (this.editedIndex > -1) {
+    //       Object.assign(this.divisions[this.editedIndex], this.editedDivision)
+    //     } else {
+    //       this.divisions.push(this.editedDivision)
+    //     }
+    //     this.closeDivision()
+    //   }
+    // },
 
     editZone(item) {
-      this.editedIndex = this.zones.indexOf(item)
-      this.editedZone = Object.assign({}, item)
-      this.editZoneDialog = true
-      this.$nextTick(() => {
-        this.$refs.editZoneForm.resetValidation()
-      })
+      // this.editedIndex = this.zones.indexOf(item)
+      // this.editedZone = Object.assign({}, item)
+      // this.editZoneDialog = true
+      // this.$nextTick(() => {
+      //   this.$refs.editZoneForm.resetValidation()
+      // })
     },
     closeZone () {
       this.editZoneDialog = false
@@ -292,25 +228,30 @@ export default {
         this.editedIndex = -1
       })
     },
-    saveZone() {
-      if (this.$refs.editZoneForm.validate()) {
-        if (this.editedIndex > -1) {
-          Object.assign(this.zones[this.editedIndex], this.editedZone)
-        } else {
-          this.zones.push(this.editedZone)
-        }
-        this.closeZone()
-      }
-    },
-    divisionNameOfZone(item) {
-      if (item.divisionId === 0) return 'Not Assinged'
-      const _division = this.divisions.find((division) => {
-        return division.id === item.divisionId
-      })
+    locationName(location_id) {
+      const _location = this.locations.find((location) => location.id === location_id)
 
-      return _division ? _division.divisionName : 'Not Assigned'
-      // return this.divisions.find((x) => x.id === item.divisionId).divisionName
+      return _location ? _location.name : 'Not Assinged'
     }
+    // saveZone() {
+    //   if (this.$refs.editZoneForm.validate()) {
+    //     if (this.editedIndex > -1) {
+    //       Object.assign(this.zones[this.editedIndex], this.editedZone)
+    //     } else {
+    //       this.zones.push(this.editedZone)
+    //     }
+    //     this.closeZone()
+    //   }
+    // }
+    // divisionNameOfZone(item) {
+    //   if (item.divisionId === 0) return 'Not Assinged'
+    //   const _division = this.divisions.find((division) => {
+    //     return division.id === item.divisionId
+    //   })
+
+    //   return _division ? _division.divisionName : 'Not Assigned'
+    //   // return this.divisions.find((x) => x.id === item.divisionId).divisionName
+    // }
   }
 }
 </script>

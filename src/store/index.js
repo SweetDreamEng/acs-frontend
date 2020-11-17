@@ -7,8 +7,8 @@ import AppModule from './app'
 import auth from './auth'
 import machines from './machines'
 import users from './users'
-import departments from './departments'
-import divisions from './divisions'
+import zones from './zones'
+import locations from './locations'
 import customers from './customers'
 import devices from './devices'
 
@@ -46,8 +46,8 @@ const dataState = createPersistedState({
     'auth',
     'machines',
     'users',
-    'departments',
-    'divisions',
+    'zones',
+    'locations',
     'customers',
     'devices'
   ]
@@ -59,8 +59,8 @@ const store = new Vuex.Store({
     auth,
     machines,
     users,
-    departments,
-    divisions,
+    zones,
+    locations,
     customers,
     devices
   },

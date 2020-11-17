@@ -12,7 +12,7 @@
     </v-sheet>
 
     <v-container>
-      <location-table></location-table>
+      <locations-table></locations-table>
 
       <br>
 
@@ -39,13 +39,13 @@ import { mapState } from 'vuex'
 
 import TopCard from '../../components/dashboard/TopCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
-import LocationTable from '../../components/dashboard/location-table/Index'
+import LocationsTable from '../../components/dashboard/dashboard-tables/LocationsTable'
 import OeeBoxes from '../../components/dashboard/boxes/Index'
 
 export default {
   components: {
     MachinesTableCard,
-    LocationTable,
+    LocationsTable,
     TopCard,
     OeeBoxes
   },

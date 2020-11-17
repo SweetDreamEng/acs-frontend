@@ -5,7 +5,7 @@
     <v-card-text>
       <v-data-table
         :headers="headers"
-        :items="zones"
+        :items="machines"
         hide-default-footer
       >
         <template v-slot:item.rate="{ item }">
@@ -30,9 +30,9 @@
           </div>
         </template>
         <template v-slot:item.zone="{ item }">
-          <router-link :to="item.zone.to" class="d-flex align-center">
-            <v-icon>mdi-google-maps</v-icon>
-            <span class="title text-no-wrap ml-1">{{ item.zone.title }}</span>
+          <router-link class="d-flex align-center" :to="'/dashboard/product/' + item.id">
+            <v-icon>mdi-wrench</v-icon>
+            <span class="title text-no-wrap ml-1">{{ item.machine.title }}</span>
           </router-link>
         </template>
         <template v-slot:item.downtime_distribution="{ item }">
@@ -106,11 +106,12 @@ export default {
         { text: 'Prod Rate', value: 'rate', align: 'center' },
         { text: 'Downtime Distrubton', align: 'center', value: 'downtime_distribution', sortable: false }
       ],
-
-      zones: [
+      selectedMachineId: 0,
+      machines: [
         {
-          zone: {
-            title: 'Zone 1',
+          id: 1,
+          machine: {
+            title: 'Machine 1',
             to: 'loc1/zone1'
           },
           utilization: '32%',
@@ -122,8 +123,9 @@ export default {
           downtime_distribution: series
         },
         {
-          zone: {
-            title: 'Zone 2',
+          id: 2,
+          machine: {
+            title: 'Machine 2',
             to: 'loc1/zone2'
           },
           utilization: '36%',
@@ -135,8 +137,9 @@ export default {
           downtime_distribution: series
         },
         {
-          zone: {
-            title: 'Zone 3',
+          id: 3,
+          machine: {
+            title: 'Machine 3',
             to: 'loc1/zone3'
           },
           utilization: '82%',

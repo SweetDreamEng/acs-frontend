@@ -19,6 +19,10 @@ export const routes = [{
     layout: 'dashboard'
   }
 }, {
+  path: '/dashboard/product/:id',
+  name: 'dashboard-product',
+  component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/DashboardProduct.vue')
+}, {
   path: '/dashboard/:location',
   name: 'location-dashboard',
   component: () => import(/* webpackChunkName: "location-dashboard" */ '@/pages/dashboard/LocationDashboard.vue'),
@@ -32,10 +36,6 @@ export const routes = [{
   meta: {
     layout: 'dashboard'
   }
-}, {
-  path: '/dashboard/product/:id',
-  name: 'dashboard-product',
-  component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/DashboardProduct.vue')
 },
 ...ACSMachines,
 ...PagesRoutes,

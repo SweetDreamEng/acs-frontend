@@ -12,7 +12,7 @@
       </v-container>
     </v-sheet>
     <v-container>
-      <location-details-table />
+      <zones-table></zones-table>
 
       <br>
 
@@ -40,14 +40,14 @@
 import { mapState } from 'vuex'
 
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
-import LocationDetailsTable from '../../components/dashboard/location-table/LocationDetailsTable'
+import ZonesTable from '../../components/dashboard/dashboard-tables/ZonesTable'
 import TopCard from '../../components/dashboard/TopCard'
 import ZoneCards from '../../components/dashboard/boxes/ZoneCard'
 
 export default {
   components: {
     MachinesTableCard,
-    LocationDetailsTable,
+    ZonesTable,
     TopCard,
     ZoneCards
   },
