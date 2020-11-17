@@ -19,3 +19,17 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+
+jobs:
+- deployment: VMDeploy
+  displayName: dev
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  environment:
+    name: ACS
+    resourceType: VirtualMachine
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - script: echo my first deployment
