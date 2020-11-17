@@ -1,10 +1,5 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
-    <div>
-      <div class="display-1">Customer Assign</div>
-      <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
-    </div>
-
     <!-- import devices from excel file -->
     <device-import></device-import>
 
@@ -207,7 +202,6 @@
 */
 
 import { mapState, mapGetters, mapActions } from 'vuex'
-import customerAssigns from './content/customer-assigns'
 import DeviceImport from '../../components/machine-mapping/DeviceImport'
 
 export default {
@@ -237,8 +231,6 @@ export default {
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
       expanded: [],
-
-      customerAssigns,
 
       editedIndex: -1,
       editedItem: {
@@ -285,9 +277,6 @@ export default {
   mounted() {
     this.loc_page = this.page
     this.getDevices(this.page)
-      .then((response) => {
-        this.getDevicesStatus(this.devices)
-      })
   },
   methods: {
     ...mapActions({
@@ -370,9 +359,6 @@ export default {
     },
     onPageChange() {
       this.getDevices(this.loc_page)
-        .then((response) => {
-          this.getDevicesStatus(this.devices)
-        })
     },
     companyName(company_id) {
       const _company = this.companies.find((company) => company.id === company_id)
