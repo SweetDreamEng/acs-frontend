@@ -20,7 +20,7 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-jobs:
+- jobs:
 - deployment: VMDeploy
   displayName: dev
   pool:
