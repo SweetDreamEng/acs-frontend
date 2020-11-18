@@ -4,6 +4,7 @@
     dense
     outlined
     type="error"
+    class="text-left"
   >
     {{ error }}
   </v-alert>

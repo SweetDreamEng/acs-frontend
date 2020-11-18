@@ -61,7 +61,7 @@ export default {
         {
           text: 'Dashboard',
           disabled: false,
-          href: '/dashboard/analytics'
+          to: '/dashboard/analytics'
         },
         {
           text: 'Location 1',

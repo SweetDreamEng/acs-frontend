@@ -179,8 +179,8 @@
             <v-btn
               :color="confirmBtnColor()"
               dark
-              @click="onConfirmClicked()"
               :loading="register_button_loading"
+              @click="onConfirmClicked()"
             >
               {{ confirmBtnText() }}
             </v-btn>

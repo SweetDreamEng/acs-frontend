@@ -11,7 +11,6 @@
             v-model="email"
             :rules="[rules.required]"
             :validate-on-blur="false"
-            :error="error"
             :label="$t('login.email')"
             name="email"
             outlined
@@ -24,7 +23,6 @@
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required]"
             :type="showPassword ? 'text' : 'password'"
-            :error="error"
             :label="$t('login.password')"
             name="password"
             outlined
@@ -33,14 +31,7 @@
             @click:append="showPassword = !showPassword"
           ></v-text-field>
 
-          <v-alert
-            v-if="errorMessages"
-            dense
-            outlined
-            type="error"
-          >
-            {{ errorMessages }}
-          </v-alert>
+          <error-component :error="errorMessages"></error-component>
 
           <v-btn
             :loading="isLoading"
@@ -59,13 +50,6 @@
         </v-form>
       </v-card-text>
     </v-card>
-
-    <!--     <div class="text-center mt-6">
-      {{ $t('login.noaccount') }}
-      <router-link to="/auth/signup" class="font-weight-bold">
-        {{ $t('login.create') }}
-      </router-link>
-    </div> -->
   </div>
 </template>
 
@@ -79,7 +63,12 @@
 |
 */
 import { mapState, mapActions } from 'vuex'
+import ErrorComponent from '../../components/common/ErrorComponent'
+
 export default {
+  components: {
+    ErrorComponent
+  },
   data() {
     return {
       // form

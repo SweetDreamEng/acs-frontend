@@ -4,11 +4,6 @@
       <v-container class="pb-0">
         <v-breadcrumbs :items="breadcrumbItems" class="mt-0 mb-n1" dark></v-breadcrumbs>
         <top-card></top-card>
-        <v-row dense>
-          <v-col cols="12">
-            <OeeBoxes></OeeBoxes>
-          </v-col>
-        </v-row>
       </v-container>
     </v-sheet>
     <v-container>
@@ -50,12 +45,12 @@ export default {
         {
           text: 'Dashboard',
           disabled: false,
-          href: '/dashboard/analytics'
+          to: '/dashboard/analytics'
         },
         {
           text: 'Location 1',
           disabled: false,
-          href: '/dashboard/loc1'
+          to: '/dashboard/loc1'
         },
         {
           text: 'Zone 1',
