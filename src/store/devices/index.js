@@ -91,7 +91,7 @@ const module = {
         deviceAPI.deviceAssigned(data)
           .then((response) => {
             commit('DEVICE_ASSIGN', data)
-            dispatch('app/showSuccess', response.data, { root: true })
+            // dispatch('app/showSuccess', response.data, { root: true })
             resolve(response)
           })
           .catch((error) => {
@@ -112,7 +112,7 @@ const module = {
         deviceAPI.updateRegistered(data)
           .then((response) => {
             commit('SET_REGISTERED', data)
-            dispatch('app/showSuccess', response.data, { root: true })
+            // dispatch('app/showSuccess', response.data, { root: true })
             resolve(response)
           })
           .catch((error) => {

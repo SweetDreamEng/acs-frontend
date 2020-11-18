@@ -96,7 +96,7 @@ const module = {
     }) {
       commit('BUTTON_LOAD')
       authAPI.updatePassword(currentPassword, newPassword).then((response) => {
-        dispatch('app/showSuccess', response.data.message, { root: true })
+        // dispatch('app/showSuccess', response.data.message, { root: true })
       })
         .catch((error) => {
           if (error.response.status === 401) {
