@@ -12,6 +12,7 @@ const module = {
         consumption: '80 Watts',
         factory: '30 Elm Street, NY',
         department: 'Zone 1',
+        location: 'Location 1',
         notes: []
       },
       {
@@ -24,6 +25,7 @@ const module = {
         consumption: '30 Watts',
         factory: '45 Main street, FL',
         department: 'Zone 2',
+        location: 'Location 2',
         notes: []
       },
       {
@@ -36,6 +38,7 @@ const module = {
         consumption: '20 Watts',
         factory: '50 Gracy Street, TX',
         department: 'Zone 3',
+        location: 'Location 3',
         notes: []
       },
       {
@@ -48,6 +51,7 @@ const module = {
         consumption: '90 Watts',
         factory: '44 Main Street, GA',
         department: 'Zone 4',
+        location: 'Location 4',
         notes: []
       },
       {
@@ -60,6 +64,7 @@ const module = {
         consumption: '10 Watts',
         factory: '33 One Drive, MA',
         department: 'Zone 1',
+        location: 'Location 1',
         notes: []
       },
       {
@@ -72,6 +77,7 @@ const module = {
         consumption: '10 Watts',
         factory: '29 Georgia Ave, CA',
         department: 'Zone 4',
+        location: 'Location 4',
         notes: []
       },
       {
@@ -84,6 +90,7 @@ const module = {
         consumption: '40 Watts',
         factory: '746 Macon, CO',
         department: 'Zone 5',
+        location: 'Location 5',
         notes: []
       },
       {
@@ -96,6 +103,7 @@ const module = {
         consumption: '20 Watts',
         factory: '1 Cantance Street, UT',
         department: 'Zone 1',
+        location: 'Location 1',
         notes: []
       },
       {
@@ -108,6 +116,7 @@ const module = {
         consumption: 'OFF',
         factory: '45 Spring Street, NY',
         department: 'Zone 5',
+        location: 'Location 5',
         notes: []
       },
       {
@@ -120,6 +129,7 @@ const module = {
         consumption: '30 Watts',
         factory: '69 Borden Rd, IL',
         department: 'Zone 3',
+        location: 'Location 3',
         notes: []
       }
     ],
@@ -167,9 +177,6 @@ const module = {
           })
         }
       })
-    },
-    SET_MACHINES: (state, machines) => {
-      state.machines = machines
     }
   },
 

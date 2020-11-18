@@ -5,7 +5,7 @@
         <v-row dense>
           <v-col cols="6" class="pt-0">
             <track-card
-              label="First Past Yield"
+              label="First Pass Yield"
               class="elevation-0"
               color="#8c9eff"
               value="87%"
@@ -19,7 +19,7 @@
           </v-col>
           <v-col cols="6" class="pb-0">
             <track-card
-              label="Avg First Past Yield"
+              label="Avg First Pass Yield"
               class="elevation-0"
               color="#06d6a0"
               value="84%"

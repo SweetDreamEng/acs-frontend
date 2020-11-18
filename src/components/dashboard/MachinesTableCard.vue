@@ -119,6 +119,7 @@ export default {
         { text: 'Machine Name', align: 'start', value: 'machinename' },
         { text: 'Capacity Utilization', align: 'center', value: 'capacity' },
         { text: 'Consumption', align: 'center', value: 'consumption' },
+        { text: 'Locations', align: 'center', value: 'location' },
         { text: 'Zones', align: 'center', value: 'department' }
       ],
 
@@ -126,7 +127,7 @@ export default {
       searchQuery: '',
       timeRageDlg: false,
       row: '',
-      headerColumnValues: ['Running', 'Machine Name', 'Capacity Utilization', 'Consumption', 'Zones'],
+      headerColumnValues: ['Running', 'Machine Name', 'Capacity Utilization', 'Consumption', 'Locations', 'Zones'],
 
       timeRageOptions: [
         {
