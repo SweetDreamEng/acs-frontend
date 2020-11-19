@@ -237,6 +237,9 @@ const module = {
           })
         }
       })
+    },
+    SET_MACHINES(state, machines) {
+      state.machines = machines
     }
   },
 

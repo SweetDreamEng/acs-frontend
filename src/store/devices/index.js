@@ -5,6 +5,22 @@ const module = {
   state: {
     data: [],                           // paginated devices fetched from backend
 
+    sim_statuses: [
+      {
+        'id': 1,
+        'name': 'Not initialized'
+      }, {
+        'id': 2,
+        'name': 'Active'
+      }, {
+        'id': 3,
+        'name': 'Suspended'
+      }, {
+        'id': 4,
+        'name': 'Scrapped'
+      }
+    ],
+
     numAdded: 0,                        // number of added devices when uploading devices in excel file
     numDuplicates: 0,                   // number of duplicate devices when uploading devices in excel file
 
@@ -14,6 +30,7 @@ const module = {
     error: null,
     table_loading: false,               // status of loading devices into the table
     button_loading: false,              // status of uploading devices from excel file
+    refresh_btn_loading: false,           // status of refreshing SIM
     activate_button_loading: false,     // status of activating SIM
     deactivate_button_loading: false,   // status of deactivating SIM
     assign_loading: false,               // status of uploading devices from excel file
@@ -48,19 +65,6 @@ const module = {
             commit('TABLE_LOAD_CLEAR')
           })
       })
-    },
-    getDevicesStatus({
-      commit
-    }, devices) {
-      for (let i = 0; i < devices.length; i++) {
-        deviceAPI.getDeviceStatus(devices[i])
-          .then((response) => {
-            commit('SET_DEVICE_STATUS', {
-              device_id: devices[i].id,
-              status: response.data.d.status === 'Active'
-            })
-          })
-      }
     },
     uploadDevices({
       commit
@@ -124,6 +128,29 @@ const module = {
           })
       })
     },
+    querySIM({
+      commit
+    }, device) {
+      commit('QUERY_BTN_LOAD')
+
+      return new Promise((resolve, reject) => {
+        deviceAPI.querySIM(device)
+          .then((response) => {
+            commit('SET_DEVICE_STATUS', {
+              device_id: response.data.id,
+              status: response.data.sim_status
+            })
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('QUERY_BTN_CLEAR')
+          })
+      })
+    },
     activateSIM({
       commit
     }, device) {
@@ -167,6 +194,12 @@ const module = {
     },
     REGISTER_BTN_CLEAR(state) {
       state.register_button_loading = false
+    },
+    QUERY_BTN_LOAD(state) {
+      state.refresh_btn_loading = true
+    },
+    QUERY_BTN_CLEAR(state) {
+      state.refresh_btn_loading = false
     },
     ACTIVATE_BTN_LOAD(state) {
       state.activate_button_loading = true

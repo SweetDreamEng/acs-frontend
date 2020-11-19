@@ -56,7 +56,7 @@
 
         <template v-slot:item.sim_status="{ item }">
           <v-icon
-            :color="item.sim_status ? 'green' : 'red'"
+            :color="item.sim_status === 2 ? 'green' : 'red'"
           >
             mdi-checkbox-blank-circle
           </v-icon>
@@ -70,17 +70,7 @@
 
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length" class="px-4 py-2">
-            <div class="mb-2">
-              SIM Status: 
-              <span v-if="item.sim_status" class="green--text font-weight-bold">Activated</span>
-              <span v-else class="red--text font-weight-bold">Deactivated</span>
-              <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ item.public_ip_sim }}</span></span>
-            </div>
-            <div>
-              <v-btn small color="primary" class="mr-2" @click="">Refresh SIM Status</v-btn>
-              <v-btn small color="primary" class="mr-2" @click="activateSIM(item)">Activate SIM</v-btn>
-              <v-btn small color="primary" class="mr-2" @click="deactivateSIM(item)">Deactivate SIM</v-btn>
-            </div>
+            <sim-panel :item="item"></sim-panel>
           </td>
         </template>
         
@@ -203,10 +193,12 @@
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 import DeviceImport from '../../components/machine-mapping/DeviceImport'
+import SimPanel from '../../components/machine-mapping/SimPanel'
 
 export default {
   components: {
-    DeviceImport
+    DeviceImport,
+    SimPanel
   },
   data() {
     return {
