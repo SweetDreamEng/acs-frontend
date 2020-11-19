@@ -32,7 +32,7 @@ const module = {
     button_loading: false,              // status of uploading devices from excel file
     refresh_btn_loading: false,           // status of refreshing SIM
     activate_button_loading: false,     // status of activating SIM
-    deactivate_button_loading: false,   // status of deactivating SIM
+    suspend_btn_loading: false,   // status of deactivating SIM
     assign_loading: false,               // status of uploading devices from excel file
     register_button_loading: false
   },
@@ -155,9 +155,24 @@ const module = {
       commit
     }, device) {
     },
-    deactivateSIM({
+    suspendSIM({
       commit, dispatch
     }, device) {
+      commit('SUSPEND_BTN_LOAD')
+
+      return new Promise((resolve, reject) => {
+        deviceAPI.suspendSIM(device)
+          .then((response) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('SUSPEND_BTN_CLEAR')
+          })
+      })
     },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
@@ -207,11 +222,11 @@ const module = {
     ACTIVATE_BTN_CLEAR(state) {
       state.activate_button_loading = false
     },
-    DEACTIVATE_BTN_LOAD(state) {
-      state.deactivate_button_loading = true
+    SUSPEND_BTN_LOAD(state) {
+      state.suspend_btn_loading = true
     },
-    DEACTIVATE_BTN_CLEAR(state) {
-      state.deactivate_button_loading = false
+    SUSPEND_BTN_CLEAR(state) {
+      state.suspend_btn_loading = false
     },
     SET_DATA(state, devices) {
       state.data = devices

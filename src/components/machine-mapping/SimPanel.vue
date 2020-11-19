@@ -20,8 +20,22 @@
         <v-icon left>mdi-refresh</v-icon>
         Refresh SIM Status
       </v-btn>
-      <v-btn small color="primary" class="mr-2" @click="activateSIM(item)">Activate SIM</v-btn>
-      <v-btn small color="primary" class="mr-2" @click="suspendSIM(item)">Deactivate SIM</v-btn>
+      <v-btn
+        small
+        color="primary"
+        class="mr-2"
+        :loading="activate_btn_loading"
+        :disabled="activate_btn_loading"
+        @click="activateSIM(item)"
+      >Activate SIM</v-btn>
+      <v-btn
+        small
+        color="primary"
+        class="mr-2"
+        :loading="suspend_btn_loading"
+        :disabled="suspend_btn_loading"
+        @click="suspendSIM(item)"
+      >Suspend SIM</v-btn>
     </div>
   </div>
 </template>
@@ -45,7 +59,7 @@ export default {
     ...mapState({
       sim_statuses: (state) => state.devices.sim_statuses,
 
-      activate_button_loading: (state) => state.devices.activate_button_loading,
+      activate_btn_loading: (state) => state.devices.activate_btn_loading,
       suspend_btn_loading: (state) => state.devices.suspend_btn_loading,
       refresh_btn_loading: (state) => state.devices.refresh_btn_loading
     })

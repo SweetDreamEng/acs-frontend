@@ -17,6 +17,11 @@ export default {
       return response
     })
   },
+  suspendSIM(device) {
+    return axios.post('/devices/suspend-sim/' + device.iccid).then((response) => {
+      return response
+    })
+  },
   getDevices(pageNum) {
     return axios.get(`/devices/${pageNum}`).then((response) => {
       return response
