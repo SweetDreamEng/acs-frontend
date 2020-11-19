@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import store from '../store/store'
+import store from '../store/index'
 
 export default function (Vue) {
   Vue.auth = {
@@ -19,11 +19,15 @@ export default function (Vue) {
       return axios.post('/auth/check')
         .then((response) =>  {
           // store.dispatch('SET_USER', response.data.user)
+          if (!response.data) {
+            store.dispatch('auth/clearAuthData')
+          }
+
           return (response.data)
         })
         .catch(() => {
           this.removeToken('token')
-          
+
           return false
         })
     }

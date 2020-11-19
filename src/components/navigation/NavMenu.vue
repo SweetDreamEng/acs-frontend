@@ -16,7 +16,7 @@
 
             <!-- menu level 3 -->
             <nav-menu-item
-              v-for="(level3Item, level3Index) in level2Item.items"
+              v-for="(level3Item, level3Index) in submenuForRoles(level2Item.items)"
               :key="level3Index"
               :menu-item="level3Item"
               small
@@ -68,6 +68,13 @@ export default {
     }),
     menuForRoles() {
       return this.menu.filter((menu_item) => {
+        return menu_item.visibleFor ? menu_item.visibleFor.includes(this.role) : true
+      })
+    }
+  },
+  methods: {
+    submenuForRoles(items) {
+      return items.filter((menu_item) => {
         return menu_item.visibleFor ? menu_item.visibleFor.includes(this.role) : true
       })
     }

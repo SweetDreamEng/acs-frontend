@@ -38,11 +38,6 @@
           {{ header.text }}
         </template>
 
-        <!-- custom table rows -->
-        <template v-slot:item.division="{ item }">
-          <span>{{ item.division ? item.division : 'Not assigned' }}</span>
-        </template>
-
         <template v-slot:item.department="{ item }">
           <span>{{ item.department ? item.department : 'Not assigned' }}</span>
         </template>
@@ -108,59 +103,6 @@
               </v-btn>
             </div>
           </v-form>
-
-          <!--           <div class="d-flex my-2">
-            <div>
-              Please add department and/or division if not found above
-            </div>
-            <v-spacer></v-spacer>
-            <v-btn
-              icon
-              class="ml-2"
-              @click="newMode = !newMode"
-            >
-              <v-icon>{{ newMode ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-            </v-btn>
-          </div>
-          <v-expand-transition>
-            <div v-show="newMode">
-              <v-form ref="newForm" v-model="isNewFormValid" lazy-validation @submit.prevent="addNewOptions">
-                <v-text-field
-                  label="New Division Name"
-                  v-model="newItem.division"
-                  :rules="[rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  label="New Department Name"
-                  v-model="newItem.department"
-                  :rules="[rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-
-                <div class="d-flex">
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="primary"
-                    text
-                    @click="newMode = false"
-                  >
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    color="primary"
-                    type="submit"
-                  >
-                    Add
-                  </v-btn>
-                </div>
-              </v-form>
-            </div>
-          </v-expand-transition> -->
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -198,7 +140,6 @@ export default {
       headers: [
         { text: 'Serial Number', value: 'id' },
         { text: 'Machine Name', value: 'product_name' },
-        { text: 'Division', value: 'division' },
         { text: 'Zones', value: 'department' },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],

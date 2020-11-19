@@ -29,11 +29,11 @@ const module = {
 
     error: null,
     table_loading: false,               // status of loading devices into the table
-    button_loading: false,              // status of uploading devices from excel file
-    refresh_btn_loading: false,           // status of refreshing SIM
+    import_btn_loading: false,          // status of uploading devices
+    refresh_btn_loading: false,         // status of refreshing SIM
     activate_button_loading: false,     // status of activating SIM
-    suspend_btn_loading: false,   // status of deactivating SIM
-    assign_loading: false,               // status of uploading devices from excel file
+    suspend_btn_loading: false,         // status of deactivating SIM
+    assign_loading: false,              // status of uploading devices from excel file
     register_button_loading: false
   },
 
@@ -66,13 +66,13 @@ const module = {
           })
       })
     },
-    uploadDevices({
+    importDevices({
       commit
-    }, myForm) {
-      commit('BUTTON_LOAD')
+    }) {
+      commit('IMPORT_BUTTON_LOAD')
       
       return new Promise((resolve, reject) => {
-        deviceAPI.uploadDevices(myForm)
+        deviceAPI.importDevices()
           .then((response) => {
             commit('SET_ADDED', response.data.numAdded)
             commit('SET_DUPLICATES', response.data.numDuplicates)
@@ -82,7 +82,7 @@ const module = {
             reject(error)
           })
           .finally(() => {
-            commit('BUTTON_CLEAR')
+            commit('IMPORT_BUTTON_CLEAR')
           })
       })
     },
@@ -186,11 +186,11 @@ const module = {
     CLEAR_ERROR(state) {
       state.error = null
     },
-    BUTTON_LOAD(state) {
-      state.button_loading = true
+    IMPORT_BUTTON_LOAD(state) {
+      state.import_btn_loading = true
     },
-    BUTTON_CLEAR(state) {
-      state.button_loading = false
+    IMPORT_BUTTON_CLEAR(state) {
+      state.import_btn_loading = false
     },
     ASSIGN_LOAD(state) {
       state.assign_loading = true

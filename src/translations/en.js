@@ -158,7 +158,7 @@ export default {
     machineMapping: 'Machine Mapping',
     customerAssign: 'Customer Assign',
     customerPages: 'Customers',
-    divisionZonesPage: 'Division/Zones'
+    divisionZonesPage: 'Zones'
   },
   // Vuetify components translations
   $vuetify: {

@@ -99,7 +99,7 @@ export default {
   data () {
     return {
       headers: [
-        { text: 'Zone', value: 'zone' },
+        { text: 'Machines', value: 'zone' },
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'start', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },

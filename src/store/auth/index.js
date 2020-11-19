@@ -119,6 +119,11 @@ const module = {
           commit('BUTTON_CLEAR')
         })
     },
+    clearAuthData({
+      commit
+    }) {
+      commit('SET_LOGOUT_ATUH')
+    },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     }
@@ -141,6 +146,10 @@ const module = {
     },
     SET_LOGOUT_ATUH(state) {
       state.token = null
+      state.user.role = null
+      state.user.email = null
+      state.user.username = null
+
       localStorage.removeItem('token')
     },
     BUTTON_LOAD(state) {

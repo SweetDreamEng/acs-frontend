@@ -79,19 +79,31 @@ export default [{
 }, {
   path: '/threshold/list',
   name: 'threshold-list',
-  component: () => import(/* webpackChunkName: "threshold-list" */ '@/pages/threshold/ListThreshold.vue')
+  component: () => import(/* webpackChunkName: "threshold-list" */ '@/pages/threshold/ListThreshold.vue'),
+  meta: {
+    userAuth: true
+  }
 }, {
   path: '/threshold/add',
   name: 'threshold-add',
-  component: () => import(/* webpackChunkName: "threshold-add" */ '@/pages/threshold/AddThreshold.vue')
+  component: () => import(/* webpackChunkName: "threshold-add" */ '@/pages/threshold/AddThreshold.vue'),
+  meta: {
+    userAuth: true
+  }
 }, {
   path: '/threshold/edit',
   name: 'threshold-edit',
-  component: () => import(/* webpackChunkName: "threshold-edit" */ '@/pages/threshold/EditThreshold.vue')
+  component: () => import(/* webpackChunkName: "threshold-edit" */ '@/pages/threshold/EditThreshold.vue'),
+  meta: {
+    userAuth: true
+  }
 }, {
   path: '/machine-mapping',
   name: 'machine-mapping',
-  component: () => import(/* webpackChunkName: "machine-mapping" */ '@/pages/machine-mapping/index.vue')
+  component: () => import(/* webpackChunkName: "machine-mapping" */ '@/pages/machine-mapping/index.vue'),
+  meta: {
+    userAuth: true
+  }
 }, {
   path: '/customer-assign',
   name: 'customer-assign',
@@ -123,5 +135,8 @@ export default [{
 }, {
   path: '/division-zones',
   name: 'division-zones',
-  component: () => import(/* webpackChunkName: "division-zones" */ '@/pages/division-zones/DivisionZones.vue')
+  component: () => import(/* webpackChunkName: "division-zones" */ '@/pages/division-zones/DivisionZones.vue'),
+  meta: {
+    userAuth: true
+  }
 }]

@@ -24,7 +24,8 @@
       </template>
 
       <!-- Navigation menu -->
-      <main-menu :menu="navigation.menu" />
+      <main-menu v-if="userRole === 'acs_admin'" :menu="navigation.menu" />
+      <main-menu v-else :menu="navigation.customerMenu" />
 
       <!-- Navigation menu footer -->
       <template v-slot:append>
@@ -155,7 +156,10 @@ export default {
     }
   },
   computed: {
-    ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached'])
+    ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
+    ...mapState({
+      userRole: (state) => state.auth.user.role
+    })
   },
   methods: {
     onKeyup(e) {

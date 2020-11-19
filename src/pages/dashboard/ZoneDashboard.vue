@@ -50,7 +50,8 @@ export default {
         {
           text: 'Location 1',
           disabled: false,
-          to: '/dashboard/1'
+          to: '/dashboard/1',
+          exact: true
         },
         {
           text: 'Zone 1',
