@@ -11,8 +11,14 @@ const module = {
         capacity: 89,
         consumption: '80 Watts',
         factory: '30 Elm Street, NY',
-        department: 'Zone 1',
-        location: 'Location 1',
+        department: {
+          id: 1,
+          name: 'Zone 1'
+        },
+        location: {
+          id: 1,
+          name: 'Location 1'
+        },
         notes: []
       },
       {
@@ -24,8 +30,14 @@ const module = {
         capacity: 30,
         consumption: '30 Watts',
         factory: '45 Main street, FL',
-        department: 'Zone 2',
-        location: 'Location 2',
+        department: {
+          id: 2,
+          name: 'Zone 2'
+        },
+        location: {
+          id: 2,
+          name: 'Location 2'
+        },
         notes: []
       },
       {
@@ -37,8 +49,14 @@ const module = {
         capacity: 57,
         consumption: '20 Watts',
         factory: '50 Gracy Street, TX',
-        department: 'Zone 3',
-        location: 'Location 3',
+        department: {
+          id: 3,
+          name: 'Zone 3'
+        },
+        location: {
+          id: 3,
+          name: 'Location 3'
+        },
         notes: []
       },
       {
@@ -50,8 +68,14 @@ const module = {
         capacity: 99,
         consumption: '90 Watts',
         factory: '44 Main Street, GA',
-        department: 'Zone 4',
-        location: 'Location 4',
+        department: {
+          id: 2,
+          name: 'Zone 2'
+        },
+        location: {
+          id: 3,
+          name: 'Location 3'
+        },
         notes: []
       },
       {
@@ -63,8 +87,14 @@ const module = {
         capacity: 32,
         consumption: '10 Watts',
         factory: '33 One Drive, MA',
-        department: 'Zone 1',
-        location: 'Location 1',
+        department: {
+          id: 1,
+          name: 'Zone 1'
+        },
+        location: {
+          id: 1,
+          name: 'Location 1'
+        },
         notes: []
       },
       {
@@ -76,8 +106,14 @@ const module = {
         capacity: 27,
         consumption: '10 Watts',
         factory: '29 Georgia Ave, CA',
-        department: 'Zone 4',
-        location: 'Location 4',
+        department: {
+          id: 1,
+          name: 'Zone 1'
+        },
+        location: {
+          id: 1,
+          name: 'Location 1'
+        },
         notes: []
       },
       {
@@ -89,8 +125,14 @@ const module = {
         capacity: 38,
         consumption: '40 Watts',
         factory: '746 Macon, CO',
-        department: 'Zone 5',
-        location: 'Location 5',
+        department: {
+          id: 3,
+          name: 'Zone 3'
+        },
+        location: {
+          id: 3,
+          name: 'Location 3'
+        },
         notes: []
       },
       {
@@ -102,8 +144,14 @@ const module = {
         capacity: 74,
         consumption: '20 Watts',
         factory: '1 Cantance Street, UT',
-        department: 'Zone 1',
-        location: 'Location 1',
+        department: {
+          id: 1,
+          name: 'Zone 1'
+        },
+        location: {
+          id: 1,
+          name: 'Location 1'
+        },
         notes: []
       },
       {
@@ -115,8 +163,14 @@ const module = {
         capacity: '',
         consumption: 'OFF',
         factory: '45 Spring Street, NY',
-        department: 'Zone 5',
-        location: 'Location 5',
+        department: {
+          id: 3,
+          name: 'Zone 3'
+        },
+        location: {
+          id: 2,
+          name: 'Location 2'
+        },
         notes: []
       },
       {
@@ -128,8 +182,14 @@ const module = {
         capacity: '52',
         consumption: '30 Watts',
         factory: '69 Borden Rd, IL',
-        department: 'Zone 3',
-        location: 'Location 3',
+        department: {
+          id: 2,
+          name: 'Zone 2'
+        },
+        location: {
+          id: 3,
+          name: 'Location 3'
+        },
         notes: []
       }
     ],

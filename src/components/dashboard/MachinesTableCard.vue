@@ -2,7 +2,7 @@
   <div class="test-machine">
     <v-card>
       <v-card-title>
-        {{ label }}
+        Report
         <v-combobox
           v-model="headerColumnValues"
           :items="headerColumns"
@@ -75,6 +75,12 @@
           <template v-slot:item.status="{ item }">
             <v-icon :color="getColor(item)">{{ getIcon(item) }}</v-icon>
           </template>
+          <template v-slot:item.location="{ item }">
+            {{ item.location.name }}
+          </template>
+          <template v-slot:item.department="{ item }">
+            {{ item.department.name }}
+          </template>
         </v-data-table>
       </v-card-text>
     </v-card>
@@ -97,10 +103,6 @@ export default {
     TimeRangeChooser
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
     loading: {
       type: Boolean,
       default: false

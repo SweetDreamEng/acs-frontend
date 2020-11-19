@@ -12,7 +12,7 @@
     </v-sheet>
 
     <v-container>
-      <locations-table></locations-table>
+      <locations-table :locations="locations"></locations-table>
 
       <br>
 
@@ -118,7 +118,8 @@ export default {
   },
   computed: {
     ...mapState({
-      machines: (state) => state.machines.data
+      machines: (state) => state.machines.data,
+      locations: (state) => state.locations.data
     })
   },
   mounted() {

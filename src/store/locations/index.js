@@ -3,7 +3,18 @@ import locationAPI from '@/services/api/location'
 const module = {
   namespaced: true,
   state: {
-    data: [],
+    data: [
+      {
+        id: 1,
+        name: 'Location 1'
+      }, {
+        id: 2,
+        name: 'Location 2'
+      }, {
+        id: 3,
+        name: 'Location 3'
+      }
+    ],
     table_loading: false
   },
 

@@ -114,7 +114,7 @@ export default {
         {
           location: {
             label: 'Location 1',
-            to: 'loc1'
+            to: '/dashboard/1'
           },
           utilization: '32%',
           color: 'green',
@@ -140,7 +140,7 @@ export default {
         {
           location: {
             label: 'Location 2',
-            to: 'loc2'
+            to: '/dashboard/2'
           },
           utilization: '36%',
           color: 'green',
@@ -166,7 +166,7 @@ export default {
         {
           location: {
             label: 'Location 3',
-            to: 'loc3'
+            to: '/dashboard/3'
           },
           utilization: '82%',
           color: 'red',

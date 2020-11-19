@@ -12,14 +12,14 @@
       </v-container>
     </v-sheet>
     <v-container>
-      <zones-table></zones-table>
+      <zones-table :zoneIds="zoneIds"></zones-table>
 
       <br>
 
       <machines-table-card
         style="min-height: 380px"
         label="Machines"
-        :items="machines"
+        :items="machinesForLocation"
         :loading="isLoading1"
       ></machines-table-card>
     </v-container>
@@ -132,8 +132,17 @@ export default {
   },
   computed: {
     ...mapState({
-      machines: (state) => state.machines.data
-    })
+      machines: (state) => state.machines.data,
+      zones: (state) => state.zones.data
+    }),
+    machinesForLocation() {
+      return this.machines.filter((machine) => {
+        return parseInt(machine.location.id) === parseInt(this.$route.params.location)
+      })
+    },
+    zoneIds() {
+      return this.machinesForLocation.map((machine) => machine.department.id)
+    }
   },
   mounted() {
     let count = 0

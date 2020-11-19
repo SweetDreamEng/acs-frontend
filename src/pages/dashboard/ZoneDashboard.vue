@@ -50,7 +50,7 @@ export default {
         {
           text: 'Location 1',
           disabled: false,
-          to: '/dashboard/loc1'
+          to: '/dashboard/1'
         },
         {
           text: 'Zone 1',
@@ -122,7 +122,13 @@ export default {
   computed: {
     ...mapState({
       machines: (state) => state.machines.data
-    })
+    }),
+    machinesForZone() {
+      return this.machines.filter((machine) => {
+        return parseInt(machine.location.id) === parseInt(this.$route.params.location)
+          && parseInt(machine.zone.id) === parseInt(this.$route.params.zone)
+      })
+    }
   },
   mounted() {
     let count = 0

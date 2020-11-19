@@ -5,7 +5,7 @@
     <v-card-text>
       <v-data-table
         :headers="headers"
-        :items="zones"
+        :items="tableZones"
         hide-default-footer
       >
         <template v-slot:item.rate="{ item }">
@@ -32,7 +32,7 @@
         <template v-slot:item.zone="{ item }">
           <router-link :to="item.zone.to" class="d-flex align-center">
             <v-icon>mdi-home</v-icon>
-            <span class="title text-no-wrap ml-1">{{ item.zone.title }}</span>
+            <span class="title text-no-wrap ml-1">{{ item.zone.name }}</span>
           </router-link>
         </template>
         <template v-slot:item.downtime_distribution="{ item }">
@@ -94,6 +94,12 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    zoneIds: {
+      type: Array,
+      default: () => {
+        []
+      }
     }
   },
   data () {
@@ -107,10 +113,11 @@ export default {
         { text: 'Downtime Distrubton', align: 'center', value: 'downtime_distribution', sortable: false }
       ],
 
-      zones: [
+      zonesData: [
         {
           zone: {
-            title: 'Zone 1',
+            id: 1,
+            name: 'Zone 1',
             to: 'loc1/zone1'
           },
           utilization: '32%',
@@ -123,7 +130,8 @@ export default {
         },
         {
           zone: {
-            title: 'Zone 2',
+            id: 2,
+            name: 'Zone 2',
             to: 'loc1/zone2'
           },
           utilization: '36%',
@@ -136,7 +144,8 @@ export default {
         },
         {
           zone: {
-            title: 'Zone 3',
+            id: 3,
+            name: 'Zone 3',
             to: 'loc1/zone3'
           },
           utilization: '82%',
@@ -257,6 +266,12 @@ export default {
     }
   },
   computed: {
+    tableZones() {
+      return this.zonesData.filter((zoneData) => {
+        if (this.zoneIds)
+          return this.zoneIds.includes(zoneData.zone.id)
+      })
+    }
   },
   methods: {
   }
