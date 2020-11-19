@@ -30,7 +30,7 @@
           </div>
         </template>
         <template v-slot:item.zone="{ item }">
-          <router-link :to="item.zone.to" class="d-flex align-center">
+          <router-link :to="item.zone.to" class="d-flex align-center" append>
             <v-icon>mdi-home</v-icon>
             <span class="title text-no-wrap ml-1">{{ item.zone.name }}</span>
           </router-link>
@@ -118,7 +118,7 @@ export default {
           zone: {
             id: 1,
             name: 'Zone 1',
-            to: 'loc1/zone1'
+            to: '1'
           },
           utilization: '32%',
           color: 'green',
@@ -132,7 +132,7 @@ export default {
           zone: {
             id: 2,
             name: 'Zone 2',
-            to: 'loc1/zone2'
+            to: '2'
           },
           utilization: '36%',
           color: 'green',
@@ -146,7 +146,7 @@ export default {
           zone: {
             id: 3,
             name: 'Zone 3',
-            to: 'loc1/zone3'
+            to: '3'
           },
           utilization: '82%',
           color: 'red',

@@ -2,7 +2,7 @@
   <div class="d-flex flex-grow-1 flex-column">
     <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
       <v-container class="pb-0">
-        <v-breadcrumbs :items="breadcrumbItems" class="mt-0 mb-n1" dark></v-breadcrumbs>
+        <v-breadcrumbs :items="breadcrumbItems" class="mt-0 mb-n1" :dark="true"></v-breadcrumbs>
         <top-card></top-card>
       </v-container>
     </v-sheet>
@@ -149,7 +149,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
   .v-breadcrumbs a {
     color: white;
   }
