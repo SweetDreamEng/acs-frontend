@@ -28,16 +28,16 @@ const module = {
   },
 
   getters: {
-    // zoneNames: (state) => {
-    //   return state.data.map((zone) => zone.zoneName)
-    // }
-    // exZoneNames: (state, getters) => {
-    //   const _zonesNames = getters.zoneNames
+    extendedLocations: (state) => {
+      const _locations = state.data.slice()
 
-    //   _zonesNames.unshift('Not assigned')
+      _locations.unshift({
+        id: 0,
+        name: 'Not Assigned'
+      })
 
-    //   return _zonesNames
-    // }
+      return _locations
+    }
   }
 }
 

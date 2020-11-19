@@ -15,7 +15,8 @@ const module = {
         name: 'Zone 3'
       }
     ],
-    table_loading: false
+    table_loading: false,
+    btn_loading: false
   },
 
   actions: {
@@ -39,6 +40,44 @@ const module = {
             commit('TABLE_LOADED')
           })
       })
+    },
+    addZone({
+      commit
+    }, data) {
+      commit('BTN_LOAD')
+
+      return new Promise((resolve, reject) => {
+        zoneAPI.addZone(data)
+          .then((response) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('BTN_LOADED')
+          })
+      })
+    },
+    updateZone({
+      commit
+    }, data) {
+      commit('BTN_LOAD')
+
+      return new Promise((resolve, reject) => {
+        zoneAPI.updateZone(data)
+          .then((response) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('BTN_LOADED')
+          })
+      })
     }
   },
 
@@ -49,22 +88,15 @@ const module = {
     TABLE_LOADED(state) {
       state.table_loading = false
     },
+    BTN_LOAD(state) {
+      state.btn_loading = true
+    },
+    BTN_LOADED(state) {
+      state.btn_loading = false
+    },
     SET_DATA(state, zones) {
       state.data = zones
     }
-  },
-
-  getters: {
-    // zoneNames: (state) => {
-    //   return state.data.map((zone) => zone.zoneName)
-    // }
-    // exZoneNames: (state, getters) => {
-    //   const _zonesNames = getters.zoneNames
-
-    //   _zonesNames.unshift('Not assigned')
-
-    //   return _zonesNames
-    // }
   }
 }
 

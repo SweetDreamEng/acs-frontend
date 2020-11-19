@@ -149,8 +149,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .v-breadcrumbs a {
-    color: white;
-  }
-</style>

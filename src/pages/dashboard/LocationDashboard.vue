@@ -163,8 +163,3 @@ export default {
   }
 }
 </script>
-<style>
-  .v-breadcrumbs a {
-    color: white;
-  }
-</style>

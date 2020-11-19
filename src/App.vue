@@ -88,7 +88,7 @@ export default {
    url(./fonts/Fonts/MeriendaSans_500s.otf) format("truetype");
 }
 
-<style scoped>
+<style>
 /**
  * Transition animation between pages
  */
@@ -106,5 +106,8 @@ export default {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.theme--dark.v-breadcrumbs a {
+  color: white;
 }
 </style>
