@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
-    <div class="display-1">Machine Mapping</div>
+    <div class="display-1 mt-2">Machine Mapping</div>
     <p class="py-1">Please assign machine names to your ACS Digital Solution product and map them to the zones and division.</p>
 
     <v-card>

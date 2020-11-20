@@ -174,14 +174,6 @@ export default {
         }
       ],
       timeRange: 'last24Hours'
-      // dateFromMenu: false,
-      // dateFrom: '',
-      // timeFromMenu: false,
-      // timeFrom: '',
-      // dateToMenu: false,
-      // dateTo: '',
-      // timeToMenu: false,
-      // timeTo: ''
     }
   },
   computed: {

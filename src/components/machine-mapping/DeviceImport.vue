@@ -5,7 +5,7 @@
         color="primary"
         :loading="import_btn_loading"
         :disabled="import_btn_loading"
-        @click="importDevices"
+        @click="submit"
       >
         Retrieve devices from Teltonika RMS
       </v-btn>

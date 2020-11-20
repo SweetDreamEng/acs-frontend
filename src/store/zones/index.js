@@ -20,6 +20,27 @@ const module = {
   },
 
   actions: {
+    initLocationsZones({
+      commit
+    }) {
+      commit('TABLE_LOAD')
+
+      return new Promise((resolve, reject) => {
+        zoneAPI.initLocationsZones()
+          .then((response) => {
+            commit('SET_DATA', response.data.zones)
+            commit('locations/SET_DATA', response.data.locations, { root: true })
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('TABLE_LOADED')
+          })
+      })
+    },
     getZones({
       commit
     }) {
@@ -28,8 +49,7 @@ const module = {
       return new Promise((resolve, reject) => {
         zoneAPI.getZones()
           .then((response) => {
-            commit('SET_DATA', response.data.zones)
-            commit('locations/SET_DATA', response.data.locations, { root: true })
+            commit('SET_DATA', response.data)
             resolve(response)
           })
           .catch((error) => {

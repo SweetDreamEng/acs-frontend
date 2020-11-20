@@ -25,7 +25,7 @@ export default {
         ]
       },
       { icon: 'mdi-swap-horizontal', key: 'menu.machineMapping', text: 'Machine Mapping', link: '/machine-mapping' },
-      { icon: 'mdi-account-multiple', key: 'menu.divisionZonesPage', text: 'Division/Zones', link: '/division-zones' }
+      { icon: 'mdi-account-multiple', key: 'menu.divisionZonesPage', text: 'Division/Zones', link: '/locations-zones' }
     ]
   }],
 

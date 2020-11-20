@@ -1,11 +1,7 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
-    <div class="d-flex align-center py-3">
-      <div>
-        <div class="display-1">Location/Zones</div>
-        <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
-      </div>
-    </div>
+    <div class="display-1 mt-2">Location/Zones</div>
+    <locations :locations="locations"></locations>
     <v-card class="mt-2">
       <v-card-title>
         Zones
@@ -39,10 +35,10 @@
                 >
                 </v-text-field>
                 <v-select
-                  v-model="editedZone.locationId"
+                  v-model="editedZone.location_id"
                   :items="extendedLocations"
                   label="Choose Location"
-                  item-text="name"
+                  item-text="location"
                   item-value="id"
                   outlined
                   dense
@@ -73,7 +69,7 @@
       </v-card-title>
       <v-card-text>
         <v-data-table
-          :headers="zoneHeader"
+          :headers="zonesHeader"
           :items="zones"
           class="flex-grow-1"
           :loading="table_loading"
@@ -107,22 +103,14 @@
 */
 
 import { mapState, mapGetters, mapActions } from 'vuex'
-
+import Locations from '../../components/locations-zones/Locations.vue'
 export default {
   components: {
+    Locations
   },
   data() {
     return {
-      isLoading: false,
-      breadcrumbs: [{
-        text: 'Location/Zones',
-        disabled: false,
-        href: '#'
-      }, {
-        text: 'List'
-      }],
-
-      zoneHeader: [
+      zonesHeader: [
         { text: 'Zone', value: 'name' },
         { text: 'Location', value: 'location_id' },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
@@ -134,15 +122,13 @@ export default {
       editZoneDialog: false,
       editedZone: {
         name: '',
-        locationId: 0
+        location_id: 0
       },
       defaultZone: {
         name: '',
-        locationId: 0
+        location_id: 0
       },
       isEditZoneFormValid: true,
-
-      isNewFormValid: true,
 
       searchQuery: '',
 
@@ -171,13 +157,14 @@ export default {
   },
   methods: {
     ...mapActions({
+      initLocationsZones: 'zones/initLocationsZones',
       getZones: 'zones/getZones',
       addZone: 'zones/addZone',
       updateZone: 'zones/updateZone'
     }),
 
     open() {
-      this.getZones()
+      this.initLocationsZones()
     },
     editZone(item) {
       this.editedIndex = this.zones.indexOf(item)
@@ -197,20 +184,21 @@ export default {
     locationName(location_id) {
       const _location = this.locations.find((location) => location.id === location_id)
 
-      return _location ? _location.name : 'Not Assinged'
+      return _location ? _location.location : 'Not Assinged'
     },
     saveZone() {
       if (this.$refs.editZoneForm.validate()) {
         if (this.editedIndex > -1) {
           this.updateZone(this.editedZone).then(() => {
             this.getZones()
+            this.closeZone()
           })
         } else {
           this.addZone(this.editedZone).then(() => {
             this.getZones()
+            this.closeZone()
           })
         }
-        this.closeZone()
       }
     }
   }

@@ -133,9 +133,9 @@ export default [{
     userAuth: true
   }
 }, {
-  path: '/division-zones',
-  name: 'division-zones',
-  component: () => import(/* webpackChunkName: "division-zones" */ '@/pages/division-zones/DivisionZones.vue'),
+  path: '/locations-zones',
+  name: 'locations-zones',
+  component: () => import(/* webpackChunkName: "locations-zones" */ '@/pages/locations-zones/LocationsZones.vue'),
   meta: {
     userAuth: true
   }
