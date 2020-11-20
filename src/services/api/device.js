@@ -1,5 +1,17 @@
 import axios from 'axios'
 export default {
+  // getDeviceStatus(device) {
+  //   return axios.post('https://cors-anywhere.herokuapp.com/https://prismproapi.koretelematics.com/4/TransactionalAPI.svc/json/queryDevice', {
+  //     deviceNumber: device.iccid.slice(0, -1)
+  //   }, {
+  //     auth: {
+  //       username: process.env.VUE_APP_PRISMPROAPI_USERNAME,
+  //       password: process.env.VUE_APP_PRISMPROAPI_PASSWORD
+  //     }
+  //   }).then((response) => {
+  //     return response
+  //   })
+  // },
   querySIM(device) {
     return axios.post('/devices/query-sim/' + device.iccid).then((response) => {
       return response
@@ -27,6 +39,12 @@ export default {
   },
   importDevices() {
     return axios.post('/devices/import').then((response) => {
+      return response
+    })
+  },
+
+  getCustomerDevices() {
+    return axios.get('/devices/customer-devices').then((response) => {
       return response
     })
   }

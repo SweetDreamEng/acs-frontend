@@ -2,9 +2,9 @@
   <div>
     <div class="mb-2">
       SIM Status: 
-      <strong v-if="item.sim_status === 4" class="grey--text">Scrapped</strong>
-      <strong v-if="item.sim_status === 2" class="green--text">Active</strong>
-      <strong v-if="item.sim_status === 3" class="red--text">Suspended</strong>
+      <strong v-if="item.sim_status === 'Scrapped'" class="grey--text">Scrapped</strong>
+      <strong v-if="item.sim_status === 'Active'" class="green--text">Active</strong>
+      <strong v-if="item.sim_status === 'Suspended'" class="red--text">Suspended</strong>
 
       <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ item.public_ip_sim }}</span></span>
     </div>

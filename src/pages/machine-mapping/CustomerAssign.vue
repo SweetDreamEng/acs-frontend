@@ -56,7 +56,7 @@
 
         <template v-slot:item.sim_status="{ item }">
           <v-icon
-            :color="item.sim_status === 2 ? 'green' : 'red'"
+            :color="item.sim_status === 'Active' ? 'green' : 'red'"
           >
             mdi-checkbox-blank-circle
           </v-icon>

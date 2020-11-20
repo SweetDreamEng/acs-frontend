@@ -10,7 +10,7 @@
         Retrieve devices from Teltonika RMS
       </v-btn>
     </div>
-    <div class="d-flex flex-column align-center mt-1">
+<!--     <div class="d-flex flex-column align-center mt-1">
       <v-alert
         v-if="numAdded"
         dense
@@ -29,7 +29,7 @@
       >
         Duplicates: <strong>{{ numDuplicates }}</strong>
       </v-alert>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

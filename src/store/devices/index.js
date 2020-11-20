@@ -5,22 +5,6 @@ const module = {
   state: {
     data: [],                           // paginated devices fetched from backend
 
-    sim_statuses: [
-      {
-        'id': 1,
-        'name': 'Not initialized'
-      }, {
-        'id': 2,
-        'name': 'Active'
-      }, {
-        'id': 3,
-        'name': 'Suspended'
-      }, {
-        'id': 4,
-        'name': 'Scrapped'
-      }
-    ],
-
     numAdded: 0,                        // number of added devices when uploading devices in excel file
     numDuplicates: 0,                   // number of duplicate devices when uploading devices in excel file
 
@@ -125,6 +109,27 @@ const module = {
           })
           .finally(() => {
             commit('REGISTER_BTN_CLEAR')
+          })
+      })
+    },
+
+    getCustomerDevices({
+      commit
+    }) {
+      commit('TABLE_LOAD')
+
+      return new Promise((resolve, reject) => {
+        deviceAPI.getCustomerDevices()
+          .then((response) => {
+            commit('SET_DATA', response.data.devices)
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('TABLE_LOAD_CLEAR')
           })
       })
     },
