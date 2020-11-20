@@ -1,4 +1,5 @@
 import companyAPI from '@/services/api/company'
+import cityAPI from '@/services/api/city'
 
 const module = {
   namespaced: true,
@@ -74,6 +75,16 @@ const module = {
       })
         .finally(() => {
           commit('BUTTON_CLEAR')
+        })
+    },
+    getCities({
+      commit, dispatch
+    }, state) {
+      cityAPI.getCities(state).then((response) => {
+        commit('cities/SET_DATA', response.data, { root: true })
+      })
+        .finally(() => {
+          // commit('BUTTON_CLEAR')
         })
     },
     clearError({ commit }) {

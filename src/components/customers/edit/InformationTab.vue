@@ -6,12 +6,53 @@
         <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation @submit.prevent="submit">
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field v-model="customerProfile.address_1" label="Address Line 1"></v-text-field>
-              <v-text-field v-model="customerProfile.address_2" label="Address Line 2"></v-text-field>
-              <v-text-field v-model="customerProfile.zip" label="Zip Code"></v-text-field>
-              <v-text-field v-model="customerProfile.city" label="City"></v-text-field>
-              <v-text-field v-model="customerProfile.state" label="State"></v-text-field>
-              <v-text-field v-model="customerProfile.country" label="Country"></v-text-field>
+              <v-text-field
+                v-model="customerProfile.address_1"
+                label="Address Line 1"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="customerProfile.address_2"
+                label="Address Line 2"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-select
+                v-model="customerProfile.state"
+                label="State"
+                :items="states"
+                outlined
+                dense
+                @change="onStateChange"
+              >
+              </v-select>
+              <v-combobox
+                v-model="customerProfile.city"
+                :items="cities"
+                label="City"
+                item-text="city"
+                :return-object="false"
+                outlined
+                dense
+              ></v-combobox>
+              <v-text-field
+                :value="zipCode"
+                label="Zip Code"
+                outlined
+                dense
+                readonly
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="customerProfile.country"
+                label="Country"
+                outlined
+                dense
+              >
+              </v-text-field>
             </v-col>
 
             <v-col cols="12" md="6">
@@ -21,6 +62,8 @@
                 value=""
                 placeholder="123-456-7890"
                 :rules="phoneRules"
+                outlined
+                dense
               >
               </v-text-field>
             </v-col>
@@ -44,6 +87,7 @@
 |
 | Information tab in customer edit page
 */
+import states from '../../../services/data/states'
 import { mapState, mapActions } from 'vuex'
 export default {
   props: {
@@ -62,6 +106,8 @@ export default {
   },
   data: () => ({
     isProfileFormValid: true,
+    
+    states,
 
     phoneRules: [
       (v) => !!v || 'Phone number is required',
@@ -70,13 +116,25 @@ export default {
   }),
   computed: {
     ...mapState({
-      isLoading: (state) => state.customers.button_loading
-    })
+      isLoading: (state) => state.customers.button_loading,
+      cities: (state) => state.cities.data
+    }),
+    zipCode() {
+      const _zip = this.cities.find((city) => city.city === this.customerProfile.city)
+
+      return _zip ? _zip.zip : ''
+    }
   },
   methods: {
     ...mapActions({
-      updateProfile: 'customers/updateProfile'
+      updateProfile: 'customers/updateProfile',
+      getCities: 'customers/getCities'
     }),
+    onStateChange() {
+      console.log('asdf')
+      
+      this.getCities(this.customerProfile.state)
+    },
     submit() {
       if (this.$refs.profileForm.validate()) {
         this.updateProfile(this.customerProfile)
