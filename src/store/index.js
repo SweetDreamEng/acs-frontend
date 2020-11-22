@@ -11,13 +11,15 @@ import zones from './zones'
 import locations from './locations'
 import customers from './customers'
 import devices from './devices'
+import cities from './cities'
 
 Vue.use(Vuex)
 
 const axios = require('axios')
 
-// axios.defaults.baseURL = process.env.VUE_APP_SERVER_API_ENDPOINT
-axios.defaults.baseURL = 'http://localhost/acs-api/public/api'
+axios.defaults.baseURL = process.env.VUE_APP_SERVER_API_ENDPOINT
+// axios.defaults.baseURL = 'http://localhost/acs-api/public/api'
+// axios.defaults.baseURL = 'http://157.230.210.3/api'
 
 axios.interceptors.request.use(
   (config) => {
@@ -49,7 +51,8 @@ const dataState = createPersistedState({
     'zones',
     'locations',
     'customers',
-    'devices'
+    'devices',
+    'cities'
   ]
 })
 
@@ -62,7 +65,8 @@ const store = new Vuex.Store({
     zones,
     locations,
     customers,
-    devices
+    devices,
+    cities
   },
   plugins: [axiosPlugin, dataState]
 })
