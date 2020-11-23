@@ -18,11 +18,20 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item value="tabs-account">
-        <account-tab ref="tabs-account" :roles="roles" :user="user"></account-tab>
+        <account-tab
+          :roles="roles"
+          :locations="locations"
+          :zones="zones"
+          :button_loading="button_loading"
+          @submit="submit"
+        >
+        </account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
-        <information-tab ref="tabs-information" :user="user"></information-tab>
+        <information-tab
+        >
+        </information-tab>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -38,10 +47,10 @@
 | Create a new user
 */
 
-import roles from './content/roles'
-
 import AccountTab from './AddUser/AccountTab'
 import InformationTab from './AddUser/InformationTab'
+
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -50,17 +59,6 @@ export default {
   },
   data() {
     return {
-      user: {
-        'id':32,
-        'email':'',
-        'name':'',
-        'verified':false,
-        'created':'2019-08-09T03:14:12Z',
-        'lastSignIn':'2019-08-14T20:00:53Z',
-        'disabled':true,
-        'role':'ADMIN',
-        'avatar':'/images/avatars/avatar1.svg'
-      },
       tab: null,
       breadcrumbs: [
         {
@@ -71,16 +69,27 @@ export default {
         {
           text: 'Add New User'
         }
-      ],
-      roles
+      ]
     }
   },
+  computed: {
+    ...mapState({
+      button_loading: (state) => state.users.button_loading,
+      roles: (state) => state.roles.data,
+      locations: (state) => state.locations.data,
+      zones: (state) => state.zones.data
+    })
+  },
+  mounted() {
+    this.open()
+  },
   methods: {
-    initializedName(username) {
-      const name = 'Foo Bar 1Name too Long'
-      const initials = username.match(/\b\w/g) || []
-
-      return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+    ...mapActions({
+      open: 'users/openCreateAccount',
+      addCompanyUser: 'users/addCompanyUser'
+    }),
+    submit(user) {
+      this.addCompanyUser(user)
     }
   }
 }

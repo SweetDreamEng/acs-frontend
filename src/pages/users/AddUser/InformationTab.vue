@@ -6,58 +6,61 @@
         <v-form>
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field value="" label="Address Line 1"></v-text-field>
-              <v-text-field value="" label="Address Line 2"></v-text-field>
-              <v-text-field value="" label="Zip Code"></v-text-field>
-              <v-text-field value="" label="City"></v-text-field>
-              <v-text-field value="" label="State"></v-text-field>
-              <v-text-field value="" label="Country"></v-text-field>
+              <v-text-field
+                value=""
+                label="Address Line 1"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                value=""
+                label="Address Line 2"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                value=""
+                label="State"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                value=""
+                label="City"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                value=""
+                label="Zip Code"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                value=""
+                label="Country"
+                outlined
+                dense
+              >
+              </v-text-field>
             </v-col>
 
             <v-col cols="12" md="6">
               <v-text-field
                 value=""
                 label="Phone"
+                outlined
+                dense
                 placeholder="123-456-7890"
+                v-mask="'###-###-####'"
                 :rules="phoneRules"
               >
               </v-text-field>
-              <v-select
-                :items="departments"
-                label="Zones"
-              >
-                <template v-slot:prepend-item>
-                  <v-list-item
-                    ripple
-                    @click="addDepartmentDialog = true"
-                  >
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        Add New
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-divider></v-divider>
-                </template>
-              </v-select>
-              <v-select
-                :items="divisions"
-                label="Division"
-              >
-                <template v-slot:prepend-item>
-                  <v-list-item
-                    ripple
-                    @click="addDivisionDialog = true"
-                  >
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        Add New
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-divider></v-divider>
-                </template>
-              </v-select>
             </v-col>
           </v-row>
 

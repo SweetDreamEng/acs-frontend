@@ -14,59 +14,83 @@
                 <span class="white--text headline">{{ user.name | initials }}</span>
               </v-avatar>
             </div>
-            <div class="flex-grow-1 pt-2 pa-sm-2">
-              <v-text-field v-model="user.name" label="Display name" placeholder="name"></v-text-field>
-              <v-text-field v-model="user.email" label="Email"></v-text-field>
+            <v-form
+              ref="form"
+              v-model="isFormValid"
+              lazy-validation
+              class="flex-grow-1 pt-2 pa-sm-2"
+              @submit.prevent="save"
+            >
+              <v-text-field
+                v-model="user.name"
+                label="Display name"
+                placeholder="name"
+                :rules="[rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="user.email"
+                label="Email"
+                placeholder="Email"
+                :rules="[rules.required, rules.emailFormat]"
+                outlined
+                dense
+              >
+              </v-text-field>
               <v-select
                 :items="roles"
+                v-model="user.role"
                 label="Role"
+                placeholder="Role"
+                item-value="id"
+                item-text="name"
+                :rules="[rules.required]"
+                outlined
+                dense
               >
               </v-select>
-              <div class="mt-2">
-                <v-btn color="primary" @click>Save</v-btn>
-              </div>
-            </div>
+              
+              <location-select :locations="locations" :zones="zones"></location-select>
+
+              <v-btn
+                color="primary"
+                @click="save"
+                :loading="button_loading"
+                :disabled="button_loading"
+              >Save</v-btn>
+            </v-form>
           </div>
         </v-card-text>
       </v-card>
     </div>
-
-    <!-- disable modal -->
-    <v-dialog v-model="disableDialog" max-width="290">
-      <v-card>
-        <v-card-title class="headline">Disable User</v-card-title>
-        <v-card-text>Are you sure you want to disable this user?</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="disableDialog = false">Cancel</v-btn>
-          <v-btn color="warning" @click="user.disabled = true; disableDialog = false">Disable</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <!-- delete modal -->
-    <v-dialog v-model="deleteDialog" max-width="290">
-      <v-card>
-        <v-card-title class="headline">Delete User</v-card-title>
-        <v-card-text>Are you sure you want to delete this user?</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="deleteDialog = false">Cancel</v-btn>
-          <v-btn color="error" @click="deleteDialog = false">Delete</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
+import LocationSelect from './LocationSelect'
+
 export default {
+  components: {
+    LocationSelect
+  },
   props: {
-    user: {
-      type: Object,
-      default: () => ({})
+    button_loading: {
+      type: Boolean,
+      default: false
     },
     roles: {
+      type: Array,
+      default: () => []
+    },
+    locations: {
+      type: Array,
+      default: () => []
+    },
+    zones: {
       type: Array,
       default: () => []
     }
@@ -74,11 +98,26 @@ export default {
   data() {
     return {
       panel: [1],
-      deleteDialog: false,
-      disableDialog: false
+      isFormValid: true,
+
+      user: {
+        name: '',
+        email: '',
+        role: ''
+      },
+
+      rules: {
+        required: (value) => (value && Boolean(value)) || 'Required',
+        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
+      }
     }
   },
   methods: {
+    save() {
+      if (this.$refs.form.validate()) {
+        this.$emit('submit', this.user)
+      }
+    }
   }
 }
 </script>

@@ -48,9 +48,15 @@ const module = {
           commit('CLEAR_ERROR')
           commit('SET_AUTH_DATA', response.data)
           
-          router.push({
-            name: 'acs-machines'
-          })
+          if (response.data.role === 'acs_admin') {
+            router.push({
+              name: 'acs-machines'
+            })
+          } else if (response.data.role === 'customer_admin') {
+            router.push({
+              name: 'dashboard-analytics'
+            })
+          }
         })
           .catch((error) => {
             console.log(error)

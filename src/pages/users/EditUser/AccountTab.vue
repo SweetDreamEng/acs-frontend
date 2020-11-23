@@ -16,13 +16,6 @@
         <v-card-text>
           <div class="d-flex flex-column flex-sm-row">
             <div>
-              <!--               <v-img
-                :src="user.avatar"
-                aspect-ratio="1"
-                class="blue-grey lighten-4 rounded elevation-3"
-                max-width="90"
-                max-height="90"
-              ></v-img> -->
               <v-avatar
                 v-if="user.name"
                 color="primary"
@@ -33,11 +26,26 @@
               <!-- <v-btn class="mt-1" small>Edit Avatar</v-btn> -->
             </div>
             <div class="flex-grow-1 pt-2 pa-sm-2">
-              <v-text-field v-model="user.name" label="Display name" placeholder="name"></v-text-field>
-              <v-text-field v-model="user.email" label="Email"></v-text-field>
+              <v-text-field
+                v-model="user.name"
+                label="Display name"
+                placeholder="name"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="user.email"
+                label="Email"
+                outlined
+                dense
+              >
+                </v-text-field>
               <v-select
                 :items="roles"
                 label="Role"
+                outlined
+                dense
               >
               </v-select>
               <div class="d-flex flex-column">

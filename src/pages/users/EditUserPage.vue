@@ -41,7 +41,14 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item value="tabs-account">
-        <account-tab ref="tabs-account" :roles="roles" :user="user"></account-tab>
+        <account-tab
+          :roles="roles"
+          :locations="locations"
+          :zones="zones"
+          :button_loading="button_loading"
+          @submit="submit"
+        >
+        </account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
@@ -61,11 +68,11 @@
 | Edit user details and manage user priviliges
 */
 
-import roles from './content/roles'
-
 import CopyLabel from '../../components/common/CopyLabel'
 import AccountTab from './EditUser/AccountTab'
 import InformationTab from './EditUser/InformationTab'
+
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -96,9 +103,25 @@ export default {
         {
           text: 'Edit User'
         }
-      ],
-      roles
+      ]
     }
+  },
+  computed: {
+    ...mapState({
+      button_loading: (state) => state.users.button_loading,
+      roles: (state) => state.roles.data,
+      locations: (state) => state.locations.data,
+      zones: (state) => state.zones.data
+    })
+  },
+  mounted() {
+    this.open()
+  },
+  methods: {
+    ...mapActions({
+      open: 'users/openCreateAccount',
+      addCompanyUser: 'users/addCompanyUser'
+    })
   }
 }
 </script>

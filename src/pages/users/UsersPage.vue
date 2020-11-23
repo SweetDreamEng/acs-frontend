@@ -83,9 +83,7 @@
             >
               <span class="white--text">{{ item.name | initials }}</span>
             </v-avatar>
-            <div class="ml-1 caption font-weight-bold">
-              <copy-label :text="item.email" />
-            </div>
+            <span class="ml-1">{{ item.email }}</span>
           </div>
         </template>
 
@@ -94,17 +92,13 @@
             label
             small
             class="font-weight-bold"
-            :dark="item.role === 'ADMIN' || item.role === 'Manager'"
+            :dark="item.role.key === 'customer_manager' || item.role.key === 'Operator'"
             :color="roleColor(item.role)"
-          >{{ item.role | capitalize }}</v-chip>
+          >{{ item.role.name | capitalize }}</v-chip>
         </template>
 
-        <template v-slot:item.created="{ item }">
-          <div>{{ item.created | formatDate('ll') }}</div>
-        </template>
-
-        <template v-slot:item.lastSignIn="{ item }">
-          <div>{{ item.lastSignIn | formatDate('lll') }}</div>
+        <template v-slot:item.created_at="{ item }">
+          <div>{{ item.created_at | formatDate('ll') }}</div>
         </template>
 
         <template v-slot:item.action="{ }">
@@ -129,8 +123,8 @@
 | List all users and give create/edit user options
 */
 
-import users from './content/users'
 import CopyLabel from '../../components/common/CopyLabel'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -154,25 +148,35 @@ export default {
         { text: 'Email', value: 'email' },
         { text: 'Name', align: 'left', value: 'name' },
         { text: 'Role', value: 'role' },
-        { text: 'Created', value: 'created' },
-        { text: 'Last SignIn', value: 'lastSignIn' },
+        { text: 'Created', value: 'created_at' },
         { text: '', sortable: false, align: 'right', value: 'action' }
-      ],
-
-      users
+      ]
     }
+  },
+  computed: {
+    ...mapState({
+      users: (state) => state.users.data
+    })
   },
   watch: {
     selectedUsers(val) {
 
     }
   },
+  mounted() {
+    this.open()
+  },
   methods: {
+    ...mapActions({
+      getCompanyUsers: 'users/getCompanyUsers'
+    }),
     searchUser() {},
-    open() {},
-    roleColor(rolename) {
-      if (rolename === 'ADMIN') return '#4CAF50'
-      else if (rolename === 'Manager') return '#F79803'
+    open() {
+      this.getCompanyUsers()
+    },
+    roleColor(role) {
+      if (role.key === 'customer_admin') return '#4CAF50'
+      else if (role.key === 'customer_manager') return '#F79803'
       else return undefined
     }
   }
