@@ -35,7 +35,8 @@ export default [{
   name: 'auth-forgot',
   component: () => import(/* webpackChunkName: "auth-forgot" */ '@/pages/auth/ForgotPage.vue'),
   meta: {
-    layout: 'auth'
+    layout: 'auth',
+    userNotAuth: true
   }
 }, {
   path: '/auth/reset-password',

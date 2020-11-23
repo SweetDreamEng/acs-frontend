@@ -125,6 +125,23 @@ const module = {
           commit('BUTTON_CLEAR')
         })
     },
+    requestForgotPassword({
+      commit
+    }, email) {
+      commit('BUTTON_LOAD')
+      authAPI.requestForgotPassword(email).then((response) => {
+      })
+        .catch((error) => {
+          if (error.response.status === 404) {
+            commit('SET_ERROR', {
+              'error': error.response.data
+            })
+          }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
+        })
+    },
     clearAuthData({
       commit
     }) {

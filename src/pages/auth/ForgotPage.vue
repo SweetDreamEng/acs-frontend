@@ -19,14 +19,15 @@
             name="email"
             outlined
             @keyup.enter="submit"
-            @change="resetErrors"
+            @input="resetErrors"
           ></v-text-field>
 
           <v-btn
-            :loading="isLoading"
             block
             x-large
             color="primary"
+            :loading="isLoading"
+            :disabled="isLoading"
             @click="submit"
           >{{ $t('forgot.button') }}</v-btn>
         </v-form>
@@ -50,37 +51,43 @@
 | Template to send email to remember/replace password
 |
 */
+import { mapState, mapActions } from 'vuex'
+
 export default {
   data() {
     return {
-      // reset button
-      isLoading: false,
-
       // form
       isFormValid: true,
       email: '',
 
       // form error
       error: false,
-      errorMessages: '',
-
       // input rules
       rules: {
         required: (value) => (value && Boolean(value)) || 'Required'
       }
     }
   },
+  computed: {
+    ...mapState({
+      isLoading: (state) => state.auth.button_loading,
+      errorMessages: (state) => state.auth.error
+    })
+  },
   methods: {
+    ...mapActions({
+      requestForgotPassword: 'auth/requestForgotPassword',
+      clearError: 'auth/clearError'
+    }),
     submit(e) {
       if (this.$refs.form.validate()) {
-        console.log('submit')
+        this.requestForgotPassword(this.email)
       }
     },
     resetEmail(email, password) {
     },
     resetErrors() {
-      this.error = false
-      this.errorMessages = ''
+      this.clearError()
     }
   }
 }

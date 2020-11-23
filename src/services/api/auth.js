@@ -20,6 +20,17 @@ export default {
       return response
     })
   },
+  requestForgotPassword(email) {
+    const data = {
+      email: email
+    }
+
+    console.log(data)
+
+    return axios.post('/auth/password-reset', data).then((response) => {
+      return response
+    })
+  },
   signOut() {
     return axios.get('/auth/logout').then((response) => {
       return response
