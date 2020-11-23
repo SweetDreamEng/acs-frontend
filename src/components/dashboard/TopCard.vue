@@ -3,7 +3,12 @@
     <v-row class="flex-grow-0" dense>
       <v-col xs="12" sm="12" md="6" lg="6">
         <v-row dense>
-          <v-col cols="6" class="pt-0">
+          <v-col
+            xs="12"
+            sm="12"
+            md="6"
+            lg="6"
+            class="pt-0">
             <track-card
               label="First Pass Yield"
               class="elevation-0"
@@ -14,10 +19,20 @@
               :series="ordersSeries"
             ></track-card>
           </v-col>
-          <v-col cols="6" class="pt-0">
+          <v-col
+            xs="12"
+            sm="12"
+            md="6"
+            lg="6"
+            class="pt-0">
             <downtime-card></downtime-card>
           </v-col>
-          <v-col cols="6" class="pb-0">
+          <v-col
+            xs="12"
+            sm="12"
+            md="6"
+            lg="6"
+            class="pb-0">
             <track-card
               label="Avg First Pass Yield"
               class="elevation-0"
@@ -28,7 +43,12 @@
               :series="customersSeries"
             ></track-card>
           </v-col>
-          <v-col cols="6" class="pb-0">
+          <v-col
+            xs="12"
+            sm="12"
+            md="6"
+            lg="6"
+            class="pb-0">
             <oee-card></oee-card>
           </v-col>
         </v-row>
