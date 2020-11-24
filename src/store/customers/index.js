@@ -25,10 +25,17 @@ const module = {
       commit('BUTTON_LOAD')
 
       companyAPI.addCustomer(data).then((response) => {
+        commit('CLEAR_ERROR')
         dispatch('app/showSuccess', response.data, { root: true })
       })
         .catch((error) => {
-          console.log(error.response.data)
+          if (error.response.status === 422) {
+            const errors = Object.values(error.response.data.error).flat()
+
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
+          }
         })
         .finally(() => {
           commit('BUTTON_CLEAR')
@@ -40,6 +47,7 @@ const module = {
       companyAPI.getCustomer(id).then((response) => {
         commit('SET_CUSTOMER_ACCOUNT', response.data.company)
         commit('SET_CUSTOMER_PROFILE', response.data.profile)
+        commit('cities/SET_DATA', response.data.cities)
       })
         .catch((error) => {
           console.log(error.response.data)

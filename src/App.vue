@@ -11,12 +11,11 @@
       v-model="toast.show"
       :timeout="toast.timeout"
       :color="toast.color"
-      outlined
       top
       right
     >
       <div class="d-flex align-center">
-        <v-icon color="success" class="mr-2">{{ toast.icon }}</v-icon>
+        <v-icon class="mr-2">{{ toast.icon }}</v-icon>
         <span>{{ toast.message }}</span>
       </div>
       <template v-slot:action="{ attrs }">

@@ -29,6 +29,7 @@
                   :validate-on-blur="false"
                   label="Company Name"
                   placeholder="Ex: Acme Inc"
+                  @input="clearError"
                   outlined
                   dense
                 ></v-text-field>
@@ -38,6 +39,7 @@
                   :validate-on-blur="false"
                   label="Administrator Name"
                   placeholder="Jane Doe"
+                  @input="clearError"
                   outlined
                   dense
                 ></v-text-field>
@@ -47,13 +49,18 @@
                   :validate-on-blur="false"
                   label="Administrator Email"
                   placeholder="jane.doe@example.com"
+                  @input="clearError"
                   outlined
                   dense
                 ></v-text-field>
+
+                <error-component :error="errorMessages"></error-component>
+
                 <div class="mt-2">
                   <v-btn
                     type="submit"
                     color="primary"
+                    :loading="button_loading"
                   >Save</v-btn>
                 </div>
               </v-form>
@@ -101,6 +108,7 @@
                   item-text="city"
                   :return-object="false"
                   :rules="[rules.required]"
+                  :disabled="!customer.state"
                   outlined
                   dense
                 ></v-combobox>
@@ -108,6 +116,7 @@
                   :value="zipCode"
                   label="Zip Code"
                   :rules="[rules.required]"
+                  :disabled="!customer.state || !customer.city"
                   outlined
                   dense
                   readonly
@@ -157,11 +166,13 @@
 | Create a new customer
 */
 import states from '../../services/data/states'
+import ErrorComponent from '../../components/common/ErrorComponent'
 
 import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
+    ErrorComponent
   },
   data() {
     return {
@@ -205,7 +216,8 @@ export default {
   computed: {
     ...mapState({
       button_loading: (state) => state.customers.button_loading,
-      cities: (state) => state.cities.data
+      cities: (state) => state.cities.data,
+      errorMessages: (state) => state.customers.error
     }),
     zipCode() {
       const _zip = this.cities.find((city) => city.city === this.customer.city)
@@ -216,7 +228,8 @@ export default {
   methods: {
     ...mapActions({
       addCustomer: 'customers/addCustomer',
-      getCities: 'customers/getCities'
+      getCities: 'customers/getCities',
+      clearError: 'customers/clearError'
     }),
     onStateChange() {
       this.getCities(this.customer.state)
