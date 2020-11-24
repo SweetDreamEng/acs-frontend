@@ -24,7 +24,6 @@ export const routes = [{
   name: 'dashboard-product',
   component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/DashboardProduct.vue'),
   meta: {
-    layout: 'dashboard',
     userAuth: true
   }
 }, {

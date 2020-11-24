@@ -35,7 +35,7 @@
       <div v-if="showChart" style="width: 400px">
         <apexchart
           type="donut"
-          height="110"
+          min-height="110"
           :options="chartOptions2"
           :series="series2"
         ></apexchart>
@@ -104,7 +104,6 @@ export default {
           }
         },
         legend: {
-          offsetY: 20,
           fontSize: '13px',
           fontFamily: 'Quicksand',
           fontWeight: 700

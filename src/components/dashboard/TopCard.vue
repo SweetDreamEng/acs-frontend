@@ -5,7 +5,7 @@
         <v-row dense>
           <v-col
             xs="12"
-            sm="12"
+            sm="6"
             md="6"
             lg="6"
             class="pt-0">
@@ -21,7 +21,7 @@
           </v-col>
           <v-col
             xs="12"
-            sm="12"
+            sm="6"
             md="6"
             lg="6"
             class="pt-0">
@@ -29,7 +29,7 @@
           </v-col>
           <v-col
             xs="12"
-            sm="12"
+            sm="6"
             md="6"
             lg="6"
             class="pb-0">
@@ -45,7 +45,7 @@
           </v-col>
           <v-col
             xs="12"
-            sm="12"
+            sm="6"
             md="6"
             lg="6"
             class="pb-0">

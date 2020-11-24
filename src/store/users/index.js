@@ -5,6 +5,8 @@ const module = {
   state: {
     data: [],
 
+    user: null,
+
     table_loading: false,
     button_loading: false
   },
@@ -19,6 +21,24 @@ const module = {
             commit('locations/SET_DATA', response.data.locations, { root: true })
             commit('zones/SET_DATA', response.data.zones, { root: true })
             commit('roles/SET_DATA', response.data.roles, { root: true })
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+      })
+    },
+    openEditAccount({
+      commit
+    }, id) {
+      return new Promise((resolve, reject) => {
+        userAPI.openEditAccount(id)
+          .then((response) => {
+            commit('locations/SET_DATA', response.data.locations, { root: true })
+            commit('zones/SET_DATA', response.data.zones, { root: true })
+            commit('roles/SET_DATA', response.data.roles, { root: true })
+            commit('SET_USER', response.data.user)
             resolve(response)
           })
           .catch((error) => {
@@ -65,12 +85,34 @@ const module = {
             commit('BUTTON_CLEAR')
           })
       })
+    },
+    updateCompanyUserAccount({
+      commit
+    }, data) {
+      commit('BUTTON_LOAD')
+      
+      return new Promise((resolve, reject) => {
+        userAPI.updateCompanyUserAccount(data)
+          .then((response) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('BUTTON_CLEAR')
+          })
+      })
     }
   },
 
   mutations: {
     SET_DATA(state, users) {
       state.data = users
+    },
+    SET_USER(state, user) {
+      state.user = user
     },
     TABLE_LOAD(state) {
       state.table_loading = true

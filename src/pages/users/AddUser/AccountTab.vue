@@ -52,7 +52,30 @@
               >
               </v-select>
               
-              <location-select :locations="locations" :zones="zones"></location-select>
+              <div
+                v-for="(location, i) in locations"
+                :key="i"
+              >
+                <v-checkbox
+                  v-model="selectedLocations"
+                  :value="location.id"
+                  :label="location.location"
+                  class="shrink mr-2 mt-0"
+                ></v-checkbox>
+                <div
+                  v-if="selectedLocations.includes(location.id)"
+                  class="d-flex flex-wrap px-2"
+                >
+                  <v-checkbox
+                    v-for="(zone, j) in zonesOfLocation(location.id)"
+                    :key="j"
+                    v-model="selectedZones"
+                    :value="zone.id"
+                    :label="zone.name"
+                    class="shrink mr-2 mt-0"
+                  ></v-checkbox>
+                </div>
+              </div>
 
               <v-btn
                 color="primary"
@@ -71,11 +94,8 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 
-import LocationSelect from './LocationSelect'
-
 export default {
   components: {
-    LocationSelect
   },
   props: {
     button_loading: {
@@ -106,6 +126,9 @@ export default {
         role: ''
       },
 
+      selectedLocations: [],
+      selectedZones: [],
+
       rules: {
         required: (value) => (value && Boolean(value)) || 'Required',
         emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
@@ -115,8 +138,19 @@ export default {
   methods: {
     save() {
       if (this.$refs.form.validate()) {
-        this.$emit('submit', this.user)
+        const data = {
+          name: this.user.name,
+          email: this.user.email,
+          role: this.user.role,
+          locations: this.selectedLocations,
+          zones: this.selectedZones
+        }
+
+        this.$emit('submit', data)
       }
+    },
+    zonesOfLocation(location_id) {
+      return this.zones.filter((zone) => zone.location_id === location_id)
     }
   }
 }

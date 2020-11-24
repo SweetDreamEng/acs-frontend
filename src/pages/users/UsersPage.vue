@@ -74,9 +74,6 @@
 
         <template v-slot:item.email="{ item }">
           <div class="d-flex align-center py-1">
-            <!-- <v-avatar size="32" class="elevation-1 grey lighten-3">
-              <v-img :src="item.avatar" />
-            </v-avatar> -->
             <v-avatar
               color="primary"
               size="28"
@@ -101,9 +98,9 @@
           <div>{{ item.created_at | formatDate('ll') }}</div>
         </template>
 
-        <template v-slot:item.action="{ }">
+        <template v-slot:item.action="{ item }">
           <div class="actions">
-            <v-btn icon to="/users/edit">
+            <v-btn icon :to="'/users/edit/' + item.id">
               <v-icon small>mdi-pencil</v-icon>
             </v-btn>
           </div>

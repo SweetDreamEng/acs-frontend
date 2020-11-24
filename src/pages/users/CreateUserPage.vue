@@ -88,8 +88,8 @@ export default {
       open: 'users/openCreateAccount',
       addCompanyUser: 'users/addCompanyUser'
     }),
-    submit(user) {
-      this.addCompanyUser(user)
+    submit(data) {
+      this.addCompanyUser(data)
     }
   }
 }

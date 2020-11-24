@@ -9,7 +9,7 @@ export default [{
     userAuth: true
   }
 }, {
-  path: '/users/edit',
+  path: '/users/edit/:id',
   name: 'users-edit',
   component: () => import(/* webpackChunkName: "users-edit" */ '@/pages/users/EditUserPage.vue'),
   meta: {

@@ -42,11 +42,12 @@
     <v-tabs-items v-model="tab">
       <v-tab-item value="tabs-account">
         <account-tab
+          :user="user"
           :roles="roles"
           :locations="locations"
           :zones="zones"
           :button_loading="button_loading"
-          @submit="submit"
+          @submit="submitAccount"
         >
         </account-tab>
       </v-tab-item>
@@ -82,17 +83,6 @@ export default {
   },
   data() {
     return {
-      user: {
-        'id':32,
-        'email':'bfitchew0@ezinearticles.com',
-        'name':'Bartel Fitchew',
-        'verified':false,
-        'created':'2019-08-09T03:14:12Z',
-        'lastSignIn':'2019-08-14T20:00:53Z',
-        'disabled':true,
-        'role':'ADMIN',
-        'avatar':'/images/avatars/avatar1.svg'
-      },
       tab: null,
       breadcrumbs: [
         {
@@ -108,6 +98,7 @@ export default {
   },
   computed: {
     ...mapState({
+      user: (state) => state.users.user,
       button_loading: (state) => state.users.button_loading,
       roles: (state) => state.roles.data,
       locations: (state) => state.locations.data,
@@ -115,13 +106,17 @@ export default {
     })
   },
   mounted() {
-    this.open()
+    this.open(this.$route.params.id)
   },
   methods: {
     ...mapActions({
-      open: 'users/openCreateAccount',
-      addCompanyUser: 'users/addCompanyUser'
-    })
+      open: 'users/openEditAccount',
+      updateCompanyUserAccount: 'users/updateCompanyUserAccount'
+    }),
+    submitAccount(data) {
+      console.log(data)
+      this.updateCompanyUserAccount(data)
+    }
   }
 }
 </script>

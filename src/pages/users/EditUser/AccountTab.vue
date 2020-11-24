@@ -23,12 +23,18 @@
               >
                 <span class="white--text headline">{{ user.name | initials }}</span>
               </v-avatar>
-              <!-- <v-btn class="mt-1" small>Edit Avatar</v-btn> -->
             </div>
-            <div class="flex-grow-1 pt-2 pa-sm-2">
+            <v-form
+              ref="form"
+              v-model="isFormValid"
+              lazy-validation
+              class="flex-grow-1 pt-2 pa-sm-2"
+              @submit.prevent="save"
+            >
               <v-text-field
                 v-model="user.name"
                 label="Display name"
+                :rules="[rules.required]"
                 placeholder="name"
                 outlined
                 dense
@@ -37,32 +43,57 @@
               <v-text-field
                 v-model="user.email"
                 label="Email"
+                :rules="[rules.required, rules.emailFormat]"
+                placeholder="Email"
                 outlined
                 dense
               >
                 </v-text-field>
               <v-select
                 :items="roles"
+                v-model="user.role"
                 label="Role"
+                placeholder="Role"
+                item-value="id"
+                item-text="name"
+                :rules="[rules.required]"
                 outlined
                 dense
               >
               </v-select>
-              <div class="d-flex flex-column">
-                <!-- <v-checkbox v-model="user.verified" dense label="Email Verified"></v-checkbox> -->
-                <div class="mt-2">
-                  <v-btn
-                    v-if="!user.verified"
-                  >
-                    <v-icon left small>mdi-email</v-icon>Send Verification Email
-                  </v-btn>
+
+              <div
+                v-for="(location, i) in locations"
+                :key="i"
+              >
+                <v-checkbox
+                  v-model="selectedLocations"
+                  :value="location.id"
+                  :label="location.location"
+                  class="shrink mr-2 mt-0"
+                ></v-checkbox>
+                <div
+                  v-if="selectedLocations.includes(location.id)"
+                  class="d-flex flex-wrap px-2"
+                >
+                  <v-checkbox
+                    v-for="(zone, j) in zonesOfLocation(location.id)"
+                    :key="j"
+                    v-model="selectedZones"
+                    :value="zone.id"
+                    :label="zone.name"
+                    class="shrink mr-2 mt-0"
+                  ></v-checkbox>
                 </div>
               </div>
 
-              <div class="mt-2">
-                <v-btn color="primary" @click>Save</v-btn>
-              </div>
-            </div>
+              <v-btn
+                color="primary"
+                @click="save"
+                :loading="button_loading"
+                :disabled="button_loading"
+              >Save</v-btn>
+            </v-form>
           </div>
         </v-card-text>
       </v-card>
@@ -175,11 +206,23 @@
 <script>
 export default {
   props: {
+    button_loading: {
+      type: Boolean,
+      default: false
+    },
     user: {
       type: Object,
       default: () => ({})
     },
     roles: {
+      type: Array,
+      default: () => []
+    },
+    locations: {
+      type: Array,
+      default: () => []
+    },
+    zones: {
       type: Array,
       default: () => []
     }
@@ -188,10 +231,45 @@ export default {
     return {
       panel: [1],
       deleteDialog: false,
-      disableDialog: false
+      disableDialog: false,
+
+      isFormValid: true,
+
+      selectedLocations: this.user.selected_locations,
+      selectedZones: this.user.selected_zones,
+
+      rules: {
+        required: (value) => (value && Boolean(value)) || 'Required',
+        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
+      }
     }
   },
+  watch: {
+    user: function (newUser, oldUser) {
+      this.selectedLocations = newUser.selected_locations
+      this.selectedZones = newUser.selected_zones
+    }
+  },
+  mounted() {
+  },
   methods: {
+    save() {
+      if (this.$refs.form.validate()) {
+        const data = {
+          id: this.user.id,
+          name: this.user.name,
+          email: this.user.email,
+          role: this.user.role,
+          locations: this.selectedLocations,
+          zones: this.selectedZones
+        }
+
+        this.$emit('submit', data)
+      }
+    },
+    zonesOfLocation(location_id) {
+      return this.zones.filter((zone) => zone.location_id === location_id)
+    }
   }
 }
 </script>
