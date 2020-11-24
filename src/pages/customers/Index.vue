@@ -14,7 +14,7 @@
     <v-card>
       <v-data-table
         :headers="headers"
-        :items="companies"
+        :items="customerAdmins"
         :search="searchQuery"
         class="flex-grow-1"
         hide-default-footer
@@ -67,7 +67,7 @@ export default {
       searchQuery: '',
       headers: [
         // { text: 'Id', align: 'left', value: 'id' },
-        { text: 'Company Name', value: 'name' },
+        { text: 'Company Name', value: 'companyName' },
         { text: 'Administrator Name', value: 'administratorName' },
         { text: 'Created At', value: 'created_at' },
         // { text: 'Last SignIn', value: 'lastSignIn' },
@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     ...mapState({
-      companies: (state) => state.customers.data
+      customerAdmins: (state) => state.customers.customerAdmins
     })
   },
   watch: {

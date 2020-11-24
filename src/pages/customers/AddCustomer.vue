@@ -23,16 +23,18 @@
           <div class="d-flex flex-column flex-sm-row">
             <div class="flex-grow-1 pt-2 pa-sm-2">
               <v-form ref="accountForm" v-model="isAccountFormValid" lazy-validation @submit.prevent="submit">
-                <v-text-field
+                <v-combobox
                   v-model="customer.companyName"
-                  :rules="[rules.required]"
-                  :validate-on-blur="false"
-                  label="Company Name"
+                  :items="companies"
+                  label="Company"
                   placeholder="Ex: Acme Inc"
+                  item-text="name"
+                  :return-object="false"
+                  :rules="[rules.required]"
                   @input="clearError"
                   outlined
                   dense
-                ></v-text-field>
+                ></v-combobox>
                 <v-text-field
                   v-model="customer.administratorName"
                   :rules="[rules.required]"
@@ -218,7 +220,8 @@ export default {
     ...mapState({
       button_loading: (state) => state.customers.button_loading,
       cities: (state) => state.cities.data,
-      errorMessages: (state) => state.customers.error
+      errorMessages: (state) => state.customers.error,
+      companies: (state) => state.customers.companies
     }),
     zipCode() {
       const _zip = this.cities.find((city) => city.city === this.customer.city)
@@ -226,8 +229,12 @@ export default {
       return _zip ? _zip.zip : ''
     }
   },
+  mounted() {
+    this.initAddCompany()
+  },
   methods: {
     ...mapActions({
+      initAddCompany: 'customers/initAddCompany',
       addCustomer: 'customers/addCustomer',
       getCities: 'customers/getCities',
       clearError: 'customers/clearError'

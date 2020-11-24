@@ -14,7 +14,10 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item value="tabs-account">
-        <account-tab :customer-account="customerAccount"></account-tab>
+        <account-tab
+          :customer-account="customerAccount"
+          :companies="companies"
+        ></account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
@@ -61,7 +64,8 @@ export default {
   computed: {
     ...mapState({
       customerAccount: (state) => state.customers.customerAccount,
-      customerProfile: (state) => state.customers.customerProfile
+      customerProfile: (state) => state.customers.customerProfile,
+      companies: (state) => state.customers.companies
     })
   },
   mounted() {

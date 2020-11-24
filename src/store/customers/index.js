@@ -1,5 +1,6 @@
 import companyAPI from '@/services/api/company'
 import cityAPI from '@/services/api/city'
+import router from '../../router'
 
 const module = {
   namespaced: true,
@@ -7,16 +8,27 @@ const module = {
     button_loading: false,                    // loading status
     error: null,
     data: [],                                 // companies
+    customerAdmins: [],
+    companies: [],
+
     customerAccount: null,                    
     customerProfile: null
   },
 
   actions: {
+    initAddCompany({
+      commit
+    }) {
+      companyAPI.initAddCompany().then((response) => {
+        commit('SET_COMPANIES', response.data.companies)
+      })
+    },
     getCustomers({
       commit
     }) {
       companyAPI.getCustomers().then((response) => {
-        commit('SET_CUSTOMERS', response.data.companies)
+        // commit('SET_CUSTOMERS', response.data.customer_admins)
+        commit('SET_CUSTOMER_ADMINS', response.data.customer_admins)
       })
     },
     addCustomer({
@@ -27,6 +39,9 @@ const module = {
       companyAPI.addCustomer(data).then((response) => {
         commit('CLEAR_ERROR')
         dispatch('app/showSuccess', response.data, { root: true })
+        router.push({
+          name: 'customers-list'
+        })
       })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -45,8 +60,9 @@ const module = {
       commit
     }, id) {
       companyAPI.getCustomer(id).then((response) => {
-        commit('SET_CUSTOMER_ACCOUNT', response.data.company)
+        commit('SET_CUSTOMER_ACCOUNT', response.data.customer)
         commit('SET_CUSTOMER_PROFILE', response.data.profile)
+        commit('SET_COMPANIES', response.data.companies)
         commit('cities/SET_DATA', response.data.cities, { root: true } )
       })
         .catch((error) => {
@@ -118,6 +134,14 @@ const module = {
 
     SET_CUSTOMERS(state, customers) {
       state.data = customers
+    },
+
+    SET_COMPANIES(state, companies) {
+      state.companies = companies
+    },
+
+    SET_CUSTOMER_ADMINS(state, customerAdmins) {
+      state.customerAdmins = customerAdmins
     },
 
     SET_CUSTOMER_ACCOUNT(state, customerAccount) {

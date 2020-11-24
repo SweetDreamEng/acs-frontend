@@ -123,8 +123,6 @@ export default {
       this.updateCompanyUserAccount(data)
     },
     submitInformation(data) {
-      console.log(data)
-      
       this.updateCompanyUserInformation(data)
     }
   }

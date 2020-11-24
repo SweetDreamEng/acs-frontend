@@ -1,5 +1,10 @@
 import axios from 'axios'
 export default {
+  initAddCompany() {
+    return axios.get('/customers/init-add-company').then((response) => {
+      return response
+    })
+  },
   getCustomers() {
     return axios.get('/customers').then((response) => {
       return response
@@ -24,9 +29,9 @@ export default {
   },
   updateAccount(accountInfo) {
     return axios.post(`/customers/update-account/${accountInfo.id}`, {
-      name: accountInfo.name,
-      administrator_name: accountInfo.administratorName,
-      administrator_email: accountInfo.administratorEmail
+      name: accountInfo.companyName,
+      administrator_name: accountInfo.name,
+      administrator_email: accountInfo.email
     }).then((response) => {
       return response
     })
