@@ -39,6 +39,7 @@
                 item-text="city"
                 :return-object="false"
                 :rules="[rules.required]"
+                :disabled="!customerProfile.state"
                 outlined
                 dense
               ></v-combobox>
@@ -46,6 +47,7 @@
                 :value="zipCode"
                 label="Zip Code"
                 :rules="[rules.required]"
+                :disabled="!customerProfile.state || !customerProfile.city"
                 outlined
                 dense
                 readonly
@@ -143,7 +145,7 @@ export default {
         const data = Object.assign(this.customerProfile, {
           zip: this.zipCode
         })
-        
+
         this.updateProfile(data)
       }
     }

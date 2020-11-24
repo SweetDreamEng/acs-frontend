@@ -47,7 +47,7 @@ const module = {
       companyAPI.getCustomer(id).then((response) => {
         commit('SET_CUSTOMER_ACCOUNT', response.data.company)
         commit('SET_CUSTOMER_PROFILE', response.data.profile)
-        commit('cities/SET_DATA', response.data.cities)
+        commit('cities/SET_DATA', response.data.cities, { root: true } )
       })
         .catch((error) => {
           console.log(error.response.data)
