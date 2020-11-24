@@ -36,6 +36,7 @@
                 label="Display name"
                 :rules="[rules.required]"
                 placeholder="name"
+                @input="clearError"
                 outlined
                 dense
               >
@@ -45,6 +46,7 @@
                 label="Email"
                 :rules="[rules.required, rules.emailFormat]"
                 placeholder="Email"
+                @input="clearError"
                 outlined
                 dense
               >
@@ -57,6 +59,7 @@
                 item-value="id"
                 item-text="name"
                 :rules="[rules.required]"
+                @input="clearError"
                 outlined
                 dense
               >
@@ -86,6 +89,8 @@
                   ></v-checkbox>
                 </div>
               </div>
+
+              <error-component :error="errorMessages"></error-component>
 
               <v-btn
                 color="primary"
@@ -204,7 +209,14 @@
 </template>
 
 <script>
+import ErrorComponent from '../../../components/common/ErrorComponent'
+
+import { mapState, mapActions } from 'vuex'
+
 export default {
+  components: {
+    ErrorComponent
+  },
   props: {
     button_loading: {
       type: Boolean,
@@ -244,6 +256,11 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      errorMessages: (state) => state.users.error
+    })
+  },
   watch: {
     user: function (newUser, oldUser) {
       this.selectedLocations = newUser.selected_locations
@@ -253,6 +270,9 @@ export default {
   mounted() {
   },
   methods: {
+    ...mapActions({
+      clearError: 'users/clearError'
+    }),
     save() {
       if (this.$refs.form.validate()) {
         const data = {

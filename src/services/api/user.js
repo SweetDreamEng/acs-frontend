@@ -1,12 +1,12 @@
 import axios from 'axios'
 export default {
 
-  openCreateAccount() {
+  initCreateAccount() {
     return axios.get('/company-users/init-create-account').then((response) => {
       return response
     })
   },
-  openEditAccount(id) {
+  openEditCompanyUser(id) {
     return axios.get('/company-users/init-edit-account/' + id).then((response) => {
       return response
     })
@@ -30,6 +30,11 @@ export default {
   },
   updateCompanyUserAccount(data) {
     return axios.post('/company-users/update-account/' + data.id, data).then((response) => {
+      return response
+    })
+  },
+  updateCompanyUserInformation(data) {
+    return axios.post('/company-users/update-information/' + data.id, data).then((response) => {
       return response
     })
   }

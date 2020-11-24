@@ -89,7 +89,7 @@
             label
             small
             class="font-weight-bold"
-            :dark="item.role.key === 'customer_manager' || item.role.key === 'Operator'"
+            :dark="item.role.key === 'customer_manager' || item.role.key === 'customer_admin'"
             :color="roleColor(item.role)"
           >{{ item.role.name | capitalize }}</v-chip>
         </template>

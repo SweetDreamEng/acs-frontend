@@ -56,6 +56,7 @@
       </v-dialog>
     </v-card-title>
     <v-card-text>
+      {{ table_loading }}
       <v-data-table
         :headers="headers"
         :items="locations"

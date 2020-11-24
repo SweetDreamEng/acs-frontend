@@ -6,17 +6,19 @@ const module = {
     data: [],
 
     user: null,
+    
+    error: null,
 
     table_loading: false,
     button_loading: false
   },
 
   actions: {
-    openCreateAccount({
+    initCreateAccount({
       commit
     }) {
       return new Promise((resolve, reject) => {
-        userAPI.openCreateAccount()
+        userAPI.initCreateAccount()
           .then((response) => {
             commit('locations/SET_DATA', response.data.locations, { root: true })
             commit('zones/SET_DATA', response.data.zones, { root: true })
@@ -29,11 +31,11 @@ const module = {
           })
       })
     },
-    openEditAccount({
+    openEditCompanyUser({
       commit
     }, id) {
       return new Promise((resolve, reject) => {
-        userAPI.openEditAccount(id)
+        userAPI.openEditCompanyUser(id)
           .then((response) => {
             commit('locations/SET_DATA', response.data.locations, { root: true })
             commit('zones/SET_DATA', response.data.zones, { root: true })
@@ -68,42 +70,73 @@ const module = {
       })
     },
     addCompanyUser({
-      commit
+      commit, dispatch
     }, data) {
       commit('BUTTON_LOAD')
       
-      return new Promise((resolve, reject) => {
-        userAPI.addCompanyUser(data)
-          .then((response) => {
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('BUTTON_CLEAR')
-          })
-      })
+      userAPI.addCompanyUser(data)
+        .then((response) => {
+          dispatch('app/showSuccess', response.data, { root: true })
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            const errors = Object.values(error.response.data.error).flat()
+
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
+          }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
+        })
     },
     updateCompanyUserAccount({
-      commit
+      commit, dispatch
     }, data) {
       commit('BUTTON_LOAD')
       
-      return new Promise((resolve, reject) => {
-        userAPI.updateCompanyUserAccount(data)
-          .then((response) => {
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('BUTTON_CLEAR')
-          })
-      })
+      userAPI.updateCompanyUserAccount(data)
+        .then((response) => {
+          dispatch('app/showSuccess', response.data, { root: true })
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            const errors = Object.values(error.response.data.error).flat()
+
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
+          }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
+        })
+    },
+    updateCompanyUserInformation({
+      commit, dispatch
+    }, data) {
+      commit('BUTTON_LOAD')
+      
+      userAPI.updateCompanyUserInformation(data)
+        .then((response) => {
+          dispatch('app/showSuccess', response.data, { root: true })
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            const errors = Object.values(error.response.data.error).flat()
+
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
+          }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
+        })
+    },
+    clearError({ commit }) {
+      commit('CLEAR_ERROR')
     }
   },
 
@@ -113,6 +146,12 @@ const module = {
     },
     SET_USER(state, user) {
       state.user = user
+    },
+    SET_ERROR(state, error) {
+      state.error = error.error
+    },
+    CLEAR_ERROR(state) {
+      state.error = null
     },
     TABLE_LOAD(state) {
       state.table_loading = true

@@ -53,7 +53,12 @@
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
-        <information-tab ref="tabs-information" :user="user"></information-tab>
+        <information-tab
+          :user="user"
+          @submit="submitInformation"
+          :button_loading="button_loading"
+        >
+        </information-tab>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -106,16 +111,21 @@ export default {
     })
   },
   mounted() {
-    this.open(this.$route.params.id)
+    this.openEditCompanyUser(this.$route.params.id)
   },
   methods: {
     ...mapActions({
-      open: 'users/openEditAccount',
-      updateCompanyUserAccount: 'users/updateCompanyUserAccount'
+      openEditCompanyUser: 'users/openEditCompanyUser',
+      updateCompanyUserAccount: 'users/updateCompanyUserAccount',
+      updateCompanyUserInformation: 'users/updateCompanyUserInformation'
     }),
     submitAccount(data) {
-      console.log(data)
       this.updateCompanyUserAccount(data)
+    },
+    submitInformation(data) {
+      console.log(data)
+      
+      this.updateCompanyUserInformation(data)
     }
   }
 }

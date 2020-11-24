@@ -72,6 +72,7 @@ router.beforeEach((to, from, next) => {
 
 store.commit('app/resetToast', { root: true })
 store.commit('customers/CLEAR_ERROR', { root: true })
+store.commit('users/CLEAR_ERROR', { root: true })
 
 // Set this to false to prevent the production tip on Vue startup.
 Vue.config.productionTip = false

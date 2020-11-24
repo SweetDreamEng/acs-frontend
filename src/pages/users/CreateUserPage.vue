@@ -5,34 +5,192 @@
         <div class="display-1">Add New User</div>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
-      <v-spacer></v-spacer>
-      <v-btn icon @click>
-        <v-icon>mdi-refresh</v-icon>
-      </v-btn>
     </div>
 
     <v-tabs v-model="tab" :show-arrows="false" background-color="transparent">
-      <v-tab to="#tabs-account">Account</v-tab>
-      <v-tab to="#tabs-information">Information</v-tab>
+      <v-tab>Account</v-tab>
+      <v-tab>Information</v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="tab">
-      <v-tab-item value="tabs-account">
-        <account-tab
-          :roles="roles"
-          :locations="locations"
-          :zones="zones"
-          :button_loading="button_loading"
-          @submit="submit"
-        >
-        </account-tab>
-      </v-tab-item>
+    <v-tabs-items>
+      <v-card class="my-2" v-show="tab === 0">
+        <v-card-title>Basic Information</v-card-title>
+        <v-card-text>
+          <div class="d-flex flex-column flex-sm-row">
+            <div>
+              <v-avatar
+                v-if="user.name"
+                color="primary"
+                size="68"
+              >
+                <span class="white--text headline">{{ user.name | initials }}</span>
+              </v-avatar>
+            </div>
+            <v-form
+              ref="accountForm"
+              v-model="isAccountFormValid"
+              lazy-validation
+              class="flex-grow-1 pt-2 pa-sm-2"
+              @submit.prevent="save"
+            >
+              <v-text-field
+                v-model="user.name"
+                label="Display name"
+                placeholder="name"
+                :rules="[rules.required]"
+                @input="clearError"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="user.email"
+                label="Email"
+                placeholder="Email"
+                :rules="[rules.required, rules.emailFormat]"
+                @input="clearError"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-select
+                :items="roles"
+                v-model="user.role"
+                label="Role"
+                placeholder="Role"
+                item-value="id"
+                item-text="name"
+                :rules="[rules.required]"
+                @input="clearError"
+                outlined
+                dense
+              >
+              </v-select>
+              
+              <div
+                v-for="(location, i) in locations"
+                :key="i"
+              >
+                <v-checkbox
+                  v-model="selectedLocations"
+                  :value="location.id"
+                  :label="location.location"
+                  class="shrink mr-2 mt-0"
+                ></v-checkbox>
+                <div
+                  v-if="selectedLocations.includes(location.id)"
+                  class="d-flex flex-wrap px-2"
+                >
+                  <v-checkbox
+                    v-for="(zone, j) in zonesOfLocation(location.id)"
+                    :key="j"
+                    v-model="selectedZones"
+                    :value="zone.id"
+                    :label="zone.name"
+                    class="shrink mr-2 mt-0"
+                  ></v-checkbox>
+                </div>
+              </div>
 
-      <v-tab-item value="tabs-information">
-        <information-tab
-        >
-        </information-tab>
-      </v-tab-item>
+              <error-component :error="errorMessages"></error-component>
+
+              <div class="mt-2">
+                <v-btn
+                  color="primary"
+                  @click="submit"
+                  :loading="button_loading"
+                  :disabled="button_loading"
+                >Save</v-btn>
+              </div>
+            </v-form>
+          </div>
+        </v-card-text>
+      </v-card>
+
+      <v-card class="my-2" v-show="tab === 1">
+        <v-card-title>User Information</v-card-title>
+        <v-card-text>
+          <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation>
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="user.address_1"
+                  label="Address Line 1"
+                  :rules="[rules.required]"
+                  outlined
+                  dense
+                >
+                </v-text-field>
+                <v-text-field
+                  v-model="user.address_2"
+                  label="Address Line 2"
+                  :rules="[rules.required]"
+                  outlined
+                  dense
+                >
+                </v-text-field>
+                <v-select
+                  v-model="user.state"
+                  label="State"
+                  :items="states"
+                  :rules="[rules.required]"
+                  outlined
+                  dense
+                  @change="onStateChange"
+                >
+                </v-select>
+                <v-combobox
+                  v-model="user.city"
+                  :items="cities"
+                  label="City"
+                  item-text="city"
+                  :return-object="false"
+                  :rules="[rules.required]"
+                  :disabled="!user.state"
+                  outlined
+                  dense
+                ></v-combobox>
+                <v-text-field
+                  :value="zipCode"
+                  label="Zip Code"
+                  :rules="[rules.required]"
+                  :disabled="!user.state || !user.city"
+                  outlined
+                  dense
+                  readonly
+                >
+                </v-text-field>
+                <v-text-field
+                  v-model="user.country"
+                  label="Country"
+                  :rules="[rules.required]"
+                  outlined
+                  dense
+                >
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="user.phone"
+                  label="Phone"
+                  placeholder="123-456-7890"
+                  outlined
+                  dense
+                  v-mask="'###-###-####'"
+                  :rules="[rules.required, rules.phoneFormat]"
+                >
+                </v-text-field>
+              </v-col>
+            </v-row>
+
+            <div class="d-flex">
+              <v-spacer></v-spacer>
+              <v-btn color="primary" @click="onBack">Back</v-btn>
+            </div>
+          </v-form>
+        </v-card-text>
+      </v-card>
     </v-tabs-items>
   </div>
 </template>
@@ -47,19 +205,18 @@
 | Create a new user
 */
 
-import AccountTab from './AddUser/AccountTab'
-import InformationTab from './AddUser/InformationTab'
+import states from '../../services/data/states'
+import ErrorComponent from '../../components/common/ErrorComponent'
 
 import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    AccountTab,
-    InformationTab
+    ErrorComponent
   },
   data() {
     return {
-      tab: null,
+      tab: 0,
       breadcrumbs: [
         {
           text: 'Users',
@@ -69,27 +226,87 @@ export default {
         {
           text: 'Add New User'
         }
-      ]
+      ],
+
+      states,
+
+      user: {
+        name: '',
+        email: '',
+        role: '',
+        address_1: '',
+        address_2: '',
+        state: '',
+        city: '',
+        country: '',
+        phone: ''
+      },
+
+      isAccountFormValid: true,
+      isProfileFormValid: true,
+
+      selectedLocations: [],
+      selectedZones: [],
+
+      rules: {
+        required: (value) => (value && Boolean(value)) || 'Required',
+        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid',
+        phoneFormat: (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
+      }
     }
   },
   computed: {
     ...mapState({
       button_loading: (state) => state.users.button_loading,
       roles: (state) => state.roles.data,
+      cities: (state) => state.cities.data,
       locations: (state) => state.locations.data,
-      zones: (state) => state.zones.data
-    })
+      zones: (state) => state.zones.data,
+      errorMessages: (state) => state.users.error
+    }),
+    zipCode() {
+      const _zip = this.cities.find((city) => city.city === this.user.city)
+
+      return _zip ? _zip.zip : ''
+    }
   },
   mounted() {
     this.open()
   },
   methods: {
     ...mapActions({
-      open: 'users/openCreateAccount',
-      addCompanyUser: 'users/addCompanyUser'
+      open: 'users/initCreateAccount',
+      addCompanyUser: 'users/addCompanyUser',
+      getCities: 'customers/getCities',
+      clearError: 'users/clearError'
     }),
-    submit(data) {
-      this.addCompanyUser(data)
+    submit() {
+      if (this.$refs.accountForm.validate()) {
+        if (this.$refs.profileForm.validate()) {
+          const data = Object.assign(this.user, {
+            zip: this.zipCode,
+            locations: this.selectedLocations,
+            zones: this.selectedZones
+          })
+          
+          console.log(data)
+
+          this.addCompanyUser(data)
+        } else {
+          this.tab = 1
+        }
+      }
+    },
+    zonesOfLocation(location_id) {
+      return this.zones.filter((zone) => zone.location_id === location_id)
+    },
+    onBack() {
+      if (this.$refs.profileForm.validate()) {
+        this.tab = 0
+      }
+    },
+    onStateChange() {
+      this.getCities(this.user.state)
     }
   }
 }

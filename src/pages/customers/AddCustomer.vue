@@ -191,6 +191,7 @@ export default {
       
       states,
 
+      // need change(remove single quote)
       customer: {
         'companyName': '',
         'administratorName': '',
