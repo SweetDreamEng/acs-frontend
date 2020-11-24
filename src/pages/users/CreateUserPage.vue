@@ -121,14 +121,6 @@
                   dense
                 >
                 </v-text-field>
-                <v-text-field
-                  v-model="user.address_2"
-                  label="Address Line 2"
-                  :rules="[rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
                 <v-select
                   v-model="user.state"
                   label="State"
@@ -235,10 +227,9 @@ export default {
         email: '',
         role: '',
         address_1: '',
-        address_2: '',
         state: '',
         city: '',
-        country: '',
+        country: 'US',
         phone: ''
       },
 

@@ -1,3 +1,5 @@
+import machineAPI from '@/services/api/machine'
+
 const module = {
   namespaced: true,
   state: {
@@ -194,7 +196,9 @@ const module = {
       }
     ],
     machines: [],
-    selectedId: 0
+    selectedId: 0,
+
+    selectedCompany: null
   },
 
   actions: {
@@ -212,6 +216,26 @@ const module = {
       commit
     }, note) {
       commit('addProductNote', note)
+    },
+    initAcsDashboard({
+      commit, state
+    }) {
+      machineAPI.initAcsDashboard()
+        .then((response) => {
+          commit('customers/SET_COMPANIES', response.data.companies, { root: true })
+          if (!state.selectedCompany)
+            commit('SET_SELECTED_COMPANY', response.data.companies[0])
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+        })
+    },
+    changeSelectedCompany({
+      commit
+    }, company) {
+      commit('SET_SELECTED_COMPANY', company)
     }
   },
 
@@ -240,6 +264,9 @@ const module = {
     },
     SET_MACHINES(state, machines) {
       state.machines = machines
+    },
+    SET_SELECTED_COMPANY(state, company) {
+      state.selectedCompany = company
     }
   },
 

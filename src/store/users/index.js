@@ -1,4 +1,5 @@
 import userAPI from '@/services/api/user'
+import router from '../../router'
 
 const module = {
   namespaced: true,
@@ -77,6 +78,9 @@ const module = {
       userAPI.addCompanyUser(data)
         .then((response) => {
           dispatch('app/showSuccess', response.data, { root: true })
+          router.push({
+            name: 'users-list'
+          })
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -99,6 +103,9 @@ const module = {
       userAPI.updateCompanyUserAccount(data)
         .then((response) => {
           dispatch('app/showSuccess', response.data, { root: true })
+          router.push({
+            name: 'users-list'
+          })
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -121,6 +128,9 @@ const module = {
       userAPI.updateCompanyUserInformation(data)
         .then((response) => {
           dispatch('app/showSuccess', response.data, { root: true })
+          router.push({
+            name: 'users-list'
+          })
         })
         .catch((error) => {
           if (error.response.status === 422) {

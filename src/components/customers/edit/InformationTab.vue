@@ -8,15 +8,7 @@
             <v-col cols="12" md="6">
               <v-text-field
                 v-model="customerProfile.address_1"
-                label="Address Line 1"
-                :rules="[rules.required]"
-                outlined
-                dense
-              >
-              </v-text-field>
-              <v-text-field
-                v-model="customerProfile.address_2"
-                label="Address Line 2"
+                label="Address"
                 :rules="[rules.required]"
                 outlined
                 dense

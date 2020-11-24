@@ -5,8 +5,8 @@
     outlined
     type="error"
     class="text-left"
+    v-html="error"
   >
-    {{ error }}
   </v-alert>
 </template>
 

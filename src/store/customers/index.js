@@ -45,11 +45,17 @@ const module = {
       })
         .catch((error) => {
           if (error.response.status === 422) {
-            const errors = Object.values(error.response.data.error).flat()
+            if (error.response.data.error.administrator_email) {
+              commit('SET_ERROR', {
+                'error': `Customer administrator for company <i>${data.companyName}</i> already exists`
+              })
+            } else {
+              const errors = Object.values(error.response.data.error).flat()
 
-            commit('SET_ERROR', {
-              'error': errors[0]
-            })
+              commit('SET_ERROR', {
+                'error': errors[0]
+              })
+            }
           }
         })
         .finally(() => {
@@ -75,14 +81,23 @@ const module = {
       commit('BUTTON_LOAD')
       companyAPI.updateAccount(account).then((response) => {
         dispatch('app/showSuccess', response.data, { root: true })
+        router.push({
+          name: 'customers-list'
+        })
       })
         .catch((error) => {
           if (error.response.status === 422) {
-            const errors = Object.values(error.response.data.error).flat()
+            if (error.response.data.error.administrator_email) {
+              commit('SET_ERROR', {
+                'error': `Customer administrator for company <i>${account.companyName}</i> already exists`
+              })
+            } else {
+              const errors = Object.values(error.response.data.error).flat()
 
-            commit('SET_ERROR', {
-              'error': errors[0]
-            })
+              commit('SET_ERROR', {
+                'error': errors[0]
+              })
+            }
           }
         })
         .finally(() => {
@@ -95,6 +110,9 @@ const module = {
       commit('BUTTON_LOAD')
       companyAPI.updateProfile(data).then((response) => {
         dispatch('app/showSuccess', response.data, { root: true })
+        router.push({
+          name: 'customers-list'
+        })
       })
         .finally(() => {
           commit('BUTTON_CLEAR')

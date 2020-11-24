@@ -27,7 +27,7 @@
                   v-model="customer.companyName"
                   :items="companies"
                   label="Company"
-                  placeholder="Ex: Acme Inc"
+                  placeholder="Type in new company name or choose from existing for ex: Acme Inc"
                   item-text="name"
                   :return-object="false"
                   :rules="[rules.required]"
@@ -79,15 +79,7 @@
               <v-col cols="12" md="6">
                 <v-text-field
                   v-model="customer.address_1"
-                  label="Address Line 1"
-                  :rules="[rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="customer.address_2"
-                  label="Address Line 2"
+                  label="Address"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -199,10 +191,9 @@ export default {
         'administratorName': '',
         'administratorEmail': '',
         'address_1': '',
-        'address_2': '',
         'state': '',
         'city': '',
-        'country': '',
+        'country': 'US',
         'phone': ''
       },
       
