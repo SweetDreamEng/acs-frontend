@@ -21,12 +21,11 @@ const module = {
     },
     addCustomer({
       commit, dispatch
-    }, {
-      companyName, administratorName, administratorEmail
-    }) {
+    }, data) {
       commit('BUTTON_LOAD')
-      companyAPI.addCustomer(companyName, administratorName, administratorEmail).then((response) => {
-        // dispatch('app/showSuccess', response.data, { root: true })
+
+      companyAPI.addCustomer(data).then((response) => {
+        dispatch('app/showSuccess', response.data, { root: true })
       })
         .catch((error) => {
           console.log(error.response.data)
@@ -51,7 +50,7 @@ const module = {
     }, account) {
       commit('BUTTON_LOAD')
       companyAPI.updateAccount(account).then((response) => {
-        // dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response.data, { root: true })
       })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -71,7 +70,7 @@ const module = {
     }, data) {
       commit('BUTTON_LOAD')
       companyAPI.updateProfile(data).then((response) => {
-        // dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response.data, { root: true })
       })
         .finally(() => {
           commit('BUTTON_CLEAR')

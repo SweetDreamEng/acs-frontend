@@ -5,12 +5,13 @@ export default {
       return response
     })
   },
-  addCustomer(companyName, administratorName, administratorEmail) {
-    const data = {
-      company_name: companyName,
-      administrator_name: administratorName,
-      administrator_email: administratorEmail
-    }
+  addCustomer(data) {
+
+    Object.assign(data, {
+      company_name: data.companyName,
+      administrator_name: data.administratorName,
+      administrator_email: data.administratorEmail
+    })
 
     return axios.post('/customers/add', data).then((response) => {
       return response

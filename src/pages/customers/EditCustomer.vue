@@ -72,6 +72,9 @@ export default {
     // get customer information on mounted
     this.open()
   },
+  destoryed() {
+
+  },
   methods: {
     ...mapActions({
       getCustomer: 'customers/getCustomer'

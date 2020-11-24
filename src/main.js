@@ -70,6 +70,8 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+store.commit('app/resetToast', { root: true })
+
 // Set this to false to prevent the production tip on Vue startup.
 Vue.config.productionTip = false
 
