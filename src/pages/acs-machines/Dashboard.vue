@@ -132,7 +132,7 @@ export default {
       machines: (state) => state.machines.data,
       locations: (state) => state.locations.data,
       companies: (state) => state.customers.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany.name
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
     breadcrumbItems() {
       return [

@@ -116,7 +116,7 @@ export default {
     ...mapState({
       machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany.name
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
     machinesForZone() {
       return this.machines.filter((machine) => {

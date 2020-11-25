@@ -133,7 +133,7 @@ export default {
       machines: (state) => state.machines.data,
       zones: (state) => state.zones.data,
       companies: (state) => state.customers.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany.name
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
     machinesForLocation() {
       return this.machines.filter((machine) => {
