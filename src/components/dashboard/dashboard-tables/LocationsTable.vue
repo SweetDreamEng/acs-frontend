@@ -22,7 +22,6 @@
               width="160"
               :options="utilizationChartOptions"
               :series="utilizationSeries"
-              class="mb-n4"
             >
             </apexchart>
             {{ item.utilization }}

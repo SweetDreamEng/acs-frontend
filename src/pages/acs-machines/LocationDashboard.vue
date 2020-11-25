@@ -131,7 +131,6 @@ export default {
   computed: {
     ...mapState({
       machines: (state) => state.machines.data,
-      zones: (state) => state.zones.data,
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),

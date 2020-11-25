@@ -102,14 +102,10 @@ const module = {
     }) {
       commit('BUTTON_LOAD')
       authAPI.updatePassword(currentPassword, newPassword).then((response) => {
-        // dispatch('app/showSuccess', response.data.message, { root: true })
+        dispatch('app/showSuccess', response.data.message, { root: true })
       })
         .catch((error) => {
-          if (error.response.status === 401) {
-            commit('SET_ERROR', {
-              'error': 'Email and password incorrect.'
-            })
-          } else if (error.response.status === 400) {
+          if (error.response.status === 400) {
             commit('SET_ERROR', {
               'error': error.response.data.error
             })

@@ -9,15 +9,11 @@
           <v-card-text>
             <v-tabs v-model="tab">
               <v-tab>Personal Info</v-tab>
-              <v-tab>Avatar</v-tab>
               <v-tab>Password</v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab" class="my-2">
               <v-tab-item>
                 <personal-info></personal-info>
-              </v-tab-item>
-              <v-tab-item>
-                b
               </v-tab-item>
               <v-tab-item>
                 <password-reset></password-reset>
