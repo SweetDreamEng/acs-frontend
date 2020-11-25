@@ -184,7 +184,7 @@ export default {
     locationName(location_id) {
       const _location = this.locations.find((location) => location.id === location_id)
 
-      return _location ? _location.location : 'Not Assinged'
+      return _location ? _location.name : 'Not Assinged'
     },
     saveZone() {
       if (this.$refs.editZoneForm.validate()) {
