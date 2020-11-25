@@ -38,7 +38,7 @@
                   v-model="editedZone.location_id"
                   :items="extendedLocations"
                   label="Choose Location"
-                  item-text="location"
+                  item-text="name"
                   item-value="id"
                   outlined
                   dense

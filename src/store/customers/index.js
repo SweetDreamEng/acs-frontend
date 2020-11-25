@@ -130,12 +130,18 @@ const module = {
     getCities({
       commit, dispatch
     }, state) {
-      cityAPI.getCities(state).then((response) => {
-        commit('cities/SET_DATA', response.data, { root: true })
-      })
-        .finally(() => {
-          // commit('BUTTON_CLEAR')
+      return new Promise((resolve, reject) => {
+        cityAPI.getCities(state).then((response) => {
+          commit('cities/SET_DATA', response.data, { root: true })
+          resolve(response)
         })
+          .catch((error) => {
+            reject(error)
+          })
+          .finally(() => {
+            // commit('BUTTON_CLEAR')
+          })
+      })
     },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
