@@ -72,7 +72,7 @@
                 <v-checkbox
                   v-model="selectedLocations"
                   :value="location.id"
-                  :label="location.location"
+                  :label="location.name"
                   class="shrink mr-2 mt-0"
                 ></v-checkbox>
                 <div
