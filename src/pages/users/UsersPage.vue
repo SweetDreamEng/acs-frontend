@@ -67,6 +67,7 @@
         :items="users"
         :search="searchQuery"
         class="flex-grow-1"
+        :loading="isUsersTableLoading"
       >
         <template v-slot:item.id="{ item }">
           <div class="font-weight-bold"># <copy-label :text="item.id + ''" /></div>
@@ -152,7 +153,8 @@ export default {
   },
   computed: {
     ...mapState({
-      users: (state) => state.users.data
+      users: (state) => state.users.data,
+      isUsersTableLoading: (state) => state.users.isUsersTableLoading
     })
   },
   watch: {
@@ -161,16 +163,13 @@ export default {
     }
   },
   mounted() {
-    this.open()
+    this.getCompanyUsers()
   },
   methods: {
     ...mapActions({
       getCompanyUsers: 'users/getCompanyUsers'
     }),
     searchUser() {},
-    open() {
-      this.getCompanyUsers()
-    },
     roleColor(role) {
       if (role.key === 'customer_admin') return '#4CAF50'
       else if (role.key === 'customer_manager') return '#F79803'

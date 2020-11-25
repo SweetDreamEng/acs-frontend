@@ -13,7 +13,7 @@
     </v-tabs>
 
     <v-tabs-items>
-      <v-card class="my-2" v-show="tab === 0">
+      <v-card v-show="tab === 0" class="my-2">
         <v-card-title>Basic Information</v-card-title>
         <v-card-text>
           <div class="d-flex flex-column flex-sm-row">
@@ -38,9 +38,9 @@
                 label="Display name"
                 placeholder="name"
                 :rules="[rules.required]"
-                @input="clearError"
                 outlined
                 dense
+                @input="clearError"
               >
               </v-text-field>
               <v-text-field
@@ -48,22 +48,22 @@
                 label="Email"
                 placeholder="Email"
                 :rules="[rules.required, rules.emailFormat]"
-                @input="clearError"
                 outlined
                 dense
+                @input="clearError"
               >
               </v-text-field>
               <v-select
-                :items="roles"
                 v-model="user.role"
+                :items="roles"
                 label="Role"
                 placeholder="Role"
                 item-value="id"
                 item-text="name"
                 :rules="[rules.required]"
-                @input="clearError"
                 outlined
                 dense
+                @input="clearError"
               >
               </v-select>
               
@@ -97,9 +97,9 @@
               <div class="mt-2">
                 <v-btn
                   color="primary"
-                  @click="submit"
                   :loading="button_loading"
                   :disabled="button_loading"
+                  @click="submit"
                 >Save</v-btn>
               </div>
             </v-form>
@@ -107,7 +107,7 @@
         </v-card-text>
       </v-card>
 
-      <v-card class="my-2" v-show="tab === 1">
+      <v-card v-show="tab === 1" class="my-2">
         <v-card-title>User Information</v-card-title>
         <v-card-text>
           <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation>
@@ -115,7 +115,7 @@
               <v-col cols="12" md="6">
                 <v-text-field
                   v-model="user.address_1"
-                  label="Address Line 1"
+                  label="Address"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -165,11 +165,11 @@
               <v-col cols="12" md="6">
                 <v-text-field
                   v-model="user.phone"
+                  v-mask="'###-###-####'"
                   label="Phone"
                   placeholder="123-456-7890"
                   outlined
                   dense
-                  v-mask="'###-###-####'"
                   :rules="[rules.required, rules.phoneFormat]"
                 >
                 </v-text-field>

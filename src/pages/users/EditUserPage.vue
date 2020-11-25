@@ -55,8 +55,8 @@
       <v-tab-item value="tabs-information">
         <information-tab
           :user="user"
-          @submit="submitInformation"
           :button_loading="button_loading"
+          @submit="submitInformation"
         >
         </information-tab>
       </v-tab-item>

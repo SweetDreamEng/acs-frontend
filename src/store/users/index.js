@@ -10,7 +10,7 @@ const module = {
     
     error: null,
 
-    table_loading: false,
+    isUsersTableLoading: false,
     button_loading: false
   },
 
@@ -164,10 +164,10 @@ const module = {
       state.error = null
     },
     TABLE_LOAD(state) {
-      state.table_loading = true
+      state.isUsersTableLoading = true
     },
     TABLE_LOADED(state) {
-      state.table_loading = false
+      state.isUsersTableLoading = false
     },
     BUTTON_LOAD(state) {
       state.button_loading = true

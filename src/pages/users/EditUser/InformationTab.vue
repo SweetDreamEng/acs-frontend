@@ -13,7 +13,7 @@
           <v-col cols="12" md="6">
             <v-text-field
               v-model="user.address_1"
-              label="Address Line 1"
+              label="Address"
               :rules="[rules.required]"
               outlined
               dense

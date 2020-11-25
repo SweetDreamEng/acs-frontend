@@ -6,7 +6,10 @@ const module = {
   namespaced: true,
   state: {
     button_loading: false,                    // loading status
+    isTableLoading: false,
+
     error: null,
+    
     data: [],                                 // companies
     customerAdmins: [],
     companies: [],
@@ -26,10 +29,16 @@ const module = {
     getCustomers({
       commit
     }) {
+      commit('TABLE_LOAD')
       companyAPI.getCustomers().then((response) => {
-        // commit('SET_CUSTOMERS', response.data.customer_admins)
         commit('SET_CUSTOMER_ADMINS', response.data.customer_admins)
       })
+        .catch(() => {
+
+        })
+        .finally(() => {
+          commit('TABLE_LOADED')
+        })
     },
     addCustomer({
       commit, dispatch
@@ -148,6 +157,14 @@ const module = {
 
     BUTTON_CLEAR(state) {
       state.button_loading = false
+    },
+
+    TABLE_LOAD(state) {
+      state.isTableLoading = true
+    },
+
+    TABLE_LOADED(state) {
+      state.isTableLoading = false
     },
 
     SET_CUSTOMERS(state, customers) {

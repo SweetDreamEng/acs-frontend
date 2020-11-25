@@ -36,9 +36,9 @@
                 label="Display name"
                 :rules="[rules.required]"
                 placeholder="name"
-                @input="clearError"
                 outlined
                 dense
+                @input="clearError"
               >
               </v-text-field>
               <v-text-field
@@ -46,22 +46,22 @@
                 label="Email"
                 :rules="[rules.required, rules.emailFormat]"
                 placeholder="Email"
-                @input="clearError"
                 outlined
                 dense
+                @input="clearError"
               >
-                </v-text-field>
+              </v-text-field>
               <v-select
-                :items="roles"
                 v-model="user.role"
+                :items="roles"
                 label="Role"
                 placeholder="Role"
                 item-value="id"
                 item-text="name"
                 :rules="[rules.required]"
-                @input="clearError"
                 outlined
                 dense
+                @input="clearError"
               >
               </v-select>
 
@@ -94,9 +94,9 @@
 
               <v-btn
                 color="primary"
-                @click="save"
                 :loading="button_loading"
                 :disabled="button_loading"
+                @click="save"
               >Save</v-btn>
             </v-form>
           </div>

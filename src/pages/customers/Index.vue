@@ -18,6 +18,7 @@
         :search="searchQuery"
         class="flex-grow-1"
         hide-default-footer
+        :loading="isTableLoading"
       >
         <!--         <template v-slot:item.id="{ item }">
           <div># {{ item.id }}</div>
@@ -77,7 +78,8 @@ export default {
   },
   computed: {
     ...mapState({
-      customerAdmins: (state) => state.customers.customerAdmins
+      customerAdmins: (state) => state.customers.customerAdmins,
+      isTableLoading: (state) => state.customers.isTableLoading
     })
   },
   watch: {
