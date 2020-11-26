@@ -4,7 +4,7 @@
       <div class="flex-grow-1 pt-2 pa-sm-2">
         <v-form ref="accountForm" v-model="isAccountValidForm" lazy-validation @submit.prevent="submit">
           <v-text-field
-            v-model="accountForm.loc_email"
+            v-model="user.email"
             :rules="[$rules.required]"
             label="Email"
             outlined
@@ -13,7 +13,7 @@
             @input="resetErrors"
           ></v-text-field>
           <v-text-field
-            v-model="accountForm.loc_name"
+            v-model="user.username"
             :rules="[$rules.required]"
             label="Full name"
             outlined
@@ -24,7 +24,7 @@
           <error-component :error="error"></error-component>
 
           <div class="mt-2">
-            <v-btn type="submit" color="primary" :loading="isLoading">Save</v-btn>
+            <v-btn type="submit" color="primary" :loading="isBtnLoading">Save</v-btn>
           </div>
         </v-form>
       </div>
@@ -38,45 +38,33 @@ export default {
   components: {
     ErrorComponent
   },
-  data() {
-    return {
-      isAccountValidForm: true,
-
-      accountForm: {
-        loc_email: '',
-        loc_name: ''
-      }
+  props: {
+    isBtnLoading: {
+      type: Boolean,
+      default: false
+    },
+    error: {
+      type: String,
+      default: ''
+    },
+    user: {
+      type: Object,
+      default: () => ({})
     }
   },
-  computed: {
-    ...mapState({
-      isLoading: (state) => state.auth.button_loading,
-      error: (state) => state.auth.error,
-      user: (state) => state.auth.user
-    })
-  },
-  created() {
-
-  },
-  mounted() {
-    this.accountForm.loc_email = this.user.email
-    this.accountForm.loc_name = this.user.username
-  },
-  destroyed() {
-    this.resetErrors()
+  data() {
+    return {
+      isAccountValidForm: true
+    }
   },
   methods: {
-    ...mapActions({
-      updatePassword: 'auth/updatePassword',
-      clearError: 'auth/clearError'
-    }),
     submit() {
       if (this.$refs.accountForm.validate()) {
-        // this.updatePassword(this.accountForm)
+        console.log(this.user)
       }
     },
     resetErrors() {
-      this.clearError()
+      this.$emit('clearError')
     }
   }
 }

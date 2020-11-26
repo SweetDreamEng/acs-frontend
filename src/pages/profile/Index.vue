@@ -13,7 +13,13 @@
             </v-tabs>
             <v-tabs-items v-model="tab" class="my-2">
               <v-tab-item>
-                <personal-info></personal-info>
+                <personal-info
+                  :is-btn-loading="isBtnLoading"
+                  :user="user"
+                  :error="error"
+                  @clearError="clearError"
+                >
+                </personal-info>
               </v-tab-item>
               <v-tab-item>
                 <password-reset
