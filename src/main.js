@@ -66,6 +66,26 @@ router.beforeEach((to, from, next) => {
 
       return next()
     })
+  } else if (to.matched.some((record) => record.meta.acsAdmin)) {
+    return Vue.auth.check('acs_admin').then((response) => {
+      if (!response) {
+        return next({
+          name: 'auth-signin'
+        })
+      }
+
+      return next()
+    })
+  } else if (to.matched.some((record) => record.meta.customerAdmin)) {
+    return Vue.auth.check('customer_admin').then((response) => {
+      if (!response) {
+        return next({
+          name: 'auth-signin'
+        })
+      }
+
+      return next()
+    })
   } else {
     return next()
   }

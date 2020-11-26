@@ -18,7 +18,7 @@ export const routes = [{
   component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/dashboard/DashboardPage.vue'),
   meta: {
     layout: 'dashboard',
-    userAuth: true
+    customerAdmin: true
   }
 }, {
   path: '/dashboard/product/:id',
@@ -33,7 +33,7 @@ export const routes = [{
   component: () => import(/* webpackChunkName: "location-dashboard" */ '@/pages/dashboard/LocationDashboard.vue'),
   meta: {
     layout: 'dashboard',
-    userAuth: true
+    customerAdmin: true
   }
 }, {
   path: '/dashboard/:location/:zone',
@@ -41,7 +41,7 @@ export const routes = [{
   component: () => import(/* webpackChunkName: "zone-dashboard" */ '@/pages/dashboard/ZoneDashboard.vue'),
   meta: {
     layout: 'dashboard',
-    userAuth: true
+    customerAdmin: true
   }
 },
 ...ACSMachines,

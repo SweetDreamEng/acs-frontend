@@ -103,20 +103,20 @@ export default [{
   name: 'machine-mapping',
   component: () => import(/* webpackChunkName: "machine-mapping" */ '@/pages/machine-mapping/index.vue'),
   meta: {
-    userAuth: true
+    customerAdmin: true
   }
 }, {
   path: '/customer-assign',
   name: 'customer-assign',
   component: () => import(/* webpackChunkName: "customer-assign" */ '@/pages/machine-mapping/CustomerAssign.vue'),
   meta: {
-    userAuth: true
+    acsAdmin: true
   }
 }, {
   path: '/locations-zones',
   name: 'locations-zones',
   component: () => import(/* webpackChunkName: "locations-zones" */ '@/pages/locations-zones/LocationsZones.vue'),
   meta: {
-    userAuth: true
+    customerAdmin: true
   }
 }]

@@ -14,9 +14,9 @@
                 item-text="name"
                 :return-object="false"
                 :rules="[$rules.required]"
-                @input="resetErrors"
                 outlined
                 dense
+                @input="resetErrors"
               ></v-combobox>
               <v-text-field
                 v-model="customerAccount.name"

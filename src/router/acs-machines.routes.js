@@ -5,7 +5,7 @@ export default [
     component: () => import(/* webpackChunkName: "acs-machines" */ '@/pages/acs-machines/Dashboard.vue'),
     meta: {
     	layout: 'dashboard',
-      userAuth: true
+      acsAdmin: true
     }
   }, {
     path: '/acs-machines/:location',
@@ -13,7 +13,7 @@ export default [
     component: () => import(/* webpackChunkName: "location-acs-dashboard" */ '@/pages/acs-machines/LocationDashboard.vue'),
     meta: {
       layout: 'dashboard',
-      userAuth: true
+      acsAdmin: true
     }
   }, {
     path: '/acs-machines/:location/:zone',
@@ -21,7 +21,7 @@ export default [
     component: () => import(/* webpackChunkName: "zone-acs-dashboard" */ '@/pages/acs-machines/ZoneDashboard.vue'),
     meta: {
       layout: 'dashboard',
-      userAuth: true
+      acsAdmin: true
     }
   }
 ]
