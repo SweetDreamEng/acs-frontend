@@ -76,6 +76,7 @@
                   :value="location.id"
                   :label="location.name"
                   class="shrink mr-2 mt-0"
+                  hide-details
                 ></v-checkbox>
                 <div
                   v-if="selectedLocations.includes(location.id)"

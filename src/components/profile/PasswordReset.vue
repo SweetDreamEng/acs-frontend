@@ -59,21 +59,14 @@ export default {
       }
     }
   },
-  destroyed() {
-    this.resetErrors()
-  },
   methods: {
-    ...mapActions({
-      updatePassword: 'auth/updatePassword',
-      clearError: 'auth/clearError'
-    }),
     submit() {
       if (this.$refs.passwordForm.validate()) {
-        this.updatePassword(this.passwordForm)
+        this.$emit('submit', this.passwordForm)
       }
     },
     resetErrors() {
-      this.clearError()
+      this.$emit('clearError')
     }
   }
 }

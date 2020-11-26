@@ -19,7 +19,8 @@
                 <password-reset
                   :is-btn-loading="isBtnLoading"
                   :error="error"
-                  @submit="">
+                  @submit="submitPassword"
+                  @clearError="clearError">
                 </password-reset>
               </v-tab-item>
             </v-tabs-items>
@@ -34,7 +35,7 @@ import PersonalInfo from '../../components/profile/PersonalInfo'
 import PasswordReset from '../../components/profile/PasswordReset'
 import Overview from '../../components/profile/Overview'
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -53,6 +54,15 @@ export default {
       user: (state) => state.auth.user,
       error: (state) => state.auth.error
     })
+  },
+  methods: {
+    ...mapActions({
+      updatePassword: 'auth/updatePassword',
+      clearError: 'auth/clearError'
+    }),
+    submitPassword(data) {
+      this.updatePassword(data)
+    }
   }
 }
 </script>

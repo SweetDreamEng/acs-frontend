@@ -74,6 +74,7 @@
                   :value="location.id"
                   :label="location.name"
                   class="shrink mr-2 mt-0"
+                  hide-details
                 ></v-checkbox>
                 <div
                   v-if="selectedLocations.includes(location.id)"
@@ -101,12 +102,14 @@
 
               <error-component :error="errorMessages"></error-component>
 
-              <v-btn
-                color="primary"
-                :loading="button_loading"
-                :disabled="button_loading"
-                @click="save"
-              >Save</v-btn>
+              <div class="mt-2">
+                <v-btn
+                  color="primary"
+                  :loading="button_loading"
+                  :disabled="button_loading"
+                  @click="save"
+                >Save</v-btn>
+              </div>
             </v-form>
           </div>
         </v-card-text>
