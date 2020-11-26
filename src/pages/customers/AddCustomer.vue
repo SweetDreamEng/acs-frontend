@@ -30,14 +30,14 @@
                   placeholder="Type in new company name or choose from existing for ex: Acme Inc"
                   item-text="name"
                   :return-object="false"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   @input="clearError"
                   outlined
                   dense
                 ></v-combobox>
                 <v-text-field
                   v-model="customer.administratorName"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   :validate-on-blur="false"
                   label="Administrator Name"
                   placeholder="Jane Doe"
@@ -47,7 +47,7 @@
                 ></v-text-field>
                 <v-text-field
                   v-model="customer.administratorEmail"
-                  :rules="[rules.required, rules.emailFormat]"
+                  :rules="[$rules.required, $rules.emailFormat]"
                   :validate-on-blur="false"
                   label="Administrator Email"
                   placeholder="jane.doe@example.com"
@@ -80,7 +80,7 @@
                 <v-text-field
                   v-model="customer.address_1"
                   label="Address"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   outlined
                   dense
                 >
@@ -89,7 +89,7 @@
                   v-model="customer.state"
                   label="State"
                   :items="states"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   outlined
                   dense
                   @change="onStateChange"
@@ -101,7 +101,7 @@
                   label="City"
                   item-text="city"
                   :return-object="false"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   :disabled="!customer.state"
                   outlined
                   dense
@@ -109,7 +109,7 @@
                 <v-text-field
                   :value="zipCode"
                   label="Zip Code"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   :disabled="!customer.state || !customer.city"
                   outlined
                   dense
@@ -118,7 +118,7 @@
                 </v-text-field>
                 <v-text-field
                   v-model="customer.country"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   label="Country"
                   outlined
                   dense
@@ -131,7 +131,7 @@
                   v-model="customer.phone"
                   v-mask="'###-###-####'"
                   placeholder="123-456-7890"
-                  :rules="[rules.required, rules.phoneFormat]"
+                  :rules="[$rules.required, $rules.phoneFormat]"
                   outlined
                   dense
                 >
@@ -198,13 +198,7 @@ export default {
       },
       
       isAccountFormValid: true,
-      isProfileFormValid: true,
-
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required',
-        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid',
-        phoneFormat: (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
-      }
+      isProfileFormValid: true
     }
   },
   computed: {
@@ -227,7 +221,7 @@ export default {
     ...mapActions({
       initAddCompany: 'customers/initAddCompany',
       addCustomer: 'customers/addCustomer',
-      getCities: 'customers/getCities',
+      getCities: 'cities/getCities',
       clearError: 'customers/clearError'
     }),
     onStateChange() {

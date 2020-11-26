@@ -27,6 +27,7 @@ import './plugins/animate'
 import './plugins/clipboard'
 import './plugins/moment'
 import './plugins/echarts'
+import './plugins/rules'
 
 // FILTERS
 import './filters/initials'

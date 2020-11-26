@@ -7,27 +7,29 @@
             color="primary"
             size="88"
           >
-            <span class="display-1 white--text">{{ username | initials }}</span>
+            <span class="display-1 white--text">{{ user.username | initials }}</span>
           </v-avatar>
         </v-avatar>
-        <h2 class="my-2 primary--text">{{ username }}</h2>
-        <div class="text-h6">{{ roleName(userRole) }}</div>
+        <h2 class="my-2 primary--text">{{ user.username }}</h2>
+        <div class="text-h6">{{ roleName(user.role) }}</div>
       </v-card-text>
     </v-card>
   </div>
 </template>
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
+  props: {
+    user: {
+      type: Object,
+      default: () => ({})
+    }
+  },
   data() {
     return {
     }
   },
   computed: {
-    ...mapState({
-      username: (state) => state.auth.user.username,
-      userRole: (state) => state.auth.user.role
-    }),
     ...mapGetters({
       roleName: 'auth/roleName'
     })

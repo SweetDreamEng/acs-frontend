@@ -109,12 +109,7 @@ export default {
 
       // form error
       error: false,
-      errorMessages: '',
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
-      }
+      errorMessages: ''
     }
   },
   methods: {

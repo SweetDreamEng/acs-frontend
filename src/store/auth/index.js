@@ -160,7 +160,7 @@ const module = {
     },
     SET_AUTH_DATA(state, user) {
       state.user.email = user.email
-      state.user.username = 'Jone Doe'
+      state.user.username = user.name
       state.user.role = user.role
     },
     SET_LOGOUT_ATUH(state) {
@@ -182,9 +182,6 @@ const module = {
   getters: {
     hasToken: (state) => {
       return state.token
-    },
-    profile: (state) => {
-      return state.user
     },
     roleName: (state) => (role_key) => {
       return state.roles.find((role) => role.key === role_key).name

@@ -64,7 +64,7 @@
               v-model="editedItem.division"
               :items="exDivisionNames"
               label="Choose Division"
-              :rules="[rules.required]"
+              :rules="[$rules.required]"
               outlined
               dense
             >
@@ -73,7 +73,7 @@
               v-model="editedItem.department"
               :items="exZoneNames"
               label="Choose Zones"
-              :rules="[rules.required]"
+              :rules="[$rules.required]"
               outlined
               dense
             >
@@ -149,12 +149,7 @@ export default {
       isEditFormValid: true,
       isNewFormValid: true,
 
-      searchQuery: '',
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required field'
-      }
+      searchQuery: ''
     }
   },
   computed: {

@@ -5,7 +5,7 @@
         <v-form ref="accountForm" v-model="isAccountValidForm" lazy-validation @submit.prevent="submit">
           <v-text-field
             v-model="accountForm.loc_email"
-            :rules="[rules.required]"
+            :rules="[$rules.required]"
             label="Email"
             outlined
             dense
@@ -14,7 +14,7 @@
           ></v-text-field>
           <v-text-field
             v-model="accountForm.loc_name"
-            :rules="[rules.required]"
+            :rules="[$rules.required]"
             label="Full name"
             outlined
             dense
@@ -45,11 +45,6 @@ export default {
       accountForm: {
         loc_email: '',
         loc_name: ''
-      },
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
       }
     }
   },

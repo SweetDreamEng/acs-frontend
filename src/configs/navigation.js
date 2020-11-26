@@ -1,5 +1,3 @@
-import menuPages from './menus/pages.menu'
-
 export default {
   // main navigation - side menu
   menu: [{

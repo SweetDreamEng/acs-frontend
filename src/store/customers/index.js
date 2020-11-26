@@ -1,5 +1,4 @@
 import companyAPI from '@/services/api/company'
-import cityAPI from '@/services/api/city'
 import router from '../../router'
 
 const module = {
@@ -126,22 +125,6 @@ const module = {
         .finally(() => {
           commit('BUTTON_CLEAR')
         })
-    },
-    getCities({
-      commit, dispatch
-    }, state) {
-      return new Promise((resolve, reject) => {
-        cityAPI.getCities(state).then((response) => {
-          commit('cities/SET_DATA', response.data, { root: true })
-          resolve(response)
-        })
-          .catch((error) => {
-            reject(error)
-          })
-          .finally(() => {
-            // commit('BUTTON_CLEAR')
-          })
-      })
     },
     clearError({ commit }) {
       commit('CLEAR_ERROR')

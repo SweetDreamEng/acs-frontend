@@ -14,7 +14,7 @@
             <v-text-field
               v-model="user.address_1"
               label="Address"
-              :rules="[rules.required]"
+              :rules="[$rules.required]"
               outlined
               dense
             >
@@ -23,7 +23,7 @@
               v-model="user.state"
               label="State"
               :items="states"
-              :rules="[rules.required]"
+              :rules="[$rules.required]"
               outlined
               dense
               @change="onStateChange"
@@ -35,7 +35,7 @@
               label="City"
               item-text="city"
               :return-object="false"
-              :rules="[rules.required]"
+              :rules="[$rules.required]"
               :disabled="!user.state"
               outlined
               dense
@@ -43,7 +43,7 @@
             <v-text-field
               :value="zipCode"
               label="Zip Code"
-              :rules="[rules.required]"
+              :rules="[$rules.required]"
               :disabled="!user.state || !user.city"
               outlined
               dense
@@ -52,7 +52,7 @@
             </v-text-field>
             <v-text-field
               v-model="user.country"
-              :rules="[rules.required]"
+              :rules="[$rules.required]"
               label="Country"
               outlined
               dense
@@ -65,7 +65,7 @@
               v-model="user.phone"
               v-mask="'###-###-####'"
               placeholder="123-456-7890"
-              :rules="[rules.required, rules.phoneFormat]"
+              :rules="[$rules.required, $rules.phoneFormat]"
               outlined
               dense
             >
@@ -107,12 +107,7 @@ export default {
   data: () => ({
     isFormValid: true,
 
-    states,
-
-    rules: {
-      required: (value) => (value && Boolean(value)) || 'Required',
-      phoneFormat: (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
-    }
+    states
   }),
   computed: {
     ...mapState({
@@ -131,7 +126,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCities: 'customers/getCities'
+      getCities: 'cities/getCities'
     }),
     onStateChange() {
       this.getCities(this.user.state)

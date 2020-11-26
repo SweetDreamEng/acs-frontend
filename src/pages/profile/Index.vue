@@ -2,7 +2,7 @@
   <div class="d-flex flex-column flex-grow-1">
     <v-row>
       <v-col xs="12" sm="4" md="4">
-        <Overview></Overview>
+        <Overview :user="user"></Overview>
       </v-col>
       <v-col xs="12" sm="8" md="8">
         <v-card>
@@ -16,7 +16,11 @@
                 <personal-info></personal-info>
               </v-tab-item>
               <v-tab-item>
-                <password-reset></password-reset>
+                <password-reset
+                  :is-btn-loading="isBtnLoading"
+                  :error="error"
+                  @submit="">
+                </password-reset>
               </v-tab-item>
             </v-tabs-items>
           </v-card-text>
@@ -29,6 +33,9 @@
 import PersonalInfo from '../../components/profile/PersonalInfo'
 import PasswordReset from '../../components/profile/PasswordReset'
 import Overview from '../../components/profile/Overview'
+
+import { mapState } from 'vuex'
+
 export default {
   components: {
     PasswordReset,
@@ -39,6 +46,13 @@ export default {
     return {
       tab: null
     }
+  },
+  computed: {
+    ...mapState({
+      isBtnLoading: (state) => state.auth.button_loading,
+      user: (state) => state.auth.user,
+      error: (state) => state.auth.error
+    })
   }
 }
 </script>

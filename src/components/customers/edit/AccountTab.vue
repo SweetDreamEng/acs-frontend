@@ -13,14 +13,14 @@
                 placeholder="Type in new company name or choose from existing for ex: Acme Inc"
                 item-text="name"
                 :return-object="false"
-                :rules="[rules.required]"
+                :rules="[$$rules.required]"
                 @input="resetErrors"
                 outlined
                 dense
               ></v-combobox>
               <v-text-field
                 v-model="customerAccount.name"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 :validate-on-blur="false"
                 dense
                 outlined
@@ -29,7 +29,7 @@
               ></v-text-field>
               <v-text-field
                 v-model="customerAccount.email"
-                :rules="[rules.required, rules.emailFormat]"
+                :rules="[$rules.required, $rules.emailFormat]"
                 :validate-on-blur="false"
                 dense
                 outlined
@@ -141,12 +141,6 @@ export default {
       user: {
         'disabled':true,
         'role':'ADMIN'
-      },
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required',
-        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
       }
     }
   },

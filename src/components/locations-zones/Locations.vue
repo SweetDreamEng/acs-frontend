@@ -29,7 +29,7 @@
               <v-text-field
                 v-model="editedItem.name"
                 label="Location name"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 outlined
                 dense
               >
@@ -38,7 +38,7 @@
                 v-model="editedItem.state"
                 label="State"
                 :items="states"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 outlined
                 dense
                 @change="onStateChange"
@@ -50,7 +50,7 @@
                 label="City"
                 item-text="city"
                 :return-object="false"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 :disabled="!editedItem.state"
                 outlined
                 dense
@@ -58,7 +58,7 @@
               <v-text-field
                 :value="zipCode"
                 label="Zip Code"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 :disabled="!editedItem.state || !editedItem.city"
                 outlined
                 dense
@@ -122,7 +122,7 @@
 */
 import states from '../../services/data/states'
 
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   props: {
@@ -165,12 +165,7 @@ export default {
       },
       isFormValid: true,
 
-      searchQuery: '',
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required field'
-      }
+      searchQuery: ''
     }
   },
   computed: {
@@ -195,7 +190,7 @@ export default {
       getLocations: 'locations/getLocations',
       addLocation: 'locations/addLocation',
       updateLocation: 'locations/updateLocation',
-      getCities: 'customers/getCities'
+      getCities: 'cities/getCities'
     }),
     editLocation(item) {
       this.editedIndex = this.locations.indexOf(item)

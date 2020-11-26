@@ -29,7 +29,7 @@
                 <v-text-field
                   v-model="editedZone.name"
                   label="Zone"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   outlined
                   dense
                 >
@@ -130,12 +130,7 @@ export default {
       },
       isEditZoneFormValid: true,
 
-      searchQuery: '',
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required field'
-      }
+      searchQuery: ''
     }
   },
   computed: {

@@ -37,7 +37,7 @@
                 v-model="user.name"
                 label="Display name"
                 placeholder="name"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 outlined
                 dense
                 @input="clearError"
@@ -47,7 +47,7 @@
                 v-model="user.email"
                 label="Email"
                 placeholder="Email"
-                :rules="[rules.required, rules.emailFormat]"
+                :rules="[$rules.required, $rules.emailFormat]"
                 outlined
                 dense
                 @input="clearError"
@@ -60,7 +60,7 @@
                 placeholder="Role"
                 item-value="id"
                 item-text="name"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 outlined
                 dense
                 @input="clearError"
@@ -81,14 +81,23 @@
                   v-if="selectedLocations.includes(location.id)"
                   class="d-flex flex-wrap px-2"
                 >
-                  <v-checkbox
-                    v-for="(zone, j) in zonesOfLocation(location.id)"
-                    :key="j"
+                  <v-chip-group
                     v-model="selectedZones"
-                    :value="zone.id"
-                    :label="zone.name"
-                    class="shrink mr-2 mt-0"
-                  ></v-checkbox>
+                    multiple
+                    column
+                  >
+                    <v-chip
+                      v-for="(zone, j) in zonesOfLocation(location.id)"
+                      :key="j"
+                      :value="zone.id"
+                      filter
+                      outlined
+                      small
+                      color="primary"
+                    >
+                      {{ zone.name }}
+                    </v-chip>
+                  </v-chip-group>
                 </div>
               </div>
 
@@ -116,7 +125,7 @@
                 <v-text-field
                   v-model="user.address_1"
                   label="Address"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   outlined
                   dense
                 >
@@ -125,7 +134,7 @@
                   v-model="user.state"
                   label="State"
                   :items="states"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   outlined
                   dense
                   @change="onStateChange"
@@ -137,7 +146,7 @@
                   label="City"
                   item-text="city"
                   :return-object="false"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   :disabled="!user.state"
                   outlined
                   dense
@@ -145,7 +154,7 @@
                 <v-text-field
                   :value="zipCode"
                   label="Zip Code"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   :disabled="!user.state || !user.city"
                   outlined
                   dense
@@ -155,7 +164,7 @@
                 <v-text-field
                   v-model="user.country"
                   label="Country"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   outlined
                   dense
                 >
@@ -170,7 +179,7 @@
                   placeholder="123-456-7890"
                   outlined
                   dense
-                  :rules="[rules.required, rules.phoneFormat]"
+                  :rules="[$rules.required, $rules.phoneFormat]"
                 >
                 </v-text-field>
               </v-col>
@@ -237,13 +246,7 @@ export default {
       isProfileFormValid: true,
 
       selectedLocations: [],
-      selectedZones: [],
-
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required',
-        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid',
-        phoneFormat: (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
-      }
+      selectedZones: []
     }
   },
   computed: {
@@ -268,7 +271,7 @@ export default {
     ...mapActions({
       open: 'users/initCreateAccount',
       addCompanyUser: 'users/addCompanyUser',
-      getCities: 'customers/getCities',
+      getCities: 'cities/getCities',
       clearError: 'users/clearError'
     }),
     submit() {

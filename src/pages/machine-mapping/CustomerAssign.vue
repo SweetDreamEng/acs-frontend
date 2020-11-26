@@ -239,12 +239,7 @@ export default {
 
       confirmDialog: false,
       selectedItem: null,
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required field'
-      },
-
+      
       loc_page: this.page
     }
   },

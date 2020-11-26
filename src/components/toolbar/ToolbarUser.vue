@@ -1,19 +1,6 @@
 <template>
   <v-menu offset-y left transition="slide-y-transition">
     <template v-slot:activator="{ on }">
-      <!-- <v-btn icon class="elevation-2" v-on="on">
-        <v-badge
-          color="success"
-          dot
-          bordered
-          offset-x="10"
-          offset-y="10"
-        >
-          <v-avatar size="40">
-            <v-img src="/images/avatars/avatar1.svg"></v-img>
-          </v-avatar>
-        </v-badge>
-      </v-btn> -->
       <v-btn
         icon
         small
@@ -23,7 +10,7 @@
           color="primary"
           size="28"
         >
-          <span class="white--text">JD</span>
+          <span class="white--text">{{ username | initials }}</span>
         </v-avatar>
       </v-btn>
     </template>
@@ -69,13 +56,17 @@ import config from '../../configs'
 | Quickmenu for user menu shortcuts on the toolbar
 |
 */
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      menu: config.toolbar.user,
-      username: 'John Doe'
+      menu: config.toolbar.user
     }
+  },
+  computed: {
+    ...mapState({
+      username: (state) => state.auth.user.username
+    })
   },
   methods: {
     ...mapActions({

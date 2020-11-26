@@ -11,7 +11,7 @@
         <v-form ref="form" v-model="isFormValid" lazy-validation @submit.prevent="submit">
           <v-text-field
             v-model="email"
-            :rules="[rules.required]"
+            :rules="[$rules.required]"
             :validate-on-blur="false"
             :error="error"
             :error-messages="errorMessages"
@@ -61,11 +61,7 @@ export default {
       email: '',
 
       // form error
-      error: false,
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
-      }
+      error: false
     }
   },
   computed: {

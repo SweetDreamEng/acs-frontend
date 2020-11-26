@@ -34,7 +34,7 @@
               <v-text-field
                 v-model="user.name"
                 label="Display name"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 placeholder="name"
                 outlined
                 dense
@@ -44,7 +44,7 @@
               <v-text-field
                 v-model="user.email"
                 label="Email"
-                :rules="[rules.required, rules.emailFormat]"
+                :rules="[$rules.required, $rules.emailFormat]"
                 placeholder="Email"
                 outlined
                 dense
@@ -58,7 +58,7 @@
                 placeholder="Role"
                 item-value="id"
                 item-text="name"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 outlined
                 dense
                 @input="clearError"
@@ -79,14 +79,23 @@
                   v-if="selectedLocations.includes(location.id)"
                   class="d-flex flex-wrap px-2"
                 >
-                  <v-checkbox
-                    v-for="(zone, j) in zonesOfLocation(location.id)"
-                    :key="j"
+                  <v-chip-group
                     v-model="selectedZones"
-                    :value="zone.id"
-                    :label="zone.name"
-                    class="shrink mr-2 mt-0"
-                  ></v-checkbox>
+                    multiple
+                    column
+                  >
+                    <v-chip
+                      v-for="(zone, j) in zonesOfLocation(location.id)"
+                      :key="j"
+                      :value="zone.id"
+                      filter
+                      outlined
+                      small
+                      color="primary"
+                    >
+                      {{ zone.name }}
+                    </v-chip>
+                  </v-chip-group>
                 </div>
               </div>
 
@@ -248,12 +257,7 @@ export default {
       isFormValid: true,
 
       selectedLocations: this.user.selected_locations,
-      selectedZones: this.user.selected_zones,
-
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required',
-        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
-      }
+      selectedZones: this.user.selected_zones
     }
   },
   computed: {

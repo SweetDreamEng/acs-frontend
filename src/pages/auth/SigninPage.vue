@@ -9,7 +9,7 @@
         <v-form ref="form" v-model="isFormValid" lazy-validation>
           <v-text-field
             v-model="email"
-            :rules="[rules.required]"
+            :rules="[$rules.required]"
             :validate-on-blur="false"
             :label="$t('login.email')"
             name="email"
@@ -21,7 +21,7 @@
           <v-text-field
             v-model="password"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required]"
+            :rules="[$rules.required]"
             :type="showPassword ? 'text' : 'password'"
             :label="$t('login.password')"
             name="password"
@@ -83,12 +83,7 @@ export default {
       errorProviderMessages: '',
 
       // show password field
-      showPassword: false,
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
-      }
+      showPassword: false
     }
   },
   computed: {

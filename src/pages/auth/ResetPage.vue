@@ -9,7 +9,7 @@
     <v-text-field
       v-model="newPassword"
       :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-      :rules="[rules.required]"
+      :rules="[$rules.required]"
       :type="showPassword ? 'text' : 'password'"
       :error="errorNewPassword"
       :error-messages="errorNewPasswordMessage"
@@ -59,12 +59,7 @@ export default {
       showPassword: false,
 
       status: 'Resetting password',
-      error: null,
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
-      }
+      error: null
     }
   },
   methods: {
