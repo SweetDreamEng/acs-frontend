@@ -1,8 +1,15 @@
 <template>
-  <v-card height="100%">
+  <v-card
+    height="100%"
+    :loading="isLoading"
+    :disabled="isLoading"
+  >
     <v-card-subtitle class="d-flex justify-space-between">
-      <strong>Target & Actuals</strong>
-      <MonthlyWeekly />
+      <div>
+        <div class="font-weight-bold">Target & Actuals</div>
+        <div class="font-italic">({{ mode }})</div>
+      </div>
+      <MonthlyWeekly @changeMode="changeMode"/>
     </v-card-subtitle>
     <v-card-text>
       <apexchart
@@ -36,24 +43,21 @@ export default {
       type: String,
       default: ''
     },
-    loading: {
+    isLoading: {
       type: Boolean,
       default: false
     },
-    series: {
+    mode: {
+      type: String,
+      default: 'Weekly'
+    },
+    valuesTgtWeight: {
       type: Array,
-      default: () => [
-        {
-          id: 1,
-          name: 'Target',
-          data: [88, 71, 84, 0, 0, 88, 88, 82, 88, 88, 0, 0, 48, 0, 88]
-        },
-        {
-          id: 2,
-          name: 'Actuals',
-          data: [78, 61, 74, 0, 0, 78, 78, 72, 78, 78, 0, 0, 38, 0, 78]
-        }
-      ]
+      default: () => [{}]
+    },
+    valuesActWeight: {
+      type: Array,
+      default: () => [{}]
     }
   },
   data() {
@@ -81,19 +85,26 @@ export default {
     }
   },
   computed: {
+    series() {
+      return [
+        {
+          id: 1,
+          name: 'Target',
+          data: this.valuesTgtWeight
+        },
+        {
+          id: 2,
+          name: 'Actuals',
+          data: this.valuesActWeight
+        }
+      ]
+    }
   },
   mounted() {
-    let count = 0
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
   },
   methods: {
-    clear() {
-      clearInterval(this.loadingInterval)
+    changeMode(mode) {
+      this.$emit('changeMode', mode)
     }
   }
 }

@@ -17,6 +17,7 @@
           v-for="(item, index) in viewOptions"
           :key="index"
           link
+          @click="$emit('changeMode', item)"
         >
           <v-list-item-content>
             <v-list-item-title>{{ item }}</v-list-item-title>

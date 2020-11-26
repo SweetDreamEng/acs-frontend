@@ -198,7 +198,13 @@ const module = {
     machines: [],
     selectedId: 0,
 
-    selectedCompany: null
+    selectedCompany: null,
+
+    modeTgtActWeightProduct: 'Weekly',
+    valuesTgtWeightProduct: [],
+    valuesActWeightProduct: [],
+
+    isWeightProductLoading: false
   },
 
   actions: {
@@ -236,6 +242,42 @@ const module = {
       commit
     }, company) {
       commit('SET_SELECTED_COMPANY', company)
+    },
+
+    // product analytics init
+    initProductAnalytics({
+      commit
+    }) {
+      commit('WEIGHT_PRODUCT_LOADING')
+      machineAPI.initProductAnalytics()
+        .then((response) => {
+          commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
+          commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+          commit('WEIGHT_PRODUCT_LOADED')
+        })
+    },
+
+    onProductTgtActModeChange({
+      commit
+    }, mode) {
+      commit('WEIGHT_PRODUCT_LOADING')
+      machineAPI.changeProductWeightMode(mode)
+        .then((response) => {
+          commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
+          commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+          commit('WEIGHT_PRODUCT_LOADED')
+          commit('SET_PRODUCT_TGT_ACT_MODE', mode)
+        })
     }
   },
 
@@ -267,6 +309,27 @@ const module = {
     },
     SET_SELECTED_COMPANY(state, company) {
       state.selectedCompany = company
+    },
+
+    // set target values
+    SET_TGT_WEIGHT_VALUES(state, tgt) {
+      state.valuesTgtWeightProduct = tgt
+    },
+    // set actual values
+    SET_ACT_WEIGHT_VALUES(state, act) {
+      state.valuesActWeightProduct = act
+    },
+
+    // Target and Actuals mode - Weekly or Monthly
+    SET_PRODUCT_TGT_ACT_MODE(state, mode) {
+      state.modeTgtActWeightProduct = mode
+    },
+
+    WEIGHT_PRODUCT_LOADING(state) {
+      state.isWeightProductLoading = true
+    },
+    WEIGHT_PRODUCT_LOADED(state) {
+      state.isWeightProductLoading = false
     }
   },
 
