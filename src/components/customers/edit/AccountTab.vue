@@ -13,7 +13,7 @@
                 placeholder="Type in new company name or choose from existing for ex: Acme Inc"
                 item-text="name"
                 :return-object="false"
-                :rules="[$$rules.required]"
+                :rules="[$rules.required]"
                 @input="resetErrors"
                 outlined
                 dense

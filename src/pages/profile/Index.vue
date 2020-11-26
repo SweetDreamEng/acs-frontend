@@ -26,7 +26,8 @@
                   :is-btn-loading="isBtnLoading"
                   :error="error"
                   @submit="submitPassword"
-                  @clearError="clearError">
+                  @clearError="clearError"
+                >
                 </password-reset>
               </v-tab-item>
             </v-tabs-items>

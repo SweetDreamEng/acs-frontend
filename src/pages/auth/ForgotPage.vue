@@ -14,13 +14,14 @@
             :rules="[$rules.required]"
             :validate-on-blur="false"
             :error="error"
-            :error-messages="errorMessages"
             :label="$t('forgot.email')"
             name="email"
             outlined
             @keyup.enter="submit"
             @input="resetErrors"
           ></v-text-field>
+
+          <error-component :error="errorMessages"></error-component>
 
           <v-btn
             block
@@ -51,9 +52,14 @@
 | Template to send email to remember/replace password
 |
 */
+import ErrorComponent from '../../components/common/ErrorComponent'
+
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  components: {
+    ErrorComponent
+  },
   data() {
     return {
       // form
@@ -79,8 +85,6 @@ export default {
       if (this.$refs.form.validate()) {
         this.requestForgotPassword(this.email)
       }
-    },
-    resetEmail(email, password) {
     },
     resetErrors() {
       this.clearError()
