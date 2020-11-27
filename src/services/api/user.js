@@ -37,5 +37,39 @@ export default {
     return axios.post('/company-users/update-information/' + data.id, data).then((response) => {
       return response
     })
+  },
+
+  // init acs users page
+  initAcsUsers() {
+    return axios.get('/acs-users').then((response) => {
+      return response
+    })
+  },
+  // init acs user create page
+  initCreateAcsUser() {
+    return axios.get('/acs-users/init-create').then((response) => {
+      return response
+    })
+  },
+  initAcsUserEdit(id) {
+    return axios.get('/acs-users/init-edit/' + id).then((response) => {
+      return response
+    })
+  },
+  
+  addAcsUser(data) {
+    return axios.post('/acs-users/store', data).then((response) => {
+      return response
+    })
+  },
+  updateAcsUserAccount(data) {
+    return axios.post('/acs-users/update-account/' + data.id, data).then((response) => {
+      return response
+    })
+  },
+  updateAcsUserInformation(data) {
+    return axios.post('/acs-users/update-information/' + data.id, data).then((response) => {
+      return response
+    })
   }
 }

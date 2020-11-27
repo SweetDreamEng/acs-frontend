@@ -6,7 +6,8 @@ export default {
     items: [
       { icon: 'mdi-view-dashboard-outline', key: 'menu.ACSMachines', text: 'ACS Machines', link: '/acs-machines' },
       { icon: 'mdi-swap-horizontal', key: 'Customer Assign', text: 'Customer Assign', link: '/customer-assign' },
-      { icon: 'mdi-account-multiple', key: 'menu.customerPages', text: 'Customers', link: '/customers/list' }
+      { icon: 'mdi-city', key: 'Companies', text: 'Companies', link: '/customers/list' },
+      { icon: 'mdi-account-multiple', key: 'Users', text: 'Users', link: '/acs-admin/users/list' }
     ]
   }],
 

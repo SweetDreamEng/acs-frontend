@@ -5,6 +5,7 @@ const module = {
   namespaced: true,
   state: {
     data: [],
+    roles: [],
 
     user: null,
     
@@ -145,6 +146,116 @@ const module = {
           commit('BUTTON_CLEAR')
         })
     },
+
+    initAcsUsers({
+      commit
+    }) {
+      commit('TABLE_LOAD')
+      userAPI.initAcsUsers()
+        .then((response) => {
+          commit('SET_DATA', response.data.users)
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+          commit('TABLE_LOADED')
+        })
+    },
+    initCreateAcsUser({
+      commit
+    }) {
+      userAPI.initCreateAcsUser()
+        .then((response) => {
+          commit('SET_ROLES', response.data.roles)
+        })
+    },
+    initAcsUserEdit({
+      commit
+    }, id ) {
+      userAPI.initAcsUserEdit(id)
+        .then((response) => {
+          commit('SET_ROLES', response.data.roles)
+          commit('SET_USER', response.data.user)
+          commit('cities/SET_DATA', response.data.cities, { root: true } )
+        })
+    },
+    
+    addAcsUser({
+      commit, dispatch
+    }, data) {
+      commit('BUTTON_LOAD')
+      
+      userAPI.addAcsUser(data)
+        .then((response) => {
+          dispatch('app/showSuccess', response.data, { root: true })
+          router.push({
+            name: 'acs-users-list'
+          })
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            const errors = Object.values(error.response.data.error).flat()
+
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
+          }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
+        })
+    },
+    updateAcsUserAccount({
+      commit, dispatch
+    }, data) {
+      commit('BUTTON_LOAD')
+      
+      userAPI.updateAcsUserAccount(data)
+        .then((response) => {
+          dispatch('app/showSuccess', response.data, { root: true })
+          router.push({
+            name: 'acs-users-list'
+          })
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            const errors = Object.values(error.response.data.error).flat()
+
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
+          }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
+        })
+    },
+    updateAcsUserInformation({
+      commit, dispatch
+    }, data) {
+      commit('BUTTON_LOAD')
+      
+      userAPI.updateAcsUserInformation(data)
+        .then((response) => {
+          dispatch('app/showSuccess', response.data, { root: true })
+          router.push({
+            name: 'acs-users-list'
+          })
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            const errors = Object.values(error.response.data.error).flat()
+
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
+          }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
+        })
+    },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     }
@@ -162,6 +273,9 @@ const module = {
     },
     CLEAR_ERROR(state) {
       state.error = null
+    },
+    SET_ROLES(state, roles) {
+      state.roles = roles
     },
     TABLE_LOAD(state) {
       state.isUsersTableLoading = true
