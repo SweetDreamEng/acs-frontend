@@ -17,8 +17,6 @@
       <!-- Navigation menu info -->
       <template v-slot:prepend>
         <div class="pa-2">
-          <!--div class="title font-weight-bold text-uppercase primary--text">{{ product.name }}</div>
-          <div class="overline grey--text">{{ product.version }}</div-->
           <v-img :src="require('../assets/imgs/logo-aec.png')" > </v-img>
         </div>
       </template>
@@ -39,7 +37,7 @@
             small
             text
           >
-            {{ item.key ? $t(item.key) : item.text }}
+            {{ item.text }}
           </v-btn>
         </div>
       </template>
@@ -74,32 +72,6 @@
 
             <v-spacer class="d-none d-lg-block"></v-spacer>
 
-            <!-- search input desktop -->
-            <!-- v-text-field
-              ref="search"
-              class="mx-1 hidden-xs-only"
-              :placeholder="$t('menu.search')"
-              prepend-inner-icon="mdi-magnify"
-              hide-details
-              filled
-              rounded
-              dense
-            ></v-text-field>
-
-            <v-spacer class="d-block d-sm-none"></v-spacer>
-
-            <v-btn class="d-block d-sm-none" icon @click="showSearch = true">
-              <v-icon>mdi-magnify</v-icon>
-            </v-btn>
-
-            <toolbar-language />
-
-            <div class="hidden-xs-only mx-1">
-              <toolbar-currency />
-            </div-->
-
-            <toolbar-apps />
-
             <div :class="[$vuetify.rtl ? 'ml-1' : 'mr-1']">
               <toolbar-notifications />
             </div>
@@ -116,13 +88,6 @@
           <slot></slot>
         </v-layout>
       </v-container>
-
-      <!--v-footer app inset>
-        <v-spacer></v-spacer>
-        <div class="overline">
-          th <v-icon small color="pink">mdi-heart</v-icon>
-        </div>
-      </v-footer-->
     </v-main>
   </div>
 </template>
@@ -135,16 +100,12 @@ import config from '../configs'
 
 import MainMenu from '../components/navigation/MainMenu'
 import ToolbarUser from '../components/toolbar/ToolbarUser'
-import ToolbarApps from '../components/toolbar/ToolbarApps'
-import ToolbarLanguage from '../components/toolbar/ToolbarLanguage'
-import ToolbarCurrency from '../components/toolbar/ToolbarCurrency'
 import ToolbarNotifications from '../components/toolbar/ToolbarNotifications'
 
 export default {
   components: {
     MainMenu,
     ToolbarUser,
-    ToolbarApps,
     ToolbarNotifications
   },
   data() {

@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-card class="text-center pa-1">
-      <v-card-title class="justify-center display-1 mb-2">{{ $t('forgot.title') }}</v-card-title>
+      <v-card-title class="justify-center display-1 mb-2">Forgot Password?</v-card-title>
       <v-card-subtitle>
-        {{ $t('forgot.subtitle') }}
+        Enter your account email address and we will send you a link to reset your password.
       </v-card-subtitle>
 
       <!-- reset form -->
@@ -14,7 +14,7 @@
             :rules="[$rules.required]"
             :validate-on-blur="false"
             :error="error"
-            :label="$t('forgot.email')"
+            label="Email"
             name="email"
             outlined
             @keyup.enter="submit"
@@ -30,14 +30,14 @@
             :loading="isLoading"
             :disabled="isLoading"
             @click="submit"
-          >{{ $t('forgot.button') }}</v-btn>
+          >Request Password Reset</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
 
     <div class="text-center mt-6">
       <router-link to="/auth/signin">
-        {{ $t('forgot.backtosign') }}
+        Back to Sign In
       </router-link>
     </div>
   </div>

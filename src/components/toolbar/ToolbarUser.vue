@@ -28,7 +28,7 @@
           <v-icon small :class="{ 'grey--text': item.disabled }">{{ item.icon }}</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>{{ item.key ? $t(item.key) : item.text }}</v-list-item-title>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -39,7 +39,7 @@
           <v-icon small>mdi-logout-variant</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>{{ $t('menu.logout') }}</v-list-item-title>
+          <v-list-item-title>Logout</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -60,7 +60,9 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      menu: config.toolbar.user
+      menu: [
+        { icon: 'mdi-account-box-outline', key: 'menu.profile', text: 'Profile', link: '/profile' }
+      ]
     }
   },
   computed: {

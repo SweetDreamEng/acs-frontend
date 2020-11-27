@@ -86,25 +86,25 @@ export default {
           text: 'L18_0_8_TargetWeight[1] with L19_0_8_DispActWeight[1]'
         }, {
           id: 1,
-          text: 'L18_0_8_TargetWeight[1] with L19_0_8_DispActWeight[2]'
+          text: 'L18_0_8_TargetWeight[2] with L19_0_8_DispActWeight[2]'
         }, {
           id: 2,
-          text: 'L18_0_8_TargetWeight[1] with L19_0_8_DispActWeight[3]'
+          text: 'L18_0_8_TargetWeight[3] with L19_0_8_DispActWeight[3]'
         }, {
           id: 3,
-          text: 'L18_0_8_TargetWeight[1] with L19_0_8_DispActWeight[4]'
+          text: 'L18_0_8_TargetWeight[4] with L19_0_8_DispActWeight[4]'
         }, {
           id: 4,
-          text: 'L18_0_8_TargetWeight[1] with L19_0_8_DispActWeight[5]'
+          text: 'L18_0_8_TargetWeight[5] with L19_0_8_DispActWeight[5]'
         }, {
           id: 5,
-          text: 'L18_0_8_TargetWeight[1] with L19_0_8_DispActWeight[6]'
+          text: 'L18_0_8_TargetWeight[6] with L19_0_8_DispActWeight[6]'
         }, {
           id: 6,
-          text: 'L18_0_8_TargetWeight[1] with L19_0_8_DispActWeight[7]'
+          text: 'L18_0_8_TargetWeight[7] with L19_0_8_DispActWeight[7]'
         }, {
           id: 7,
-          text: 'L18_0_8_TargetWeight[1] with L19_0_8_DispActWeight[8]'
+          text: 'L18_0_8_TargetWeight[8] with L19_0_8_DispActWeight[8]'
         }
       ],
 

@@ -15,7 +15,7 @@
               color="#8c9eff"
               value="87%"
               :percentage="1.7"
-              :percentage-label="$t('dashboard.lastweek')"
+              percentage-label="vs last week"
               :series="ordersSeries"
             ></track-card>
           </v-col>
@@ -39,7 +39,7 @@
               color="#06d6a0"
               value="84%"
               :percentage="4.3"
-              :percentage-label="$t('dashboard.lastweek')"
+              percentage-label="vs last week"
               :series="customersSeries"
             ></track-card>
           </v-col>
@@ -59,8 +59,8 @@
             :value="1.832"
             :percentage="3.2"
             :loading="isLoading1"
-            :percentage-label="$t('dashboard.lastweek')"
-            :action-label="$t('dashboard.viewReport')"
+            percentage-label="vs last week"
+            action-label="View Report"
           ></sales-card>
         </div>
       </v-col>

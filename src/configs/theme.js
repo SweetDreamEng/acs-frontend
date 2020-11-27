@@ -29,27 +29,9 @@ export default {
     success: '#4CAF50',
     warning: '#FFC107'
   },
-
-  //AEC Dark Blue - 002855
-  //AEC Light Blue- 009add
-  //AEC Dark grey - 292929
-
-  // light theme colors
-  //light: {
-  //  background: '#ffffff',
-  //  surface: '#f2f5f8', //background on screen behind chart
-  //  primary: '#0096c7', // darker accent color
-  //  secondary: '#a0b9c8', //lighter color
-  //  accent: '#048ba8', //almost same as primary
-  //  error: '#ef476f',
-  //  info: '#2196F3',
-  //  success: '#06d6a0',
-  //  warning: '#ffd166'
-  //}
   light: {
     background: '#ffffff',
     surface: '#f2f5f8', //background on screen behind chart
-    // primary: '009add', // darker accent color
     primary: '#092954', // darker accent color
     secondary: '#508FF0', //lighter color // 002855
     accent: '#003066', //almost same as primary

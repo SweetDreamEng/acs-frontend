@@ -8,7 +8,7 @@
         {{ label }}
       </v-card-title>
       <v-card-subtitle>
-        <TimeRangeChooser1 />
+        <TimeRangeChooser />
       </v-card-subtitle>
       <v-card-text>
         <v-data-table
@@ -75,11 +75,11 @@
 */
 import moment from 'moment'
 import store from '../../../store'
-import TimeRangeChooser1 from '../TimeRangeChooser1'
+import TimeRangeChooser from '../TimeRangeChooser'
 
 export default {
   components: {
-    TimeRangeChooser1
+    TimeRangeChooser
   },
   props: {
     label: {

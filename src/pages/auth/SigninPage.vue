@@ -11,7 +11,7 @@
             v-model="email"
             :rules="[$rules.required]"
             :validate-on-blur="false"
-            :label="$t('login.email')"
+            label="Email"
             name="email"
             outlined
             @keyup.enter="submit"
@@ -23,7 +23,7 @@
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[$rules.required]"
             :type="showPassword ? 'text' : 'password'"
-            :label="$t('login.password')"
+            label="Password"
             name="password"
             outlined
             @input="resetErrors"
@@ -40,11 +40,11 @@
             x-large
             color="primary"
             @click="submit"
-          >{{ $t('login.button') }}</v-btn>
+          >Sign In</v-btn>
 
           <div class="mt-5">
             <router-link to="/auth/forgot-password">
-              {{ $t('login.forgot') }}
+              Forgot Password
             </router-link>
           </div>
         </v-form>
