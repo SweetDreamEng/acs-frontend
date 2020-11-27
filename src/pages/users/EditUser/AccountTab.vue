@@ -236,7 +236,9 @@ export default {
     },
     user: {
       type: Object,
-      default: () => ({})
+      default: () => ({
+        name: ''
+      })
     },
     roles: {
       type: Array,

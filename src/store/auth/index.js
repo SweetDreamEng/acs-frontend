@@ -5,6 +5,7 @@ import authAPI from '@/services/api/auth'
 const module = {
   namespaced: true,
   state: {
+    isAppReady: false,
     token: null,
     user: {
       role: null,
@@ -47,7 +48,8 @@ const module = {
         authAPI.check().then((response) => {
           commit('CLEAR_ERROR')
           commit('SET_AUTH_DATA', response.data)
-          
+          Vue.auth.setUser(response.data)
+
           if (response.data.role === 'acs_admin') {
             router.push({
               name: 'acs-machines'
@@ -84,16 +86,14 @@ const module = {
       authAPI.signOut().then((response) => {
         if (response.status === 200) {
           commit('SET_LOGOUT_ATUH')
+          localStorage.removeItem('token')
+          localStorage.removeItem('user')
+
           router.push({
             name: 'auth-signin'
           })
         }
       })
-        .catch((error) => {
-          if (error.response.status === 401) {
-            localStorage.removeItem('token')
-          }
-        })
     },
     updatePassword({
       commit, dispatch
@@ -149,6 +149,17 @@ const module = {
   },
 
   mutations: {
+    BOOTSTRAP(state, { user, token }) {
+      if (user && token) {
+        state.user.email = user.email
+        state.user.username = user.name
+        state.user.role = user.role
+        state.token = token
+      }
+
+      state.isAppReady = true
+    },
+
     SET_ERROR(state, error) {
       state.error = error.error
     },
@@ -159,17 +170,17 @@ const module = {
       state.token = token
     },
     SET_AUTH_DATA(state, user) {
-      state.user.email = user.email
-      state.user.username = user.name
-      state.user.role = user.role
+      if (user) {
+        state.user.email = user.email
+        state.user.username = user.name
+        state.user.role = user.role
+      }
     },
     SET_LOGOUT_ATUH(state) {
       state.token = null
       state.user.role = null
       state.user.email = null
       state.user.username = null
-
-      localStorage.removeItem('token')
     },
     BUTTON_LOAD(state) {
       state.button_loading = true
@@ -182,6 +193,14 @@ const module = {
   getters: {
     hasToken: (state) => {
       return state.token
+    },
+    isCustomerAdmin: (state) => {
+      return true
+      // return state.user.role === 'customer_admin'
+    },
+    isAcsAdmin: (state) => {
+      return true
+      // return state.user.role === 'acs_admin'
     },
     roleName: (state) => (role_key) => {
       return state.roles.find((role) => role.key === role_key).name

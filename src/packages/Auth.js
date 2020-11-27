@@ -15,6 +15,18 @@ export default function (Vue) {
       localStorage.removeItem('token')
     },
 
+    getUser() {
+      localStorage.getItem('user')
+    },
+
+    setUser(user) {
+      localStorage.setItem('user', JSON.stringify(user))
+    },
+
+    removeUser() {
+      localStorage.removeItem('user')
+    },
+
     check(role = '') {
       return axios.post('/auth/check', {
         role

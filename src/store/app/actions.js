@@ -35,6 +35,9 @@ const showSuccess = ({ state, commit }, message) => {
     })
   })
 }
+const setPageLoading = ({ state, commit }, status) => {
+  commit('setPageLoading', status)
+}
 
 export default {
   showToast,

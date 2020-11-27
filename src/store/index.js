@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
 
 // Global vuex
 import AppModule from './app'
@@ -16,47 +15,9 @@ import roles from './roles'
 
 Vue.use(Vuex)
 
-const axios = require('axios')
-
-axios.defaults.baseURL = process.env.VUE_APP_SERVER_API_ENDPOINT
-// axios.defaults.baseURL = 'http://localhost/acs-api/public/api'
-
-axios.interceptors.request.use(
-  (config) => {
-    const token = Vue.auth.getToken()
-
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    
-    return config
-  },
-  (error) => Promise.reject(error)
-)
-
-const axiosPlugin = (store) => {
-  store.$axios = axios
-}
-
 /**
  * Main Vuex Store
  */
-
-const dataState = createPersistedState({
-  paths: [
-    'app',
-    'auth',
-    'customers',
-    'machines',
-    'users',
-    'zones',
-    'locations',
-    'devices',
-    'cities',
-    'roles'
-  ]
-})
-
 const store = new Vuex.Store({
   modules: {
     app: AppModule,
@@ -69,8 +30,7 @@ const store = new Vuex.Store({
     devices,
     cities,
     roles
-  },
-  plugins: [axiosPlugin, dataState]
+  }
 })
 
 export default store

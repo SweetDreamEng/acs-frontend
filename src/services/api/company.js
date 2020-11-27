@@ -1,12 +1,12 @@
-import axios from 'axios'
+import api from '@/api.js'
 export default {
   initAddCompany() {
-    return axios.get('/customers/init-add-company').then((response) => {
+    return api.get('/customers/init-add-company').then((response) => {
       return response
     })
   },
   getCustomers() {
-    return axios.get('/customers').then((response) => {
+    return api.get('/customers').then((response) => {
       return response
     })
   },
@@ -18,17 +18,17 @@ export default {
       administrator_email: data.administratorEmail
     })
 
-    return axios.post('/customers/add', data).then((response) => {
+    return api.post('/customers/add', data).then((response) => {
       return response
     })
   },
   getCustomer(id) {
-    return axios.get(`/customers/${id}`).then((response) => {
+    return api.get(`/customers/${id}`).then((response) => {
       return response
     })
   },
   updateAccount(accountInfo) {
-    return axios.post(`/customers/update-account/${accountInfo.id}`, {
+    return api.post(`/customers/update-account/${accountInfo.id}`, {
       name: accountInfo.companyName,
       administrator_name: accountInfo.name,
       administrator_email: accountInfo.email
@@ -37,7 +37,7 @@ export default {
     })
   },
   updateProfile(data) {
-    return axios.post(`/customers/update-profile/${data.id}`, {
+    return api.post(`/customers/update-profile/${data.id}`, {
       address_1: data.address_1,
       address_2: data.address_2,
       zip: data.zip,

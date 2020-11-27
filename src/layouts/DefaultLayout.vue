@@ -1,8 +1,6 @@
 <template>
   <div
-    v-shortkey="['ctrl', '/']"
     class="d-flex flex-grow-1"
-    @shortkey="onKeyup"
   >
     <!-- Navigation -->
     <v-navigation-drawer

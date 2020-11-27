@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '@/api.js'
 export default {
 
   /*
@@ -9,7 +9,7 @@ export default {
     }
   */
   initLocationsZones(pageNum) {
-    return axios.get('/locations-zones').then((response) => {
+    return api.get('/locations-zones').then((response) => {
       return response
     })
   },
@@ -18,7 +18,7 @@ export default {
     Get zones
   */
   getZones(pageNum) {
-    return axios.get('/zones').then((response) => {
+    return api.get('/zones').then((response) => {
       return response
     })
   },
@@ -32,7 +32,7 @@ export default {
       }
   */
   addZone(data) {
-  	return axios.post('/zones/add', data).then((response) => {
+  	return api.post('/zones/add', data).then((response) => {
       return response
     })
   },
@@ -47,7 +47,7 @@ export default {
       }
   */
   updateZone(data) {
-    return axios.patch('/zones/update', data).then((response) => {
+    return api.patch('/zones/update', data).then((response) => {
       return response
     })
   }
