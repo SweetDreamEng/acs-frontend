@@ -4,11 +4,12 @@
       <strong>Inventory & Fractional Inventory</strong>
       <MonthlyWeekly />
     </v-card-subtitle>
-    <v-card-text class="d-flex align-center">
+    <v-card-text class="d-flex align-center justify-space-between">
       <apexchart
         v-if="!isLoading1"
         type="radialBar"
         height="150"
+        width="160"
         :options="chartOptions0"
         :series="series0"
       >
@@ -18,7 +19,7 @@
           <v-chip
             class="mt-1"
             outlined
-            style="width: 68px;"
+            style="min-width: 68px;"
             color="primary lighten-2"
             label
             dark
@@ -30,7 +31,7 @@
           <v-chip
             class="mt-1"
             outlined
-            style="width: 68px;"
+            style="min-width: 68px;"
             color="grey"
             label
             dark
@@ -42,7 +43,7 @@
           <v-chip
             class="mt-1"
             outlined
-            style="width: 68px;"
+            style="min-width: 68px;"
             color="orange"
             label
             dark

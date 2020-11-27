@@ -6,7 +6,7 @@
   >
     <v-card-subtitle class="d-flex justify-space-between">
       <div>
-        <div class="font-weight-bold">Target & Actuals</div>
+        <div class="font-weight-bold">Target & Actuals Weight</div>
         <div class="font-italic">({{ mode }})</div>
       </div>
       <MonthlyWeekly @changeMode="changeMode"/>
@@ -22,6 +22,8 @@
         @change="changeParams"
         outlined
         dense
+        class="ml-auto"
+        style="width: 480px"
       >
       </v-select>
     </v-card-subtitle>

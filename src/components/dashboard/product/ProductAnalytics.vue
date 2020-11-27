@@ -9,7 +9,7 @@
         <utilization class="mt-1"></utilization>
       </v-col>
       <v-col md="6" sm="12" xs="12">
-        <utilization-and-availability
+        <actual-target-weight
           :mode="modeWeight"
           :param="paramWeight"
           :valuesTgtWeight="valuesTgtWeight"
@@ -17,7 +17,7 @@
           :isLoading="isWeightProductLoading"
           @changeParams="_onProductWeightParamChange"
         >
-        </utilization-and-availability>
+        </actual-target-weight>
         <!-- <status-summary class="mt-1"></status-summary> -->
       </v-col>
     </v-row>
@@ -39,7 +39,7 @@ import HoursPerYear from './HoursPerYear'
 import Availability from './Availability'
 import Utilization from './Utilization'
 // import StatusSummary from './StatusSummary'
-import UtilizationAndAvailability from './UtilizationAndAvailability'
+import ActualTargetWeight from './ActualTargetWeight'
 import AverageUtilization from './AverageUtilization'
 import Cutting from './Cutting'
 import OEE from './OEE'
@@ -48,7 +48,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    HoursPerYear, Availability, Utilization, UtilizationAndAvailability, AverageUtilization, Cutting, OEE
+    HoursPerYear, Availability, Utilization, ActualTargetWeight, AverageUtilization, Cutting, OEE
   },
   data() {
     return {
