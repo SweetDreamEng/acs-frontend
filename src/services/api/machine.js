@@ -7,15 +7,13 @@ export default {
     })
   },
 
-  initProductAnalytics() {
-    return axios.get('/analytics/init-product').then((response) => {
+  initProductAnalytics(data) {
+    return axios.post('/analytics/init-product', data).then((response) => {
       return response
     })
   },
-  changeProductWeightMode(mode) {
-    return axios.post('/analytics/product-weight', {
-      mode
-    }).then((response) => {
+  changeProductWeightMode(data) {
+    return axios.post('/analytics/product-weight', data).then((response) => {
       return response
     })
   }

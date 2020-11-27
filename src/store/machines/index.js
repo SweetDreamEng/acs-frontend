@@ -200,7 +200,8 @@ const module = {
 
     selectedCompany: null,
 
-    modeTgtActWeightProduct: 'Weekly',
+    modeWeightProduct: 'Weekly',
+    paramWeightProduct: 0,
     valuesTgtWeightProduct: [],
     valuesActWeightProduct: [],
 
@@ -247,9 +248,9 @@ const module = {
     // product analytics init
     initProductAnalytics({
       commit
-    }) {
+    }, data) {
       commit('WEIGHT_PRODUCT_LOADING')
-      machineAPI.initProductAnalytics()
+      machineAPI.initProductAnalytics(data)
         .then((response) => {
           commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
@@ -262,11 +263,11 @@ const module = {
         })
     },
 
-    onProductTgtActModeChange({
+    onProductWeightParamChange({
       commit
-    }, mode) {
+    }, data) {
       commit('WEIGHT_PRODUCT_LOADING')
-      machineAPI.changeProductWeightMode(mode)
+      machineAPI.changeProductWeightMode(data)
         .then((response) => {
           commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
@@ -276,7 +277,8 @@ const module = {
         })
         .finally(() => {
           commit('WEIGHT_PRODUCT_LOADED')
-          commit('SET_PRODUCT_TGT_ACT_MODE', mode)
+          commit('SET_PRODUCT_WEIGHT_MODE', data.mode)
+          commit('SET_PRODUCT_WEIGHT_PARAM', data.param)
         })
     }
   },
@@ -321,8 +323,13 @@ const module = {
     },
 
     // Target and Actuals mode - Weekly or Monthly
-    SET_PRODUCT_TGT_ACT_MODE(state, mode) {
-      state.modeTgtActWeightProduct = mode
+    SET_PRODUCT_WEIGHT_MODE(state, mode) {
+      state.modeWeightProduct = mode
+    },
+    // Target and Actuals mode - Weekly or Monthly
+    SET_PRODUCT_WEIGHT_PARAM(state, param) {
+      console.log(param)
+      state.paramWeightProduct = param
     },
 
     WEIGHT_PRODUCT_LOADING(state) {

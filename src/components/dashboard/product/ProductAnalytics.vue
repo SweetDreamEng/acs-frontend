@@ -10,11 +10,12 @@
       </v-col>
       <v-col md="6" sm="12" xs="12">
         <utilization-and-availability
-          :mode="modeTgtActWeight"
+          :mode="modeWeight"
+          :param="paramWeight"
           :valuesTgtWeight="valuesTgtWeight"
           :valuesActWeight="valuesActWeight"
           :isLoading="isWeightProductLoading"
-          @changeMode="_onProductTgtActModeChange"
+          @changeParams="_onProductWeightParamChange"
         >
         </utilization-and-availability>
         <!-- <status-summary class="mt-1"></status-summary> -->
@@ -56,22 +57,26 @@ export default {
   },
   computed: {
     ...mapState({
-      modeTgtActWeight: (state) => state.machines.modeTgtActWeightProduct,
+      modeWeight: (state) => state.machines.modeWeightProduct,
+      paramWeight: (state) => state.machines.paramWeightProduct,
       valuesTgtWeight: (state) => state.machines.valuesTgtWeightProduct,
       valuesActWeight: (state) => state.machines.valuesActWeightProduct,
       isWeightProductLoading: (state) => state.machines.isWeightProductLoading
     })
   },
   mounted() {
-    this.initProductAnalytics()
+    this.initProductAnalytics({
+      mode: this.modeWeight,
+      param: this.paramWeight
+    })
   },
   methods: {
     ...mapActions({
       initProductAnalytics: 'machines/initProductAnalytics',
-      onProductTgtActModeChange: 'machines/onProductTgtActModeChange'
+      onProductWeightParamChange: 'machines/onProductWeightParamChange'
     }),
-    _onProductTgtActModeChange(mode) {
-      this.onProductTgtActModeChange(mode)
+    _onProductWeightParamChange(data) {
+      this.onProductWeightParamChange(data)
     }
   }
 }
