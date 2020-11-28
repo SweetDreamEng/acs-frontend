@@ -39,7 +39,7 @@ export default {
     },
     data: {
       type: Array,
-      default: () => [12,32,43,45,64,87,72,67,66,59,55,48]
+      default: () => [12,12,12,12,12,12,72,67,66,59,55,48]
     }
   },
   data() {
@@ -48,9 +48,10 @@ export default {
       isLoading1: true,
 
       offset: 0,
+      traffic: Array(11).fill(0),
 
       series: [{
-        data: this.data
+        data: Array(11).fill(0).slice(0)
       }],
 
       chartOptions: {
@@ -81,8 +82,11 @@ export default {
         markers: {
           size: 0
         },
+        xaxis: {
+          range: 10
+        },
         yaxis: {
-          max: 100
+          max: 10
         },
         legend: {
           show: false
@@ -102,15 +106,15 @@ export default {
     }, 400)
 
     window.setInterval(() => {
-      this.offset++
+      this.traffic.push(parseInt(Math.random() * 10))
       this.$refs.chart.updateSeries([{
-        data: this.getNewSeries()
+        data: this.traffic.slice()
       }])
     }, 1000)
   
     window.setInterval(() => {
       this.$refs.chart.updateSeries([{
-        data: this.data
+        data: this.traffic.slice()
       }], false, true)
     }, 60000)
   },
