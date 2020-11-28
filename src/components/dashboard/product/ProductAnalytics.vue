@@ -1,12 +1,20 @@
 <template>
   <div>
     <v-row dense>
+      <v-col md="4" sm="4" xs="12">
+        <overview></overview>
+      </v-col>
+      <v-col md="8" sm="8" xs="12">
+        <utilization></utilization>
+      </v-col>
+    </v-row>
+    <v-row dense>
       <v-col md="4" sm="8" xs="12">
-        <hours-per-year></hours-per-year>
+        <energy-consumption></energy-consumption>
       </v-col>
       <v-col md="2" sm="4" xs="12">
         <availability></availability>
-        <utilization class="mt-1"></utilization>
+        <hours-per-year class="mt-1"></hours-per-year>
       </v-col>
       <v-col md="6" sm="12" xs="12">
         <actual-target-weight
@@ -35,6 +43,7 @@
   </div>
 </template>
 <script>
+import Overview from './Overview'
 import HoursPerYear from './HoursPerYear'
 import Availability from './Availability'
 import Utilization from './Utilization'
@@ -43,12 +52,13 @@ import ActualTargetWeight from './ActualTargetWeight'
 import AverageUtilization from './AverageUtilization'
 import Cutting from './Cutting'
 import OEE from './OEE'
+import EnergyConsumption from './EnergyConsumption'
 
 import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    HoursPerYear, Availability, Utilization, ActualTargetWeight, AverageUtilization, Cutting, OEE
+    Overview, HoursPerYear, Availability, Utilization, ActualTargetWeight, AverageUtilization, Cutting, OEE, EnergyConsumption
   },
   data() {
     return {

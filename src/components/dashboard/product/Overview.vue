@@ -1,22 +1,22 @@
 <template>
   <v-card height="100%">
-    <v-card-title>
-      <strong>Utilization</strong>
-    </v-card-title>
+    <v-img
+      height="150"
+      contain
+      src="../../../assets/imgs/blender.png"
+    ></v-img>
     <v-card-text>
-      <apexchart
-        type="line"
-        ref="chart"
-        height="180"
-        :options="chartOptions"
-        :series="series"
-      >
-      </apexchart>
+      <div class="title">BD Batch Blender</div>
+      <div class="ml-2">
+        <div>Version: <small>v.1.0.0</small></div>
+        <div>Serial Number: <small>44A2242</small></div>
+      </div>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
+
 /*
 |---------------------------------------------------------------------
 | DEMO Dashboard Card Component
@@ -26,7 +26,6 @@
 | your own dashboard component
 |
 */
-
 export default {
   props: {
     label: {
@@ -37,60 +36,56 @@ export default {
       type: Boolean,
       default: false
     },
-    data: {
+    mode: {
+      type: String,
+      default: 'Weekly'
+    },
+    series: {
       type: Array,
-      default: () => [12,32,43,45,64,87,72,67,66,59,55,48]
+      default: () => [{
+        name: 'Desktops',
+        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+      }]
     }
   },
   data() {
     return {
       loadingInterval: null,
-      isLoading1: true,
-
-      offset: 0,
-
-      series: [{
-        data: this.data
-      }],
-
-      chartOptions: {
+      isLoading1: true
+    }
+  },
+  computed: {
+    chartOptions() {
+      return {
         chart: {
-          id: 'realtime',
           type: 'line',
-          animations: {
-            enabled: true,
-            easing: 'linear',
-            dynamicAnimation: {
-              speed: 1000
-            }
+          zoom: {
+            enabled: false
           },
           toolbar: {
             show: false
-          },
-          zoom: {
-            enabled: false
           }
         },
         dataLabels: {
           enabled: false
         },
         stroke: {
-          curve: 'smooth',
           width: 2
         },
-        markers: {
-          size: 0
+        grid: {
+          show: false
         },
         yaxis: {
-          max: 100
-        },
-        legend: {
           show: false
+        },
+        xaxis: {
+          labels: {
+            show: false
+          },
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
         }
       }
     }
-  },
-  computed: {
   },
   mounted() {
     let count = 0
@@ -100,29 +95,10 @@ export default {
       this[`isLoading${count++}`] = false
       if (count === 4) this.clear()
     }, 400)
-
-    window.setInterval(() => {
-      this.offset++
-      this.$refs.chart.updateSeries([{
-        data: this.getNewSeries()
-      }])
-    }, 1000)
-  
-    window.setInterval(() => {
-      this.$refs.chart.updateSeries([{
-        data: this.data
-      }], false, true)
-    }, 60000)
   },
   methods: {
     clear() {
       clearInterval(this.loadingInterval)
-    },
-
-    getNewSeries() {
-      this.data.push(this.data.shift())
-
-      return this.data
     }
   }
 }

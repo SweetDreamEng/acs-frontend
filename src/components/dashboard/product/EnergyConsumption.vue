@@ -1,15 +1,20 @@
 <template>
-  <v-card>
+  <v-card height="100%">
     <v-card-subtitle class="d-flex justify-space-between">
-      <strong>Operational Efficiency</strong>
+      <strong>Energy Consumption</strong>
       <MonthlyWeekly />
     </v-card-subtitle>
     <v-card-text>
+      <div>
+        <span class="display-1">887.3 kWH</span>
+        <span><v-icon color="green">mdi-arrow-down</v-icon>12% of target</span>
+      </div>
       <apexchart
         v-if="!isLoading1"
-        type="radialBar"
+        type="line"
         :options="chartOptions"
         :series="series"
+        height="260"
       >
       </apexchart>
     </v-card-text>
@@ -41,61 +46,56 @@ export default {
       type: Boolean,
       default: false
     },
+    mode: {
+      type: String,
+      default: 'Weekly'
+    },
     series: {
       type: Array,
-      default: () => [67]
+      default: () => [{
+        name: 'Desktops',
+        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+      }]
     }
   },
   data() {
     return {
       loadingInterval: null,
-      isLoading1: true,
-
-      chartOptions: {
-        chart: {
-          height: 350,
-          type: 'radialBar'
-        },
-        plotOptions: {
-          radialBar: {
-            startAngle: -135,
-            endAngle: 135,
-            dataLabels: {
-              name: {
-                fontSize: '12px',
-                color: '#222',
-                offsetY: 70
-              },
-              value: {
-                offsetY: -10,
-                fontSize: '18px',
-                color: undefined,
-                formatter: function (val) {
-                  return val + '%'
-                }
-              }
-            }
-          }
-        },
-        fill: {
-          type: 'gradient',
-          gradient: {
-            shade: 'dark',
-            shadeIntensity: 0.15,
-            inverseColors: false,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [0, 50, 65, 91]
-          }
-        },
-        stroke: {
-          dashArray: 4
-        },
-        labels: ['']
-      }
+      isLoading1: true
     }
   },
   computed: {
+    chartOptions() {
+      return {
+        chart: {
+          type: 'line',
+          zoom: {
+            enabled: false
+          },
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: 2
+        },
+        grid: {
+          show: false
+        },
+        yaxis: {
+          show: false
+        },
+        xaxis: {
+          labels: {
+            show: false
+          },
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+        }
+      }
+    }
   },
   mounted() {
     let count = 0
