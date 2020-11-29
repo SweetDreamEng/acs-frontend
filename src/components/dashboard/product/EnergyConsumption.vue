@@ -14,7 +14,7 @@
         type="line"
         :options="chartOptions"
         :series="series"
-        height="260"
+        height="140"
       >
       </apexchart>
     </v-card-text>

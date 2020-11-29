@@ -201,11 +201,18 @@ const module = {
     selectedCompany: null,
 
     modeWeightProduct: 'Weekly',
+    modeInventory: 'Weekly',
+
     paramWeightProduct: 0,
+    paramInventory: 0,
+
     valuesTgtWeightProduct: [],
     valuesActWeightProduct: [],
+    valuesHopInventory: [],
+    valuesFrtInventory: [],
 
-    isWeightProductLoading: false
+    isWeightProductLoading: false,
+    isInventoryProductLoading: false
   },
 
   actions: {
@@ -250,16 +257,20 @@ const module = {
       commit
     }, data) {
       commit('WEIGHT_PRODUCT_LOADING')
+      commit('INVENTORY_PRODUCT_LOADING')
       machineAPI.initProductAnalytics(data)
         .then((response) => {
           commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
+          commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
+          commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
         })
         .catch((error) => {
           console.log(error.response)
         })
         .finally(() => {
           commit('WEIGHT_PRODUCT_LOADED')
+          commit('INVENTORY_PRODUCT_LOADED')
         })
     },
 
@@ -279,6 +290,25 @@ const module = {
           commit('WEIGHT_PRODUCT_LOADED')
           commit('SET_PRODUCT_WEIGHT_MODE', data.mode)
           commit('SET_PRODUCT_WEIGHT_PARAM', data.param)
+        })
+    },
+
+    onProductInventoryParamChanged({
+      commit
+    }, data) {
+      commit('INVENTORY_PRODUCT_LOADING')
+      machineAPI.onProductInventoryParamChanged(data)
+        .then((response) => {
+          commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
+          commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+          commit('INVENTORY_PRODUCT_LOADED')
+          commit('SET_PRODUCT_INVENTORY_MODE', data.mode)
+          commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
         })
     }
   },
@@ -321,15 +351,28 @@ const module = {
     SET_ACT_WEIGHT_VALUES(state, act) {
       state.valuesActWeightProduct = act
     },
+    SET_HOP_INVENTORY_VALUES(state, hops) {
+      state.valuesHopInventory = hops
+    },
+    SET_FRT_INVENTORY_VALUES(state, fractions) {
+      state.valuesFrtInventory = fractions
+    },
 
     // Target and Actuals mode - Weekly or Monthly
     SET_PRODUCT_WEIGHT_MODE(state, mode) {
       state.modeWeightProduct = mode
     },
     // Target and Actuals mode - Weekly or Monthly
+    SET_PRODUCT_INVENTORY_MODE(state, mode) {
+      state.modeInventory = mode
+    },
+
+    // Target and Actuals mode - Weekly or Monthly
     SET_PRODUCT_WEIGHT_PARAM(state, param) {
-      console.log(param)
       state.paramWeightProduct = param
+    },
+    SET_PRODUCT_INVENTORY_PARAM(state, param) {
+      state.paramInventory = param
     },
 
     WEIGHT_PRODUCT_LOADING(state) {
@@ -337,6 +380,12 @@ const module = {
     },
     WEIGHT_PRODUCT_LOADED(state) {
       state.isWeightProductLoading = false
+    },
+    INVENTORY_PRODUCT_LOADING(state) {
+      state.isInventoryProductLoading = true
+    },
+    INVENTORY_PRODUCT_LOADED(state) {
+      state.isInventoryProductLoading = false
     }
   },
 

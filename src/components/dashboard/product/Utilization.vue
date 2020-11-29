@@ -46,8 +46,9 @@ export default {
     return {
       loadingInterval: null,
       isLoading1: true,
+      interval1: null,
+      interval2: null,
 
-      offset: 0,
       traffic: Array(11).fill(0),
 
       series: [{
@@ -83,10 +84,16 @@ export default {
           size: 0
         },
         xaxis: {
+          labels: {
+            show: false
+          },
           range: 10
         },
         yaxis: {
           max: 10
+        },
+        grid: {
+          show: false
         },
         legend: {
           show: false
@@ -105,18 +112,24 @@ export default {
       if (count === 4) this.clear()
     }, 400)
 
-    window.setInterval(() => {
+    this.interval1 = window.setInterval(() => {
       this.traffic.push(parseInt(Math.random() * 10))
       this.$refs.chart.updateSeries([{
         data: this.traffic.slice()
       }])
     }, 1000)
   
-    window.setInterval(() => {
-      this.$refs.chart.updateSeries([{
-        data: this.traffic.slice()
-      }], false, true)
+    this.interval2 = window.setInterval(() => {
+      if (this.$refs.chart) {
+        this.$refs.chart.updateSeries([{
+          data: this.traffic.slice()
+        }], false, true)
+      }
     }, 60000)
+  },
+  destroyed() {
+    clearInterval(this.interval1)
+    clearInterval(this.interval2)
   },
   methods: {
     clear() {

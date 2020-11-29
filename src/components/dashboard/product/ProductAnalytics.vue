@@ -9,12 +9,16 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="4" sm="8" xs="12">
-        <energy-consumption></energy-consumption>
-      </v-col>
-      <v-col md="2" sm="4" xs="12">
-        <availability></availability>
-        <hours-per-year class="mt-1"></hours-per-year>
+      <v-col md="6" sm="12" xs="12">
+        <OEE
+          :mode="modeInventory"
+          :param="paramInventory"
+          :valuesHopInventory="valuesHopInventory"
+          :valuesFrtInventory="valuesFrtInventory"
+          :isLoading="isInventoryProductLoading"
+          @changeParams="_onProductInventoryParamChanged"
+        >
+        </OEE>
       </v-col>
       <v-col md="6" sm="12" xs="12">
         <actual-target-weight
@@ -33,11 +37,15 @@
       <v-col md="4" sm="8" xs="12">
         <AverageUtilization />
       </v-col>
+      <v-col md="4" sm="8" xs="12">
+        <energy-consumption></energy-consumption>
+      </v-col>
+      <v-col md="2" sm="4" xs="12">
+        <availability :series="statusSeries"></availability>
+      </v-col>
       <v-col md="2" sm="4" xs="12">
         <Cutting />
-      </v-col>
-      <v-col md="6" sm="12" xs="12">
-        <OEE />
+        <!-- <hours-per-year class="mt-1"></hours-per-year> -->
       </v-col>
     </v-row>
   </div>
@@ -58,20 +66,36 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    Overview, HoursPerYear, Availability, Utilization, ActualTargetWeight, AverageUtilization, Cutting, OEE, EnergyConsumption
+    Overview, Availability, Utilization, ActualTargetWeight, AverageUtilization, Cutting, OEE, EnergyConsumption
   },
   data() {
     return {
-
+      statusSeries: [{
+        name: 'Status',
+        data: [
+          ['2020-02-02', 13],
+          ['2020-02-03', 16],
+          ['2020-02-04', 9],
+          ['2020-02-05', 12]
+        ]
+      }]
     }
   },
   computed: {
     ...mapState({
       modeWeight: (state) => state.machines.modeWeightProduct,
+      modeInventory: (state) => state.machines.modeInventory,
+
       paramWeight: (state) => state.machines.paramWeightProduct,
+      paramInventory: (state) => state.machines.paramInventory,
+
       valuesTgtWeight: (state) => state.machines.valuesTgtWeightProduct,
       valuesActWeight: (state) => state.machines.valuesActWeightProduct,
-      isWeightProductLoading: (state) => state.machines.isWeightProductLoading
+      valuesHopInventory: (state) => state.machines.valuesHopInventory,
+      valuesFrtInventory: (state) => state.machines.valuesFrtInventory,
+
+      isWeightProductLoading: (state) => state.machines.isWeightProductLoading,
+      isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading
     })
   },
   mounted() {
@@ -83,10 +107,14 @@ export default {
   methods: {
     ...mapActions({
       initProductAnalytics: 'machines/initProductAnalytics',
-      onProductWeightParamChange: 'machines/onProductWeightParamChange'
+      onProductWeightParamChange: 'machines/onProductWeightParamChange',
+      onProductInventoryParamChanged: 'machines/onProductInventoryParamChanged'
     }),
     _onProductWeightParamChange(data) {
       this.onProductWeightParamChange(data)
+    },
+    _onProductInventoryParamChanged(data) {
+      this.onProductInventoryParamChanged(data)
     }
   }
 }

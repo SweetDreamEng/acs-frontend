@@ -16,5 +16,10 @@ export default {
     return api.post('/analytics/product-weight', data).then((response) => {
       return response
     })
+  },
+  onProductInventoryParamChanged(data) {
+    return api.post('/analytics/product-inventory', data).then((response) => {
+      return response
+    })
   }
 }

@@ -32,7 +32,8 @@
             sm="6"
             md="6"
             lg="6"
-            class="pb-0">
+            class="pb-0"
+          >
             <track-card
               label="Avg First Pass Yield"
               class="elevation-0"
@@ -41,14 +42,16 @@
               :percentage="4.3"
               percentage-label="vs last week"
               :series="customersSeries"
-            ></track-card>
+            >
+            </track-card>
           </v-col>
           <v-col
             xs="12"
             sm="6"
             md="6"
             lg="6"
-            class="pb-0">
+            class="pb-0"
+          >
             <oee-card></oee-card>
           </v-col>
         </v-row>
