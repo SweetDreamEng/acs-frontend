@@ -1,42 +1,61 @@
 <template>
-  <v-card
-    height="100%"
-    :loading="isLoading"
-    :disabled="isLoading"
-  >
-    <v-card-subtitle class="d-flex justify-space-between">
-      <div>
-        <div class="font-weight-bold">Target & Actuals Weight</div>
-        <div class="font-italic">({{ mode }})</div>
-      </div>
-      <MonthlyWeekly @changeMode="changeMode"/>
-    </v-card-subtitle>
-    <v-card-subtitle>
-      <v-select
-        v-model="loc_param"
-        :items="items"
-        label="Choose Parameter"
-        item-text="text"
-        item-value="id"
-        hide-details
-        @change="changeParams"
-        outlined
-        dense
-        class="ml-auto"
-        style="width: 480px"
-      >
-      </v-select>
-    </v-card-subtitle>
-    <v-card-text>
-      <apexchart
-        type="area"
-        :options="chartOptions"
-        :series="series"
-        height="240"
-      >
-      </apexchart>
-    </v-card-text>
-  </v-card>
+  <div>
+    <v-card
+      height="100%"
+      :loading="isLoading"
+      :disabled="isLoading"
+    >
+      <v-card-subtitle class="d-flex justify-space-between">
+        <div>
+          <div class="font-weight-bold">Target & Actuals Weight</div>
+          <div class="font-italic">({{ mode }})</div>
+        </div>
+        <v-btn
+          icon
+          small
+          class="ml-auto"
+          @click="showTimeRangeChooser = true"
+        >
+          <v-icon>mdi-dots-horizontal</v-icon>
+        </v-btn>
+      </v-card-subtitle>
+      <v-card-subtitle>
+        <v-select
+          v-model="loc_param"
+          :items="items"
+          label="Choose Parameter"
+          item-text="text"
+          item-value="id"
+          hide-details
+          @change="changeParams"
+          outlined
+          dense
+          class="ml-auto"
+          style="width: 480px"
+        >
+        </v-select>
+      </v-card-subtitle>
+      <v-card-text>
+        <apexchart
+          type="area"
+          :options="chartOptions"
+          :series="series"
+          height="240"
+        >
+        </apexchart>
+      </v-card-text>
+    </v-card>
+    <time-range-chooser
+      :dlg="showTimeRangeChooser"
+      :date-from="weightTimeRange.dateFrom"
+      :date-to="weightTimeRange.dateTo"
+      :time-from="weightTimeRange.timeFrom"
+      :time-to="weightTimeRange.timeTo"
+      @close="showTimeRangeChooser = false"
+      @submit="onTimeRangeChanged"
+    >
+    </time-range-chooser>
+  </div>
 </template>
 
 <script>
@@ -50,10 +69,13 @@
 | your own dashboard component
 |
 */
-import MonthlyWeekly from '../MonthlyWeekly'
+import TimeRangeChooser from '../TimeRangeChooser'
+
+import { mapState } from 'vuex'
+
 export default {
   components: {
-    MonthlyWeekly
+    TimeRangeChooser
   },
   props: {
     isLoading: {
@@ -81,6 +103,8 @@ export default {
     return {
       loadingInterval: null,
       isLoading1: true,
+
+      showTimeRangeChooser: false,
 
       items: [
         {
@@ -132,6 +156,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('machines', ['weightTimeRange']),
     series() {
       return [
         {
@@ -161,6 +186,10 @@ export default {
         mode: this.mode,
         param: this.loc_param
       })
+    },
+    onTimeRangeChanged(data) {
+      this.$emit('change', data)
+      this.showTimeRangeChooser = false
     }
   }
 }

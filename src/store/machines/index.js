@@ -206,6 +206,13 @@ const module = {
     paramWeightProduct: 0,
     paramInventory: 0,
 
+    weightTimeRange: {
+      timeRange: 'last24Hours',
+      dateFrom: new Date().toISOString().substr(0, 10),
+      dateTo: new Date().toISOString().substr(0, 10),
+      timeFrom: '00:00',
+      timeTo: '00:00'
+    },
     valuesTgtWeightProduct: [],
     valuesActWeightProduct: [],
     valuesHopInventory: [],
@@ -254,16 +261,21 @@ const module = {
 
     // product analytics init
     initProductAnalytics({
-      commit
-    }, data) {
+      commit, state
+    }) {
       commit('WEIGHT_PRODUCT_LOADING')
       commit('INVENTORY_PRODUCT_LOADING')
-      machineAPI.initProductAnalytics(data)
+      machineAPI.initProductAnalytics({
+        mode: state.modeWeightProduct,
+        param: state.paramWeightProduct
+      })
         .then((response) => {
           commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
           commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
           commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
+          commit('alarms/SET_ALARM_TYPES', response.data.alarm_types, { root: true })
+          commit('alarms/SET_ALARMS', response.data.alarms, { root: true })
         })
         .catch((error) => {
           console.log(error.response)

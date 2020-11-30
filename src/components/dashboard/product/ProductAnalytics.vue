@@ -98,15 +98,8 @@ export default {
       isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading
     })
   },
-  mounted() {
-    this.initProductAnalytics({
-      mode: this.modeWeight,
-      param: this.paramWeight
-    })
-  },
   methods: {
     ...mapActions({
-      initProductAnalytics: 'machines/initProductAnalytics',
       onProductWeightParamChange: 'machines/onProductWeightParamChange',
       onProductInventoryParamChanged: 'machines/onProductInventoryParamChanged'
     }),

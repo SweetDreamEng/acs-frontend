@@ -10,12 +10,17 @@
       <div class="display-1">{{ selectedMachine.machinename }}</div>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
-          <product-analytics></product-analytics>
+          <product-analytics
+          >
+          </product-analytics>
         </v-col>
         <v-col cols="12">
           <alarm-table
             label="Alarms"
             :loading="isLoading1"
+            :alarm-types="alarmTypes"
+            :alarms="alarms"
+            @change="_onAlarmParamChange"
           >
           </alarm-table>
         </v-col>
@@ -58,7 +63,7 @@
 */
 
 // import vuex helper functions
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 import ProductAnalytics from '../../components/dashboard/product/ProductAnalytics'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
@@ -83,28 +88,28 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      alarmTypes: (state) => state.alarms.alarmTypes,
+      alarms: (state) => state.alarms.alarms
+    }),
     ...mapGetters('machines', [
       'selectedMachine'
     ])
   },
   mounted() {
-    let count = 0
-
     this.selectMachine(this.$route.params.id)
 
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
+    this.initProductAnalytics()
   },
   beforeDestroy() {
     this.clear()
   },
   methods: {
     ...mapActions({
+      initProductAnalytics: 'machines/initProductAnalytics',
       'selectMachine': 'machines/selectMachine',
-      'updateSelections': 'machines/updateSelections'
+      'updateSelections': 'machines/updateSelections',
+      onAlarmParamChanged: 'alarms/onAlarmParamChanged'
     }),
     clear() {
       clearInterval(this.loadingInterval)
@@ -112,6 +117,9 @@ export default {
     onMachineUpdate() {
       this.updateSelections(this.selections)
       this.dialog = false
+    },
+    _onAlarmParamChange(params) {
+      this.onAlarmParamChanged(params)
     }
   }
 }
