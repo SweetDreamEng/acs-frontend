@@ -41,17 +41,14 @@
 
           <!-- custom table row -->
           <template v-slot:item.createdAt="{ item }">
-            <span v-if="item.status === 'Alarm'">
-              {{ item.createdAt }}
-            </span>
+            {{ lastActivated(item) }}
           </template>
           <template v-slot:item.status="{ item }">
             <v-chip
-              :color="item.status === 'Normal' ? 'green' : 'red'"
+              :color="alarmsOfType(item).length === 0 ? 'green' : 'red'"
               dark
               small
             >
-              <b>{{ item.status }}</b>
             </v-chip>
           </template>
           <template v-slot:expanded-item="{  }">
@@ -123,7 +120,7 @@ export default {
     return {
       headers: [
         { text: 'Alarm', align: 'start', value: 'name' },
-        { text: 'Status', align: 'start', value: 'status' },
+        { text: 'Status', align: 'center', value: 'status' },
         { text: 'Alarm activated at', align: 'start', value: 'createdAt' },
         { text: '', value: 'data-table-expand' }
       ],
@@ -142,6 +139,18 @@ export default {
     onTimeRangeChanged(data) {
       this.$emit('change', data)
       this.showTimeRangeChooser = false
+    },
+    alarmsOfType(type) {
+      return this.alarms.filter((alarm) => {
+        return alarm.typeId === type.id
+      })
+    },
+    lastActivated(type) {
+      if (this.alarmsOfType(type).length === 0) {
+        return 'No Alarm Detected'
+      } else {
+        return ''
+      }
     }
   }
 }

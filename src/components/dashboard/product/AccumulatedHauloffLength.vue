@@ -10,7 +10,7 @@
       </div>
       <apexchart
         v-if="!isLoading1"
-        type="line"
+        type="area"
         :options="chartOptions"
         :series="series"
         height="140"
@@ -39,11 +39,11 @@ export default {
       type: String,
       default: 'Weekly'
     },
-    series: {
+    hauloffLengths: {
       type: Array,
       default: () => [{
-        name: 'Inventory',
-        data: [148, 10, 41, 35, 62, 69, 91, 51, 49]
+        name: 'Hauloff Length',
+        data: []
       }]
     }
   },
@@ -57,7 +57,7 @@ export default {
     chartOptions() {
       return {
         chart: {
-          type: 'line',
+          type: 'area',
           zoom: {
             enabled: false
           },
@@ -69,6 +69,7 @@ export default {
           enabled: false
         },
         stroke: {
+          curve: 'straight',
           width: 2
         },
         grid: {
@@ -84,6 +85,12 @@ export default {
           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
         }
       }
+    },
+    series() {
+      return [{
+        name: 'Inventory',
+        data: this.hauloffLengths
+      }]
     }
   },
   mounted() {

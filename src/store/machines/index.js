@@ -220,6 +220,10 @@ const module = {
     valuesActWeightProduct: [],
     valuesHopInventory: [],
     valuesFrtInventory: [],
+    
+    // GH Gravimetric Extrusion Control Hopper
+    hopperInventories: [],
+    hauloffLengths: [],
 
     isWeightProductLoading: false,
     isInventoryProductLoading: false
@@ -279,6 +283,11 @@ const module = {
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
           commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
           commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
+
+          // GH Gravimetric Extrusion Control Hopper
+          commit('SET_HOPPER_INVENTORIES', response.data.hopper_inventories)
+          commit('SET_HAULOFF_LENGTHS', response.data.hauloff_lengths)
+
           commit('alarms/SET_ALARM_TYPES', response.data.alarm_types, { root: true })
           commit('alarms/SET_ALARMS', response.data.alarms, { root: true })
         })
@@ -364,7 +373,7 @@ const module = {
     SET_MACHINE(state, machine) {
       state.machine = machine
     },
-    
+
     // set target values
     SET_TGT_WEIGHT_VALUES(state, tgt) {
       state.valuesTgtWeightProduct = tgt
@@ -408,7 +417,10 @@ const module = {
     },
     INVENTORY_PRODUCT_LOADED(state) {
       state.isInventoryProductLoading = false
-    }
+    },
+
+    SET_HOPPER_INVENTORIES(state, hopperInventories) { state.hopperInventories = hopperInventories },
+    SET_HAULOFF_LENGTHS(state, hauloffLengths) { state.hauloffLengths = hauloffLengths }
   },
 
   getters: {

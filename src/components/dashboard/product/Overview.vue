@@ -8,7 +8,7 @@
     <v-card-text>
       <div class="subtitle font-weight-bold">{{ machine.name }}</div>
       <div class="ml-2">
-        <div>PLC Software Version: <small>v.1.0.0</small></div>
+        <div>PLC Software Version: <small>{{ machine.version }}</small></div>
         <div>PLC Software Build: <small></small></div>
         <div>Serial Number: <small>44A2242</small></div>
       </div>

@@ -30,10 +30,16 @@
     </v-row>
     <v-row dense>
       <v-col md="4" sm="8" xs="12">
-        <accumulated-hopper-inventory></accumulated-hopper-inventory>
+        <accumulated-hopper-inventory
+          :hopper-inventories="hopperInventories"
+        >
+        </accumulated-hopper-inventory>
       </v-col>
       <v-col md="4" sm="8" xs="12">
-        <accumulated-hauloff-length></accumulated-hauloff-length>
+        <accumulated-hauloff-length
+          :hauloff-lengths="hauloffLengths"
+        >
+        </accumulated-hauloff-length>
       </v-col>
     </v-row>
   </div>
@@ -78,6 +84,9 @@ export default {
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
+
+      hopperInventories: (state) => state.machines.hopperInventories,
+      hauloffLengths: (state) => state.machines.hauloffLengths,
 
       modeWeight: (state) => state.machines.modeWeightProduct,
       modeInventory: (state) => state.machines.modeInventory,
