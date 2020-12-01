@@ -3,8 +3,8 @@ import axios from 'axios'
 import store from './store'
 
 const API = axios.create({
-  baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
-  // baseURL: 'http://localhost/acs-api/public/api',
+  // baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
+  baseURL: 'http://localhost/acs-api/public/api',
   timeout: 15000
 })
 
@@ -24,17 +24,17 @@ API.interceptors.request.use(async (config) => {
 API.interceptors.response.use(function (response) {
   return response
 }, function (error) {
-  // if (401 === error.response.status) {
+  if (401 === error.response.status) {
 
-  //   Vue.auth.removeToken()
-  //   Vue.auth.removeUser()
+    Vue.auth.removeToken()
+    Vue.auth.removeUser()
 
-  //   store.commit('auth/SET_LOGOUT_ATUH', { root: true })
+    store.commit('auth/SET_LOGOUT_ATUH', { root: true })
 
-  //   window.location = '/auth/signin'
-  // } else {
-  return Promise.reject(error)
-  // }
+    window.location = '/auth/signin'
+  } else {
+    return Promise.reject(error)
+  }
 })
 
 export default API

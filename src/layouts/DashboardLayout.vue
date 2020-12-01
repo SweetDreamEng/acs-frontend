@@ -22,8 +22,11 @@
       </template>
 
       <!-- Navigation menu -->
-      <main-menu v-if="userRole === 'acs_admin'" :menu="navigation.menu" />
-      <main-menu v-else :menu="navigation.customerMenu" />
+      <main-menu v-if="userRole === 'acs_admin' || userRole === 'acs_manager'" :menu="navigation.menu" />
+      <main-menu v-if="userRole === 'acs_viewer'" :menu="navigation.acsViewerMenu" />
+      <main-menu v-if="userRole === 'customer_admin'" :menu="navigation.customerMenu" />
+      <main-menu v-if="userRole === 'customer_manager'" :menu="navigation.customerMenu" />
+      <main-menu v-if="userRole === 'customer_operator'" :menu="navigation.customerMenu" />
 
       <!-- Navigation menu footer -->
       <template v-slot:append>

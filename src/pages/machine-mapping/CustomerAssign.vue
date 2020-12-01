@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
     <!-- import devices from excel file -->
-    <device-import></device-import>
+    <device-import v-if="canImportDevices"></device-import>
 
     <div class="pt-1"></div>
     
@@ -258,7 +258,8 @@ export default {
     }),
     ...mapGetters({
       companies: 'customers/extendedCompanies',
-      machines: 'machines/extendedMachines'
+      machines: 'machines/extendedMachines',
+      canImportDevices: 'auth/canImportDevices'
     })
   },
   mounted() {

@@ -6,7 +6,7 @@
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
       <v-spacer></v-spacer>
-      <v-btn color="primary" to="/customers/add">
+      <v-btn v-if="canCreateCompanies" color="primary" to="/customers/add">
         Create Company
       </v-btn>
     </div>
@@ -32,7 +32,7 @@
         </template> -->
 
         <template v-slot:item.action="{ item }">
-          <div class="actions">
+          <div v-if="canCreateCompanies" class="actions">
             <v-btn icon :to="editLink(item)">
               <v-icon small>mdi-pencil</v-icon>
             </v-btn>
@@ -52,7 +52,7 @@
 |
 | List all customers and customer add/edit options
 */
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -80,6 +80,9 @@ export default {
     ...mapState({
       customerAdmins: (state) => state.customers.customerAdmins,
       isTableLoading: (state) => state.customers.isTableLoading
+    }),
+    ...mapGetters({
+      canCreateCompanies: 'auth/canCreateCompanies'
     })
   },
   watch: {

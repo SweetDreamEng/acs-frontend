@@ -11,6 +11,16 @@ export default {
     ]
   }],
 
+  acsViewerMenu: [{
+    text: '',
+    key: '',
+    items: [
+      { icon: 'mdi-view-dashboard-outline', text: 'ACS Machines', link: '/acs-machines' },
+      { icon: 'mdi-city', text: 'Companies', link: '/customers/list' },
+      { icon: 'mdi-account-multiple', text: 'Users', link: '/acs-admin/users/list' }
+    ]
+  }],
+
   customerMenu: [{
     text: '',
     key: '',

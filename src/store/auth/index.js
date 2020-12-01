@@ -50,7 +50,7 @@ const module = {
           commit('SET_AUTH_DATA', response.data)
           Vue.auth.setUser(response.data)
 
-          if (response.data.role === 'acs_admin') {
+          if (response.data.role === 'acs_admin' || response.data.role === 'acs_manager' || response.data.role === 'acs_viewer') {
             router.push({
               name: 'acs-machines'
             })
@@ -204,6 +204,15 @@ const module = {
     },
     roleName: (state) => (role_key) => {
       return state.roles.find((role) => role.key === role_key).name
+    },
+    canCreateAcsUser: (state) => {
+      return state.user.role === 'acs_admin'
+    },
+    canCreateCompanies: (state) => {
+      return state.user.role === 'acs_admin' || state.user.role === 'acs_manager'
+    },
+    canImportDevices: (state) => {
+      return state.user.role === 'acs_admin' || state.user.role === 'acs_manager'
     }
   }
 }
