@@ -1,33 +1,31 @@
 <template>
   <v-card height="100%">
-    <v-img
-      height="150"
-      contain
-      src="../../../assets/imgs/blender.png"
-    ></v-img>
+    <v-card-title class="d-flex justify-space-between">
+      <strong>Accumulated Hauloff Length</strong>
+    </v-card-title>
     <v-card-text>
-      <div class="subtitle font-weight-bold">{{ machine.name }}</div>
-      <div class="ml-2">
-        <div>PLC Software Version: <small>v.1.0.0</small></div>
-        <div>PLC Software Build: <small></small></div>
-        <div>Serial Number: <small>44A2242</small></div>
+      <div>
+        <span class="display-1">655.1</span>
+        <span><v-icon color="green">mdi-arrow-up</v-icon>36% of target</span>
       </div>
+      <apexchart
+        v-if="!isLoading1"
+        type="line"
+        :options="chartOptions"
+        :series="series"
+        height="140"
+      >
+      </apexchart>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
 
-/*
-|---------------------------------------------------------------------
-| DEMO Dashboard Card Component
-|---------------------------------------------------------------------
-|
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
-|
-*/
+// import MonthlyWeekly from '../MonthlyWeekly'
 export default {
+  components: {
+  },
   props: {
     label: {
       type: String,
@@ -37,9 +35,16 @@ export default {
       type: Boolean,
       default: false
     },
-    machine: {
-      type: Object,
-      default: () => ({})
+    mode: {
+      type: String,
+      default: 'Weekly'
+    },
+    series: {
+      type: Array,
+      default: () => [{
+        name: 'Inventory',
+        data: [148, 10, 41, 35, 62, 69, 91, 51, 49]
+      }]
     }
   },
   data() {

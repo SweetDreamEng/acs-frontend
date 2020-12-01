@@ -7,7 +7,7 @@ export default {
     })
   },
 
-  initProductAnalytics(data) {
+  initProduct(data) {
     return api.post('/analytics/init-product', data).then((response) => {
       return response
     })

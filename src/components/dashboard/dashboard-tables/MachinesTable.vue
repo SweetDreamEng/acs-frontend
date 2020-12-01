@@ -110,11 +110,10 @@ export default {
         {
           id: 1,
           machine: {
-            title: 'Machine 1',
+            title: 'BD Batch Blender',
             to: 'loc1/zone1'
           },
           utilization: '32%',
-          color: 'green',
           value: 75,
           oee: '93.1%',
           performance: '78%',
@@ -124,11 +123,10 @@ export default {
         {
           id: 2,
           machine: {
-            title: 'Machine 2',
+            title: 'Accumeter Ovation Continuous',
             to: 'loc1/zone2'
           },
           utilization: '36%',
-          color: 'green',
           value: 52,
           oee: '89.8%',
           performance: '28%',
@@ -138,11 +136,10 @@ export default {
         {
           id: 3,
           machine: {
-            title: 'Machine 3',
+            title: 'GH Gravimetric Extrusion Control Hopper',
             to: 'loc1/zone3'
           },
           utilization: '82%',
-          color: 'red',
           value: 78,
           oee: '78.2%',
           performance: '25%',

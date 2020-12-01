@@ -2,7 +2,10 @@
   <div>
     <v-row dense>
       <v-col md="4" sm="4" xs="12">
-        <overview></overview>
+        <overview
+          :machine="machine"
+        >
+        </overview>
       </v-col>
       <v-col md="8" sm="8" xs="12">
         <utilization></utilization>
@@ -51,16 +54,16 @@
   </div>
 </template>
 <script>
-import Overview from './Overview'
-import HoursPerYear from './HoursPerYear'
-import Availability from './Availability'
-import Utilization from './Utilization'
+import Overview from '../Overview'
+import HoursPerYear from '../HoursPerYear'
+import Availability from '../Availability'
+import Utilization from '../Utilization'
 // import StatusSummary from './StatusSummary'
-import ActualTargetWeight from './ActualTargetWeight'
-import AverageUtilization from './AverageUtilization'
-import Cutting from './Cutting'
-import OEE from './OEE'
-import EnergyConsumption from './EnergyConsumption'
+import ActualTargetWeight from '../ActualTargetWeight'
+import AverageUtilization from '../AverageUtilization'
+import Cutting from '../Cutting'
+import OEE from '../OEE'
+import EnergyConsumption from '../EnergyConsumption'
 
 import { mapState, mapActions } from 'vuex'
 
@@ -83,6 +86,8 @@ export default {
   },
   computed: {
     ...mapState({
+      machine: (state) => state.machines.machine,
+
       modeWeight: (state) => state.machines.modeWeightProduct,
       modeInventory: (state) => state.machines.modeInventory,
 

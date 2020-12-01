@@ -195,6 +195,9 @@ const module = {
         notes: []
       }
     ],
+    machine: {
+
+    },
     machines: [],
     selectedId: 0,
 
@@ -260,16 +263,18 @@ const module = {
     },
 
     // product analytics init
-    initProductAnalytics({
+    initProduct({
       commit, state
-    }) {
+    }, id) {
       commit('WEIGHT_PRODUCT_LOADING')
       commit('INVENTORY_PRODUCT_LOADING')
-      machineAPI.initProductAnalytics({
+      machineAPI.initProduct({
+        machineId: id,
         mode: state.modeWeightProduct,
         param: state.paramWeightProduct
       })
         .then((response) => {
+          commit('SET_MACHINE', response.data.machine)
           commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
           commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
@@ -355,6 +360,11 @@ const module = {
       state.selectedCompany = company
     },
 
+    // set machine for product page
+    SET_MACHINE(state, machine) {
+      state.machine = machine
+    },
+    
     // set target values
     SET_TGT_WEIGHT_VALUES(state, tgt) {
       state.valuesTgtWeightProduct = tgt
