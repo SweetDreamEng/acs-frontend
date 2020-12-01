@@ -54,7 +54,7 @@ const module = {
             router.push({
               name: 'acs-machines'
             })
-          } else if (response.data.role === 'customer_admin') {
+          } else if (response.data.role === 'customer_admin' || response.data.role === 'customer_manager' || response.data.role === 'customer_operator') {
             router.push({
               name: 'dashboard-analytics'
             })
@@ -213,6 +213,9 @@ const module = {
     },
     canImportDevices: (state) => {
       return state.user.role === 'acs_admin' || state.user.role === 'acs_manager'
+    },
+    canCreateCustomerUser: (state) => {
+      return state.user.role === 'customer_admin'
     }
   }
 }

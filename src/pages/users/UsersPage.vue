@@ -6,7 +6,7 @@
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
       <v-spacer></v-spacer>
-      <v-btn color="primary" to="/users/add">
+      <v-btn v-if="canCreateCustomerUser" color="primary" to="/users/add">
         Create User
       </v-btn>
     </div>
@@ -100,7 +100,7 @@
         </template>
 
         <template v-slot:item.action="{ item }">
-          <div class="actions">
+          <div v-if="canCreateCustomerUser" class="actions">
             <v-btn icon :to="'/users/edit/' + item.id">
               <v-icon small>mdi-pencil</v-icon>
             </v-btn>
@@ -122,7 +122,7 @@
 */
 
 import CopyLabel from '../../components/common/CopyLabel'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -155,6 +155,9 @@ export default {
     ...mapState({
       users: (state) => state.users.data,
       isUsersTableLoading: (state) => state.users.isUsersTableLoading
+    }),
+    ...mapGetters({
+      canCreateCustomerUser: 'auth/canCreateCustomerUser'
     })
   },
   watch: {

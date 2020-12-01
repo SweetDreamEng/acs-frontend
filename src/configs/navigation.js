@@ -37,6 +37,21 @@ export default {
       { icon: 'mdi-account-multiple', text: 'Division/Zones', link: '/locations-zones' }
     ]
   }],
+  customerOperatorMenu: [{
+    text: '',
+    key: '',
+    items: [
+      { icon: 'mdi-view-dashboard-outline', text: 'Machines', link: '/dashboard/analytics' },
+      { icon: 'mdi-account-multiple', text: 'User Access', link: '/users/list' },
+      { icon: 'mdi-speedometer', text: 'Threshold', regex: /^\/threshold/,
+        items: [
+          { text: 'Thresholds', link: '/threshold/list' },
+          { text: 'Add Threshold', link: '/threshold/add' }
+        ]
+      },
+      { icon: 'mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' }
+    ]
+  }],
 
   // footer links
   footer: [{
