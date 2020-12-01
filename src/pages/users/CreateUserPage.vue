@@ -67,38 +67,40 @@
               >
               </v-select>
               
-              <div
-                v-for="(location, i) in locations"
-                :key="i"
-              >
-                <v-checkbox
-                  v-model="selectedLocations"
-                  :value="location.id"
-                  :label="location.name"
-                  class="shrink mr-2 mt-0"
-                  hide-details
-                ></v-checkbox>
+              <div v-if="user.role !== 4">
                 <div
-                  v-if="selectedLocations.includes(location.id)"
-                  class="d-flex flex-wrap px-2"
+                  v-for="(location, i) in locations"
+                  :key="i"
                 >
-                  <v-chip-group
-                    v-model="selectedZones"
-                    multiple
-                    column
+                  <v-checkbox
+                    v-model="selectedLocations"
+                    :value="location.id"
+                    :label="location.name"
+                    class="shrink mr-2 mt-0"
+                    hide-details
+                  ></v-checkbox>
+                  <div
+                    v-if="selectedLocations.includes(location.id)"
+                    class="d-flex flex-wrap px-2"
                   >
-                    <v-chip
-                      v-for="(zone, j) in zonesOfLocation(location.id)"
-                      :key="j"
-                      :value="zone.id"
-                      filter
-                      outlined
-                      small
-                      color="primary"
+                    <v-chip-group
+                      v-model="selectedZones"
+                      multiple
+                      column
                     >
-                      {{ zone.name }}
-                    </v-chip>
-                  </v-chip-group>
+                      <v-chip
+                        v-for="(zone, j) in zonesOfLocation(location.id)"
+                        :key="j"
+                        :value="zone.id"
+                        filter
+                        outlined
+                        small
+                        color="primary"
+                      >
+                        {{ zone.name }}
+                      </v-chip>
+                    </v-chip-group>
+                  </div>
                 </div>
               </div>
 

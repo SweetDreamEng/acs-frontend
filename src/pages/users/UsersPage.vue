@@ -90,7 +90,7 @@
             label
             small
             class="font-weight-bold"
-            :dark="item.role.key === 'customer_manager' || item.role.key === 'customer_admin'"
+            dark
             :color="roleColor(item.role)"
           >{{ item.role.name | capitalize }}</v-chip>
         </template>
@@ -174,9 +174,9 @@ export default {
     }),
     searchUser() {},
     roleColor(role) {
-      if (role.key === 'customer_admin') return '#4CAF50'
-      else if (role.key === 'customer_manager') return '#F79803'
-      else return undefined
+      if (role.key === 'customer_admin') return 'primary'
+      else if (role.key === 'customer_manager') return '#4CAF50'
+      else return '#F79803'
     }
   }
 }

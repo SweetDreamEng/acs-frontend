@@ -171,7 +171,7 @@ export default {
     roleColor(role) {
       if (role.key === 'acs_manager') return '#4CAF50'
       else if (role.key === 'acs_viewer') return '#F79803'
-      else return undefined
+      else return 'primary'
     }
   }
 }
