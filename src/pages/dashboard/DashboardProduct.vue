@@ -14,6 +14,10 @@
             v-if="machine.id === 1"
           >
           </product-analytics1>
+          <product-analytics2
+            v-if="machine.id === 2"
+          >
+          </product-analytics2>
           <product-analytics3
             v-if="machine.id === 3"
           >
@@ -71,6 +75,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import ProductAnalytics1 from '../../components/dashboard/product/product-analytics/ProductAnalytics1'
+import ProductAnalytics2 from '../../components/dashboard/product/product-analytics/ProductAnalytics2'
 import ProductAnalytics3 from '../../components/dashboard/product/product-analytics/ProductAnalytics3'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
@@ -79,7 +84,7 @@ import NoteForm from '../../components/dashboard/NoteForm'
 
 export default {
   components: {
-    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics1, ProductAnalytics3
+    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics1, ProductAnalytics2, ProductAnalytics3
   },
   props: {
   },
