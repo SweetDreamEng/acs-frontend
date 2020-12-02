@@ -41,9 +41,18 @@
         small
         color="primary"
         class="mr-2"
-        :loading="remote_btn_loading"
-        :disabled="remote_btn_loading"
-        @click="() => remote(item)"
+        :loading="remote_web_btn_loading"
+        :disabled="remote_web_btn_loading"
+        @click="() => onRemoteWeb(item)"
+        >Remote WebUI</v-btn
+      >
+      <v-btn
+        small
+        color="primary"
+        class="mr-2"
+        :loading="remote_cli_btn_loading"
+        :disabled="remote_cli_btn_loading"
+        @click="() => onRemoteCli(item)"
         >Remote Control</v-btn
       >
     </div>
@@ -87,7 +96,8 @@ export default {
       activate_btn_loading: (state) => state.devices.activate_btn_loading,
       suspend_btn_loading: (state) => state.devices.suspend_btn_loading,
       refresh_btn_loading: (state) => state.devices.refresh_btn_loading,
-      remote_btn_loading: (state) => state.devices.remote_btn_loading
+      remote_web_btn_loading: (state) => state.devices.remote_web_btn_loading,
+      remote_cli_btn_loading: (state) => state.devices.remote_cli_btn_loading
     })
   },
   methods: {
@@ -95,7 +105,8 @@ export default {
       'querySIM': 'devices/querySIM',
       'activateSIM': 'devices/activateSIM',
       'suspendSIM': 'devices/suspendSIM',
-      'remoteControl': 'devices/remoteControl'
+      'remoteWeb': 'devices/remoteWeb',
+      'remoteCli': 'devices/remoteCli'
     }),
     // save () {
     //   if (this.$refs.editForm.validate()) {
@@ -109,8 +120,18 @@ export default {
     //       })
     //   }
     // },
-    remote(item) {
-      this.remoteControl(item).then((response) => {
+    onRemoteWeb(item) {
+      this.remoteWeb(item).then((response) => {
+        const arr  = response.data.data
+
+        if ( arr.length > 0 ) {
+          this.link = arr.reduce((a, b) => a.ttl > b.ttl ? a : b, arr[0]).url
+          this.isRemote = true
+        }
+      })
+    },
+    onRemoteCli(item) {
+      this.remoteCli(item).then((response) => {
         const arr  = response.data.data
 
         if ( arr.length > 0 ) {

@@ -11,8 +11,13 @@ export default {
       return response
     })
   },
-  remoteControl(device) {
-    return api.post('/devices/remote-control/' + device.device_id).then((response) => {
+  remoteWeb(device) {
+    return api.post('/devices/remote-web/' + device.device_id).then((response) => {
+      return response
+    })
+  },
+  remoteCli(device) {
+    return api.post('/devices/remote-cli/' + device.device_id).then((response) => {
       return response
     })
   },
