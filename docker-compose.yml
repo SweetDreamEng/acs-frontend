@@ -1,12 +1,7 @@
 version: '3'
 services:
-  #Vue frontend
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
-      args:
-        - GIT_USERNAME=${GIT_USERNAME}
+    build: .
     image: acs-frontend
     container_name: acs-frontend
     stdin_open: true
@@ -14,6 +9,16 @@ services:
     ports: 
       - "3000:8080"
     volumes:
-      - ./src/acs-frontend:/var/www/html/acs-frontend/
+      - .:/var/www/html/acs-frontend
     networks:
-      - app-networks
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
