@@ -221,9 +221,14 @@ const module = {
     valuesHopInventory: [],
     valuesFrtInventory: [],
     
+    // Energy Consumption
+    energyConsumption: [],
+
     // GH Gravimetric Extrusion Control Hopper
     hopperInventories: [],
     hauloffLengths: [],
+    recipeSetPoints: [],
+    recipeActualPoints: [],
 
     isWeightProductLoading: false,
     isInventoryProductLoading: false
@@ -284,9 +289,14 @@ const module = {
           commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
           commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
 
+          // Energy consumption
+          commit('SET_ENERGY_CONSUMPTION', response.data.energy_consumption)
+
           // GH Gravimetric Extrusion Control Hopper
           commit('SET_HOPPER_INVENTORIES', response.data.hopper_inventories)
           commit('SET_HAULOFF_LENGTHS', response.data.hauloff_lengths)
+          commit('SET_RECIPE_SET_POINTS', response.data.set_points)
+          commit('SET_RECIPE_ACTUAL_POINTS', response.data.actual_points)
 
           commit('alarms/SET_ALARM_TYPES', response.data.alarm_types, { root: true })
           commit('alarms/SET_ALARMS', response.data.alarms, { root: true })
@@ -419,8 +429,14 @@ const module = {
       state.isInventoryProductLoading = false
     },
 
+    // Energy Consumption
+    SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },
+
+    // GH Gravimetric Extrusion Control Hopper
     SET_HOPPER_INVENTORIES(state, hopperInventories) { state.hopperInventories = hopperInventories },
-    SET_HAULOFF_LENGTHS(state, hauloffLengths) { state.hauloffLengths = hauloffLengths }
+    SET_HAULOFF_LENGTHS(state, hauloffLengths) { state.hauloffLengths = hauloffLengths },
+    SET_RECIPE_ACTUAL_POINTS(state, actualPoints) { state.recipeActualPoints = actualPoints },
+    SET_RECIPE_SET_POINTS(state, setPoints) { state.recipeSetPoints = setPoints }
   },
 
   getters: {

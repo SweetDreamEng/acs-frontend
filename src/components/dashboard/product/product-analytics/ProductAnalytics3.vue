@@ -18,17 +18,27 @@
         <operation-mode></operation-mode>
       </v-col>
       <v-col md="4" sm="8" xs="12">
-        <energy-consumption></energy-consumption>
+        <energy-consumption
+          :energy-consumption="energyConsumption"
+        >
+        </energy-consumption>
       </v-col>
       <v-col md="2" sm="4" xs="12">
-        <availability :series="statusSeries"></availability>
+        <!-- <availability :series="statusSeries"></availability> -->
       </v-col>
       <v-col md="2" sm="4" xs="12">
-        <Cutting />
+        <!-- <Cutting /> -->
         <!-- <hours-per-year class="mt-1"></hours-per-year> -->
       </v-col>
     </v-row>
     <v-row dense>
+      <v-col md="4" sm="8" xs="12">
+        <recipe
+          :set-points="recipeSetPoints"
+          :actual-points="recipeActualPoints"
+        >
+        </recipe>
+      </v-col>
       <v-col md="4" sm="8" xs="12">
         <accumulated-hopper-inventory
           :hopper-inventories="hopperInventories"
@@ -48,12 +58,13 @@
 import Overview from '../Overview'
 import OperationMode from '../OperationMode'
 import HoursPerYear from '../HoursPerYear'
-import Availability from '../Availability'
+// import Availability from '../Availability'
 import Utilization from '../Utilization'
-import Cutting from '../Cutting'
+// import Cutting from '../Cutting'
 import EnergyConsumption from '../EnergyConsumption'
 import AccumulatedHopperInventory from '../AccumulatedHopperInventory'
 import AccumulatedHauloffLength from '../AccumulatedHauloffLength'
+import Recipe from './gh-gravimetric-extrusion-control-hopper/Recipe'
 
 import { mapState, mapActions } from 'vuex'
 
@@ -61,12 +72,13 @@ export default {
   components: {
     Overview,
     OperationMode,
-    Availability,
+    // Availability,
     Utilization,
-    Cutting,
+    // Cutting,
     EnergyConsumption,
     AccumulatedHopperInventory,
-    AccumulatedHauloffLength
+    AccumulatedHauloffLength,
+    Recipe
   },
   data() {
     return {
@@ -100,7 +112,14 @@ export default {
       valuesFrtInventory: (state) => state.machines.valuesFrtInventory,
 
       isWeightProductLoading: (state) => state.machines.isWeightProductLoading,
-      isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading
+      isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading,
+      
+      // Energy Consumption
+      energyConsumption: (state) => state.machines.energyConsumption,
+
+      // GH Gravimetric Extrusion Control Hopper
+      recipeSetPoints: (state) => state.machines.recipeSetPoints,
+      recipeActualPoints: (state) => state.machines.recipeActualPoints
     })
   },
   methods: {

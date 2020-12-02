@@ -1,7 +1,14 @@
 <template>
   <v-card height="100%">
     <v-card-title class="d-flex justify-space-between">
-      <strong>Accumulated Hauloff Length</strong>
+      <div>Accumulated Hauloff Length</div>
+      <v-btn
+        icon
+        small
+        @click="showTimeRangeChooser = true"
+      >
+        <v-icon>mdi-dots-horizontal</v-icon>
+      </v-btn>
     </v-card-title>
     <v-card-text>
       <div>
@@ -13,7 +20,7 @@
         type="area"
         :options="chartOptions"
         :series="series"
-        height="140"
+        height="160"
       >
       </apexchart>
     </v-card-text>
@@ -73,9 +80,6 @@ export default {
           width: 2
         },
         grid: {
-          show: false
-        },
-        yaxis: {
           show: false
         },
         xaxis: {

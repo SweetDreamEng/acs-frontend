@@ -50,11 +50,11 @@ export default {
       type: String,
       default: 'Weekly'
     },
-    series: {
+    energyConsumption: {
       type: Array,
       default: () => [{
-        name: 'Desktops',
-        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+        name: 'Energy Consumption',
+        data: []
       }]
     }
   },
@@ -85,16 +85,21 @@ export default {
         grid: {
           show: false
         },
-        yaxis: {
-          show: false
-        },
         xaxis: {
           labels: {
             show: false
-          },
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+          }
+        },
+        yaxis: {
+          show: false
         }
       }
+    },
+    series() {
+      return [{
+        name: 'Energy Consumption',
+        data: this.energyConsumption
+      }]
     }
   },
   mounted() {

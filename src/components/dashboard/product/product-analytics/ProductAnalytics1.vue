@@ -41,7 +41,10 @@
         <AverageUtilization />
       </v-col>
       <v-col md="4" sm="8" xs="12">
-        <energy-consumption></energy-consumption>
+        <energy-consumption
+          :energy-consumption="energyConsumption"
+        >
+        </energy-consumption>
       </v-col>
       <v-col md="2" sm="4" xs="12">
         <availability :series="statusSeries"></availability>
@@ -100,7 +103,10 @@ export default {
       valuesFrtInventory: (state) => state.machines.valuesFrtInventory,
 
       isWeightProductLoading: (state) => state.machines.isWeightProductLoading,
-      isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading
+      isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading,
+
+      // Energy Consumption
+      energyConsumption: (state) => state.machines.energyConsumption
     })
   },
   methods: {
