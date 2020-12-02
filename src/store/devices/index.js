@@ -17,6 +17,8 @@ const module = {
     refresh_btn_loading: false,         // status of refreshing SIM
     activate_button_loading: false,     // status of activating SIM
     suspend_btn_loading: false,         // status of deactivating SIM
+    remote_web_btn_loading: false,         // status of Remote WebUI
+    remote_cli_btn_loading: false,         // status of Remote CLI
     assign_loading: false,              // status of uploading devices from excel file
     register_button_loading: false
   },
@@ -179,6 +181,44 @@ const module = {
           })
       })
     },
+    remoteWeb({
+      commit, dispatch
+    }, device) {
+      commit('REMOTE_WEB_BTN_LOAD')
+
+      return new Promise((resolve, reject) => {
+        deviceAPI.remoteWeb(device)
+          .then((response) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('REMOTE_WEB_BTN_CLEAR')
+          })
+      })
+    },
+    remoteCli({
+      commit, dispatch
+    }, device) {
+      commit('REMOTE_CLI_BTN_LOAD')
+
+      return new Promise((resolve, reject) => {
+        deviceAPI.remoteCli(device)
+          .then((response) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('REMOTE_CLI_BTN_CLEAR')
+          })
+      })
+    },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     },
@@ -232,6 +272,18 @@ const module = {
     },
     SUSPEND_BTN_CLEAR(state) {
       state.suspend_btn_loading = false
+    },
+    REMOTE_WEB_BTN_LOAD(state) {
+      state.remote_web_btn_loading = true
+    },
+    REMOTE_WEB_BTN_CLEAR(state) {
+      state.remote_web_btn_loading = false
+    },
+    REMOTE_CLI_BTN_LOAD(state) {
+      state.remote_cli_btn_loading = true
+    },
+    REMOTE_CLI_BTN_CLEAR(state) {
+      state.remote_cli_btn_loading = false
     },
     SET_DATA(state, devices) {
       state.data = devices

@@ -11,6 +11,16 @@ export default {
       return response
     })
   },
+  remoteWeb(device) {
+    return api.post('/devices/remote-web/' + device.device_id).then((response) => {
+      return response
+    })
+  },
+  remoteCli(device) {
+    return api.post('/devices/remote-cli/' + device.device_id).then((response) => {
+      return response
+    })
+  },
   getDevices(pageNum) {
     return api.get(`/devices/${pageNum}`).then((response) => {
       return response
