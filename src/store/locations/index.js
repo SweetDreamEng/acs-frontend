@@ -3,18 +3,8 @@ import locationAPI from '@/services/api/location'
 const module = {
   namespaced: true,
   state: {
-    data: [
-      {
-        id: 1,
-        name: 'Location 1'
-      }, {
-        id: 2,
-        name: 'Location 2'
-      }, {
-        id: 3,
-        name: 'Location 3'
-      }
-    ],
+    data: [],
+
     table_loading: false,
     btn_loading: false
   },
@@ -104,7 +94,7 @@ const module = {
 
       _locations.unshift({
         id: 0,
-        location: 'Not Assigned'
+        name: 'Not Assigned'
       })
 
       return _locations

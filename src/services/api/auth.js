@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '@/api.js'
 export default {
   signIn(email, password) {
     const data = {
@@ -6,7 +6,7 @@ export default {
       password
     }
 
-    return axios.post('/auth/signin', data).then((response) => {
+    return api.post('/auth/signin', data).then((response) => {
       return response
     })
   },
@@ -16,17 +16,28 @@ export default {
       new_password: newPassword
     }
 
-    return axios.post('/auth/update-password', data).then((response) => {
+    return api.post('/auth/update-password', data).then((response) => {
+      return response
+    })
+  },
+  requestForgotPassword(email) {
+    const data = {
+      email: email
+    }
+
+    console.log(data)
+
+    return api.post('/auth/password-reset', data).then((response) => {
       return response
     })
   },
   signOut() {
-    return axios.get('/auth/logout').then((response) => {
+    return api.get('/auth/logout').then((response) => {
       return response
     })
   },
   check() {
-    return axios.post('/auth/check').then((response) => {
+    return api.post('/auth/check').then((response) => {
       return response
     })
   }

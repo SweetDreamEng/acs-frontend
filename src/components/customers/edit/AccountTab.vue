@@ -6,18 +6,21 @@
         <div class="d-flex flex-column flex-sm-row">
           <div class="flex-grow-1 pt-2 pa-sm-2">
             <v-form ref="accountForm" v-model="isAccountFormValid" lazy-validation @submit.prevent="submit">
+              <v-combobox
+                v-model="customerAccount.companyName"
+                :items="companies"
+                label="Company"
+                placeholder="Type in new company name or choose from existing for ex: Acme Inc"
+                item-text="name"
+                :return-object="false"
+                :rules="[$rules.required]"
+                outlined
+                dense
+                @input="resetErrors"
+              ></v-combobox>
               <v-text-field
                 v-model="customerAccount.name"
-                :rules="[rules.required]"
-                :validate-on-blur="false"
-                dense
-                outlined
-                label="Company Name"
-                @input="resetErrors"
-              ></v-text-field>
-              <v-text-field
-                v-model="customerAccount.administratorName"
-                :rules="[rules.required]"
+                :rules="[$rules.required]"
                 :validate-on-blur="false"
                 dense
                 outlined
@@ -25,8 +28,8 @@
                 @input="resetErrors"
               ></v-text-field>
               <v-text-field
-                v-model="customerAccount.administratorEmail"
-                :rules="[rules.required, rules.emailFormat]"
+                v-model="customerAccount.email"
+                :rules="[$rules.required, $rules.emailFormat]"
                 :validate-on-blur="false"
                 dense
                 outlined
@@ -120,9 +123,13 @@ export default {
       type: Object,
       default: () => ({
         name: '',
-        administratorName: '',
-        administratorEmail: ''
+        companyName: '',
+        email: ''
       })
+    },
+    companies: {
+      type: Array,
+      default: () => ([])
     }
   },
   data() {
@@ -134,12 +141,6 @@ export default {
       user: {
         'disabled':true,
         'role':'ADMIN'
-      },
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required',
-        emailFormat: (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
       }
     }
   },

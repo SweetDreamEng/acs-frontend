@@ -7,15 +7,29 @@
     </div>
 
     <div v-else>
-      <div class="display-1">{{ selectedMachine.machinename }}</div>
+      <div class="display-1">{{ machine.name }}</div>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
-          <product-analytics></product-analytics>
+          <product-analytics1
+            v-if="machine.id === 1"
+          >
+          </product-analytics1>
+          <product-analytics2
+            v-if="machine.id === 2"
+          >
+          </product-analytics2>
+          <product-analytics3
+            v-if="machine.id === 3"
+          >
+          </product-analytics3>
         </v-col>
         <v-col cols="12">
           <alarm-table
             label="Alarms"
             :loading="isLoading1"
+            :alarm-types="alarmTypes"
+            :alarms="alarms"
+            @change="_onAlarmParamChange"
           >
           </alarm-table>
         </v-col>
@@ -58,9 +72,11 @@
 */
 
 // import vuex helper functions
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
-import ProductAnalytics from '../../components/dashboard/product/ProductAnalytics'
+import ProductAnalytics1 from '../../components/dashboard/product/product-analytics/ProductAnalytics1'
+import ProductAnalytics2 from '../../components/dashboard/product/product-analytics/ProductAnalytics2'
+import ProductAnalytics3 from '../../components/dashboard/product/product-analytics/ProductAnalytics3'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
@@ -68,7 +84,7 @@ import NoteForm from '../../components/dashboard/NoteForm'
 
 export default {
   components: {
-    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics
+    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics1, ProductAnalytics2, ProductAnalytics3
   },
   props: {
   },
@@ -83,28 +99,28 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      machine: (state) => state.machines.machine,
+      alarmTypes: (state) => state.alarms.alarmTypes,
+      alarms: (state) => state.alarms.alarms
+    }),
     ...mapGetters('machines', [
       'selectedMachine'
     ])
   },
   mounted() {
-    let count = 0
-
     this.selectMachine(this.$route.params.id)
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
+    this.initProduct(this.$route.params.id)
   },
   beforeDestroy() {
     this.clear()
   },
   methods: {
     ...mapActions({
+      initProduct: 'machines/initProduct',
       'selectMachine': 'machines/selectMachine',
-      'updateSelections': 'machines/updateSelections'
+      'updateSelections': 'machines/updateSelections',
+      onAlarmParamChanged: 'alarms/onAlarmParamChanged'
     }),
     clear() {
       clearInterval(this.loadingInterval)
@@ -112,6 +128,9 @@ export default {
     onMachineUpdate() {
       this.updateSelections(this.selections)
       this.dialog = false
+    },
+    _onAlarmParamChange(params) {
+      this.onAlarmParamChanged(params)
     }
   }
 }

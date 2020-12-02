@@ -29,7 +29,6 @@
         </v-btn>
       </v-card-actions>
     </div>
-
     <v-dialog v-model="alarmReports" max-width="400">
       <alarm-reports @close="alarmReports=false"></alarm-reports>
     </v-dialog>

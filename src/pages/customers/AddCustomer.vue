@@ -12,18 +12,140 @@
     </div>
 
     <v-tabs v-model="tab" :show-arrows="false" background-color="transparent">
-      <v-tab to="#tabs-account">Account</v-tab>
-      <v-tab to="#tabs-information">Information</v-tab>
+      <v-tab>Account</v-tab>
+      <v-tab>Information</v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="tab">
-      <v-tab-item value="tabs-account">
-        <account-tab></account-tab>
-      </v-tab-item>
+    <v-tabs-items>
+      <v-card class="my-2" v-show="tab === 0">
+        <v-card-title>Basic Information</v-card-title>
+        <v-card-text>
+          <div class="d-flex flex-column flex-sm-row">
+            <div class="flex-grow-1 pt-2 pa-sm-2">
+              <v-form ref="accountForm" v-model="isAccountFormValid" lazy-validation @submit.prevent="submit">
+                <v-combobox
+                  v-model="customer.companyName"
+                  :items="companies"
+                  label="Company"
+                  placeholder="Type in new company name or choose from existing for ex: Acme Inc"
+                  item-text="name"
+                  :return-object="false"
+                  :rules="[$rules.required]"
+                  @input="clearError"
+                  outlined
+                  dense
+                ></v-combobox>
+                <v-text-field
+                  v-model="customer.administratorName"
+                  :rules="[$rules.required]"
+                  :validate-on-blur="false"
+                  label="Administrator Name"
+                  placeholder="Jane Doe"
+                  @input="clearError"
+                  outlined
+                  dense
+                ></v-text-field>
+                <v-text-field
+                  v-model="customer.administratorEmail"
+                  :rules="[$rules.required, $rules.emailFormat]"
+                  :validate-on-blur="false"
+                  label="Administrator Email"
+                  placeholder="jane.doe@example.com"
+                  @input="clearError"
+                  outlined
+                  dense
+                ></v-text-field>
 
-      <v-tab-item value="tabs-information">
-        <information-tab></information-tab>
-      </v-tab-item>
+                <error-component :error="errorMessages"></error-component>
+
+                <div class="mt-2">
+                  <v-btn
+                    type="submit"
+                    color="primary"
+                    :loading="button_loading"
+                  >Save</v-btn>
+                </div>
+              </v-form>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
+
+      <v-card class="my-2" v-show="tab === 1">
+        <v-card-title>Account Information</v-card-title>
+        <v-card-text  ref="b">
+          <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation>
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="customer.address_1"
+                  label="Address"
+                  :rules="[$rules.required]"
+                  outlined
+                  dense
+                >
+                </v-text-field>
+                <v-select
+                  v-model="customer.state"
+                  label="State"
+                  :items="states"
+                  :rules="[$rules.required]"
+                  outlined
+                  dense
+                  @change="onStateChange"
+                >
+                </v-select>
+                <v-combobox
+                  v-model="customer.city"
+                  :items="cities"
+                  label="City"
+                  item-text="city"
+                  :return-object="false"
+                  :rules="[$rules.required]"
+                  :disabled="!customer.state"
+                  outlined
+                  dense
+                ></v-combobox>
+                <v-text-field
+                  :value="zipCode"
+                  label="Zip Code"
+                  :rules="[$rules.required]"
+                  :disabled="!customer.state || !customer.city"
+                  outlined
+                  dense
+                  readonly
+                >
+                </v-text-field>
+                <v-text-field
+                  v-model="customer.country"
+                  :rules="[$rules.required]"
+                  label="Country"
+                  outlined
+                  dense
+                >
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="customer.phone"
+                  v-mask="'###-###-####'"
+                  placeholder="123-456-7890"
+                  :rules="[$rules.required, $rules.phoneFormat]"
+                  outlined
+                  dense
+                >
+                </v-text-field>
+              </v-col>
+            </v-row>
+
+            <div class="d-flex">
+              <v-spacer></v-spacer>
+              <v-btn color="primary" @click="onBack">Back</v-btn>
+            </div>
+          </v-form>
+        </v-card-text>
+      </v-card>
     </v-tabs-items>
   </div>
 </template>
@@ -37,16 +159,18 @@
 |
 | Create a new customer
 */
-import AccountTab from '../../components/customers/add/AccountTab'
-import InformationTab from '../../components/customers/add/InformationTab'
+import states from '../../services/data/states'
+import ErrorComponent from '../../components/common/ErrorComponent'
+
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    AccountTab, InformationTab
+    ErrorComponent
   },
   data() {
     return {
-      tab: null,
+      tab: 0,
 
       breadcrumbs: [
         {
@@ -57,11 +181,70 @@ export default {
         {
           text: 'Add New Company'
         }
-      ]
+      ],
+      
+      states,
+
+      // need change(remove single quote)
+      customer: {
+        'companyName': '',
+        'administratorName': '',
+        'administratorEmail': '',
+        'address_1': '',
+        'state': '',
+        'city': '',
+        'country': 'US',
+        'phone': ''
+      },
+      
+      isAccountFormValid: true,
+      isProfileFormValid: true
     }
   },
+  computed: {
+    ...mapState({
+      button_loading: (state) => state.customers.button_loading,
+      cities: (state) => state.cities.data,
+      errorMessages: (state) => state.customers.error,
+      companies: (state) => state.customers.companies
+    }),
+    zipCode() {
+      const _zip = this.cities.find((city) => city.city === this.customer.city)
+
+      return _zip ? _zip.zip : ''
+    }
+  },
+  mounted() {
+    this.initAddCompany()
+  },
   methods: {
-    
+    ...mapActions({
+      initAddCompany: 'customers/initAddCompany',
+      addCustomer: 'customers/addCustomer',
+      getCities: 'cities/getCities',
+      clearError: 'customers/clearError'
+    }),
+    onStateChange() {
+      this.getCities(this.customer.state)
+    },
+    submit() {
+      if (this.$refs.accountForm.validate()) {
+        if (this.$refs.profileForm.validate()) {
+          const data = Object.assign(this.customer, {
+            zip: this.zipCode
+          })
+          
+          this.addCustomer(data)
+        } else {
+          this.tab = 1
+        }
+      }
+    },
+    onBack() {
+      if (this.$refs.profileForm.validate()) {
+        this.tab = 0
+      }
+    }
   }
 }
 </script>

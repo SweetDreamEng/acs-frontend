@@ -1,3 +1,5 @@
+import cityAPI from '@/services/api/city'
+
 const module = {
   namespaced: true,
   state: {
@@ -5,6 +7,21 @@ const module = {
   },
 
   actions: {
+    getCities({
+      commit, dispatch
+    }, state) {
+      return new Promise((resolve, reject) => {
+        cityAPI.getCities(state).then((response) => {
+          commit('cities/SET_DATA', response.data, { root: true })
+          resolve(response)
+        })
+          .catch((error) => {
+            reject(error)
+          })
+          .finally(() => {
+          })
+      })
+    }
   },
 
   mutations: {

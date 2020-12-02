@@ -16,13 +16,6 @@
         <v-card-text>
           <div class="d-flex flex-column flex-sm-row">
             <div>
-              <!--               <v-img
-                :src="user.avatar"
-                aspect-ratio="1"
-                class="blue-grey lighten-4 rounded elevation-3"
-                max-width="90"
-                max-height="90"
-              ></v-img> -->
               <v-avatar
                 v-if="user.name"
                 color="primary"
@@ -30,31 +23,95 @@
               >
                 <span class="white--text headline">{{ user.name | initials }}</span>
               </v-avatar>
-              <!-- <v-btn class="mt-1" small>Edit Avatar</v-btn> -->
             </div>
-            <div class="flex-grow-1 pt-2 pa-sm-2">
-              <v-text-field v-model="user.name" label="Display name" placeholder="name"></v-text-field>
-              <v-text-field v-model="user.email" label="Email"></v-text-field>
+            <v-form
+              ref="form"
+              v-model="isFormValid"
+              lazy-validation
+              class="flex-grow-1 pt-2 pa-sm-2"
+              @submit.prevent="save"
+            >
+              <v-text-field
+                v-model="user.name"
+                label="Display name"
+                :rules="[$rules.required]"
+                placeholder="name"
+                outlined
+                dense
+                @input="clearError"
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="user.email"
+                label="Email"
+                :rules="[$rules.required, $rules.emailFormat]"
+                placeholder="Email"
+                outlined
+                dense
+                @input="clearError"
+              >
+              </v-text-field>
               <v-select
+                v-model="user.role"
                 :items="roles"
                 label="Role"
+                placeholder="Role"
+                item-value="id"
+                item-text="name"
+                :rules="[$rules.required]"
+                outlined
+                dense
+                @input="clearError"
               >
               </v-select>
-              <div class="d-flex flex-column">
-                <!-- <v-checkbox v-model="user.verified" dense label="Email Verified"></v-checkbox> -->
-                <div class="mt-2">
-                  <v-btn
-                    v-if="!user.verified"
+
+              <div v-if="user.role !== 4">
+                <div
+                  v-for="(location, i) in locations"
+                  :key="i"
+                >
+                  <v-checkbox
+                    v-model="selectedLocations"
+                    :value="location.id"
+                    :label="location.name"
+                    class="shrink mr-2 mt-0"
+                    hide-details
+                  ></v-checkbox>
+                  <div
+                    v-if="selectedLocations.includes(location.id)"
+                    class="d-flex flex-wrap px-2"
                   >
-                    <v-icon left small>mdi-email</v-icon>Send Verification Email
-                  </v-btn>
+                    <v-chip-group
+                      v-model="selectedZones"
+                      multiple
+                      column
+                    >
+                      <v-chip
+                        v-for="(zone, j) in zonesOfLocation(location.id)"
+                        :key="j"
+                        :value="zone.id"
+                        filter
+                        outlined
+                        small
+                        color="primary"
+                      >
+                        {{ zone.name }}
+                      </v-chip>
+                    </v-chip-group>
+                  </div>
                 </div>
               </div>
+              <error-component :error="errorMessages"></error-component>
 
               <div class="mt-2">
-                <v-btn color="primary" @click>Save</v-btn>
+                <v-btn
+                  color="primary"
+                  :loading="button_loading"
+                  :disabled="button_loading"
+                  @click="save"
+                >Save</v-btn>
               </div>
-            </div>
+            </v-form>
           </div>
         </v-card-text>
       </v-card>
@@ -165,13 +222,34 @@
 </template>
 
 <script>
+import ErrorComponent from '../../../components/common/ErrorComponent'
+
+import { mapState, mapActions } from 'vuex'
+
 export default {
+  components: {
+    ErrorComponent
+  },
   props: {
+    button_loading: {
+      type: Boolean,
+      default: false
+    },
     user: {
       type: Object,
-      default: () => ({})
+      default: () => ({
+        name: ''
+      })
     },
     roles: {
+      type: Array,
+      default: () => []
+    },
+    locations: {
+      type: Array,
+      default: () => []
+    },
+    zones: {
       type: Array,
       default: () => []
     }
@@ -180,10 +258,48 @@ export default {
     return {
       panel: [1],
       deleteDialog: false,
-      disableDialog: false
+      disableDialog: false,
+
+      isFormValid: true,
+
+      selectedLocations: this.user.selected_locations,
+      selectedZones: this.user.selected_zones
     }
   },
+  computed: {
+    ...mapState({
+      errorMessages: (state) => state.users.error
+    })
+  },
+  watch: {
+    user: function (newUser, oldUser) {
+      this.selectedLocations = newUser.selected_locations
+      this.selectedZones = newUser.selected_zones
+    }
+  },
+  mounted() {
+  },
   methods: {
+    ...mapActions({
+      clearError: 'users/clearError'
+    }),
+    save() {
+      if (this.$refs.form.validate()) {
+        const data = {
+          id: this.user.id,
+          name: this.user.name,
+          email: this.user.email,
+          role: this.user.role,
+          locations: this.selectedLocations,
+          zones: this.selectedZones
+        }
+
+        this.$emit('submit', data)
+      }
+    },
+    zonesOfLocation(location_id) {
+      return this.zones.filter((zone) => zone.location_id === location_id)
+    }
   }
 }
 </script>

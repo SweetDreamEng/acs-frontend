@@ -1,14 +1,23 @@
-import menuPages from './menus/pages.menu'
-
 export default {
   // main navigation - side menu
   menu: [{
     text: '',
     key: '',
     items: [
-      { icon: 'mdi-view-dashboard-outline', key: 'menu.ACSMachines', text: 'ACS Machines', link: '/acs-machines' },
-      { icon: 'mdi-swap-horizontal', key: 'Customer Assign', text: 'Customer Assign', link: '/customer-assign' },
-      { icon: 'mdi-account-multiple', key: 'menu.customerPages', text: 'Customers', link: '/customers/list' }
+      { icon: 'mdi-view-dashboard-outline', text: 'ACS Machines', link: '/acs-machines' },
+      { icon: 'mdi-swap-horizontal', text: 'Customer Assign', link: '/customer-assign' },
+      { icon: 'mdi-city', text: 'Companies', link: '/customers/list' },
+      { icon: 'mdi-account-multiple', text: 'Users', link: '/acs-admin/users/list' }
+    ]
+  }],
+
+  acsViewerMenu: [{
+    text: '',
+    key: '',
+    items: [
+      { icon: 'mdi-view-dashboard-outline', text: 'ACS Machines', link: '/acs-machines' },
+      { icon: 'mdi-city', text: 'Companies', link: '/customers/list' },
+      { icon: 'mdi-account-multiple', text: 'Users', link: '/acs-admin/users/list' }
     ]
   }],
 
@@ -16,16 +25,31 @@ export default {
     text: '',
     key: '',
     items: [
-      { icon: 'mdi-view-dashboard-outline', key: 'menu.dashboard', text: 'Machines', link: '/dashboard/analytics' },
-      { icon: 'mdi-account-multiple', key: 'menu.userPages', text: 'User Access', link: '/users/list' },
-      { icon: 'mdi-speedometer', key: 'menu.threshold', text: 'Threshold', regex: /^\/threshold/,
+      { icon: 'mdi-view-dashboard-outline', text: 'Machines', link: '/dashboard/analytics' },
+      { icon: 'mdi-account-multiple', text: 'User Access', link: '/users/list' },
+      { icon: 'mdi-speedometer', text: 'Threshold', regex: /^\/threshold/,
         items: [
-          { key: 'menu.thresholdList', text: 'Thresholds', link: '/threshold/list' },
-          { key: 'menu.thresholdAdd', text: 'Add Threshold', link: '/threshold/add' }
+          { text: 'Thresholds', link: '/threshold/list' },
+          { text: 'Add Threshold', link: '/threshold/add' }
         ]
       },
-      { icon: 'mdi-swap-horizontal', key: 'menu.machineMapping', text: 'Machine Mapping', link: '/machine-mapping' },
-      { icon: 'mdi-account-multiple', key: 'menu.divisionZonesPage', text: 'Division/Zones', link: '/locations-zones' }
+      { icon: 'mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
+      { icon: 'mdi-account-multiple', text: 'Division/Zones', link: '/locations-zones' }
+    ]
+  }],
+  customerOperatorMenu: [{
+    text: '',
+    key: '',
+    items: [
+      { icon: 'mdi-view-dashboard-outline', text: 'Machines', link: '/dashboard/analytics' },
+      { icon: 'mdi-account-multiple', text: 'User Access', link: '/users/list' },
+      { icon: 'mdi-speedometer', text: 'Threshold', regex: /^\/threshold/,
+        items: [
+          { text: 'Thresholds', link: '/threshold/list' },
+          { text: 'Add Threshold', link: '/threshold/add' }
+        ]
+      },
+      { icon: 'mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' }
     ]
   }],
 

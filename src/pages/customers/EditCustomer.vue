@@ -5,10 +5,6 @@
         <div class="display-1">Edit Company</div>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
-      <v-spacer></v-spacer>
-      <v-btn icon @click>
-        <v-icon>mdi-refresh</v-icon>
-      </v-btn>
     </div>
 
     <v-tabs v-model="tab" :show-arrows="false" background-color="transparent">
@@ -18,7 +14,10 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item value="tabs-account">
-        <account-tab :customer-account="customerAccount"></account-tab>
+        <account-tab
+          :customer-account="customerAccount"
+          :companies="companies"
+        ></account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
@@ -65,12 +64,16 @@ export default {
   computed: {
     ...mapState({
       customerAccount: (state) => state.customers.customerAccount,
-      customerProfile: (state) => state.customers.customerProfile
+      customerProfile: (state) => state.customers.customerProfile,
+      companies: (state) => state.customers.companies
     })
   },
   mounted() {
     // get customer information on mounted
     this.open()
+  },
+  destoryed() {
+
   },
   methods: {
     ...mapActions({

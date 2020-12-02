@@ -6,14 +6,21 @@
     <v-card v-else>
       <v-card-title color="primary">
         {{ label }}
+        <v-btn
+          rounded
+          outlined
+          color="primary"
+          dark
+          class="ml-auto"
+          @click="showTimeRangeChooser = true"
+        >
+          Local Time: {{ timeRangeLabel }}
+        </v-btn>
       </v-card-title>
-      <v-card-subtitle>
-        <TimeRangeChooser1 />
-      </v-card-subtitle>
       <v-card-text>
         <v-data-table
           :headers="headers"
-          :items="alarms"
+          :items="alarmTypes"
           :expanded.sync="expanded"
           show-expand
           hide-default-footer
@@ -27,40 +34,48 @@
             <v-icon color="primary">mdi-information</v-icon>
             {{ header.text }}
           </template>
-          <!--           <template v-slot:header.value="{ header }">
-            <v-icon color="primary">mdi-chart-bar</v-icon>
-            {{ header.text }}
-          </template> -->
           <template v-slot:header.createdAt="{ header }">
             <v-icon color="primary">mdi-clock</v-icon>
             <span v-text="header.text"></span>
-
           </template>
 
           <!-- custom table row -->
           <template v-slot:item.createdAt="{ item }">
-            <span v-if="item.status === 'Alarm'">
-              {{ item.createdAt }}
-            </span>
+            {{ lastActivated(item) }}
           </template>
           <template v-slot:item.status="{ item }">
             <v-chip
-              :color="item.status === 'Normal' ? 'green' : 'red'"
+              :color="alarmsOfType(item).length === 0 ? 'green' : 'red'"
               dark
               small
             >
-              <b>{{ item.status }}</b>
             </v-chip>
           </template>
-          <template v-slot:expanded-item="{ item }">
+          <template v-slot:expanded-item="{  }">
             <td :colspan="headers.length" class="px-4">
-              <div class="pa-1">Alarm generated at {{ item.createdAt }} time</div>
-              <div class="pa-1">Alarm cleared at {{ item.createdAt }} time</div>
+              <div
+                class="pa-1"
+                v-for="alarm in alarms"
+                :key="alarm.id"
+              >
+                Alarm generated at {{ alarm.timestamp }} time
+              </div>
             </td>
           </template>
         </v-data-table>
       </v-card-text>
     </v-card>
+
+    <time-range-chooser
+      :dlg="showTimeRangeChooser"
+      :date-from="dateFrom"
+      :date-to="dateTo"
+      :time-from="timeFrom"
+      :time-to="timeTo"
+      @close="showTimeRangeChooser = false"
+      @submit="onTimeRangeChanged"
+    >
+    </time-range-chooser>
   </div>
 </template>
 
@@ -75,11 +90,13 @@
 */
 import moment from 'moment'
 import store from '../../../store'
-import TimeRangeChooser1 from '../TimeRangeChooser1'
+import TimeRangeChooser from '../TimeRangeChooser'
+
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   components: {
-    TimeRangeChooser1
+    TimeRangeChooser
   },
   props: {
     label: {
@@ -89,57 +106,52 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    alarmTypes: {
+      type: Array,
+      default: () => ([])
+    },
+    alarms: {
+      type: Array,
+      default: () => ([])
     }
   },
   data () {
     return {
       headers: [
-        { text: 'Alarm', align: 'start', value: 'alarm' },
-        { text: 'Status', align: 'start', value: 'status' },
-        // { text: 'Value', align: 'start', value: 'value' },
+        { text: 'Alarm', align: 'start', value: 'name' },
+        { text: 'Status', align: 'center', value: 'status' },
         { text: 'Alarm activated at', align: 'start', value: 'createdAt' },
         { text: '', value: 'data-table-expand' }
       ],
-      alarms: [
-        {
-          id: 1,
-          alarm: 'Power Loss',
-          status: 'Alarm',
-          value: 76,
-          createdAt: 'October 23rd, 2020 6:0 AM EST'
-        },{
-          id: 2,
-          alarm: 'Out of Material',
-          status: 'Alarm',
-          value: 27,
-          createdAt: 'October 23rd, 2020 6:0 AM EST'
-        },
-        {
-          id: 3,
-          alarm: 'Hopper Unstable',
-          status: 'Alarm',
-          value: 1,
-          createdAt: 'October 23rd, 2020 6:0 AM EST'
-        },
-        {
-          id: 7,
-          alarm: 'Mixer Failure',
-          status: 'Alarm',
-          value: 1,
-          createdAt: 'October 23rd, 2020 6:0 AM EST'
-        },{
-          id: 8,
-          alarm: 'Unable to make rate',
-          status: 'Alarm',
-          value: 1,
-          createdAt: 'October 23rd, 2020 6:0 AM EST'
-        }
-      ],
+      showTimeRangeChooser: false,
       expanded: []
     }
   },
+  computed: {
+    ...mapState('alarms', ['dateFrom', 'dateTo', 'timeFrom', 'timeTo']),
+    ...mapGetters({
+      timeRangeLabel: 'alarms/timeRangeLabel'
+    })
+  },
   methods: {
-    open(item) { }
+    open(item) { },
+    onTimeRangeChanged(data) {
+      this.$emit('change', data)
+      this.showTimeRangeChooser = false
+    },
+    alarmsOfType(type) {
+      return this.alarms.filter((alarm) => {
+        return alarm.typeId === type.id
+      })
+    },
+    lastActivated(type) {
+      if (this.alarmsOfType(type).length === 0) {
+        return 'No Alarm Detected'
+      } else {
+        return ''
+      }
+    }
   }
 }
 </script>

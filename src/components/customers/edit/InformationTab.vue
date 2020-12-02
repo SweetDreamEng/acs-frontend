@@ -8,14 +8,8 @@
             <v-col cols="12" md="6">
               <v-text-field
                 v-model="customerProfile.address_1"
-                label="Address Line 1"
-                outlined
-                dense
-              >
-              </v-text-field>
-              <v-text-field
-                v-model="customerProfile.address_2"
-                label="Address Line 2"
+                label="Address"
+                :rules="[$rules.required]"
                 outlined
                 dense
               >
@@ -24,6 +18,7 @@
                 v-model="customerProfile.state"
                 label="State"
                 :items="states"
+                :rules="[$rules.required]"
                 outlined
                 dense
                 @change="onStateChange"
@@ -35,12 +30,16 @@
                 label="City"
                 item-text="city"
                 :return-object="false"
+                :rules="[$rules.required]"
+                :disabled="!customerProfile.state"
                 outlined
                 dense
               ></v-combobox>
               <v-text-field
                 :value="zipCode"
                 label="Zip Code"
+                :rules="[$rules.required]"
+                :disabled="!customerProfile.state || !customerProfile.city"
                 outlined
                 dense
                 readonly
@@ -48,6 +47,7 @@
               </v-text-field>
               <v-text-field
                 v-model="customerProfile.country"
+                :rules="[$rules.required]"
                 label="Country"
                 outlined
                 dense
@@ -59,9 +59,8 @@
               <v-text-field
                 v-model="customerProfile.phone"
                 v-mask="'###-###-####'"
-                value=""
                 placeholder="123-456-7890"
-                :rules="phoneRules"
+                :rules="[$rules.required, $rules.phoneFormat]"
                 outlined
                 dense
               >
@@ -107,12 +106,7 @@ export default {
   data: () => ({
     isProfileFormValid: true,
     
-    states,
-
-    phoneRules: [
-      (v) => !!v || 'Phone number is required',
-      (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
-    ]
+    states
   }),
   computed: {
     ...mapState({
@@ -128,16 +122,18 @@ export default {
   methods: {
     ...mapActions({
       updateProfile: 'customers/updateProfile',
-      getCities: 'customers/getCities'
+      getCities: 'cities/getCities'
     }),
     onStateChange() {
-      console.log('asdf')
-      
       this.getCities(this.customerProfile.state)
     },
     submit() {
       if (this.$refs.profileForm.validate()) {
-        this.updateProfile(this.customerProfile)
+        const data = Object.assign(this.customerProfile, {
+          zip: this.zipCode
+        })
+
+        this.updateProfile(data)
       }
     }
   }

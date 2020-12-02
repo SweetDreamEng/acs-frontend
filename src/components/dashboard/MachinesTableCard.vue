@@ -97,7 +97,7 @@ import { mapActions } from 'vuex'
 | Machines table card to list machines and their properties
 |
 */
-import TimeRangeChooser from './TimeRangeChooser1'
+import TimeRangeChooser from './TimeRangeChooser'
 export default {
   components: {
     TimeRangeChooser

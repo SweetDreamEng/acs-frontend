@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
     <!-- import devices from excel file -->
-    <device-import></device-import>
+    <device-import v-if="canImportDevices"></device-import>
 
     <div class="pt-1"></div>
     
@@ -239,12 +239,7 @@ export default {
 
       confirmDialog: false,
       selectedItem: null,
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required field'
-      },
-
+      
       loc_page: this.page
     }
   },
@@ -263,7 +258,8 @@ export default {
     }),
     ...mapGetters({
       companies: 'customers/extendedCompanies',
-      machines: 'machines/extendedMachines'
+      machines: 'machines/extendedMachines',
+      canImportDevices: 'auth/canImportDevices'
     })
   },
   mounted() {

@@ -5,6 +5,7 @@ import authAPI from '@/services/api/auth'
 const module = {
   namespaced: true,
   state: {
+    isAppReady: false,
     token: null,
     user: {
       role: null,
@@ -47,10 +48,17 @@ const module = {
         authAPI.check().then((response) => {
           commit('CLEAR_ERROR')
           commit('SET_AUTH_DATA', response.data)
-          
-          router.push({
-            name: 'acs-machines'
-          })
+          Vue.auth.setUser(response.data)
+
+          if (response.data.role === 'acs_admin' || response.data.role === 'acs_manager' || response.data.role === 'acs_viewer') {
+            router.push({
+              name: 'acs-machines'
+            })
+          } else if (response.data.role === 'customer_admin' || response.data.role === 'customer_manager' || response.data.role === 'customer_operator') {
+            router.push({
+              name: 'dashboard-analytics'
+            })
+          }
         })
           .catch((error) => {
             console.log(error)
@@ -78,16 +86,14 @@ const module = {
       authAPI.signOut().then((response) => {
         if (response.status === 200) {
           commit('SET_LOGOUT_ATUH')
+          localStorage.removeItem('token')
+          localStorage.removeItem('user')
+
           router.push({
             name: 'auth-signin'
           })
         }
       })
-        .catch((error) => {
-          if (error.response.status === 401) {
-            localStorage.removeItem('token')
-          }
-        })
     },
     updatePassword({
       commit, dispatch
@@ -96,14 +102,10 @@ const module = {
     }) {
       commit('BUTTON_LOAD')
       authAPI.updatePassword(currentPassword, newPassword).then((response) => {
-        // dispatch('app/showSuccess', response.data.message, { root: true })
+        dispatch('app/showSuccess', response.data.message, { root: true })
       })
         .catch((error) => {
-          if (error.response.status === 401) {
-            commit('SET_ERROR', {
-              'error': 'Email and password incorrect.'
-            })
-          } else if (error.response.status === 400) {
+          if (error.response.status === 400) {
             commit('SET_ERROR', {
               'error': error.response.data.error
             })
@@ -112,6 +114,23 @@ const module = {
 
             commit('SET_ERROR', {
               'error': errors[0]
+            })
+          }
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
+        })
+    },
+    requestForgotPassword({
+      commit
+    }, email) {
+      commit('BUTTON_LOAD')
+      authAPI.requestForgotPassword(email).then((response) => {
+      })
+        .catch((error) => {
+          if (error.response.status === 404) {
+            commit('SET_ERROR', {
+              'error': error.response.data
             })
           }
         })
@@ -130,6 +149,17 @@ const module = {
   },
 
   mutations: {
+    BOOTSTRAP(state, { user, token }) {
+      if (user && token) {
+        state.user.email = user.email
+        state.user.username = user.name
+        state.user.role = user.role
+        state.token = token
+      }
+
+      state.isAppReady = true
+    },
+
     SET_ERROR(state, error) {
       state.error = error.error
     },
@@ -140,17 +170,17 @@ const module = {
       state.token = token
     },
     SET_AUTH_DATA(state, user) {
-      state.user.email = user.email
-      state.user.username = 'Jone Doe'
-      state.user.role = user.role
+      if (user) {
+        state.user.email = user.email
+        state.user.username = user.name
+        state.user.role = user.role
+      }
     },
     SET_LOGOUT_ATUH(state) {
       state.token = null
       state.user.role = null
       state.user.email = null
       state.user.username = null
-
-      localStorage.removeItem('token')
     },
     BUTTON_LOAD(state) {
       state.button_loading = true
@@ -164,11 +194,28 @@ const module = {
     hasToken: (state) => {
       return state.token
     },
-    profile: (state) => {
-      return state.user
+    isCustomerAdmin: (state) => {
+      return true
+      // return state.user.role === 'customer_admin'
+    },
+    isAcsAdmin: (state) => {
+      return true
+      // return state.user.role === 'acs_admin'
     },
     roleName: (state) => (role_key) => {
       return state.roles.find((role) => role.key === role_key).name
+    },
+    canCreateAcsUser: (state) => {
+      return state.user.role === 'acs_admin'
+    },
+    canCreateCompanies: (state) => {
+      return state.user.role === 'acs_admin' || state.user.role === 'acs_manager'
+    },
+    canImportDevices: (state) => {
+      return state.user.role === 'acs_admin' || state.user.role === 'acs_manager'
+    },
+    canCreateCustomerUser: (state) => {
+      return state.user.role === 'customer_admin'
     }
   }
 }

@@ -1,3 +1,5 @@
+import machineAPI from '@/services/api/machine'
+
 const module = {
   namespaced: true,
   state: {
@@ -193,8 +195,43 @@ const module = {
         notes: []
       }
     ],
+    machine: {
+
+    },
     machines: [],
-    selectedId: 0
+    selectedId: 0,
+
+    selectedCompany: null,
+
+    modeWeightProduct: 'Weekly',
+    modeInventory: 'Weekly',
+
+    paramWeightProduct: 0,
+    paramInventory: 0,
+
+    weightTimeRange: {
+      timeRange: 'last24Hours',
+      dateFrom: new Date().toISOString().substr(0, 10),
+      dateTo: new Date().toISOString().substr(0, 10),
+      timeFrom: '00:00',
+      timeTo: '00:00'
+    },
+    valuesTgtWeightProduct: [],
+    valuesActWeightProduct: [],
+    valuesHopInventory: [],
+    valuesFrtInventory: [],
+    
+    // Energy Consumption
+    energyConsumption: [],
+
+    // GH Gravimetric Extrusion Control Hopper
+    hopperInventories: [],
+    hauloffLengths: [],
+    recipeSetPoints: [],
+    recipeActualPoints: [],
+
+    isWeightProductLoading: false,
+    isInventoryProductLoading: false
   },
 
   actions: {
@@ -212,6 +249,103 @@ const module = {
       commit
     }, note) {
       commit('addProductNote', note)
+    },
+    initAcsDashboard({
+      commit, state
+    }) {
+      machineAPI.initAcsDashboard()
+        .then((response) => {
+          commit('customers/SET_COMPANIES', response.data.companies, { root: true })
+          if (!state.selectedCompany)
+            commit('SET_SELECTED_COMPANY', response.data.companies[0])
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+        })
+    },
+    changeSelectedCompany({
+      commit
+    }, company) {
+      commit('SET_SELECTED_COMPANY', company)
+    },
+
+    // product analytics init
+    initProduct({
+      commit, state
+    }, id) {
+      commit('WEIGHT_PRODUCT_LOADING')
+      commit('INVENTORY_PRODUCT_LOADING')
+      machineAPI.initProduct({
+        machineId: id,
+        mode: state.modeWeightProduct,
+        param: state.paramWeightProduct
+      })
+        .then((response) => {
+          commit('SET_MACHINE', response.data.machine)
+          commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
+          commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
+          commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
+          commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
+
+          // Energy consumption
+          commit('SET_ENERGY_CONSUMPTION', response.data.energy_consumption)
+
+          // GH Gravimetric Extrusion Control Hopper
+          commit('SET_HOPPER_INVENTORIES', response.data.hopper_inventories)
+          commit('SET_HAULOFF_LENGTHS', response.data.hauloff_lengths)
+          commit('SET_RECIPE_SET_POINTS', response.data.set_points)
+          commit('SET_RECIPE_ACTUAL_POINTS', response.data.actual_points)
+
+          commit('alarms/SET_ALARM_TYPES', response.data.alarm_types, { root: true })
+          commit('alarms/SET_ALARMS', response.data.alarms, { root: true })
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+          commit('WEIGHT_PRODUCT_LOADED')
+          commit('INVENTORY_PRODUCT_LOADED')
+        })
+    },
+
+    onProductWeightParamChange({
+      commit
+    }, data) {
+      commit('WEIGHT_PRODUCT_LOADING')
+      machineAPI.changeProductWeightMode(data)
+        .then((response) => {
+          commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
+          commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+          commit('WEIGHT_PRODUCT_LOADED')
+          commit('SET_PRODUCT_WEIGHT_MODE', data.mode)
+          commit('SET_PRODUCT_WEIGHT_PARAM', data.param)
+        })
+    },
+
+    onProductInventoryParamChanged({
+      commit
+    }, data) {
+      commit('INVENTORY_PRODUCT_LOADING')
+      machineAPI.onProductInventoryParamChanged(data)
+        .then((response) => {
+          commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
+          commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+          commit('INVENTORY_PRODUCT_LOADED')
+          commit('SET_PRODUCT_INVENTORY_MODE', data.mode)
+          commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
+        })
     }
   },
 
@@ -240,7 +374,69 @@ const module = {
     },
     SET_MACHINES(state, machines) {
       state.machines = machines
-    }
+    },
+    SET_SELECTED_COMPANY(state, company) {
+      state.selectedCompany = company
+    },
+
+    // set machine for product page
+    SET_MACHINE(state, machine) {
+      state.machine = machine
+    },
+
+    // set target values
+    SET_TGT_WEIGHT_VALUES(state, tgt) {
+      state.valuesTgtWeightProduct = tgt
+    },
+    // set actual values
+    SET_ACT_WEIGHT_VALUES(state, act) {
+      state.valuesActWeightProduct = act
+    },
+    SET_HOP_INVENTORY_VALUES(state, hops) {
+      state.valuesHopInventory = hops
+    },
+    SET_FRT_INVENTORY_VALUES(state, fractions) {
+      state.valuesFrtInventory = fractions
+    },
+
+    // Target and Actuals mode - Weekly or Monthly
+    SET_PRODUCT_WEIGHT_MODE(state, mode) {
+      state.modeWeightProduct = mode
+    },
+    // Target and Actuals mode - Weekly or Monthly
+    SET_PRODUCT_INVENTORY_MODE(state, mode) {
+      state.modeInventory = mode
+    },
+
+    // Target and Actuals mode - Weekly or Monthly
+    SET_PRODUCT_WEIGHT_PARAM(state, param) {
+      state.paramWeightProduct = param
+    },
+    SET_PRODUCT_INVENTORY_PARAM(state, param) {
+      state.paramInventory = param
+    },
+
+    WEIGHT_PRODUCT_LOADING(state) {
+      state.isWeightProductLoading = true
+    },
+    WEIGHT_PRODUCT_LOADED(state) {
+      state.isWeightProductLoading = false
+    },
+    INVENTORY_PRODUCT_LOADING(state) {
+      state.isInventoryProductLoading = true
+    },
+    INVENTORY_PRODUCT_LOADED(state) {
+      state.isInventoryProductLoading = false
+    },
+
+    // Energy Consumption
+    SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },
+
+    // GH Gravimetric Extrusion Control Hopper
+    SET_HOPPER_INVENTORIES(state, hopperInventories) { state.hopperInventories = hopperInventories },
+    SET_HAULOFF_LENGTHS(state, hauloffLengths) { state.hauloffLengths = hauloffLengths },
+    SET_RECIPE_ACTUAL_POINTS(state, actualPoints) { state.recipeActualPoints = actualPoints },
+    SET_RECIPE_SET_POINTS(state, setPoints) { state.recipeSetPoints = setPoints }
   },
 
   getters: {

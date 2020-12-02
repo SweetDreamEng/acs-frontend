@@ -12,7 +12,7 @@
         </v-card-subtitle>
       </v-card-subtitle>
       <v-card-text>
-        <apexchart type="bar" height="150" :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="bar" height="140" :options="chartOptions" :series="series"></apexchart>
       </v-card-text>
     </v-card>
   </div>

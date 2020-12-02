@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '@/api.js'
 export default {
 
   /*
@@ -8,7 +8,7 @@ export default {
     }
   */
   getLocations(pageNum) {
-    return axios.get('/locations').then((response) => {
+    return api.get('/locations').then((response) => {
       return response
     })
   },
@@ -21,7 +21,7 @@ export default {
       }
   */
   addLocation(data) {
-  	return axios.post('/locations/add', data).then((response) => {
+  	return api.post('/locations/add', data).then((response) => {
       return response
     })
   },
@@ -35,7 +35,7 @@ export default {
       }
   */
   updateLocation(data) {
-    return axios.patch('/locations/update', data).then((response) => {
+    return api.patch('/locations/update', data).then((response) => {
       return response
     })
   }

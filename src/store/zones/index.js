@@ -24,6 +24,7 @@ const module = {
       commit
     }) {
       commit('TABLE_LOAD')
+      commit('locations/TABLE_LOAD', null, { root: true })
 
       return new Promise((resolve, reject) => {
         zoneAPI.initLocationsZones()
@@ -37,6 +38,7 @@ const module = {
             reject(error)
           })
           .finally(() => {
+            commit('locations/TABLE_LOADED', null, { root: true })
             commit('TABLE_LOADED')
           })
       })

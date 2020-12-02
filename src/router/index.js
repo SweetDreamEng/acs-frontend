@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
+import bootstrap from './bootstrap'
 
 // Routes
 import ACSMachines from './acs-machines.routes'
 import PagesRoutes from './pages.routes'
 import UsersRoutes from './users.routes'
+import CustomersRoutes from './customers.routes'
+import AcsAdminUsersRoutes from './acs-admin.users.routes'
 
 Vue.use(Router)
 
@@ -17,14 +21,13 @@ export const routes = [{
   component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/dashboard/DashboardPage.vue'),
   meta: {
     layout: 'dashboard',
-    userAuth: true
+    customerAdmin: true
   }
 }, {
   path: '/dashboard/product/:id',
   name: 'dashboard-product',
   component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/DashboardProduct.vue'),
   meta: {
-    layout: 'dashboard',
     userAuth: true
   }
 }, {
@@ -33,7 +36,7 @@ export const routes = [{
   component: () => import(/* webpackChunkName: "location-dashboard" */ '@/pages/dashboard/LocationDashboard.vue'),
   meta: {
     layout: 'dashboard',
-    userAuth: true
+    customerAdmin: true
   }
 }, {
   path: '/dashboard/:location/:zone',
@@ -41,12 +44,14 @@ export const routes = [{
   component: () => import(/* webpackChunkName: "zone-dashboard" */ '@/pages/dashboard/ZoneDashboard.vue'),
   meta: {
     layout: 'dashboard',
-    userAuth: true
+    customerAdmin: true
   }
 },
 ...ACSMachines,
+...AcsAdminUsersRoutes,
 ...PagesRoutes,
 ...UsersRoutes,
+...CustomersRoutes,
 {
   path: '/blank',
   name: 'blank',
@@ -72,17 +77,70 @@ const router = new Router({
   routes
 })
 
+let firstRoute = true
+
 /**
  * Before each route update
  */
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  store.commit('app/PAGE_LOADING', { root: true } )
+  
+  if (firstRoute) {
+    firstRoute = false
+
+    await bootstrap()
+  }
+
+  const { role } = store.state.auth.user
+
+  const requiresAuth =
+    (to.matched.some((record) => record.meta.userAuth)) ||
+    (to.matched.some((record) => record.meta.acsAdmin)) ||
+    (to.matched.some((record) => record.meta.customerAdmin))
+
+  if (requiresAuth) {
+    if (role) {
+      if (to.matched.some((record) => record.meta.userAuth)) {
+        return next()
+      } else if (role !== 'acs_admin' && to.matched.some((record) => record.meta.userAuth)) {
+        return next({
+          name: 'auth-signin'
+        })
+      } else if (role !== 'customer_admin' && to.matched.some((record) => record.meta.userAuth)) {
+        return next({
+          name: 'auth-signin'
+        })
+      }
+
+      return next()
+    } else {
+      return next({
+        name: 'auth-signin'
+      })
+    }
+  } else {
+    // TODO: if I am authenticated but I'm going to a page for non authenticated people, where should I be redirected
+    if (role && (to.matched.some((record) => record.meta.userNotAuth))) {
+      if (role === 'acs_admin') {
+        return next({
+          name: 'acs-machines'
+        })
+      } else if (role === 'customer_admin') {
+        return next({
+          name: 'dashboard-analytics'
+        })
+      }
+    }
+  }
+
   return next()
 })
 
 /**
  * After each route update
  */
-router.afterEach((to, from) => {
+router.afterEach((to, from, next) => {
+  store.commit('app/PAGE_LOADED', { root: true } )
 })
 
 export default router

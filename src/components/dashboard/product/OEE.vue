@@ -1,61 +1,38 @@
 <template>
-  <v-card height="100%">
+  <v-card
+    height="100%"
+    :loading="isLoading"
+    :disabled="isLoading"
+  >
     <v-card-subtitle class="d-flex justify-space-between">
-      <strong>Inventory & Fractional Inventory</strong>
-      <MonthlyWeekly />
-    </v-card-subtitle>
-    <v-card-text class="d-flex align-center">
-      <apexchart
-        v-if="!isLoading1"
-        type="radialBar"
-        height="150"
-        :options="chartOptions0"
-        :series="series0"
-      >
-      </apexchart>
-      <div class="d-flex flex-column mr-2">
-        <div>
-          <v-chip
-            class="mt-1"
-            outlined
-            style="width: 68px;"
-            color="primary lighten-2"
-            label
-            dark
-          >
-            A: 100
-          </v-chip>
-        </div>
-        <div>
-          <v-chip
-            class="mt-1"
-            outlined
-            style="width: 68px;"
-            color="grey"
-            label
-            dark
-          >
-            P: 60
-          </v-chip>
-        </div>
-        <div>
-          <v-chip
-            class="mt-1"
-            outlined
-            style="width: 68px;"
-            color="orange"
-            label
-            dark
-          >
-            Q: 100
-          </v-chip>
-        </div>
+      <div>
+        <div class="font-weight-bold">Hop & Fractual Inventories</div>
+        <div class="font-italic">({{ mode }})</div>
       </div>
+      <MonthlyWeekly @changeMode="changeMode"/>
+    </v-card-subtitle>
+    <v-card-subtitle>
+      <v-select
+        v-model="loc_param"
+        :items="items"
+        label="Choose Parameter"
+        item-text="text"
+        item-value="id"
+        hide-details
+        @change="changeParams"
+        outlined
+        dense
+        class="ml-auto"
+        style="width: 480px"
+      >
+      </v-select>
+    </v-card-subtitle>
+    <v-card-text>
       <apexchart
         type="area"
         :options="chartOptions"
         :series="series"
-        height="150"
+        height="240"
       >
       </apexchart>
     </v-card-text>
@@ -79,32 +56,25 @@ export default {
     MonthlyWeekly
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
-    loading: {
+    isLoading: {
       type: Boolean,
       default: false
     },
-    series0: {
-      type: Array,
-      default: () => [59]
+    mode: {
+      type: String,
+      default: 'Weekly'
     },
-    series: {
+    param: {
+      type: Number,
+      default: 1
+    },
+    valuesHopInventory: {
       type: Array,
-      default: () => [
-        {
-          id: 1,
-          name: 'Inventory',
-          data: [88, 71, 84, 0, 0, 88, 88, 82, 88, 88, 0, 0, 48, 0, 88]
-        },
-        {
-          id: 2,
-          name: 'Fractional Inventory',
-          data: [78, 61, 74, 0, 0, 78, 78, 72, 78, 78, 0, 0, 38, 0, 78]
-        }
-      ]
+      default: () => [{}]
+    },
+    valuesFrtInventory: {
+      type: Array,
+      default: () => [{}]
     }
   },
   data() {
@@ -112,33 +82,36 @@ export default {
       loadingInterval: null,
       isLoading1: true,
 
-      chartOptions0: {
-        chart: {
-          height: 350,
-          type: 'radialBar'
-        },
-        plotOptions: {
-          radialBar: {
-            hollow: {
-              size: '70%'
-            },
-            dataLabels: {
-              value: {
-                offsetY: -10,
-                fontSize: '18px',
-                color: '#EF9A9A'
-              }
-            },
-            track: {
-              background: '#ccc'
-            }
-          }
-        },
-        fill: {
-          colors: ['#EF9A9A']
-        },
-        labels: ['']
-      },
+      items: [
+        {
+          id: 0,
+          text: 'L30_0_8_HopInv[1] with L30_16_23_FracInv[1]'
+        }, {
+          id: 1,
+          text: 'L30_0_8_HopInv[2] with L30_16_23_FracInv[2]'
+        }, {
+          id: 2,
+          text: 'L30_0_8_HopInv[3] with L30_16_23_FracInv[3]'
+        }, {
+          id: 3,
+          text: 'L30_0_8_HopInv[4] with L30_16_23_FracInv[4]'
+        }, {
+          id: 4,
+          text: 'L30_0_8_HopInv[5] with L30_16_23_FracInv[5]'
+        }, {
+          id: 5,
+          text: 'L30_0_8_HopInv[6] with L30_16_23_FracInv[6]'
+        }, {
+          id: 6,
+          text: 'L30_0_8_HopInv[7] with L30_16_23_FracInv[7]'
+        }, {
+          id: 7,
+          text: 'L30_0_8_HopInv[8] with L30_16_23_FracInv[8]'
+        }
+      ],
+
+      loc_param: this.param,
+
       chartOptions: {
         chart: {
           height: 120,
@@ -159,19 +132,35 @@ export default {
     }
   },
   computed: {
+    series() {
+      return [
+        {
+          id: 1,
+          name: 'Target',
+          data: this.valuesHopInventory
+        },
+        {
+          id: 2,
+          name: 'Actuals',
+          data: this.valuesFrtInventory
+        }
+      ]
+    }
   },
   mounted() {
-    let count = 0
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
   },
   methods: {
-    clear() {
-      clearInterval(this.loadingInterval)
+    changeMode(mode) {
+      this.$emit('changeParams', {
+        mode: mode,
+        param: this.loc_param
+      })
+    },
+    changeParams() {
+      this.$emit('changeParams', {
+        mode: this.mode,
+        param: this.loc_param
+      })
     }
   }
 }

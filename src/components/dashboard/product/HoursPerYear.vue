@@ -1,5 +1,5 @@
 <template>
-  <v-card height="100%">
+  <v-card>
     <v-card-subtitle class="d-flex justify-space-between">
       <strong>Operational Efficiency</strong>
       <MonthlyWeekly />

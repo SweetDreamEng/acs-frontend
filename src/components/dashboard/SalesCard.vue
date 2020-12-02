@@ -9,7 +9,6 @@
     <!-- information -->
     <div v-else class="d-flex flex-column flex-grow-1">
       <v-card-title>
-        <!-- <div>{{ $t(label) }}</div> -->
         <div>Daily Production</div>
         <v-spacer></v-spacer>
         <v-btn text color="secondary" @click="$emit('action-clicked')">{{ actionLabel }}</v-btn>
@@ -23,14 +22,14 @@
           </div>
           <div class="primary--text text--lighten-4 mt-1">
             <!-- {{ 1.04 | percentageLabel }} {{ $t('dashboard.lastweek') }} -->
-            {{ 42 }} {{ $t('dashboard.lastweek') }}
+            {{ 42 }} vs last week
           </div>
         </div>
 
         <v-spacer></v-spacer>
 
         <div class="px-2 pb-2">
-          <div class="title mb-1">{{ $t('dashboard.weeklyUtil') }}</div>
+          <div class="title mb-1">Target Production</div>
           <div class="d-flex align-center">
             <div class="text-h4">
               <!-- {{ value | formatPercentage }} -->

@@ -1,37 +1,43 @@
-import axios from 'axios'
+import api from '@/api.js'
 export default {
-  getCustomers() {
-    return axios.get('/customers').then((response) => {
+  initAddCompany() {
+    return api.get('/customers/init-add-company').then((response) => {
       return response
     })
   },
-  addCustomer(companyName, administratorName, administratorEmail) {
-    const data = {
-      company_name: companyName,
-      administrator_name: administratorName,
-      administrator_email: administratorEmail
-    }
+  getCustomers() {
+    return api.get('/customers').then((response) => {
+      return response
+    })
+  },
+  addCustomer(data) {
 
-    return axios.post('/customers/add', data).then((response) => {
+    Object.assign(data, {
+      company_name: data.companyName,
+      administrator_name: data.administratorName,
+      administrator_email: data.administratorEmail
+    })
+
+    return api.post('/customers/add', data).then((response) => {
       return response
     })
   },
   getCustomer(id) {
-    return axios.get(`/customers/${id}`).then((response) => {
+    return api.get(`/customers/${id}`).then((response) => {
       return response
     })
   },
   updateAccount(accountInfo) {
-    return axios.post(`/customers/update-account/${accountInfo.id}`, {
-      name: accountInfo.name,
-      administrator_name: accountInfo.administratorName,
-      administrator_email: accountInfo.administratorEmail
+    return api.post(`/customers/update-account/${accountInfo.id}`, {
+      name: accountInfo.companyName,
+      administrator_name: accountInfo.name,
+      administrator_email: accountInfo.email
     }).then((response) => {
       return response
     })
   },
   updateProfile(data) {
-    return axios.post(`/customers/update-profile/${data.id}`, {
+    return api.post(`/customers/update-profile/${data.id}`, {
       address_1: data.address_1,
       address_2: data.address_2,
       zip: data.zip,

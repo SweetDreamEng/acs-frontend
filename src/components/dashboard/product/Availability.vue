@@ -1,19 +1,23 @@
 <template>
-  <v-card>
-    <v-card-subtitle class="d-flex justify-space-between">
-      <strong>Availability</strong>
-      <MonthlyWeekly />
-    </v-card-subtitle>
-    <v-card-text>
-      <apexchart
-        v-if="!isLoading1"
-        type="radialBar"
-        height="150"
-        :options="chartOptions"
-        :series="series"
-      >
-      </apexchart>
-    </v-card-text>
+  <v-card
+    color="success darken-1"
+    dark
+    height="100%"
+    class="d-flex flex-column justify-space-between"
+  >
+    <div class="pa-2 pb-0">
+      <div class="title">Machine Status</div>
+      <div>Blender</div>
+      <div>Running</div>
+    </div>
+    <v-spacer></v-spacer>
+
+    <apexchart
+      type="area"
+      height="100"
+      :options="chartOptions"
+      :series="series"
+    ></apexchart>
   </v-card>
 </template>
 
@@ -31,7 +35,7 @@
 import MonthlyWeekly from '../MonthlyWeekly'
 export default {
   components: {
-    MonthlyWeekly
+    // MonthlyWeekly
   },
   props: {
     label: {
@@ -42,9 +46,9 @@ export default {
       type: Boolean,
       default: false
     },
-    series: {
-      type: Array,
-      default: () => [100]
+    options: {
+      type: Object,
+      default: () => ({})
     }
   },
   data() {
@@ -52,26 +56,43 @@ export default {
       loadingInterval: null,
       isLoading1: true,
 
+      series: [{
+        name: 'Status',
+        data: [
+          ['2020-02-02', 13],
+          ['2020-02-03', 16],
+          ['2020-02-04', 9],
+          ['2020-02-05', 12]
+        ]
+      }],
       chartOptions: {
         chart: {
-          height: 350,
-          type: 'radialBar'
-        },
-        plotOptions: {
-          radialBar: {
-            hollow: {
-              size: '70%'
-            },
-            dataLabels: {
-              value: {
-                offsetY: -10,
-                fontSize: '18px',
-                color: 'primary'
-              }
+          animations: {
+            speed: 400,
+            animateGradually: {
+              enabled: false
             }
+          },
+          width: '100%',
+          height: 60,
+          type: 'area',
+          sparkline: {
+            enabled: true
           }
         },
-        labels: ['']
+        colors: ['#fff'],
+        fill: {
+          type: 'solid',
+          opacity: 0.15
+        },
+        stroke: {
+          curve: 'smooth',
+          width: 1
+        },
+        xaxis: {
+          type: 'datetime'
+        },
+        ...this.options
       }
     }
   },

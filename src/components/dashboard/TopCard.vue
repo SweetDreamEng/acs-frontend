@@ -3,32 +3,55 @@
     <v-row class="flex-grow-0" dense>
       <v-col xs="12" sm="12" md="6" lg="6">
         <v-row dense>
-          <v-col cols="6" class="pt-0">
+          <v-col
+            xs="12"
+            sm="6"
+            md="6"
+            lg="6"
+            class="pt-0">
             <track-card
               label="First Pass Yield"
               class="elevation-0"
               color="#8c9eff"
               value="87%"
               :percentage="1.7"
-              :percentage-label="$t('dashboard.lastweek')"
+              percentage-label="vs last week"
               :series="ordersSeries"
             ></track-card>
           </v-col>
-          <v-col cols="6" class="pt-0">
+          <v-col
+            xs="12"
+            sm="6"
+            md="6"
+            lg="6"
+            class="pt-0">
             <downtime-card></downtime-card>
           </v-col>
-          <v-col cols="6" class="pb-0">
+          <v-col
+            xs="12"
+            sm="6"
+            md="6"
+            lg="6"
+            class="pb-0"
+          >
             <track-card
               label="Avg First Pass Yield"
               class="elevation-0"
               color="#06d6a0"
               value="84%"
               :percentage="4.3"
-              :percentage-label="$t('dashboard.lastweek')"
+              percentage-label="vs last week"
               :series="customersSeries"
-            ></track-card>
+            >
+            </track-card>
           </v-col>
-          <v-col cols="6" class="pb-0">
+          <v-col
+            xs="12"
+            sm="6"
+            md="6"
+            lg="6"
+            class="pb-0"
+          >
             <oee-card></oee-card>
           </v-col>
         </v-row>
@@ -39,8 +62,8 @@
             :value="1.832"
             :percentage="3.2"
             :loading="isLoading1"
-            :percentage-label="$t('dashboard.lastweek')"
-            :action-label="$t('dashboard.viewReport')"
+            percentage-label="vs last week"
+            action-label="View Report"
           ></sales-card>
         </div>
       </v-col>

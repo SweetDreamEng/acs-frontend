@@ -6,20 +6,20 @@ export default [{
   name: 'users-list',
   component: () => import(/* webpackChunkName: "users-list" */ '@/pages/users/UsersPage.vue'),
   meta: {
-    userAuth: true
+    customerAdmin: true
   }
 }, {
-  path: '/users/edit',
+  path: '/users/edit/:id',
   name: 'users-edit',
   component: () => import(/* webpackChunkName: "users-edit" */ '@/pages/users/EditUserPage.vue'),
   meta: {
-    userAuth: true
+    customerAdmin: true
   }
 }, {
   path: '/users/add',
   name: 'users-add',
   component: () => import(/* webpackChunkName: "users-add" */ '@/pages/users/CreateUserPage.vue'),
   meta: {
-    userAuth: true
+    customerAdmin: true
   }
 }]

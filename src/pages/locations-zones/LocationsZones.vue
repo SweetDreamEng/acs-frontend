@@ -29,7 +29,7 @@
                 <v-text-field
                   v-model="editedZone.name"
                   label="Zone"
-                  :rules="[rules.required]"
+                  :rules="[$rules.required]"
                   outlined
                   dense
                 >
@@ -38,7 +38,7 @@
                   v-model="editedZone.location_id"
                   :items="extendedLocations"
                   label="Choose Location"
-                  item-text="location"
+                  item-text="name"
                   item-value="id"
                   outlined
                   dense
@@ -130,12 +130,7 @@ export default {
       },
       isEditZoneFormValid: true,
 
-      searchQuery: '',
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required field'
-      }
+      searchQuery: ''
     }
   },
   computed: {
@@ -184,7 +179,7 @@ export default {
     locationName(location_id) {
       const _location = this.locations.find((location) => location.id === location_id)
 
-      return _location ? _location.location : 'Not Assinged'
+      return _location ? _location.name : 'Not Assinged'
     },
     saveZone() {
       if (this.$refs.editZoneForm.validate()) {

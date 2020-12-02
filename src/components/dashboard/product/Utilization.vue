@@ -1,14 +1,13 @@
 <template>
-  <v-card>
-    <v-card-subtitle class="d-flex justify-space-between">
+  <v-card height="100%">
+    <v-card-title>
       <strong>Utilization</strong>
-      <small class="ml-auto">1 Mon</small>
-    </v-card-subtitle>
+    </v-card-title>
     <v-card-text>
       <apexchart
-        v-if="!isLoading1"
-        type="radialBar"
-        height="150"
+        type="line"
+        ref="chart"
+        height="180"
         :options="chartOptions"
         :series="series"
       >
@@ -18,7 +17,6 @@
 </template>
 
 <script>
-
 /*
 |---------------------------------------------------------------------
 | DEMO Dashboard Card Component
@@ -28,6 +26,7 @@
 | your own dashboard component
 |
 */
+
 export default {
   props: {
     label: {
@@ -38,42 +37,67 @@ export default {
       type: Boolean,
       default: false
     },
-    series: {
+    data: {
       type: Array,
-      default: () => [65]
+      default: () => [12,12,12,12,12,12,72,67,66,59,55,48]
     }
   },
   data() {
     return {
       loadingInterval: null,
       isLoading1: true,
+      interval1: null,
+      interval2: null,
+
+      traffic: Array(11).fill(0),
+
+      series: [{
+        data: Array(11).fill(0).slice(0)
+      }],
 
       chartOptions: {
         chart: {
-          height: 350,
-          type: 'radialBar'
-        },
-        plotOptions: {
-          radialBar: {
-            hollow: {
-              size: '70%'
-            },
-            dataLabels: {
-              value: {
-                offsetY: -10,
-                fontSize: '18px',
-                color: '#4CAF50'
-              }
-            },
-            track: {
-              background: '#ccc'
+          id: 'realtime',
+          type: 'line',
+          animations: {
+            enabled: true,
+            easing: 'linear',
+            dynamicAnimation: {
+              speed: 1000
             }
+          },
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: false
           }
         },
-        fill: {
-          colors: ['#4CAF50']
+        dataLabels: {
+          enabled: false
         },
-        labels: ['']
+        stroke: {
+          curve: 'smooth',
+          width: 2
+        },
+        markers: {
+          size: 0
+        },
+        xaxis: {
+          labels: {
+            show: false
+          },
+          range: 10
+        },
+        yaxis: {
+          max: 10
+        },
+        grid: {
+          show: false
+        },
+        legend: {
+          show: false
+        }
       }
     }
   },
@@ -87,10 +111,35 @@ export default {
       this[`isLoading${count++}`] = false
       if (count === 4) this.clear()
     }, 400)
+
+    this.interval1 = window.setInterval(() => {
+      this.traffic.push(parseInt(Math.random() * 10))
+      this.$refs.chart.updateSeries([{
+        data: this.traffic.slice()
+      }])
+    }, 1000)
+  
+    this.interval2 = window.setInterval(() => {
+      if (this.$refs.chart) {
+        this.$refs.chart.updateSeries([{
+          data: this.traffic.slice()
+        }], false, true)
+      }
+    }, 60000)
+  },
+  destroyed() {
+    clearInterval(this.interval1)
+    clearInterval(this.interval2)
   },
   methods: {
     clear() {
       clearInterval(this.loadingInterval)
+    },
+
+    getNewSeries() {
+      this.data.push(this.data.shift())
+
+      return this.data
     }
   }
 }

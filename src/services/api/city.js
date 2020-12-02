@@ -1,7 +1,7 @@
-import axios from 'axios'
+import api from '@/api.js'
 export default {
   getCities(state) {
-    return axios.get('/cities/' + state).then((response) => {
+    return api.get('/cities/' + state).then((response) => {
       return response
     })
   }

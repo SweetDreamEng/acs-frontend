@@ -6,7 +6,7 @@
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
       <v-spacer></v-spacer>
-      <v-btn color="primary" to="/users/add">
+      <v-btn v-if="canCreateCustomerUser" color="primary" to="/users/add">
         Create User
       </v-btn>
     </div>
@@ -67,6 +67,7 @@
         :items="users"
         :search="searchQuery"
         class="flex-grow-1"
+        :loading="isUsersTableLoading"
       >
         <template v-slot:item.id="{ item }">
           <div class="font-weight-bold"># <copy-label :text="item.id + ''" /></div>
@@ -74,18 +75,13 @@
 
         <template v-slot:item.email="{ item }">
           <div class="d-flex align-center py-1">
-            <!-- <v-avatar size="32" class="elevation-1 grey lighten-3">
-              <v-img :src="item.avatar" />
-            </v-avatar> -->
             <v-avatar
               color="primary"
               size="28"
             >
               <span class="white--text">{{ item.name | initials }}</span>
             </v-avatar>
-            <div class="ml-1 caption font-weight-bold">
-              <copy-label :text="item.email" />
-            </div>
+            <span class="ml-1">{{ item.email }}</span>
           </div>
         </template>
 
@@ -94,22 +90,18 @@
             label
             small
             class="font-weight-bold"
-            :dark="item.role === 'ADMIN' || item.role === 'Manager'"
+            dark
             :color="roleColor(item.role)"
-          >{{ item.role | capitalize }}</v-chip>
+          >{{ item.role.name | capitalize }}</v-chip>
         </template>
 
-        <template v-slot:item.created="{ item }">
-          <div>{{ item.created | formatDate('ll') }}</div>
+        <template v-slot:item.created_at="{ item }">
+          <div>{{ item.created_at | formatDate('ll') }}</div>
         </template>
 
-        <template v-slot:item.lastSignIn="{ item }">
-          <div>{{ item.lastSignIn | formatDate('lll') }}</div>
-        </template>
-
-        <template v-slot:item.action="{ }">
-          <div class="actions">
-            <v-btn icon to="/users/edit">
+        <template v-slot:item.action="{ item }">
+          <div v-if="canCreateCustomerUser" class="actions">
+            <v-btn icon :to="'/users/edit/' + item.id">
               <v-icon small>mdi-pencil</v-icon>
             </v-btn>
           </div>
@@ -129,8 +121,8 @@
 | List all users and give create/edit user options
 */
 
-import users from './content/users'
 import CopyLabel from '../../components/common/CopyLabel'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -154,26 +146,37 @@ export default {
         { text: 'Email', value: 'email' },
         { text: 'Name', align: 'left', value: 'name' },
         { text: 'Role', value: 'role' },
-        { text: 'Created', value: 'created' },
-        { text: 'Last SignIn', value: 'lastSignIn' },
+        { text: 'Created', value: 'created_at' },
         { text: '', sortable: false, align: 'right', value: 'action' }
-      ],
-
-      users
+      ]
     }
+  },
+  computed: {
+    ...mapState({
+      users: (state) => state.users.data,
+      isUsersTableLoading: (state) => state.users.isUsersTableLoading
+    }),
+    ...mapGetters({
+      canCreateCustomerUser: 'auth/canCreateCustomerUser'
+    })
   },
   watch: {
     selectedUsers(val) {
 
     }
   },
+  mounted() {
+    this.getCompanyUsers()
+  },
   methods: {
+    ...mapActions({
+      getCompanyUsers: 'users/getCompanyUsers'
+    }),
     searchUser() {},
-    open() {},
-    roleColor(rolename) {
-      if (rolename === 'ADMIN') return '#4CAF50'
-      else if (rolename === 'Manager') return '#F79803'
-      else return undefined
+    roleColor(role) {
+      if (role.key === 'customer_admin') return 'primary'
+      else if (role.key === 'customer_manager') return '#4CAF50'
+      else return '#F79803'
     }
   }
 }
