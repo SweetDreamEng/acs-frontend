@@ -29,7 +29,6 @@
 
 <script>
 
-// import MonthlyWeekly from '../MonthlyWeekly'
 export default {
   components: {
   },
