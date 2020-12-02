@@ -35,8 +35,31 @@
         :loading="suspend_btn_loading"
         :disabled="suspend_btn_loading"
         @click="suspendSIM(item)"
-      >Suspend SIM</v-btn>
+        >Suspend SIM</v-btn
+      >
+      <v-btn
+        small
+        color="primary"
+        class="mr-2"
+        :loading="remote_btn_loading"
+        :disabled="remote_btn_loading"
+        @click="() => remote(item)"
+        >Remote Control</v-btn
+      >
     </div>
+    <v-bottom-sheet v-model="isRemote">
+      <v-sheet class="text-center" height="200px">
+        <v-btn
+          class="mt-6"
+          text
+          color="red"
+          @click="isRemote = !isRemote"
+        >close</v-btn>
+        <div class="py-3">
+          <a :href="link" target="_blank">{{ link }} </a>
+        </div>
+      </v-sheet>
+    </v-bottom-sheet>
   </div>
 </template>
 <script>
@@ -52,7 +75,9 @@ export default {
   },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      isRemote: false,
+      link: []
     }
   },
   computed: {
@@ -61,15 +86,17 @@ export default {
 
       activate_btn_loading: (state) => state.devices.activate_btn_loading,
       suspend_btn_loading: (state) => state.devices.suspend_btn_loading,
-      refresh_btn_loading: (state) => state.devices.refresh_btn_loading
+      refresh_btn_loading: (state) => state.devices.refresh_btn_loading,
+      remote_btn_loading: (state) => state.devices.remote_btn_loading
     })
   },
   methods: {
     ...mapActions({
       'querySIM': 'devices/querySIM',
       'activateSIM': 'devices/activateSIM',
-      'suspendSIM': 'devices/suspendSIM'
-    })
+      'suspendSIM': 'devices/suspendSIM',
+      'remoteControl': 'devices/remoteControl'
+    }),
     // save () {
     //   if (this.$refs.editForm.validate()) {
     //     this.deviceAssigned({
@@ -82,6 +109,16 @@ export default {
     //       })
     //   }
     // },
+    remote(item) {
+      this.remoteControl(item).then((response) => {
+        const arr  = response.data.data
+
+        if ( arr.length > 0 ) {
+          this.link = arr.reduce((a, b) => a.ttl > b.ttl ? a : b, arr[0]).url
+          this.isRemote = true
+        }
+      })
+    }
   }
 }
 </script>

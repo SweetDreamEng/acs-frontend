@@ -11,6 +11,11 @@ export default {
       return response
     })
   },
+  remoteControl(device) {
+    return api.post('/devices/remote-control/' + device.device_id).then((response) => {
+      return response
+    })
+  },
   getDevices(pageNum) {
     return api.get(`/devices/${pageNum}`).then((response) => {
       return response

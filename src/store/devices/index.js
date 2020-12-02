@@ -17,6 +17,7 @@ const module = {
     refresh_btn_loading: false,         // status of refreshing SIM
     activate_button_loading: false,     // status of activating SIM
     suspend_btn_loading: false,         // status of deactivating SIM
+    remote_btn_loading: false,         // status of deactivating SIM
     assign_loading: false,              // status of uploading devices from excel file
     register_button_loading: false
   },
@@ -179,6 +180,25 @@ const module = {
           })
       })
     },
+    remoteControl({
+      commit, dispatch
+    }, device) {
+      commit('REMOTE_BTN_LOAD')
+
+      return new Promise((resolve, reject) => {
+        deviceAPI.remoteControl(device)
+          .then((response) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+          .finally(() => {
+            commit('REMOTE_BTN_CLEAR')
+          })
+      })
+    },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     },
@@ -232,6 +252,12 @@ const module = {
     },
     SUSPEND_BTN_CLEAR(state) {
       state.suspend_btn_loading = false
+    },
+    REMOTE_BTN_LOAD(state) {
+      state.remote_btn_loading = true
+    },
+    REMOTE_BTN_CLEAR(state) {
+      state.remote_btn_loading = false
     },
     SET_DATA(state, devices) {
       state.data = devices
