@@ -6,7 +6,7 @@
       <strong v-if="item.sim_status === 'Active'" class="green--text">Active</strong>
       <strong v-if="item.sim_status === 'Suspended'" class="red--text">Suspended</strong>
 
-      <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ item.public_ip_sim }}</span></span>
+      <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ public_ip }}</span></span>
     </div>
     <div>
       <v-btn
@@ -53,7 +53,7 @@
         :loading="remote_cli_btn_loading"
         :disabled="remote_cli_btn_loading"
         @click="() => onRemoteCli(item)"
-        >Remote Control</v-btn
+        >Remote CLI</v-btn
       >
     </div>
     <v-bottom-sheet v-model="isRemote">
@@ -65,7 +65,7 @@
           @click="isRemote = !isRemote"
         >close</v-btn>
         <div class="py-3">
-          <a :href="link" target="_blank">{{ link }} </a>
+          <a :href="'https://' + link" target="_blank">{{ 'https://' + link }} </a>
         </div>
       </v-sheet>
     </v-bottom-sheet>
@@ -86,7 +86,8 @@ export default {
     return {
       isLoading: false,
       isRemote: false,
-      link: []
+      link: [],
+      public_ip: null
     }
   },
   computed: {
@@ -100,13 +101,20 @@ export default {
       remote_cli_btn_loading: (state) => state.devices.remote_cli_btn_loading
     })
   },
+  mounted() {
+    console.log('this.item', this.item)
+    this.publicIp(this.item).then((response) => {
+      this.public_ip = response.data.public_ip_sim
+    })
+  },
   methods: {
     ...mapActions({
       'querySIM': 'devices/querySIM',
       'activateSIM': 'devices/activateSIM',
       'suspendSIM': 'devices/suspendSIM',
       'remoteWeb': 'devices/remoteWeb',
-      'remoteCli': 'devices/remoteCli'
+      'remoteCli': 'devices/remoteCli',
+      'publicIp': 'devices/publicIp'
     }),
     // save () {
     //   if (this.$refs.editForm.validate()) {
@@ -122,7 +130,7 @@ export default {
     // },
     onRemoteWeb(item) {
       this.remoteWeb(item).then((response) => {
-        const arr  = response.data.data
+        const arr  = response.data
 
         if ( arr.length > 0 ) {
           this.link = arr.reduce((a, b) => a.ttl > b.ttl ? a : b, arr[0]).url
@@ -132,7 +140,7 @@ export default {
     },
     onRemoteCli(item) {
       this.remoteCli(item).then((response) => {
-        const arr  = response.data.data
+        const arr  = response.data
 
         if ( arr.length > 0 ) {
           this.link = arr.reduce((a, b) => a.ttl > b.ttl ? a : b, arr[0]).url
