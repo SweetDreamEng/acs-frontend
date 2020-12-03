@@ -6,7 +6,7 @@
       <strong v-if="item.sim_status === 'Active'" class="green--text">Active</strong>
       <strong v-if="item.sim_status === 'Suspended'" class="red--text">Suspended</strong>
 
-      <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ public_ip }}</span></span>
+      <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ item.public_ip_sim }}</span></span>
     </div>
     <div>
       <v-btn
@@ -35,26 +35,23 @@
         :loading="suspend_btn_loading"
         :disabled="suspend_btn_loading"
         @click="suspendSIM(item)"
-        >Suspend SIM</v-btn
-      >
+      >Suspend SIM</v-btn>
       <v-btn
         small
         color="primary"
         class="mr-2"
         :loading="remote_web_btn_loading"
         :disabled="remote_web_btn_loading"
-        @click="() => onRemoteWeb(item)"
-        >Remote WebUI</v-btn
-      >
+        @click="onRemoteWeb(item)"
+      >Remote WebUI</v-btn>
       <v-btn
         small
         color="primary"
         class="mr-2"
         :loading="remote_cli_btn_loading"
         :disabled="remote_cli_btn_loading"
-        @click="() => onRemoteCli(item)"
-        >Remote CLI</v-btn
-      >
+        @click="onRemoteCli(item)"
+      >Remote CLI</v-btn>
     </div>
     <v-bottom-sheet v-model="isRemote">
       <v-sheet class="text-center" height="200px">
@@ -65,7 +62,7 @@
           @click="isRemote = !isRemote"
         >close</v-btn>
         <div class="py-3">
-          <a :href="'https://' + link" target="_blank">{{ 'https://' + link }} </a>
+          <a :href="'https://' + link" target="_blank">{{ link }} </a>
         </div>
       </v-sheet>
     </v-bottom-sheet>
@@ -86,25 +83,17 @@ export default {
     return {
       isLoading: false,
       isRemote: false,
-      link: [],
-      public_ip: null
+      link: []
     }
   },
   computed: {
     ...mapState({
       sim_statuses: (state) => state.devices.sim_statuses,
-
       activate_btn_loading: (state) => state.devices.activate_btn_loading,
       suspend_btn_loading: (state) => state.devices.suspend_btn_loading,
       refresh_btn_loading: (state) => state.devices.refresh_btn_loading,
       remote_web_btn_loading: (state) => state.devices.remote_web_btn_loading,
       remote_cli_btn_loading: (state) => state.devices.remote_cli_btn_loading
-    })
-  },
-  mounted() {
-    console.log('this.item', this.item)
-    this.publicIp(this.item).then((response) => {
-      this.public_ip = response.data.public_ip_sim
     })
   },
   methods: {
@@ -113,8 +102,7 @@ export default {
       'activateSIM': 'devices/activateSIM',
       'suspendSIM': 'devices/suspendSIM',
       'remoteWeb': 'devices/remoteWeb',
-      'remoteCli': 'devices/remoteCli',
-      'publicIp': 'devices/publicIp'
+      'remoteCli': 'devices/remoteCli'
     }),
     // save () {
     //   if (this.$refs.editForm.validate()) {
