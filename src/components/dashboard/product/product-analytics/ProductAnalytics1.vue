@@ -38,7 +38,10 @@
     </v-row>
     <v-row dense>
       <v-col md="4" sm="8" xs="12">
-        <AverageUtilization />
+        <AverageUtilization
+          :weekly-running-hours="weeklyRuningHours"
+        >
+        </AverageUtilization>
       </v-col>
       <v-col md="4" sm="8" xs="12">
         <energy-consumption
@@ -98,9 +101,9 @@ export default {
 
       isWeightProductLoading: (state) => state.machines.isWeightProductLoading,
       isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading,
-
-      // Energy Consumption
-      energyConsumption: (state) => state.machines.energyConsumption
+      
+      energyConsumption: (state) => state.machines.energyConsumption,                   // Energy Consumption
+      weeklyRuningHours: (state) => state.machines.weeklyRuningHours                    // Weekly running hours
     })
   },
   methods: {

@@ -224,6 +224,9 @@ const module = {
     // Energy Consumption
     energyConsumption: [],
 
+    // BD Batch Blender
+    weeklyRuningHours: [],
+
     // GH Gravimetric Extrusion Control Hopper
     hopperInventories: [],
     hauloffLengths: [],
@@ -291,6 +294,9 @@ const module = {
 
           // Energy consumption
           commit('SET_ENERGY_CONSUMPTION', response.data.energy_consumption)
+
+          // BD Batch Blender
+          commit('SET_RUNNING_HOURS_PER_WEEK', response.data.weekly_running_hours)
 
           // GH Gravimetric Extrusion Control Hopper
           commit('SET_HOPPER_INVENTORIES', response.data.hopper_inventories)
@@ -431,6 +437,9 @@ const module = {
 
     // Energy Consumption
     SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },
+
+    // BD Batch Blender
+    SET_RUNNING_HOURS_PER_WEEK(state, weeklyRuningHours) { state.weeklyRuningHours = weeklyRuningHours },
 
     // GH Gravimetric Extrusion Control Hopper
     SET_HOPPER_INVENTORIES(state, hopperInventories) { state.hopperInventories = hopperInventories },
