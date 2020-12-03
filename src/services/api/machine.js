@@ -21,5 +21,10 @@ export default {
     return api.post('/analytics/product-inventory', data).then((response) => {
       return response
     })
+  },
+  getInventory(data) {
+    return api.post('/analytics/product-inventory', data).then((response) => {
+      return response
+    })
   }
 }

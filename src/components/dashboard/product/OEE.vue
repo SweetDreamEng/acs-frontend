@@ -10,14 +10,11 @@
         <div class="caption font-italic">({{ timeRangeLabel }})</div>
       </div>
       <v-btn
-        rounded
-        outlined
-        color="primary"
-        dark
+        icon
         class="ml-auto"
         @click="$emit('showTimeRange')"
       >
-        Choose Time Range
+        <v-icon>mdi-dots-horizontal</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-subtitle class="mt-1">
@@ -176,12 +173,6 @@ export default {
   mounted() {
   },
   methods: {
-    changeMode(mode) {
-      this.$emit('changeParams', {
-        mode: mode,
-        param: this.loc_param
-      })
-    },
     changeParams() {
       this.$emit('changeParams', {
         mode: this.mode,

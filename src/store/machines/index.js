@@ -391,11 +391,21 @@ const module = {
     },
 
     onProductInventoryParamChanged({
-      commit, state
+      commit, dispatch, state
     }, data) {
+      commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
+
+      dispatch('getInventory')
+    },
+    getInventory({
+      commit, state
+    }) {
       commit('INVENTORY_PRODUCT_LOADING')
 
-      machineAPI.onProductInventoryParamChanged(data)
+      machineAPI.getInventory({
+        param: state.paramInventory,
+        timeRange: state.inventoryTimeRange
+      })
         .then((response) => {
           commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
           commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
@@ -405,17 +415,15 @@ const module = {
         })
         .finally(() => {
           commit('INVENTORY_PRODUCT_LOADED')
-          commit('SET_PRODUCT_INVENTORY_MODE', data.mode)
-          commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
         })
     },
     onTimeRangeChanged({
       commit, dispatch, state
     }, data) {
       commit('SET_INVENTORY_TIME_RANGE', data)
-      dispatch('onProductInventoryParamChanged', {
+      dispatch('getInventory', {
         param: state.paramInventory,
-        mode: state.modeInventory
+        timeRange: state.inventoryTimeRange
       })
     }
   },

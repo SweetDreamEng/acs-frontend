@@ -143,7 +143,7 @@ export default {
 
       isWeightProductLoading: (state) => state.machines.isWeightProductLoading,
       isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading,
-      
+
       energyConsumption: (state) => state.machines.energyConsumption,                   // Energy Consumption
       weeklyRuningHours: (state) => state.machines.weeklyRuningHours,                   // Weekly running hours
       totalRunningPercentage: (state) => state.machines.totalRunningPercentage,         // Weekly running hours
@@ -169,6 +169,8 @@ export default {
       this.showTimeRangeChooser = true
     },
     _onTimeRangeChanged(data) {
+      console.log(data)
+      
       this.onTimeRangeChanged(data)
       this.showTimeRangeChooser = false
     }
