@@ -4,14 +4,23 @@
     :loading="isLoading"
     :disabled="isLoading"
   >
-    <v-card-subtitle class="d-flex justify-space-between">
+    <v-card-title class="d-flex justify-space-between">
       <div>
-        <div class="font-weight-bold">Hop & Fractual Inventories</div>
-        <div class="font-italic">({{ mode }})</div>
+        <div>Hop & Fractual Inventories</div>
+        <div class="caption font-italic">({{ timeRangeLabel }})</div>
       </div>
-      <MonthlyWeekly @changeMode="changeMode"/>
-    </v-card-subtitle>
-    <v-card-subtitle>
+      <v-btn
+        rounded
+        outlined
+        color="primary"
+        dark
+        class="ml-auto"
+        @click="$emit('showTimeRange')"
+      >
+        Choose Time Range
+      </v-btn>
+    </v-card-title>
+    <v-card-subtitle class="mt-1">
       <v-select
         v-model="loc_param"
         :items="items"
@@ -41,24 +50,17 @@
 
 <script>
 
-/*
-|---------------------------------------------------------------------
-| DEMO Dashboard Card Component
-|---------------------------------------------------------------------
-|
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
-|
-*/
-import MonthlyWeekly from '../MonthlyWeekly'
 export default {
   components: {
-    MonthlyWeekly
   },
   props: {
     isLoading: {
       type: Boolean,
       default: false
+    },
+    timeRangeLabel: {
+      type: String,
+      default: ''
     },
     mode: {
       type: String,
@@ -116,18 +118,42 @@ export default {
         chart: {
           height: 120,
           type: 'area',
-          sparkline: {
-            enabled: true
-          },
           animations: {
             speed: 400
+          },
+          toolbar: {
+            show: false
           }
         },
         stroke: {
           curve: 'smooth',
           width: 2
         },
-        xaxis: this.xaxis
+        dataLabels: {
+          enabled: false
+        }
+        // xaxis: {
+        //   type: 'datetime',
+        //   categories: [
+        //     '2018-09-19T00:00:00.000Z',
+        //     '2018-09-19T01:30:00.000Z',
+        //     '2018-09-20T02:30:00.000Z',
+        //     '2018-09-21T03:30:00.000Z',
+        //     '2018-09-22T04:30:00.000Z',
+        //     '2018-09-23T05:30:00.000Z',
+        //     '2018-09-24T06:30:00.000Z',
+        //     '2018-09-25T00:00:00.000Z',
+        //     '2018-09-26T01:30:00.000Z',
+        //     '2018-09-27T02:30:00.000Z',
+        //     '2018-09-28T03:30:00.000Z',
+        //     '2018-09-29T04:30:00.000Z',
+        //     '2018-09-30T05:30:00.000Z',
+        //     '2018-10-1T06:30:00.000Z',
+        //     '2018-10-2T00:00:00.000Z',
+        //     '2018-10-3T01:30:00.000Z',
+        //     '2018-10-4T06:30:00.000Z'
+        //   ]
+        // },
       }
     }
   },
@@ -136,12 +162,12 @@ export default {
       return [
         {
           id: 1,
-          name: 'Target',
+          name: 'Hop',
           data: this.valuesHopInventory
         },
         {
           id: 2,
-          name: 'Actuals',
+          name: 'Fractual',
           data: this.valuesFrtInventory
         }
       ]

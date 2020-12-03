@@ -19,7 +19,9 @@
           :valuesHopInventory="valuesHopInventory"
           :valuesFrtInventory="valuesFrtInventory"
           :isLoading="isInventoryProductLoading"
+          :time-range-label="timeRangeLabel('inventory')"
           @changeParams="_onProductInventoryParamChanged"
+          @showTimeRange="onShowTimeRangeDlgOpen"
         >
         </OEE>
       </v-col>
@@ -64,6 +66,17 @@
         </recipe>
       </v-col>
     </v-row> -->
+
+    <time-range-chooser
+      :dlg="showTimeRangeChooser"
+      :date-from="inventoryTimeRange.dateFrom"
+      :date-to="inventoryTimeRange.dateTo"
+      :time-from="inventoryTimeRange.timeFrom"
+      :time-to="inventoryTimeRange.timeTo"
+      @close="showTimeRangeChooser = false"
+      @submit="_onTimeRangeChanged"
+    >
+    </time-range-chooser>
   </div>
 </template>
 <script>
@@ -76,8 +89,9 @@ import AverageRuntimeByWeek from './bd-batch-blender/AverageRuntimeByWeek'
 import OEE from '../OEE'
 import EnergyConsumption from '../EnergyConsumption'
 // import Recipe from './bd-batch-blender/Recipe'
+import TimeRangeChooser from '../../TimeRangeChooser'
 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -87,10 +101,18 @@ export default {
     ActualTargetWeight,
     AverageRuntimeByWeek,
     OEE,
-    EnergyConsumption
+    EnergyConsumption,
+    TimeRangeChooser
   },
   data() {
     return {
+      showTimeRangeChooser: false,
+      
+      dateFrom: '',
+      dateTo: '',
+      timeFrom: '',
+      timeTo: '',
+
       statusSeries: [{
         name: 'Status',
         data: [
@@ -105,6 +127,8 @@ export default {
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
+
+      inventoryTimeRange: (state) => state.machines.inventoryTimeRange,
 
       modeWeight: (state) => state.machines.modeWeightProduct,
       modeInventory: (state) => state.machines.modeInventory,
@@ -124,18 +148,29 @@ export default {
       weeklyRuningHours: (state) => state.machines.weeklyRuningHours,                   // Weekly running hours
       totalRunningPercentage: (state) => state.machines.totalRunningPercentage,         // Weekly running hours
       recipeValues: (state) => state.machines.recipeValues                              // recipe
+    }),
+    ...mapGetters({
+      timeRangeLabel: 'machines/timeRangeLabel'
     })
   },
   methods: {
     ...mapActions({
       onProductWeightParamChange: 'machines/onProductWeightParamChange',
-      onProductInventoryParamChanged: 'machines/onProductInventoryParamChanged'
+      onProductInventoryParamChanged: 'machines/onProductInventoryParamChanged',
+      onTimeRangeChanged: 'machines/onTimeRangeChanged'
     }),
     _onProductWeightParamChange(data) {
       this.onProductWeightParamChange(data)
     },
     _onProductInventoryParamChanged(data) {
       this.onProductInventoryParamChanged(data)
+    },
+    onShowTimeRangeDlgOpen() {
+      this.showTimeRangeChooser = true
+    },
+    _onTimeRangeChanged(data) {
+      this.onTimeRangeChanged(data)
+      this.showTimeRangeChooser = false
     }
   }
 }

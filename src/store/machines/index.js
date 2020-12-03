@@ -206,6 +206,57 @@ const module = {
     modeWeightProduct: 'Weekly',
     modeInventory: 'Weekly',
 
+    timeRageOptions: [
+      {
+        label: 'Last 30 minutes',
+        value: 'last30Min'
+      },
+      {
+        label: 'Last hour',
+        value: 'lastHour'
+      },
+      {
+        label: 'Last 4 hours',
+        value: 'last4Hours'
+      },
+      {
+        label: 'Last 12 hours',
+        value: 'last12Hours'
+      },
+      {
+        label: 'Last 24 hours',
+        value: 'last24Hours'
+      },
+      {
+        label: 'Last 48 hours',
+        value: 'last48Hours'
+      },
+      {
+        label: 'Last 3 days',
+        value: 'last3Days'
+      },
+      {
+        label: 'Last 7 days',
+        value: 'last7Days'
+      },
+      {
+        label: 'Last 24 days',
+        value: 'last24Days'
+      },
+      {
+        label: 'Custom',
+        value: 'custom'
+      }
+    ],
+
+    inventoryTimeRange: {
+      timeRange: 'last24Hours',
+      dateFrom: new Date().toISOString().substr(0, 10),
+      dateTo: new Date().toISOString().substr(0, 10),
+      timeFrom: '00:00',
+      timeTo: '00:00'
+    },
+
     paramWeightProduct: 0,
     paramInventory: 0,
 
@@ -340,9 +391,10 @@ const module = {
     },
 
     onProductInventoryParamChanged({
-      commit
+      commit, state
     }, data) {
       commit('INVENTORY_PRODUCT_LOADING')
+
       machineAPI.onProductInventoryParamChanged(data)
         .then((response) => {
           commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
@@ -356,6 +408,15 @@ const module = {
           commit('SET_PRODUCT_INVENTORY_MODE', data.mode)
           commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
         })
+    },
+    onTimeRangeChanged({
+      commit, dispatch, state
+    }, data) {
+      commit('SET_INVENTORY_TIME_RANGE', data)
+      dispatch('onProductInventoryParamChanged', {
+        param: state.paramInventory,
+        mode: state.modeInventory
+      })
     }
   },
 
@@ -451,7 +512,15 @@ const module = {
     SET_HOPPER_INVENTORIES(state, hopperInventories) { state.hopperInventories = hopperInventories },
     SET_HAULOFF_LENGTHS(state, hauloffLengths) { state.hauloffLengths = hauloffLengths },
     SET_RECIPE_ACTUAL_POINTS(state, actualPoints) { state.recipeActualPoints = actualPoints },
-    SET_RECIPE_SET_POINTS(state, setPoints) { state.recipeSetPoints = setPoints }
+    SET_RECIPE_SET_POINTS(state, setPoints) { state.recipeSetPoints = setPoints },
+
+    SET_INVENTORY_TIME_RANGE(state, data) {
+      state.inventoryTimeRange.timeRange = data.timeRange
+      state.inventoryTimeRange.dateFrom = data.dateFrom
+      state.inventoryTimeRange.dateTo = data.dateTo
+      state.inventoryTimeRange.timeFrom = data.timeFrom
+      state.inventoryTimeRange.dateTo = data.dateTo
+    }
   },
 
   getters: {
@@ -473,6 +542,17 @@ const module = {
       })
 
       return _machines
+    },
+    timeRangeLabel: (state) => (id) => {
+      if (id === 'inventory') {
+        if (state.inventoryTimeRange.timeRange !== 'custom') {
+          return state.timeRageOptions.find((range) => range.value === state.inventoryTimeRange.timeRange).label
+        } else {
+          return state.inventoryTimeRange.dateFrom + ' ' + state.inventoryTimeRange.timeFrom + ' ~ ' + state.inventoryTimeRange.dateTo + ' ' + state.inventoryTimeRange.timeTo
+        }
+      } else {
+        return ''
+      }
     }
   }
 }

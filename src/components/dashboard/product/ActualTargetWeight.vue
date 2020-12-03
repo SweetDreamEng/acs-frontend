@@ -140,12 +140,15 @@ export default {
         chart: {
           height: 120,
           type: 'area',
-          sparkline: {
-            enabled: true
-          },
           animations: {
             speed: 400
+          },
+          toolbar: {
+            show: false
           }
+        },
+        dataLabels: {
+          enabled: false
         },
         stroke: {
           curve: 'smooth',
