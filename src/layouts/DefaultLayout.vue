@@ -72,10 +72,6 @@
 
             <v-spacer class="d-none d-lg-block"></v-spacer>
 
-            <div :class="[$vuetify.rtl ? 'ml-1' : 'mr-1']">
-              <toolbar-notifications />
-            </div>
-
             <toolbar-user />
           </div>
         </div>
@@ -100,13 +96,11 @@ import config from '../configs'
 
 import MainMenu from '../components/navigation/MainMenu'
 import ToolbarUser from '../components/toolbar/ToolbarUser'
-import ToolbarNotifications from '../components/toolbar/ToolbarNotifications'
 
 export default {
   components: {
     MainMenu,
-    ToolbarUser,
-    ToolbarNotifications
+    ToolbarUser
   },
   data() {
     return {

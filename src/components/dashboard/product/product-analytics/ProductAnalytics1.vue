@@ -56,6 +56,14 @@
         </machine-status>
       </v-col>
     </v-row>
+<!--     <v-row dense>
+      <v-col md="4" sm="8" xs="12">
+        <recipe
+          :recipe-values="recipeValues"
+        >
+        </recipe>
+      </v-col>
+    </v-row> -->
   </div>
 </template>
 <script>
@@ -67,12 +75,19 @@ import ActualTargetWeight from '../ActualTargetWeight'
 import AverageRuntimeByWeek from './bd-batch-blender/AverageRuntimeByWeek'
 import OEE from '../OEE'
 import EnergyConsumption from '../EnergyConsumption'
+// import Recipe from './bd-batch-blender/Recipe'
 
 import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    Overview, MachineStatus, Utilization, ActualTargetWeight, AverageRuntimeByWeek, OEE, EnergyConsumption
+    Overview,
+    MachineStatus,
+    Utilization,
+    ActualTargetWeight,
+    AverageRuntimeByWeek,
+    OEE,
+    EnergyConsumption
   },
   data() {
     return {
@@ -107,7 +122,8 @@ export default {
       
       energyConsumption: (state) => state.machines.energyConsumption,                   // Energy Consumption
       weeklyRuningHours: (state) => state.machines.weeklyRuningHours,                   // Weekly running hours
-      totalRunningPercentage: (state) => state.machines.totalRunningPercentage                    // Weekly running hours
+      totalRunningPercentage: (state) => state.machines.totalRunningPercentage,         // Weekly running hours
+      recipeValues: (state) => state.machines.recipeValues                              // recipe
     })
   },
   methods: {
