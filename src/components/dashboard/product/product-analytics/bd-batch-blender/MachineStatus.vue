@@ -1,5 +1,5 @@
 <template>
-  <v-card height="100%" color="primary lighten-1" dark>
+  <v-card height="100%">
     <v-card-title class="d-flex justify-space-between">
       <div>Machine Status</div>
       <v-btn
@@ -9,11 +9,7 @@
         <v-icon>mdi-dots-horizontal</v-icon>
       </v-btn>
     </v-card-title>
-    <v-card-subtitle>
-      <span class="display-1">655.1</span>
-      <span><v-icon color="green">mdi-arrow-up</v-icon>36% of target</span>
-    </v-card-subtitle>
-    <v-card-text style="background: white;">
+    <v-card-text>
       <apexchart
         type="pie"
         :options="chartOptions"
@@ -31,23 +27,13 @@ export default {
   components: {
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    mode: {
-      type: String,
-      default: 'Weekly'
+    totalRunningPercentage: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return {
-      loadingInterval: null,
-      isLoading1: true
     }
   },
   computed: {
@@ -88,22 +74,12 @@ export default {
       }
     },
     series() {
-      return [85, 15]
+      return [this.totalRunningPercentage, 100 - this.totalRunningPercentage]
     }
   },
   mounted() {
-    let count = 0
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
   },
   methods: {
-    clear() {
-      clearInterval(this.loadingInterval)
-    }
   }
 }
 </script>

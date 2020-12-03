@@ -226,6 +226,7 @@ const module = {
 
     // BD Batch Blender
     weeklyRuningHours: [],
+    totalRunningPercentage: 0,
 
     // GH Gravimetric Extrusion Control Hopper
     hopperInventories: [],
@@ -297,6 +298,7 @@ const module = {
 
           // BD Batch Blender
           commit('SET_RUNNING_HOURS_PER_WEEK', response.data.weekly_running_hours)
+          commit('SET_RUNNING_PERCENTAGE', (parseFloat(response.data.total_running_percentage) * 100).toFixed(2))
 
           // GH Gravimetric Extrusion Control Hopper
           commit('SET_HOPPER_INVENTORIES', response.data.hopper_inventories)
@@ -440,6 +442,7 @@ const module = {
 
     // BD Batch Blender
     SET_RUNNING_HOURS_PER_WEEK(state, weeklyRuningHours) { state.weeklyRuningHours = weeklyRuningHours },
+    SET_RUNNING_PERCENTAGE(state, totalRunningPercentage) { state.totalRunningPercentage = totalRunningPercentage },
 
     // GH Gravimetric Extrusion Control Hopper
     SET_HOPPER_INVENTORIES(state, hopperInventories) { state.hopperInventories = hopperInventories },

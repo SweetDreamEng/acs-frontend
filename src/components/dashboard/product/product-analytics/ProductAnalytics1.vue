@@ -38,10 +38,10 @@
     </v-row>
     <v-row dense>
       <v-col md="4" sm="8" xs="12">
-        <AverageUtilization
+        <average-runtime-by-week
           :weekly-running-hours="weeklyRuningHours"
         >
-        </AverageUtilization>
+        </average-runtime-by-week>
       </v-col>
       <v-col md="4" sm="8" xs="12">
         <energy-consumption
@@ -50,7 +50,10 @@
         </energy-consumption>
       </v-col>
       <v-col md="4" sm="8" xs="12">
-        <machine-status></machine-status>
+        <machine-status
+          :total-running-percentage="totalRunningPercentage"
+        >
+        </machine-status>
       </v-col>
     </v-row>
   </div>
@@ -61,7 +64,7 @@ import HoursPerYear from '../HoursPerYear'
 import MachineStatus from './bd-batch-blender/MachineStatus'
 import Utilization from '../Utilization'
 import ActualTargetWeight from '../ActualTargetWeight'
-import AverageUtilization from '../AverageUtilization'
+import AverageRuntimeByWeek from './bd-batch-blender/AverageRuntimeByWeek'
 import OEE from '../OEE'
 import EnergyConsumption from '../EnergyConsumption'
 
@@ -69,7 +72,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    Overview, MachineStatus, Utilization, ActualTargetWeight, AverageUtilization, OEE, EnergyConsumption
+    Overview, MachineStatus, Utilization, ActualTargetWeight, AverageRuntimeByWeek, OEE, EnergyConsumption
   },
   data() {
     return {
@@ -103,7 +106,8 @@ export default {
       isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading,
       
       energyConsumption: (state) => state.machines.energyConsumption,                   // Energy Consumption
-      weeklyRuningHours: (state) => state.machines.weeklyRuningHours                    // Weekly running hours
+      weeklyRuningHours: (state) => state.machines.weeklyRuningHours,                   // Weekly running hours
+      totalRunningPercentage: (state) => state.machines.totalRunningPercentage                    // Weekly running hours
     })
   },
   methods: {
