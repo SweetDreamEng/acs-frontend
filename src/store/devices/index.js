@@ -219,6 +219,20 @@ const module = {
           })
       })
     },
+    publicIp({
+      commit, dispatch
+    }, device) {
+      return new Promise((resolve, reject) => {
+        deviceAPI.publicIp(device)
+          .then((response) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            reject(error)
+          })
+      })
+    },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     },
