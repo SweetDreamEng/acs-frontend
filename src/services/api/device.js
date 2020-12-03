@@ -21,11 +21,6 @@ export default {
       return response
     })
   },
-  publicIp(device) {
-    return api.post('/devices/public-ip/' + device.iccid).then((response) => {
-      return response
-    })
-  },
   getDevices(pageNum) {
     return api.get(`/devices/${pageNum}`).then((response) => {
       return response

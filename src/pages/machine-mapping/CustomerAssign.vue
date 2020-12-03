@@ -70,7 +70,7 @@
 
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length" class="px-4 py-2">
-            <sim-panel :item="item" :key="item.device_id"></sim-panel>
+            <sim-panel :item="item"></sim-panel>
           </td>
         </template>
         
