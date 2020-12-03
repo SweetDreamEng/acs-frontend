@@ -46,12 +46,8 @@
         >
         </energy-consumption>
       </v-col>
-      <v-col md="2" sm="4" xs="12">
-        <availability :series="statusSeries"></availability>
-      </v-col>
-      <v-col md="2" sm="4" xs="12">
-        <Cutting />
-        <!-- <hours-per-year class="mt-1"></hours-per-year> -->
+      <v-col md="4" sm="8" xs="12">
+        <machine-status></machine-status>
       </v-col>
     </v-row>
   </div>
@@ -59,12 +55,10 @@
 <script>
 import Overview from '../Overview'
 import HoursPerYear from '../HoursPerYear'
-import Availability from '../Availability'
+import MachineStatus from './bd-batch-blender/MachineStatus'
 import Utilization from '../Utilization'
-// import StatusSummary from './StatusSummary'
 import ActualTargetWeight from '../ActualTargetWeight'
 import AverageUtilization from '../AverageUtilization'
-import Cutting from '../Cutting'
 import OEE from '../OEE'
 import EnergyConsumption from '../EnergyConsumption'
 
@@ -72,7 +66,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    Overview, Availability, Utilization, ActualTargetWeight, AverageUtilization, Cutting, OEE, EnergyConsumption
+    Overview, MachineStatus, Utilization, ActualTargetWeight, AverageUtilization, OEE, EnergyConsumption
   },
   data() {
     return {
