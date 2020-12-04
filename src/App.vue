@@ -41,7 +41,6 @@ import PageLoading from './components/common/PageLoading'
 
 // Layouts
 import defaultLayout from './layouts/DefaultLayout'
-import dashboardLayout from './layouts/DashboardLayout'
 import simpleLayout from './layouts/SimpleLayout'
 import authLayout from './layouts/AuthLayout'
 import errorLayout from './layouts/ErrorLayout'
@@ -60,8 +59,7 @@ export default {
     defaultLayout,
     simpleLayout,
     authLayout,
-    errorLayout,
-    dashboardLayout
+    errorLayout
   },
   computed: {
     ...mapState('app', ['toast']),
@@ -75,9 +73,11 @@ export default {
       return false
     },
     currentLayout: function() {
-      const layout = this.$route.meta.layout || 'default'
-
-      return layout + 'Layout'
+      if (this.$route.meta.layout === 'dashboard') {
+        return 'defaultLayout'
+      } else {
+        return (this.$route.meta.layout || 'default') + 'Layout'
+      }
     }
   },
   head: {

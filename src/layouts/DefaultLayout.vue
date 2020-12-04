@@ -63,11 +63,14 @@
     </v-app-bar>
 
     <v-main>
-      <v-container class="fill-height" :fluid="!isContentBoxed">
+      <v-container v-if="this.$route.meta.layout !== 'dashboard'" class="fill-height" :fluid="!isContentBoxed">
         <v-layout>
           <slot></slot>
         </v-layout>
       </v-container>
+      <v-layout v-else>
+        <slot></slot>
+      </v-layout>
     </v-main>
   </div>
 </template>
