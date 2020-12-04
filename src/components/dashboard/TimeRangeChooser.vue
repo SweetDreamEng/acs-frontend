@@ -14,7 +14,7 @@
             md="6"
           >
             <v-radio-group
-              v-model="locTimeRange"
+              v-model="locTimeRangeOption"
             >
               <v-radio
                 v-for="(item, i) in timeRageOptions.slice(0, 5)"
@@ -30,7 +30,7 @@
             md="6"
           >
             <v-radio-group
-              v-model="locTimeRange"
+              v-model="locTimeRangeOption"
             >
               <v-radio
                 v-for="(item, i) in timeRageOptions.slice(5, 10)"
@@ -45,7 +45,7 @@
         <v-divider></v-divider>
 
         <v-expand-transition>
-          <div v-show="locTimeRange==='custom'">
+          <div v-show="locTimeRangeOption==='custom'">
             <div class="d-flex">
               <v-menu
                 ref="dateFrom"
@@ -172,7 +172,7 @@ export default {
       type: Boolean,
       default: false
     },
-    timeRange: {
+    timeRangeOption: {
       type: String,
       default: 'last24Hours'
     },
@@ -195,7 +195,7 @@ export default {
   },
   data () {
     return {
-      locTimeRange: this.timeRange,
+      locTimeRangeOption: this.timeRangeOption,
       dateFromMenu: false,
       timeFromMenu: false,
       dateToMenu: false,
@@ -214,14 +214,8 @@ export default {
       this.$emit('close')
     },
     apply() {
-      // if (this.locTimeRange === 'last24Hours') {
-      //   const currentDate = new Date()
-      //   const yesterdayDate = currentDate.setDate(currentDate.getDate() - 1)
-        
-      //   console.log(yesterdayDate)
-      // }
       this.$emit('submit', {
-        timeRange: this.locTimeRange,
+        timeRangeOption: this.locTimeRangeOption,
         dateFrom: this.locDateFrom,
         dateTo: this.locDateTo,
         timeFrom: this.locTimeFrom,

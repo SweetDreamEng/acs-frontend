@@ -59,9 +59,9 @@ export default {
       type: String,
       default: ''
     },
-    mode: {
-      type: String,
-      default: 'Weekly'
+    xaxisLabels: {
+      type: Array,
+      default: () => ([])
     },
     param: {
       type: Number,
@@ -128,29 +128,10 @@ export default {
         },
         dataLabels: {
           enabled: false
+        },
+        xaxis: {
+          type: 'datetime'
         }
-        // xaxis: {
-        //   type: 'datetime',
-        //   categories: [
-        //     '2018-09-19T00:00:00.000Z',
-        //     '2018-09-19T01:30:00.000Z',
-        //     '2018-09-20T02:30:00.000Z',
-        //     '2018-09-21T03:30:00.000Z',
-        //     '2018-09-22T04:30:00.000Z',
-        //     '2018-09-23T05:30:00.000Z',
-        //     '2018-09-24T06:30:00.000Z',
-        //     '2018-09-25T00:00:00.000Z',
-        //     '2018-09-26T01:30:00.000Z',
-        //     '2018-09-27T02:30:00.000Z',
-        //     '2018-09-28T03:30:00.000Z',
-        //     '2018-09-29T04:30:00.000Z',
-        //     '2018-09-30T05:30:00.000Z',
-        //     '2018-10-1T06:30:00.000Z',
-        //     '2018-10-2T00:00:00.000Z',
-        //     '2018-10-3T01:30:00.000Z',
-        //     '2018-10-4T06:30:00.000Z'
-        //   ]
-        // },
       }
     }
   },
@@ -158,12 +139,10 @@ export default {
     series() {
       return [
         {
-          id: 1,
           name: 'Hop',
           data: this.valuesHopInventory
         },
         {
-          id: 2,
           name: 'Fractual',
           data: this.valuesFrtInventory
         }
@@ -175,7 +154,6 @@ export default {
   methods: {
     changeParams() {
       this.$emit('changeParams', {
-        mode: this.mode,
         param: this.loc_param
       })
     }

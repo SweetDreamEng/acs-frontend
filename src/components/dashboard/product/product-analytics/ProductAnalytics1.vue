@@ -20,6 +20,7 @@
           :valuesFrtInventory="valuesFrtInventory"
           :isLoading="isInventoryProductLoading"
           :time-range-label="timeRangeLabel('inventory')"
+          :xaxisLabels="xaxisLabels('inventory')"
           @changeParams="_onProductInventoryParamChanged"
           @showTimeRange="onShowTimeRangeDlgOpen"
         >
@@ -69,6 +70,7 @@
 
     <time-range-chooser
       :dlg="showTimeRangeChooser"
+      :time-range-option="inventoryTimeRange.timeRangeOption"
       :date-from="inventoryTimeRange.dateFrom"
       :date-to="inventoryTimeRange.dateTo"
       :time-from="inventoryTimeRange.timeFrom"
@@ -150,7 +152,8 @@ export default {
       recipeValues: (state) => state.machines.recipeValues                              // recipe
     }),
     ...mapGetters({
-      timeRangeLabel: 'machines/timeRangeLabel'
+      timeRangeLabel: 'machines/timeRangeLabel',
+      xaxisLabels: 'machines/xaxisLabels'
     })
   },
   methods: {
@@ -170,7 +173,7 @@ export default {
     },
     _onTimeRangeChanged(data) {
       console.log(data)
-      
+
       this.onTimeRangeChanged(data)
       this.showTimeRangeChooser = false
     }

@@ -250,7 +250,7 @@ const module = {
     ],
 
     inventoryTimeRange: {
-      timeRange: 'last24Hours',
+      timeRangeOption: 'last24Hours',
       dateFrom: new Date().toISOString().substr(0, 10),
       dateTo: new Date().toISOString().substr(0, 10),
       timeFrom: '00:00',
@@ -261,7 +261,7 @@ const module = {
     paramInventory: 0,
 
     weightTimeRange: {
-      timeRange: 'last24Hours',
+      timeRangeOption: 'last24Hours',
       dateFrom: new Date().toISOString().substr(0, 10),
       dateTo: new Date().toISOString().substr(0, 10),
       timeFrom: '00:00',
@@ -335,8 +335,9 @@ const module = {
       commit('INVENTORY_PRODUCT_LOADING')
       machineAPI.initProduct({
         machineId: id,
-        mode: state.modeWeightProduct,
-        param: state.paramWeightProduct
+        param: state.paramWeightProduct,
+        paramInventory: state.paramInventory,
+        inventoryTimeRange: state.inventoryTimeRange
       })
         .then((response) => {
           commit('SET_MACHINE', response.data.machine)
@@ -523,11 +524,7 @@ const module = {
     SET_RECIPE_SET_POINTS(state, setPoints) { state.recipeSetPoints = setPoints },
 
     SET_INVENTORY_TIME_RANGE(state, data) {
-      state.inventoryTimeRange.timeRange = data.timeRange
-      state.inventoryTimeRange.dateFrom = data.dateFrom
-      state.inventoryTimeRange.dateTo = data.dateTo
-      state.inventoryTimeRange.timeFrom = data.timeFrom
-      state.inventoryTimeRange.dateTo = data.dateTo
+      state.inventoryTimeRange = Object.assign({}, data)
     }
   },
 
@@ -553,14 +550,24 @@ const module = {
     },
     timeRangeLabel: (state) => (id) => {
       if (id === 'inventory') {
-        if (state.inventoryTimeRange.timeRange !== 'custom') {
-          return state.timeRageOptions.find((range) => range.value === state.inventoryTimeRange.timeRange).label
+        if (state.inventoryTimeRange.timeRangeOption !== 'custom') {
+          return state.timeRageOptions.find((item) => item.value === state.inventoryTimeRange.timeRangeOption).label
         } else {
           return state.inventoryTimeRange.dateFrom + ' ' + state.inventoryTimeRange.timeFrom + ' ~ ' + state.inventoryTimeRange.dateTo + ' ' + state.inventoryTimeRange.timeTo
         }
       } else {
         return ''
       }
+    },
+    xaxisLabels: (state) => (id) => {
+      // const timestamp = new Date().getTime() / 1000
+      // const axisArray = [...Array(12).keys()]
+
+      // if (state.inventoryTimeRange.timeRange === 'last24Hours') {
+      //   return axisArray.map((i) => {
+      //     return new Date(timestamp + i * 3600).getHours().toString()
+      //   })
+      // }
     }
   }
 }
