@@ -77,8 +77,8 @@
           <v-spacer></v-spacer>
           <v-btn
             color="primary"
+            :loading="buttonLoading"
             @click="save"
-            :loading="button_loading"
           >
             Save
           </v-btn>
@@ -95,7 +95,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   props: {
-    button_loading: {
+    buttonLoading: {
       type: Boolean,
       default: false
     },

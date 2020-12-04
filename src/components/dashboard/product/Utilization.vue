@@ -5,8 +5,8 @@
     </v-card-title>
     <v-card-text>
       <apexchart
-        type="line"
         ref="chart"
+        type="line"
         height="180"
         :options="chartOptions"
         :series="series"

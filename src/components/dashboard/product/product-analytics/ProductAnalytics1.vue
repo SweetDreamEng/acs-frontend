@@ -16,9 +16,9 @@
         <OEE
           :mode="modeInventory"
           :param="paramInventory"
-          :valuesHopInventory="valuesHopInventory"
-          :valuesFrtInventory="valuesFrtInventory"
-          :isLoading="isInventoryProductLoading"
+          :values-hop-inventory="valuesHopInventory"
+          :values-frt-inventory="valuesFrtInventory"
+          :is-loading="isInventoryProductLoading"
           :time-range-label="timeRangeLabel('inventory')"
           @changeParams="_onProductInventoryParamChanged"
           @showTimeRange="onShowTimeRangeDlgOpen('inventory')"
@@ -29,9 +29,9 @@
         <actual-target-weight
           :mode="modeWeight"
           :param="paramWeight"
-          :valuesTgtWeight="valuesTgtWeight"
-          :valuesActWeight="valuesActWeight"
-          :isLoading="isWeightProductLoading"
+          :values-tgt-weight="valuesTgtWeight"
+          :values-act-weight="valuesActWeight"
+          :is-loading="isWeightProductLoading"
           :time-range-label="timeRangeLabel('weight')"
           @changeParams="_onProductWeightParamChange"
           @showTimeRange="onShowTimeRangeDlgOpen('weight')"
@@ -60,7 +60,7 @@
         </machine-status>
       </v-col>
     </v-row>
-<!--     <v-row dense>
+    <!--     <v-row dense>
       <v-col md="4" sm="8" xs="12">
         <recipe
           :recipe-values="recipeValues"

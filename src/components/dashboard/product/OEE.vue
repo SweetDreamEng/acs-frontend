@@ -25,11 +25,11 @@
         item-text="text"
         item-value="id"
         hide-details
-        @change="changeParams"
         outlined
         dense
         class="ml-auto"
         style="width: 480px"
+        @change="changeParams"
       >
       </v-select>
     </v-card-subtitle>
@@ -76,6 +76,7 @@ export default {
     return {
       loadingInterval: null,
       isLoading1: true,
+      isMounted: false,
 
       items: [
         {
@@ -144,8 +145,6 @@ export default {
         }
       ]
     }
-  },
-  mounted() {
   },
   methods: {
     changeParams() {

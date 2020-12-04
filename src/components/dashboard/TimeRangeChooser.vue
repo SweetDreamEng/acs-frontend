@@ -206,15 +206,15 @@ export default {
       locTimeTo: this.timeTo
     }
   },
+  computed: {
+    ...mapState('machines', ['timeRageOptions'])
+  },
   watch: {
     timeRangeOption (newValue) { this.locTimeRangeOption = newValue },
     dateFrom (newValue) { this.locDateFrom = newValue },
     dateTo (newValue) { this.locdateTo = newValue },
     timeFrom (newValue) { this.loctimeFrom = newValue },
     timeTo (newValue) { this.loctimeTo = newValue }
-  },
-  computed: {
-    ...mapState('machines', ['timeRageOptions'])
   },
   methods: {
     dlgBtnClicked() {

@@ -12,7 +12,7 @@
       </v-container>
     </v-sheet>
     <v-container>
-      <zones-table :zoneIds="zoneIds"></zones-table>
+      <zones-table :zone-ids="zoneIds"></zones-table>
 
       <br>
 

@@ -85,7 +85,7 @@ const module = {
     signOut({ commit }) {
       authAPI.signOut().then((response) => {
         if (response.status === 200) {
-          commit('SET_LOGOUT_ATUH')
+          commit('SET_LOGOUT_AUTH')
           localStorage.removeItem('token')
           localStorage.removeItem('user')
 
@@ -141,7 +141,7 @@ const module = {
     clearAuthData({
       commit
     }) {
-      commit('SET_LOGOUT_ATUH')
+      commit('SET_LOGOUT_AUTH')
     },
     clearError({ commit }) {
       commit('CLEAR_ERROR')
@@ -176,7 +176,7 @@ const module = {
         state.user.role = user.role
       }
     },
-    SET_LOGOUT_ATUH(state) {
+    SET_LOGOUT_AUTH(state) {
       state.token = null
       state.user.role = null
       state.user.email = null

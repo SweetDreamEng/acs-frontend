@@ -8,7 +8,8 @@
             sm="6"
             md="6"
             lg="6"
-            class="pt-0">
+            class="pt-0"
+          >
             <track-card
               label="First Pass Yield"
               class="elevation-0"
@@ -24,7 +25,8 @@
             sm="6"
             md="6"
             lg="6"
-            class="pt-0">
+            class="pt-0"
+          >
             <downtime-card></downtime-card>
           </v-col>
           <v-col

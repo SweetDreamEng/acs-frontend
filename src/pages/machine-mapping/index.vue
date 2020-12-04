@@ -5,7 +5,7 @@
 
     <v-card>
       <v-card-text>
-      <!-- maps list -->
+        <!-- maps list -->
         <v-data-table
           :headers="headers"
           :items="devices"

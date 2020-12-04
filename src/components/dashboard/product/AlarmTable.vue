@@ -51,12 +51,12 @@
             >
             </v-chip>
           </template>
-          <template v-slot:expanded-item="{  }">
+          <template v-slot:expanded-item="{ }">
             <td :colspan="headers.length" class="px-4">
               <div
-                class="pa-1"
                 v-for="alarm in alarms"
                 :key="alarm.id"
+                class="pa-1"
               >
                 Alarm generated at {{ alarm.timestamp }} time
               </div>

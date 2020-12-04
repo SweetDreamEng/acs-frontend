@@ -274,7 +274,7 @@ const module = {
     valuesActWeightProduct: [],
     valuesHopInventory: [],
     valuesFrtInventory: [],
-    
+
     // Energy Consumption
     energyConsumption: [],
 
@@ -588,6 +588,8 @@ const module = {
     selectedTimeRange: (state) => {
       if (state.selectedTimeRangeKey === 'inventory') return state.inventoryTimeRange
       else if (state.selectedTimeRangeKey === 'weight') return state.weightTimeRange
+
+      return ''
     }
   }
 }

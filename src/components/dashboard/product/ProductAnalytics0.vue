@@ -16,9 +16,9 @@
         <OEE
           :mode="modeInventory"
           :param="paramInventory"
-          :valuesHopInventory="valuesHopInventory"
-          :valuesFrtInventory="valuesFrtInventory"
-          :isLoading="isInventoryProductLoading"
+          :values-hop-inventory="valuesHopInventory"
+          :values-frt-inventory="valuesFrtInventory"
+          :is-loading="isInventoryProductLoading"
           @changeParams="_onProductInventoryParamChanged"
         >
         </OEE>
@@ -27,9 +27,9 @@
         <actual-target-weight
           :mode="modeWeight"
           :param="paramWeight"
-          :valuesTgtWeight="valuesTgtWeight"
-          :valuesActWeight="valuesActWeight"
-          :isLoading="isWeightProductLoading"
+          :values-tgt-weight="valuesTgtWeight"
+          :values-act-weight="valuesActWeight"
+          :is-loading="isWeightProductLoading"
           @changeParams="_onProductWeightParamChange"
         >
         </actual-target-weight>

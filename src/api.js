@@ -21,17 +21,17 @@ API.interceptors.request.use(async (config) => {
   return Promise.reject(error)
 })
 
-API.interceptors.response.use(function (response) {
+API.interceptors.response.use((response) => {
   return response
-}, function (error) {
+}, (error) => {
   if (401 === error.response.status) {
 
     Vue.auth.removeToken()
     Vue.auth.removeUser()
 
-    store.commit('auth/SET_LOGOUT_ATUH', { root: true })
+    store.commit('auth/SET_LOGOUT_AUTH', { root: true })
 
-    window.location = '/auth/signin'
+    return window.location = '/auth/signin'
   } else {
     return Promise.reject(error)
   }

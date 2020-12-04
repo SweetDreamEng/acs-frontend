@@ -1,14 +1,12 @@
 <template>
   <v-app v-if="isAppReady">
     <page-loading :is-loading="isPageLoading"></page-loading>
-    <div>
-      <!-- Layout component -->
-      <component :is="currentLayout" v-if="isRouterLoaded">
-        <transition name="fade" mode="out-in">
-          <router-view />
-        </transition>
-      </component>
-    </div>
+    <!-- Layout component -->
+    <component :is="currentLayout" v-if="isRouterLoaded">
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
+    </component>
 
     <v-snackbar
       v-model="toast.show"

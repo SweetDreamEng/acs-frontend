@@ -1,5 +1,5 @@
 <template>
-	<v-dialog
+  <v-dialog
     v-model="isLoading"
     persistent
     content-class="page-loader"

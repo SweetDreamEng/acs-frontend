@@ -125,13 +125,13 @@ import states from '../../services/data/states'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  components: {
+  },
   props: {
     locations: {
       type: Array,
       default: () => []
     }
-  },
-  components: {
   },
   data() {
     return {

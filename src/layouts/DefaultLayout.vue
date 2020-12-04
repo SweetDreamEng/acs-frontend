@@ -53,27 +53,11 @@
     >
       <v-card class="flex-grow-1 d-flex" :class="[isToolbarDetached ? 'pa-1 mt-3 mx-1' : 'pa-0 ma-0']" :flat="!isToolbarDetached">
         <div class="d-flex flex-grow-1 align-center">
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-          <!-- search input mobile -->
-          <v-text-field
-            v-if="showSearch"
-            append-icon="mdi-close"
-            placeholder="Search"
-            prepend-inner-icon="mdi-magnify"
-            hide-details
-            solo
-            flat
-            autofocus
-            @click:append="showSearch = false"
-          ></v-text-field>
+          <v-spacer class="d-none d-lg-block"></v-spacer>
 
-          <div v-else class="d-flex flex-grow-1 align-center">
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-
-            <v-spacer class="d-none d-lg-block"></v-spacer>
-
-            <toolbar-user />
-          </div>
+          <toolbar-user />
         </div>
       </v-card>
     </v-app-bar>
@@ -115,17 +99,6 @@ export default {
     ...mapState({
       userRole: (state) => state.auth.user.role
     })
-  },
-  methods: {
-    onKeyup(e) {
-      this.$refs.search.focus()
-    }
   }
 }
 </script>
-
-<style scoped>
-.buy-button {
-  box-shadow: 1px 1px 18px #ee44aa;
-}
-</style>
