@@ -59,10 +59,6 @@ export default {
       type: String,
       default: ''
     },
-    xaxisLabels: {
-      type: Array,
-      default: () => ([])
-    },
     param: {
       type: Number,
       default: 1

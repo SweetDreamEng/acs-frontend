@@ -267,6 +267,9 @@ const module = {
       timeFrom: '00:00',
       timeTo: '00:00'
     },
+
+    selectedTimeRangeKey: 'inventory',
+
     valuesTgtWeightProduct: [],
     valuesActWeightProduct: [],
     valuesHopInventory: [],
@@ -327,6 +330,12 @@ const module = {
       commit('SET_SELECTED_COMPANY', company)
     },
 
+    selectTimeRange({
+      commit, dispatch, state
+    }, key) {
+      commit('SET_CURRENT_TIME_PARAM_KEY', key)
+      commit('SET_CURRENT_TIME_RANGE_ITEM', key)
+    },
     // product analytics init
     initProduct({
       commit, state
@@ -337,7 +346,8 @@ const module = {
         machineId: id,
         param: state.paramWeightProduct,
         paramInventory: state.paramInventory,
-        inventoryTimeRange: state.inventoryTimeRange
+        inventoryTimeRange: state.inventoryTimeRange,
+        weightTimeRange: state.weightTimeRange
       })
         .then((response) => {
           commit('SET_MACHINE', response.data.machine)
@@ -373,10 +383,13 @@ const module = {
     },
 
     onProductWeightParamChange({
-      commit
-    }, data) {
+      commit, state
+    }) {
       commit('WEIGHT_PRODUCT_LOADING')
-      machineAPI.changeProductWeightMode(data)
+      machineAPI.changeProductWeightMode({
+        param: state.paramWeightProduct,
+        timeRange: state.weightTimeRange
+      })
         .then((response) => {
           commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
@@ -386,8 +399,6 @@ const module = {
         })
         .finally(() => {
           commit('WEIGHT_PRODUCT_LOADED')
-          commit('SET_PRODUCT_WEIGHT_MODE', data.mode)
-          commit('SET_PRODUCT_WEIGHT_PARAM', data.param)
         })
     },
 
@@ -421,11 +432,13 @@ const module = {
     onTimeRangeChanged({
       commit, dispatch, state
     }, data) {
-      commit('SET_INVENTORY_TIME_RANGE', data)
-      dispatch('getInventory', {
-        param: state.paramInventory,
-        timeRange: state.inventoryTimeRange
-      })
+      if (state.selectedTimeRangeKey === 'inventory') {
+        commit('SET_INVENTORY_TIME_RANGE', data)
+        dispatch('getInventory')
+      } else if (state.selectedTimeRangeKey === 'weight') {
+        commit('SET_WEIGHT_TIME_RANGE', data)
+        dispatch('onProductWeightParamChange')
+      }
     }
   },
 
@@ -523,9 +536,16 @@ const module = {
     SET_RECIPE_ACTUAL_POINTS(state, actualPoints) { state.recipeActualPoints = actualPoints },
     SET_RECIPE_SET_POINTS(state, setPoints) { state.recipeSetPoints = setPoints },
 
-    SET_INVENTORY_TIME_RANGE(state, data) {
-      state.inventoryTimeRange = Object.assign({}, data)
-    }
+    SET_CURRENT_TIME_RANGE_ITEM(state, key) {
+      if (key === 'inventory') {
+        state.selectedTimeRange = state.inventoryTimeRange
+      } else if (key === 'weight') {
+        state.selectedTimeRange = state.weightTimeRange
+      }
+    },
+    SET_CURRENT_TIME_PARAM_KEY(state, key) { state.selectedTimeRangeKey = key },
+    SET_INVENTORY_TIME_RANGE(state, data) { state.inventoryTimeRange = Object.assign({}, data) },
+    SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) }
   },
 
   getters: {
@@ -555,19 +575,19 @@ const module = {
         } else {
           return state.inventoryTimeRange.dateFrom + ' ' + state.inventoryTimeRange.timeFrom + ' ~ ' + state.inventoryTimeRange.dateTo + ' ' + state.inventoryTimeRange.timeTo
         }
+      } else if (id === 'weight') {
+        if (state.weightTimeRange.timeRangeOption !== 'custom') {
+          return state.timeRageOptions.find((item) => item.value === state.weightTimeRange.timeRangeOption).label
+        } else {
+          return state.weightTimeRange.dateFrom + ' ' + state.weightTimeRange.timeFrom + ' ~ ' + state.weightTimeRange.dateTo + ' ' + state.weightTimeRange.timeTo
+        }
       } else {
         return ''
       }
     },
-    xaxisLabels: (state) => (id) => {
-      // const timestamp = new Date().getTime() / 1000
-      // const axisArray = [...Array(12).keys()]
-
-      // if (state.inventoryTimeRange.timeRange === 'last24Hours') {
-      //   return axisArray.map((i) => {
-      //     return new Date(timestamp + i * 3600).getHours().toString()
-      //   })
-      // }
+    selectedTimeRange: (state) => {
+      if (state.selectedTimeRangeKey === 'inventory') return state.inventoryTimeRange
+      else if (state.selectedTimeRangeKey === 'weight') return state.weightTimeRange
     }
   }
 }

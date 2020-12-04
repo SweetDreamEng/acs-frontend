@@ -20,9 +20,8 @@
           :valuesFrtInventory="valuesFrtInventory"
           :isLoading="isInventoryProductLoading"
           :time-range-label="timeRangeLabel('inventory')"
-          :xaxisLabels="xaxisLabels('inventory')"
           @changeParams="_onProductInventoryParamChanged"
-          @showTimeRange="onShowTimeRangeDlgOpen"
+          @showTimeRange="onShowTimeRangeDlgOpen('inventory')"
         >
         </OEE>
       </v-col>
@@ -33,7 +32,9 @@
           :valuesTgtWeight="valuesTgtWeight"
           :valuesActWeight="valuesActWeight"
           :isLoading="isWeightProductLoading"
+          :time-range-label="timeRangeLabel('weight')"
           @changeParams="_onProductWeightParamChange"
+          @showTimeRange="onShowTimeRangeDlgOpen('weight')"
         >
         </actual-target-weight>
         <!-- <status-summary class="mt-1"></status-summary> -->
@@ -70,11 +71,11 @@
 
     <time-range-chooser
       :dlg="showTimeRangeChooser"
-      :time-range-option="inventoryTimeRange.timeRangeOption"
-      :date-from="inventoryTimeRange.dateFrom"
-      :date-to="inventoryTimeRange.dateTo"
-      :time-from="inventoryTimeRange.timeFrom"
-      :time-to="inventoryTimeRange.timeTo"
+      :time-range-option="selectedTimeRange.timeRangeOption"
+      :date-from="selectedTimeRange.dateFrom"
+      :date-to="selectedTimeRange.dateTo"
+      :time-from="selectedTimeRange.timeFrom"
+      :time-to="selectedTimeRange.timeTo"
       @close="showTimeRangeChooser = false"
       @submit="_onTimeRangeChanged"
     >
@@ -130,8 +131,6 @@ export default {
     ...mapState({
       machine: (state) => state.machines.machine,
 
-      inventoryTimeRange: (state) => state.machines.inventoryTimeRange,
-
       modeWeight: (state) => state.machines.modeWeightProduct,
       modeInventory: (state) => state.machines.modeInventory,
 
@@ -153,14 +152,16 @@ export default {
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
-      xaxisLabels: 'machines/xaxisLabels'
+      xaxisLabels: 'machines/xaxisLabels',
+      selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
   methods: {
     ...mapActions({
       onProductWeightParamChange: 'machines/onProductWeightParamChange',
       onProductInventoryParamChanged: 'machines/onProductInventoryParamChanged',
-      onTimeRangeChanged: 'machines/onTimeRangeChanged'
+      onTimeRangeChanged: 'machines/onTimeRangeChanged',
+      selectTimeRange: 'machines/selectTimeRange'
     }),
     _onProductWeightParamChange(data) {
       this.onProductWeightParamChange(data)
@@ -168,12 +169,13 @@ export default {
     _onProductInventoryParamChanged(data) {
       this.onProductInventoryParamChanged(data)
     },
-    onShowTimeRangeDlgOpen() {
-      this.showTimeRangeChooser = true
+    onShowTimeRangeDlgOpen(key) {
+      this.selectTimeRange(key)
+      this.$nextTick(() => {
+        this.showTimeRangeChooser = true
+      })
     },
     _onTimeRangeChanged(data) {
-      console.log(data)
-
       this.onTimeRangeChanged(data)
       this.showTimeRangeChooser = false
     }
