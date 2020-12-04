@@ -7,6 +7,7 @@
       <strong v-if="item.sim_status === 'Suspended'" class="red--text">Suspended</strong>
 
       <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ item.public_ip_sim }}</span></span>
+      <span class="ml-2">Carrier: <span class="font-weight-bold">{{ item.carrier }}</span></span>
     </div>
     <div>
       <v-btn
