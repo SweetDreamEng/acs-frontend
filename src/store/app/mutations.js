@@ -59,11 +59,5 @@ export default {
   },
   setToolbarDetached: (state, isDetached) => {
     state.isToolbarDetached = isDetached
-  },
-  PAGE_LOADING: (state) => {
-    state.isPageLoading = true
-  },
-  PAGE_LOADED: (state) => {
-    state.isPageLoading = false
   }
 }

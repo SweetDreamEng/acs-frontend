@@ -83,7 +83,7 @@ let firstRoute = true
  * Before each route update
  */
 router.beforeEach(async (to, from, next) => {
-  store.commit('app/PAGE_LOADING', { root: true } )
+  document.getElementById('loading').style.display = 'flex'
 
   if (firstRoute) {
     firstRoute = false
@@ -139,7 +139,7 @@ router.beforeEach(async (to, from, next) => {
  * After each route update
  */
 router.afterEach((to, from, next) => {
-  store.commit('app/PAGE_LOADED', { root: true } )
+  document.getElementById('loading').style.display = 'none'
 })
 
 export default router

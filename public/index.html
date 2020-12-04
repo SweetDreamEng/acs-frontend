@@ -5,13 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <style type="text/css">
+      #loading {
+        display: flex;
+        z-index: 100;
+        width: 100vw;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        
+        -webkit-animation:spin 4s linear infinite;
+        -moz-animation:spin 4s linear infinite;
+        animation:spin 4s linear infinite;
+      }
+      @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+      @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+      @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+    </style>
     <title>ACS/Digital Solutions</title>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-
+    <div id="loading">
+      <img src="<%= BASE_URL %>loading.svg" width="50px; height=50px;">
+    </div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

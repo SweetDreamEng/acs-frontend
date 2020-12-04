@@ -1,6 +1,5 @@
 <template>
   <v-app v-if="isAppReady">
-    <page-loading :is-loading="isPageLoading"></page-loading>
     <!-- Layout component -->
     <component :is="currentLayout" v-if="isRouterLoaded">
       <transition name="fade" mode="out-in">
@@ -37,8 +36,6 @@ import { mapState } from 'vuex'
 
 import config from './configs'
 
-import PageLoading from './components/common/PageLoading'
-
 // Layouts
 import defaultLayout from './layouts/DefaultLayout'
 import simpleLayout from './layouts/SimpleLayout'
@@ -55,7 +52,6 @@ import errorLayout from './layouts/ErrorLayout'
 */
 export default {
   components: {
-    PageLoading,
     defaultLayout,
     simpleLayout,
     authLayout,
@@ -85,6 +81,9 @@ export default {
       // adds config/icons into the html head tag
       ...config.icons.map((href) => ({ rel: 'stylesheet', href }))
     ]
+  },
+  mounted() {
+    document.getElementById('loading').style.display = 'none'
   }
 }
 </script>
