@@ -14,6 +14,9 @@ const module = {
     },
     roles: [
       {
+        'key': 'super_admin',
+        'name': 'Super Admin'
+      }, {
         'key': 'acs_admin',
         'name': 'ACS Administrator'
       }, {
@@ -57,6 +60,10 @@ const module = {
           } else if (response.data.role === 'customer_admin' || response.data.role === 'customer_manager' || response.data.role === 'customer_operator') {
             router.push({
               name: 'dashboard-analytics'
+            })
+          } else if (response.data.role === 'super_admin') {
+            router.push({
+              name: 'app-settings/color'
             })
           }
         })

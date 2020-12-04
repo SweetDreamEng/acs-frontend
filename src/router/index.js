@@ -4,6 +4,8 @@ import store from '../store'
 import bootstrap from './bootstrap'
 
 // Routes
+
+import AppSettingsRoutes from './app-settings.routes'
 import ACSMachines from './acs-machines.routes'
 import PagesRoutes from './pages.routes'
 import UsersRoutes from './users.routes'
@@ -47,6 +49,7 @@ export const routes = [{
     customerAdmin: true
   }
 },
+...AppSettingsRoutes,
 ...ACSMachines,
 ...AcsAdminUsersRoutes,
 ...PagesRoutes,
@@ -94,6 +97,7 @@ router.beforeEach(async (to, from, next) => {
   const { role } = store.state.auth.user
 
   const requiresAuth =
+    (to.matched.some((record) => record.meta.superAdmin)) ||
     (to.matched.some((record) => record.meta.userAuth)) ||
     (to.matched.some((record) => record.meta.acsAdmin)) ||
     (to.matched.some((record) => record.meta.customerAdmin))

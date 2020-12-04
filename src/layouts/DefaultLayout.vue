@@ -20,6 +20,7 @@
       </template>
 
       <!-- Navigation menu -->
+      <main-menu v-if="userRole === 'super_admin'" :menu="navigation.superAdminMenu" />
       <main-menu v-if="userRole === 'acs_admin' || userRole === 'acs_manager'" :menu="navigation.menu" />
       <main-menu v-if="userRole === 'acs_viewer'" :menu="navigation.acsViewerMenu" />
       <main-menu v-if="userRole === 'customer_admin' || userRole === 'customer_manager'" :menu="navigation.customerMenu" />
