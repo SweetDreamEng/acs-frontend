@@ -7,6 +7,7 @@
       <strong v-if="item.sim_status === 'Suspended'" class="red--text">Suspended</strong>
 
       <span class="ml-2">Public Static IP: <span class="font-weight-bold">{{ item.public_ip_sim }}</span></span>
+      <span class="ml-2">Carrier: <span class="font-weight-bold">{{ item.carrier }}</span></span>
     </div>
     <div>
       <v-btn
@@ -36,7 +37,36 @@
         :disabled="suspend_btn_loading"
         @click="suspendSIM(item)"
       >Suspend SIM</v-btn>
+      <v-btn
+        small
+        color="primary"
+        class="mr-2"
+        :loading="remote_web_btn_loading"
+        :disabled="remote_web_btn_loading"
+        @click="onRemoteWeb(item)"
+      >Remote WebUI</v-btn>
+      <v-btn
+        small
+        color="primary"
+        class="mr-2"
+        :loading="remote_cli_btn_loading"
+        :disabled="remote_cli_btn_loading"
+        @click="onRemoteCli(item)"
+      >Remote CLI</v-btn>
     </div>
+    <v-bottom-sheet v-model="isRemote">
+      <v-sheet class="text-center" height="200px">
+        <v-btn
+          class="mt-6"
+          text
+          color="red"
+          @click="isRemote = !isRemote"
+        >close</v-btn>
+        <div class="py-3">
+          <a :href="'https://' + link" target="_blank">{{ link }} </a>
+        </div>
+      </v-sheet>
+    </v-bottom-sheet>
   </div>
 </template>
 <script>
@@ -52,24 +82,29 @@ export default {
   },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      isRemote: false,
+      link: []
     }
   },
   computed: {
     ...mapState({
       sim_statuses: (state) => state.devices.sim_statuses,
-
       activate_btn_loading: (state) => state.devices.activate_btn_loading,
       suspend_btn_loading: (state) => state.devices.suspend_btn_loading,
-      refresh_btn_loading: (state) => state.devices.refresh_btn_loading
+      refresh_btn_loading: (state) => state.devices.refresh_btn_loading,
+      remote_web_btn_loading: (state) => state.devices.remote_web_btn_loading,
+      remote_cli_btn_loading: (state) => state.devices.remote_cli_btn_loading
     })
   },
   methods: {
     ...mapActions({
       'querySIM': 'devices/querySIM',
       'activateSIM': 'devices/activateSIM',
-      'suspendSIM': 'devices/suspendSIM'
-    })
+      'suspendSIM': 'devices/suspendSIM',
+      'remoteWeb': 'devices/remoteWeb',
+      'remoteCli': 'devices/remoteCli'
+    }),
     // save () {
     //   if (this.$refs.editForm.validate()) {
     //     this.deviceAssigned({
@@ -82,6 +117,26 @@ export default {
     //       })
     //   }
     // },
+    onRemoteWeb(item) {
+      this.remoteWeb(item).then((response) => {
+        const arr  = response.data
+
+        if ( arr.length > 0 ) {
+          this.link = arr.reduce((a, b) => a.ttl > b.ttl ? a : b, arr[0]).url
+          this.isRemote = true
+        }
+      })
+    },
+    onRemoteCli(item) {
+      this.remoteCli(item).then((response) => {
+        const arr  = response.data
+
+        if ( arr.length > 0 ) {
+          this.link = arr.reduce((a, b) => a.ttl > b.ttl ? a : b, arr[0]).url
+          this.isRemote = true
+        }
+      })
+    }
   }
 }
 </script>

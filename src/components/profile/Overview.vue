@@ -3,7 +3,7 @@
     <v-card>
       <v-card-text class="text-center">
         <v-avatar size="160">
-           <v-avatar
+          <v-avatar
             color="primary"
             size="88"
           >

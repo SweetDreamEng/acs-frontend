@@ -105,7 +105,7 @@ export default {
         },
         legend: {
           fontSize: '13px',
-          fontFamily: 'Quicksand',
+          fontFamily: 'Museo Sans 500',
           fontWeight: 700
         },
         responsive: [{

@@ -9,8 +9,6 @@ const { currency, availableCurrencies } = currencies
 
 // state initial values
 const state = {
-  isPageLoading: false,
-  
   product,
 
   time,

@@ -1,14 +1,11 @@
 <template>
   <v-app v-if="isAppReady">
-    <page-loading :is-loading="isPageLoading"></page-loading>
-    <div>
-      <!-- Layout component -->
-      <component :is="currentLayout" v-if="isRouterLoaded">
-        <transition name="fade" mode="out-in">
-          <router-view />
-        </transition>
-      </component>
-    </div>
+    <!-- Layout component -->
+    <component :is="currentLayout" v-if="isRouterLoaded">
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
+    </component>
 
     <v-snackbar
       v-model="toast.show"
@@ -39,11 +36,8 @@ import { mapState } from 'vuex'
 
 import config from './configs'
 
-import PageLoading from './components/common/PageLoading'
-
 // Layouts
 import defaultLayout from './layouts/DefaultLayout'
-import dashboardLayout from './layouts/DashboardLayout'
 import simpleLayout from './layouts/SimpleLayout'
 import authLayout from './layouts/AuthLayout'
 import errorLayout from './layouts/ErrorLayout'
@@ -58,12 +52,10 @@ import errorLayout from './layouts/ErrorLayout'
 */
 export default {
   components: {
-    PageLoading,
     defaultLayout,
     simpleLayout,
     authLayout,
-    errorLayout,
-    dashboardLayout
+    errorLayout
   },
   computed: {
     ...mapState('app', ['toast']),
@@ -77,9 +69,11 @@ export default {
       return false
     },
     currentLayout: function() {
-      const layout = this.$route.meta.layout || 'default'
-
-      return layout + 'Layout'
+      if (this.$route.meta.layout === 'dashboard') {
+        return 'defaultLayout'
+      } else {
+        return (this.$route.meta.layout || 'default') + 'Layout'
+      }
     }
   },
   head: {
@@ -87,6 +81,9 @@ export default {
       // adds config/icons into the html head tag
       ...config.icons.map((href) => ({ rel: 'stylesheet', href }))
     ]
+  },
+  mounted() {
+    document.getElementById('loading').style.display = 'none'
   }
 }
 </script>

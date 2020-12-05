@@ -1,5 +1,5 @@
 <template>
-	<v-card height="100%">
+  <v-card height="100%">
     <v-card-title>Operation Mode</v-card-title>
     <v-card-text>
       <apexchart type="rangeBar" height="200" :options="chartOptions" :series="series"></apexchart>

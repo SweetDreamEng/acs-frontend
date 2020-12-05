@@ -5,21 +5,20 @@
       :loading="isLoading"
       :disabled="isLoading"
     >
-      <v-card-subtitle class="d-flex justify-space-between">
+      <v-card-title class="d-flex justify-space-between">
         <div>
-          <div class="font-weight-bold">Target & Actuals Weight</div>
-          <div class="font-italic">({{ mode }})</div>
+          <div>Target & Actuals Weight</div>
+          <div class="caption font-italic">({{ timeRangeLabel }})</div>
         </div>
         <v-btn
           icon
-          small
           class="ml-auto"
-          @click="showTimeRangeChooser = true"
+          @click="$emit('showTimeRange')"
         >
           <v-icon>mdi-dots-horizontal</v-icon>
         </v-btn>
-      </v-card-subtitle>
-      <v-card-subtitle>
+      </v-card-title>
+      <v-card-subtitle class="mt-1">
         <v-select
           v-model="loc_param"
           :items="items"
@@ -27,11 +26,11 @@
           item-text="text"
           item-value="id"
           hide-details
-          @change="changeParams"
           outlined
           dense
           class="ml-auto"
           style="width: 480px"
+          @change="changeParams"
         >
         </v-select>
       </v-card-subtitle>
@@ -45,46 +44,24 @@
         </apexchart>
       </v-card-text>
     </v-card>
-    <time-range-chooser
-      :dlg="showTimeRangeChooser"
-      :date-from="weightTimeRange.dateFrom"
-      :date-to="weightTimeRange.dateTo"
-      :time-from="weightTimeRange.timeFrom"
-      :time-to="weightTimeRange.timeTo"
-      @close="showTimeRangeChooser = false"
-      @submit="onTimeRangeChanged"
-    >
-    </time-range-chooser>
   </div>
 </template>
 
 <script>
 
-/*
-|---------------------------------------------------------------------
-| DEMO Dashboard Card Component
-|---------------------------------------------------------------------
-|
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
-|
-*/
-import TimeRangeChooser from '../TimeRangeChooser'
-
 import { mapState } from 'vuex'
 
 export default {
   components: {
-    TimeRangeChooser
   },
   props: {
     isLoading: {
       type: Boolean,
       default: false
     },
-    mode: {
+    timeRangeLabel: {
       type: String,
-      default: 'Weekly'
+      default: ''
     },
     param: {
       type: Number,
@@ -140,18 +117,23 @@ export default {
         chart: {
           height: 120,
           type: 'area',
-          sparkline: {
-            enabled: true
-          },
           animations: {
             speed: 400
+          },
+          toolbar: {
+            show: false
           }
+        },
+        dataLabels: {
+          enabled: false
         },
         stroke: {
           curve: 'smooth',
           width: 2
         },
-        xaxis: this.xaxis
+        xaxis: {
+          type: 'datetime'
+        }
       }
     }
   },
@@ -175,15 +157,8 @@ export default {
   mounted() {
   },
   methods: {
-    changeMode(mode) {
-      this.$emit('changeParams', {
-        mode: mode,
-        param: this.loc_param
-      })
-    },
     changeParams() {
       this.$emit('changeParams', {
-        mode: this.mode,
         param: this.loc_param
       })
     },

@@ -17,7 +17,7 @@
     </v-tabs>
 
     <v-tabs-items>
-      <v-card class="my-2" v-show="tab === 0">
+      <v-card v-show="tab === 0" class="my-2">
         <v-card-title>Basic Information</v-card-title>
         <v-card-text>
           <div class="d-flex flex-column flex-sm-row">
@@ -31,9 +31,9 @@
                   item-text="name"
                   :return-object="false"
                   :rules="[$rules.required]"
-                  @input="clearError"
                   outlined
                   dense
+                  @input="clearError"
                 ></v-combobox>
                 <v-text-field
                   v-model="customer.administratorName"
@@ -41,9 +41,9 @@
                   :validate-on-blur="false"
                   label="Administrator Name"
                   placeholder="Jane Doe"
-                  @input="clearError"
                   outlined
                   dense
+                  @input="clearError"
                 ></v-text-field>
                 <v-text-field
                   v-model="customer.administratorEmail"
@@ -51,9 +51,9 @@
                   :validate-on-blur="false"
                   label="Administrator Email"
                   placeholder="jane.doe@example.com"
-                  @input="clearError"
                   outlined
                   dense
+                  @input="clearError"
                 ></v-text-field>
 
                 <error-component :error="errorMessages"></error-component>
@@ -71,9 +71,9 @@
         </v-card-text>
       </v-card>
 
-      <v-card class="my-2" v-show="tab === 1">
+      <v-card v-show="tab === 1" class="my-2">
         <v-card-title>Account Information</v-card-title>
-        <v-card-text  ref="b">
+        <v-card-text ref="b">
           <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation>
             <v-row>
               <v-col cols="12" md="6">

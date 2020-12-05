@@ -1,21 +1,17 @@
 <template>
-  <div>
-    <!-- loading spinner -->
-    <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
-      <v-progress-circular indeterminate color="secondary"></v-progress-circular>
-    </div>
-    <v-card height="100%">
-      <v-card-subtitle>
-        <v-card-subtitle class="d-flex justify-space-between">
-          <strong>Average runtime by week</strong>
-          <MonthlyWeekly />
-        </v-card-subtitle>
-      </v-card-subtitle>
-      <v-card-text>
-        <apexchart type="bar" height="140" :options="chartOptions" :series="series"></apexchart>
-      </v-card-text>
-    </v-card>
-  </div>
+  <v-card height="100%">
+    <v-card-title class="d-flex justify-space-between">
+      <div>Average runtime by week</div>
+      <v-btn
+        icon
+      >
+        <v-icon>mdi-dots-horizontal</v-icon>
+      </v-btn>
+    </v-card-title>
+    <v-card-text>
+      <apexchart type="bar" height="140" :options="chartOptions" :series="series"></apexchart>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -29,10 +25,8 @@
 | your own dashboard component
 |
 */
-import MonthlyWeekly from '../MonthlyWeekly'
 export default {
   components: {
-    MonthlyWeekly
   },
   props: {
     label: {
@@ -42,6 +36,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    weeklyRunningHours: {
+      type: Array,
+      default: () => ([])
     }
   },
   data() {
@@ -49,10 +47,6 @@ export default {
       loadingInterval: null,
       isLoading1: true,
 
-      series: [{
-        name: 'Average runtime by week',
-        data: [430, 448, 470, 540, 580, 690, 1100]
-      }],
       chartOptions: {
         chart: {
           type: 'bar',
@@ -79,6 +73,12 @@ export default {
     }
   },
   computed: {
+    series() {
+      return [{
+        name: 'Average runtime by week',
+        data: this.weeklyRunningHours
+      }]
+    }
   },
   mounted() {
     let count = 0

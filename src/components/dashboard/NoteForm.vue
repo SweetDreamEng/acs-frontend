@@ -9,19 +9,21 @@
           ref="form"
           v-model="valid"
           lazy-validation
+          @submit="addNote"
         >
           <v-textarea
             v-model="note"
             label="Note"
             outlined
             required
+            :rules="[$rules.required]"
           ></v-textarea>
 
           <v-btn
             :disabled="!valid"
             color="grey"
             class="mr-4"
-            @click="clearNote"
+            @click="note = ''"
           >
             <v-icon dark>
               mdi-minus
@@ -29,10 +31,11 @@
             Reset
           </v-btn>
           <v-btn
-            :disabled="!valid"
-            color="success"
+            color="primary"
             class="mr-4"
-            @click="addNote"
+            :loading="isLoading"
+            :disabled="isLoading"
+            @click="_addNote"
           >
             <v-icon dark>
               mdi-plus
@@ -44,25 +47,43 @@
     </v-card-text>
   </v-card>
 </template>
+
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+
 export default {
+  props: {
+    machineId: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
       valid: true,
       note: ''
     }
   },
+  computed: {
+    ...mapState({
+      isLoading: (state) => state.machines.isNoteAdding
+    })
+  },
   methods: {
-    ...mapActions([
-      'addProductNote'
-    ]),
-    addNote() {
-      this.addProductNote(this.note)
-      this.note = ''
-    },
-    clearNote() {
-      this.note = ''
+    ...mapActions({
+      addNote: 'machines/addNote'
+    }),
+    _addNote() {
+      if (this.$refs.form.validate()) {
+        this.addNote({
+          machineId: this.machineId,
+          note: this.note
+        })
+          .then(() => {
+            this.note = ''
+            this.$refs.form.resetValidation()
+          })
+      }
     }
   }
 }

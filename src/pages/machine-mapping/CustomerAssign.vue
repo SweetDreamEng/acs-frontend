@@ -115,7 +115,7 @@
             <v-select
               v-model="editedItem.machine_id"
               :items="machines"
-              label="Choose Machine"
+              label="Choose Configuration"
               item-text="name"
               item-value="id"
               outlined
@@ -215,8 +215,9 @@ export default {
       selectedUsers: [],
       tableHeaders: [
         { text: 'Serial Number', value: 'serial_number' },
+        { text: 'Device Name', value: 'name' },
         { text: 'Company Name', value: 'company_id' },
-        { text: 'Machine Name', value: 'machine_id' },
+        { text: 'Machine Configuration', value: 'machine_id' },
         { text: 'Device Registration', align: 'center', value: 'registered', sortable: false },
         { text: 'SIM Status', align: 'center', value: 'sim_status' },
         { text: 'Administration', value: 'data-table-expand', sortable: false },
@@ -351,12 +352,12 @@ export default {
     companyName(company_id) {
       const _company = this.companies.find((company) => company.id === company_id)
 
-      return _company ? _company.name : 'Not Assinged'
+      return _company ? _company.name : 'Not Assigned'
     },
     machineName(machine_id) {
       const _machine = this.machines.find((machine) => machine.id === machine_id)
 
-      return _machine ? _machine.name : 'Not Assinged'
+      return _machine ? _machine.name : 'Not Configured'
     }
   }
 }

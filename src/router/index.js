@@ -4,6 +4,8 @@ import store from '../store'
 import bootstrap from './bootstrap'
 
 // Routes
+
+import AppSettingsRoutes from './app-settings.routes'
 import ACSMachines from './acs-machines.routes'
 import PagesRoutes from './pages.routes'
 import UsersRoutes from './users.routes'
@@ -47,6 +49,7 @@ export const routes = [{
     customerAdmin: true
   }
 },
+...AppSettingsRoutes,
 ...ACSMachines,
 ...AcsAdminUsersRoutes,
 ...PagesRoutes,
@@ -83,8 +86,8 @@ let firstRoute = true
  * Before each route update
  */
 router.beforeEach(async (to, from, next) => {
-  store.commit('app/PAGE_LOADING', { root: true } )
-  
+  document.getElementById('loading').style.display = 'flex'
+
   if (firstRoute) {
     firstRoute = false
 
@@ -94,6 +97,7 @@ router.beforeEach(async (to, from, next) => {
   const { role } = store.state.auth.user
 
   const requiresAuth =
+    (to.matched.some((record) => record.meta.superAdmin)) ||
     (to.matched.some((record) => record.meta.userAuth)) ||
     (to.matched.some((record) => record.meta.acsAdmin)) ||
     (to.matched.some((record) => record.meta.customerAdmin))
@@ -119,13 +123,12 @@ router.beforeEach(async (to, from, next) => {
       })
     }
   } else {
-    // TODO: if I am authenticated but I'm going to a page for non authenticated people, where should I be redirected
     if (role && (to.matched.some((record) => record.meta.userNotAuth))) {
       if (role === 'acs_admin') {
         return next({
           name: 'acs-machines'
         })
-      } else if (role === 'customer_admin') {
+      } else if (role === 'customer_admin' && role === 'customer_manager' || role === 'customer_operator') {
         return next({
           name: 'dashboard-analytics'
         })
@@ -140,7 +143,7 @@ router.beforeEach(async (to, from, next) => {
  * After each route update
  */
 router.afterEach((to, from, next) => {
-  store.commit('app/PAGE_LOADED', { root: true } )
+  document.getElementById('loading').style.display = 'none'
 })
 
 export default router

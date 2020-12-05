@@ -48,11 +48,14 @@
       <!-- Note form and timeline -->
       <v-row>
         <v-col xs="12" sm="12" md="5">
-          <note-form></note-form>
+          <note-form
+            :machine-id="parseInt($route.params.id)"
+          >
+          </note-form>
         </v-col>
         <v-col xs="12" sm="12" md="7">
           <notes-timeline
-            :machine="selectedMachine"
+            :notes="notes"
           >
           </notes-timeline>
         </v-col>
@@ -91,18 +94,16 @@ export default {
   data() {
     return {
       loadingInterval: null,
-      isLoading1: false,
-
-      parameterIds: [],
-
-      showChecks: false
+      isLoading1: false
     }
   },
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
       alarmTypes: (state) => state.alarms.alarmTypes,
-      alarms: (state) => state.alarms.alarms
+      alarms: (state) => state.alarms.alarms,
+      isLoading: (state) => state.machines.isNoteAdding,
+      notes: (state) => state.machines.notes
     }),
     ...mapGetters('machines', [
       'selectedMachine'

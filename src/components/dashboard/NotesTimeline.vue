@@ -6,17 +6,17 @@
     <v-card-text>
       <v-timeline>
         <v-timeline-item
-          v-for="(note, i) in machine.notes"
+          v-for="(note, i) in notes"
           :key="i"
           color="success"
         >
           <template v-slot:opposite>
             <span
               :class="`subtitle font-weight-bold secondary--text`"
-              v-text="formatDate(note.time)"
+              v-text="formatDate(note.created_at)"
             ></span>
           </template>
-          {{ note.text }}
+          {{ note.note }}
         </v-timeline-item>
       </v-timeline>
     </v-card-text>
@@ -34,24 +34,13 @@
 import moment from 'moment'
 export default {
   props: {
-    machine: {
-      type: Object,
-      default: () => ({
-        id: 1,
-        selections: [1, 3, 4],
-        status: 'Warning',
-        machinename: 'BD Batch Blender',
-        capacity: 89,
-        consumption: '80 Watts',
-        factory: '30 Elm Street, NY',
-        department: 'Division 1',
-        notes: []
-      })
+    notes: {
+      type: Array,
+      default: () => ([])
     }
   },
   data() {
     return {
-
     }
   },
   methods: {

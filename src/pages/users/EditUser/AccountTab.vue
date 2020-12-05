@@ -106,8 +106,8 @@
               <div class="mt-2">
                 <v-btn
                   color="primary"
-                  :loading="button_loading"
-                  :disabled="button_loading"
+                  :loading="buttonLoading"
+                  :disabled="buttonLoading"
                   @click="save"
                 >Save</v-btn>
               </div>
@@ -231,7 +231,7 @@ export default {
     ErrorComponent
   },
   props: {
-    button_loading: {
+    buttonLoading: {
       type: Boolean,
       default: false
     },

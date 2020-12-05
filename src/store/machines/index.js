@@ -203,26 +203,89 @@ const module = {
 
     selectedCompany: null,
 
+    // product note
+    isNoteAdding: false,
+    notes: [],
+
     modeWeightProduct: 'Weekly',
     modeInventory: 'Weekly',
 
-    paramWeightProduct: 0,
-    paramInventory: 0,
+    timeRageOptions: [
+      {
+        label: 'Last 30 minutes',
+        value: 'last30Min'
+      },
+      {
+        label: 'Last hour',
+        value: 'lastHour'
+      },
+      {
+        label: 'Last 4 hours',
+        value: 'last4Hours'
+      },
+      {
+        label: 'Last 12 hours',
+        value: 'last12Hours'
+      },
+      {
+        label: 'Last 24 hours',
+        value: 'last24Hours'
+      },
+      {
+        label: 'Last 48 hours',
+        value: 'last48Hours'
+      },
+      {
+        label: 'Last 3 days',
+        value: 'last3Days'
+      },
+      {
+        label: 'Last 7 days',
+        value: 'last7Days'
+      },
+      {
+        label: 'Last 24 days',
+        value: 'last24Days'
+      },
+      {
+        label: 'Custom',
+        value: 'custom'
+      }
+    ],
 
-    weightTimeRange: {
-      timeRange: 'last24Hours',
+    inventoryTimeRange: {
+      timeRangeOption: 'last24Hours',
       dateFrom: new Date().toISOString().substr(0, 10),
       dateTo: new Date().toISOString().substr(0, 10),
       timeFrom: '00:00',
       timeTo: '00:00'
     },
+
+    paramWeightProduct: 0,
+    paramInventory: 0,
+
+    weightTimeRange: {
+      timeRangeOption: 'last24Hours',
+      dateFrom: new Date().toISOString().substr(0, 10),
+      dateTo: new Date().toISOString().substr(0, 10),
+      timeFrom: '00:00',
+      timeTo: '00:00'
+    },
+
+    selectedTimeRangeKey: 'inventory',
+
     valuesTgtWeightProduct: [],
     valuesActWeightProduct: [],
     valuesHopInventory: [],
     valuesFrtInventory: [],
-    
+
     // Energy Consumption
     energyConsumption: [],
+
+    // BD Batch Blender
+    weeklyRuningHours: [],
+    totalRunningPercentage: 0,
+    recipeValues: [],
 
     // GH Gravimetric Extrusion Control Hopper
     hopperInventories: [],
@@ -245,10 +308,24 @@ const module = {
     }, selections) {
       commit('updateSelections', selections)
     },
-    addProductNote({
-      commit
-    }, note) {
-      commit('addProductNote', note)
+    addNote({
+      commit, state
+    }, data) {
+      state.isNoteAdding = true
+      
+      return new Promise((resolve, reject) => {
+        machineAPI.addNote(data)
+          .then((response) => {
+            commit('SET_NOTES', response.data.notes)
+            resolve(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+          .finally(() => {
+            state.isNoteAdding = false
+          })
+      })
     },
     initAcsDashboard({
       commit, state
@@ -271,6 +348,12 @@ const module = {
       commit('SET_SELECTED_COMPANY', company)
     },
 
+    selectTimeRange({
+      commit, dispatch, state
+    }, key) {
+      commit('SET_CURRENT_TIME_PARAM_KEY', key)
+      commit('SET_CURRENT_TIME_RANGE_ITEM', key)
+    },
     // product analytics init
     initProduct({
       commit, state
@@ -279,11 +362,17 @@ const module = {
       commit('INVENTORY_PRODUCT_LOADING')
       machineAPI.initProduct({
         machineId: id,
-        mode: state.modeWeightProduct,
-        param: state.paramWeightProduct
+        param: state.paramWeightProduct,
+        paramInventory: state.paramInventory,
+        inventoryTimeRange: state.inventoryTimeRange,
+        weightTimeRange: state.weightTimeRange
       })
         .then((response) => {
           commit('SET_MACHINE', response.data.machine)
+          
+          // set machine notes
+          commit('SET_NOTES', response.data.notes)
+
           commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
           commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
@@ -291,6 +380,11 @@ const module = {
 
           // Energy consumption
           commit('SET_ENERGY_CONSUMPTION', response.data.energy_consumption)
+
+          // BD Batch Blender
+          commit('SET_RUNNING_HOURS_PER_WEEK', response.data.weekly_running_hours)
+          commit('SET_RUNNING_PERCENTAGE', parseFloat((response.data.total_running_percentage * 100).toFixed(2)))
+          commit('SET_RECIPE_VALUES', response.data.recipe_values)
 
           // GH Gravimetric Extrusion Control Hopper
           commit('SET_HOPPER_INVENTORIES', response.data.hopper_inventories)
@@ -311,10 +405,13 @@ const module = {
     },
 
     onProductWeightParamChange({
-      commit
-    }, data) {
+      commit, state
+    }) {
       commit('WEIGHT_PRODUCT_LOADING')
-      machineAPI.changeProductWeightMode(data)
+      machineAPI.changeProductWeightMode({
+        param: state.paramWeightProduct,
+        timeRange: state.weightTimeRange
+      })
         .then((response) => {
           commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
@@ -324,16 +421,25 @@ const module = {
         })
         .finally(() => {
           commit('WEIGHT_PRODUCT_LOADED')
-          commit('SET_PRODUCT_WEIGHT_MODE', data.mode)
-          commit('SET_PRODUCT_WEIGHT_PARAM', data.param)
         })
     },
 
     onProductInventoryParamChanged({
-      commit
+      commit, dispatch, state
     }, data) {
+      commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
+
+      dispatch('getInventory')
+    },
+    getInventory({
+      commit, state
+    }) {
       commit('INVENTORY_PRODUCT_LOADING')
-      machineAPI.onProductInventoryParamChanged(data)
+
+      machineAPI.getInventory({
+        param: state.paramInventory,
+        timeRange: state.inventoryTimeRange
+      })
         .then((response) => {
           commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
           commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
@@ -343,9 +449,18 @@ const module = {
         })
         .finally(() => {
           commit('INVENTORY_PRODUCT_LOADED')
-          commit('SET_PRODUCT_INVENTORY_MODE', data.mode)
-          commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
         })
+    },
+    onTimeRangeChanged({
+      commit, dispatch, state
+    }, data) {
+      if (state.selectedTimeRangeKey === 'inventory') {
+        commit('SET_INVENTORY_TIME_RANGE', data)
+        dispatch('getInventory')
+      } else if (state.selectedTimeRangeKey === 'weight') {
+        commit('SET_WEIGHT_TIME_RANGE', data)
+        dispatch('onProductWeightParamChange')
+      }
     }
   },
 
@@ -360,7 +475,7 @@ const module = {
         }
       })
     },
-    addProductNote: (state, note) => {
+    addNote: (state, note) => {
       state.data.forEach( (_data) => {
         if (_data.id === state.selectedId) {
           const currentTime = new Date()
@@ -382,6 +497,11 @@ const module = {
     // set machine for product page
     SET_MACHINE(state, machine) {
       state.machine = machine
+    },
+
+    // Set machine notes
+    SET_NOTES(state, notes) {
+      state.notes = notes
     },
 
     // set target values
@@ -432,11 +552,27 @@ const module = {
     // Energy Consumption
     SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },
 
+    // BD Batch Blender
+    SET_RUNNING_HOURS_PER_WEEK(state, weeklyRuningHours) { state.weeklyRuningHours = weeklyRuningHours },
+    SET_RUNNING_PERCENTAGE(state, totalRunningPercentage) { state.totalRunningPercentage = totalRunningPercentage },
+    SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
+
     // GH Gravimetric Extrusion Control Hopper
     SET_HOPPER_INVENTORIES(state, hopperInventories) { state.hopperInventories = hopperInventories },
     SET_HAULOFF_LENGTHS(state, hauloffLengths) { state.hauloffLengths = hauloffLengths },
     SET_RECIPE_ACTUAL_POINTS(state, actualPoints) { state.recipeActualPoints = actualPoints },
-    SET_RECIPE_SET_POINTS(state, setPoints) { state.recipeSetPoints = setPoints }
+    SET_RECIPE_SET_POINTS(state, setPoints) { state.recipeSetPoints = setPoints },
+
+    SET_CURRENT_TIME_RANGE_ITEM(state, key) {
+      if (key === 'inventory') {
+        state.selectedTimeRange = state.inventoryTimeRange
+      } else if (key === 'weight') {
+        state.selectedTimeRange = state.weightTimeRange
+      }
+    },
+    SET_CURRENT_TIME_PARAM_KEY(state, key) { state.selectedTimeRangeKey = key },
+    SET_INVENTORY_TIME_RANGE(state, data) { state.inventoryTimeRange = Object.assign({}, data) },
+    SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) }
   },
 
   getters: {
@@ -458,6 +594,29 @@ const module = {
       })
 
       return _machines
+    },
+    timeRangeLabel: (state) => (id) => {
+      if (id === 'inventory') {
+        if (state.inventoryTimeRange.timeRangeOption !== 'custom') {
+          return state.timeRageOptions.find((item) => item.value === state.inventoryTimeRange.timeRangeOption).label
+        } else {
+          return state.inventoryTimeRange.dateFrom + ' ' + state.inventoryTimeRange.timeFrom + ' ~ ' + state.inventoryTimeRange.dateTo + ' ' + state.inventoryTimeRange.timeTo
+        }
+      } else if (id === 'weight') {
+        if (state.weightTimeRange.timeRangeOption !== 'custom') {
+          return state.timeRageOptions.find((item) => item.value === state.weightTimeRange.timeRangeOption).label
+        } else {
+          return state.weightTimeRange.dateFrom + ' ' + state.weightTimeRange.timeFrom + ' ~ ' + state.weightTimeRange.dateTo + ' ' + state.weightTimeRange.timeTo
+        }
+      } else {
+        return ''
+      }
+    },
+    selectedTimeRange: (state) => {
+      if (state.selectedTimeRangeKey === 'inventory') return state.inventoryTimeRange
+      else if (state.selectedTimeRangeKey === 'weight') return state.weightTimeRange
+
+      return ''
     }
   }
 }
