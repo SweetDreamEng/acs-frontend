@@ -203,6 +203,10 @@ const module = {
 
     selectedCompany: null,
 
+    // product note
+    isNoteAdding: false,
+    notes: [],
+
     modeWeightProduct: 'Weekly',
     modeInventory: 'Weekly',
 
@@ -304,10 +308,24 @@ const module = {
     }, selections) {
       commit('updateSelections', selections)
     },
-    addProductNote({
-      commit
-    }, note) {
-      commit('addProductNote', note)
+    addNote({
+      commit, state
+    }, data) {
+      state.isNoteAdding = true
+      
+      return new Promise((resolve, reject) => {
+        machineAPI.addNote(data)
+          .then((response) => {
+            commit('SET_NOTES', response.data.notes)
+            resolve(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+          .finally(() => {
+            state.isNoteAdding = false
+          })
+      })
     },
     initAcsDashboard({
       commit, state
@@ -351,6 +369,10 @@ const module = {
       })
         .then((response) => {
           commit('SET_MACHINE', response.data.machine)
+          
+          // set machine notes
+          commit('SET_NOTES', response.data.notes)
+
           commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
           commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
           commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
@@ -453,7 +475,7 @@ const module = {
         }
       })
     },
-    addProductNote: (state, note) => {
+    addNote: (state, note) => {
       state.data.forEach( (_data) => {
         if (_data.id === state.selectedId) {
           const currentTime = new Date()
@@ -475,6 +497,11 @@ const module = {
     // set machine for product page
     SET_MACHINE(state, machine) {
       state.machine = machine
+    },
+
+    // Set machine notes
+    SET_NOTES(state, notes) {
+      state.notes = notes
     },
 
     // set target values
