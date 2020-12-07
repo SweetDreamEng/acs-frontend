@@ -11,7 +11,7 @@ const module = {
     error: null,
     loading: true,
     button_loading: null,
-    logo_file_name: null,
+    logo_file: null,
     auth_background_file: null
   },
 
@@ -51,14 +51,22 @@ const module = {
         } else {
           commit('SET_PRIVATE_COLORS', ['#092954'])
         }
-
-        let auth_background_file = response.filter((data) => data.type.includes('auth_background'))
+        let auth_background_file = response.filter((data) => data.type.includes('auth_background_filepath'))
 
         if (auth_background_file.length) {
           auth_background_file = auth_background_file[0]['value']
           commit('SET_AUTH_BACKGROUND_FILE', auth_background_file)
         } else {
           commit('SET_AUTH_BACKGROUND_FILE', false)
+        }
+
+        let logo_file = response.filter((data) => data.type.includes('logo_filepath'))
+
+        if (logo_file.length) {
+          logo_file = logo_file[0]['value']
+          commit('SET_LOGO_FILE', logo_file)
+        } else {
+          commit('SET_LOGO_FILE', false)
         }
       })
         .catch((error) => {
@@ -85,12 +93,16 @@ const module = {
           commit('BUTTON_CLEAR')
         })
     },
-    setLogoFileName({
+    uploadLogo({
       commit
     }, {
-      filename
+      formData
     }) {
-      commit('SET_LOGO_FILE_NAME', filename)
+      settingAPI.uploadLogo(
+        formData
+      ).then((response) => {
+        commit('SET_LOGO_FILE', response.data.filepath)
+      })      
     },
     updateAuthBackground({
       commit
@@ -120,8 +132,8 @@ const module = {
     SET_PRIVATE_COLORS(state, private_colors) {
       state.private_colors = private_colors
     },
-    SET_LOGO_FILE_NAME(state, filename) {
-      state.filename = filename
+    SET_LOGO_FILE(state, filepath) {
+      state.logo_file = filepath
     },
     SET_AUTH_BACKGROUND_FILE(state, filepath) {
       state.auth_background_file = filepath

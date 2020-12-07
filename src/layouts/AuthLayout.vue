@@ -2,7 +2,8 @@
   <div class='d-flex text-center flex-column flex-md-row flex-grow-1'>
     <v-sheet class='layout-side mx-auto mx-md-1 d-none d-md-flex flex-md-column justify-space-between px-2'>
       <div class='mt-3 mt-md-10 pa-2'>
-        <img class='w-full' src='../assets/imgs/logo-aec.png' />
+        <v-img v-if="logoFilePath" class="logo" :src="logoFilePath" > </v-img>
+        <v-img v-else-if='logoFilePath === false' class="logo" :src="require('../assets/imgs/logo-aec.png')" > </v-img>
       </div>
       <div v-if='authBackgroundFile' class='w-full' :style='authBackground'/> 
       <div v-else-if='authBackgroundFile === false' class='w-full defaultAuthBackground' />
@@ -27,7 +28,8 @@ export default {
   computed: {
     ...mapState('app', ['product']),
     ...mapState({
-      authBackgroundFile: (state) => state.settings.auth_background_file
+      authBackgroundFile: (state) => state.settings.auth_background_file,
+      logoFilePath: (state) => state.settings.logo_file
     }),
     authBackground() {
       return {
@@ -45,6 +47,11 @@ export default {
 </script>
 
 <style scoped>
+.logo {
+  max-width: 356px;
+  max-height: 88px;
+}
+
 .layout-side {
   width: 420px;
 }
@@ -59,6 +66,7 @@ export default {
 
 .defaultAuthBackground {
   background-image: url('../assets/imgs/auth-background.png');
-  background-size: 'cover';
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 </style>

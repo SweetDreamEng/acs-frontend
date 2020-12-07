@@ -68,7 +68,7 @@ const module = {
             })
           } else if (response.data.role === 'super_admin') {
             router.push({
-              name: 'app-settings-choose-logo'
+              name: 'app-settings-customize-application'
             })
           }
         })

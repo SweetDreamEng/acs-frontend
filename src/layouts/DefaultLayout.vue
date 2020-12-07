@@ -15,8 +15,8 @@
       <!-- Navigation menu info -->
       <template v-slot:prepend>
         <div class="pa-2">
-          <v-img v-if="logoFileName" :src="require(logoFileName)" > </v-img>
-          <v-img v-else :src="require('../assets/imgs/logo-aec.png')" > </v-img>
+          <v-img v-if="logoFilePath" :src="logoFilePath" > </v-img>
+          <v-img v-else-if='logoFilePath === false' :src="require('../assets/imgs/logo-aec.png')" > </v-img>
         </div>
       </template>
 
@@ -56,9 +56,7 @@
       <v-card class="flex-grow-1 d-flex" :class="[isToolbarDetached ? 'pa-1 mt-3 mx-1' : 'pa-0 ma-0']" :flat="!isToolbarDetached">
         <div class="d-flex flex-grow-1 align-center">
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-
           <v-spacer class="d-none d-lg-block"></v-spacer>
-
           <toolbar-user />
         </div>
       </v-card>
@@ -78,7 +76,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 // navigation menu configurations
 import config from '../configs'
@@ -98,11 +96,21 @@ export default {
       navigation: config.navigation
     }
   },
+  mounted() {
+    this.setInitialSetting({}).then(() => {
+      console.log(this.logoFilePath)
+    })
+  },
+  methods: {
+    ...mapActions({
+      setInitialSetting: 'settings/setInitialSetting'
+    })
+  },
   computed: {
     ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
     ...mapState({
       userRole: (state) => state.auth.user.role,
-      logoFileName: (state) => state.settings.logo_file_name
+      logoFilePath: (state) => state.settings.logo_file
     })
   }
 }

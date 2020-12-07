@@ -22,5 +22,11 @@ export default {
     return api.post('/app-settings/update-auth-background').then((response) => {
       return response
     })
+  },
+
+  uploadLogo(data) {
+    return api.post('/app-settings/upload-logo', data).then((response) => {
+      return response
+    })
   }
 }
