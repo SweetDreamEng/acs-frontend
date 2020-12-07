@@ -15,7 +15,8 @@
       <!-- Navigation menu info -->
       <template v-slot:prepend>
         <div class="pa-2">
-          <v-img :src="require('../assets/imgs/logo-aec.png')" > </v-img>
+          <v-img v-if="logoFileName" :src="require(logoFileName)" > </v-img>
+          <v-img v-else :src="require('../assets/imgs/logo-aec.png')" > </v-img>
         </div>
       </template>
 
@@ -94,14 +95,14 @@ export default {
     return {
       drawer: true,
       showSearch: false,
-
       navigation: config.navigation
     }
   },
   computed: {
     ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
     ...mapState({
-      userRole: (state) => state.auth.user.role
+      userRole: (state) => state.auth.user.role,
+      logoFileName: (state) => state.settings.logo_file_name
     })
   }
 }

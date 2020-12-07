@@ -132,7 +132,8 @@ export default {
       machines: (state) => state.machines.data,
       locations: (state) => state.locations.data,
       companies: (state) => state.customers.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
+      privateColors: (state) => state.settings.private_colors
     }),
     breadcrumbItems() {
       return [
@@ -151,6 +152,14 @@ export default {
 
     let count = 0
 
+    this.setInitialSetting({}).then(() => {
+      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
+      if (this.privateColors.length >= 2) {
+        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
+        this.$vuetify.theme.themes.light.background = this.privateColors[2]
+      }
+    })
+
     // DEMO delay for loading graphics
     this.loadingInterval = setInterval(() => {
       this[`isLoading${count++}`] = false
@@ -163,7 +172,8 @@ export default {
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
-      changeSelectedCompany: 'machines/changeSelectedCompany'
+      changeSelectedCompany: 'machines/changeSelectedCompany',
+      setInitialSetting: 'settings/setInitialSetting'
     }),
     clear() {
       clearInterval(this.loadingInterval)

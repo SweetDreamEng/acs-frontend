@@ -6,6 +6,7 @@ import AppModule from './app'
 import auth from './auth'
 import customers from './customers'
 import machines from './machines'
+import settings from './settings'
 import users from './users'
 import zones from './zones'
 import locations from './locations'
@@ -26,6 +27,7 @@ const store = new Vuex.Store({
     machines,
     users,
     zones,
+    settings,
     locations,
     customers,
     devices,
