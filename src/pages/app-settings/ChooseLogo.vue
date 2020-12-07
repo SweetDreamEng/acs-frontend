@@ -159,13 +159,17 @@ export default {
     ...mapActions({
       'grabColors': 'settings/grabColors',
       'setInitialSetting': 'settings/setInitialSetting',
-      'applyPrivateColors': 'settings/applyPrivateColors'
+      'applyPrivateColors': 'settings/applyPrivateColors',
+      'updateAuthBackground': 'settings/updateAuthBackground'
     }),
     async submit () {
       if (this.$refs.form.validate()) {
         this.grabColors({
           url: this.url
         })
+
+        //-- Generic Random Images --//
+        this.updateAuthBackground()
       }
     },
     applyCustomization () {
@@ -189,6 +193,8 @@ export default {
       this.applyPrivateColors({
         colors
       })
+
+      this.updateAuthBackground()
     },
     handlColorClicked (color) {
       this.customizationColor = color

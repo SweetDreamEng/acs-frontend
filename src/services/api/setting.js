@@ -16,5 +16,11 @@ export default {
     return api.post('/app-settings/get-setting', data).then((response) => {
       return response
     })
+  },
+
+  updateAuthBackground() {
+    return api.post('/app-settings/update-auth-background').then((response) => {
+      return response
+    })
   }
 }
