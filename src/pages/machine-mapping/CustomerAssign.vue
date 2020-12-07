@@ -50,13 +50,21 @@
               dark
               style="width: 80px;"
               @click="onRegisterChange(item)"
-            >{{ item.registered ? 'Register' : 'Revoke' }}</v-btn>
+            >{{ item.registered ? 'Revoke' : 'Register' }}</v-btn>
           </div>
         </template>
 
         <template v-slot:item.sim_status="{ item }">
           <v-icon
             :color="item.sim_status === 'Active' ? 'green' : 'red'"
+          >
+            mdi-checkbox-blank-circle
+          </v-icon>
+        </template>
+
+        <template v-slot:item.checkin="{ item }">
+          <v-icon
+            :color="item.checkin === 1 ? 'green' : 'red'"
           >
             mdi-checkbox-blank-circle
           </v-icon>
@@ -220,6 +228,7 @@ export default {
         { text: 'Machine Configuration', value: 'machine_id' },
         { text: 'Device Registration', align: 'center', value: 'registered', sortable: false },
         { text: 'SIM Status', align: 'center', value: 'sim_status' },
+        { text: 'Device checkin', align: 'center', value: 'checkin' },
         { text: 'Administration', value: 'data-table-expand', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],

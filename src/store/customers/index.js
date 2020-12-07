@@ -18,114 +18,129 @@ const module = {
   },
 
   actions: {
-    initAddCompany({
+    async initAddCompany({
       commit
     }) {
-      companyAPI.initAddCompany().then((response) => {
+      try {
+        const response = await companyAPI.initAddCompany()
+
         commit('SET_COMPANIES', response.data.companies)
-      })
+      } catch (error) {
+        console.log(error.response)
+      }
     },
-    getCustomers({
+
+    async getCustomers({
       commit
     }) {
       commit('TABLE_LOAD')
-      companyAPI.getCustomers().then((response) => {
-        commit('SET_CUSTOMER_ADMINS', response.data.customer_admins)
-      })
-        .catch(() => {
+      
+      try {
+        const response = await companyAPI.getCustomers()
 
-        })
-        .finally(() => {
-          commit('TABLE_LOADED')
-        })
+        commit('SET_CUSTOMER_ADMINS', response.data.customer_admins)
+      } catch (error) {
+        console.log(error.response)
+      }
+      
+      commit('TABLE_LOADED')
     },
-    addCustomer({
+    async addCustomer({
       commit, dispatch
     }, data) {
       commit('BUTTON_LOAD')
 
-      companyAPI.addCustomer(data).then((response) => {
+      try {
+        const response = await companyAPI.addCustomer(data)
+
         commit('CLEAR_ERROR')
         dispatch('app/showSuccess', response.data, { root: true })
         router.push({
           name: 'customers-list'
         })
-      })
-        .catch((error) => {
-          if (error.response.status === 422) {
-            if (error.response.data.error.administrator_email) {
-              commit('SET_ERROR', {
-                'error': `Customer administrator for company <i>${data.companyName}</i> already exists`
-              })
-            } else {
-              const errors = Object.values(error.response.data.error).flat()
+      } catch (error) {
+        if (error.response.status === 422) {
+          if (error.response.data.error.administrator_email) {
+            commit('SET_ERROR', {
+              'error': `Customer administrator for company <i>${data.companyName}</i> already exists`
+            })
+          } else {
+            const errors = Object.values(error.response.data.error).flat()
 
-              commit('SET_ERROR', {
-                'error': errors[0]
-              })
-            }
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
           }
-        })
-        .finally(() => {
-          commit('BUTTON_CLEAR')
-        })
+        }
+      }
+
+      commit('BUTTON_CLEAR')
     },
-    getCustomer({
+    
+    async getCustomer({
       commit
     }, id) {
-      companyAPI.getCustomer(id).then((response) => {
+      try {
+        const response = await companyAPI.getCustomer(id)
+
         commit('SET_CUSTOMER_ACCOUNT', response.data.customer)
         commit('SET_CUSTOMER_PROFILE', response.data.profile)
         commit('SET_COMPANIES', response.data.companies)
         commit('cities/SET_DATA', response.data.cities, { root: true } )
-      })
-        .catch((error) => {
-          console.log(error.response.data)
-        })
+      } catch (error) {
+        console.log(error.response.data)
+      }
     },
-    updateAccount({
+
+    async updateAccount({
       commit, dispatch
     }, account) {
       commit('BUTTON_LOAD')
-      companyAPI.updateAccount(account).then((response) => {
+      
+      try {
+        const response = await companyAPI.updateAccount(account)
+        
         dispatch('app/showSuccess', response.data, { root: true })
         router.push({
           name: 'customers-list'
         })
-      })
-        .catch((error) => {
-          if (error.response.status === 422) {
-            if (error.response.data.error.administrator_email) {
-              commit('SET_ERROR', {
-                'error': `Customer administrator for company <i>${account.companyName}</i> already exists`
-              })
-            } else {
-              const errors = Object.values(error.response.data.error).flat()
+      } catch (error) {
+        if (error.response.status === 422) {
+          if (error.response.data.error.administrator_email) {
+            commit('SET_ERROR', {
+              'error': `Customer administrator for company <i>${account.companyName}</i> already exists`
+            })
+          } else {
+            const errors = Object.values(error.response.data.error).flat()
 
-              commit('SET_ERROR', {
-                'error': errors[0]
-              })
-            }
+            commit('SET_ERROR', {
+              'error': errors[0]
+            })
           }
-        })
-        .finally(() => {
-          commit('BUTTON_CLEAR')
-        })
+        }
+      }
+      
+      commit('BUTTON_CLEAR')
     },
-    updateProfile({
+
+    async updateProfile({
       commit, dispatch
     }, data) {
       commit('BUTTON_LOAD')
-      companyAPI.updateProfile(data).then((response) => {
+
+      try {
+        const response = await companyAPI.updateProfile(data)
+        
         dispatch('app/showSuccess', response.data, { root: true })
         router.push({
           name: 'customers-list'
         })
-      })
-        .finally(() => {
-          commit('BUTTON_CLEAR')
-        })
+      } finally {
+        commit('BUTTON_CLEAR')
+      }
+      
     },
+
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     }

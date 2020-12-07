@@ -39,48 +39,49 @@ const module = {
   },
 
   actions: {
-    signIn({
+    async signIn({
       commit
     }, {
       email, password
     }) {
       commit('BUTTON_LOAD')
-      authAPI.signIn(email, password).then((response) => {
-        commit('SET_TOKEN', response.data.access_token)
-        Vue.auth.setToken(response.data.access_token)
-        authAPI.check().then((response) => {
-          commit('CLEAR_ERROR')
-          commit('SET_AUTH_DATA', response.data)
-          Vue.auth.setUser(response.data)
 
-          if (response.data.role === 'acs_admin' || response.data.role === 'acs_manager' || response.data.role === 'acs_viewer') {
-            router.push({
-              name: 'acs-machines'
-            })
-          } else if (response.data.role === 'customer_admin' || response.data.role === 'customer_manager' || response.data.role === 'customer_operator') {
-            router.push({
-              name: 'dashboard-analytics'
-            })
-          } else if (response.data.role === 'super_admin') {
-            router.push({
-              name: 'app-settings/color'
-            })
-          }
-        })
-          .catch((error) => {
-            console.log(error)
+      try {
+        const response = await authAPI.signIn(email, password)
+        
+        commit('SET_TOKEN', response.data.access_token)
+        
+        Vue.auth.setToken(response.data.access_token)
+        
+        const checkResponse = await authAPI.check()
+
+        commit('CLEAR_ERROR')
+        commit('SET_AUTH_DATA', checkResponse.data)
+
+        Vue.auth.setUser(checkResponse.data)
+
+        if (checkResponse.data.role === 'acs_admin' || checkResponse.data.role === 'acs_manager' || checkResponse.data.role === 'acs_viewer') {
+          router.push({
+            name: 'acs-machines'
           })
-      })
-        .catch((error) => {
-          if (error.response.status === 401) {
-            commit('SET_ERROR', {
-              'error': 'Email and password incorrect.'
-            })
-          }
-        })
-        .finally(() => {
-          commit('BUTTON_CLEAR')
-        })
+        } else if (checkResponse.data.role === 'customer_admin' || checkResponse.data.role === 'customer_manager' || checkResponse.data.role === 'customer_operator') {
+          router.push({
+            name: 'dashboard-analytics'
+          })
+        } else if (checkResponse.data.role === 'super_admin') {
+          router.push({
+            name: 'app-settings/color'
+          })
+        }
+      } catch (error) {
+        if (error.response.status === 401) {
+          commit('SET_ERROR', {
+            'error': 'Email and password incorrect.'
+          })
+        }
+      }
+        
+      commit('BUTTON_CLEAR')
     },
 
     /**
@@ -89,67 +90,73 @@ const module = {
      *
      * @param {*} param0
      */
-    signOut({ commit }) {
-      authAPI.signOut().then((response) => {
-        if (response.status === 200) {
-          commit('SET_LOGOUT_AUTH')
-          localStorage.removeItem('token')
-          localStorage.removeItem('user')
+    async signOut({ commit }) {
+      const response = await authAPI.signOut()
 
-          router.push({
-            name: 'auth-signin'
-          })
-        }
-      })
+      if (response.status === 200) {
+        commit('SET_LOGOUT_AUTH')
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+
+        router.push({
+          name: 'auth-signin'
+        })
+      }
     },
-    updatePassword({
+
+    async updatePassword({
       commit, dispatch
     }, {
       currentPassword, newPassword
     }) {
       commit('BUTTON_LOAD')
-      authAPI.updatePassword(currentPassword, newPassword).then((response) => {
-        dispatch('app/showSuccess', response.data.message, { root: true })
-      })
-        .catch((error) => {
-          if (error.response.status === 400) {
-            commit('SET_ERROR', {
-              'error': error.response.data.error
-            })
-          } else if (error.response.status === 422) {
-            const errors = Object.values(error.response.data.error).flat()
+      
+      try {
+        const response = await authAPI.updatePassword(currentPassword, newPassword)
 
-            commit('SET_ERROR', {
-              'error': errors[0]
-            })
-          }
-        })
-        .finally(() => {
-          commit('BUTTON_CLEAR')
-        })
+        dispatch('app/showSuccess', response.data.message, { root: true })
+      } catch (error) {
+        if (error.response.status === 400) {
+          commit('SET_ERROR', {
+            'error': error.response.data.error
+          })
+        } else if (error.response.status === 422) {
+          const errors = Object.values(error.response.data.error).flat()
+
+          commit('SET_ERROR', {
+            'error': errors[0]
+          })
+        }
+      }
+      
+      commit('BUTTON_CLEAR')
     },
-    requestForgotPassword({
+    
+    async requestForgotPassword({
       commit
     }, email) {
       commit('BUTTON_LOAD')
-      authAPI.requestForgotPassword(email).then((response) => {
-      })
-        .catch((error) => {
-          if (error.response.status === 404) {
-            commit('SET_ERROR', {
-              'error': error.response.data
-            })
-          }
-        })
-        .finally(() => {
-          commit('BUTTON_CLEAR')
-        })
+
+      try {
+        await authAPI.requestForgotPassword(email)
+
+      } catch (error) {
+        if (error.response.status === 404) {
+          commit('SET_ERROR', {
+            'error': error.response.data
+          })
+        }
+      }
+      
+      commit('BUTTON_CLEAR')
     },
+
     clearAuthData({
       commit
     }) {
       commit('SET_LOGOUT_AUTH')
     },
+    
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     }
@@ -200,14 +207,6 @@ const module = {
   getters: {
     hasToken: (state) => {
       return state.token
-    },
-    isCustomerAdmin: (state) => {
-      return true
-      // return state.user.role === 'customer_admin'
-    },
-    isAcsAdmin: (state) => {
-      return true
-      // return state.user.role === 'acs_admin'
     },
     roleName: (state) => (role_key) => {
       return state.roles.find((role) => role.key === role_key).name
