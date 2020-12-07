@@ -46,11 +46,16 @@
         <template v-slot:item.registered="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <v-btn
-              :color="item.registered ? 'green' : 'red'"
-              dark
-              style="width: 80px;"
               @click="onRegisterChange(item)"
-            >{{ item.registered ? 'Register' : 'Revoke' }}</v-btn>
+            >
+              <v-icon
+                left
+                :color="item.registered ? 'green' : 'red'"
+              >
+                mdi-checkbox-blank-circle
+              </v-icon>
+              {{ item.registered ? 'Revoke' : 'Register' }}
+            </v-btn>
           </div>
         </template>
 
@@ -314,7 +319,7 @@ export default {
     },
     confirmBtnText() {
       if (this.selectedItem) {
-        if (this.selectedItem.device_registration)
+        if (!this.selectedItem.registered)
           return 'Confirm Registration'
         else
           return 'Confirm Revocation'
@@ -324,7 +329,7 @@ export default {
     },
     confirmBtnColor() {
       if (this.selectedItem) {
-        if (this.selectedItem.device_registration)
+        if (!this.selectedItem.registered)
           return 'green'
         else
           return 'red'
@@ -334,7 +339,7 @@ export default {
     },
     confirmationMessage() {
       if (this.selectedItem) {
-        if (this.selectedItem.device_registration)
+        if (!this.selectedItem.registered)
           return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be configured with product ${this.selectedItem.product_category}. Please confirm registration`
         else
           return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be reset and product ${this.selectedItem.product_category} configuration will be removed. The device will no longer send PLC data. Please confirm revocation`

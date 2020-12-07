@@ -18,7 +18,7 @@ const showError = ({ state, commit }, { message = 'Failed!', error }) => {
       icon: 'mdi-alert',
       color: 'error',
       message: message + ' ' + error.message,
-      timeout: 10000
+      timeout: 3000
     })
   })
 }

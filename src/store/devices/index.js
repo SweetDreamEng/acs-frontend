@@ -102,11 +102,13 @@ const module = {
         deviceAPI.updateRegistered(data)
           .then((response) => {
             commit('SET_REGISTERED', data)
-            // dispatch('app/showSuccess', response.data, { root: true })
+            dispatch('app/showSuccess', response.data, { root: true })
             resolve(response)
           })
           .catch((error) => {
-            console.log(error.response)
+            dispatch('app/showError', {
+              error: error.response.data
+            }, { root: true })
             reject(error)
           })
           .finally(() => {
