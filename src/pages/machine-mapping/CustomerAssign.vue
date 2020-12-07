@@ -50,7 +50,7 @@
               dark
               style="width: 80px;"
               @click="onRegisterChange(item)"
-            >{{ item.registered ? 'Revoke' : 'Register' }}</v-btn>
+            >{{ item.registered ? 'Register' : 'Revoke' }}</v-btn>
           </div>
         </template>
 

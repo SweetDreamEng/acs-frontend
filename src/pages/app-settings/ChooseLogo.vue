@@ -1,126 +1,121 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
-      <v-container class="pb-0">
-        <!-- customer assignment table -->
-        <v-card>
-          <v-card-title>Logo</v-card-title>
-          <v-card-text>
-            <v-expansion-panels accordion>
-              <!-- Upload logo Image --->
-              <v-expansion-panel>
-                <v-expansion-panel-header>Upload logo Image</v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <v-card flat>
-                    <v-btn
-                      color="primary"
-                      class="text-none"
-                      depressed
-                      :loading="isSelecting"
-                      @click="handleFileUploadBtnClicked"
-                    >
-                      <v-icon left>
-                        mdi-cloud-upload
-                      </v-icon>
-                      Upload Logo Image
-                    </v-btn>
-                    <input
-                      ref="uploader"
-                      class="d-none"
-                      type="file"
-                      accept="image/*"
-                      @change="onFileChanged"
-                    >
-                  </v-card>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
+    <v-card>
+      <v-card-title>Logo</v-card-title>
+      <v-card-text>
+        <v-expansion-panels accordion>
+          <!-- Upload logo Image --->
+          <v-expansion-panel>
+            <v-expansion-panel-header>Upload logo Image</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-card flat>
+                <v-btn
+                  color="primary"
+                  class="text-none"
+                  depressed
+                  :loading="isSelecting"
+                  @click="handleFileUploadBtnClicked"
+                >
+                  <v-icon left>
+                    mdi-cloud-upload
+                  </v-icon>
+                  Upload Logo Image
+                </v-btn>
+                <input
+                  ref="uploader"
+                  class="d-none"
+                  type="file"
+                  accept="image/*"
+                  @change="onFileChanged"
+                >
+              </v-card>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
 
-              <!-- Application Customization --->
-              <v-expansion-panel>
-                <v-expansion-panel-header>Application Customization</v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <v-card flat>
-                  <!-- Input URL Form -->
-                    <v-card-text>
-                      <v-form ref="form" lazy-validation>
-                        <v-text-field label="Input Website URL" v-model="url" :rules="[$rules.required]" @keyup.enter="submit"/>
-                        <v-row justify="space-around">
-                          <v-btn
-                            class="ma-2 white--text"
-                            :loading="buttonLoading == 'SUBMIT'"
-                            :disabled="buttonLoading == 'SUBMIT'"
-                            color="info"
-                            @click="submit"
-                          >
-                            SUBMIT
-                          </v-btn>
-                          <v-sheet v-if="buttonLoading == 'APPLY' || buttonLoading == false">
-                            <v-btn
-                              class="ma-2"
-                              :loading="buttonLoading == 'APPLY'"
-                              :disabled="buttonLoading == 'APPLY'"
-                              color="success"
-                              @click="applyCustomization"                          
-                            >
-                              Apply Customization
-                            </v-btn>
-                            <v-btn
-                              fab
-                              large
-                              dark
-                              :color="customizationColor"
-                            ></v-btn>
-                          </v-sheet>
-                        </v-row>
-                      </v-form>
-                    </v-card-text>
-                    <v-text-field
-                      v-if="buttonLoading"
-                      color="success"
-                      loading
-                      disabled
-                    ></v-text-field>
-                    <v-card-text v-if="colors">
-                      <v-row>
-                        <v-col
-                          v-for="(color, idx) in colors"
-                          :key="idx"
-                          class="d-flex child-flex"
-                          cols="2"
+          <!-- Application Customization --->
+          <v-expansion-panel>
+            <v-expansion-panel-header>Application Customization</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-card flat>
+              <!-- Input URL Form -->
+                <v-card-text>
+                  <v-form ref="form" lazy-validation>
+                    <v-text-field label="Input Website URL" v-model="url" :rules="[$rules.required]" @keyup.enter="submit"/>
+                    <v-row justify="space-around">
+                      <v-btn
+                        class="ma-2 white--text"
+                        :loading="buttonLoading == 'SUBMIT'"
+                        :disabled="buttonLoading == 'SUBMIT'"
+                        color="info"
+                        @click="submit"
+                      >
+                        SUBMIT
+                      </v-btn>
+                      <v-sheet v-if="buttonLoading == 'APPLY' || buttonLoading == false">
+                        <v-btn
+                          class="ma-2"
+                          :loading="buttonLoading == 'APPLY'"
+                          :disabled="buttonLoading == 'APPLY'"
+                          color="success"
+                          @click="applyCustomization"                          
                         >
-                          <v-btn
-                            :color="color.Hex"
-                            :key="idx"
-                            elevation="11"
-                            height="100"
-                            @click="handlColorClicked(color.Hex)"
-                          ></v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-card-text>
+                          Apply Customization
+                        </v-btn>
+                        <v-btn
+                          fab
+                          large
+                          dark
+                          :color="customizationColor"
+                        ></v-btn>
+                      </v-sheet>
+                    </v-row>
+                  </v-form>
+                </v-card-text>
+                <v-text-field
+                  v-if="buttonLoading"
+                  color="success"
+                  loading
+                  disabled
+                ></v-text-field>
+                <v-card-text v-if="colors">
+                  <v-row>
+                    <v-col
+                      v-for="(color, idx) in colors"
+                      :key="idx"
+                      class="d-flex child-flex"
+                      cols="2"
+                    >
+                      <v-btn
+                        :color="color.Hex"
+                        :key="idx"
+                        elevation="11"
+                        height="100"
+                        @click="handlColorClicked(color.Hex)"
+                      ></v-btn>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
 
-                    <v-card-text v-if="!colors.length && buttonLoading == false">
-                      <v-row justify="center">
-                        Sorry, We can't find any colors from given URL.
-                      </v-row>
-                      <v-row justify="center">
-                        <v-color-picker
-                          dot-size="25"
-                          show-swatches
-                          swatches-max-height="200"
-                          elevation="15"
-                          v-model="customizationColor"
-                        ></v-color-picker>
-                      </v-row>
-                    </v-card-text>
-                  </v-card>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-card-text>
-        </v-card>
-      </v-container>
-    </v-sheet>
+                <v-card-text v-if="!colors.length && buttonLoading == false">
+                  <v-row justify="center">
+                    Sorry, We can't find any colors from given URL.
+                  </v-row>
+                  <v-row justify="center">
+                    <v-color-picker
+                      dot-size="25"
+                      show-swatches
+                      swatches-max-height="200"
+                      elevation="15"
+                      v-model="customizationColor"
+                    ></v-color-picker>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
