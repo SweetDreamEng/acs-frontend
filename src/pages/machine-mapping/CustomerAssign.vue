@@ -43,17 +43,22 @@
           <span>{{ machineName(item.machine_id) }}</span>
         </template>
 
-        <template v-slot:item.registered="{ item }">
+        <template v-slot:item.registered_view="{ item }">
+          <div class="font-weight-bold d-flex align-center text-no-wrap">
+            <v-icon
+              left
+              :color="item.registered ? 'green' : 'red'"
+            >
+              mdi-checkbox-blank-circle
+            </v-icon>
+          </div>
+        </template>
+
+        <template v-slot:item.registered_action="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <v-btn
               @click="onRegisterChange(item)"
             >
-              <v-icon
-                left
-                :color="item.registered ? 'green' : 'red'"
-              >
-                mdi-checkbox-blank-circle
-              </v-icon>
               {{ item.registered ? 'Revoke' : 'Register' }}
             </v-btn>
           </div>
@@ -71,7 +76,7 @@
           <v-icon
             :color="item.checkin === 1 ? 'green' : 'red'"
           >
-            mdi-checkbox-blank-circle
+            {{ item.checkin === 1 ? 'mdi-check-circle-outline' : 'mdi-close-circle-outline' }}
           </v-icon>
         </template>
 
@@ -231,7 +236,8 @@ export default {
         { text: 'Device Name', value: 'name' },
         { text: 'Company Name', value: 'company_id' },
         { text: 'Machine Configuration', value: 'machine_id' },
-        { text: 'Device Registration', align: 'center', value: 'registered', sortable: false },
+        { text: 'REG Status', align: 'center', value: 'registered_view' },
+        { text: 'Device Registration', align: 'center', value: 'registered_action', sortable: false },
         { text: 'SIM Status', align: 'center', value: 'sim_status' },
         { text: 'Device checkin', align: 'center', value: 'checkin' },
         { text: 'Administration', value: 'data-table-expand', sortable: false },
