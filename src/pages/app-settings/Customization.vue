@@ -1,133 +1,133 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
-      <v-container class="pb-0">
-        <!-- customer assignment table -->
-        <v-card>
-          <v-card-title>Logo</v-card-title>
-          <v-card-text>
-            <v-expansion-panels accordion>
-              <!-- Upload logo Image --->
-              <v-expansion-panel>
-                <v-expansion-panel-header>Upload logo Image</v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <v-card flat>
-                    <v-btn
-                      color="primary"
-                      class="text-none"
-                      depressed
-                      :loading="isSelecting"
-                      @click="handleFileUploadBtnClicked"
-                    >
-                      <v-icon left>
-                        mdi-cloud-upload
-                      </v-icon>
-                      Upload Logo Image
-                    </v-btn>
-                    <input
-                      ref="uploader"
-                      class="d-none"
-                      type="file"
-                      accept="image/*"
-                      @change="onFileChanged"
-                    >
-                  </v-card>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
+    <!-- customer assignment table -->
+    <v-card>
+      <v-card-title>Logo</v-card-title>
+      <v-card-text>
+        <v-expansion-panels accordion>
+          <!-- Upload logo Image --->
+          <v-expansion-panel>
+            <v-expansion-panel-header>Upload logo Image</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-card flat>
+                <v-btn
+                  color="primary"
+                  class="text-none"
+                  depressed
+                  :loading="isSelecting"
+                  @click="handleFileUploadBtnClicked"
+                >
+                  <v-icon left>
+                    mdi-cloud-upload
+                  </v-icon>
+                  Upload Logo Image
+                </v-btn>
+                <input
+                  ref="uploader"
+                  class="d-none"
+                  type="file"
+                  accept="image/*"
+                  @change="onFileChanged"
+                >
+              </v-card>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
 
-              <!-- Application Customization --->
-              <v-expansion-panel>
-                <v-expansion-panel-header>Application Customization</v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <v-card flat>
-                    <!-- Input URL Form -->
-                    <v-card-text>
-                      <v-form ref="form" lazy-validation>
-                        <v-text-field v-model="url" label="Input Website URL" :rules="[$rules.required]" @keyup.enter="submit"/>
-                        <v-row justify="space-around">
-                          <v-btn
-                            class="ma-2 white--text"
-                            :loading="buttonLoading == 'SUBMIT'"
-                            :disabled="buttonLoading == 'SUBMIT'"
-                            color="info"
-                            @click="submit"
-                          >
-                            SUBMIT
-                          </v-btn>
-                          <v-sheet v-if="buttonLoading == 'APPLY' || buttonLoading == false">
-                            <v-btn
-                              class="ma-2"
-                              :loading="buttonLoading == 'APPLY'"
-                              :disabled="buttonLoading == 'APPLY'"
-                              color="success"
-                              @click="applyCustomization"                          
-                            >
-                              Apply Customization
-                            </v-btn>
-                            <v-btn
-                              fab
-                              large
-                              dark
-                              :color="customizationColor"
-                            ></v-btn>
-                          </v-sheet>
-                        </v-row>
-                      </v-form>
-                    </v-card-text>
+          <!-- Application Customization --->
+          <v-expansion-panel>
+            <v-expansion-panel-header>Application Customization</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-card flat>
+                <!-- Input URL Form -->
+                <v-card-text>
+                  <v-form ref="form" lazy-validation @submit.prevent="submit">
                     <v-text-field
-                      v-if="buttonLoading"
-                      color="success"
-                      loading
-                      disabled
-                    ></v-text-field>
-                    <v-card-text v-if="colors">
-                      <v-row>
-                        <v-col
-                          v-for="(color, idx) in colors"
-                          :key="idx"
-                          class="d-flex child-flex"
-                          cols="2"
+                      v-model="url"
+                      label="Input Website URL"
+                      outlined
+                      dense
+                      :rules="[$rules.required]"
+                    />
+                    <v-row justify="space-around">
+                      <v-btn
+                        class="ma-2 white--text"
+                        :loading="buttonLoading == 'SUBMIT'"
+                        :disabled="buttonLoading == 'SUBMIT'"
+                        color="info"
+                        @click="submit"
+                      >
+                        SUBMIT
+                      </v-btn>
+                      <v-sheet v-if="buttonLoading === 'APPLY' || buttonLoading === false">
+                        <v-btn
+                          class="ma-2"
+                          :loading="buttonLoading === 'APPLY'"
+                          :disabled="buttonLoading === 'APPLY'"
+                          color="success"
+                          @click="applyCustomization"                          
                         >
-                          <v-btn
-                            :key="idx"
-                            :color="color.Hex"
-                            elevation="11"
-                            height="100"
-                            @click="handlColorClicked(color.Hex)"
-                          ></v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-card-text>
+                          Apply Customization
+                        </v-btn>
+                        <v-btn
+                          fab
+                          large
+                          dark
+                          :color="customizationColor"
+                        ></v-btn>
+                      </v-sheet>
+                    </v-row>
+                  </v-form>
+                </v-card-text>
+                <v-text-field
+                  v-if="buttonLoading"
+                  color="success"
+                  loading
+                  disabled
+                ></v-text-field>
+                <v-card-text v-if="colors">
+                  <v-row>
+                    <v-col
+                      v-for="(color, idx) in colors"
+                      :key="idx"
+                      class="d-flex child-flex"
+                      cols="2"
+                    >
+                      <v-btn
+                        :key="idx"
+                        :color="color.Hex"
+                        elevation="11"
+                        height="100"
+                        @click="handlColorClicked(color.Hex)"
+                      ></v-btn>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
 
-                    <v-card-text v-if="!colors.length && buttonLoading == false">
-                      <v-row justify="center">
-                        Sorry, We can't find any colors from given URL.
-                      </v-row>
-                      <v-row justify="center">
-                        <v-color-picker
-                          v-model="customizationColor"
-                          dot-size="25"
-                          show-swatches
-                          swatches-max-height="200"                          
-                          elevation="15"                          
-                        ></v-color-picker>
-                      </v-row>
-                    </v-card-text>
-                  </v-card>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-card-text>
-        </v-card>
-      </v-container>
-    </v-sheet>
+                <v-card-text v-if="!colors.length && buttonLoading == false">
+                  <v-row justify="center">
+                    Sorry, We can't find any colors from given URL.
+                  </v-row>
+                  <v-row justify="center">
+                    <v-color-picker
+                      v-model="customizationColor"
+                      dot-size="25"
+                      show-swatches
+                      swatches-max-height="200"                          
+                      elevation="15"                          
+                    ></v-color-picker>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import axios from 'axios'
-import api from '@/api.js'
 
 export default {
   data () {
