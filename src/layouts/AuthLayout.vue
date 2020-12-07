@@ -1,27 +1,45 @@
 <template>
-  <div class="d-flex text-center flex-column flex-md-row flex-grow-1">
-    <v-sheet class="layout-side mx-auto mx-md-1 d-none d-md-flex flex-md-column justify-space-between px-2">
-      <div class="mt-3 mt-md-10 pa-2">
-        <img class="w-full" src="../assets/imgs/logo-aec.png" />
+  <div class='d-flex text-center flex-column flex-md-row flex-grow-1'>
+    <v-sheet class='layout-side mx-auto mx-md-1 d-none d-md-flex flex-md-column justify-space-between px-2'>
+      <div class='mt-3 mt-md-10 pa-2'>
+        <img class='w-full' src='../assets/imgs/logo-aec.png' />
       </div>
-      <img class="w-full" src="../assets/imgs/auth-background.png" />
+      <div v-if='authBackgroundFile' class='w-full' :style='authBackground'/> 
+      <div v-else-if='authBackgroundFile === false' class='w-full defaultAuthBackground' />
     </v-sheet>
 
-    <div class="pa-2 pa-md-4 flex-grow-1 align-center justify-center d-flex flex-column">
-      <div class="layout-content ma-auto w-full">
+    <div class='pa-2 pa-md-4 flex-grow-1 align-center justify-center d-flex flex-column'>
+      <div class='layout-content ma-auto w-full'>
         <slot></slot>
       </div>
-      <div class="overline mt-4">{{ product.name }} - {{ product.version }}</div>
+      <div class='overline mt-4'>{{ product.name }} - {{ product.version }}</div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
+  mounted() {
+    this.setInitialSetting()
+  },
   computed: {
-    ...mapState('app', ['product'])
+    ...mapState('app', ['product']),
+    ...mapState({
+      authBackgroundFile: (state) => state.settings.auth_background_file
+    }),
+    authBackground() {
+      return {
+        'background-image': `url(${this.authBackgroundFile})`,
+        'background-size': 'cover'
+      }
+    }
+  },
+  methods: {
+    ...mapActions({
+      setInitialSetting: 'settings/setInitialSetting'
+    })
   }
 }
 </script>
@@ -33,5 +51,14 @@ export default {
 
 .layout-content {
   max-width: 480px;
+}
+
+.w-full {
+  height: 100%;
+}
+
+.defaultAuthBackground {
+  background-image: url('../assets/imgs/auth-background.png');
+  background-size: 'cover';
 }
 </style>

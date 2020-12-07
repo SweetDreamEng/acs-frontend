@@ -11,7 +11,8 @@ const module = {
     error: null,
     loading: true,
     button_loading: null,
-    logo_file_name: null
+    logo_file_name: null,
+    auth_background_file: null
   },
 
   actions: {
@@ -50,6 +51,15 @@ const module = {
         } else {
           commit('SET_PRIVATE_COLORS', ['#092954'])
         }
+
+        let auth_background_file = response.filter((data) => data.type.includes('auth_background'))
+
+        if (auth_background_file.length) {
+          auth_background_file = auth_background_file[0]['value']
+          commit('SET_AUTH_BACKGROUND_FILE', auth_background_file)
+        } else {
+          commit('SET_AUTH_BACKGROUND_FILE', false)
+        }
       })
         .catch((error) => {
           console.log(error)
@@ -81,6 +91,19 @@ const module = {
       filename
     }) {
       commit('SET_LOGO_FILE_NAME', filename)
+    },
+    updateAuthBackground({
+      commit
+    }) {
+      settingAPI.updateAuthBackground().then((response) => {
+        commit('SET_AUTH_BACKGROUND_FILE', response.data.filepath)
+      })
+        .catch((error) => {
+          console.log('error', error)
+        })
+        .finally(() => {
+
+        })
     }
   },
 
@@ -99,6 +122,9 @@ const module = {
     },
     SET_LOGO_FILE_NAME(state, filename) {
       state.filename = filename
+    },
+    SET_AUTH_BACKGROUND_FILE(state, filepath) {
+      state.auth_background_file = filepath
     }
   }
 }
