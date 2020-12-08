@@ -47,7 +47,8 @@
         </template>
       </v-data-table>
 
-      <div class="d-flex justify-end mr-4">
+      <div class="d-flex justify-end align-center mr-4">
+        <div class="label font-italic">(Data displayed for last 7 days)</div>
         <div>
           <v-icon class="ml-2 mr-0" color="#269ffb">mdi-checkbox-blank</v-icon>
           Unplanned
@@ -94,6 +95,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    locations: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
@@ -108,87 +113,6 @@ export default {
       ],
 
       selected: ['name1', 'name2', 'name3'],
-
-      locations: [
-        {
-          location: {
-            label: 'Location 1',
-            to: '/acs-machines/1'
-          },
-          utilization: '32%',
-          color: 'green',
-          value: 75,
-          oee: '93.1%',
-          performance: '78%',
-          rate: 56,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [14]
-            },
-            {
-              name: 'Name',
-              data: [53]
-            },
-            {
-              name: 'Name',
-              data: [22]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 2',
-            to: '/acs-machines/2'
-          },
-          utilization: '36%',
-          color: 'green',
-          value: 52,
-          oee: '89.8%',
-          performance: '28%',
-          rate: 65,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [44]
-            },
-            {
-              name: 'Name',
-              data: [53]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 3',
-            to: '/acs-machines/3'
-          },
-          utilization: '82%',
-          color: 'red',
-          value: 78,
-          oee: '78.2%',
-          performance: '25%',
-          rate: 34,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [41]
-            },
-            {
-              name: 'Name',
-              data: [33]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
-        }
-      ],
 
       searchQuery: '',
 

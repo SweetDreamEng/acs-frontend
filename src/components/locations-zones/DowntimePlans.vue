@@ -248,7 +248,8 @@ export default {
         'No Demand',
         'Preventative Maintenance',
         'Machine Failure',
-        'Power Outage'
+        'Power Outage',
+        'Idle'
       ],
 
       editedIndex: -1,

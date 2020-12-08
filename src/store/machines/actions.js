@@ -122,6 +122,20 @@ const getWeeklyRunningHours = async ({ state, commit }, id) => {
   }
 }
 
+const initLocationsTable = async ({ state, commit }) => {
+  state.loadingLocationsTable = true
+
+  try {
+    const response = await machineAPI.initLocationsTable()
+
+    commit('SET_DOWNTIME_DISTRIBUTION', response.data.downtime_distribution)        
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingLocationsTable = false
+  }
+}
+
 const onProductWeightParamChange = ({ commit, state }) => {
   commit('WEIGHT_PRODUCT_LOADING')
   machineAPI.changeProductWeightMode({
@@ -179,6 +193,7 @@ export default {
   updateSelections,
   addNote,
   initAcsDashboard,
+  initLocationsTable,
   changeSelectedCompany,
   selectTimeRange,
   initProduct,
