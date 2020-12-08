@@ -9,7 +9,7 @@ const selectedMachine = (state) => {
 }
 
 const extendedMachines = (state) => {
-  const _machines = state.machines
+  const _machines = state.machines.slice()
 
   _machines.unshift({
     id: 0,
