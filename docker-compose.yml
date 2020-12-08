@@ -11,15 +11,9 @@ services:
     volumes:
       - .:/var/www/html/acs-frontend
     networks:
-      - app-network
+      - acsapi_app-network
 
 #Docker Networks
 networks:
-  app-network:
-    driver: bridge
-
-#Volumes
-volumes:
-  dbdata:
-    driver: local
-
+  acsapi_app-network:
+    external: true
