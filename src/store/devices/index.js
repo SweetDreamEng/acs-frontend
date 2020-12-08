@@ -20,7 +20,11 @@ const module = {
     remote_web_btn_loading: false,         // status of Remote WebUI
     remote_cli_btn_loading: false,         // status of Remote CLI
     assign_loading: false,              // status of uploading devices from excel file
-    register_button_loading: false
+    register_button_loading: false,
+
+    downtimePlanBtnLoading: false,
+    downtimePlansTableLoading: false,
+    downtimePlans: []
   },
 
   actions: {
@@ -102,11 +106,13 @@ const module = {
         deviceAPI.updateRegistered(data)
           .then((response) => {
             commit('SET_REGISTERED', data)
-            // dispatch('app/showSuccess', response.data, { root: true })
+            dispatch('app/showSuccess', response.data, { root: true })
             resolve(response)
           })
           .catch((error) => {
-            console.log(error.response)
+            dispatch('app/showError', {
+              error: error.response.data
+            }, { root: true })
             reject(error)
           })
           .finally(() => {
@@ -219,6 +225,61 @@ const module = {
           })
       })
     },
+    async getDowntimePlans({
+      commit, state
+    }) {
+      state.downtimePlansTableLoading = true
+
+      try {
+        const response = await deviceAPI.getDowntimePlans()
+
+        commit('SET_DOWNTIME_PLANS', response.data.downtimePlans)
+        commit('machines/SET_MACHINES', response.data.machines, { root: true })
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        state.downtimePlansTableLoading = false
+      }
+    },
+
+    async updateDowntimePlan({
+      state, commit, dispatch
+    }, { data, id }) {
+      state.downtimePlanBtnLoading = true
+
+      try {
+        const response = await deviceAPI.updateDowntimePlan(data, id)
+
+        dispatch('app/showSuccess', response.data, { root: true })
+      } catch (error) {
+        console.log(error)
+        dispatch('app/showError', {
+          error: error.response.data
+        }, { root: true })
+      } finally {
+        state.downtimePlanBtnLoading = false
+      }
+    },
+
+    async addDowntimePlan({
+      state, commit, dispatch
+    }, data) {
+      state.downtimePlanBtnLoading = true
+
+      try {
+        const response = await deviceAPI.addDowntimePlan(data)
+
+        dispatch('app/showSuccess', response.data, { root: true })
+      } catch (error) {
+        console.log(error)
+        dispatch('app/showError', {
+          error: error.response.data
+        }, { root: true })
+      } finally {
+        state.downtimePlanBtnLoading = false
+      }
+    },
+
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     },
@@ -316,7 +377,8 @@ const module = {
     },
     SET_PAGINATION_DATA(state, data) {
       Object.assign(state, data)
-    }
+    },
+    SET_DOWNTIME_PLANS(state, plans) { state.downtimePlans = plans }
   },
 
   getters: {

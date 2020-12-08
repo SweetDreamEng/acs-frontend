@@ -4,7 +4,7 @@ import mutations from './mutations'
 
 const { product, time, theme, currencies  } = configs
 
-const { globalTheme, menuTheme, toolbarTheme, isToolbarDetached, isContentBoxed, isRTL } = theme
+const { globalTheme, menuTheme, toolbarTheme, isToolbarDetached, isContentBoxed, isRTL, light } = theme
 const { currency, availableCurrencies } = currencies
 
 // state initial values
@@ -12,6 +12,8 @@ const state = {
   product,
 
   time,
+
+  light,
 
   // currency
   currency,

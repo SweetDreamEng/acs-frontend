@@ -1,38 +1,30 @@
 <template>
-  <v-card height="100%">
-    <v-img
-      height="150"
-      contain
-      src="../../../assets/imgs/blender.png"
-    ></v-img>
-    <v-card-text>
-      <div class="subtitle font-weight-bold">{{ machine.name }}</div>
-      <div class="ml-2">
-        <div>PLC Software Version: <small>{{ machine.version }}</small></div>
-        <div>PLC Software Build: <small>{{ machine.software_build }}</small></div>
-        <div>Serial Number: <small>{{ machine.serial_number }}</small></div>
-      </div>
-    </v-card-text>
-  </v-card>
+  <div>
+    <v-card
+      height="280"
+      :loading="loading"
+    >
+      <v-img
+        height="150"
+        contain
+        src="../../../assets/imgs/blender.png"
+      ></v-img>
+      <v-card-text>
+        <div class="subtitle font-weight-bold">{{ machine.name }}</div>
+        <div class="ml-2">
+          <div>PLC Software Version: <small>{{ machine.version }}</small></div>
+          <div>PLC Software Build: <small>{{ machine.software_build }}</small></div>
+          <div>Serial Number: <small>{{ machine.serial_number }}</small></div>
+        </div>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
 
-/*
-|---------------------------------------------------------------------
-| DEMO Dashboard Card Component
-|---------------------------------------------------------------------
-|
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
-|
-*/
 export default {
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
     loading: {
       type: Boolean,
       default: false
@@ -44,8 +36,6 @@ export default {
   },
   data() {
     return {
-      loadingInterval: null,
-      isLoading1: true
     }
   },
   computed: {
@@ -81,19 +71,7 @@ export default {
       }
     }
   },
-  mounted() {
-    let count = 0
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
-  },
   methods: {
-    clear() {
-      clearInterval(this.loadingInterval)
-    }
   }
 }
 </script>

@@ -35,7 +35,7 @@
 |
 */
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 import TopCard from '../../components/dashboard/TopCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
@@ -119,11 +119,20 @@ export default {
   computed: {
     ...mapState({
       machines: (state) => state.machines.data,
-      locations: (state) => state.locations.data
+      locations: (state) => state.locations.data,
+      privateColors: (state) => state.settings.private_colors
     })
   },
   mounted() {
     let count = 0
+
+    this.setInitialSetting({}).then(() => {
+      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
+      if (this.privateColors.length >= 2) {
+        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
+        this.$vuetify.theme.themes.light.background = this.privateColors[2]
+      }
+    })
 
     // DEMO delay for loading graphics
     this.loadingInterval = setInterval(() => {
@@ -135,6 +144,9 @@ export default {
     this.clear()
   },
   methods: {
+    ...mapActions({
+      setInitialSetting: 'settings/setInitialSetting'
+    }),
     clear() {
       clearInterval(this.loadingInterval)
     }

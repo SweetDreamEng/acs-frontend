@@ -12,6 +12,19 @@ export default {
       return response
     })
   },
+
+  getOverview(id) {
+    return api.get(`/analytics/product-overview/${id}`).then((response) => {
+      return response
+    })
+  },
+
+  getWeeklyRunningHours(id) {
+    return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {
+      return response
+    })
+  },
+
   changeProductWeightMode(data) {
     return api.post('/analytics/product-weight', data).then((response) => {
       return response

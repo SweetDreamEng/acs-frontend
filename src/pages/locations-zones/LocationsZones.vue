@@ -2,6 +2,7 @@
   <div class="d-flex flex-column flex-grow-1">
     <div class="display-1 mt-2">Location/Zones</div>
     <locations :locations="locations"></locations>
+    
     <v-card class="mt-2">
       <v-card-title>
         Zones
@@ -90,6 +91,8 @@
         </v-data-table>
       </v-card-text>
     </v-card>
+
+    <downtime-plans></downtime-plans>
   </div>
 </template>
 
@@ -101,12 +104,14 @@
 |---------------------------------------------------------------------
 |
 */
+import Locations from '../../components/locations-zones/Locations.vue'
+import DowntimePlans from '../../components/locations-zones/DowntimePlans.vue'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
-import Locations from '../../components/locations-zones/Locations.vue'
+
 export default {
   components: {
-    Locations
+    Locations, DowntimePlans
   },
   data() {
     return {

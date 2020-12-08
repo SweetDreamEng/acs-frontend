@@ -1,7 +1,7 @@
 export default [{
-  path: '/app-settings/color',
-  name: 'app-settings-color',
-  component: () => import(/* webpackChunkName: "app-settings-color" */ '@/pages/app-settings/ChooseColor.vue'),
+  path: '/app-settings/customize-application',
+  name: 'app-settings-customize-application',
+  component: () => import(/* webpackChunkName: "app-settings-logo" */ '@/pages/app-settings/Customization.vue'),
   meta: {
     superAdmin: true
   }

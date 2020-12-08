@@ -43,14 +43,24 @@
           <span>{{ machineName(item.machine_id) }}</span>
         </template>
 
-        <template v-slot:item.registered="{ item }">
+        <template v-slot:item.registered_view="{ item }">
+          <div class="font-weight-bold d-flex align-center text-no-wrap">
+            <v-icon
+              left
+              :color="item.registered ? 'green' : 'red'"
+            >
+              mdi-checkbox-blank-circle
+            </v-icon>
+          </div>
+        </template>
+
+        <template v-slot:item.registered_action="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <v-btn
-              :color="item.registered ? 'green' : 'red'"
-              dark
-              style="width: 80px;"
               @click="onRegisterChange(item)"
-            >{{ item.registered ? 'Register' : 'Revoke' }}</v-btn>
+            >
+              {{ item.registered ? 'Revoke' : 'Register' }}
+            </v-btn>
           </div>
         </template>
 
@@ -59,6 +69,14 @@
             :color="item.sim_status === 'Active' ? 'green' : 'red'"
           >
             mdi-checkbox-blank-circle
+          </v-icon>
+        </template>
+
+        <template v-slot:item.checkin="{ item }">
+          <v-icon
+            :color="item.checkin === 1 ? 'green' : 'red'"
+          >
+            {{ item.checkin === 1 ? 'mdi-check-circle-outline' : 'mdi-close-circle-outline' }}
           </v-icon>
         </template>
 
@@ -218,8 +236,10 @@ export default {
         { text: 'Device Name', value: 'name' },
         { text: 'Company Name', value: 'company_id' },
         { text: 'Machine Configuration', value: 'machine_id' },
-        { text: 'Device Registration', align: 'center', value: 'registered', sortable: false },
+        { text: 'REG Status', align: 'center', value: 'registered_view' },
+        { text: 'Device Registration', align: 'center', value: 'registered_action', sortable: false },
         { text: 'SIM Status', align: 'center', value: 'sim_status' },
+        { text: 'Device checkin', align: 'center', value: 'checkin' },
         { text: 'Administration', value: 'data-table-expand', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
@@ -305,7 +325,7 @@ export default {
     },
     confirmBtnText() {
       if (this.selectedItem) {
-        if (this.selectedItem.device_registration)
+        if (!this.selectedItem.registered)
           return 'Confirm Registration'
         else
           return 'Confirm Revocation'
@@ -315,7 +335,7 @@ export default {
     },
     confirmBtnColor() {
       if (this.selectedItem) {
-        if (this.selectedItem.device_registration)
+        if (!this.selectedItem.registered)
           return 'green'
         else
           return 'red'
@@ -325,7 +345,7 @@ export default {
     },
     confirmationMessage() {
       if (this.selectedItem) {
-        if (this.selectedItem.device_registration)
+        if (!this.selectedItem.registered)
           return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be configured with product ${this.selectedItem.product_category}. Please confirm registration`
         else
           return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be reset and product ${this.selectedItem.product_category} configuration will be removed. The device will no longer send PLC data. Please confirm revocation`

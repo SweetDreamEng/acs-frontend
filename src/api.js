@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import axios from 'axios'
 import store from './store'
+import router from './router'
 
 const API = axios.create({
   baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
   // baseURL: 'http://localhost/acs-api/public/api',
-  timeout: 30000
+  timeout: 60000
 })
 
 API.interceptors.request.use(async (config) => {
@@ -31,7 +32,11 @@ API.interceptors.response.use((response) => {
 
     store.commit('auth/SET_LOGOUT_AUTH', { root: true })
 
-    return window.location = '/auth/signin'
+    if (router.history.current.name === 'auth-signin') {
+      return Promise.reject(error)
+    } else {
+      return window.location = '/auth/signin'
+    }
   } else {
     return Promise.reject(error)
   }

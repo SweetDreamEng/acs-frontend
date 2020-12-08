@@ -37,6 +37,24 @@ export default {
     })
   },
 
+  getDowntimePlans() {
+    return api.get('/downtime-plans').then((response) => {
+      return response
+    })
+  },
+
+  updateDowntimePlan(data, id) {
+    return api.post(`/downtime-plans/update/${id}`, data).then((response) => {
+      return response
+    })
+  },
+
+  addDowntimePlan(data) {
+    return api.post('/downtime-plans/store', data).then((response) => {
+      return response
+    })
+  },
+
   /*
     Import devices from teltonika API
   */

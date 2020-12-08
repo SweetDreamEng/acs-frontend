@@ -15,7 +15,7 @@ export default {
     text: '',
     key: '',
     items: [
-      { icon: 'mdi-view-dashboard-outline', text: 'App Settings', link: '/app-settings/color' }
+      { icon: 'mdi-view-dashboard-outline', text: 'App Settings', link: '/app-settings/customize-application' }
     ]
   }],
 
@@ -42,7 +42,7 @@ export default {
         ]
       },
       { icon: 'mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
-      { icon: 'mdi-account-multiple', text: 'Division/Zones', link: '/locations-zones' }
+      { icon: 'mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' }
     ]
   }],
   customerOperatorMenu: [{
