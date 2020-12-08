@@ -7,6 +7,12 @@ export default {
     })
   },
 
+  initLocationsTable() {
+    return api.get('/acs-machines/init-locations-table').then((response) => {
+      return response
+    })
+  },
+
   initProduct(data) {
     return api.post('/analytics/init-product', data).then((response) => {
       return response

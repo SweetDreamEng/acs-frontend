@@ -212,6 +212,10 @@ const state = {
   loadingWeeklyRunningHours1: false,
   weeklyRuningHours: [],
 
+  // Locations table series
+  loadingLocationsTable: false,
+  downtimeDistribution: [],
+
   modeWeightProduct: 'Weekly',
   modeInventory: 'Weekly',
 

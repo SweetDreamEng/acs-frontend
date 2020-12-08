@@ -107,5 +107,7 @@ export default {
   },
   SET_CURRENT_TIME_PARAM_KEY(state, key) { state.selectedTimeRangeKey = key },
   SET_INVENTORY_TIME_RANGE(state, data) { state.inventoryTimeRange = Object.assign({}, data) },
-  SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) }
+  SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) },
+
+  SET_DOWNTIME_DISTRIBUTION(state, data) { state.downtimeDistribution = data }
 }
