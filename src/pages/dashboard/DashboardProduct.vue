@@ -7,19 +7,18 @@
     </div>
 
     <div v-else>
-      <div class="display-1">{{ machine.name }}</div>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
           <product-analytics1
-            v-if="machine.id === 1"
+            v-if="$route.params.id == 1"
           >
           </product-analytics1>
           <product-analytics2
-            v-if="machine.id === 2"
+            v-if="$route.params.id == 2"
           >
           </product-analytics2>
           <product-analytics3
-            v-if="machine.id === 3"
+            v-if="$route.params.id == 3"
           >
           </product-analytics3>
         </v-col>
@@ -109,15 +108,25 @@ export default {
       'selectedMachine'
     ])
   },
+  
+  created() {
+    this.getOverview(this.$route.params.id)
+    this.getWeeklyRunningHours(this.$route.params.id)
+  },
+
   mounted() {
     this.selectMachine(this.$route.params.id)
     this.initProduct(this.$route.params.id)
   },
+
   beforeDestroy() {
     this.clear()
   },
+
   methods: {
     ...mapActions({
+      getOverview: 'machines/getOverview',
+      getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
       initProduct: 'machines/initProduct',
       'selectMachine': 'machines/selectMachine',
       'updateSelections': 'machines/updateSelections',

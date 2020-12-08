@@ -4,6 +4,7 @@
       <v-col md="4" sm="4" xs="12">
         <overview
           :machine="machine"
+          :loading="loadingOverview"
         >
         </overview>
       </v-col>
@@ -44,6 +45,7 @@
       <v-col md="4" sm="8" xs="12">
         <average-runtime-by-week
           :weekly-running-hours="weeklyRuningHours"
+          :loading="loadingWeeklyRunningHours1"
         >
         </average-runtime-by-week>
       </v-col>
@@ -129,7 +131,11 @@ export default {
   },
   computed: {
     ...mapState({
+      loadingOverview: (state) => state.machines.loadingOverview,
       machine: (state) => state.machines.machine,
+
+      loadingWeeklyRunningHours1: (state) => state.machines.loadingWeeklyRunningHours1,
+      weeklyRuningHours: (state) => state.machines.weeklyRuningHours,                   // Weekly running hours
 
       modeWeight: (state) => state.machines.modeWeightProduct,
       modeInventory: (state) => state.machines.modeInventory,
@@ -146,7 +152,6 @@ export default {
       isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading,
 
       energyConsumption: (state) => state.machines.energyConsumption,                   // Energy Consumption
-      weeklyRuningHours: (state) => state.machines.weeklyRuningHours,                   // Weekly running hours
       totalRunningPercentage: (state) => state.machines.totalRunningPercentage,         // Weekly running hours
       recipeValues: (state) => state.machines.recipeValues                              // recipe
     }),
