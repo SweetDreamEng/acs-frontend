@@ -11,9 +11,9 @@ services:
     volumes:
       - .:/var/www/html/acs-frontend
     networks:
-      - acsapi_app-network
+      - acs-api_app-network
 
 #Docker Networks
 networks:
-  acsapi_app-network:
+  acs-api_app-network:
     external: true
