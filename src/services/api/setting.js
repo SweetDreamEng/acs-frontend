@@ -28,5 +28,11 @@ export default {
     return api.post('/app-settings/upload-logo', data).then((response) => {
       return response
     })
+  },
+
+  resetSettings() {
+    return api.post('/app-settings/reset').then((response) => {
+      return response
+    })
   }
 }

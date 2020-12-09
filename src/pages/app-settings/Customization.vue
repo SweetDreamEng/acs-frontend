@@ -97,7 +97,7 @@
                         :color="color.Hex"
                         elevation="11"
                         height="100"
-                        @click="handlColorClicked(color.Hex)"
+                        @click="handleColorClicked(color.Hex)"
                       ></v-btn>
                     </v-col>
                   </v-row>
@@ -120,6 +120,16 @@
               </v-card>
             </v-expansion-panel-content>
           </v-expansion-panel>
+          <v-btn
+            depressed
+            color="error"
+            style="width: 100%"
+            :loading="buttonLoading == 'SUBMIT'"
+            :disabled="buttonLoading == 'SUBMIT'"
+            @click="handleResetBtnClicked"
+          >
+            Set Default Settings
+          </v-btn>
         </v-expansion-panels>
       </v-card-text>
     </v-card>
@@ -163,6 +173,7 @@ export default {
   methods: {
     ...mapActions({
       'grabColors': 'settings/grabColors',
+      'resetSettings': 'settings/resetSettings',
       'setInitialSetting': 'settings/setInitialSetting',
       'applyPrivateColors': 'settings/applyPrivateColors',
       'uploadLogo': 'settings/uploadLogo',
@@ -202,8 +213,20 @@ export default {
 
       this.updateAuthBackground()
     },
-    handlColorClicked (color) {
+    handleColorClicked (color) {
       this.customizationColor = color
+    },
+    handleResetBtnClicked () {
+      this.resetSettings().then(() => {
+        this.setInitialSetting({}).then(() => {
+          this.$vuetify.theme.themes.light.primary = this.privateColors[0]
+          if (this.privateColors.length >= 2) {
+            this.$vuetify.theme.themes.light.accent = this.privateColors[1]
+            this.$vuetify.theme.themes.light.background = this.privateColors[2]
+          }
+          this.customizationColor = this.privateColors[0]
+        })
+      })
     },
     handleFileUploadBtnClicked() {
       this.isSelecting = true
