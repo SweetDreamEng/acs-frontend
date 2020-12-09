@@ -15,8 +15,8 @@
       <!-- Navigation menu info -->
       <template v-slot:prepend>
         <div class="pa-2">
-          <v-img v-if="logoFilePath" :src="logoFilePath" > </v-img>
-          <v-img v-else-if="logoFilePath === false" :src="require('../assets/imgs/logo-aec.png')" > </v-img>
+          <v-img v-if="logoFile" :src="logoFilePath"  @error="onLogoImgError()"> </v-img>
+          <v-img v-else-if='logoFile === false' :src="require('../assets/imgs/logo-aec.png')" > </v-img>
         </div>
       </template>
 
@@ -93,7 +93,8 @@ export default {
     return {
       drawer: true,
       showSearch: false,
-      navigation: config.navigation
+      navigation: config.navigation,
+      logoImgError: false
     }
   },
   computed: {
@@ -104,14 +105,25 @@ export default {
     })
   },
   mounted() {
-    this.setInitialSetting({}).then(() => {
-      console.log(this.logoFilePath)
-    })
+    this.setInitialSetting()
   },
   methods: {
     ...mapActions({
       setInitialSetting: 'settings/setInitialSetting'
-    })
+    }),
+    onLogoImgError() {
+      this.logoImgError = true
+    }
+  },
+  computed: {
+    ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
+    ...mapState({
+      userRole: (state) => state.auth.user.role,
+      logoFile: (state) => state.settings.logo_file
+    }),
+    logoFilePath() {
+      return this.logoImgError ? require('../assets/imgs/logo-aec.png') : this.logoFile
+    }
   }
 }
 </script>
