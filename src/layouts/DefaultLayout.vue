@@ -97,13 +97,6 @@ export default {
       logoImgError: false
     }
   },
-  computed: {
-    ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
-    ...mapState({
-      userRole: (state) => state.auth.user.role,
-      logoFilePath: (state) => state.settings.logo_file
-    })
-  },
   mounted() {
     this.setInitialSetting()
   },

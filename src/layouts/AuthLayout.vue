@@ -46,9 +46,6 @@ export default {
       return this.logoImgError ? require('../assets/imgs/logo-aec.png') : this.logoFile
     }
   },
-  mounted() {
-    this.setInitialSetting()
-  },
   methods: {
     ...mapActions({
       setInitialSetting: 'settings/setInitialSetting'
