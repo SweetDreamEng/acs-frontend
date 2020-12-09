@@ -21,6 +21,8 @@ const module = {
     remote_cli_btn_loading: false,         // status of Remote CLI
     assign_loading: false,              // status of uploading devices from excel file
     register_button_loading: false,
+    loadingTableMachineMapping: false,
+    loadingBtnAssginZoneToMachine: false,
 
     downtimePlanBtnLoading: false,
     downtimePlansTableLoading: false,
@@ -121,26 +123,38 @@ const module = {
       })
     },
 
-    getCustomerDevices({
-      commit
+    async getCustomerDevices({
+      state, commit
     }) {
-      commit('TABLE_LOAD')
+      state.loadingTableMachineMapping = true
 
-      return new Promise((resolve, reject) => {
-        deviceAPI.getCustomerDevices()
-          .then((response) => {
-            commit('SET_DATA', response.data.devices)
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('TABLE_LOAD_CLEAR')
-          })
-      })
+      try {
+        const response = await deviceAPI.getCustomerDevices()
+
+        commit('SET_DATA', response.data.devices)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        state.loadingTableMachineMapping = false
+      }
     },
+
+    async assignZoneToDevice({
+      state, commit, dispatch
+    }, data) {
+      state.loadingBtnAssginZoneToMachine = true
+
+      try {
+        const response = await deviceAPI.assignZoneToDevice(data)
+
+        dispatch('app/showSuccess', response.data, { root: true })
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        state.loadingBtnAssginZoneToMachine = false
+      }
+    },
+
     querySIM({
       commit
     }, device) {

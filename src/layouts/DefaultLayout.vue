@@ -16,7 +16,7 @@
       <template v-slot:prepend>
         <div class="pa-2">
           <v-img v-if="logoFilePath" :src="logoFilePath" > </v-img>
-          <v-img v-else-if='logoFilePath === false' :src="require('../assets/imgs/logo-aec.png')" > </v-img>
+          <v-img v-else-if="logoFilePath === false" :src="require('../assets/imgs/logo-aec.png')" > </v-img>
         </div>
       </template>
 
@@ -96,6 +96,13 @@ export default {
       navigation: config.navigation
     }
   },
+  computed: {
+    ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
+    ...mapState({
+      userRole: (state) => state.auth.user.role,
+      logoFilePath: (state) => state.settings.logo_file
+    })
+  },
   mounted() {
     this.setInitialSetting({}).then(() => {
       console.log(this.logoFilePath)
@@ -104,13 +111,6 @@ export default {
   methods: {
     ...mapActions({
       setInitialSetting: 'settings/setInitialSetting'
-    })
-  },
-  computed: {
-    ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
-    ...mapState({
-      userRole: (state) => state.auth.user.role,
-      logoFilePath: (state) => state.settings.logo_file
     })
   }
 }

@@ -71,5 +71,14 @@ export default {
     return api.get('/devices/customer-devices').then((response) => {
       return response
     })
+  },
+
+  /*
+    Assign zone to device in machine mapping page
+  */
+  assignZoneToDevice(data) {
+    return api.post('/devices/assign-zone', data).then((response) => {
+      return response
+    })
   }
 }
