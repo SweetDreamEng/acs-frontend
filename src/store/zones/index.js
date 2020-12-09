@@ -15,6 +15,7 @@ const module = {
         name: 'Zone 3'
       }
     ],
+
     table_loading: false,
     btn_loading: false
   },
@@ -118,6 +119,19 @@ const module = {
     },
     SET_DATA(state, zones) {
       state.data = zones
+    }
+  },
+
+  getters: {
+    extendedZones: (state) => {
+      const _zoness = state.data.slice()
+
+      _zoness.unshift({
+        id: 0,
+        name: 'Not Assigned'
+      })
+
+      return _zoness
     }
   }
 }

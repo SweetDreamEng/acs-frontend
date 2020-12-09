@@ -115,4 +115,7 @@ export default {
 .theme--dark.v-breadcrumbs a {
   color: white;
 }
+a {
+  font-decoration: none;
+}
 </style>

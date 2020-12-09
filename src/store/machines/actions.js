@@ -8,6 +8,16 @@ const updateSelections = ({ commit }, selections) => {
   commit('updateSelections', selections)
 }
 
+const getAllConfigurations = async ({ commit }) => {
+  try {
+    const response = await machineAPI.getAllConfigurations()
+
+    commit('SET_MACHINES', response.data.configurations)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const addNote = ({ commit, state }, data) => {
   state.isNoteAdding = true
 
@@ -189,6 +199,7 @@ const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
 }
 
 export default {
+  getAllConfigurations,
   selectMachine,
   updateSelections,
   addNote,

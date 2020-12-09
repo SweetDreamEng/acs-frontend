@@ -16,8 +16,7 @@
             Add
           </v-btn>
         </template>
-        <v-card
-        >
+        <v-card>
           <v-card-title class="primary white--text">
             <span class="headline">{{ editTitle }}</span>
           </v-card-title>
@@ -83,9 +82,10 @@
                       outlined
                       dense
                       v-bind="attrs"
-                      v-on="on"
                       class="ml-2"
-                    ></v-text-field>
+                      v-on="on"
+                    >
+                    </v-text-field>
                   </template>
                   <v-time-picker
                     v-if="timeFromMenu"
@@ -142,9 +142,10 @@
                       outlined
                       dense
                       v-bind="attrs"
-                      v-on="on"
                       class="ml-2"
-                    ></v-text-field>
+                      v-on="on"
+                    >
+                    </v-text-field>
                   </template>
                   <v-time-picker
                     v-if="timeToMenu"

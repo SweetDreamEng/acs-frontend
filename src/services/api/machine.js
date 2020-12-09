@@ -1,5 +1,10 @@
 import api from '@/api.js'
 export default {
+  getAllConfigurations() {
+    return api.get('/configurations/index').then((response) => {
+      return response
+    })
+  },
 
   initAcsDashboard() {
     return api.get('/acs-machines').then((response) => {

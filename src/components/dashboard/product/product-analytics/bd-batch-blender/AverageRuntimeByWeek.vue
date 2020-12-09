@@ -62,17 +62,17 @@ export default {
       }
     }
   },
-  watch: {
-    loading(val) {
-      console.log(val)
-    }
-  },
   computed: {
     series() {
       return [{
         name: 'Average runtime by week',
         data: this.weeklyRunningHours
       }]
+    }
+  },
+  watch: {
+    loading(val) {
+      console.log(val)
     }
   },
   methods: {

@@ -11,6 +11,7 @@
           :items="devices"
           class="flex-grow-1"
           :search="searchQuery"
+          :loading="loadingTableMachineMapping"
         >
           <template v-slot:top>
             <v-text-field
@@ -34,8 +35,15 @@
             {{ header.text }}
           </template>
 
-          <template v-slot:item.department="{ item }">
-            <span>{{ item.department ? item.department : 'Not assigned' }}</span>
+          <template v-slot:item.machine_id="{ item }">
+            <span>{{ configurationName(item) }}</span>
+          </template>
+
+          <template v-slot:item.zone_id="{ item }">
+            <span>{{ zoneName(item) }}</span>
+          </template>
+          <template v-slot:item.location_id="{ item }">
+            <span>{{ locationName(item) }}</span>
           </template>
 
           <template v-slot:item.actions="{ item }">
@@ -60,7 +68,7 @@
 
         <v-card-text class="mt-4">
           <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
-            <v-select
+<!--             <v-select
               v-model="editedItem.division"
               :items="exDivisionNames"
               label="Choose Division"
@@ -68,23 +76,22 @@
               outlined
               dense
             >
-            </v-select>
+            </v-select> -->
             <v-select
-              v-model="editedItem.department"
-              :items="exZoneNames"
+              v-model="editedItem.zone_id"
+              :items="extendedZones"
               label="Choose Zones"
-              :rules="[$rules.required]"
+              item-text="name"
+              item-value="id"
               outlined
               dense
             >
             </v-select>
-
             <div class="d-flex">
               <v-spacer></v-spacer>
               <v-btn
                 color="primary"
                 text
-                :disabled="newMode"
                 @click="close"
               >
                 Cancel
@@ -92,7 +99,8 @@
               <v-btn
                 color="primary"
                 type="submit"
-                :disabled="newMode"
+                :disabled="loadingBtnAssginZoneToMachine"
+                :loading="loadingBtnAssginZoneToMachine"
               >
                 Save
               </v-btn>
@@ -125,36 +133,40 @@ export default {
 
       headers: [
         { text: 'Serial Number', value: 'serial_number' },
-        { text: 'Machine Name', value: 'product_name' },
+        { text: 'Configuration', value: 'machine_id' },
         { text: 'Zones', value: 'zone_id' },
+        { text: 'Locations', value: 'location_id' },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
 
       newMode: false,
       editedIndex: -1,
       editedItem: {
-        department: '',
-        division: ''
+        serial_number: 0,
+        zone_id: 0
       },
       defaultItem: {
-        department: 'Not assigned',
-        division: 'Not assigned'
+        serial_number: 0,
+        zone_id: 0
       },
       editDialog: false,
-      newItem: {
-        department: '',
-        division: ''
-      },
 
       isEditFormValid: true,
-      isNewFormValid: true,
 
       searchQuery: ''
     }
   },
   computed: {
     ...mapState({
-      devices: (state) => state.devices.data
+      loadingTableMachineMapping: (state) => state.devices.loadingTableMachineMapping,
+      loadingBtnAssginZoneToMachine: (state) => state.devices.loadingBtnAssginZoneToMachine,
+      devices: (state) => state.devices.data,
+      configurations: (state) => state.machines.machines,
+      zones: (state) => state.zones.data,
+      locations: (state) => state.locations.data
+    }),
+    ...mapGetters({
+      extendedZones: 'zones/extendedZones'
     })
   },
   watch: {
@@ -167,13 +179,20 @@ export default {
   },
   methods: {
     ...mapActions({
-      'getCustomerDevices': 'devices/getCustomerDevices'
+      getCustomerDevices: 'devices/getCustomerDevices',
+      getAllConfigurations: 'machines/getAllConfigurations',
+      getZones: 'zones/getZones',
+      assignZoneToDevice: 'devices/assignZoneToDevice',
+      getLocations: 'locations/getLocations'
     }),
     open() {
       this.getCustomerDevices()
+      this.getAllConfigurations()
+      this.getZones()
+      this.getLocations()
     },
     editItem (item) {
-      this.editedIndex = this.devices.indexOf(item)
+      this.editedIndex = item.machine_id
       this.editedItem = Object.assign({}, item)
       this.editDialog = true
       this.$nextTick(() => {
@@ -187,11 +206,30 @@ export default {
         this.editedIndex = -1
       })
     },
-    save () {
+    async save () {
       if (this.$refs.editForm.validate()) {
-        // Object.assign(this.maps[this.editedIndex], this.editedItem)
+        await this.assignZoneToDevice(this.editedItem)
         this.close()
+        await this.getCustomerDevices()
       }
+    },
+    configurationName(device) {
+      const configuration = this.configurations.find((item) => {
+        return item.id === device.machine_id
+      })
+
+      if (configuration) return configuration.name
+      else return ''
+    },
+    locationName(item) {
+      const _location = this.locations.find((location) => location.id === item.location_id)
+
+      return _location ? _location.name : 'Not Assinged'
+    },
+    zoneName(item) {
+      const _zone = this.zones.find((zone) => zone.id === item.zone_id)
+
+      return _zone ? _zone.name : 'Not Assinged'
     }
   }
 }
