@@ -2,10 +2,10 @@
   <div class="d-flex text-center flex-column flex-md-row flex-grow-1">
     <v-sheet class="layout-side mx-auto mx-md-1 d-none d-md-flex flex-md-column justify-space-between px-2">
       <div class="mt-3 mt-md-10 pa-2">
-        <v-img v-if='logoFile' class='logo' :src='logoFilePath' @error='onLogoImgError()'> </v-img>
-        <v-img v-else-if='logoFile === false' class='logo' :src="require('../assets/imgs/logo-aec.png')" > </v-img>
+        <v-img v-if="logoFile" class="logo" :src="logoFilePath" @error="onLogoImgError()"> </v-img>
+        <v-img v-else-if="logoFile === false" class="logo" :src="require('../assets/imgs/logo-aec.png')" > </v-img>
       </div>
-      <div v-if="authBackgroundFile" class="w-full" :style='authBackground'/>
+      <div v-if="authBackgroundFile" class="w-full" :style="authBackground" />
       <div v-else-if="authBackgroundFile === false" class="w-full defaultAuthBackground" />
     </v-sheet>
 
