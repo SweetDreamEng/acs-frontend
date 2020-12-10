@@ -74,6 +74,22 @@ const module = {
         .finally(() => {
           commit('ALARMS_LOADED')
         })
+    },
+    getCorrespondingAlarmTypes({
+      commit
+    }, machine_id) {
+      return alarmAPI.getCorrespondingAlarmTypes(machine_id)
+        .then((response) => {
+          console.log(response)
+          commit('SET_ALARM_TYPES', response.data.alarm_types)
+          // commit('SET_ALARMS', response.data.alarms)
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+        .finally(() => {
+          
+        })
     }
   },
 

@@ -197,6 +197,11 @@ const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
     dispatch('onProductWeightParamChange')
   }
 }
+const getMachines = ({ commit }) => {
+  machineAPI.getMachines().then((response) => {
+    commit('SET_MACHINES', response.data.machines)
+  })
+}
 
 export default {
   getAllConfigurations,
@@ -213,5 +218,6 @@ export default {
   onProductWeightParamChange,
   onProductInventoryParamChanged,
   getInventory,
-  onTimeRangeChanged
+  onTimeRangeChanged,
+  getMachines
 }

@@ -95,6 +95,10 @@ import { mapState } from 'vuex'
 | Machines table card to list machines and their properties
 |
 */
+function formatDate(date) {
+  return date ? moment(date).format('D MMM') : ''
+}
+
 export default {
   data () {
     return {

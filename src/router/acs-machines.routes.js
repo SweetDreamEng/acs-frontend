@@ -8,6 +8,13 @@ export default [
       acsAdmin: true
     }
   }, {
+    path: '/acs-machines/alarms',
+    name: 'acs-machines-alarms',
+    component: () => import(/* webpackChunkName: "acs-machines-alarms" */ '@/pages/acs-machines/Alarms.vue'),
+    meta: {
+      acsAdmin: true
+    }
+  }, {
     path: '/acs-machines/:location',
     name: 'location-acs-dashboard',
     component: () => import(/* webpackChunkName: "location-acs-dashboard" */ '@/pages/acs-machines/LocationDashboard.vue'),
