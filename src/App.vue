@@ -76,15 +76,15 @@ export default {
       }
     }
   },
+  mounted() {
+    document.getElementById('loading').style.display = 'none'
+  },
   head: {
     link: [
       // adds config/icons into the html head tag
       ...config.icons.map((href) => ({ rel: 'stylesheet', href }))
     ]
-  },
-  mounted() {
-    document.getElementById('loading').style.display = 'none'
-  }
+  }  
 }
 </script>
 
