@@ -162,11 +162,11 @@ export default {
           downtime_distribution: [
             {
               name: 'Name',
-              data: [this.downtimeDistribution[0]]
+              data: [this.downtimeDistribution[1]]
             },
             {
               name: 'Name',
-              data: [this.downtimeDistribution[1]]
+              data: [this.downtimeDistribution[0]]
             },
             {
               name: 'Name',

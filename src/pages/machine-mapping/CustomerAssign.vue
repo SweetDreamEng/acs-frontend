@@ -58,6 +58,8 @@
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <v-btn
               @click="onRegisterChange(item)"
+              dark
+              :color="item.registered ? 'red' : 'green'"
             >
               {{ item.registered ? 'Revoke' : 'Register' }}
             </v-btn>
@@ -167,12 +169,13 @@
     <v-dialog
       v-model="confirmDialog"
       max-width="400px"
+      persistent
     >
       <v-card>
-        <v-card-title>
+        <v-card-title class="primary white--text">
           Confirm
         </v-card-title>
-        <v-card-text>
+        <v-card-text class="mt-2">
           <v-alert
             border="top"
             outlined
@@ -180,7 +183,7 @@
             elevation="2"
             color="primary"
           >
-            <small>{{ confirmationMessage() }}</small>
+            <small v-html="confirmationMessage()"></small>
           </v-alert>
           <div class="d-flex justify-end">
             <v-btn color="primary" text @click="confirmDialog = false">Cancel</v-btn>
@@ -346,9 +349,9 @@ export default {
     confirmationMessage() {
       if (this.selectedItem) {
         if (!this.selectedItem.registered)
-          return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be configured with product ${this.selectedItem.product_category}. Please confirm registration`
+          return `Device ${this.selectedItem.serial_number} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be configured with product <strong><i>${this.machineName(this.selectedItem.machine_id)}</i></strong>. Please confirm registration`
         else
-          return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be reset and product ${this.selectedItem.product_category} configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
+          return `Device ${this.selectedItem.id} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be reset and product <strong><i>${this.machineName(this.selectedItem.machine_id)}</i></strong> configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
       } else {
         return ''
       }

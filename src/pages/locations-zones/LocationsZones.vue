@@ -37,8 +37,9 @@
                 </v-text-field>
                 <v-select
                   v-model="editedZone.location_id"
-                  :items="extendedLocations"
+                  :items="locations"
                   label="Choose Location"
+                  :rules="[$rules.required]"
                   item-text="name"
                   item-value="id"
                   outlined
@@ -144,9 +145,6 @@ export default {
       table_loading: (state) => state.zones.table_loading,
       locations: (state) => state.locations.data,
       zones: (state) => state.zones.data
-    }),
-    ...mapGetters({
-      extendedLocations: 'locations/extendedLocations'
     }),
     editTitle() {
       return this.editedIndex === -1 ? 'Add Zone' : 'Edit Zone'
