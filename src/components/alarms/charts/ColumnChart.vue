@@ -2,19 +2,24 @@
   <v-card>
     <v-card-title>{{ title }}</v-card-title>
     <v-card-text>
-      <div class="d-flex flex-column flex-grow-1 graphic-container"> 
-        <v-select
-          v-model="selectedMachineName"
-          :items="dropDownList"
-          label="Select Machine Types"
-          @input="$emit('selectMachine', selectedMachineName)"
-        ></v-select>               
-        <apexchart
-          height="300"
-          :options="chartOptions"
-          :series="series"
-        ></apexchart>
-      </div>
+      <v-row justify="space-between">
+        <v-col cols="4" sm="4" md="4" lg="4">
+          <v-select
+            v-model="selectedMachineName"
+            :items="dropDownList"
+            label="Select Machine Types"
+            @input="$emit('selectMachine', selectedMachineName)"
+          ></v-select>
+        </v-col>
+        <v-col cols="4" sm="4" md="4" lg="4">
+          <date-range-picker></date-range-picker>
+        </v-col>
+      </v-row>
+      <apexchart
+        height="300"
+        :options="chartOptions"
+        :series="series"
+      ></apexchart>
     </v-card-text>
   </v-card>
 </template>
@@ -22,12 +27,19 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import VueApexCharts from 'vue-apexcharts'
+import DateRangePicker from '../../dashboard/DateRangePicker.vue'
 
 export default {
+  components: {
+    DateRangePicker
+  },
+  mounted() {
+    this.$emit('selectMachine', 'BD Batch Blender')
+  },
   props: {
     title: {
       type: String,
-      default: () => ('Alarm Per Type')
+      default: () => ('')
     },
     series: {
       type: Array,
@@ -44,7 +56,7 @@ export default {
   },
   data() {
     return {
-      selectedMachineName: 0
+      selectedMachineName: 'BD Batch Blender'
     }
   },
   computed: {
@@ -55,7 +67,7 @@ export default {
           height: 350,
           stacked: true,
           toolbar: {
-            show: true
+            show: false
           },
           zoom: {
             enabled: true
@@ -92,8 +104,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.graphic-container {
-  max-width: 600px;
-}
-</style>

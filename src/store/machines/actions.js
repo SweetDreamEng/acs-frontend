@@ -174,7 +174,7 @@ const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   }
 }
 const getMachines = ({ commit }) => {
-  machineAPI.getMachines().then((response) => {
+  return machineAPI.getMachines().then((response) => {
     commit('SET_MACHINES', response.data.machines)
   })
 }
