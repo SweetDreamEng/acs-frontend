@@ -97,7 +97,7 @@
                         :color="color.Hex"
                         elevation="11"
                         height="100"
-                        @click="handlColorClicked(color.Hex)"
+                        @click="handleColorClicked(color.Hex)"
                       ></v-btn>
                     </v-col>
                   </v-row>
@@ -202,7 +202,7 @@ export default {
 
       this.updateAuthBackground()
     },
-    handlColorClicked (color) {
+    handleColorClicked (color) {
       this.customizationColor = color
     },
     handleFileUploadBtnClicked() {
