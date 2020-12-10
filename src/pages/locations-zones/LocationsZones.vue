@@ -146,6 +146,9 @@ export default {
       locations: (state) => state.locations.data,
       zones: (state) => state.zones.data
     }),
+    ...mapGetters({
+      locationName: 'locations/locationName'
+    }),
     editTitle() {
       return this.editedIndex === -1 ? 'Add Zone' : 'Edit Zone'
     }
@@ -179,23 +182,16 @@ export default {
         this.editedIndex = -1
       })
     },
-    locationName(location_id) {
-      const _location = this.locations.find((location) => location.id === location_id)
-
-      return _location ? _location.name : 'Not Assinged'
-    },
-    saveZone() {
+    async saveZone() {
       if (this.$refs.editZoneForm.validate()) {
         if (this.editedIndex > -1) {
-          this.updateZone(this.editedZone).then(() => {
-            this.getZones()
-            this.closeZone()
-          })
+          await this.updateZone(this.editedZone)
+          this.getZones()
+          this.closeZone()
         } else {
-          this.addZone(this.editedZone).then(() => {
-            this.getZones()
-            this.closeZone()
-          })
+          await this.addZone(this.editedZone)
+          this.getZones()
+          this.closeZone()
         }
       }
     }

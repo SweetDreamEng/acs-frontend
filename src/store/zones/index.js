@@ -64,43 +64,31 @@ const module = {
           })
       })
     },
-    addZone({
+    async addZone({
       commit
     }, data) {
       commit('BTN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        zoneAPI.addZone(data)
-          .then((response) => {
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('BTN_LOADED')
-          })
-      })
+      try {
+        const response = await zoneAPI.addZone(data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('BTN_LOADED')
+      }
     },
-    updateZone({
+    async updateZone({
       commit
     }, data) {
       commit('BTN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        zoneAPI.updateZone(data)
-          .then((response) => {
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('BTN_LOADED')
-          })
-      })
+      try {
+        await zoneAPI.updateZone(data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('BTN_LOADED')
+      }
     }
   },
 
@@ -132,6 +120,11 @@ const module = {
       })
 
       return _zoness
+    },
+    zoneName: (state) => (id) => {
+      const _zone = state.data.find((zone) => zone.id === id)
+
+      return _zone ? _zone.name : 'Not Assinged'
     }
   }
 }

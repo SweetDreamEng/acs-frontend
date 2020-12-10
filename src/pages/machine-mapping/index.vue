@@ -5,7 +5,6 @@
 
     <v-card>
       <v-card-text>
-        <!-- maps list -->
         <v-data-table
           :headers="headers"
           :items="devices"
@@ -25,25 +24,12 @@
               class="mx-1"
             ></v-text-field>
           </template>
-          <!-- custom table header -->
-          <template v-slot:header.department="{ header }">
-            <v-icon color="primary">mdi-account-multiple-plus</v-icon>
-            {{ header.text }}
-          </template>
-          <template v-slot:header.division="{ header }">
-            <v-icon color="primary">mdi-routes</v-icon>
-            {{ header.text }}
-          </template>
-
-          <template v-slot:item.machine_id="{ item }">
-            <span>{{ configurationName(item) }}</span>
-          </template>
 
           <template v-slot:item.zone_id="{ item }">
-            <span>{{ zoneName(item) }}</span>
+            <span>{{ zoneName(item.zone_id) }}</span>
           </template>
           <template v-slot:item.location_id="{ item }">
-            <span>{{ locationName(item) }}</span>
+            <span>{{ locationName(item.location_id) }}</span>
           </template>
 
           <template v-slot:item.actions="{ item }">
@@ -68,15 +54,14 @@
 
         <v-card-text class="mt-4">
           <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
-<!--             <v-select
-              v-model="editedItem.division"
-              :items="exDivisionNames"
-              label="Choose Division"
+            <v-text-field
+              v-model="editedItem.name"
+              label="Machine Name"
               :rules="[$rules.required]"
               outlined
               dense
             >
-            </v-select> -->
+            </v-text-field>
             <v-select
               v-model="editedItem.zone_id"
               :items="extendedZones"
@@ -119,7 +104,7 @@
 | url: /machine-mapping
 |---------------------------------------------------------------------
 |
-| List all mappings between machines and division/department
+| List all customer devices
 */
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -133,7 +118,7 @@ export default {
 
       headers: [
         { text: 'Serial Number', value: 'serial_number' },
-        { text: 'Configuration', value: 'machine_id' },
+        { text: 'Machine Name', value: 'name' },
         { text: 'Zones', value: 'zone_id' },
         { text: 'Locations', value: 'location_id' },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
@@ -166,7 +151,9 @@ export default {
       locations: (state) => state.locations.data
     }),
     ...mapGetters({
-      extendedZones: 'zones/extendedZones'
+      extendedZones: 'zones/extendedZones',
+      zoneName: 'zones/zoneName',
+      locationName: 'locations/locationName'
     })
   },
   watch: {
@@ -212,24 +199,6 @@ export default {
         this.close()
         await this.getCustomerDevices()
       }
-    },
-    configurationName(device) {
-      const configuration = this.configurations.find((item) => {
-        return item.id === device.machine_id
-      })
-
-      if (configuration) return configuration.name
-      else return ''
-    },
-    locationName(item) {
-      const _location = this.locations.find((location) => location.id === item.location_id)
-
-      return _location ? _location.name : 'Not Assinged'
-    },
-    zoneName(item) {
-      const _zone = this.zones.find((zone) => zone.id === item.zone_id)
-
-      return _zone ? _zone.name : 'Not Assinged'
     }
   }
 }
