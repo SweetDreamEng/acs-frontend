@@ -22,7 +22,7 @@
     </v-sheet>
 
     <v-container>
-      <locations-table :locations="locations"></locations-table>
+      <locations-table></locations-table>
 
       <br>
 
@@ -143,88 +143,6 @@ export default {
         }, {
           text: 'Dashboard',
           disabled: true
-        }
-      ]
-    },
-    locations() {
-      return [
-        {
-          location: {
-            label: 'Location 1',
-            to: '/acs-machines/1'
-          },
-          utilization: '32%',
-          color: 'green',
-          value: 75,
-          oee: '93.1%',
-          performance: '78%',
-          rate: 56,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [this.downtimeDistribution[1]]
-            },
-            {
-              name: 'Name',
-              data: [this.downtimeDistribution[0]]
-            },
-            {
-              name: 'Name',
-              data: [this.downtimeDistribution[2]]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 2',
-            to: '/acs-machines/2'
-          },
-          utilization: '36%',
-          color: 'green',
-          value: 52,
-          oee: '89.8%',
-          performance: '28%',
-          rate: 65,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [44]
-            },
-            {
-              name: 'Name',
-              data: [53]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 3',
-            to: '/acs-machines/3'
-          },
-          utilization: '82%',
-          color: 'red',
-          value: 78,
-          oee: '78.2%',
-          performance: '25%',
-          rate: 34,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [41]
-            },
-            {
-              name: 'Name',
-              data: [33]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
         }
       ]
     }

@@ -18,6 +18,18 @@ export default {
     })
   },
 
+  initAcsZonesTable(location_id) {
+    return api.get(`/acs-machines/init-zones-table/${location_id}`).then((response) => {
+      return response
+    })
+  },
+
+  initAcsMachinesTable(zone_id) {
+    return api.get(`/acs-machines/init-machines-table/${zone_id}`).then((response) => {
+      return response
+    })
+  },
+
   initProduct(data) {
     return api.post('/analytics/init-product', data).then((response) => {
       return response

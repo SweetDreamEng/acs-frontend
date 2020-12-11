@@ -228,6 +228,9 @@ const state = {
   loadingLocationsTable: false,
   downtimeDistribution: [],
 
+  // Zones table
+  loadingZonesTable: false,
+
   modeWeightProduct: 'Weekly',
   modeInventory: 'Weekly',
 

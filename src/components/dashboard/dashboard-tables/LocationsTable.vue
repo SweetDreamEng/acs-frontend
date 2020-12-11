@@ -27,16 +27,16 @@
             {{ item.utilization }}
           </div>
         </template>
-        <template v-slot:item.location="{ item }">
-          <router-link :to="'/dashboard/' + item.location.id" class="d-flex align-center">
+        <template v-slot:item.name="{ item }">
+          <router-link :to="'/acs-machines/' + item.id" class="d-flex align-center">
             <v-icon>mdi-google-maps</v-icon>
-            <span class="title text-no-wrap ml-1">{{ item.location.label }}</span>
+            <span class="title text-no-wrap ml-1">{{ item.name }}</span>
           </router-link>
         </template>
-        <template v-slot:item.downtime_distribution="{ item }">
+        <template v-slot:item.downtimeDistribution="{ item }">
           <div class="d-flex align-end justify-end">
             <apexchart
-              v-if="hasNoDowntime(item.downtime_distribution)"
+              v-if="hasNoDowntime(item.downtimeDistribution)"
               type="bar"
               width="240"
               height="80"
@@ -50,7 +50,7 @@
               width="240"
               height="80"
               :options="chartOptions"
-              :series="item.downtime_distribution"
+              :series="downtimeDistribution(item.downtimeDistribution)"
             >
             </apexchart>
           </div>
@@ -96,6 +96,8 @@ const series = [
   }
 ]
 
+import { mapState } from 'vuex'
+
 import ProductionRateChart from '../charts/ProductionRateChart'
 export default {
   components: {
@@ -109,21 +111,17 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    },
-    locations: {
-      type: Array,
-      default: () => []
     }
   },
   data () {
     return {
       headers: [
-        { text: 'Location', value: 'location' },
+        { text: 'Location', value: 'name' },
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'center', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },
         { text: 'Prod Rate', value: 'rate', align: 'center' },
-        { text: 'Downtime Distrubton', align: 'right', value: 'downtime_distribution', sortable: false }
+        { text: 'Downtime Distrubton', align: 'right', value: 'downtimeDistribution', sortable: false }
       ],
 
       selected: ['name1', 'name2', 'name3'],
@@ -306,16 +304,55 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      locations: (state) => state.locations.data
+    })
   },
   methods: {
     hasNoDowntime(distribution) {
-      let sum = 0
+      if (distribution) {
+        let sum = 0
 
-      for (let i = distribution.length - 1; i >= 0; i--) {
-        sum += distribution[i].data.reduce((a, b) => a + b, 0)
+        sum += distribution.reduce((a, b) => a + b, 0)
+        
+        return sum === 0
+      } else {
+        return false
       }
-      
-      return sum === 0
+    },
+
+    downtimeDistribution(distribution) {
+      if (distribution) {
+        return [
+          {
+            name: 'Name',
+            data: distribution[1]
+          },
+          {
+            name: 'Name',
+            data: distribution[0]
+          },
+          {
+            name: 'Name',
+            data: distribution[2]
+          }
+        ]
+      } else {
+        return [
+          {
+            name: 'Name',
+            data: 0
+          },
+          {
+            name: 'Name',
+            data: 0
+          },
+          {
+            name: 'Name',
+            data: 0
+          }
+        ]
+      }
     }
   }
 }

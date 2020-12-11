@@ -169,11 +169,39 @@ const initLocationsTable = async ({ state, commit }) => {
   try {
     const response = await machineAPI.initLocationsTable()
 
-    commit('SET_DOWNTIME_DISTRIBUTION', response.data.downtime_distribution)        
+    commit('locations/SET_DATA', response.data.locations, { root: true })
   } catch (error) {
     console.log(error)
   } finally {
     state.loadingLocationsTable = false
+  }
+}
+
+const initAcsZonesTable = async ({ state, commit }, location_id) => {
+  state.loadingZonesTable = true
+
+  try {
+    const response = await machineAPI.initAcsZonesTable(location_id)
+
+    commit('zones/SET_DATA', response.data.zones, { root: true })
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingZonesTable = false
+  }
+}
+
+const initAcsMachinesTable = async ({ state, commit }, zone) => {
+  state.loadingMachinesTable = true
+
+  try {
+    const response = await machineAPI.initAcsMachinesTable(zone)
+
+    commit('devices/SET_DATA', response.data.devices, { root: true })
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingMachinesTable = false
   }
 }
 
@@ -243,6 +271,8 @@ export default {
   addNote,
   initAcsDashboard,
   initLocationsTable,
+  initAcsZonesTable,
+  initAcsMachinesTable,
   changeSelectedCompany,
   selectTimeRange,
   initProduct,

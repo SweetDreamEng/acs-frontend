@@ -20,7 +20,10 @@
       </v-container>
     </v-sheet>
     <v-container>
-      <zones-table :zone-ids="zoneIds"></zones-table>
+      <zones-table
+        :zones="zones"
+      >
+      </zones-table>
 
       <br>
 
@@ -132,7 +135,8 @@ export default {
     ...mapState({
       machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
+      zones: (state) => state.zones.data
     }),
     machinesForLocation() {
       return this.machines.filter((machine) => {
@@ -161,6 +165,7 @@ export default {
   },
   mounted() {
     this.initAcsDashboard()
+    this.initAcsZonesTable(this.$route.params.location)
 
     let count = 0
 
@@ -176,6 +181,7 @@ export default {
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
+      initAcsZonesTable: 'machines/initAcsZonesTable',
       changeSelectedCompany: 'machines/changeSelectedCompany'
     }),
     clear() {

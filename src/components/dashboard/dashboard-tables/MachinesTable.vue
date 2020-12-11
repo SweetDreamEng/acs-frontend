@@ -28,21 +28,33 @@
             {{ item.utilization }}
           </div>
         </template>
-        <template v-slot:item.zone="{ item }">
+        <template v-slot:item.customer_assigned_name="{ item }">
           <router-link class="d-flex align-center" :to="'/dashboard/product/' + item.id">
             <v-icon>mdi-wrench</v-icon>
-            <span class="title text-no-wrap ml-1">{{ item.machine.title }}</span>
+            <span class="title text-no-wrap ml-1">{{ item.customer_assigned_name }}</span>
           </router-link>
         </template>
-        <template v-slot:item.downtime_distribution="{ item }">
-          <apexchart
-            type="bar"
-            width="240"
-            height="80"
-            :options="chartOptions"
-            :series="item.downtime_distribution"
-          >
-          </apexchart>
+        <template v-slot:item.downtimeDistribution="{ item }">
+          <div class="d-flex align-end justify-end">
+            <apexchart
+              v-if="hasNoDowntime(item.downtimeDistribution)"
+              type="bar"
+              width="240"
+              height="80"
+              :options="noDowntimeChartOptions"
+              :series="noDowntimeSeries"
+            >
+            </apexchart>
+            <apexchart
+              v-else
+              type="bar"
+              width="240"
+              height="80"
+              :options="chartOptions"
+              :series="downtimeDistribution(item.downtimeDistribution)"
+            >
+            </apexchart>
+          </div>
         </template>
       </v-data-table>
 
@@ -80,6 +92,8 @@ const series = [
   }
 ]
 
+import { mapState } from 'vuex'
+
 import ProductionRateChart from '../charts/ProductionRateChart'
 export default {
   components: {
@@ -98,62 +112,20 @@ export default {
   data () {
     return {
       headers: [
-        { text: 'Machines', value: 'zone' },
+        { text: 'Machines', value: 'customer_assigned_name' },
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'start', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },
         { text: 'Prod Rate', value: 'rate', align: 'center' },
-        { text: 'Downtime Distrubton', align: 'center', value: 'downtime_distribution', sortable: false }
+        { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false }
       ],
       selectedMachineId: 0,
-      machines: [
-        {
-          id: 1,
-          machine: {
-            title: 'BD Batch Blender',
-            to: 'loc1/zone1'
-          },
-          utilization: '32%',
-          value: 75,
-          oee: '93.1%',
-          performance: '78%',
-          rate: 56,
-          downtime_distribution: series
-        },
-        {
-          id: 2,
-          machine: {
-            title: 'Accumeter Ovation Continuous',
-            to: 'loc1/zone2'
-          },
-          utilization: '36%',
-          value: 52,
-          oee: '89.8%',
-          performance: '28%',
-          rate: 65,
-          downtime_distribution: series
-        },
-        {
-          id: 3,
-          machine: {
-            title: 'GH Gravimetric Extrusion Control Hopper',
-            to: 'loc1/zone3'
-          },
-          utilization: '82%',
-          value: 78,
-          oee: '78.2%',
-          performance: '25%',
-          rate: 34,
-          downtime_distribution: series
-        }
-      ],
 
       searchQuery: '',
 
       chartOptions: {
         chart: {
           type: 'bar',
-          height: 350,
           stacked: true,
           stackType: '100%',
           toolbar: {
@@ -165,6 +137,70 @@ export default {
             horizontal: true,
             dataLabels: {
               enabled: false
+            }
+          }
+        },
+        stroke: {
+          width: 1,
+          colors: ['#fff']
+        },
+        xaxis: {
+          axisBorder: {
+            show: false
+          },
+          labels: {
+            show: false
+          }
+        },
+        yaxis: {
+          labels: {
+            show: false
+          },
+          title: {
+            text: undefined
+          }
+        },
+        tooltip: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        grid: {
+          show: false
+        }
+      },
+
+      noDowntimeSeries: [
+        {
+          name: 'Name',
+          data: [100]
+        }
+      ],
+      
+      noDowntimeChartOptions: {
+        chart: {
+          type: 'bar',
+          stacked: true,
+          stackType: '100%',
+          toolbar: {
+            show: false
+          }
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            colors: {
+              ranges: [{
+                from: 0,
+                to: 100,
+                color: '#4CAF50'
+              }]
+            },
+            dataLabels: {
+              formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+                return w.config.series[seriesIndex].name + ':  ' + value
+              }
             }
           }
         },
@@ -256,8 +292,35 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      machines: (state) => state.devices.data
+    })
   },
   methods: {
+    hasNoDowntime(distribution) {
+      let sum = 0
+
+      sum += distribution.reduce((a, b) => a + b, 0)
+      
+      return sum === 0
+    },
+
+    downtimeDistribution(distribution) {
+      return [
+        {
+          name: 'Name',
+          data: distribution[1]
+        },
+        {
+          name: 'Name',
+          data: distribution[0]
+        },
+        {
+          name: 'Name',
+          data: distribution[2]
+        }
+      ]
+    }
   }
 }
 </script>

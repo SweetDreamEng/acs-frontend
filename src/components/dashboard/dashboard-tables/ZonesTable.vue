@@ -4,8 +4,9 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
+        v-if="!loading"
         :headers="headers"
-        :items="tableZones"
+        :items="zones"
         hide-default-footer
       >
         <template v-slot:item.rate="{ item }">
@@ -28,21 +29,33 @@
             {{ item.utilization }}
           </div>
         </template>
-        <template v-slot:item.zone="{ item }">
-          <router-link :to="item.zone.to" class="d-flex align-center" append>
+        <template v-slot:item.name="{ item }">
+          <router-link :to="item.id.toString()" class="d-flex align-center" append>
             <v-icon>mdi-home</v-icon>
-            <span class="title text-no-wrap ml-1">{{ item.zone.name }}</span>
+            <span class="title text-no-wrap ml-1">{{ item.name }}</span>
           </router-link>
         </template>
-        <template v-slot:item.downtime_distribution="{ item }">
-          <apexchart
-            type="bar"
-            width="240"
-            height="80"
-            :options="chartOptions"
-            :series="item.downtime_distribution"
-          >
-          </apexchart>
+        <template v-slot:item.downtimeDistribution="{ item }">
+          <div class="d-flex align-end justify-end">
+            <apexchart
+              v-if="hasNoDowntime(item.downtimeDistribution)"
+              type="bar"
+              width="240"
+              height="80"
+              :options="noDowntimeChartOptions"
+              :series="noDowntimeSeries"
+            >
+            </apexchart>
+            <apexchart
+              v-else
+              type="bar"
+              width="240"
+              height="80"
+              :options="chartOptions"
+              :series="downtimeDistribution(item.downtimeDistribution)"
+            >
+            </apexchart>
+          </div>
         </template>
       </v-data-table>
 
@@ -80,6 +93,8 @@ const series = [
   }
 ]
 
+import { mapState } from 'vuex'
+
 import ProductionRateChart from '../charts/ProductionRateChart'
 export default {
   components: {
@@ -89,27 +104,17 @@ export default {
     label: {
       type: String,
       default: ''
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    zoneIds: {
-      type: Array,
-      default: () => {
-        []
-      }
     }
   },
   data () {
     return {
       headers: [
-        { text: 'Zone', value: 'zone' },
+        { text: 'Zone', value: 'name' },
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'start', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },
         { text: 'Prod Rate', value: 'rate', align: 'center' },
-        { text: 'Downtime Distrubton', align: 'center', value: 'downtime_distribution', sortable: false }
+        { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false }
       ],
 
       zonesData: [
@@ -162,7 +167,6 @@ export default {
       chartOptions: {
         chart: {
           type: 'bar',
-          height: 350,
           stacked: true,
           stackType: '100%',
           toolbar: {
@@ -207,7 +211,68 @@ export default {
           show: false
         }
       },
-
+      noDowntimeChartOptions: {
+        chart: {
+          type: 'bar',
+          stacked: true,
+          stackType: '100%',
+          toolbar: {
+            show: false
+          }
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            colors: {
+              ranges: [{
+                from: 0,
+                to: 100,
+                color: '#4CAF50'
+              }]
+            },
+            dataLabels: {
+              formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+                return w.config.series[seriesIndex].name + ':  ' + value
+              }
+            }
+          }
+        },
+        stroke: {
+          width: 1,
+          colors: ['#fff']
+        },
+        xaxis: {
+          axisBorder: {
+            show: false
+          },
+          labels: {
+            show: false
+          }
+        },
+        yaxis: {
+          labels: {
+            show: false
+          },
+          title: {
+            text: undefined
+          }
+        },
+        tooltip: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        grid: {
+          show: false
+        }
+      },
+      noDowntimeSeries: [
+        {
+          name: 'Name',
+          data: [100]
+        }
+      ],
       utilizationSeries: [{
         name: 'OEE',
         data: [10, 35, 41]
@@ -265,14 +330,62 @@ export default {
     }
   },
   computed: {
-    tableZones() {
-      return this.zonesData.filter((zoneData) => {
-        if (this.zoneIds)
-          return this.zoneIds.includes(zoneData.zone.id)
-      })
-    }
+    ...mapState({
+      zones: (state) => state.zones.data,
+      loading: (state) => state.machines.loadingZonesTable
+    })
   },
   methods: {
+    hasNoDowntime(distribution) {
+      if (distribution) {
+        let sum = 0
+
+        sum += distribution.reduce((a, b) => a + b, 0)
+        
+        return sum === 0
+      } else {
+        return false
+      }
+    },
+
+    downtimeDistribution(distribution) {
+      if (distribution) {
+        return [
+          {
+            name: 'Name',
+            data: distribution[1]
+          },
+          {
+            name: 'Name',
+            data: distribution[0]
+          },
+          {
+            name: 'Name',
+            data: distribution[2]
+          }
+        ]
+      } else {
+        return [
+          {
+            name: 'Name',
+            data: 0
+          },
+          {
+            name: 'Name',
+            data: 0
+          },
+          {
+            name: 'Name',
+            data: 0
+          }
+        ]
+      }
+    }
   }
 }
 </script>
+<style scoped>
+  a {
+    text-decoration: none;
+  }
+</style>
