@@ -55,8 +55,8 @@
         <v-card-text class="mt-4">
           <v-form ref="editForm" v-model="isEditFormValid" lazy-validation @submit.prevent="save">
             <v-text-field
-              v-model="editedItem.name"
-              label="Machine Name"
+              v-model="editedItem.customer_assigned_name"
+              label="Assigned Name"
               :rules="[$rules.required]"
               outlined
               dense
@@ -119,6 +119,7 @@ export default {
       headers: [
         { text: 'Serial Number', value: 'serial_number' },
         { text: 'Machine Name', value: 'name' },
+        { text: 'Assigned Name', value: 'customer_assigned_name' },
         { text: 'Zones', value: 'zone_id' },
         { text: 'Locations', value: 'location_id' },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
