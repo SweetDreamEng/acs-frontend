@@ -32,6 +32,12 @@ const timeRangeLabel = (state) => (id) => {
     } else {
       return state.weightTimeRange.dateFrom + ' ' + state.weightTimeRange.timeFrom + ' ~ ' + state.weightTimeRange.dateTo + ' ' + state.weightTimeRange.timeTo
     }
+  } else if (id === 'utilization') {
+    if (state.utilizationTimeRange.timeRangeOption !== 'custom') {
+      return state.timeRageOptions.find((item) => item.value === state.utilizationTimeRange.timeRangeOption).label
+    } else {
+      return state.utilizationTimeRange.dateFrom + ' ' + state.utilizationTimeRange.timeFrom + ' ~ ' + state.utilizationTimeRange.dateTo + ' ' + state.utilizationTimeRange.timeTo
+    }
   } else {
     return ''
   }
@@ -40,6 +46,7 @@ const timeRangeLabel = (state) => (id) => {
 const selectedTimeRange = (state) => {
   if (state.selectedTimeRangeKey === 'inventory') return state.inventoryTimeRange
   else if (state.selectedTimeRangeKey === 'weight') return state.weightTimeRange
+  else if (state.selectedTimeRangeKey === 'utilization') return state.utilizationTimeRange
 
   return ''
 }

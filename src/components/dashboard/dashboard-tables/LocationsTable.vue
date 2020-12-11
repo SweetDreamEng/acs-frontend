@@ -28,7 +28,7 @@
           </div>
         </template>
         <template v-slot:item.location="{ item }">
-          <router-link :to="item.location.to" class="d-flex align-center">
+          <router-link :to="'/dashboard/' + item.location.id" class="d-flex align-center">
             <v-icon>mdi-google-maps</v-icon>
             <span class="title text-no-wrap ml-1">{{ item.location.label }}</span>
           </router-link>
@@ -36,6 +36,16 @@
         <template v-slot:item.downtime_distribution="{ item }">
           <div class="d-flex align-end justify-end">
             <apexchart
+              v-if="hasNoDowntime(item.downtime_distribution)"
+              type="bar"
+              width="240"
+              height="80"
+              :options="noDowntimeChartOptions"
+              :series="noDowntimeSeries"
+            >
+            </apexchart>
+            <apexchart
+              v-else
               type="bar"
               width="240"
               height="80"
@@ -47,7 +57,12 @@
         </template>
       </v-data-table>
 
-      <div class="d-flex justify-end mr-4">
+      <div class="d-flex align-center justify-end mr-4">
+        <div class="label font-italic">(Data displayed for last 7 days)</div>
+        <div>
+          <v-icon class="ml-2 mr-0" color="#4CAF50">mdi-checkbox-blank</v-icon>
+          No Downtime
+        </div>
         <div>
           <v-icon class="ml-2 mr-0" color="#269ffb">mdi-checkbox-blank</v-icon>
           Unplanned
@@ -94,6 +109,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    locations: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
@@ -109,93 +128,11 @@ export default {
 
       selected: ['name1', 'name2', 'name3'],
 
-      locations: [
-        {
-          location: {
-            label: 'Location 1',
-            to: '/dashboard/1'
-          },
-          utilization: '32%',
-          color: 'green',
-          value: 75,
-          oee: '93.1%',
-          performance: '78%',
-          rate: 56,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [14]
-            },
-            {
-              name: 'Name',
-              data: [53]
-            },
-            {
-              name: 'Name',
-              data: [22]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 2',
-            to: '/dashboard/2'
-          },
-          utilization: '36%',
-          color: 'green',
-          value: 52,
-          oee: '89.8%',
-          performance: '28%',
-          rate: 65,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [44]
-            },
-            {
-              name: 'Name',
-              data: [53]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 3',
-            to: '/dashboard/3'
-          },
-          utilization: '82%',
-          color: 'red',
-          value: 78,
-          oee: '78.2%',
-          performance: '25%',
-          rate: 34,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [41]
-            },
-            {
-              name: 'Name',
-              data: [33]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
-        }
-      ],
-
       searchQuery: '',
 
       chartOptions: {
         chart: {
           type: 'bar',
-          height: 350,
           stacked: true,
           stackType: '100%',
           toolbar: {
@@ -303,14 +240,82 @@ export default {
             }
           ]
         }
+      },
+      noDowntimeSeries: [
+        {
+          name: 'Name',
+          data: [100]
+        }
+      ],
+      noDowntimeChartOptions: {
+        chart: {
+          type: 'bar',
+          stacked: true,
+          stackType: '100%',
+          toolbar: {
+            show: false
+          }
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            colors: {
+              ranges: [{
+                from: 0,
+                to: 100,
+                color: '#4CAF50'
+              }]
+            },
+            dataLabels: {
+              formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+                return w.config.series[seriesIndex].name + ':  ' + value
+              }
+            }
+          }
+        },
+        stroke: {
+          width: 1,
+          colors: ['#fff']
+        },
+        xaxis: {
+          axisBorder: {
+            show: false
+          },
+          labels: {
+            show: false
+          }
+        },
+        yaxis: {
+          labels: {
+            show: false
+          },
+          title: {
+            text: undefined
+          }
+        },
+        tooltip: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        grid: {
+          show: false
+        }
       }
     }
   },
   computed: {
   },
   methods: {
-    toggleSeries() {
+    hasNoDowntime(distribution) {
+      let sum = 0
 
+      for (let i = distribution.length - 1; i >= 0; i--) {
+        sum += distribution[i].data.reduce((a, b) => a + b, 0)
+      }
+      
+      return sum === 0
     }
   }
 }

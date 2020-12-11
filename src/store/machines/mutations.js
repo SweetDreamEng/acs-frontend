@@ -26,6 +26,8 @@ export default {
   OVERVIEW_LOADED(state) { state.loadingOverview = false },
   SET_OVERVIEW(state, overview) { state.machine = overview },
 
+  SET_UTILIZATION(state, utilization) { state.utilizationSeries = utilization },
+
   SET_WEEKLY_RUNNING_HOURS(state, hours) { state.weeklyRuningHours = hours },
 
   SET_MACHINES(state, machines) {
@@ -103,11 +105,14 @@ export default {
       state.selectedTimeRange = state.inventoryTimeRange
     } else if (key === 'weight') {
       state.selectedTimeRange = state.weightTimeRange
+    } else if (key === 'utilization') {
+      state.selectedTimeRange = state.utilizationTimeRange
     }
   },
   SET_CURRENT_TIME_PARAM_KEY(state, key) { state.selectedTimeRangeKey = key },
   SET_INVENTORY_TIME_RANGE(state, data) { state.inventoryTimeRange = Object.assign({}, data) },
   SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) },
+  SET_UTILIZATION_TIME_RANGE(state, data) { state.utilizationTimeRange = Object.assign({}, data) },
 
   SET_DOWNTIME_DISTRIBUTION(state, data) { state.downtimeDistribution = data }
 }

@@ -50,7 +50,7 @@ import { mapState, mapActions } from 'vuex'
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
 import TopCard from '../../components/dashboard/TopCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
-import LocationsTable from '../../components/dashboard/acs-dashboard-tables/LocationsTable'
+import LocationsTable from '../../components/dashboard/dashboard-tables/LocationsTable'
 import OeeBoxes from '../../components/dashboard/boxes/Index'
 
 export default {

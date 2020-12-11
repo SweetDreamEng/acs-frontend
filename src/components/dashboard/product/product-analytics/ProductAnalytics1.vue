@@ -9,7 +9,12 @@
         </overview>
       </v-col>
       <v-col md="8" sm="8" xs="12">
-        <utilization></utilization>
+        <utilization
+          :machine-id="1"
+          :time-range-label="timeRangeLabel('utilization')"
+          @showTimeRange="onShowTimeRangeDlgOpen('utilization')"
+        >
+        </utilization>
       </v-col>
     </v-row>
     <v-row dense>

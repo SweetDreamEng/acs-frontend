@@ -118,6 +118,23 @@ const getOverview = async ({ commit }, id) => {
   }
 }
 
+const getUtilization = async ({ state, commit }, id) => {
+  state.loadingUtilization = true
+
+  try {
+    const response = await machineAPI.getUtilization({
+      id: id,
+      timeRange: state.utilizationTimeRange
+    })
+
+    commit('SET_UTILIZATION', response.data.utilizations)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingUtilization = false
+  }
+}
+
 const getWeeklyRunningHours = async ({ state, commit }, id) => {
   state.loadingWeeklyRunningHours1 = true
 
@@ -195,6 +212,9 @@ const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   } else if (state.selectedTimeRangeKey === 'weight') {
     commit('SET_WEIGHT_TIME_RANGE', data)
     dispatch('onProductWeightParamChange')
+  } else if (state.selectedTimeRangeKey === 'utilization') {
+    commit('SET_UTILIZATION_TIME_RANGE', data)
+    dispatch('getUtilization', 1)
   }
 }
 const getMachines = ({ commit }) => {
@@ -214,6 +234,7 @@ export default {
   selectTimeRange,
   initProduct,
   getOverview,
+  getUtilization,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,

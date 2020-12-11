@@ -30,6 +30,12 @@ export default {
     })
   },
 
+  getUtilization(data) {
+    return api.post('/analytics/product-utilization', data).then((response) => {
+      return response
+    })
+  },
+
   getWeeklyRunningHours(id) {
     return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {
       return response
