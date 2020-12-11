@@ -1,7 +1,6 @@
 <template>
   <v-card
     height="100%"
-    :loading="loadingUtilization"
   >
     <v-card-title>
       <div>
@@ -97,16 +96,13 @@ export default {
   },
   mounted() {
     this.getUtilization(this.machineId).then((reponse) => {
-      console.log(this.utilizationSeries)
-      // this.interval1 = window.setInterval(async () => {
-      //   await this.getUtilization(this.machineId)
+      this.interval1 = window.setInterval(async () => {
+        await this.getUtilization(this.machineId)
 
-      //   console.log(this.utilizationSeries)
-
-      //   this.$refs.chart.updateSeries([{
-      //     data: this.utilizationSeries
-      //   }])
-      // }, 3000)
+        this.$refs.chart.updateSeries([{
+          data: this.utilizationSeries
+        }])
+      }, 60000)
     })
 
     // // let count = 0
@@ -121,7 +117,7 @@ export default {
   },
   destroyed() {
     clearInterval(this.interval1)
-    clearInterval(this.interval2)
+    // clearInterval(this.interval2)
   },
   methods: {
     ...mapActions({
