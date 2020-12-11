@@ -36,6 +36,12 @@ export default {
     })
   },
 
+  getEnergyConsumption(data) {
+    return api.post('/analytics/product-energy-consumption', data).then((response) => {
+      return response
+    })
+  },
+
   getWeeklyRunningHours(id) {
     return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {
       return response

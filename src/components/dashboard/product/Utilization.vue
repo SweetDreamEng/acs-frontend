@@ -1,6 +1,7 @@
 <template>
   <v-card
     height="100%"
+    :loading="loadingUtilization"
   >
     <v-card-title>
       <div>
@@ -17,7 +18,6 @@
     </v-card-title>
     <v-card-text>
       <apexchart
-        ref="chart"
         type="area"
         height="180"
         :options="chartOptions"
@@ -38,7 +38,7 @@
 | your own dashboard component
 |
 */
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -53,11 +53,6 @@ export default {
   },
   data() {
     return {
-      interval1: null,
-      interval2: null,
-
-      traffic: Array(11).fill(0),
-
       chartOptions: {
         chart: {
           type: 'area',
@@ -92,41 +87,6 @@ export default {
         name: 'utilization',
         data: this.utilizationSeries
       }]
-    }
-  },
-  mounted() {
-    this.getUtilization(this.machineId).then((reponse) => {
-      this.interval1 = window.setInterval(async () => {
-        await this.getUtilization(this.machineId)
-
-        this.$refs.chart.updateSeries([{
-          data: this.utilizationSeries
-        }])
-      }, 60000)
-    })
-
-    // // let count = 0
-
-    // this.interval2 = window.setInterval(() => {
-    //   if (this.$refs.chart) {
-    //     this.$refs.chart.updateSeries([{
-    //       data: this.traffic.slice()
-    //     }], false, true)
-    //   }
-    // }, 60000)
-  },
-  destroyed() {
-    clearInterval(this.interval1)
-    // clearInterval(this.interval2)
-  },
-  methods: {
-    ...mapActions({
-      getUtilization: 'machines/getUtilization'
-    }),
-    getNewSeries() {
-      this.data.push(this.data.shift())
-
-      return this.data
     }
   }
 }

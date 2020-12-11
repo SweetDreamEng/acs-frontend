@@ -1,20 +1,27 @@
 <template>
-  <v-card height="100%">
+  <v-card
+    height="100%"
+    :loading="loadingEnergyConsumption"
+  >
     <v-card-subtitle class="d-flex justify-space-between">
-      <strong>Energy Consumption</strong>
-      <MonthlyWeekly />
+      <div>
+        <div>Energy Consumption</div>
+        <div class="caption font-italic">({{ timeRangeLabel }})</div>
+      </div>
+      <v-btn
+        icon
+        class="ml-auto"
+        @click="$emit('showTimeRange')"
+      >
+        <v-icon>mdi-dots-horizontal</v-icon>
+      </v-btn>
     </v-card-subtitle>
     <v-card-text>
-      <div>
-        <span class="display-1">887.3 kWH</span>
-        <span><v-icon color="green">mdi-arrow-down</v-icon>12% of target</span>
-      </div>
       <apexchart
-        v-if="!isLoading1"
-        type="line"
+        type="area"
+        height="140"
         :options="chartOptions"
         :series="series"
-        height="140"
       >
       </apexchart>
     </v-card-text>
@@ -32,41 +39,24 @@
 | your own dashboard component
 |
 */
-import MonthlyWeekly from '../MonthlyWeekly'
+import { mapState } from 'vuex'
+
 export default {
   components: {
-    MonthlyWeekly
   },
   props: {
-    label: {
+    machineId: {
+      type: Number,
+      default: 0
+    },
+    timeRangeLabel: {
       type: String,
       default: ''
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    mode: {
-      type: String,
-      default: 'Weekly'
-    },
-    energyConsumption: {
-      type: Array,
-      default: () => [{
-        name: 'Energy Consumption',
-        data: []
-      }]
     }
   },
   data() {
     return {
-      loadingInterval: null,
-      isLoading1: true
-    }
-  },
-  computed: {
-    chartOptions() {
-      return {
+      chartOptions: {
         chart: {
           type: 'line',
           zoom: {
@@ -94,26 +84,18 @@ export default {
           show: false
         }
       }
-    },
+    }
+  },
+  computed: {
+    ...mapState({
+      loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
+      energyConsumption: (state) => state.machines.energyConsumption
+    }),
     series() {
       return [{
         name: 'Energy Consumption',
         data: this.energyConsumption
       }]
-    }
-  },
-  mounted() {
-    let count = 0
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
-  },
-  methods: {
-    clear() {
-      clearInterval(this.loadingInterval)
     }
   }
 }

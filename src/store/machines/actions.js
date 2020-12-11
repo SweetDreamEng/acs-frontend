@@ -79,9 +79,6 @@ const initProduct = ({ commit, state }, id) => {
       commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
       commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
 
-      // Energy consumption
-      commit('SET_ENERGY_CONSUMPTION', response.data.energy_consumption)
-
       // BD Batch Blender
       commit('SET_RUNNING_PERCENTAGE', parseFloat((response.data.total_running_percentage * 100).toFixed(2)))
       commit('SET_RECIPE_VALUES', response.data.recipe_values)
@@ -132,6 +129,23 @@ const getUtilization = async ({ state, commit }, id) => {
     console.log(error)
   } finally {
     state.loadingUtilization = false
+  }
+}
+
+const getEnergyConsumption = async ({ state, commit }, id) => {
+  state.loadingEnergyConsumption = true
+
+  try {
+    const response = await machineAPI.getEnergyConsumption({
+      id: id,
+      timeRange: state.energyConsumptionTimeRange
+    })
+
+    commit('SET_ENERGY_CONSUMPTION', response.data.energy_consumption)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingEnergyConsumption = false
   }
 }
 
@@ -215,6 +229,9 @@ const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   } else if (state.selectedTimeRangeKey === 'utilization') {
     commit('SET_UTILIZATION_TIME_RANGE', data)
     dispatch('getUtilization', 1)
+  } else if (state.selectedTimeRangeKey === 'energy-consumption') {
+    commit('SET_ENERGY_CONSUMPTION_TIME_RANGE', data)
+    dispatch('getEnergyConsumption', 1)
   }
 }
 const getMachines = ({ commit }) => {
@@ -235,6 +252,7 @@ export default {
   initProduct,
   getOverview,
   getUtilization,
+  getEnergyConsumption,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,

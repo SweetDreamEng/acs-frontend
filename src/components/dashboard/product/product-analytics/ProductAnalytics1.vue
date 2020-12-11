@@ -56,7 +56,9 @@
       </v-col>
       <v-col md="4" sm="8" xs="12">
         <energy-consumption
-          :energy-consumption="energyConsumption"
+          :machine-id="1"
+          :time-range-label="timeRangeLabel('energy-consumption')"
+          @showTimeRange="onShowTimeRangeDlgOpen('energy-consumption')"
         >
         </energy-consumption>
       </v-col>
@@ -156,7 +158,6 @@ export default {
       isWeightProductLoading: (state) => state.machines.isWeightProductLoading,
       isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading,
 
-      energyConsumption: (state) => state.machines.energyConsumption,                   // Energy Consumption
       totalRunningPercentage: (state) => state.machines.totalRunningPercentage,         // Weekly running hours
       recipeValues: (state) => state.machines.recipeValues                              // recipe
     }),

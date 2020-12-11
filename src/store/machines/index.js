@@ -208,6 +208,10 @@ const state = {
   loadingUtilization: false,
   utilizationSeries: [],
 
+  // Energy Consumption
+  loadingEnergyConsumption: false,
+  energyConsumption: [],
+  
   // Machine overview
   loadingOverview: false,
   machine: {},
@@ -274,6 +278,14 @@ const state = {
     timeTo: '00:00'
   },
 
+  energyConsumptionTimeRange: {
+    timeRangeOption: 'last24Hours',
+    dateFrom: new Date().toISOString().substr(0, 10),
+    dateTo: new Date().toISOString().substr(0, 10),
+    timeFrom: '00:00',
+    timeTo: '00:00'
+  },
+
   inventoryTimeRange: {
     timeRangeOption: 'last24Hours',
     dateFrom: new Date().toISOString().substr(0, 10),
@@ -299,9 +311,6 @@ const state = {
   valuesActWeightProduct: [],
   valuesHopInventory: [],
   valuesFrtInventory: [],
-
-  // Energy Consumption
-  energyConsumption: [],
 
   // BD Batch Blender
   totalRunningPercentage: 0,

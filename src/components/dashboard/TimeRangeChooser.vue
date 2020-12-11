@@ -42,8 +42,6 @@
           </v-col>
         </v-row>
 
-        <v-divider></v-divider>
-
         <v-expand-transition>
           <div v-show="locTimeRangeOption==='custom'">
             <div class="d-flex">

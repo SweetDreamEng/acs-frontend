@@ -87,9 +87,6 @@ export default {
     state.isInventoryProductLoading = false
   },
 
-  // Energy Consumption
-  SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },
-
   // BD Batch Blender
   SET_RUNNING_PERCENTAGE(state, totalRunningPercentage) { state.totalRunningPercentage = totalRunningPercentage },
   SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
@@ -113,6 +110,9 @@ export default {
   SET_INVENTORY_TIME_RANGE(state, data) { state.inventoryTimeRange = Object.assign({}, data) },
   SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) },
   SET_UTILIZATION_TIME_RANGE(state, data) { state.utilizationTimeRange = Object.assign({}, data) },
-
+  SET_ENERGY_CONSUMPTION_TIME_RANGE(state, data) { state.energyConsumptionTimeRange = Object.assign({}, data) },
+  
+  // Energy Consumption
+  SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },
   SET_DOWNTIME_DISTRIBUTION(state, data) { state.downtimeDistribution = data }
 }
