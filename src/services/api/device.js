@@ -74,6 +74,15 @@ export default {
   },
 
   /*
+    Get devices with analytics for a certain customer
+  */
+  getCustomerDevicesAnalytics() {
+    return api.get('/devices/customer-devices-analytics').then((response) => {
+      return response
+    })
+  },
+
+  /*
     Assign zone to device in machine mapping page
   */
   assignZoneToDevice(data) {

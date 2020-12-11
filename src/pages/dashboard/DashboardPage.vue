@@ -17,8 +17,7 @@
       <br>
 
       <machines-table-card
-        label="Machines"
-        :items="machines"
+        :devices="devices"
         :loading="isLoading1"
       ></machines-table-card>
     </v-container>
@@ -55,71 +54,15 @@ export default {
 
       isLoading1: true,
 
-      series: [44, 55],
-
-      ordersSeries: [{
-        name: 'FPY',
-        data: [
-          ['2020-02-02', 34],
-          ['2020-02-03', 43],
-          ['2020-02-04', 40],
-          ['2020-02-05', 43]
-        ]
-      }],
-
-      customersSeries: [{
-        name: 'Avg FPY',
-        data: [
-          ['2020-02-02', 13],
-          ['2020-02-03', 11],
-          ['2020-02-04', 13],
-          ['2020-02-05', 12]
-        ]
-      }],
-
-      tab: 0,
-      locationDetailsView: false,
-
       page: 1,
-      total: 9,
-
-      markers: [{
-        position: {
-          lat: 25.44,
-          lng: -80.47
-        }
-      }, {
-        position: {
-          lat: 40.66,
-          lng: -73.94
-        }
-      }, {
-        position: {
-          lat: 31.89,
-          lng: -97.08
-        }
-      }, {
-        position: {
-          lat: 37.9,
-          lng: -122.08
-        }
-      }, {
-        position: {
-          lat: 31.99,
-          lng: -83.31
-        }
-      }, {
-        position: {
-          lat: 39.42,
-          lng: -74.49
-        }
-      }]
+      total: 9
     }
   },
   computed: {
     ...mapState({
-      machines: (state) => state.machines.data,
+      devices: (state) => state.devices.data,
       locations: (state) => state.locations.data,
+      zones: (state) => state.zones.data,
       privateColors: (state) => state.settings.private_colors
     })
   },
@@ -134,6 +77,10 @@ export default {
       }
     })
 
+    this.getCustomerDevicesAnalytics()
+    this.getLocations()
+    this.getZones()
+
     // DEMO delay for loading graphics
     this.loadingInterval = setInterval(() => {
       this[`isLoading${count++}`] = false
@@ -145,6 +92,9 @@ export default {
   },
   methods: {
     ...mapActions({
+      getCustomerDevicesAnalytics: 'devices/getCustomerDevicesAnalytics',
+      getLocations: 'locations/getLocations',
+      getZones: 'zones/getZones',
       setInitialSetting: 'settings/setInitialSetting'
     }),
     clear() {
