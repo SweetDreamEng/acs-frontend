@@ -216,6 +216,10 @@ const state = {
   loadingOverview: false,
   machine: {},
 
+  // Machine overview
+  loadingInventories: false,
+  inventories: [],
+
   // Running hours per weekday
   loadingWeeklyRunningHours1: false,
   weeklyRuningHours: [],

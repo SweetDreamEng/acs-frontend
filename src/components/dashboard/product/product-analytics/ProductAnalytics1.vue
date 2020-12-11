@@ -18,20 +18,13 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="6" sm="12" xs="12">
+      <v-col md="4" sm="6" xs="12">
         <OEE
-          :mode="modeInventory"
-          :param="paramInventory"
-          :values-hop-inventory="valuesHopInventory"
-          :values-frt-inventory="valuesFrtInventory"
-          :is-loading="isInventoryProductLoading"
-          :time-range-label="timeRangeLabel('inventory')"
-          @changeParams="_onProductInventoryParamChanged"
-          @showTimeRange="onShowTimeRangeDlgOpen('inventory')"
+          :is-loading="loadingInventories"
         >
         </OEE>
       </v-col>
-      <v-col md="6" sm="12" xs="12">
+      <v-col md="4" sm="6" xs="12">
         <actual-target-weight
           :mode="modeWeight"
           :param="paramWeight"
@@ -140,6 +133,8 @@ export default {
     ...mapState({
       loadingOverview: (state) => state.machines.loadingOverview,
       machine: (state) => state.machines.machine,
+
+      loadingInventories: (state) => state.machines.loadingInventories,
 
       loadingWeeklyRunningHours1: (state) => state.machines.loadingWeeklyRunningHours1,
       weeklyRuningHours: (state) => state.machines.weeklyRuningHours,                   // Weekly running hours

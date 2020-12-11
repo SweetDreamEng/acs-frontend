@@ -58,8 +58,8 @@ export default {
       return response
     })
   },
-  getInventory(data) {
-    return api.post('/analytics/product-inventory', data).then((response) => {
+  getInventory(id) {
+    return api.get(`/analytics/product-inventory/${id}`).then((response) => {
       return response
     })
   },

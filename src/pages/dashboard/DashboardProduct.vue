@@ -114,6 +114,7 @@ export default {
     this.getWeeklyRunningHours(this.$route.params.id)
     this.getUtilization(this.$route.params.id)
     this.getEnergyConsumption(this.$route.params.id)
+    this.getInventory(this.$route.params.id)
   },
 
   mounted() {
@@ -130,6 +131,7 @@ export default {
       getOverview: 'machines/getOverview',
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
+      getInventory: 'machines/getInventory',
       getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
       initProduct: 'machines/initProduct',
       'selectMachine': 'machines/selectMachine',

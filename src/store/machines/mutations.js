@@ -28,6 +28,8 @@ export default {
 
   SET_UTILIZATION(state, utilization) { state.utilizationSeries = utilization },
 
+  SET_INVENTORIES(state, inventories) { state.inventories = inventories },
+
   SET_WEEKLY_RUNNING_HOURS(state, hours) { state.weeklyRuningHours = hours },
 
   SET_MACHINES(state, machines) {

@@ -198,31 +198,27 @@ const onProductWeightParamChange = ({ commit, state }) => {
 const onProductInventoryParamChanged = ({ commit, dispatch, state }, data) => {
   commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
 
-  dispatch('getInventory')
+  // dispatch('getInventory')
 }
 
-const getInventory = ({ commit, state }) => {
-  commit('INVENTORY_PRODUCT_LOADING')
+const getInventory = async ({ commit, state }, id) => {
+  state.loadingInventories = true
 
-  machineAPI.getInventory({
-    param: state.paramInventory,
-    timeRange: state.inventoryTimeRange
-  })
-    .then((response) => {
-      commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
-      commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
-    })
-    .catch((error) => {
-      console.log(error.response)
-    })
-    .finally(() => {
-      commit('INVENTORY_PRODUCT_LOADED')
-    })
+  try {
+    const response = await machineAPI.getInventory(id)
+
+    commit('SET_INVENTORIES', response.data.inventories)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingInventories = false
+  }
 }
+
 const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   if (state.selectedTimeRangeKey === 'inventory') {
     commit('SET_INVENTORY_TIME_RANGE', data)
-    dispatch('getInventory')
+    // dispatch('getInventory')
   } else if (state.selectedTimeRangeKey === 'weight') {
     commit('SET_WEIGHT_TIME_RANGE', data)
     dispatch('onProductWeightParamChange')
@@ -253,10 +249,10 @@ export default {
   getOverview,
   getUtilization,
   getEnergyConsumption,
+  getInventory,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,
-  getInventory,
   onTimeRangeChanged,
   getMachines
 }
