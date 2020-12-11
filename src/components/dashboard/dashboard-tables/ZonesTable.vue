@@ -1,10 +1,7 @@
 <template>
   <v-card>
-    <v-card-title>
-    </v-card-title>
-    <v-card-text>
+    <v-card-text v-if="!loading">
       <v-data-table
-        v-if="!loading"
         :headers="headers"
         :items="zones"
         hide-default-footer
@@ -349,37 +346,20 @@ export default {
     },
 
     downtimeDistribution(distribution) {
-      if (distribution) {
-        return [
-          {
-            name: 'Name',
-            data: distribution[1]
-          },
-          {
-            name: 'Name',
-            data: distribution[0]
-          },
-          {
-            name: 'Name',
-            data: distribution[2]
-          }
-        ]
-      } else {
-        return [
-          {
-            name: 'Name',
-            data: 0
-          },
-          {
-            name: 'Name',
-            data: 0
-          },
-          {
-            name: 'Name',
-            data: 0
-          }
-        ]
-      }
+      return [
+        {
+          name: 'Name',
+          data: [distribution[1]]
+        },
+        {
+          name: 'Name',
+          data: [distribution[0]]
+        },
+        {
+          name: 'Name',
+          data: [distribution[2]]
+        }
+      ]
     }
   }
 }

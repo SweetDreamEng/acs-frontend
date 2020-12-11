@@ -1,7 +1,5 @@
 <template>
   <v-card>
-    <v-card-title>
-    </v-card-title>
     <v-card-text>
       <v-data-table
         :headers="headers"
@@ -177,7 +175,7 @@ export default {
           data: [100]
         }
       ],
-      
+
       noDowntimeChartOptions: {
         chart: {
           type: 'bar',
@@ -309,15 +307,15 @@ export default {
       return [
         {
           name: 'Name',
-          data: distribution[1]
+          data: [distribution[1]]
         },
         {
           name: 'Name',
-          data: distribution[0]
+          data: [distribution[0]]
         },
         {
           name: 'Name',
-          data: distribution[2]
+          data: [distribution[2]]
         }
       ]
     }

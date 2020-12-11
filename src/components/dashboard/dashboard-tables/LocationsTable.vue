@@ -1,6 +1,8 @@
 <template>
   <v-card>
-    <v-card-text>
+    <v-card-text
+      v-if="!loading"
+    >
       <v-data-table
         :headers="headers"
         :items="locations"
@@ -107,10 +109,6 @@ export default {
     label: {
       type: String,
       default: ''
-    },
-    loading: {
-      type: Boolean,
-      default: false
     }
   },
   data () {
@@ -305,54 +303,34 @@ export default {
   },
   computed: {
     ...mapState({
+      loading: (state) => state.machines.loadingLocationsTable,
       locations: (state) => state.locations.data
     })
   },
   methods: {
     hasNoDowntime(distribution) {
-      if (distribution) {
-        let sum = 0
+      let sum = 0
 
-        sum += distribution.reduce((a, b) => a + b, 0)
-        
-        return sum === 0
-      } else {
-        return false
-      }
+      sum += distribution.reduce((a, b) => a + b, 0)
+      
+      return sum === 0
     },
 
     downtimeDistribution(distribution) {
-      if (distribution) {
-        return [
-          {
-            name: 'Name',
-            data: distribution[1]
-          },
-          {
-            name: 'Name',
-            data: distribution[0]
-          },
-          {
-            name: 'Name',
-            data: distribution[2]
-          }
-        ]
-      } else {
-        return [
-          {
-            name: 'Name',
-            data: 0
-          },
-          {
-            name: 'Name',
-            data: 0
-          },
-          {
-            name: 'Name',
-            data: 0
-          }
-        ]
-      }
+      return [
+        {
+          name: 'Name',
+          data: [distribution[1]]
+        },
+        {
+          name: 'Name',
+          data: [distribution[0]]
+        },
+        {
+          name: 'Name',
+          data: [distribution[2]]
+        }
+      ]
     }
   }
 }
