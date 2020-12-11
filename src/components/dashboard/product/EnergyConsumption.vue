@@ -58,9 +58,9 @@ export default {
     return {
       chartOptions: {
         chart: {
-          type: 'line',
-          zoom: {
-            enabled: false
+          type: 'area',
+          animations: {
+            speed: 400
           },
           toolbar: {
             show: false
@@ -70,18 +70,11 @@ export default {
           enabled: false
         },
         stroke: {
+          curve: 'smooth',
           width: 2
         },
-        grid: {
-          show: false
-        },
         xaxis: {
-          labels: {
-            show: false
-          }
-        },
-        yaxis: {
-          show: false
+          type: 'datetime'
         }
       }
     }
