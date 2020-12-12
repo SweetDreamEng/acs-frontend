@@ -13,12 +13,12 @@
         </div>
       </v-container>
     </v-sheet>
-    
+
     <v-container fluid>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
           <product-analytics1
-            :product-id="$route.params.id"
+            :product-id="$route.params.productId"
           >
           </product-analytics1>
         </v-col>
