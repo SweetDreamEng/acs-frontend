@@ -14,7 +14,7 @@
           :key="i"
           class="d-flex align-center pb-1"
         >
-          <div class="subtitle-1 text-right" style="width: 50%;">Feader {{ i }} :</div>
+          <div class="subtitle-1 text-right" style="width: 50%;">Feader {{ i + 1 }} :</div>
           <div class="ml-1" style="width: 50%;">{{ inventory }}</div>
         </div>
       </div>

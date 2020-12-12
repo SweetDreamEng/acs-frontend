@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="4" xs="12">
+      <v-col md="4" sm="12" xs="12">
         <overview
           :machine="machine"
           :loading="loadingOverview"
         >
         </overview>
       </v-col>
-      <v-col md="4" sm="4" xs="12">
+      <v-col md="4" sm="12" xs="12">
         <utilization
           :machine-id="1"
           :time-range-label="timeRangeLabel('utilization')"
@@ -16,15 +16,17 @@
         >
         </utilization>
       </v-col>
-      <v-col md="4" sm="4" xs="12">
-        <OEE
-          :is-loading="loadingInventories"
+      <v-col md="4" sm="12" xs="12">
+        <energy-consumption
+          :machine-id="1"
+          :time-range-label="timeRangeLabel('energy-consumption')"
+          @showTimeRange="onShowTimeRangeDlgOpen('energy-consumption')"
         >
-        </OEE>
+        </energy-consumption>
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="6" sm="6" xs="12">
+      <v-col md="4" sm="12" xs="12">
         <actual-target-weight
           :mode="modeWeight"
           :param="paramWeight"
@@ -36,26 +38,26 @@
           @showTimeRange="onShowTimeRangeDlgOpen('weight')"
         >
         </actual-target-weight>
-        <!-- <status-summary class="mt-1"></status-summary> -->
       </v-col>
-      <v-col md="6" sm="6" xs="12">
+      <v-col md="4" sm="12" xs="12">
+        <OEE
+          :is-loading="loadingInventories"
+        >
+        </OEE>
+      </v-col>
+      <v-col md="4" sm="12" xs="12">
+
+      </v-col>
+    </v-row>
+    <v-row dense>
+      <v-col md="4" sm="12" xs="12">
         <average-runtime-by-week
           :weekly-running-hours="weeklyRuningHours"
           :loading="loadingWeeklyRunningHours1"
         >
         </average-runtime-by-week>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="4" sm="8" xs="12">
-        <energy-consumption
-          :machine-id="1"
-          :time-range-label="timeRangeLabel('energy-consumption')"
-          @showTimeRange="onShowTimeRangeDlgOpen('energy-consumption')"
-        >
-        </energy-consumption>
-      </v-col>
-      <v-col md="4" sm="8" xs="12">
+      <v-col md="4" sm="12" xs="12">
         <machine-status
           :total-running-percentage="totalRunningPercentage"
         >

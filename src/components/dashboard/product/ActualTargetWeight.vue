@@ -5,17 +5,7 @@
     :disabled="isLoading"
   >
     <v-card-title class="d-flex justify-space-between">
-      <div>
-        <div>Target & Actuals Weight</div>
-        <div class="caption font-italic">({{ timeRangeLabel }})</div>
-      </div>
-      <v-btn
-        icon
-        class="ml-auto"
-        @click="$emit('showTimeRange')"
-      >
-        <v-icon>mdi-dots-horizontal</v-icon>
-      </v-btn>
+      Target & Actuals Weight
     </v-card-title>
     <v-card-text>
       <apexchart
@@ -83,6 +73,8 @@ export default {
           width: 2
         },
         xaxis: {
+          categories: ['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6', 'Feeder 7', 'Feeder 8'],
+          rotate: -45
         }
       }
     }

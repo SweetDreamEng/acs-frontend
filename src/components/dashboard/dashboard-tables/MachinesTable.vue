@@ -34,15 +34,7 @@
         </template>
         <template v-slot:item.downtimeDistribution="{ item }">
           <div v-if="item && item.downtimeDistribution" class="d-flex align-end justify-end">
-            <apexchart
-              v-if="hasNoDowntime(item.downtimeDistribution)"
-              type="bar"
-              width="240"
-              height="80"
-              :options="noDowntimeChartOptions"
-              :series="noDowntimeSeries"
-            >
-            </apexchart>
+            <no-downtime v-if="hasNoDowntime(item.downtimeDistribution)"></no-downtime>
             <apexchart
               v-else
               type="bar"
@@ -93,19 +85,13 @@ const series = [
 import { mapState } from 'vuex'
 
 import ProductionRateChart from '../charts/ProductionRateChart'
+import NoDowntime from './NoDowntime'
+
 export default {
   components: {
-    ProductionRateChart
+    ProductionRateChart, NoDowntime
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    }
   },
   data () {
     return {
@@ -135,70 +121,6 @@ export default {
             horizontal: true,
             dataLabels: {
               enabled: false
-            }
-          }
-        },
-        stroke: {
-          width: 1,
-          colors: ['#fff']
-        },
-        xaxis: {
-          axisBorder: {
-            show: false
-          },
-          labels: {
-            show: false
-          }
-        },
-        yaxis: {
-          labels: {
-            show: false
-          },
-          title: {
-            text: undefined
-          }
-        },
-        tooltip: {
-          enabled: false
-        },
-        legend: {
-          show: false
-        },
-        grid: {
-          show: false
-        }
-      },
-
-      noDowntimeSeries: [
-        {
-          name: 'Name',
-          data: [100]
-        }
-      ],
-
-      noDowntimeChartOptions: {
-        chart: {
-          type: 'bar',
-          stacked: true,
-          stackType: '100%',
-          toolbar: {
-            show: false
-          }
-        },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            colors: {
-              ranges: [{
-                from: 0,
-                to: 100,
-                color: '#4CAF50'
-              }]
-            },
-            dataLabels: {
-              formatter: function(value, { seriesIndex, dataPointIndex, w }) {
-                return w.config.series[seriesIndex].name + ':  ' + value
-              }
             }
           }
         },
@@ -291,7 +213,8 @@ export default {
   },
   computed: {
     ...mapState({
-      machines: (state) => state.devices.data
+      machines: (state) => state.devices.data,
+      loading: (state) => state.machines.loadingMachinesTable
     })
   },
   methods: {

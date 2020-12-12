@@ -37,15 +37,7 @@
         </template>
         <template v-slot:item.downtimeDistribution="{ item }">
           <div v-if="item && item.downtimeDistribution" class="d-flex align-end justify-end">
-            <apexchart
-              v-if="hasNoDowntime(item.downtimeDistribution)"
-              type="bar"
-              width="240"
-              height="80"
-              :options="noDowntimeChartOptions"
-              :series="noDowntimeSeries"
-            >
-            </apexchart>
+            <no-downtime v-if="hasNoDowntime(item.downtimeDistribution)"></no-downtime>
             <apexchart
               v-else
               type="bar"
@@ -61,10 +53,6 @@
 
       <div class="d-flex align-center justify-end mr-4">
         <div class="label font-italic">(Data displayed for last 7 days)</div>
-        <div>
-          <v-icon class="ml-2 mr-0" color="#4CAF50">mdi-checkbox-blank</v-icon>
-          No Downtime
-        </div>
         <div>
           <v-icon class="ml-2 mr-0" color="#269ffb">mdi-checkbox-blank</v-icon>
           Unplanned
@@ -101,15 +89,13 @@ const series = [
 import { mapState } from 'vuex'
 
 import ProductionRateChart from '../charts/ProductionRateChart'
+import NoDowntime from './NoDowntime'
+
 export default {
   components: {
-    ProductionRateChart
+    ProductionRateChart, NoDowntime
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    }
   },
   data () {
     return {
@@ -235,68 +221,6 @@ export default {
               borderColor: '#00E396'
             }
           ]
-        }
-      },
-      noDowntimeSeries: [
-        {
-          name: 'Name',
-          data: [100]
-        }
-      ],
-      noDowntimeChartOptions: {
-        chart: {
-          type: 'bar',
-          stacked: true,
-          stackType: '100%',
-          toolbar: {
-            show: false
-          }
-        },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            colors: {
-              ranges: [{
-                from: 0,
-                to: 100,
-                color: '#4CAF50'
-              }]
-            },
-            dataLabels: {
-              formatter: function(value, { seriesIndex, dataPointIndex, w }) {
-                return w.config.series[seriesIndex].name + ':  ' + value
-              }
-            }
-          }
-        },
-        stroke: {
-          width: 1,
-          colors: ['#fff']
-        },
-        xaxis: {
-          axisBorder: {
-            show: false
-          },
-          labels: {
-            show: false
-          }
-        },
-        yaxis: {
-          labels: {
-            show: false
-          },
-          title: {
-            text: undefined
-          }
-        },
-        tooltip: {
-          enabled: false
-        },
-        legend: {
-          show: false
-        },
-        grid: {
-          show: false
         }
       }
     }
