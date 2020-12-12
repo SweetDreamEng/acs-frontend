@@ -8,7 +8,7 @@
         >
         </overview>
       </v-col>
-      <v-col md="8" sm="8" xs="12">
+      <v-col md="4" sm="4" xs="12">
         <utilization
           :machine-id="1"
           :time-range-label="timeRangeLabel('utilization')"
@@ -16,15 +16,15 @@
         >
         </utilization>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="4" sm="6" xs="12">
+      <v-col md="4" sm="4" xs="12">
         <OEE
           :is-loading="loadingInventories"
         >
         </OEE>
       </v-col>
-      <v-col md="4" sm="6" xs="12">
+    </v-row>
+    <v-row dense>
+      <v-col md="6" sm="6" xs="12">
         <actual-target-weight
           :mode="modeWeight"
           :param="paramWeight"
@@ -38,15 +38,15 @@
         </actual-target-weight>
         <!-- <status-summary class="mt-1"></status-summary> -->
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="4" sm="8" xs="12">
+      <v-col md="6" sm="6" xs="12">
         <average-runtime-by-week
           :weekly-running-hours="weeklyRuningHours"
           :loading="loadingWeeklyRunningHours1"
         >
         </average-runtime-by-week>
       </v-col>
+    </v-row>
+    <v-row dense>
       <v-col md="4" sm="8" xs="12">
         <energy-consumption
           :machine-id="1"
@@ -62,15 +62,6 @@
         </machine-status>
       </v-col>
     </v-row>
-    <!--     <v-row dense>
-      <v-col md="4" sm="8" xs="12">
-        <recipe
-          :recipe-values="recipeValues"
-        >
-        </recipe>
-      </v-col>
-    </v-row> -->
-
     <time-range-chooser
       :dlg="showTimeRangeChooser"
       :time-range-option="selectedTimeRange.timeRangeOption"

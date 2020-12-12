@@ -1,9 +1,10 @@
 <template>
   <v-card>
-    <v-card-text v-if="!loading">
+    <v-card-text>
       <v-data-table
         :headers="headers"
         :items="zones"
+        :loading="loading"
         hide-default-footer
       >
         <template v-slot:item.rate="{ item }">
@@ -33,7 +34,7 @@
           </router-link>
         </template>
         <template v-slot:item.downtimeDistribution="{ item }">
-          <div class="d-flex align-end justify-end">
+          <div  v-if="item && item.downtimeDistribution" class="d-flex align-end justify-end">
             <apexchart
               v-if="hasNoDowntime(item.downtimeDistribution)"
               type="bar"
@@ -75,21 +76,6 @@
 </template>
 
 <script>
-const series = [
-  {
-    name: 'Name',
-    data: [44]
-  },
-  {
-    name: 'Name',
-    data: [53]
-  },
-  {
-    name: 'Name',
-    data: [12]
-  }
-]
-
 import { mapState } from 'vuex'
 
 import ProductionRateChart from '../charts/ProductionRateChart'
@@ -112,51 +98,6 @@ export default {
         { text: 'Actual Performance', align: 'center', value: 'performance' },
         { text: 'Prod Rate', value: 'rate', align: 'center' },
         { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false }
-      ],
-
-      zonesData: [
-        {
-          zone: {
-            id: 1,
-            name: 'Zone 1',
-            to: '1'
-          },
-          utilization: '32%',
-          color: 'green',
-          value: 75,
-          oee: '93.1%',
-          performance: '78%',
-          rate: 56,
-          downtime_distribution: series
-        },
-        {
-          zone: {
-            id: 2,
-            name: 'Zone 2',
-            to: '2'
-          },
-          utilization: '36%',
-          color: 'green',
-          value: 52,
-          oee: '89.8%',
-          performance: '28%',
-          rate: 65,
-          downtime_distribution: series
-        },
-        {
-          zone: {
-            id: 3,
-            name: 'Zone 3',
-            to: '3'
-          },
-          utilization: '82%',
-          color: 'red',
-          value: 78,
-          oee: '78.2%',
-          performance: '25%',
-          rate: 34,
-          downtime_distribution: series
-        }
       ],
 
       searchQuery: '',
@@ -334,15 +275,11 @@ export default {
   },
   methods: {
     hasNoDowntime(distribution) {
-      if (distribution) {
-        let sum = 0
+      let sum = 0
 
-        sum += distribution.reduce((a, b) => a + b, 0)
-        
-        return sum === 0
-      } else {
-        return false
-      }
+      sum += distribution.reduce((a, b) => a + b, 0)
+      
+      return sum === 0
     },
 
     downtimeDistribution(distribution) {
