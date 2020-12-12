@@ -4,7 +4,7 @@
     <device-import v-if="canImportDevices"></device-import>
 
     <div class="pt-1"></div>
-    
+
     <!-- customer assignment table -->
     <v-card>
       <v-card-title>Customer Device Assignment</v-card-title>
@@ -57,9 +57,9 @@
         <template v-slot:item.registered_action="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <v-btn
-              @click="onRegisterChange(item)"
               dark
               :color="item.registered ? 'red' : 'green'"
+              @click="onRegisterChange(item)"
             >
               {{ item.registered ? 'Revoke' : 'Register' }}
             </v-btn>
@@ -93,7 +93,7 @@
             <sim-panel :item="item"></sim-panel>
           </td>
         </template>
-        
+
         <template v-slot:item.actions="{ item }">
           <v-icon
             small
@@ -274,7 +274,7 @@ export default {
       activate_button_loading: (state) => state.devices.activate_button_loading,
       deactivate_button_loading: (state) => state.devices.deactivate_button_loading,
       register_button_loading: (state) => state.devices.register_button_loading,
-      
+
       devices: (state) => state.devices.data,
 
       pageCount: (state) => state.devices.pageCount,

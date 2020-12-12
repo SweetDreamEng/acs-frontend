@@ -3,18 +3,7 @@ import zoneAPI from '@/services/api/zone'
 const module = {
   namespaced: true,
   state: {
-    data: [
-      {
-        id: 1,
-        name: 'Zone 1'
-      }, {
-        id: 2,
-        name: 'Zone 2'
-      }, {
-        id: 3,
-        name: 'Zone 3'
-      }
-    ],
+    data: [],
 
     table_loading: false,
     btn_loading: false

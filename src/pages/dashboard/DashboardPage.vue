@@ -1,13 +1,9 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
+    <v-sheet color="surface2" class="my-n8 py-8">
       <v-container class="pb-0">
         <top-card></top-card>
-        <v-row dense>
-          <v-col cols="12">
-            <OeeBoxes></OeeBoxes>
-          </v-col>
-        </v-row>
+        <OeeBoxes></OeeBoxes>
       </v-container>
     </v-sheet>
 

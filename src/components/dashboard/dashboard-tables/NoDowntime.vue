@@ -33,6 +33,12 @@ export default {
             }
           }
         },
+        dataLabels: {
+          enabled: true,
+          formatter: function(val, opt) {
+            return 'No Downtime'
+          }
+        },
         xaxis: {
           axisBorder: {
             show: false
@@ -67,8 +73,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  a {
-    text-decoration: none;
-  }
-</style>

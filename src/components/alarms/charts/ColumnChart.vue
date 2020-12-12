@@ -33,9 +33,6 @@ export default {
   components: {
     DateRangePicker
   },
-  mounted() {
-    this.$emit('selectMachine', 'BD Batch Blender')
-  },
   props: {
     title: {
       type: String,
@@ -53,6 +50,9 @@ export default {
       type: Array,
       default: () => ([])
     }
+  },
+  mounted() {
+    this.$emit('selectMachine', 'BD Batch Blender')
   },
   data() {
     return {

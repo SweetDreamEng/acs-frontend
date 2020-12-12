@@ -13,7 +13,7 @@
           <date-range-picker></date-range-picker>
         </v-col>
       </v-row>
-      <div style='overflow-x: hidden; overflow-y: hidden; width:100%'>
+      <div style="overflow-x: hidden; overflow-y: hidden; width:100%">
         <v-card>
           <apexchart
             height="300"

@@ -109,13 +109,4 @@ export default {
 .fade-leave-active {
   opacity: 0;
 }
-.cursor-pointer {
-  cursor: pointer;
-}
-.theme--dark.v-breadcrumbs a {
-  color: white;
-}
-a {
-  font-decoration: none;
-}
 </style>
