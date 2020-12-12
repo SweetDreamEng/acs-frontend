@@ -204,9 +204,29 @@ const state = {
   isNoteAdding: false,
   notes: [],
 
+  // utilization
+  loadingUtilization: false,
+  utilizationSeries: [],
+
+  // Energy Consumption
+  loadingEnergyConsumption: false,
+  energyConsumption: [],
+  
   // Machine overview
   loadingOverview: false,
   machine: {},
+
+  // Machine overview
+  loadingInventories: false,
+  inventories: [],
+
+  // Product Weight
+  loadingWeight: false,
+  actualWeights: [],
+  targetWeights: [],
+
+  loadingRecipe: false,
+  recipeValues: [],
 
   // Running hours per weekday
   loadingWeeklyRunningHours1: false,
@@ -215,6 +235,9 @@ const state = {
   // Locations table series
   loadingLocationsTable: false,
   downtimeDistribution: [],
+
+  // Zones table
+  loadingZonesTable: false,
 
   modeWeightProduct: 'Weekly',
   modeInventory: 'Weekly',
@@ -262,6 +285,22 @@ const state = {
     }
   ],
 
+  utilizationTimeRange: {
+    timeRangeOption: 'last24Hours',
+    dateFrom: new Date().toISOString().substr(0, 10),
+    dateTo: new Date().toISOString().substr(0, 10),
+    timeFrom: '00:00',
+    timeTo: '00:00'
+  },
+
+  energyConsumptionTimeRange: {
+    timeRangeOption: 'last24Hours',
+    dateFrom: new Date().toISOString().substr(0, 10),
+    dateTo: new Date().toISOString().substr(0, 10),
+    timeFrom: '00:00',
+    timeTo: '00:00'
+  },
+
   inventoryTimeRange: {
     timeRangeOption: 'last24Hours',
     dateFrom: new Date().toISOString().substr(0, 10),
@@ -288,12 +327,8 @@ const state = {
   valuesHopInventory: [],
   valuesFrtInventory: [],
 
-  // Energy Consumption
-  energyConsumption: [],
-
   // BD Batch Blender
   totalRunningPercentage: 0,
-  recipeValues: [],
 
   // GH Gravimetric Extrusion Control Hopper
   hopperInventories: [],

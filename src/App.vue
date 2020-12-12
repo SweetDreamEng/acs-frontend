@@ -76,15 +76,15 @@ export default {
       }
     }
   },
+  mounted() {
+    document.getElementById('loading').style.display = 'none'
+  },
   head: {
     link: [
       // adds config/icons into the html head tag
       ...config.icons.map((href) => ({ rel: 'stylesheet', href }))
     ]
-  },
-  mounted() {
-    document.getElementById('loading').style.display = 'none'
-  }
+  }  
 }
 </script>
 
@@ -108,14 +108,5 @@ export default {
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
-}
-.cursor-pointer {
-  cursor: pointer;
-}
-.theme--dark.v-breadcrumbs a {
-  color: white;
-}
-a {
-  font-decoration: none;
 }
 </style>

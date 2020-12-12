@@ -45,6 +45,22 @@ const module = {
       
       commit('TABLE_LOADED')
     },
+
+    /*
+      Get all companies
+    */
+    async getCompanies({
+      commit
+    }) {
+      try {
+        const response = await companyAPI.getCompanies()
+
+        commit('SET_COMPANIES', response.data.companies)
+      } catch (error) {
+        console.log(error.response)
+      }
+    },
+
     async addCustomer({
       commit, dispatch
     }, data) {

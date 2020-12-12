@@ -22,6 +22,7 @@ const module = {
     assign_loading: false,              // status of uploading devices from excel file
     register_button_loading: false,
     loadingTableMachineMapping: false,
+    loadingCustomerDevicesTable: false,     //customer devices table in dashboard
     loadingBtnAssginZoneToMachine: false,
 
     downtimePlanBtnLoading: false,
@@ -136,6 +137,21 @@ const module = {
         console.log(error.response)
       } finally {
         state.loadingTableMachineMapping = false
+      }
+    },
+
+    // Get customer devices with analytics
+    async getCustomerDevicesAnalytics({ state, commit }) {
+      state.loadingCustomerDevicesTable = true
+
+      try {
+        const response = await deviceAPI.getCustomerDevicesAnalytics()
+
+        commit('SET_DATA', response.data.devices)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        state.loadingCustomerDevicesTable = false
       }
     },
 

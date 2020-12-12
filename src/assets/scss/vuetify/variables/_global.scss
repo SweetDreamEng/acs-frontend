@@ -75,3 +75,6 @@ $toolbar-transition:
   280ms map-get($transition, 'fast-out-slow-in') box-shadow,
   0.25s map-get($transition, 'fast-out-slow-in') max-width,
   0.25s map-get($transition, 'fast-out-slow-in') width;
+
+// Breadcrumbs
+$breadcrumbs-padding: 14px 0 !important;

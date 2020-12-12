@@ -32,6 +32,7 @@ export default {
   light: {
     background: '#ffffff',
     surface: '#f2f5f8', //background on screen behind chart
+    surface2: '#bac8d2',
     primary: '#092954', // darker accent color
     secondary: '#508FF0', //lighter color // 002855
     accent: '#003066', //almost same as primary

@@ -1,10 +1,19 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet v-if="$route.name !== 'product-details'" color="surface2" class="my-n8 py-8">
+    <v-sheet color="surface2" class="my-n8 py-8">
       <v-container class="pb-0" fluid>
-        <v-breadcrumbs :items="breadcrumbItems"></v-breadcrumbs>
+        <div class="d-flex mt-2 align-center">
+          <v-breadcrumbs :items="breadcrumbItems"></v-breadcrumbs>
+          <v-spacer></v-spacer>
+          <company-menu
+            :companies="companies"
+            @companyChanged="onCompanyChanged"
+          >
+          </company-menu>
+        </div>
       </v-container>
     </v-sheet>
+
     <v-container fluid>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
@@ -72,10 +81,11 @@ import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
 import NoteForm from '../../components/dashboard/NoteForm'
+import CompanyMenu from '../../components/dashboard/CompanyMenu'
 
 export default {
   components: {
-    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics1
+    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics1, CompanyMenu
   },
   props: {
   },
@@ -88,35 +98,40 @@ export default {
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
+      companies: (state) => state.customers.companies,
       alarmTypes: (state) => state.alarms.alarmTypes,
       alarms: (state) => state.alarms.alarms,
       isLoading: (state) => state.machines.isNoteAdding,
-      notes: (state) => state.machines.notes
+      notes: (state) => state.machines.notes,
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
     ...mapGetters('machines', [
       'selectedMachine'
     ]),
     ...mapGetters({
-      locationName: 'locations/locationName',
-      zoneName: 'zones/zoneName'
+      zoneName: 'zones/zoneName',
+      locationName: 'locations/locationName'
     }),
     breadcrumbItems() {
       return [
         {
+          text: this.selectedCompanyName,
+          disabled: true
+        }, {
           text: 'Dashboard',
           disabled: false,
           exact: true,
-          to: '/dashboard/analytics'
+          to: '/acs-machines'
         }, {
           text: this.locationName(parseInt(this.$route.params.location)),
           disabled: false,
           exact: true,
-          to: `/dashboard/analytics/${this.$route.params.location}`
+          to: `/acs-machines/${this.$route.params.location}`
         }, {
           text: this.zoneName(parseInt(this.$route.params.zone)),
           disabled: false,
           exact: true,
-          to: `/dashboard/analytics/${this.$route.params.location}/${this.$route.params.zone}`
+          to: `/acs-machines/${this.$route.params.location}/${this.$route.params.zone}`
         }, {
           text: this.machine.customer_assigned_name,
           disabled: true
@@ -126,6 +141,9 @@ export default {
   },
   
   created() {
+    this.getLocations()
+    this.getZones()
+    this.getCompanies()
     this.getOverview(this.$route.params.productId)
     this.getWeeklyRunningHours(this.$route.params.productId)
     this.getUtilization(this.$route.params.productId)
@@ -136,9 +154,7 @@ export default {
   },
 
   mounted() {
-    this.getLocations()
-    this.getZones()
-    this.selectMachine(this.$route.params.id)
+    this.selectMachine(this.$route.params.productId)
   },
 
   beforeDestroy() {
@@ -149,6 +165,7 @@ export default {
     ...mapActions({
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
+      getCompanies: 'customers/getCompanies',
       getOverview: 'machines/getOverview',
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
@@ -159,7 +176,8 @@ export default {
       initProduct: 'machines/initProduct',
       'selectMachine': 'machines/selectMachine',
       'updateSelections': 'machines/updateSelections',
-      onAlarmParamChanged: 'alarms/onAlarmParamChanged'
+      onAlarmParamChanged: 'alarms/onAlarmParamChanged',
+      changeSelectedCompany: 'machines/changeSelectedCompany'
     }),
     clear() {
       clearInterval(this.loadingInterval)
@@ -170,6 +188,9 @@ export default {
     },
     _onAlarmParamChange(params) {
       this.onAlarmParamChanged(params)
+    },
+    onCompanyChanged(company) {
+      this.changeSelectedCompany(company)
     }
   }
 }

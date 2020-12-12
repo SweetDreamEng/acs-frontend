@@ -1,76 +1,64 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="4" xs="12">
+      <v-col md="4" sm="12" xs="12">
         <overview
           :machine="machine"
           :loading="loadingOverview"
         >
         </overview>
       </v-col>
-      <v-col md="8" sm="8" xs="12">
-        <utilization></utilization>
+      <v-col md="4" sm="12" xs="12">
+        <utilization
+          :machine-id="1"
+          :time-range-label="timeRangeLabel('utilization')"
+          @showTimeRange="onShowTimeRangeDlgOpen('utilization')"
+        >
+        </utilization>
+      </v-col>
+      <v-col md="4" sm="12" xs="12">
+        <energy-consumption
+          :machine-id="1"
+          :time-range-label="timeRangeLabel('energy-consumption')"
+          @showTimeRange="onShowTimeRangeDlgOpen('energy-consumption')"
+        >
+        </energy-consumption>
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="6" sm="12" xs="12">
+      <v-col md="4" sm="12" xs="12">
+        <actual-target-weight
+          :values-tgt-weight="valuesTgtWeight"
+          :values-act-weight="valuesActWeight"
+          :is-loading="loadingWeight"
+        >
+        </actual-target-weight>
+      </v-col>
+      <v-col md="4" sm="12" xs="12">
         <OEE
-          :mode="modeInventory"
-          :param="paramInventory"
-          :values-hop-inventory="valuesHopInventory"
-          :values-frt-inventory="valuesFrtInventory"
-          :is-loading="isInventoryProductLoading"
-          :time-range-label="timeRangeLabel('inventory')"
-          @changeParams="_onProductInventoryParamChanged"
-          @showTimeRange="onShowTimeRangeDlgOpen('inventory')"
+          :is-loading="loadingInventories"
         >
         </OEE>
       </v-col>
-      <v-col md="6" sm="12" xs="12">
-        <actual-target-weight
-          :mode="modeWeight"
-          :param="paramWeight"
-          :values-tgt-weight="valuesTgtWeight"
-          :values-act-weight="valuesActWeight"
-          :is-loading="isWeightProductLoading"
-          :time-range-label="timeRangeLabel('weight')"
-          @changeParams="_onProductWeightParamChange"
-          @showTimeRange="onShowTimeRangeDlgOpen('weight')"
-        >
-        </actual-target-weight>
-        <!-- <status-summary class="mt-1"></status-summary> -->
+      <v-col md="4" sm="12" xs="12">
+        <recipe></recipe>
       </v-col>
     </v-row>
-    <v-row dense>
-      <v-col md="4" sm="8" xs="12">
+<!--     <v-row dense>
+      <v-col md="4" sm="12" xs="12">
         <average-runtime-by-week
           :weekly-running-hours="weeklyRuningHours"
           :loading="loadingWeeklyRunningHours1"
         >
         </average-runtime-by-week>
       </v-col>
-      <v-col md="4" sm="8" xs="12">
-        <energy-consumption
-          :energy-consumption="energyConsumption"
-        >
-        </energy-consumption>
-      </v-col>
-      <v-col md="4" sm="8" xs="12">
+      <v-col md="4" sm="12" xs="12">
         <machine-status
           :total-running-percentage="totalRunningPercentage"
         >
         </machine-status>
       </v-col>
-    </v-row>
-    <!--     <v-row dense>
-      <v-col md="4" sm="8" xs="12">
-        <recipe
-          :recipe-values="recipeValues"
-        >
-        </recipe>
-      </v-col>
     </v-row> -->
-
     <time-range-chooser
       :dlg="showTimeRangeChooser"
       :time-range-option="selectedTimeRange.timeRangeOption"
@@ -86,14 +74,14 @@
 </template>
 <script>
 import Overview from '../Overview'
-import HoursPerYear from '../HoursPerYear'
-import MachineStatus from './bd-batch-blender/MachineStatus'
+// import MachineStatus from './bd-batch-blender/MachineStatus'
 import Utilization from '../Utilization'
 import ActualTargetWeight from '../ActualTargetWeight'
-import AverageRuntimeByWeek from './bd-batch-blender/AverageRuntimeByWeek'
+// import AverageRuntimeByWeek from './bd-batch-blender/AverageRuntimeByWeek'
 import OEE from '../OEE'
 import EnergyConsumption from '../EnergyConsumption'
-// import Recipe from './bd-batch-blender/Recipe'
+import Recipe from './bd-batch-blender/Recipe'
+
 import TimeRangeChooser from '../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -101,13 +89,20 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   components: {
     Overview,
-    MachineStatus,
+    Recipe,
+    // MachineStatus,
     Utilization,
     ActualTargetWeight,
-    AverageRuntimeByWeek,
+    // AverageRuntimeByWeek,
     OEE,
     EnergyConsumption,
     TimeRangeChooser
+  },
+  props: {
+    productId: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
@@ -132,7 +127,10 @@ export default {
   computed: {
     ...mapState({
       loadingOverview: (state) => state.machines.loadingOverview,
+      loadingWeight: (state) => state.machines.loadingWeight,
       machine: (state) => state.machines.machine,
+
+      loadingInventories: (state) => state.machines.loadingInventories,
 
       loadingWeeklyRunningHours1: (state) => state.machines.loadingWeeklyRunningHours1,
       weeklyRuningHours: (state) => state.machines.weeklyRuningHours,                   // Weekly running hours
@@ -143,15 +141,14 @@ export default {
       paramWeight: (state) => state.machines.paramWeightProduct,
       paramInventory: (state) => state.machines.paramInventory,
 
-      valuesTgtWeight: (state) => state.machines.valuesTgtWeightProduct,
-      valuesActWeight: (state) => state.machines.valuesActWeightProduct,
+      valuesTgtWeight: (state) => state.machines.targetWeights,
+      valuesActWeight: (state) => state.machines.actualWeights,
       valuesHopInventory: (state) => state.machines.valuesHopInventory,
       valuesFrtInventory: (state) => state.machines.valuesFrtInventory,
 
       isWeightProductLoading: (state) => state.machines.isWeightProductLoading,
       isInventoryProductLoading: (state) => state.machines.isInventoryProductLoading,
 
-      energyConsumption: (state) => state.machines.energyConsumption,                   // Energy Consumption
       totalRunningPercentage: (state) => state.machines.totalRunningPercentage,         // Weekly running hours
       recipeValues: (state) => state.machines.recipeValues                              // recipe
     }),
@@ -181,6 +178,7 @@ export default {
       })
     },
     _onTimeRangeChanged(data) {
+      data.id = this.productId
       this.onTimeRangeChanged(data)
       this.showTimeRangeChooser = false
     }

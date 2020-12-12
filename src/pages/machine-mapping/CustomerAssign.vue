@@ -4,7 +4,7 @@
     <device-import v-if="canImportDevices"></device-import>
 
     <div class="pt-1"></div>
-    
+
     <!-- customer assignment table -->
     <v-card>
       <v-card-title>Customer Device Assignment</v-card-title>
@@ -57,6 +57,8 @@
         <template v-slot:item.registered_action="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <v-btn
+              dark
+              :color="item.registered ? 'red' : 'green'"
               @click="onRegisterChange(item)"
             >
               {{ item.registered ? 'Revoke' : 'Register' }}
@@ -91,7 +93,7 @@
             <sim-panel :item="item"></sim-panel>
           </td>
         </template>
-        
+
         <template v-slot:item.actions="{ item }">
           <v-icon
             small
@@ -167,12 +169,13 @@
     <v-dialog
       v-model="confirmDialog"
       max-width="400px"
+      persistent
     >
       <v-card>
-        <v-card-title>
+        <v-card-title class="primary white--text">
           Confirm
         </v-card-title>
-        <v-card-text>
+        <v-card-text class="mt-2">
           <v-alert
             border="top"
             outlined
@@ -180,7 +183,7 @@
             elevation="2"
             color="primary"
           >
-            <small>{{ confirmationMessage() }}</small>
+            <small v-html="confirmationMessage()"></small>
           </v-alert>
           <div class="d-flex justify-end">
             <v-btn color="primary" text @click="confirmDialog = false">Cancel</v-btn>
@@ -271,7 +274,7 @@ export default {
       activate_button_loading: (state) => state.devices.activate_button_loading,
       deactivate_button_loading: (state) => state.devices.deactivate_button_loading,
       register_button_loading: (state) => state.devices.register_button_loading,
-      
+
       devices: (state) => state.devices.data,
 
       pageCount: (state) => state.devices.pageCount,
@@ -346,9 +349,9 @@ export default {
     confirmationMessage() {
       if (this.selectedItem) {
         if (!this.selectedItem.registered)
-          return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be configured with product ${this.selectedItem.product_category}. Please confirm registration`
+          return `Device ${this.selectedItem.serial_number} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be configured with product <strong><i>${this.machineName(this.selectedItem.machine_id)}</i></strong>. Please confirm registration`
         else
-          return `Device ${this.selectedItem.id} assigned to customer ${this.selectedItem.customer_name} will be reset and product ${this.selectedItem.product_category} configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
+          return `Device ${this.selectedItem.id} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be reset and product <strong><i>${this.machineName(this.selectedItem.machine_id)}</i></strong> configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
       } else {
         return ''
       }

@@ -1,5 +1,5 @@
 <template>
-  <v-card light class="elevation-0">
+  <v-card light>
     <div class="d-flex flex-wrap align-center justify-center pa-2">
       <v-progress-circular v-if="loading" indeterminate color="secondary"></v-progress-circular>
       <v-slide-group
@@ -22,7 +22,7 @@
               <div class="caption">{{ box.location }} </div>
               <div class="pl-2">
                 <small>OEE </small>
-                <div class="">{{ box.value }}</div>
+                <div>{{ box.value }}</div>
               </div>
             </div>
             <v-spacer></v-spacer>
@@ -40,6 +40,12 @@
   </v-card>
 </template>
 <script>
+import moment from 'moment'
+
+function formatDate(date) {
+  return date ? moment(date).format('D MMM') : ''
+}
+
 export default {
   components: {
   },
@@ -248,3 +254,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.stats-slide {
+  flex: 1;
+  .v-slide-group__content {
+    min-width: 100%;
+    justify-content: center;
+  }
+}
+</style>

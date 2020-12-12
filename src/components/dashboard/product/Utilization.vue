@@ -1,12 +1,24 @@
 <template>
-  <v-card height="100%">
+  <v-card
+    height="100%"
+    :loading="loadingUtilization"
+  >
     <v-card-title>
-      <strong>Utilization</strong>
+      <div>
+        <div>Capacity Utilization</div>
+        <div class="caption font-italic">({{ timeRangeLabel }})</div>
+      </div>
+      <v-btn
+        icon
+        class="ml-auto"
+        @click="$emit('showTimeRange')"
+      >
+        <v-icon>mdi-dots-horizontal</v-icon>
+      </v-btn>
     </v-card-title>
     <v-card-text>
       <apexchart
-        ref="chart"
-        type="line"
+        type="area"
         height="180"
         :options="chartOptions"
         :series="series"
@@ -26,51 +38,29 @@
 | your own dashboard component
 |
 */
+import { mapState } from 'vuex'
 
 export default {
   props: {
-    label: {
+    machineId: {
+      type: Number,
+      default: 0
+    },
+    timeRangeLabel: {
       type: String,
       default: ''
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    data: {
-      type: Array,
-      default: () => [12,12,12,12,12,12,72,67,66,59,55,48]
     }
   },
   data() {
     return {
-      loadingInterval: null,
-      isLoading1: true,
-      interval1: null,
-      interval2: null,
-
-      traffic: Array(11).fill(0),
-
-      series: [{
-        data: Array(11).fill(0).slice(0)
-      }],
-
       chartOptions: {
         chart: {
-          id: 'realtime',
-          type: 'line',
+          type: 'area',
           animations: {
-            enabled: true,
-            easing: 'linear',
-            dynamicAnimation: {
-              speed: 1000
-            }
+            speed: 400
           },
           toolbar: {
             show: false
-          },
-          zoom: {
-            enabled: false
           }
         },
         dataLabels: {
@@ -80,66 +70,23 @@ export default {
           curve: 'smooth',
           width: 2
         },
-        markers: {
-          size: 0
-        },
         xaxis: {
-          labels: {
-            show: false
-          },
-          range: 10
-        },
-        yaxis: {
-          max: 10
-        },
-        grid: {
-          show: false
-        },
-        legend: {
-          show: false
+          type: 'datetime'
         }
       }
     }
   },
   computed: {
-  },
-  mounted() {
-    let count = 0
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
-
-    this.interval1 = window.setInterval(() => {
-      this.traffic.push(parseInt(Math.random() * 10))
-      this.$refs.chart.updateSeries([{
-        data: this.traffic.slice()
-      }])
-    }, 1000)
-  
-    this.interval2 = window.setInterval(() => {
-      if (this.$refs.chart) {
-        this.$refs.chart.updateSeries([{
-          data: this.traffic.slice()
-        }], false, true)
-      }
-    }, 60000)
-  },
-  destroyed() {
-    clearInterval(this.interval1)
-    clearInterval(this.interval2)
-  },
-  methods: {
-    clear() {
-      clearInterval(this.loadingInterval)
-    },
-
-    getNewSeries() {
-      this.data.push(this.data.shift())
-
-      return this.data
+    ...mapState({
+      loadingUtilization: (state) => state.machines.loadingUtilization,
+      utilizationSeries: (state) => state.machines.utilizationSeries
+    }),
+    series() {
+      return [{
+        id: 1,
+        name: 'utilization',
+        data: this.utilizationSeries
+      }]
     }
   }
 }

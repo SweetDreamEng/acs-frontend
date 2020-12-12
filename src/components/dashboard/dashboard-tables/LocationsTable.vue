@@ -1,6 +1,8 @@
 <template>
   <v-card>
-    <v-card-text>
+    <v-card-text
+      v-if="!loading"
+    >
       <v-data-table
         :headers="headers"
         :items="locations"
@@ -27,27 +29,30 @@
             {{ item.utilization }}
           </div>
         </template>
-        <template v-slot:item.location="{ item }">
-          <router-link :to="item.location.to" class="d-flex align-center">
+        <template v-slot:item.name="{ item }">
+          <router-link :to="item.id.toString()" append class="d-flex align-center">
             <v-icon>mdi-google-maps</v-icon>
-            <span class="title text-no-wrap ml-1">{{ item.location.label }}</span>
+            <span class="title text-no-wrap ml-1">{{ item.name }}</span>
           </router-link>
         </template>
-        <template v-slot:item.downtime_distribution="{ item }">
-          <div class="d-flex align-end justify-end">
+        <template v-slot:item.downtimeDistribution="{ item }">
+          <div v-if="item && item.downtimeDistribution" class="d-flex align-end justify-end">
+            <no-downtime v-if="hasNoDowntime(item.downtimeDistribution)"></no-downtime>
             <apexchart
+              v-else
               type="bar"
               width="240"
               height="80"
               :options="chartOptions"
-              :series="item.downtime_distribution"
+              :series="downtimeDistribution(item.downtimeDistribution)"
             >
             </apexchart>
           </div>
         </template>
       </v-data-table>
 
-      <div class="d-flex justify-end mr-4">
+      <div class="d-flex align-center justify-end mr-4">
+        <div class="label font-italic">(Data displayed for last 7 days)</div>
         <div>
           <v-icon class="ml-2 mr-0" color="#269ffb">mdi-checkbox-blank</v-icon>
           Unplanned
@@ -81,121 +86,35 @@ const series = [
   }
 ]
 
+import { mapState } from 'vuex'
+
 import ProductionRateChart from '../charts/ProductionRateChart'
+import NoDowntime from './NoDowntime'
+
 export default {
   components: {
-    ProductionRateChart
+    ProductionRateChart, NoDowntime
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    }
   },
   data () {
     return {
       headers: [
-        { text: 'Location', value: 'location' },
+        { text: 'Location', value: 'name' },
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'center', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },
         { text: 'Prod Rate', value: 'rate', align: 'center' },
-        { text: 'Downtime Distrubton', align: 'right', value: 'downtime_distribution', sortable: false }
+        { text: 'Downtime Distrubton', align: 'right', value: 'downtimeDistribution', sortable: false }
       ],
 
       selected: ['name1', 'name2', 'name3'],
-
-      locations: [
-        {
-          location: {
-            label: 'Location 1',
-            to: '/dashboard/1'
-          },
-          utilization: '32%',
-          color: 'green',
-          value: 75,
-          oee: '93.1%',
-          performance: '78%',
-          rate: 56,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [14]
-            },
-            {
-              name: 'Name',
-              data: [53]
-            },
-            {
-              name: 'Name',
-              data: [22]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 2',
-            to: '/dashboard/2'
-          },
-          utilization: '36%',
-          color: 'green',
-          value: 52,
-          oee: '89.8%',
-          performance: '28%',
-          rate: 65,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [44]
-            },
-            {
-              name: 'Name',
-              data: [53]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 3',
-            to: '/dashboard/3'
-          },
-          utilization: '82%',
-          color: 'red',
-          value: 78,
-          oee: '78.2%',
-          performance: '25%',
-          rate: 34,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [41]
-            },
-            {
-              name: 'Name',
-              data: [33]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
-        }
-      ],
 
       searchQuery: '',
 
       chartOptions: {
         chart: {
           type: 'bar',
-          height: 350,
           stacked: true,
           stackType: '100%',
           toolbar: {
@@ -307,10 +226,35 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      loading: (state) => state.machines.loadingLocationsTable,
+      locations: (state) => state.locations.data
+    })
   },
   methods: {
-    toggleSeries() {
+    hasNoDowntime(distribution) {
+      let sum = 0
 
+      sum += distribution.reduce((a, b) => a + b, 0)
+      
+      return sum === 0
+    },
+
+    downtimeDistribution(distribution) {
+      return [
+        {
+          name: 'Name',
+          data: [distribution[1]]
+        },
+        {
+          name: 'Name',
+          data: [distribution[0]]
+        },
+        {
+          name: 'Name',
+          data: [distribution[2]]
+        }
+      ]
     }
   }
 }

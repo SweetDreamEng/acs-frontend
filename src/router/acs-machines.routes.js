@@ -8,6 +8,13 @@ export default [
       acsAdmin: true
     }
   }, {
+    path: '/acs-machines/alarms',
+    name: 'acs-machines-alarms',
+    component: () => import(/* webpackChunkName: "acs-machines-alarms" */ '@/pages/acs-machines/Alarms.vue'),
+    meta: {
+      acsAdmin: true
+    }
+  }, {
     path: '/acs-machines/:location',
     name: 'location-acs-dashboard',
     component: () => import(/* webpackChunkName: "location-acs-dashboard" */ '@/pages/acs-machines/LocationDashboard.vue'),
@@ -19,6 +26,14 @@ export default [
     path: '/acs-machines/:location/:zone',
     name: 'zone-acs-dashboard',
     component: () => import(/* webpackChunkName: "zone-acs-dashboard" */ '@/pages/acs-machines/ZoneDashboard.vue'),
+    meta: {
+      layout: 'dashboard',
+      acsAdmin: true
+    }
+  }, {
+    path: '/acs-machines/:location/:zone/:productId',
+    name: 'product-acs-dashboard',
+    component: () => import(/* webpackChunkName: "product-acs-dashboard" */ '@/pages/acs-machines/ProductDashboard.vue'),
     meta: {
       layout: 'dashboard',
       acsAdmin: true

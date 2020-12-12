@@ -34,6 +34,21 @@ const module = {
           commit('BUTTON_CLEAR')
         })  
     },
+    resetSettings({
+      commit
+    }) {
+      commit('BUTTON_LOAD', 'RESET')
+      
+      return settingAPI.resetSettings().then((response) => {
+
+      })
+        .catch((error) => {
+
+        })
+        .finally(() => {
+          commit('BUTTON_CLEAR')
+        })  
+    },
     setInitialSetting({
       commit
     }) {

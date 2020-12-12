@@ -1,9 +1,9 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
+    <v-sheet color="surface2" class="my-n8 py-8">
       <v-container class="pb-0">
         <div class="d-flex mt-2 align-center">
-          <v-breadcrumbs :items="breadcrumbItems" dark></v-breadcrumbs>
+          <v-breadcrumbs :items="breadcrumbItems"></v-breadcrumbs>
           <v-spacer></v-spacer>
           <company-menu
             :companies="companies"
@@ -12,15 +12,12 @@
           </company-menu>
         </div>
         <top-card></top-card>
-        <v-row dense>
-          <v-col cols="12">
-            <ZoneCards></ZoneCards>
-          </v-col>
-        </v-row>
+        <ZoneCards></ZoneCards>
       </v-container>
     </v-sheet>
     <v-container>
-      <zones-table :zone-ids="zoneIds"></zones-table>
+      <zones-table :zones="zones">
+      </zones-table>
 
       <br>
 
@@ -45,7 +42,7 @@
 */
 
 // import vuex helper functions
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
@@ -93,46 +90,18 @@ export default {
       locationDetailsView: false,
 
       page: 1,
-      total: 9,
-
-      markers: [{
-        position: {
-          lat: 25.44,
-          lng: -80.47
-        }
-      }, {
-        position: {
-          lat: 40.66,
-          lng: -73.94
-        }
-      }, {
-        position: {
-          lat: 31.89,
-          lng: -97.08
-        }
-      }, {
-        position: {
-          lat: 37.9,
-          lng: -122.08
-        }
-      }, {
-        position: {
-          lat: 31.99,
-          lng: -83.31
-        }
-      }, {
-        position: {
-          lat: 39.42,
-          lng: -74.49
-        }
-      }]
+      total: 9
     }
   },
   computed: {
     ...mapState({
       machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
+      zones: (state) => state.zones.data
+    }),
+    ...mapGetters({
+      locationName: 'locations/locationName'
     }),
     machinesForLocation() {
       return this.machines.filter((machine) => {
@@ -153,14 +122,17 @@ export default {
           exact: true,
           to: '/acs-machines'
         }, {
-          text: 'Location 1',
+          text: this.locationName(parseInt(this.$route.params.location)),
           disabled: true
         }
       ]
     }
   },
   mounted() {
+    this.getLocations()
+
     this.initAcsDashboard()
+    this.initAcsZonesTable(this.$route.params.location)
 
     let count = 0
 
@@ -176,7 +148,9 @@ export default {
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
-      changeSelectedCompany: 'machines/changeSelectedCompany'
+      initAcsZonesTable: 'machines/initAcsZonesTable',
+      changeSelectedCompany: 'machines/changeSelectedCompany',
+      getLocations: 'locations/getLocations'
     }),
     clear() {
       clearInterval(this.loadingInterval)

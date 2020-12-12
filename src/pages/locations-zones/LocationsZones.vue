@@ -37,8 +37,9 @@
                 </v-text-field>
                 <v-select
                   v-model="editedZone.location_id"
-                  :items="extendedLocations"
+                  :items="locations"
                   label="Choose Location"
+                  :rules="[$rules.required]"
                   item-text="name"
                   item-value="id"
                   outlined
@@ -146,7 +147,7 @@ export default {
       zones: (state) => state.zones.data
     }),
     ...mapGetters({
-      extendedLocations: 'locations/extendedLocations'
+      locationName: 'locations/locationName'
     }),
     editTitle() {
       return this.editedIndex === -1 ? 'Add Zone' : 'Edit Zone'
@@ -181,23 +182,16 @@ export default {
         this.editedIndex = -1
       })
     },
-    locationName(location_id) {
-      const _location = this.locations.find((location) => location.id === location_id)
-
-      return _location ? _location.name : 'Not Assinged'
-    },
-    saveZone() {
+    async saveZone() {
       if (this.$refs.editZoneForm.validate()) {
         if (this.editedIndex > -1) {
-          this.updateZone(this.editedZone).then(() => {
-            this.getZones()
-            this.closeZone()
-          })
+          await this.updateZone(this.editedZone)
+          this.getZones()
+          this.closeZone()
         } else {
-          this.addZone(this.editedZone).then(() => {
-            this.getZones()
-            this.closeZone()
-          })
+          await this.addZone(this.editedZone)
+          this.getZones()
+          this.closeZone()
         }
       }
     }

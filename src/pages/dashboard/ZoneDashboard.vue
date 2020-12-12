@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
+    <v-sheet color="surface2" class="my-n8 py-8">
       <v-container class="pb-0">
-        <v-breadcrumbs :items="breadcrumbItems" class="mt-0 mb-n1" :dark="true"></v-breadcrumbs>
+        <v-breadcrumbs :items="breadcrumbItems"></v-breadcrumbs>
         <top-card></top-card>
       </v-container>
     </v-sheet>
@@ -23,7 +23,7 @@
 */
 
 // import vuex helper functions
-import { mapState } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 // DEMO Cards for dashboard
 import MachinesTable from '../../components/dashboard/dashboard-tables/MachinesTable'
@@ -40,24 +40,6 @@ export default {
       loadingInterval: null,
 
       isLoading1: true,
-
-      breadcrumbItems: [
-        {
-          text: 'Dashboard',
-          disabled: false,
-          to: '/dashboard/analytics'
-        },
-        {
-          text: 'Location 1',
-          disabled: false,
-          to: '/dashboard/1',
-          exact: true
-        },
-        {
-          text: 'Zone 1',
-          disabled: true
-        }
-      ],
 
       series: [44, 55],
 
@@ -85,45 +67,35 @@ export default {
       locationDetailsView: false,
 
       page: 1,
-      total: 9,
-
-      markers: [{
-        position: {
-          lat: 25.44,
-          lng: -80.47
-        }
-      }, {
-        position: {
-          lat: 40.66,
-          lng: -73.94
-        }
-      }, {
-        position: {
-          lat: 31.89,
-          lng: -97.08
-        }
-      }, {
-        position: {
-          lat: 37.9,
-          lng: -122.08
-        }
-      }, {
-        position: {
-          lat: 31.99,
-          lng: -83.31
-        }
-      }, {
-        position: {
-          lat: 39.42,
-          lng: -74.49
-        }
-      }]
+      total: 9
     }
   },
   computed: {
     ...mapState({
       machines: (state) => state.machines.data
     }),
+    ...mapGetters({
+      locationName: 'locations/locationName',
+      zoneName: 'zones/zoneName'
+    }),
+    breadcrumbItems() {
+      return  [
+        {
+          text: 'Dashboard',
+          disabled: false,
+          exact: true,
+          to: '/dashboard/analytics'
+        }, {
+          text: this.locationName(parseInt(this.$route.params.location)),
+          disabled: false,
+          exact: true,
+          to: `/dashboard/analytics/${this.$route.params.location}`
+        }, {
+          text: this.zoneName(parseInt(this.$route.params.zone)),
+          disabled: true
+        }
+      ]
+    },
     machinesForZone() {
       return this.machines.filter((machine) => {
         return parseInt(machine.location.id) === parseInt(this.$route.params.location)
@@ -132,6 +104,9 @@ export default {
     }
   },
   mounted() {
+    this.getLocations()
+    this.getZones()
+
     let count = 0
 
     // DEMO delay for loading graphics
@@ -144,6 +119,10 @@ export default {
     this.clear()
   },
   methods: {
+    ...mapActions({
+      getLocations: 'locations/getLocations',
+      getZones: 'zones/getZones'
+    }),
     clear() {
       clearInterval(this.loadingInterval)
     }

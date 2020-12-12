@@ -79,9 +79,6 @@ const initProduct = ({ commit, state }, id) => {
       commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
       commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
 
-      // Energy consumption
-      commit('SET_ENERGY_CONSUMPTION', response.data.energy_consumption)
-
       // BD Batch Blender
       commit('SET_RUNNING_PERCENTAGE', parseFloat((response.data.total_running_percentage * 100).toFixed(2)))
       commit('SET_RECIPE_VALUES', response.data.recipe_values)
@@ -118,6 +115,69 @@ const getOverview = async ({ commit }, id) => {
   }
 }
 
+const getUtilization = async ({ state, commit }, id) => {
+  state.loadingUtilization = true
+
+  try {
+    const response = await machineAPI.getUtilization({
+      id: id,
+      timeRange: state.utilizationTimeRange
+    })
+
+    commit('SET_UTILIZATION', response.data.utilizations)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingUtilization = false
+  }
+}
+
+const getEnergyConsumption = async ({ state, commit }, id) => {
+  state.loadingEnergyConsumption = true
+
+  try {
+    const response = await machineAPI.getEnergyConsumption({
+      id: id,
+      timeRange: state.energyConsumptionTimeRange
+    })
+
+    commit('SET_ENERGY_CONSUMPTION', response.data.energy_consumption)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingEnergyConsumption = false
+  }
+}
+
+const getRecipe = async ({ state, commit }, id) => {
+  state.loadingRecipe = true
+
+  try {
+    const response = await machineAPI.getRecipe(id)
+
+    commit('SET_RECIPE_VALUES', response.data.recipe_values)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingRecipe = false
+  }
+}
+
+const getWeight = async ({ state, commit }, id) => {
+  state.loadingWeight = true
+
+  try {
+    const response = await machineAPI.getWeight(id)
+
+    commit('SET_ACTUAL_WEIGHTS', response.data.actuals)
+    commit('SET_TARGET_WEIGHTS', response.data.targets)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingWeight = false
+  }
+}
+
 const getWeeklyRunningHours = async ({ state, commit }, id) => {
   state.loadingWeeklyRunningHours1 = true
 
@@ -138,11 +198,39 @@ const initLocationsTable = async ({ state, commit }) => {
   try {
     const response = await machineAPI.initLocationsTable()
 
-    commit('SET_DOWNTIME_DISTRIBUTION', response.data.downtime_distribution)        
+    commit('locations/SET_DATA', response.data.locations, { root: true })
   } catch (error) {
     console.log(error)
   } finally {
     state.loadingLocationsTable = false
+  }
+}
+
+const initAcsZonesTable = async ({ state, commit }, location_id) => {
+  state.loadingZonesTable = true
+
+  try {
+    const response = await machineAPI.initAcsZonesTable(location_id)
+
+    commit('zones/SET_DATA', response.data.zones, { root: true })
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingZonesTable = false
+  }
+}
+
+const initAcsMachinesTable = async ({ state, commit }, zone) => {
+  state.loadingMachinesTable = true
+
+  try {
+    const response = await machineAPI.initAcsMachinesTable(zone)
+
+    commit('devices/SET_DATA', response.data.devices, { root: true })
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingMachinesTable = false
   }
 }
 
@@ -167,35 +255,36 @@ const onProductWeightParamChange = ({ commit, state }) => {
 const onProductInventoryParamChanged = ({ commit, dispatch, state }, data) => {
   commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
 
-  dispatch('getInventory')
+  // dispatch('getInventory')
 }
 
-const getInventory = ({ commit, state }) => {
-  commit('INVENTORY_PRODUCT_LOADING')
+const getInventory = async ({ commit, state }, id) => {
+  state.loadingInventories = true
 
-  machineAPI.getInventory({
-    param: state.paramInventory,
-    timeRange: state.inventoryTimeRange
-  })
-    .then((response) => {
-      commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
-      commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
-    })
-    .catch((error) => {
-      console.log(error.response)
-    })
-    .finally(() => {
-      commit('INVENTORY_PRODUCT_LOADED')
-    })
-}
-const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
-  if (state.selectedTimeRangeKey === 'inventory') {
-    commit('SET_INVENTORY_TIME_RANGE', data)
-    dispatch('getInventory')
-  } else if (state.selectedTimeRangeKey === 'weight') {
-    commit('SET_WEIGHT_TIME_RANGE', data)
-    dispatch('onProductWeightParamChange')
+  try {
+    const response = await machineAPI.getInventory(id)
+
+    commit('SET_INVENTORIES', response.data.inventories)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingInventories = false
   }
+}
+
+const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
+  if (state.selectedTimeRangeKey === 'utilization') {
+    commit('SET_UTILIZATION_TIME_RANGE', data)
+    dispatch('getUtilization', data.id)
+  } else if (state.selectedTimeRangeKey === 'energy-consumption') {
+    commit('SET_ENERGY_CONSUMPTION_TIME_RANGE', data)
+    dispatch('getEnergyConsumption', data.id)
+  }
+}
+const getMachines = ({ commit }) => {
+  return machineAPI.getMachines().then((response) => {
+    commit('SET_MACHINES', response.data.machines)
+  })
 }
 
 export default {
@@ -205,13 +294,20 @@ export default {
   addNote,
   initAcsDashboard,
   initLocationsTable,
+  initAcsZonesTable,
+  initAcsMachinesTable,
   changeSelectedCompany,
   selectTimeRange,
   initProduct,
   getOverview,
+  getUtilization,
+  getEnergyConsumption,
+  getInventory,
+  getRecipe,
+  getWeight,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,
-  getInventory,
-  onTimeRangeChanged
+  onTimeRangeChanged,
+  getMachines
 }

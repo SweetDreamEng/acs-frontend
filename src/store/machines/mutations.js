@@ -26,6 +26,11 @@ export default {
   OVERVIEW_LOADED(state) { state.loadingOverview = false },
   SET_OVERVIEW(state, overview) { state.machine = overview },
 
+  SET_UTILIZATION(state, utilization) { state.utilizationSeries = utilization },
+  SET_INVENTORIES(state, inventories) { state.inventories = inventories },
+  SET_ACTUAL_WEIGHTS(state, actualWeights) { state.actualWeights = actualWeights },
+  SET_TARGET_WEIGHTS(state, targetWeights) { state.targetWeights = targetWeights },
+
   SET_WEEKLY_RUNNING_HOURS(state, hours) { state.weeklyRuningHours = hours },
 
   SET_MACHINES(state, machines) {
@@ -72,21 +77,12 @@ export default {
     state.paramInventory = param
   },
 
-  WEIGHT_PRODUCT_LOADING(state) {
-    state.isWeightProductLoading = true
-  },
-  WEIGHT_PRODUCT_LOADED(state) {
-    state.isWeightProductLoading = false
-  },
   INVENTORY_PRODUCT_LOADING(state) {
     state.isInventoryProductLoading = true
   },
   INVENTORY_PRODUCT_LOADED(state) {
     state.isInventoryProductLoading = false
   },
-
-  // Energy Consumption
-  SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },
 
   // BD Batch Blender
   SET_RUNNING_PERCENTAGE(state, totalRunningPercentage) { state.totalRunningPercentage = totalRunningPercentage },
@@ -103,11 +99,17 @@ export default {
       state.selectedTimeRange = state.inventoryTimeRange
     } else if (key === 'weight') {
       state.selectedTimeRange = state.weightTimeRange
+    } else if (key === 'utilization') {
+      state.selectedTimeRange = state.utilizationTimeRange
     }
   },
   SET_CURRENT_TIME_PARAM_KEY(state, key) { state.selectedTimeRangeKey = key },
   SET_INVENTORY_TIME_RANGE(state, data) { state.inventoryTimeRange = Object.assign({}, data) },
   SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) },
-
+  SET_UTILIZATION_TIME_RANGE(state, data) { state.utilizationTimeRange = Object.assign({}, data) },
+  SET_ENERGY_CONSUMPTION_TIME_RANGE(state, data) { state.energyConsumptionTimeRange = Object.assign({}, data) },
+  
+  // Energy Consumption
+  SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },
   SET_DOWNTIME_DISTRIBUTION(state, data) { state.downtimeDistribution = data }
 }

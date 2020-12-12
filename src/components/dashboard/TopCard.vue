@@ -12,7 +12,6 @@
           >
             <track-card
               label="First Pass Yield"
-              class="elevation-0"
               color="#8c9eff"
               value="87%"
               :percentage="1.7"
@@ -38,7 +37,6 @@
           >
             <track-card
               label="Avg First Pass Yield"
-              class="elevation-0"
               color="#06d6a0"
               value="84%"
               :percentage="4.3"

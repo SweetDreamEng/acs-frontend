@@ -1,13 +1,9 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="primary lighten-1" class="my-n4 mb-n8 pb-8">
+    <v-sheet color="surface2" class="my-n8 py-8">
       <v-container class="pb-0">
         <top-card></top-card>
-        <v-row dense>
-          <v-col cols="12">
-            <OeeBoxes></OeeBoxes>
-          </v-col>
-        </v-row>
+        <OeeBoxes></OeeBoxes>
       </v-container>
     </v-sheet>
 
@@ -17,8 +13,7 @@
       <br>
 
       <machines-table-card
-        label="Machines"
-        :items="machines"
+        :devices="devices"
         :loading="isLoading1"
       ></machines-table-card>
     </v-container>
@@ -55,73 +50,100 @@ export default {
 
       isLoading1: true,
 
-      series: [44, 55],
-
-      ordersSeries: [{
-        name: 'FPY',
-        data: [
-          ['2020-02-02', 34],
-          ['2020-02-03', 43],
-          ['2020-02-04', 40],
-          ['2020-02-05', 43]
-        ]
-      }],
-
-      customersSeries: [{
-        name: 'Avg FPY',
-        data: [
-          ['2020-02-02', 13],
-          ['2020-02-03', 11],
-          ['2020-02-04', 13],
-          ['2020-02-05', 12]
-        ]
-      }],
-
-      tab: 0,
-      locationDetailsView: false,
-
       page: 1,
-      total: 9,
-
-      markers: [{
-        position: {
-          lat: 25.44,
-          lng: -80.47
-        }
-      }, {
-        position: {
-          lat: 40.66,
-          lng: -73.94
-        }
-      }, {
-        position: {
-          lat: 31.89,
-          lng: -97.08
-        }
-      }, {
-        position: {
-          lat: 37.9,
-          lng: -122.08
-        }
-      }, {
-        position: {
-          lat: 31.99,
-          lng: -83.31
-        }
-      }, {
-        position: {
-          lat: 39.42,
-          lng: -74.49
-        }
-      }]
+      total: 9
     }
   },
   computed: {
     ...mapState({
-      machines: (state) => state.machines.data,
-      locations: (state) => state.locations.data,
-      privateColors: (state) => state.settings.private_colors
-    })
+      devices: (state) => state.devices.data,
+      // locations: (state) => state.locations.data,
+      zones: (state) => state.zones.data,
+      privateColors: (state) => state.settings.private_colors,
+      downtimeDistribution: (state) => state.machines.downtimeDistribution
+    }),
+    locations() {
+      return [
+        {
+          location: {
+            label: 'Location 1',
+            id: 1
+          },
+          utilization: '32%',
+          color: 'green',
+          value: 75,
+          oee: '93.1%',
+          performance: '78%',
+          rate: 56,
+          downtime_distribution: [
+            {
+              name: 'Name',
+              data: [this.downtimeDistribution[1]]
+            },
+            {
+              name: 'Name',
+              data: [this.downtimeDistribution[0]]
+            },
+            {
+              name: 'Name',
+              data: [this.downtimeDistribution[2]]
+            }
+          ]
+        },
+        {
+          location: {
+            label: 'Location 2',
+            id: 2
+          },
+          utilization: '36%',
+          color: 'green',
+          value: 52,
+          oee: '89.8%',
+          performance: '28%',
+          rate: 65,
+          downtime_distribution: [
+            {
+              name: 'Name',
+              data: [44]
+            },
+            {
+              name: 'Name',
+              data: [53]
+            },
+            {
+              name: 'Name',
+              data: [12]
+            }
+          ]
+        },
+        {
+          location: {
+            label: 'Location 3',
+            id: 3
+          },
+          utilization: '82%',
+          color: 'red',
+          value: 78,
+          oee: '78.2%',
+          performance: '25%',
+          rate: 34,
+          downtime_distribution: [
+            {
+              name: 'Name',
+              data: [41]
+            },
+            {
+              name: 'Name',
+              data: [33]
+            },
+            {
+              name: 'Name',
+              data: [12]
+            }
+          ]
+        }
+      ]
+    }
   },
   mounted() {
     let count = 0
@@ -134,6 +156,11 @@ export default {
       }
     })
 
+    this.getCustomerDevicesAnalytics()
+    this.getLocations()
+    this.getZones()
+    this.initLocationsTable()
+
     // DEMO delay for loading graphics
     this.loadingInterval = setInterval(() => {
       this[`isLoading${count++}`] = false
@@ -145,6 +172,10 @@ export default {
   },
   methods: {
     ...mapActions({
+      initLocationsTable: 'machines/initLocationsTable',
+      getCustomerDevicesAnalytics: 'devices/getCustomerDevicesAnalytics',
+      getLocations: 'locations/getLocations',
+      getZones: 'zones/getZones',
       setInitialSetting: 'settings/setInitialSetting'
     }),
     clear() {
