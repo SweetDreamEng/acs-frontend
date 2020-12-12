@@ -149,6 +149,20 @@ const getEnergyConsumption = async ({ state, commit }, id) => {
   }
 }
 
+const getRecipe = async ({ state, commit }, id) => {
+  state.loadingRecipe = true
+
+  try {
+    const response = await machineAPI.getRecipe(id)
+
+    commit('SET_RECIPE_VALUES', response.data.recipe_values)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingRecipe = false
+  }
+}
+
 const getWeeklyRunningHours = async ({ state, commit }, id) => {
   state.loadingWeeklyRunningHours1 = true
 
@@ -280,6 +294,7 @@ export default {
   getUtilization,
   getEnergyConsumption,
   getInventory,
+  getRecipe,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,

@@ -115,11 +115,11 @@ export default {
     this.getUtilization(this.$route.params.id)
     this.getEnergyConsumption(this.$route.params.id)
     this.getInventory(this.$route.params.id)
+    this.getRecipe(this.$route.params.id)
   },
 
   mounted() {
     this.selectMachine(this.$route.params.id)
-    this.initProduct(this.$route.params.id)
   },
 
   beforeDestroy() {
@@ -132,6 +132,7 @@ export default {
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
       getInventory: 'machines/getInventory',
+      getRecipe: 'machines/getRecipe',
       getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
       initProduct: 'machines/initProduct',
       'selectMachine': 'machines/selectMachine',

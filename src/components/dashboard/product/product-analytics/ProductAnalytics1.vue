@@ -46,10 +46,10 @@
         </OEE>
       </v-col>
       <v-col md="4" sm="12" xs="12">
-
+        <recipe></recipe>
       </v-col>
     </v-row>
-    <v-row dense>
+<!--     <v-row dense>
       <v-col md="4" sm="12" xs="12">
         <average-runtime-by-week
           :weekly-running-hours="weeklyRuningHours"
@@ -63,7 +63,7 @@
         >
         </machine-status>
       </v-col>
-    </v-row>
+    </v-row> -->
     <time-range-chooser
       :dlg="showTimeRangeChooser"
       :time-range-option="selectedTimeRange.timeRangeOption"
@@ -79,14 +79,14 @@
 </template>
 <script>
 import Overview from '../Overview'
-import HoursPerYear from '../HoursPerYear'
-import MachineStatus from './bd-batch-blender/MachineStatus'
+// import MachineStatus from './bd-batch-blender/MachineStatus'
 import Utilization from '../Utilization'
 import ActualTargetWeight from '../ActualTargetWeight'
-import AverageRuntimeByWeek from './bd-batch-blender/AverageRuntimeByWeek'
+// import AverageRuntimeByWeek from './bd-batch-blender/AverageRuntimeByWeek'
 import OEE from '../OEE'
 import EnergyConsumption from '../EnergyConsumption'
-// import Recipe from './bd-batch-blender/Recipe'
+import Recipe from './bd-batch-blender/Recipe'
+
 import TimeRangeChooser from '../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -94,10 +94,11 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   components: {
     Overview,
-    MachineStatus,
+    Recipe,
+    // MachineStatus,
     Utilization,
     ActualTargetWeight,
-    AverageRuntimeByWeek,
+    // AverageRuntimeByWeek,
     OEE,
     EnergyConsumption,
     TimeRangeChooser

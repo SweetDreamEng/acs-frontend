@@ -54,6 +54,12 @@ export default {
     })
   },
 
+  getRecipe(id) {
+    return api.get(`/analytics/product-recipe/${id}`).then((response) => {
+      return response
+    })
+  },
+
   getWeeklyRunningHours(id) {
     return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {
       return response

@@ -220,6 +220,9 @@ const state = {
   loadingInventories: false,
   inventories: [],
 
+  loadingRecipe: false,
+  recipeValues: [],
+
   // Running hours per weekday
   loadingWeeklyRunningHours1: false,
   weeklyRuningHours: [],
@@ -321,7 +324,6 @@ const state = {
 
   // BD Batch Blender
   totalRunningPercentage: 0,
-  recipeValues: [],
 
   // GH Gravimetric Extrusion Control Hopper
   hopperInventories: [],
