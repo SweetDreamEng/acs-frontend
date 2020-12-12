@@ -4,7 +4,7 @@
       Recipe
     </v-card-title>
     <v-card-text>
-      <apexchart type="pie" :options="chartOptions" :series="recipeValues"></apexchart>
+      <apexchart type="pie" height="240" :options="chartOptions" :series="recipeValues"></apexchart>
     </v-card-text>
   </v-card>
 </template>

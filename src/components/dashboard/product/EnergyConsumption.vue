@@ -3,7 +3,7 @@
     height="100%"
     :loading="loadingEnergyConsumption"
   >
-    <v-card-subtitle class="d-flex justify-space-between">
+    <v-card-title class="d-flex justify-space-between">
       <div>
         <div>Energy Consumption</div>
         <div class="caption font-italic">({{ timeRangeLabel }})</div>
@@ -15,7 +15,7 @@
       >
         <v-icon>mdi-dots-horizontal</v-icon>
       </v-btn>
-    </v-card-subtitle>
+    </v-card-title>
     <v-card-text>
       <apexchart
         type="area"

@@ -13,7 +13,7 @@
       <div class="ml-2">
         <div>PLC Software Version: <small>{{ machine.version }}</small></div>
         <div>PLC Software Build: <small>{{ machine.software_build }}</small></div>
-        <div>Serial Number: <small>{{ machine.serial_number }}</small></div>
+        <div>Serial Number: <small>{{ machine.serial }}</small></div>
       </div>
     </v-card-text>
   </v-card>

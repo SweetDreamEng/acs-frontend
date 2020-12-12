@@ -28,14 +28,9 @@
     <v-row dense>
       <v-col md="4" sm="12" xs="12">
         <actual-target-weight
-          :mode="modeWeight"
-          :param="paramWeight"
           :values-tgt-weight="valuesTgtWeight"
           :values-act-weight="valuesActWeight"
-          :is-loading="isWeightProductLoading"
-          :time-range-label="timeRangeLabel('weight')"
-          @changeParams="_onProductWeightParamChange"
-          @showTimeRange="onShowTimeRangeDlgOpen('weight')"
+          :is-loading="loadingWeight"
         >
         </actual-target-weight>
       </v-col>
@@ -103,6 +98,12 @@ export default {
     EnergyConsumption,
     TimeRangeChooser
   },
+  props: {
+    productId: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       showTimeRangeChooser: false,
@@ -126,6 +127,7 @@ export default {
   computed: {
     ...mapState({
       loadingOverview: (state) => state.machines.loadingOverview,
+      loadingWeight: (state) => state.machines.loadingWeight,
       machine: (state) => state.machines.machine,
 
       loadingInventories: (state) => state.machines.loadingInventories,
@@ -139,8 +141,8 @@ export default {
       paramWeight: (state) => state.machines.paramWeightProduct,
       paramInventory: (state) => state.machines.paramInventory,
 
-      valuesTgtWeight: (state) => state.machines.valuesTgtWeightProduct,
-      valuesActWeight: (state) => state.machines.valuesActWeightProduct,
+      valuesTgtWeight: (state) => state.machines.targetWeights,
+      valuesActWeight: (state) => state.machines.actualWeights,
       valuesHopInventory: (state) => state.machines.valuesHopInventory,
       valuesFrtInventory: (state) => state.machines.valuesFrtInventory,
 
@@ -176,6 +178,7 @@ export default {
       })
     },
     _onTimeRangeChanged(data) {
+      data.id = this.productId
       this.onTimeRangeChanged(data)
       this.showTimeRangeChooser = false
     }

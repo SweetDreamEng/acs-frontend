@@ -220,6 +220,11 @@ const state = {
   loadingInventories: false,
   inventories: [],
 
+  // Product Weight
+  loadingWeight: false,
+  actualWeights: [],
+  targetWeights: [],
+
   loadingRecipe: false,
   recipeValues: [],
 

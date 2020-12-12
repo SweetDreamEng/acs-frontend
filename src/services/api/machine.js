@@ -48,6 +48,12 @@ export default {
     })
   },
 
+  getWeight(id) {
+    return api.get(`/analytics/product-weight/${id}`).then((response) => {
+      return response
+    })
+  },
+
   getEnergyConsumption(data) {
     return api.post('/analytics/product-energy-consumption', data).then((response) => {
       return response

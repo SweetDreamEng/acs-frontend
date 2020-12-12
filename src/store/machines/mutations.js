@@ -27,8 +27,9 @@ export default {
   SET_OVERVIEW(state, overview) { state.machine = overview },
 
   SET_UTILIZATION(state, utilization) { state.utilizationSeries = utilization },
-
   SET_INVENTORIES(state, inventories) { state.inventories = inventories },
+  SET_ACTUAL_WEIGHTS(state, actualWeights) { state.actualWeights = actualWeights },
+  SET_TARGET_WEIGHTS(state, targetWeights) { state.targetWeights = targetWeights },
 
   SET_WEEKLY_RUNNING_HOURS(state, hours) { state.weeklyRuningHours = hours },
 
@@ -76,12 +77,6 @@ export default {
     state.paramInventory = param
   },
 
-  WEIGHT_PRODUCT_LOADING(state) {
-    state.isWeightProductLoading = true
-  },
-  WEIGHT_PRODUCT_LOADED(state) {
-    state.isWeightProductLoading = false
-  },
   INVENTORY_PRODUCT_LOADING(state) {
     state.isInventoryProductLoading = true
   },

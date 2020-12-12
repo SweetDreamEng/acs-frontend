@@ -163,6 +163,21 @@ const getRecipe = async ({ state, commit }, id) => {
   }
 }
 
+const getWeight = async ({ state, commit }, id) => {
+  state.loadingWeight = true
+
+  try {
+    const response = await machineAPI.getWeight(id)
+
+    commit('SET_ACTUAL_WEIGHTS', response.data.actuals)
+    commit('SET_TARGET_WEIGHTS', response.data.targets)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingWeight = false
+  }
+}
+
 const getWeeklyRunningHours = async ({ state, commit }, id) => {
   state.loadingWeeklyRunningHours1 = true
 
@@ -258,18 +273,12 @@ const getInventory = async ({ commit, state }, id) => {
 }
 
 const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
-  if (state.selectedTimeRangeKey === 'inventory') {
-    commit('SET_INVENTORY_TIME_RANGE', data)
-    // dispatch('getInventory')
-  } else if (state.selectedTimeRangeKey === 'weight') {
-    commit('SET_WEIGHT_TIME_RANGE', data)
-    dispatch('onProductWeightParamChange')
-  } else if (state.selectedTimeRangeKey === 'utilization') {
+  if (state.selectedTimeRangeKey === 'utilization') {
     commit('SET_UTILIZATION_TIME_RANGE', data)
-    dispatch('getUtilization', 1)
+    dispatch('getUtilization', data.id)
   } else if (state.selectedTimeRangeKey === 'energy-consumption') {
     commit('SET_ENERGY_CONSUMPTION_TIME_RANGE', data)
-    dispatch('getEnergyConsumption', 1)
+    dispatch('getEnergyConsumption', data.id)
   }
 }
 const getMachines = ({ commit }) => {
@@ -295,6 +304,7 @@ export default {
   getEnergyConsumption,
   getInventory,
   getRecipe,
+  getWeight,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,

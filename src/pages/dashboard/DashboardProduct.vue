@@ -2,7 +2,7 @@
   <div class="d-flex flex-grow-1 flex-column">
 
     <!-- loading spinner -->
-    <div v-if="isLoading1 || !selectedMachine" class="d-flex flex-grow-1 align-center justify-center">
+    <div v-if="isLoading1" class="d-flex flex-grow-1 align-center justify-center">
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </div>
 
@@ -10,17 +10,9 @@
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
           <product-analytics1
-            v-if="$route.params.id == 1"
+            :product-id="$route.params.id"
           >
           </product-analytics1>
-          <product-analytics2
-            v-if="$route.params.id == 2"
-          >
-          </product-analytics2>
-          <product-analytics3
-            v-if="$route.params.id == 3"
-          >
-          </product-analytics3>
         </v-col>
         <v-col cols="12">
           <alarm-table
@@ -77,8 +69,6 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import ProductAnalytics1 from '../../components/dashboard/product/product-analytics/ProductAnalytics1'
-import ProductAnalytics2 from '../../components/dashboard/product/product-analytics/ProductAnalytics2'
-import ProductAnalytics3 from '../../components/dashboard/product/product-analytics/ProductAnalytics3'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
@@ -86,7 +76,7 @@ import NoteForm from '../../components/dashboard/NoteForm'
 
 export default {
   components: {
-    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics1, ProductAnalytics2, ProductAnalytics3
+    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics1
   },
   props: {
   },
@@ -116,6 +106,7 @@ export default {
     this.getEnergyConsumption(this.$route.params.id)
     this.getInventory(this.$route.params.id)
     this.getRecipe(this.$route.params.id)
+    this.getWeight(this.$route.params.id)
   },
 
   mounted() {
@@ -133,6 +124,7 @@ export default {
       getEnergyConsumption: 'machines/getEnergyConsumption',
       getInventory: 'machines/getInventory',
       getRecipe: 'machines/getRecipe',
+      getWeight: 'machines/getWeight',
       getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
       initProduct: 'machines/initProduct',
       'selectMachine': 'machines/selectMachine',
