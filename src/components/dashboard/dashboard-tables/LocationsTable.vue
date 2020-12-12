@@ -30,7 +30,7 @@
           </div>
         </template>
         <template v-slot:item.name="{ item }">
-          <router-link :to="'/acs-machines/' + item.id" class="d-flex align-center">
+          <router-link :to="item.id.toString()" append class="d-flex align-center">
             <v-icon>mdi-google-maps</v-icon>
             <span class="title text-no-wrap ml-1">{{ item.name }}</span>
           </router-link>

@@ -26,14 +26,15 @@ export const routes = [{
     customerAdmin: true
   }
 }, {
-  path: '/dashboard/product/:id',
+  path: '/dashboard/analytics/:location/:zone/:productId',
   name: 'dashboard-product',
   component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/DashboardProduct.vue'),
   meta: {
+    layout: 'dashboard',
     userAuth: true
   }
 }, {
-  path: '/dashboard/:location',
+  path: '/dashboard/analytics/:location',
   name: 'location-dashboard',
   component: () => import(/* webpackChunkName: "location-dashboard" */ '@/pages/dashboard/LocationDashboard.vue'),
   meta: {
@@ -41,7 +42,7 @@ export const routes = [{
     customerAdmin: true
   }
 }, {
-  path: '/dashboard/:location/:zone',
+  path: '/dashboard/analytics/:location/:zone',
   name: 'zone-dashboard',
   component: () => import(/* webpackChunkName: "zone-dashboard" */ '@/pages/dashboard/ZoneDashboard.vue'),
   meta: {

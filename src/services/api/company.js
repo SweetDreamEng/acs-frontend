@@ -10,6 +10,13 @@ export default {
       return response
     })
   },
+
+  getCompanies() {
+    return api.get('/companies').then((response) => {
+      return response
+    })
+  },
+
   addCustomer(data) {
 
     Object.assign(data, {

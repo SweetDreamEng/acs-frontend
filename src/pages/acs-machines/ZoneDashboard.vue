@@ -34,7 +34,7 @@
 */
 
 // import vuex helper functions
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 // DEMO Cards for dashboard
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
@@ -89,6 +89,10 @@ export default {
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
+    ...mapGetters({
+      locationName: 'locations/locationName',
+      zoneName: 'zones/zoneName'
+    }),
     machinesForZone() {
       return this.machines.filter((machine) => {
         return parseInt(machine.location.id) === parseInt(this.$route.params.location)
@@ -106,18 +110,20 @@ export default {
           exact: true,
           to: '/acs-machines'
         }, {
-          text: 'Location 1',
+          text: this.locationName(parseInt(this.$route.params.location)),
           disabled: false,
           exact: true,
-          to: '/acs-machines/1'
+          to: `/acs-machines/${this.$route.params.location}`
         }, {
-          text: 'Zone 1',
+          text: this.zoneName(parseInt(this.$route.params.zone)),
           disabled: true
         }
       ]
     }
   },
   mounted() {
+    this.getLocations()
+    this.getZones()
     this.initAcsMachinesTable(this.$route.params.zone)
     
     let count = 0
@@ -134,7 +140,9 @@ export default {
   methods: {
     ...mapActions({
       initAcsMachinesTable: 'machines/initAcsMachinesTable',
-      changeSelectedCompany: 'machines/changeSelectedCompany'
+      changeSelectedCompany: 'machines/changeSelectedCompany',
+      getLocations: 'locations/getLocations',
+      getZones: 'zones/getZones'
     }),
     clear() {
       clearInterval(this.loadingInterval)
