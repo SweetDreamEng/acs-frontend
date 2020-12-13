@@ -49,6 +49,12 @@ export const routes = [{
     layout: 'dashboard',
     customerAdmin: true
   }
+}, {
+  path: '/products/:productId',
+  name: 'product-details',
+  component: () => import(/* webpackChunkName: "product-details" */ '@/pages/dashboard/DashboardProduct.vue'),
+  meta: {
+  }
 },
 ...AppSettingsRoutes,
 ...ACSMachines,

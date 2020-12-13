@@ -1,11 +1,10 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="surface2" class="my-n8 py-8">
+    <v-sheet v-if="$route.name !== 'product-details'" color="surface2" class="my-n8 py-8">
       <v-container class="pb-0" fluid>
         <v-breadcrumbs :items="breadcrumbItems"></v-breadcrumbs>
       </v-container>
     </v-sheet>
-    
     <v-container fluid>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">

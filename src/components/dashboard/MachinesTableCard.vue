@@ -142,9 +142,9 @@ export default {
     },
     productView(item) {
       this.$router.push({
-        name: 'dashboard-product',
+        name: 'product-details',
         params: {
-          id: item.machine_id
+          productId: item.serial_number
         }
       })
     },
