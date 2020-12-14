@@ -93,8 +93,6 @@ let firstRoute = true
  * Before each route update
  */
 router.beforeEach(async (to, from, next) => {
-  document.getElementById('loading').style.display = 'flex'
-
   if (firstRoute) {
     firstRoute = false
 
@@ -145,12 +143,4 @@ router.beforeEach(async (to, from, next) => {
 
   return next()
 })
-
-/**
- * After each route update
- */
-router.afterEach((to, from, next) => {
-  document.getElementById('loading').style.display = 'none'
-})
-
 export default router

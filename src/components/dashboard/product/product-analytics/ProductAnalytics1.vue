@@ -44,21 +44,6 @@
         <recipe></recipe>
       </v-col>
     </v-row>
-<!--     <v-row dense>
-      <v-col md="4" sm="12" xs="12">
-        <average-runtime-by-week
-          :weekly-running-hours="weeklyRuningHours"
-          :loading="loadingWeeklyRunningHours1"
-        >
-        </average-runtime-by-week>
-      </v-col>
-      <v-col md="4" sm="12" xs="12">
-        <machine-status
-          :total-running-percentage="totalRunningPercentage"
-        >
-        </machine-status>
-      </v-col>
-    </v-row> -->
     <time-range-chooser
       :dlg="showTimeRangeChooser"
       :time-range-option="selectedTimeRange.timeRangeOption"

@@ -12,7 +12,8 @@
         type="bar"
         height="240"
         :options="chartOptions"
-        :series="series">
+        :series="series"
+      >
       </apexchart>
     </v-card-text>
   </v-card>

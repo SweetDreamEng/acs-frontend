@@ -34,7 +34,7 @@
           </router-link>
         </template>
         <template v-slot:item.downtimeDistribution="{ item }">
-          <div  v-if="item && item.downtimeDistribution" class="d-flex align-end justify-end">
+          <div v-if="item && item.downtimeDistribution" class="d-flex align-end justify-end">
             <no-downtime v-if="hasNoDowntime(item.downtimeDistribution)"></no-downtime>
             <apexchart
               v-else
