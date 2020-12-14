@@ -57,7 +57,7 @@
           {{ header.text }}
         </template>
 
-<!-- -->
+        <!-- -->
         <template v-slot:item.status="{ item }">
           <v-icon :color="getColor(item)">{{ getIcon(item) }}</v-icon>
         </template>

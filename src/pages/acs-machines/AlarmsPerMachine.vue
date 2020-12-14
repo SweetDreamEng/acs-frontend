@@ -16,10 +16,10 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="12" style="max-height: 5px; font-size: 20px;">
+        <v-col cols="12" style="font-size: 20px;">
           All Machines <v-icon>mdi-near-me</v-icon>{{ totalAmount }}
         </v-col>
-        <v-col cols="12" style="max-height: 200px">
+        <v-col cols="12">
           <v-row>
             <v-col 
               v-for="idx in 4"

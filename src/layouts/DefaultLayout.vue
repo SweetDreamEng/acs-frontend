@@ -97,8 +97,25 @@ export default {
       logoImgError: false
     }
   },
+  computed: {
+    ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
+    ...mapState({
+      userRole: (state) => state.auth.user.role,
+      logoFile: (state) => state.settings.logo_file,
+      privateColors: (state) => state.settings.private_colors
+    }),
+    logoFilePath() {
+      return this.logoImgError ? require('../assets/imgs/logo-aec.png') : this.logoFile
+    }
+  },  
   mounted() {
-    this.setInitialSetting()
+    this.setInitialSetting({}).then(() => {
+      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
+      if (this.privateColors.length >= 2) {
+        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
+        this.$vuetify.theme.themes.light.background = this.privateColors[2]
+      }
+    })
   },
   methods: {
     ...mapActions({
@@ -106,16 +123,6 @@ export default {
     }),
     onLogoImgError() {
       this.logoImgError = true
-    }
-  },
-  computed: {
-    ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
-    ...mapState({
-      userRole: (state) => state.auth.user.role,
-      logoFile: (state) => state.settings.logo_file
-    }),
-    logoFilePath() {
-      return this.logoImgError ? require('../assets/imgs/logo-aec.png') : this.logoFile
     }
   }
 }

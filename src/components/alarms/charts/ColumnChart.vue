@@ -101,6 +101,9 @@ export default {
         }
       }
     }
+  },
+  mounted() {
+    this.$emit('selectMachine', 'BD Batch Blender')
   }
 }
 </script>
