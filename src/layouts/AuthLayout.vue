@@ -27,24 +27,33 @@ export default {
       logoImgError: false
     }
   },
-  mounted() {
-    this.setInitialSetting()
-  },
   computed: {
     ...mapState('app', ['product']),
     ...mapState({
       authBackgroundFile: (state) => state.settings.auth_background_file,
-      logoFile: (state) => state.settings.logo_file
+      logoFile: (state) => state.settings.logo_file,
+      privateColors: (state) => state.settings.private_colors
     }),
     authBackground() {
       return {
         'background-image': `url(${this.authBackgroundFile})`,
-        'background-size': 'cover'
+        // 'background-size': 'cover',
+        'background-position': 'center center',
+        'background-size': '100% 100%'
       }
     },
     logoFilePath() {
       return this.logoImgError ? require('../assets/imgs/logo-aec.png') : this.logoFile
     }
+  },
+  mounted() {
+    this.setInitialSetting({}).then(() => {
+      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
+      if (this.privateColors.length >= 2) {
+        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
+        this.$vuetify.theme.themes.light.background = this.privateColors[2]
+      }
+    })
   },
   methods: {
     ...mapActions({
