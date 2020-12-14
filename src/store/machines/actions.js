@@ -265,6 +265,11 @@ const getMachines = ({ commit }) => {
     commit('SET_MACHINES', response.data.machines)
   })
 }
+const getMachinesByCompanyId = ({ commit }, { companyId }) => {
+  return machineAPI.getMachinesByCompanyId(companyId).then((response) => {
+    commit('SET_MACHINES', response.data.machines)
+  })
+}
 
 export default {
   getAllConfigurations,
@@ -287,5 +292,6 @@ export default {
   onProductWeightParamChange,
   onProductInventoryParamChanged,
   onTimeRangeChanged,
-  getMachines
+  getMachines,
+  getMachinesByCompanyId
 }

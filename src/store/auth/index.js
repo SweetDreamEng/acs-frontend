@@ -10,7 +10,8 @@ const module = {
     user: {
       role: null,
       email: null,
-      username: null
+      username: null,
+      companyId: null
     },
     roles: [
       {
@@ -170,6 +171,7 @@ const module = {
         state.user.email = user.email
         state.user.username = user.name
         state.user.role = user.role
+        state.user.companyId = user.company_id
         state.token = token
       }
 
@@ -190,6 +192,7 @@ const module = {
         state.user.email = user.email
         state.user.username = user.name
         state.user.role = user.role
+        state.user.companyId = user.company_id
       }
     },
     SET_LOGOUT_AUTH(state) {
@@ -197,6 +200,7 @@ const module = {
       state.user.role = null
       state.user.email = null
       state.user.username = null
+      state.user.companyId = null
     },
     BUTTON_LOAD(state) {
       state.button_loading = true

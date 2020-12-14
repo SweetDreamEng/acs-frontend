@@ -12,7 +12,7 @@
           </v-col>    
           <v-col cols="12">
             <column-chart
-              :title="'Alarm Per Type'"
+              :title="'Alarm Per Customers'"
               :series="columnSeries"
               :dropDownList="machineNames"
               :categories="categories"

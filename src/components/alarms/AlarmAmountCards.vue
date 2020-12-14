@@ -11,7 +11,7 @@
       {{ amount }}
     </v-row>
     <v-row class="alarmTitle">
-      {{ title }}
+      {{ time }}
     </v-row>
   </v-col>
 </template>
@@ -23,7 +23,7 @@ export default {
       type: String,
       default: () => ('#000000')
     },
-    title: {
+    time: {
       type: String,
       default: () => ('')
     },

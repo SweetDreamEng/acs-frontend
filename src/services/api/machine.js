@@ -91,5 +91,10 @@ export default {
     return api.get('/acs-machines/get-machines').then((response) => {
       return response
     })
+  },
+  getMachinesByCompanyId(id) {
+    return api.get(`/acs-machines/get-machines-by-company-id/${id}`).then((response) => {
+      return response
+    })
   }
 }

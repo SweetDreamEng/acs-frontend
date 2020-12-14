@@ -10,7 +10,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
         v-model="dateRangeText"
-        label="Date range"
+        label="Select Date Range"
         prepend-icon="mdi-calendar"
         readonly
         v-bind="attrs"
@@ -20,8 +20,9 @@
     <v-date-picker
       v-model="dates"
       range
-      @input="datePicker = false"
-    ></v-date-picker>
+      @input="submit()"
+      >
+    </v-date-picker>
   </v-menu>
 </template>
 
@@ -29,18 +30,23 @@
 export default {
   data() {
     return {
-      dates: ['2020-01-01', new Date().toISOString().substr(0, 10)],
+      dates: [],
       datePicker: false
     }
   },
   computed: {
-    dateRangeText () {
+    dateRangeText () {            
       return this.dates.join(' ~ ')
+    }
+  },
+  methods: {
+    submit() {
+      this.datePicker = this.dates.length !== 2
+
+      if (this.dates.length === 2) {
+        this.$emit('onDateRangeSelected', this.dates)
+      }
     }
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -7,12 +7,18 @@
           <v-select
             v-model="selectedMachineName"
             :items="dropDownList"
+            item-text="name"
+            item-value="last"
+            outlined
+            dense
             label="Select Machine Types"
             @input="$emit('selectMachine', selectedMachineName)"
           ></v-select>
         </v-col>
         <v-col cols="4" sm="4" md="4" lg="4">
-          <date-range-picker></date-range-picker>
+          <date-range-picker
+            @onDateRangeSelected="handleDateRangeSelected"
+          ></date-range-picker>
         </v-col>
       </v-row>
       <apexchart
@@ -51,9 +57,12 @@ export default {
       default: () => ([])
     }
   },
+  mounted() {
+    this.selectedMachineName = 'ddd'
+  },
   data() {
     return {
-      selectedMachineName: 'BD Batch Blender'
+      selectedMachineName: null
     }
   },
   computed: {
@@ -99,8 +108,10 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$emit('selectMachine', 'BD Batch Blender')
+  methods: {
+    handleDateRangeSelected (dates) {
+      this.$emit('onDateRangeSelected', this.title , dates)
+    }
   }
 }
 </script>
