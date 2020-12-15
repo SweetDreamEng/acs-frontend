@@ -23,9 +23,7 @@
       <br>
 
       <machines-table-card
-        label="Machines"
-        :items="machines"
-        :loading="isLoading1"
+        :devices="devices"
       ></machines-table-card>
     </v-container>
   </div>
@@ -59,68 +57,6 @@ export default {
   },
   data() {
     return {
-      loadingInterval: null,
-      isLoading1: true,
-
-      series: [44, 55],
-
-      ordersSeries: [{
-        name: 'FPY',
-        data: [
-          ['2020-02-02', 34],
-          ['2020-02-03', 43],
-          ['2020-02-04', 40],
-          ['2020-02-05', 43]
-        ]
-      }],
-
-      customersSeries: [{
-        name: 'Avg FPY',
-        data: [
-          ['2020-02-02', 13],
-          ['2020-02-03', 11],
-          ['2020-02-04', 13],
-          ['2020-02-05', 12]
-        ]
-      }],
-
-      tab: 0,
-      locationDetailsView: false,
-
-      page: 1,
-      total: 9,
-
-      markers: [{
-        position: {
-          lat: 25.44,
-          lng: -80.47
-        }
-      }, {
-        position: {
-          lat: 40.66,
-          lng: -73.94
-        }
-      }, {
-        position: {
-          lat: 31.89,
-          lng: -97.08
-        }
-      }, {
-        position: {
-          lat: 37.9,
-          lng: -122.08
-        }
-      }, {
-        position: {
-          lat: 31.99,
-          lng: -83.31
-        }
-      }, {
-        position: {
-          lat: 39.42,
-          lng: -74.49
-        }
-      }]
     }
   },
   computed: {
@@ -129,7 +65,8 @@ export default {
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
       privateColors: (state) => state.settings.private_colors,
-      downtimeDistribution: (state) => state.machines.downtimeDistribution
+      downtimeDistribution: (state) => state.machines.downtimeDistribution,
+      devices: (state) => state.devices.data
     }),
     breadcrumbItems() {
       return [
@@ -146,9 +83,7 @@ export default {
   mounted() {
     this.initAcsDashboard()
     this.initLocationsTable()
-
-    let count = 0
-
+    this.getAcsDevicesAnalytics()
     this.setInitialSetting({}).then(() => {
       this.$vuetify.theme.themes.light.primary = this.privateColors[0]
       if (this.privateColors.length >= 2) {
@@ -156,26 +91,15 @@ export default {
         this.$vuetify.theme.themes.light.background = this.privateColors[2]
       }
     })
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
-  },
-  beforeDestroy() {
-    this.clear()
   },
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
       initLocationsTable: 'machines/initLocationsTable',
+      getAcsDevicesAnalytics: 'devices/getAcsDevicesAnalytics',
       changeSelectedCompany: 'machines/changeSelectedCompany',
       setInitialSetting: 'settings/setInitialSetting'
     }),
-    clear() {
-      clearInterval(this.loadingInterval)
-    },
     onCompanyChanged(company) {
       this.changeSelectedCompany(company)
     }

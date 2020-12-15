@@ -140,9 +140,9 @@ const module = {
       }
     },
 
-    // Get customer devices with analytics
+    // Get customer devices with analytics in customer dashboard page
     async getCustomerDevicesAnalytics({ state, commit }) {
-      state.loadingCustomerDevicesTable = true
+      state.loadingDashboardDevicesTable = true
 
       try {
         const response = await deviceAPI.getCustomerDevicesAnalytics()
@@ -151,7 +151,22 @@ const module = {
       } catch (error) {
         console.log(error.response)
       } finally {
-        state.loadingCustomerDevicesTable = false
+        state.loadingDashboardDevicesTable = false
+      }
+    },
+
+    // Get customer devices with analytics in acs dashboard
+    async getAcsDevicesAnalytics({ state, commit }) {
+      state.loadingDashboardDevicesTable = true
+
+      try {
+        const response = await deviceAPI.getAcsDevicesAnalytics()
+
+        commit('SET_DATA', response.data.devices)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        state.loadingDashboardDevicesTable = false
       }
     },
 

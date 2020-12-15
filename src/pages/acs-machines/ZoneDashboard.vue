@@ -16,7 +16,7 @@
     </v-sheet>
     <v-container>
       <machines-table
-        :machine="machines"
+        :devices="devices"
       >
       </machines-table>
     </v-container>
@@ -50,44 +50,14 @@ export default {
   },
   data() {
     return {
-      loadingInterval: null,
-
-      isLoading1: true,
-
-      series: [44, 55],
-
-      ordersSeries: [{
-        name: 'FPY',
-        data: [
-          ['2020-02-02', 34],
-          ['2020-02-03', 43],
-          ['2020-02-04', 40],
-          ['2020-02-05', 43]
-        ]
-      }],
-
-      customersSeries: [{
-        name: 'Avg FPY',
-        data: [
-          ['2020-02-02', 13],
-          ['2020-02-03', 11],
-          ['2020-02-04', 13],
-          ['2020-02-05', 12]
-        ]
-      }],
-
-      tab: 0,
-      locationDetailsView: false,
-
-      page: 1,
-      total: 9
     }
   },
   computed: {
     ...mapState({
       machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
+      devices: (state) => state.devices.data
     }),
     ...mapGetters({
       locationName: 'locations/locationName',
@@ -125,28 +95,16 @@ export default {
     this.getLocations()
     this.getZones()
     this.initAcsMachinesTable(this.$route.params.zone)
-    
-    let count = 0
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
-  },
-  beforeDestroy() {
-    this.clear()
+    this.changeSelectedCompany()
   },
   methods: {
     ...mapActions({
       initAcsMachinesTable: 'machines/initAcsMachinesTable',
+      getAcsDevicesAnalytics: 'devices/getAcsDevicesAnalytics',
       changeSelectedCompany: 'machines/changeSelectedCompany',
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones'
     }),
-    clear() {
-      clearInterval(this.loadingInterval)
-    },
     onCompanyChanged(company) {
       this.changeSelectedCompany(company)
     }

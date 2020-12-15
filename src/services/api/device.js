@@ -74,10 +74,19 @@ export default {
   },
 
   /*
-    Get devices with analytics for a certain customer
+    Get devices with analytics for a certain customer in customer dashboard pages
   */
   getCustomerDevicesAnalytics() {
     return api.get('/devices/customer-devices-analytics').then((response) => {
+      return response
+    })
+  },
+
+  /*
+    Get devices with analytics for a certain customer in acs dashboard pages
+  */
+  getAcsDevicesAnalytics() {
+    return api.get('/devices/acs-devices-analytics').then((response) => {
       return response
     })
   },

@@ -49,47 +49,23 @@
       </v-data-table>
 
       <div class="d-flex justify-end mr-4">
-        <div>
-          <v-icon class="ml-2 mr-0" color="#269ffb">mdi-checkbox-blank</v-icon>
-          Unplanned
-        </div>
-        <div>
-          <v-icon class="ml-2 mr-0" color="#26e7a5">mdi-checkbox-blank</v-icon>
-          Planned
-        </div>
-        <div>
-          <v-icon class="ml-2 mr-0" color="#febb3b">mdi-checkbox-blank</v-icon>
-          Idle
-        </div>
+        <downtime-legend></downtime-legend>
       </div>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-const series = [
-  {
-    name: 'Name',
-    data: [44]
-  },
-  {
-    name: 'Name',
-    data: [53]
-  },
-  {
-    name: 'Name',
-    data: [12]
-  }
-]
 
 import { mapState } from 'vuex'
 
 import ProductionRateChart from '../charts/ProductionRateChart'
 import NoDowntime from './NoDowntime'
+import DowntimeLegend from './DowntimeLegend'
 
 export default {
   components: {
-    ProductionRateChart, NoDowntime
+    ProductionRateChart, NoDowntime, DowntimeLegend
   },
   props: {
   },
