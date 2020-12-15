@@ -65,6 +65,12 @@ export default {
       return response
     })
   },
+  
+  getRecipe2(id) {
+    return api.get(`/analytics/product-actual-target-recipe/${id}`).then((response) => {
+      return response
+    })
+  },
 
   getWeeklyRunningHours(id) {
     return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {

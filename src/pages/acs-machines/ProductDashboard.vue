@@ -17,10 +17,13 @@
     <v-container fluid>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
-          <product-analytics1
-            :product-id="$route.params.productId"
-          >
-          </product-analytics1>
+          <div v-if="loadingAnalytics" class="d-flex flex-grow-1 align-center justify-center">
+            <v-progress-circular indeterminate color="primary"></v-progress-circular>
+          </div>
+          <template v-else>
+            <product-analytics1 :product-id="$route.params.productId"></product-analytics1>
+            <product-analytics2 :product-id="$route.params.productId"></product-analytics2>
+          </template>
         </v-col>
         <v-col cols="12">
           <alarm-table
@@ -77,6 +80,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import ProductAnalytics1 from '../../components/dashboard/product/product-analytics/ProductAnalytics1'
+import ProductAnalytics2 from '../../components/dashboard/product/product-analytics/ProductAnalytics2'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
@@ -103,7 +107,9 @@ export default {
       alarms: (state) => state.alarms.alarms,
       isLoading: (state) => state.machines.isNoteAdding,
       notes: (state) => state.machines.notes,
-      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
+
+      loadingAnalytics: (state) => state.machines.loadingOverview
     }),
     ...mapGetters('machines', [
       'selectedMachine'

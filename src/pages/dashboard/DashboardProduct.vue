@@ -8,10 +8,13 @@
     <v-container fluid>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
-          <product-analytics1
-            :product-id="$route.params.productId"
-          >
-          </product-analytics1>
+          <div v-if="loadingAnalytics" class="d-flex flex-grow-1 align-center justify-center">
+            <v-progress-circular indeterminate color="primary"></v-progress-circular>
+          </div>
+          <template v-else>
+            <product-analytics1 v-if="machine.machine_id === 1" :product-id="$route.params.productId"></product-analytics1>
+            <product-analytics2 v-if="machine.machine_id === 2" :product-id="$route.params.productId"></product-analytics2>
+          </template>
         </v-col>
         <v-col cols="12">
           <alarm-table
@@ -68,6 +71,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import ProductAnalytics1 from '../../components/dashboard/product/product-analytics/ProductAnalytics1'
+import ProductAnalytics2 from '../../components/dashboard/product/product-analytics/ProductAnalytics2'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
@@ -79,7 +83,7 @@ export default {
     NotesTimeline,
     NoteForm,
     AlarmTable,
-    ProductAnalytics1
+    ProductAnalytics1, ProductAnalytics2
   },
   props: {
   },
@@ -95,7 +99,9 @@ export default {
       alarmTypes: (state) => state.alarms.alarmTypes,
       alarms: (state) => state.alarms.alarms,
       isLoading: (state) => state.machines.isNoteAdding,
-      notes: (state) => state.notes.data
+      notes: (state) => state.notes.data,
+
+      loadingAnalytics: (state) => state.machines.loadingOverview
     }),
     ...mapGetters('machines', [
       'selectedMachine'
@@ -137,6 +143,10 @@ export default {
     this.getInventory(this.$route.params.productId)
     this.getRecipe(this.$route.params.productId)
     this.getWeight(this.$route.params.productId)
+
+    // Accumeter Ovation Continuous Blender
+    this.getRecipe2(this.$route.params.productId)
+
     this.getNotes(this.$route.params.productId)
   },
 
@@ -165,6 +175,9 @@ export default {
       'selectMachine': 'machines/selectMachine',
       'updateSelections': 'machines/updateSelections',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
+
+      getRecipe2: 'machines/getRecipe2',
+
       getNotes: 'notes/getNotes'
     }),
     clear() {

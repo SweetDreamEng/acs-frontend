@@ -224,6 +224,10 @@ const state = {
   loadingRecipe: false,
   recipeValues: [],
 
+  // Accumeter Ovation Continuous Blender
+  actualRecipe2Values: [],
+  targetRecipe2Values: [],
+
   // Running hours per weekday
   loadingWeeklyRunningHours1: false,
   weeklyRuningHours: [],

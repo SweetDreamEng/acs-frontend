@@ -1,7 +1,8 @@
 <template>
   <v-card
     height="100%"
-    :loading="loadingUtilization"
+    :loading="loading"
+    :disabled="loading"
   >
     <v-card-title>
       <div>
@@ -42,9 +43,9 @@ import { mapState } from 'vuex'
 
 export default {
   props: {
-    machineId: {
-      type: Number,
-      default: 0
+    loading: {
+      type: Boolean,
+      default: false
     },
     timeRangeLabel: {
       type: String,
@@ -78,7 +79,6 @@ export default {
   },
   computed: {
     ...mapState({
-      loadingUtilization: (state) => state.machines.loadingUtilization,
       utilizationSeries: (state) => state.machines.utilizationSeries
     }),
     series() {

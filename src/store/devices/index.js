@@ -22,9 +22,9 @@ const module = {
     assign_loading: false,              // status of uploading devices from excel file
     register_button_loading: false,
     loadingTableMachineMapping: false,
-    loadingCustomerDevicesTable: false,     //customer devices table in dashboard
     loadingBtnAssginZoneToMachine: false,
-
+    loadingDashboardDevicesTable: false,    //Devices table loading value in ACS dashboard and user dashboard pages
+    
     downtimePlanBtnLoading: false,
     downtimePlansTableLoading: false,
     downtimePlans: []

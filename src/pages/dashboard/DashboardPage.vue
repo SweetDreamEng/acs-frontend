@@ -57,93 +57,11 @@ export default {
   computed: {
     ...mapState({
       devices: (state) => state.devices.data,
-      // locations: (state) => state.locations.data,
+      locations: (state) => state.locations.data,
       zones: (state) => state.zones.data,
       privateColors: (state) => state.settings.private_colors,
       downtimeDistribution: (state) => state.machines.downtimeDistribution
-    }),
-    locations() {
-      return [
-        {
-          location: {
-            label: 'Location 1',
-            id: 1
-          },
-          utilization: '32%',
-          color: 'green',
-          value: 75,
-          oee: '93.1%',
-          performance: '78%',
-          rate: 56,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [this.downtimeDistribution[1]]
-            },
-            {
-              name: 'Name',
-              data: [this.downtimeDistribution[0]]
-            },
-            {
-              name: 'Name',
-              data: [this.downtimeDistribution[2]]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 2',
-            id: 2
-          },
-          utilization: '36%',
-          color: 'green',
-          value: 52,
-          oee: '89.8%',
-          performance: '28%',
-          rate: 65,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [44]
-            },
-            {
-              name: 'Name',
-              data: [53]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
-        },
-        {
-          location: {
-            label: 'Location 3',
-            id: 3
-          },
-          utilization: '82%',
-          color: 'red',
-          value: 78,
-          oee: '78.2%',
-          performance: '25%',
-          rate: 34,
-          downtime_distribution: [
-            {
-              name: 'Name',
-              data: [41]
-            },
-            {
-              name: 'Name',
-              data: [33]
-            },
-            {
-              name: 'Name',
-              data: [12]
-            }
-          ]
-        }
-      ]
-    }
+    })
   },
   mounted() {
     let count = 0

@@ -1,7 +1,8 @@
 <template>
   <v-card
     height="100%"
-    :loading="loadingEnergyConsumption"
+    :loading="loading"
+    :disabled="loading"
   >
     <v-card-title class="d-flex justify-space-between">
       <div>
@@ -45,9 +46,9 @@ export default {
   components: {
   },
   props: {
-    machineId: {
-      type: Number,
-      default: 0
+    loading: {
+      type: Boolean,
+      default: false
     },
     timeRangeLabel: {
       type: String,
@@ -81,7 +82,6 @@ export default {
   },
   computed: {
     ...mapState({
-      loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
       energyConsumption: (state) => state.machines.energyConsumption
     }),
     series() {

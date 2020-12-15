@@ -18,12 +18,13 @@
     </v-sheet>
 
     <v-container>
-      <locations-table></locations-table>
+      <locations-table :locations="locations"></locations-table>
 
       <br>
 
       <machines-table-card
         :devices="devices"
+        :loading="loadingDashboardDevicesTable"
       ></machines-table-card>
     </v-container>
   </div>
@@ -61,13 +62,17 @@ export default {
   },
   computed: {
     ...mapState({
+      loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
+      
       machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
       privateColors: (state) => state.settings.private_colors,
       downtimeDistribution: (state) => state.machines.downtimeDistribution,
-      devices: (state) => state.devices.data
+      devices: (state) => state.devices.data,
+      locations: (state) => state.locations.data
     }),
+
     breadcrumbItems() {
       return [
         {

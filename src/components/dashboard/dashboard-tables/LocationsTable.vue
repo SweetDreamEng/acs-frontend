@@ -71,6 +71,10 @@ export default {
     ProductionRateChart, NoDowntime, DowntimeLegend
   },
   props: {
+    locations: {
+      type: Array,
+      default: () => []
+    }
   },
   data () {
     return {
@@ -202,8 +206,7 @@ export default {
   },
   computed: {
     ...mapState({
-      loading: (state) => state.machines.loadingLocationsTable,
-      locations: (state) => state.locations.data
+      loading: (state) => state.machines.loadingLocationsTable
     })
   },
   methods: {

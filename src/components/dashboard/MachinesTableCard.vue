@@ -24,16 +24,16 @@
       </v-combobox>
     </v-card-title>
     <v-card-text>
-      <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
+      <!-- <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
         <v-progress-circular indeterminate color="primary"></v-progress-circular>
-      </div>
+      </div> -->
       <v-data-table
-        v-else
         id="machines-table"
         :headers="filtedHeaders"
         :items="devices"
-        hide-default-footer
         :search="searchQuery"
+        :loading="loading"
+        :disabled="loading"
         @click:row="productView"
       >
         <template v-slot:header.status="{ header }">

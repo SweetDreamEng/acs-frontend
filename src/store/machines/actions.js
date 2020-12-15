@@ -157,6 +157,21 @@ const getWeight = async ({ state, commit }, id) => {
   }
 }
 
+const getRecipe2 = async ({ state, commit }, id) => {
+  state.loadingRecipe = true
+
+  try {
+    const response = await machineAPI.getRecipe2(id)
+
+    state.actualRecipe2Values = response.data.actuals
+    state.targetRecipe2Values = response.data.targets
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingRecipe = false
+  }
+}
+
 const getWeeklyRunningHours = async ({ state, commit }, id) => {
   state.loadingWeeklyRunningHours1 = true
 
@@ -288,6 +303,7 @@ export default {
   getInventory,
   getRecipe,
   getWeight,
+  getRecipe2,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,
