@@ -18,24 +18,6 @@ const getAllConfigurations = async ({ commit }) => {
   }
 }
 
-const addNote = ({ commit, state }, data) => {
-  state.isNoteAdding = true
-
-  return new Promise((resolve, reject) => {
-    machineAPI.addNote(data)
-      .then((response) => {
-        commit('SET_NOTES', response.data.notes)
-        resolve(response)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-      .finally(() => {
-        state.isNoteAdding = false
-      })
-  })
-}
-
 const initAcsDashboard = ({ commit, state }) => {
   machineAPI.initAcsDashboard()
     .then((response) => {
@@ -71,9 +53,6 @@ const initProduct = ({ commit, state }, id) => {
     weightTimeRange: state.weightTimeRange
   })
     .then((response) => {
-      // set machine notes
-      commit('SET_NOTES', response.data.notes)
-
       commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
       commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
       commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
@@ -291,7 +270,6 @@ export default {
   getAllConfigurations,
   selectMachine,
   updateSelections,
-  addNote,
   initAcsDashboard,
   initLocationsTable,
   initAcsZonesTable,

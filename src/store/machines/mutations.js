@@ -9,18 +9,6 @@ export default {
       }
     })
   },
-  addNote: (state, note) => {
-    state.data.forEach( (_data) => {
-      if (_data.id === state.selectedId) {
-        const currentTime = new Date()
-
-        _data.notes.push({
-          text: note,
-          time: currentTime
-        })
-      }
-    })
-  },
 
   OVERVIEW_LOADING(state) { state.loadingOverview = true },
   OVERVIEW_LOADED(state) { state.loadingOverview = false },
@@ -38,11 +26,6 @@ export default {
   },
   SET_SELECTED_COMPANY(state, company) {
     state.selectedCompany = company
-  },
-
-  // Set machine notes
-  SET_NOTES(state, notes) {
-    state.notes = notes
   },
 
   // set target values

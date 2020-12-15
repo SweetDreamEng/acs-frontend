@@ -39,7 +39,7 @@
       <v-row>
         <v-col xs="12" sm="12" md="5">
           <note-form
-            :machine-id="parseInt($route.params.id)"
+            :device-id="parseInt($route.params.productId)"
           >
           </note-form>
         </v-col>
@@ -75,7 +75,11 @@ import NoteForm from '../../components/dashboard/NoteForm'
 
 export default {
   components: {
-    ProductParametersChart, NotesTimeline, NoteForm, AlarmTable, ProductAnalytics1
+    ProductParametersChart,
+    NotesTimeline,
+    NoteForm,
+    AlarmTable,
+    ProductAnalytics1
   },
   props: {
   },
@@ -91,7 +95,7 @@ export default {
       alarmTypes: (state) => state.alarms.alarmTypes,
       alarms: (state) => state.alarms.alarms,
       isLoading: (state) => state.machines.isNoteAdding,
-      notes: (state) => state.machines.notes
+      notes: (state) => state.notes.data
     }),
     ...mapGetters('machines', [
       'selectedMachine'
@@ -133,6 +137,7 @@ export default {
     this.getInventory(this.$route.params.productId)
     this.getRecipe(this.$route.params.productId)
     this.getWeight(this.$route.params.productId)
+    this.getNotes(this.$route.params.productId)
   },
 
   mounted() {
@@ -159,7 +164,8 @@ export default {
       initProduct: 'machines/initProduct',
       'selectMachine': 'machines/selectMachine',
       'updateSelections': 'machines/updateSelections',
-      onAlarmParamChanged: 'alarms/onAlarmParamChanged'
+      onAlarmParamChanged: 'alarms/onAlarmParamChanged',
+      getNotes: 'notes/getNotes'
     }),
     clear() {
       clearInterval(this.loadingInterval)

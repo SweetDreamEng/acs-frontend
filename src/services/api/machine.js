@@ -87,11 +87,6 @@ export default {
       return response
     })
   },
-  addNote(data) {
-    return api.post('/notes/store', data).then((response) => {
-      return response
-    })
-  },
   getMachines() {
     return api.get('/acs-machines/get-machines').then((response) => {
       return response

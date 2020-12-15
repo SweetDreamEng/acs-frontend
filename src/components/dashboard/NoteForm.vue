@@ -53,7 +53,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   props: {
-    machineId: {
+    deviceId: {
       type: Number,
       default: 0
     }
@@ -66,23 +66,29 @@ export default {
   },
   computed: {
     ...mapState({
-      isLoading: (state) => state.machines.isNoteAdding
+      isLoading: (state) => state.notes.isNoteAdding
     })
   },
   methods: {
     ...mapActions({
-      addNote: 'machines/addNote'
+      addNote: 'notes/addNote',
+      getNotes: 'notes/getNotes'
     }),
-    _addNote() {
+    async _addNote() {
       if (this.$refs.form.validate()) {
-        this.addNote({
-          machineId: this.machineId,
-          note: this.note
-        })
-          .then(() => {
-            this.note = ''
-            this.$refs.form.resetValidation()
+        try {
+          await this.addNote({
+            deviceId: this.deviceId,
+            note: this.note
           })
+
+          this.note = ''
+          this.$refs.form.resetValidation()
+
+          await this.getNotes(this.deviceId)
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
   }

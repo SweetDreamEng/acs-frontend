@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import authAPI from '@/services/api/auth'
-
 // packages
 import Auth from './packages/Auth'
 Vue.use(Auth)

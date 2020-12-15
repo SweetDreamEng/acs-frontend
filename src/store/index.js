@@ -14,6 +14,7 @@ import devices from './devices'
 import cities from './cities'
 import roles from './roles'
 import alarms from './alarms'
+import notes from './notes'
 
 Vue.use(Vuex)
 
@@ -33,7 +34,8 @@ const store = new Vuex.Store({
     devices,
     cities,
     roles,
-    alarms
+    alarms,
+    notes
   }
 })
 

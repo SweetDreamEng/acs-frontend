@@ -200,10 +200,6 @@ const state = {
 
   selectedCompany: null,
 
-  // product note
-  isNoteAdding: false,
-  notes: [],
-
   // utilization
   loadingUtilization: false,
   utilizationSeries: [],

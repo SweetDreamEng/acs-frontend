@@ -58,8 +58,8 @@ export default {
     errorLayout
   },
   computed: {
-    ...mapState('app', ['toast']),
     ...mapState({
+      toast: (state) => state.app.toast,
       isPageLoading: (state) => state.app.isPageLoading,
       isAppReady: (state) => state.auth.isAppReady
     }),
