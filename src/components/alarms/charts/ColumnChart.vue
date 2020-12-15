@@ -51,9 +51,6 @@ export default {
       default: () => ([])
     }
   },
-  mounted() {
-    this.$emit('selectMachine', 'BD Batch Blender')
-  },
   data() {
     return {
       selectedMachineName: 'BD Batch Blender'

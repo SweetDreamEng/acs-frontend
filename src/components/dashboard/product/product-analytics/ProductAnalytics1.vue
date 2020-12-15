@@ -26,7 +26,7 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="4" sm="12" xs="12">
+      <v-col md="8" sm="12" xs="12">
         <actual-target-weight
           :values-tgt-weight="valuesTgtWeight"
           :values-act-weight="valuesActWeight"
@@ -35,13 +35,15 @@
         </actual-target-weight>
       </v-col>
       <v-col md="4" sm="12" xs="12">
+        <recipe></recipe>
+      </v-col>
+    </v-row>
+    <v-row dense>
+      <v-col md="12" sm="12" xs="12">
         <OEE
           :is-loading="loadingInventories"
         >
         </OEE>
-      </v-col>
-      <v-col md="4" sm="12" xs="12">
-        <recipe></recipe>
       </v-col>
     </v-row>
     <time-range-chooser

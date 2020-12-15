@@ -8,14 +8,15 @@
       Hop & Fractual Inventories
     </v-card-title>
     <v-card-text>
-      <div v-if="inventories.length">
+      <div v-if="inventories.length" class="d-flex flex-wrap px-2">
         <div
           v-for="(inventory, i) in inventories"
           :key="i"
-          class="d-flex align-center pb-1"
+          class="py-1"
+          style="width: 25%"
         >
-          <div class="subtitle-1 text-right" style="width: 50%;">Feader {{ i + 1 }} :</div>
-          <div class="ml-1" style="width: 50%;">{{ inventory }}</div>
+          <div class="text-h5 black--text" v-text="inventory"></div>
+          <div class="body-1" v-text="'Feader ' + (i + 1)"></div>
         </div>
       </div>
     </v-card-text>

@@ -3,13 +3,14 @@
     height="100%"
     :loading="loading"
   >
+    <v-card-title>{{ machine.customer_assigned_name }}</v-card-title>
+    <v-card-subtitle>{{ machine.name }}</v-card-subtitle>
     <v-img
       height="150"
       contain
       src="../../../assets/imgs/blender.png"
     ></v-img>
     <v-card-text>
-      <div class="subtitle font-weight-bold">{{ machine.customer_assigned_name }} ({{ machine.name }})</div>
       <div class="ml-2">
         <div>PLC Software Version: <small>{{ machine.version }}</small></div>
         <div>PLC Software Build: <small>{{ machine.software_build }}</small></div>

@@ -10,7 +10,7 @@
     <v-card-text>
       <apexchart
         type="bar"
-        height="240"
+        height="400"
         :options="chartOptions"
         :series="series"
       >
@@ -66,16 +66,38 @@ export default {
             show: false
           }
         },
-        dataLabels: {
-          enabled: false
+        fill: {
+          colors: ['#002855', '#008ffb'],
+          opacity: 0.9,
+          type: 'solid'
         },
-        stroke: {
-          curve: 'smooth',
-          width: 2
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            dataLabels: {
+              position: 'top'
+            },
+            barHeight: '70%',
+            endingShape: 'rounded'
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          offsetX: -20,
+          style: {
+            fontSize: '10px',
+            colors: ['#fff']
+          }
         },
         xaxis: {
           categories: ['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6', 'Feeder 7', 'Feeder 8'],
           rotate: -45
+        },
+        legend: {
+          show: true,
+          markers: {
+            fillColors: ['#002855', '#008ffb']
+          }
         }
       }
     }
