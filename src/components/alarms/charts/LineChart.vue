@@ -1,21 +1,29 @@
 <template>
   <v-card>
-    <v-card-title v-if="subTitle != 'Short-Term'">{{ title }}</v-card-title>
+    <v-card-title>{{ title }}</v-card-title>
     <v-card-text>
       <v-row justify="space-between">
         <v-col cols="4" sm="4" md="4" lg="4">
           <v-select
+            v-model="selectedMachineName"
             :items="dropDownList"
+            item-text="name"
+            outlined
+            dense
             label="Select Machine Types"
+            @input="$emit('selectMachine', selectedMachineName)"
           ></v-select>
         </v-col>
         <v-col cols="4" sm="4" md="4" lg="4">
-          <date-range-picker></date-range-picker>
+          <date-range-picker
+            @onDateRangeSelected="handleDateRangeSelected"
+          ></date-range-picker>
         </v-col>
       </v-row>
-      <div style="overflow-x: hidden; overflow-y: hidden; width:100%">
+      <div style='overflow-x: scroll; overflow-y: hidden;'>
         <v-card>
           <apexchart
+            :width="width"
             height="300"
             :options="chartOptions"
             :series="series"
@@ -42,27 +50,26 @@ export default {
     },
     series: {
       type: Array,
-      default: () => ([])
+      default: () => (null)
     },
     dropDownList: {
       type: Array,
       default: () => ([])
-    },
-    categories: {
-      type: Array,
-      default: () => ([])
-    },
-    subTitle: {
-      type: String,
-      default: () => ('')
     }
   },
   data() {
     return {
-      selectedMachineName: 0
+      selectedMachineName: this.dropDownList[0]
     }
   },
   computed: {
+    width() {
+      if (this.series[0]) {
+        return 1250 > 30 * this.series[0].data.length ? 1250 : 30 * this.series[0].data.length
+      }
+      
+      return '100%'
+    },
     chartOptions() {
       return {
         chart: {
@@ -76,20 +83,19 @@ export default {
           enabled: false
         },
         stroke: {
-          width: [5, 5, 5, 5, 5],
-          curve: 'straight'
-        },
-        title: {
-          text: this.subTitle,
-          align: 'left'
-        },        
-        xaxis: {
-          categories: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+          width: 3,
+          curve: 'smooth',
+          lineCap: 'butt'
         },
         grid: {
           borderColor: '#f1f1f1'
         }
       }
+    }
+  },
+  methods: {
+    handleDateRangeSelected (dates) {
+      this.$emit('onDateRangeSelected', this.title, dates)
     }
   }
 }

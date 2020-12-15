@@ -1,16 +1,16 @@
 <template>
   <v-row>
     <v-col>
-      <v-card
-        outlined
-        style="background-color: lightgrey;"
-        tile
+      <v-toolbar 
+        color="grey"
+        flat
+        dense
       >
-        Alarms/Machine
-      </v-card>
+        {{ name }}
+      </v-toolbar>
       <v-card
         outlined
-        style="border: 2px solid lightgrey;"
+        style="border: 1px solid grey;"
         tile
       >
         <v-icon>mdi-near-me</v-icon>{{ amount }}
@@ -21,9 +21,14 @@
 
 <script>
 export default {
-  data() {
-    return {
-      amount: Math.floor(Math.random() * 50) + 50
+  props: {
+    name: {
+      type: String,
+      default: () => ('')
+    },
+    amount: {
+      type: Number,
+      default: () => (0)
     }
   }
 }

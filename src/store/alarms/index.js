@@ -1,4 +1,5 @@
 import alarmAPI from '@/services/api/alarm'
+import { startCase } from 'lodash'
 const now = new Date('YYYY-MM-DD')
 
 const module = {
@@ -6,6 +7,12 @@ const module = {
   state: {
     alarmTypes: [],
     alarms: [],
+    severity: [],
+    alarmsPerType: [],
+    alarmsDistribution: [],
+    alarmsAmountPerMachine: [],
+    dateRange: {},
+    selectedMachineName: {},
     timeRageOptions: [
       {
         label: 'Last 30 minutes',
@@ -80,9 +87,7 @@ const module = {
     }, machine_id) {
       return alarmAPI.getCorrespondingAlarmTypes(machine_id)
         .then((response) => {
-          console.log(response)
           commit('SET_ALARM_TYPES', response.data.alarm_types)
-          // commit('SET_ALARMS', response.data.alarms)
         })
         .catch((error) => {
           console.log(error.response)
@@ -90,6 +95,77 @@ const module = {
         .finally(() => {
           
         })
+    },
+    getAlarmsByCompanyId({
+      commit
+    }, company_id) {
+      return alarmAPI.getAlarmsByCompanyId(company_id)
+        .then((response) => {
+          commit('SET_ALARMS', response.data.alarms)
+        })
+    },
+    getSeverityByCompanyId({
+      commit
+    }, data ) {
+      return alarmAPI.getSeverityByCompanyId(data)
+        .then((response) => {
+          commit('SET_SEVERITY', response.data.severity)
+        })
+    },
+    getAlarmsPerTypeByMachine({
+      commit,
+      state
+    }, data ) {
+      if (data.machine_name) {
+        commit('SET_SELECTED_MACHINE_NAME', {
+          type: 'Alarms Per Type',
+          selectedMachineName: data.machine_name
+        })
+      } else {
+        data.machine_name = state.selectedMachineName['Alarms Per Type']
+      }
+
+      return alarmAPI.getAlarmsPerTypeByMachine(data)
+        .then((response) => {
+          commit('SET_ALARMS_PER_TYPE', response.data.alarms)
+        })
+    },
+    getAlarmsDistributionByMachine({
+      commit,
+      state
+    }, data ) {
+      if (data.machine_name) {
+        commit('SET_SELECTED_MACHINE_NAME', {
+          type: 'Alarms Distribution',
+          selectedMachineName: data.machine_name
+        })
+      } else {
+        data.machine_name = state.selectedMachineName['Alarms Distribution']
+      }
+      
+      return alarmAPI.getAlarmsDistributionByMachine(data)
+        .then((response) => {
+          commit('SET_ALARMS_DISTRIBUTION', response.data.results)
+        })
+    },
+    getAlarmsAmountPerMachineByCompanyId({
+      commit
+    }, data ) {
+      return alarmAPI.getAlarmsAmountPerMachineByCompanyId(data)
+        .then((response) => {
+          commit('SET_ALARMS_AMOUNT_PER_MACHINE', response.data.results)
+        })
+    },
+    setDateRange({
+      commit
+    }, {
+      type,
+      dates
+    }) {
+      return commit('SET_DATE_RANGE', {
+        type,
+        dates
+      })
     }
   },
 
@@ -102,6 +178,30 @@ const module = {
     //set alarms
     SET_ALARMS(state, alarms) {
       state.alarms = alarms
+    },
+
+    SET_ALARMS_AMOUNT_PER_MACHINE(state, alarmsAmountPerMachine) {
+      state.alarmsAmountPerMachine = alarmsAmountPerMachine
+    },
+
+    SET_ALARMS_DISTRIBUTION(state, alarmsDistribution) {
+      state.alarmsDistribution = alarmsDistribution
+    },
+
+    SET_ALARMS_PER_TYPE(state, alarmsPerType) {
+      state.alarmsPerType = alarmsPerType
+    },
+
+    SET_SEVERITY(state, severity) {
+      state.severity = severity
+    },
+
+    SET_DATE_RANGE(state, data) {
+      state.dateRange[data.type] = data.dates
+    },
+
+    SET_SELECTED_MACHINE_NAME(state, data) {
+      state.selectedMachineName[data.type] = data.selectedMachineName
     },
 
     SET_ALARM_PARAMS(state, params) {
@@ -127,6 +227,9 @@ const module = {
       } else {
         return state.dateFrom + ' ' + state.timeFrom + ' ~ ' + state.dateTo + ' ' + state.timeTo
       }
+    },
+    selectedMachineName(state) {
+      return state.selectedMachineName
     }
   }
 }

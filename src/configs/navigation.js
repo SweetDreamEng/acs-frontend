@@ -35,13 +35,14 @@ export default {
     key: '',
     items: [
       { icon: 'mdi-view-dashboard-outline', text: 'Machines', link: '/dashboard/analytics' },
+      { icon: 'mdi-near-me', text: 'Alarms', link: '/customers/alarms' },
       { icon: 'mdi-account-multiple', text: 'User Access', link: '/users/list' },
       { icon: 'mdi-speedometer', text: 'Threshold', regex: /^\/threshold/,
         items: [
           { text: 'Thresholds', link: '/threshold/list' },
           { text: 'Add Threshold', link: '/threshold/add' }
         ]
-      },
+      },      
       { icon: 'mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
       { icon: 'mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' }
     ]

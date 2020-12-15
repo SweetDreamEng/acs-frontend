@@ -19,4 +19,11 @@ export default [{
   meta: {
     acsAdmin: true
   }
+}, {
+  path: '/customers/alarms',
+  name: 'customers-alarms',
+  component: () => import(/* webpackChunkName: "customers-alarms" */ '@/pages/customers/Alarms.vue'),
+  meta: {
+    acsAdmin: true
+  }
 }]

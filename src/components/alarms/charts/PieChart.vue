@@ -4,7 +4,9 @@
     <v-card-text>
       <div class="d-flex" style="justify-content: flex-end">
         <v-col cols="4">
-          <date-range-picker></date-range-picker>
+          <date-range-picker
+            @onDateRangeSelected="handleDateRangeSelected"
+          ></date-range-picker>
         </v-col>
       </div>
       <v-row dense>
@@ -15,7 +17,7 @@
           lg="3"
         >
           <apexchart
-            height="150"
+            height="200"
             :options="chartOptions"
             :series="series"
           ></apexchart>
@@ -29,16 +31,16 @@
           <v-row>
             <v-col cols="6">
               <alarm-amount-cards
-                :iconType="'mdi-near-me'"
-                :amount="series[0] + series[1] + series[2]"
-                :title="'Total Alarms'"
+                :iconType="'mdi-bell'"
+                :amount="totalAmount"
+                :time="'Total Alarms'"
               />
             </v-col>
             <v-col cols="6">
               <alarm-amount-cards 
                 :iconType="'mdi-clock-outline'"
                 :amount="totalTime"
-                :title="'Total hours'"
+                :time="'Total Times'"
               />
             </v-col>
           </v-row>
@@ -50,30 +52,15 @@
           lg="4"
         >
           <v-row>
-            <v-col cols="4">
+            <v-col 
+              v-for="(value, idx) in 3"
+              :key="value"
+              cols="4">
               <alarm-amount-cards
-                :iconColor="'#FF0000'"
+                :iconColor="colors[idx]"
                 :iconType="'mdi-near-me'"
-                :amount="series[0]"
-                :title="'28:45 h'"
-                :isAlarmInfo="true"
-              />
-            </v-col>
-            <v-col cols="4">
-              <alarm-amount-cards
-                :iconColor="'#FFDD00'" 
-                :iconType="'mdi-near-me'"
-                :amount="series[1]"
-                :title="'64:51 h'"
-                :isAlarmInfo="true"
-              />
-            </v-col>
-            <v-col cols="4">
-              <alarm-amount-cards
-                :iconColor="'#00AAFF'"
-                :iconType="'mdi-near-me'"
-                :amount="series[2]"
-                :title="'04:59 h'"
+                :amount="series[idx]"
+                :time="alarmTimes[idx]"
                 :isAlarmInfo="true"
               />
             </v-col>
@@ -98,56 +85,54 @@ export default {
   props: {
     title: {
       type: String,
-      default: () => ('All Alarms- Severity')
-    },
-    totalAmount: {
-      type: Number,
-      default: () => (0)
-    },
-    totalHours: {
-      type: Number,
-      default: () => (0)
+      default: () => ('')
     },
     series: {
       type: Array,
       default: () => ([])
     },
-    hours: {
+    times: {
+      type: Array,
+      default: () => ([])
+    },
+    labels: {
       type: Array,
       default: () => ([])
     }
   },
   data() {
     return {
-      selectMachineName: 0
+      selectMachineName: 0,
+      colors : ['#FF0000', '#FFDD00', '#00AAFF']
     }
   },
   computed: {
-    alarmTimes() {
-      const times = this.hours.map((mins) => {
-        const hours = Math.floor(mins / 60)
-        const minutes = Math.round(mins % 60)
+    totalAmount() {
+      let amount = 0
 
-        return hours + ':' + minutes
+      this.series.forEach((item) => {
+        amount += item
       })
 
-      return times
+      return amount
     },
     totalTime() {
-      let totalmins = 0
+      let value = 0
+      
+      this.times.forEach((item) => {
+        value += item
+      })
 
-      for (let i = 0; i < this.hours.length; i ++) {
-        totalmins += this.hours[i]
-      }
-      const hours = Math.floor(totalmins / 60)
-      const minutes = Math.round(totalmins % 60)
+      return value
+    },
+    alarmTimes() {
+      const data = this.times.map((item) => item + ' times')
 
-      return hours + ':' + minutes
+      return data
     },
     chartOptions() {
       return {
         chart: {
-          height: 500,
           type: 'donut'
         },
         plotOptions: {
@@ -164,11 +149,16 @@ export default {
         fill: {
           colors: ['#FF0000', '#FFDD00', '#00AAFF']
         },
-        labels: ['BD Batch Blender', 'GH-F Gravimetric Additive Feeder', 'GP Portable Chiller'],
+        labels: this.labels,
         legend: {
           show: false
         }
       }
+    }
+  },
+  methods: {
+    handleDateRangeSelected (dates) {
+      this.$emit('onDateRangeSelected', this.title, dates)
     }
   }
 }
