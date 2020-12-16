@@ -14,6 +14,10 @@
           <template v-else>
             <product-analytics1 v-if="machine.machine_id === 1" :product-id="$route.params.productId"></product-analytics1>
             <product-analytics2 v-if="machine.machine_id === 2" :product-id="$route.params.productId"></product-analytics2>
+            <product-analytics3 v-if="machine.machine_id === 3" :product-id="$route.params.productId"></product-analytics3>
+            <product-analytics4 v-if="machine.machine_id === 4" :product-id="$route.params.productId"></product-analytics4>
+            <product-analytics5 v-if="machine.machine_id === 5" :product-id="$route.params.productId"></product-analytics5>
+            <product-analytics6 v-if="machine.machine_id === 6" :product-id="$route.params.productId"></product-analytics6>
           </template>
         </v-col>
         <v-col cols="12">
@@ -72,6 +76,10 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 
 import ProductAnalytics1 from '../../components/dashboard/product/product-analytics/ProductAnalytics1'
 import ProductAnalytics2 from '../../components/dashboard/product/product-analytics/ProductAnalytics2'
+import ProductAnalytics3 from '../../components/dashboard/product/product-analytics/ProductAnalytics3'
+import ProductAnalytics4 from '../../components/dashboard/product/product-analytics/ProductAnalytics4'
+import ProductAnalytics5 from '../../components/dashboard/product/product-analytics/ProductAnalytics5'
+import ProductAnalytics6 from '../../components/dashboard/product/product-analytics/ProductAnalytics6'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
@@ -83,7 +91,7 @@ export default {
     NotesTimeline,
     NoteForm,
     AlarmTable,
-    ProductAnalytics1, ProductAnalytics2
+    ProductAnalytics1, ProductAnalytics2, ProductAnalytics3, ProductAnalytics4, ProductAnalytics5, ProductAnalytics6
   },
   props: {
   },
