@@ -20,7 +20,7 @@
           ></date-range-picker>
         </v-col>
       </v-row>
-      <div style='overflow-x: scroll; overflow-y: hidden;'>
+      <div style="overflow-x: scroll; overflow-y: hidden;">
         <v-card>
           <apexchart
             :width="width"
@@ -36,7 +36,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import VueApexCharts from 'vue-apexcharts'
 import DateRangePicker from '../../dashboard/DateRangePicker.vue'
 
 export default {

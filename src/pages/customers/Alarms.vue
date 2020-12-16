@@ -15,9 +15,9 @@
         <column-chart
           :title="'Alarms Per Type'"
           :series="alarmPerTypeChartSeries"
-          :dropDownList="machineNames"
+          :drop-down-list="machineNames"
           :categories="alarmPerTypeChartCategories"
-          @selectMachine="updateAlarmPerTypeChartSeries"
+          @select-machine="updateAlarmPerTypeChartSeries"
           @onDateRangeSelected="handleDateRangeSelected"              
         >
         </column-chart>
@@ -26,8 +26,8 @@
         <line-chart
           :title="'Alarms Distribution'"
           :series="alarmDistributionChartSeries"
-          :dropDownList="machineNames"
-          @selectMachine="updateAlarmDistributionChartSeries"
+          :drop-down-list="machineNames"
+          @select-machine="updateAlarmDistributionChartSeries"
           @onDateRangeSelected="handleDateRangeSelected"
         >
         </line-chart>
@@ -36,14 +36,14 @@
         <line-chart
           :title="'Alarm response time'"
           :series="responseSeries"
-          :dropDownList="machineNames"
+          :dropDown-list="machineNames"
         >
         </line-chart>
       </v-col> -->
       <v-col cols="12">
         <alarms-per-machine
           :title="'Alarms Per Machine'"
-          :alarmsAmountPerMachine="alarmsAmountPerMachine"              
+          :alarms-amount-per-machine="alarmsAmountPerMachine"              
           @onDateRangeSelected="handleDateRangeSelected"
         >
         </alarms-per-machine>

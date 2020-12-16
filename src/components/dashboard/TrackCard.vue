@@ -37,7 +37,6 @@
 
 <script>
 import moment from 'moment'
-import VueApexCharts from 'vue-apexcharts'
 import TrendPercent from '../common/TrendPercent'
 
 function formatDate(date) {

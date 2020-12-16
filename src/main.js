@@ -17,7 +17,6 @@ import router from './router'
 // PLUGINS
 import vuetify from './plugins/vuetify'
 import './plugins/vue-head'
-import './plugins/vue-gtag'
 import './plugins/apexcharts'
 import './plugins/animate'
 import './plugins/clipboard'

@@ -27,8 +27,8 @@
               lg="3"
             >
               <alarm-per-machine-card 
-                :name = "alarm.name"
-                :amount = "parseInt(alarm.amount)"
+                :name="alarm.name"
+                :amount="parseInt(alarm.amount)"
               />
             </v-col>
           </v-row>

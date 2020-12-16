@@ -21,7 +21,7 @@
       v-model="dates"
       range
       @input="submit()"
-      >
+    >
     </v-date-picker>
   </v-menu>
 </template>

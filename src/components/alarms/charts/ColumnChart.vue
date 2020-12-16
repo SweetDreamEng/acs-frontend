@@ -32,7 +32,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import VueApexCharts from 'vue-apexcharts'
 import DateRangePicker from '../../dashboard/DateRangePicker.vue'
 
 export default {
@@ -56,9 +55,6 @@ export default {
       type: Array,
       default: () => ([])
     }
-  },
-  mounted() {
-    this.selectedMachineName = 'ddd'
   },
   data() {
     return {
@@ -107,6 +103,9 @@ export default {
         }
       }
     }
+  },
+  mounted() {
+    this.selectedMachineName = 'ddd'
   },
   methods: {
     handleDateRangeSelected (dates) {

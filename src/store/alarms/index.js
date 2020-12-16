@@ -1,5 +1,4 @@
 import alarmAPI from '@/services/api/alarm'
-import { startCase } from 'lodash'
 const now = new Date('YYYY-MM-DD')
 
 const module = {

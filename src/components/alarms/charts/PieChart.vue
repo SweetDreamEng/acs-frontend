@@ -31,14 +31,14 @@
           <v-row>
             <v-col cols="6">
               <alarm-amount-cards
-                :iconType="'mdi-bell'"
+                :icon-type="'mdi-bell'"
                 :amount="totalAmount"
                 :time="'Total Alarms'"
               />
             </v-col>
             <v-col cols="6">
               <alarm-amount-cards 
-                :iconType="'mdi-clock-outline'"
+                :icon-type="'mdi-clock-outline'"
                 :amount="totalTime"
                 :time="'Total Times'"
               />
@@ -55,13 +55,14 @@
             <v-col 
               v-for="(value, idx) in 3"
               :key="value"
-              cols="4">
+              cols="4"
+            >
               <alarm-amount-cards
-                :iconColor="colors[idx]"
-                :iconType="'mdi-near-me'"
+                :icon-color="colors[idx]"
+                :icon-type="'mdi-near-me'"
                 :amount="series[idx]"
                 :time="alarmTimes[idx]"
-                :isAlarmInfo="true"
+                :is-alarm-info="true"
               />
             </v-col>
           </v-row>
@@ -73,7 +74,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import VueApexCharts from 'vue-apexcharts'
 import DateRangePicker from '../../dashboard/DateRangePicker.vue'
 import AlarmAmountCards from '../AlarmAmountCards.vue'
 

@@ -14,7 +14,7 @@
             <column-chart
               :title="'Alarm Per Customers'"
               :series="columnSeries"
-              :dropDownList="machineNames"
+              :drop-down-list="machineNames"
               :categories="categories"
               @selectMachine="handleSelectMachine"              
             >
@@ -24,14 +24,14 @@
             <line-chart
               :title="'Alarm Distribution'"
               :series="lineSeries"
-              :dropDownList="machineNames"
-              :subTitle="'Long-Term'"
+              :drop-down-list="machineNames"
+              :sub-title="'Long-Term'"
             >
             </line-chart>
             <line-chart
               :series="lineSeries"
-              :dropDownList="machineNames"
-              :subTitle="'Short-Term'"
+              :drop-down-list="machineNames"
+              :sub-title="'Short-Term'"
             >
             </line-chart>
           </v-col>
@@ -39,14 +39,14 @@
             <line-chart
               :title="'Alarm response time'"
               :series="responseSeries"
-              :dropDownList="machineNames"
+              :drop-down-list="machineNames"
             >
             </line-chart>
           </v-col>
           <v-col cols="12">
             <alarms-per-machine
               :title="'Alarms Per Machine'"
-              :dropDownList="machineNames"
+              :drop-down-list="machineNames"
             >
             </alarms-per-machine>
           </v-col>
