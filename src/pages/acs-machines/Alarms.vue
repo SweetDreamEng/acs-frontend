@@ -1,57 +1,67 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-card elevation="10">
-      <v-sheet>
-        <v-row>
-          <v-col cols="12">
-            <pie-chart
-              :series="pieSeries"
-              :hours="pieHours"
-            >
-            </pie-chart>
-          </v-col>    
-          <v-col cols="12">
-            <column-chart
-              :title="'Alarm Per Customers'"
-              :series="columnSeries"
-              :drop-down-list="machineNames"
-              :categories="categories"
-              @selectMachine="handleSelectMachine"              
-            >
-            </column-chart>
-          </v-col>
-          <v-col cols="12">
-            <line-chart
-              :title="'Alarm Distribution'"
-              :series="lineSeries"
-              :drop-down-list="machineNames"
-              :sub-title="'Long-Term'"
-            >
-            </line-chart>
-            <line-chart
-              :series="lineSeries"
-              :drop-down-list="machineNames"
-              :sub-title="'Short-Term'"
-            >
-            </line-chart>
-          </v-col>
-          <v-col cols="12">
-            <line-chart
-              :title="'Alarm response time'"
-              :series="responseSeries"
-              :drop-down-list="machineNames"
-            >
-            </line-chart>
-          </v-col>
-          <v-col cols="12">
-            <alarms-per-machine
-              :title="'Alarms Per Machine'"
-              :drop-down-list="machineNames"
-            >
-            </alarms-per-machine>
-          </v-col>
-        </v-row>
-      </v-sheet>
+    <v-card>
+      <v-card-title>Overview</v-card-title>
+      <v-card-text>
+        <pie-chart
+          :series="pieSeries"
+          :hours="pieHours"
+        >
+        </pie-chart>
+      </v-card-text>
+    </v-card>
+
+    <br>
+
+    <v-card>
+      <v-card-title>Alarm Per Customers</v-card-title>
+      <v-card-text>
+        <column-chart
+          :series="columnSeries"
+          :drop-down-list="devices"
+          :categories="categories"
+        >
+        </column-chart>
+      </v-card-text>
+    </v-card>
+
+    <br>
+
+    <v-card>
+      <v-card-title>Alarm Distribution</v-card-title>
+      <v-card-text>
+        <line-chart
+          :series="lineSeries"
+          :drop-down-list="devices"
+          :sub-title="'Long-Term'"
+        >
+        </line-chart>
+      </v-card-text>
+    </v-card>
+
+    <br>
+
+    <v-card>
+      <v-card-title>Alarm response time</v-card-title>
+      <v-card-text>
+        <line-chart
+          :series="responseSeries"
+          :drop-down-list="devices"
+        >
+        </line-chart>
+      </v-card-text>
+    </v-card>
+
+    <br>
+
+    <v-card>
+      <v-card-title>Alarms Per Machine</v-card-title>
+      <v-card-text>
+        <alarms-per-machine
+          :drop-down-list="devices"
+        >
+        </alarms-per-machine>
+      </v-card-text>
     </v-card>
   </div>
 </template>
@@ -59,64 +69,19 @@
 <script>
 import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
-import VueApexCharts from 'vue-apexcharts'
 import ColumnChart from '../../components/alarms/charts/ColumnChart'
 import PieChart from '../../components/alarms/charts/PieChart'
 import LineChart from '../../components/alarms/charts/LineChart'
 import AlarmsPerMachine from './AlarmsPerMachine'
-// import TrendPercent from '../../common/TrendPercent'
 
-function formatDate(date) {
-  return date ? moment(date).format('D MMM') : ''
-}
-
-/*
-|---------------------------------------------------------------------
-| DEMO Dashboard Card Component
-|---------------------------------------------------------------------
-|
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
-|
-*/
 export default {
   components: {
     ColumnChart,
     PieChart,
     LineChart,
     AlarmsPerMachine
-    // TrendPercent
   },
-  // props: {
-  //   series: {
-  //     type: Array,
-  //     default: () => ([])
-  //   },
-  //   label: {
-  //     type: String,
-  //     default: ''
-  //   },
-  //   color: {
-  //     type: String,
-  //     default: '#092954'
-  //   },
-  //   value: {
-  //     type: String,
-  //     default: ''
-  //   },
-  //   percentage: {
-  //     type: Number,
-  //     default: 0
-  //   },
-  //   percentageLabel: {
-  //     type: String,
-  //     default: 'vs. last week'
-  //   },
-  //   options: {
-  //     type: Object,
-  //     default: () => ({})
-  //   }
-  // },
+
   data() {
     return {
       loading: true,
@@ -166,62 +131,21 @@ export default {
       }],
       pieSeries: [231.225, 529.313, 526.458],
       pieHours: [2000, 1600, 200],
-      categories: null,
-      selectedMachineName: null
+      categories: null
     }
   },
   computed: {
     ...mapState({
-      machines: (state) => state.machines.machines,
-      alarmTypes: (state) => state.alarms.alarmTypes
-    }),
-    machineNames() {
-      let names = []
-
-      if (this.machines.length) {
-        names = this.machines.map((machine) => machine.name)
-      }
-
-      return names
-    }
+      devices: (state) => state.devices.data
+    })
   },
   mounted() {
-    this.getMachines()
-
-    setTimeout(() => {
-      this.loading = false
-    }, 500)
+    this.getAllDevices()
   },
   methods: {
     ...mapActions({
-      'getMachines': 'machines/getMachines',
-      'getCorrespondingAlarmTypes': 'alarms/getCorrespondingAlarmTypes'
-    }),
-    handleSelectMachine (selectedMachineName) {
-      this.getMachines().then(() => {
-        let machine = this.machines.filter((machine) => machine.name === selectedMachineName)
-        
-        machine = machine[0]
-        this.getCorrespondingAlarmTypes(machine.id).then(() => {
-
-          const category_data = []
-          const series_data = []
-
-          if (this.alarmTypes.length) {
-
-            for (let i = 0; i < this.alarmTypes.length; i ++) {
-              category_data.push([`${this.alarmTypes[i].name}`])
-              series_data.push(Math.floor(Math.random() * 1000))
-            }
-            this.categories = category_data
-            this.columnSeries = [{
-              name: selectedMachineName,
-              data: series_data
-            }]
-          }
-        })
-      })      
-    }
+      'getAllDevices': 'devices/getAllDevices'
+    })
   }
 }
 </script>

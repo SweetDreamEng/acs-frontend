@@ -59,6 +59,19 @@ const module = {
           })
       })
     },
+
+    async getAllDevices({
+      commit
+    }) {
+      try {
+        const response = await deviceAPI.getAllDevices()
+        
+        commit('SET_DATA', response.data.devices)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
     importDevices({
       commit
     }) {

@@ -26,6 +26,16 @@ export default {
       return response
     })
   },
+
+  /*
+    Get all devices for acs users
+  */
+  getAllDevices() {
+    return api.get('/devices/all').then((response) => {
+      return response
+    })
+  },
+
   updateRegistered(data) {
     return api.post('/devices/device-register-update', data).then((response) => {
       return response

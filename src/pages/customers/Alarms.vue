@@ -1,80 +1,78 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-row>
-      <v-col cols="12">
+    <v-card>
+      <v-card-title>Overview</v-card-title>
+      <v-card-text>
         <pie-chart
-          :title="'All Alarms - Severity'"
-          :series="severityChartSeries"
-          :times="severityChartTimes"
-          :labels="severityChartLabels"              
-          @onDateRangeSelected="handleDateRangeSelected"
+          :series="pieSeries"
+          :hours="pieHours"
         >
         </pie-chart>
-      </v-col>    
-      <v-col cols="12">
+      </v-card-text>
+    </v-card>
+
+    <br>
+
+    <v-card>
+      <v-card-title>Alarm Per Customers</v-card-title>
+      <v-card-text>
         <column-chart
-          :title="'Alarms Per Type'"
-          :series="alarmPerTypeChartSeries"
-          :drop-down-list="machineNames"
-          :categories="alarmPerTypeChartCategories"
-          @select-machine="updateAlarmPerTypeChartSeries"
-          @onDateRangeSelected="handleDateRangeSelected"              
+          :series="columnSeries"
+          :drop-down-list="devices"
+          :categories="categories"
         >
         </column-chart>
-      </v-col>
-      <v-col cols="12">
+      </v-card-text>
+    </v-card>
+
+    <br>
+
+    <v-card>
+      <v-card-title>Alarm Distribution</v-card-title>
+      <v-card-text>
         <line-chart
-          :title="'Alarms Distribution'"
-          :series="alarmDistributionChartSeries"
-          :drop-down-list="machineNames"
-          @select-machine="updateAlarmDistributionChartSeries"
-          @onDateRangeSelected="handleDateRangeSelected"
+          :series="lineSeries"
+          :drop-down-list="devices"
+          :sub-title="'Long-Term'"
         >
         </line-chart>
-      </v-col>
-      <!-- <v-col cols="12">
+      </v-card-text>
+    </v-card>
+
+    <br>
+
+    <v-card>
+      <v-card-title>Alarm response time</v-card-title>
+      <v-card-text>
         <line-chart
-          :title="'Alarm response time'"
           :series="responseSeries"
-          :dropDown-list="machineNames"
+          :drop-down-list="devices"
         >
         </line-chart>
-      </v-col> -->
-      <v-col cols="12">
+      </v-card-text>
+    </v-card>
+
+    <br>
+
+    <v-card>
+      <v-card-title>Alarms Per Machine</v-card-title>
+      <v-card-text>
         <alarms-per-machine
-          :title="'Alarms Per Machine'"
-          :alarms-amount-per-machine="alarmsAmountPerMachine"              
-          @onDateRangeSelected="handleDateRangeSelected"
+          :drop-down-list="devices"
         >
         </alarms-per-machine>
-      </v-col>
-    </v-row>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
 <script>
-import moment, { max } from 'moment'
 import { mapState, mapActions } from 'vuex'
-import VueApexCharts from 'vue-apexcharts'
 import ColumnChart from '../../components/alarms/charts/ColumnChart'
 import PieChart from '../../components/alarms/charts/PieChart'
 import LineChart from '../../components/alarms/charts/LineChart'
 import AlarmsPerMachine from './AlarmsPerMachine'
-// import TrendPercent from '../../common/TrendPercent'
 
-function formatDate(date) {
-  return date ? moment(date).format('D MMM') : ''
-}
-
-/*
-|---------------------------------------------------------------------
-| DEMO Dashboard Card Component
-|---------------------------------------------------------------------
-|
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
-|
-*/
 export default {
   components: {
     ColumnChart,
@@ -85,136 +83,68 @@ export default {
   data() {
     return {
       loading: true,
-      alarmPerTypeChartSeries: [],
-      alarmPerTypeChartCategories: [],
-      alarmDistributionChartSeries: [],
-      severityChartSeries: [],
-      severityChartTimes: [],
-      severityChartLabels: [],
+      columnSeries: [{
+        name: 'BD Batch Blender',
+        data: [44, 55, 41, 67, 22, 43]
+      }],
+      lineSeries: [{
+        name: 'Accumeter Ovation Continuous Blender',
+        data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+      },
+      {
+        name: 'GH Gravimetric Extrusion Control Hopper',
+        data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+      },
+      {
+        name: 'GH-F Gravimetric Additive Feeder',
+        data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
+      },
+      {
+        name: 'VTC Plus Conveying System',
+        data: [30, 43, 42, 72, 83, 98, 19, 47, 66, 81, 22, 45]
+      },
+      {
+        name: 'NGX Dryer',
+        data: [57, 87, 94, 79, 35, 88, 25, 58, 58, 82, 13, 99]
+      }],
+      responseSeries: [{
+        name: 'Accumeter Ovation Continuous Blender',
+        data: [0, 37, 50, 35, 10, 0, 0, 2, 3, 0, 0, 0]
+      },
+      {
+        name: 'GH Gravimetric Extrusion Control Hopper',
+        data: [8, 0, 12, 7, 0, 0, 0, 0, 0, 5, 0, 0]
+      },
+      {
+        name: 'GH-F Gravimetric Additive Feeder',
+        data: [8, 2, 0, 0, 0, 3, 4, 5, 0, 0, 0, 0]
+      },
+      {
+        name: 'VTC Plus Conveying System',
+        data: [3, 0, 4, 7, 0, 9, 1, 4, 0, 0, 0, 5]
+      },
+      {
+        name: 'NGX Dryer',
+        data: [0, 0, 0, 0, 0, 0, 2, 8, 0, 0, 2, 0]
+      }],
+      pieSeries: [231.225, 529.313, 526.458],
+      pieHours: [2000, 1600, 200],
+      categories: null,
       selectedMachineName: null
     }
   },
   computed: {
     ...mapState({
-      machines: (state) => state.machines.machines,
-      severity: (state) => state.alarms.severity,
-      companyId: (state) => state.auth.user.companyId,
-      alarmsPerType: (state) => state.alarms.alarmsPerType,
-      alarmsDistribution: (state) => state.alarms.alarmsDistribution,
-      alarmsAmountPerMachine: (state) => state.alarms.alarmsAmountPerMachine,
-      dateRange: (state) => state.alarms.dateRange,
-      machineName: (state) => state.alarms.selectedMachineName
-    }),
-    machineNames() {
-      let names = []
-
-      if (this.machines.length) {
-        names = this.machines.map((machine) => machine)
-      }
-
-      return names
-    }
+      devices: (state) => state.devices.data
+    })
   },
   mounted() {
-    this.updateSeverityChartData()
-    this.updateAlarmsAmountPerMachineByCompanyId()
-    this.getMachinesByCompanyId({ 
-      companyId: this.companyId
-    }).then(() => {
-      if (this.machines.length) {
-        this.updateAlarmPerTypeChartSeries(this.machines[0].name)
-        this.updateAlarmDistributionChartSeries(this.machines[0].name)
-      }      
-    })
-
-    setTimeout(() => {
-      this.loading = false
-    }, 500)
+    this.getCustomerDevices()
   },
   methods: {
     ...mapActions({
-      'getMachinesByCompanyId': 'machines/getMachinesByCompanyId',
-      'getSeverityByCompanyId': 'alarms/getSeverityByCompanyId',
-      'getAlarmsPerTypeByMachine': 'alarms/getAlarmsPerTypeByMachine',
-      'getAlarmsDistributionByMachine': 'alarms/getAlarmsDistributionByMachine',
-      'getAlarmsAmountPerMachineByCompanyId': 'alarms/getAlarmsAmountPerMachineByCompanyId',
-      'setDateRange': 'alarms/setDateRange'
-    }),
-    updateSeverityChartData () {
-      this.getSeverityByCompanyId({
-        company_id: this.companyId,
-        dates: this.dateRange['All Alarms - Severity']
-      }).then(() => {
-        this.severityChartLabels = []
-        this.severityChartSeries = []
-        this.severityChartTimes = []
-        for (let i = 0; i < 3; i ++) {
-          this.severityChartLabels.push(this.severity[i].alarm_type_name)
-          this.severityChartSeries.push(parseInt(this.severity[i].values))
-          this.severityChartTimes.push(parseInt(this.severity[i].times))
-        }
-      })
-    },
-    updateAlarmPerTypeChartSeries (selectedMachineName) {
-      this.getAlarmsPerTypeByMachine({
-        company_id: this.companyId,
-        machine_name: selectedMachineName,
-        dates: this.dateRange['Alarms Per Type']
-      }).then(() => {
-        this.alarmPerTypeChartSeries[0] = {
-          'name': this.machineName['Alarms Per Type'],
-          'data': this.alarmsPerType.map((item) => item.values)
-        }
-        this.alarmPerTypeChartCategories = this.alarmsPerType.map((item) => item.name)
-        console.log(this.alarmsPerTypeChartCategories)
-      })
-    },
-    updateAlarmDistributionChartSeries (selectedMachineName) {
-      this.getAlarmsDistributionByMachine({
-        company_id: this.companyId,
-        machine_name: selectedMachineName,
-        dates: this.dateRange['Alarms Distribution']
-      }).then(() => {
-        this.alarmDistributionChartSeries = this.alarmsDistribution.slice(0, this.alarmsDistribution.length)
-      })
-    },
-    updateAlarmsAmountPerMachineByCompanyId () {
-      this.getAlarmsAmountPerMachineByCompanyId({
-        company_id: this.companyId,
-        dates: this.dateRange['Alarms Per Machine']
-      })
-    },
-    handleDateRangeSelected (type, dates) {
-      if (dates[0] > dates[1]) {
-        const temp = dates[0].slice(0)
-
-        dates[0] = dates[1].slice(0)
-        dates[1] = temp.slice(0)
-      }
-      
-      switch (type) {
-      case 'All Alarms - Severity':
-        this.setDateRange({ type, dates }).then(() => {
-          this.updateSeverityChartData ()
-        })
-        break
-      case 'Alarms Per Type':
-        this.setDateRange({ type, dates }).then(() => {
-          this.updateAlarmPerTypeChartSeries ()
-        })
-        break
-      case 'Alarms Distribution':
-        this.setDateRange({ type, dates }).then(() => {
-          this.updateAlarmDistributionChartSeries ()
-        })
-        break
-      case 'Alarms Per Machine':
-        this.setDateRange({ type, dates }).then(() => {
-          this.updateAlarmsAmountPerMachineByCompanyId ()
-        })
-        break
-      }
-    }
+      'getCustomerDevices': 'devices/getCustomerDevices'
+    })
   }
 }
 </script>

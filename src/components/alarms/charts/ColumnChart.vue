@@ -1,42 +1,32 @@
 <template>
-  <v-card>
-    <v-card-title>{{ title }}</v-card-title>
-    <v-card-text>
-      <v-row justify="space-between">
-        <v-col cols="4" sm="4" md="4" lg="4">
-          <v-select
-            v-model="selectedMachineName"
-            :items="dropDownList"
-            item-text="name"
-            item-value="last"
-            outlined
-            dense
-            label="Select Machine Types"
-            @input="$emit('selectMachine', selectedMachineName)"
-          ></v-select>
-        </v-col>
-        <v-col cols="4" sm="4" md="4" lg="4">
-          <date-range-picker
-            @onDateRangeSelected="handleDateRangeSelected"
-          ></date-range-picker>
-        </v-col>
-      </v-row>
-      <apexchart
-        height="300"
-        :options="chartOptions"
-        :series="series"
-      ></apexchart>
-    </v-card-text>
-  </v-card>
+  <div>
+    <v-row justify="space-between">
+      <v-col cols="4" sm="4" md="4" lg="4">
+        <v-select
+          v-model="selectedMachineName"
+          :items="dropDownList"
+          item-text="name"
+          item-value="id"
+          outlined
+          dense
+          label="Select Product"
+          @input="$emit('selectMachine', selectedMachineName)"
+        ></v-select>
+      </v-col>
+    </v-row>
+    <apexchart
+      height="300"
+      :options="chartOptions"
+      :series="series"
+    ></apexchart>
+  </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import DateRangePicker from '../../dashboard/DateRangePicker.vue'
 
 export default {
   components: {
-    DateRangePicker
   },
   props: {
     title: {
