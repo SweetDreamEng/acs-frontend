@@ -1,6 +1,25 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <!-- customer assignment table -->
+    <v-card>
+      <v-toolbar
+        color="primary"
+        dark
+      >
+        <v-toolbar-title>Logo</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <v-btn icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-card-text>
+        
+      </v-card-text>
+    </v-card>
+
+    <br>
+    
     <v-card>
       <v-card-title>Logo</v-card-title>
       <v-card-text>

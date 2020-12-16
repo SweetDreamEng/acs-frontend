@@ -46,12 +46,6 @@ export default {
   },
   data() {
     return {
-      loadingInterval: null,
-
-      isLoading1: true,
-
-      page: 1,
-      total: 9
     }
   },
   computed: {
@@ -64,8 +58,6 @@ export default {
     })
   },
   mounted() {
-    let count = 0
-
     this.setInitialSetting({}).then(() => {
       this.$vuetify.theme.themes.light.primary = this.privateColors[0]
       if (this.privateColors.length >= 2) {
@@ -78,15 +70,6 @@ export default {
     this.getLocations()
     this.getZones()
     this.initLocationsTable()
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
-  },
-  beforeDestroy() {
-    this.clear()
   },
   methods: {
     ...mapActions({
@@ -95,10 +78,7 @@ export default {
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
       setInitialSetting: 'settings/setInitialSetting'
-    }),
-    clear() {
-      clearInterval(this.loadingInterval)
-    }
+    })
   }
 }
 </script>

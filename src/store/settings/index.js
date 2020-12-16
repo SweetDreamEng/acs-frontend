@@ -12,10 +12,22 @@ const module = {
     loading: true,
     button_loading: null,
     logo_file: null,
-    auth_background_file: null
+    auth_background_file: null,
+
+    logoFilePath: ''
   },
 
   actions: {
+    async getAppSettings({ commit }) {
+      try {
+        const response = settingAPI.appSettings()
+
+        commit('SET_APP_SETTINGS', response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
     grabColors({
       commit
     }, {
@@ -135,6 +147,11 @@ const module = {
   },
 
   mutations: {
+    // Set basic app settings
+    SET_APP_SETTINGS(state, data) {
+      state.logoFilePath = data.logo
+    },
+
     BUTTON_LOAD(state, button) {
       state.button_loading = button
     },

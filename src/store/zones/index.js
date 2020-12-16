@@ -113,7 +113,7 @@ const module = {
     zoneName: (state) => (id) => {
       const _zone = state.data.find((zone) => zone.id === id)
 
-      return _zone ? _zone.name : 'Not Assinged'
+      return _zone ? _zone.name : 'Not Assigned'
     }
   }
 }

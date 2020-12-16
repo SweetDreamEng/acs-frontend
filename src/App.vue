@@ -60,7 +60,6 @@ export default {
   computed: {
     ...mapState({
       toast: (state) => state.app.toast,
-      isPageLoading: (state) => state.app.isPageLoading,
       isAppReady: (state) => state.auth.isAppReady
     }),
     isRouterLoaded: function() {

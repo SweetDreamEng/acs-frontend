@@ -1,5 +1,10 @@
 import api from '@/api.js'
 export default {
+  appSettings() {
+    return api.get('/settings/app-settings').then((response) => {
+      return response
+    })
+  },
   grabColors(data) {
     return api.post('/app-settings/grab-colors', data).then((response) => {
       return response

@@ -102,7 +102,7 @@ const module = {
     locationName: (state) => (id) => {
       const _location = state.data.find((location) => location.id === id)
 
-      return _location ? _location.name : 'Not Assinged'
+      return _location ? _location.name : 'Not Assigned'
     }
   }
 }

@@ -18,6 +18,9 @@
             <product-analytics4 v-if="machine.machine_id === 4" :product-id="$route.params.productId"></product-analytics4>
             <product-analytics5 v-if="machine.machine_id === 5" :product-id="$route.params.productId"></product-analytics5>
             <product-analytics6 v-if="machine.machine_id === 6" :product-id="$route.params.productId"></product-analytics6>
+            <product-analytics7 v-if="machine.machine_id === 7" :product-id="$route.params.productId"></product-analytics7>
+            <product-analytics8 v-if="machine.machine_id === 8" :product-id="$route.params.productId"></product-analytics8>
+            <product-analytics9 v-if="machine.machine_id === 9" :product-id="$route.params.productId"></product-analytics9>
           </template>
         </v-col>
         <v-col cols="12">
@@ -80,6 +83,9 @@ import ProductAnalytics3 from '../../components/dashboard/product/product-analyt
 import ProductAnalytics4 from '../../components/dashboard/product/product-analytics/ProductAnalytics4'
 import ProductAnalytics5 from '../../components/dashboard/product/product-analytics/ProductAnalytics5'
 import ProductAnalytics6 from '../../components/dashboard/product/product-analytics/ProductAnalytics6'
+import ProductAnalytics7 from '../../components/dashboard/product/product-analytics/ProductAnalytics7'
+import ProductAnalytics8 from '../../components/dashboard/product/product-analytics/ProductAnalytics8'
+import ProductAnalytics9 from '../../components/dashboard/product/product-analytics/ProductAnalytics9'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
@@ -91,7 +97,7 @@ export default {
     NotesTimeline,
     NoteForm,
     AlarmTable,
-    ProductAnalytics1, ProductAnalytics2, ProductAnalytics3, ProductAnalytics4, ProductAnalytics5, ProductAnalytics6
+    ProductAnalytics1, ProductAnalytics2, ProductAnalytics3, ProductAnalytics4, ProductAnalytics5, ProductAnalytics6, ProductAnalytics7, ProductAnalytics8, ProductAnalytics9
   },
   props: {
   },
