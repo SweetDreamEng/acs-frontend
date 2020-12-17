@@ -1,16 +1,15 @@
-FROM node:lts-alpine
-
-# make the 'app' folder the current working directory
-WORKDIR /var/www/html/acs-frontend
-
-# copy both 'package.json' and 'package-lock.json' (if available)
+# build stage
+FROM node:lts-alpine as build-stage
+WORKDIR /app
 COPY package*.json ./
-
-# install project dependencies
 RUN npm install
-
-# copy project files and folders to the current working directory
 COPY . .
-
-# build app for production with minification
 RUN npm run build
+
+# production stage
+FROM nginx:1.16 as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY ./sourcefiles/nginx/conf.d/proxy-vue.conf /etc/nginx/conf.d
+EXPOSE 8080:8080
+CMD ["nginx", "-g", "daemon off;"]
