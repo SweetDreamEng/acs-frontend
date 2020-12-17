@@ -8,6 +8,15 @@ Vue.use(Auth)
 import VueMask from 'v-mask'
 Vue.use(VueMask)
 
+// import Echo from 'laravel-echo'
+// window.Pusher = require('pusher-js')
+// window.Echo = new Echo({
+//   broadcaster: 'pusher',
+//   key: 'ce4734b07a1e03416f4c',
+//   cluster: 'mt1',
+//   encrypted: true
+// })
+
 // VUEX - https://vuex.vuejs.org/
 import store from './store'
 
@@ -22,6 +31,7 @@ import './plugins/animate'
 import './plugins/clipboard'
 import './plugins/moment'
 import './plugins/rules'
+import './plugins/channel'
 
 // FILTERS
 import './filters/initials'

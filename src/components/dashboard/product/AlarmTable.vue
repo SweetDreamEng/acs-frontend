@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </div>
-    <v-card v-else>
+    <v-card
+      :loading="loading"
+      :disabled="loading"
+    >
       <v-card-title color="primary">
-        {{ label }}
+        Alarms
         <v-btn
           rounded
           outlined
@@ -23,7 +23,6 @@
           :items="alarmTypes"
           :expanded.sync="expanded"
           show-expand
-          hide-default-footer
         >
           <!-- custom table header -->
           <template v-slot:header.alarm="{ header }">
@@ -45,13 +44,14 @@
           </template>
           <template v-slot:item.status="{ item }">
             <v-chip
-              :color="alarmsOfType(item).length === 0 ? 'green' : 'red'"
+              :color="isAlarmActivated(item) ? 'red' : 'green'"
               dark
               small
             >
+              {{ alarmsCount(item) }}
             </v-chip>
           </template>
-          <template v-slot:expanded-item="{ }">
+<!--           <template v-slot:expanded-item="{ }">
             <td :colspan="headers.length" class="px-4">
               <div
                 v-for="alarm in alarms"
@@ -61,7 +61,7 @@
                 Alarm generated at {{ alarm.timestamp }} time
               </div>
             </td>
-          </template>
+          </template> -->
         </v-data-table>
       </v-card-text>
     </v-card>
@@ -88,8 +88,6 @@
 | Table that lists alarms of a certain product
 |
 */
-import moment from 'moment'
-import store from '../../../store'
 import TimeRangeChooser from '../TimeRangeChooser'
 
 import { mapState, mapGetters } from 'vuex'
@@ -99,10 +97,6 @@ export default {
     TimeRangeChooser
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
     loading: {
       type: Boolean,
       default: false
@@ -135,7 +129,6 @@ export default {
     })
   },
   methods: {
-    open(item) { },
     onTimeRangeChanged(data) {
       this.$emit('change', data)
       this.showTimeRangeChooser = false
@@ -151,6 +144,14 @@ export default {
       } else {
         return ''
       }
+    },
+    isAlarmActivated(alarmType) {
+      return this.alarms.some((alarm) => alarm.tag_id === alarmType.tag_id)
+    },
+    alarmsCount(alarmType) {
+      const alarms = this.alarms.filter((alarm) => alarm.tag_id === alarmType.tag_id)
+
+      return alarms.length ? alarms.length : ''
     }
   }
 }

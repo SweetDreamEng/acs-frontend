@@ -55,6 +55,8 @@ const module = {
       }
     ],
     
+    loadingAlarms: false,
+
     loadingAlarmsPerMachine: false,
     alamrsPerMachine: [],
 
@@ -68,6 +70,24 @@ const module = {
   },
 
   actions: {
+    /*
+      get alarms for product
+    */
+    async getProductAlarms({ state, commit }, productId) {
+      state.loadingAlarms = true
+
+      try {
+        const response = await alarmAPI.getProductAlarms(productId)
+
+        commit('SET_ALARMS', response.data.alarms)
+        commit('SET_ALARM_TYPES', response.data.alarm_types)
+      } catch (error) {
+        console.log(error)
+      }
+
+      state.loadingAlarms = false
+    },
+
     /*
       Get alarms by machine
     */

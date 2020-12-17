@@ -27,8 +27,8 @@
           <alarm-table
             label="Alarms"
             :loading="isLoading1"
-            :alarm-types="alarmTypes"
             :alarms="alarms"
+            :alarm-types="alarmTypes"
             @change="_onAlarmParamChange"
           >
           </alarm-table>
@@ -150,6 +150,8 @@ export default {
   },
   
   created() {
+    this.getLocations()
+    this.getZones()
     this.getOverview(this.$route.params.productId)
     this.getWeeklyRunningHours(this.$route.params.productId)
     this.getUtilization(this.$route.params.productId)
@@ -157,6 +159,7 @@ export default {
     this.getInventory(this.$route.params.productId)
     this.getRecipe(this.$route.params.productId)
     this.getWeight(this.$route.params.productId)
+    this.getProductAlarms(this.$route.params.productId)
 
     // Accumeter Ovation Continuous Blender
     this.getRecipe2(this.$route.params.productId)
@@ -165,13 +168,10 @@ export default {
   },
 
   mounted() {
-    this.getLocations()
-    this.getZones()
-    this.selectMachine(this.$route.params.id)
-  },
 
-  beforeDestroy() {
-    this.clear()
+    this.$channel.bind('alarm.created', (data) => {
+      console.log(data)
+    })
   },
 
   methods: {
@@ -186,21 +186,11 @@ export default {
       getWeight: 'machines/getWeight',
       getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
       initProduct: 'machines/initProduct',
-      'selectMachine': 'machines/selectMachine',
-      'updateSelections': 'machines/updateSelections',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
-
+      getProductAlarms: 'alarms/getProductAlarms',
       getRecipe2: 'machines/getRecipe2',
-
       getNotes: 'notes/getNotes'
     }),
-    clear() {
-      clearInterval(this.loadingInterval)
-    },
-    onMachineUpdate() {
-      this.updateSelections(this.selections)
-      this.dialog = false
-    },
     _onAlarmParamChange(params) {
       this.onAlarmParamChanged(params)
     }

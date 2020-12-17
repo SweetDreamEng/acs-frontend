@@ -1,5 +1,11 @@
 import api from '@/api.js'
 export default {
+  getProductAlarms(productId) {
+    return api.post(`/alarms/${productId}`).then((response) => {
+      return response
+    })
+  },
+
   getAlarmsByMachine() {
     return api.post('/alarms/alarms-for-customer-devices').then((response) => {
       return response
