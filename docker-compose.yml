@@ -6,12 +6,7 @@ services:
     container_name: acs-frontend
     stdin_open: true
     tty: true
+    ports:
+      - "8080:8080"
     volumes:
       - ./:/var/www/html/acs-frontend
-    networks:
-      - acs-api_app-network
-
-#Docker Networks
-networks:
-  acs-api_app-network:
-    external: true
