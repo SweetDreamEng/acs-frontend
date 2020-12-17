@@ -14,7 +14,6 @@
 
       <machines-table-card
         :devices="devices"
-        :loading="isLoading1"
       ></machines-table-card>
     </v-container>
   </div>

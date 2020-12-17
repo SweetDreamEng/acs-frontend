@@ -13,15 +13,22 @@
 
     <br>
 
-    <v-card>
-      <v-card-title>Alarm Per Customers</v-card-title>
-      <v-card-text>
-        <column-chart
-          :series="columnSeries"
-          :drop-down-list="devices"
-          :categories="categories"
+    <v-card v-if="!loadingAlarmsPerMachine" :loading="loadingAlarmsPerMachine" :disabled="loadingAlarmsPerMachine">
+      <v-card-title>
+        Alarms By Machine
+        <v-btn
+          icon
+          class="ml-auto"
+          @click="$emit('showTimeRange')"
         >
-        </column-chart>
+          <v-icon>mdi-filter</v-icon>
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <alarms-by-machine
+          :devices="devices"
+        >
+        </alarms-by-machine>
       </v-card-text>
     </v-card>
 
@@ -68,17 +75,17 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import ColumnChart from '../../components/alarms/charts/ColumnChart'
 import PieChart from '../../components/alarms/charts/PieChart'
 import LineChart from '../../components/alarms/charts/LineChart'
 import AlarmsPerMachine from './AlarmsPerMachine'
+import AlarmsByMachine from '../../components/alarms/customers/AlarmsByMachine'
 
 export default {
   components: {
-    ColumnChart,
     PieChart,
     LineChart,
-    AlarmsPerMachine
+    AlarmsPerMachine,
+    AlarmsByMachine
   },
   data() {
     return {
@@ -135,15 +142,18 @@ export default {
   },
   computed: {
     ...mapState({
-      devices: (state) => state.devices.data
+      devices: (state) => state.devices.data,
+      loadingAlarmsPerMachine: (state) => state.alarms.loadingAlarmsPerMachine
     })
   },
   mounted() {
     this.getCustomerDevices()
+    this.getAlarmsByMachine()
   },
   methods: {
     ...mapActions({
-      'getCustomerDevices': 'devices/getCustomerDevices'
+      getCustomerDevices: 'devices/getCustomerDevices',
+      getAlarmsByMachine: 'alarms/getAlarmsByMachine'
     })
   }
 }

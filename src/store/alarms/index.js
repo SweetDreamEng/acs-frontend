@@ -55,6 +55,9 @@ const module = {
       }
     ],
     
+    loadingAlarmsPerMachine: false,
+    alamrsPerMachine: [],
+
     timeRange: 'last24Hours',
     dateFrom: new Date().toISOString().substr(0, 10),
     dateTo: new Date().toISOString().substr(0, 10),
@@ -65,6 +68,24 @@ const module = {
   },
 
   actions: {
+    /*
+      Get alarms by machine
+    */
+    async getAlarmsByMachine({ state, commit }) {
+      state.loadingAlarmsPerMachine = true
+      
+      try {
+        const response = await alarmAPI.getAlarmsByMachine()
+
+        commit('SET_ALARMS_PER_MACHINE')
+      } catch (error) {
+        console.log(error)
+      }
+
+      state.loadingAlarmsPerMachine = false
+
+    },
+
     onAlarmParamChanged({
       commit
     }, data) {
@@ -169,6 +190,10 @@ const module = {
   },
 
   mutations: {
+    SET_ALARMS_PER_MACHINE(state, alamrsPerMachine) {
+      state.alamrsPerMachine = alamrsPerMachine
+    },
+
     // init alarm types
     SET_ALARM_TYPES(state, types) {
       state.alarmTypes = types
