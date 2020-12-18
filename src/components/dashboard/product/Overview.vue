@@ -4,7 +4,10 @@
     :loading="loading"
   >
     <v-card-title>{{ machine.customer_assigned_name }}</v-card-title>
-    <v-card-subtitle>{{ machine.name }}</v-card-subtitle>
+    <v-card-subtitle>
+      <div>{{ machine.name }}</div>
+      <div>{{ machine.configuration.name }}</div>
+    </v-card-subtitle>
     <v-img
       height="150"
       contain

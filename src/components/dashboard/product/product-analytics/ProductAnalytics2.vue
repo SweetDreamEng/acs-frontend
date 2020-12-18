@@ -70,7 +70,6 @@
 <script>
 import Overview from '../Overview'
 import Utilization from '../Utilization'
-// import ActualTargetRecipe from './accumeter-ovation-continuous-blender/ActualTargetRecipe'
 import EnergyConsumption from '../EnergyConsumption'
 import MachineState from './accumeter-ovation-continuous-blender/MachineState'
 import FeederStable from './accumeter-ovation-continuous-blender/FeederStable'
@@ -84,7 +83,6 @@ export default {
   components: {
     Overview,
     Utilization,
-    // ActualTargetRecipe,
     EnergyConsumption,
     MachineState,
     FeederStable,

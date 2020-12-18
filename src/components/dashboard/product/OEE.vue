@@ -5,7 +5,7 @@
     :disabled="isLoading"
   >
     <v-card-title>
-      Hop & Fractual Inventories
+      Inventories
     </v-card-title>
     <v-card-text>
       <div v-if="inventories.length" class="d-flex flex-wrap px-2">
@@ -16,7 +16,7 @@
           style="width: 25%"
         >
           <div class="text-h5 black--text" v-text="inventory"></div>
-          <div class="body-1" v-text="'Feader ' + (i + 1)"></div>
+          <div class="body-1" v-text="'Feeder ' + (i + 1)"></div>
         </div>
       </div>
     </v-card-text>

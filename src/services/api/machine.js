@@ -78,6 +78,12 @@ export default {
     })
   },
 
+  getMachineStates3(id) {
+    return api.get(`/analytics/product-system-states-3/${id}`).then((response) => {
+      return response
+    })
+  },
+
   getFeederStables(id) {
     return api.get(`/analytics/product-feeder-stables/${id}`).then((response) => {
       return response

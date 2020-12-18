@@ -26,7 +26,8 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="8" sm="12" xs="12">
+      <v-col md="4" sm="12" xs="12">
+        <machine-states :loading="loadingMachineStates" :machine-states="machineStates"></machine-states>
       </v-col>
       <v-col md="4" sm="12" xs="12">
       </v-col>
@@ -48,6 +49,7 @@
 import Overview from '../Overview'
 import Utilization from '../Utilization'
 import EnergyConsumption from '../EnergyConsumption'
+import MachineStates from './gh-gravimetric-extrusion-control-hopper/MachineStates'
 import TimeRangeChooser from '../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -57,6 +59,7 @@ export default {
     Overview,
     Utilization,
     EnergyConsumption,
+    MachineStates,
     TimeRangeChooser
   },
   props: {
@@ -75,10 +78,12 @@ export default {
       machine: (state) => state.machines.machine,
       actualRecipeValues: (state) => state.machines.actualRecipe2Values,
       targetRecipeValues: (state) => state.machines.targetRecipe2Values,
-      
+      machineStates: (state) => state.machines.systemStates,
+
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
+      loadingMachineStates: (state) => state.machines.loadingSystemStates,
       loadingRecipe: (state) => state.machines.loadingRecipe
     }),
     ...mapGetters({
@@ -86,8 +91,12 @@ export default {
       selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
+  created() {
+    this.getMachineStates(this.productId)
+  },
   methods: {
     ...mapActions({
+      getMachineStates: 'machines/getMachineStates3',
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
       selectTimeRange: 'machines/selectTimeRange'
     }),

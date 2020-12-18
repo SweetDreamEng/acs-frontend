@@ -186,6 +186,20 @@ const getSystemStates = async({ state, commit }, id) => {
   }
 }
 
+const getMachineStates3 = async({ state, commit }, id) => {
+  state.loadingSystemStates = true
+
+  try {
+    const response = await machineAPI.getMachineStates3(id)
+
+    state.systemStates = response.data.machine_states
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingSystemStates = false
+  }
+}
+
 const getFeederStables = async({ state, commit }, id) => {
   state.loadingFeederStables2 = true
 
@@ -354,6 +368,7 @@ export default {
   getWeight,
   getRecipe2,
   getSystemStates,
+  getMachineStates3,
   getFeederStables,
   getProductionRate,
   getWeeklyRunningHours,
