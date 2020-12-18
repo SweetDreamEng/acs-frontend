@@ -1,26 +1,24 @@
 <template>
-  <v-card height="100%">
-    <v-card-title class="d-flex justify-space-between">
-      <div>Accumulated Hopper Inventory</div>
+  <v-card :loading="loading" :disabled="loading" height="100%">
+    <v-card-title>
+      <div>
+        <div>Accumulated Hopper Inventory</div>
+        <div class="caption font-italic">({{ timeRangeLabel }})</div>
+      </div>
       <v-btn
         icon
-        small
-        @click="showTimeRangeChooser = true"
+        class="ml-auto"
+        @click="$emit('showTimeRange')"
       >
-        <v-icon>mdi-dots-horizontal</v-icon>
+        <v-icon>mdi-filter</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-text>
-      <div>
-        <span class="display-1">12.3</span>
-        <span><v-icon color="green">mdi-arrow-up</v-icon>12% of target</span>
-      </div>
       <apexchart
-        v-if="!isLoading1"
         type="area"
         :options="chartOptions"
         :series="series"
-        height="160"
+        height="200"
       >
       </apexchart>
     </v-card-text>
@@ -28,33 +26,25 @@
 </template>
 
 <script>
-
-// import MonthlyWeekly from '../MonthlyWeekly'
 export default {
   components: {
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
     loading: {
       type: Boolean,
       default: false
     },
-    mode: {
+    timeRangeLabel: {
       type: String,
-      default: 'Weekly'
+      default: ''
     },
     hopperInventories: {
       type: Array,
-      default: () => ([])
+      default: () => []
     }
   },
   data() {
     return {
-      loadingInterval: null,
-      isLoading1: true
     }
   },
   computed: {
@@ -76,14 +66,8 @@ export default {
           curve: 'straight',
           width: 2
         },
-        grid: {
-          show: false
-        },
         xaxis: {
-          labels: {
-            show: false
-          },
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+          type: 'datetime'
         }
       }
     },
@@ -92,23 +76,6 @@ export default {
         name: 'Inventory',
         data: this.hopperInventories
       }]
-    }
-  },
-  mounted() {
-    let count = 0
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) {
-        this.clear()
-      }
-    }, 400)
-
-  },
-  methods: {
-    clear() {
-      clearInterval(this.loadingInterval)
     }
   }
 }

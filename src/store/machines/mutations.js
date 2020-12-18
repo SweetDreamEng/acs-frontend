@@ -88,10 +88,14 @@ export default {
       state.selectedTimeRange = state.energyConsumptionTimeRange
     } else if (key === 'process-rate') {
       state.selectedTimeRange = state.processRateTimeRange
+    } else if (key === 'hauloff-lengths') {
+      state.selectedTimeRange = state.hauloffTimeRange
     }
   },
   SET_CURRENT_TIME_PARAM_KEY(state, key) { state.selectedTimeRangeKey = key },
   SET_INVENTORY_TIME_RANGE(state, data) { state.inventoryTimeRange = Object.assign({}, data) },
+  SET_HOPPER_INVENTORY_TIME_RANGE(state, data) { state.inventoryTimeRange = Object.assign({}, data) },
+  SET_HAULOFF_LENGTH_TIME_RANGE(state, data) { state.hauloffTimeRange = Object.assign({}, data) },
   SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) },
   SET_UTILIZATION_TIME_RANGE(state, data) { state.utilizationTimeRange = Object.assign({}, data) },
   SET_ENERGY_CONSUMPTION_TIME_RANGE(state, data) { state.energyConsumptionTimeRange = Object.assign({}, data) },

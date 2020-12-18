@@ -30,15 +30,6 @@
 </template>
 
 <script>
-/*
-|---------------------------------------------------------------------
-| DEMO Dashboard Card Component
-|---------------------------------------------------------------------
-|
-| Demo card component to be used to gather some ideas on how to build
-| your own dashboard component
-|
-*/
 import { mapState } from 'vuex'
 
 export default {

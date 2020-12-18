@@ -32,6 +32,10 @@ const timeRangeLabel = (state) => (id) => {
     timeRange = state.energyConsumptionTimeRange
   } else if (id === 'process-rate') {
     timeRange = state.processRateTimeRange
+  } else if (id === 'hopper-inventories') {
+    timeRange = state.inventoryTimeRange
+  } else if (id === 'hauloff-lengths') {
+    timeRange = state.hauloffTimeRange
   }
 
   if (timeRange.timeRangeOption !== 'custom') {
@@ -45,6 +49,9 @@ const selectedTimeRange = (state) => {
   if (state.selectedTimeRangeKey === 'inventory') return state.inventoryTimeRange
   else if (state.selectedTimeRangeKey === 'weight') return state.weightTimeRange
   else if (state.selectedTimeRangeKey === 'utilization') return state.utilizationTimeRange
+  else if (state.selectedTimeRangeKey === 'process-rate') return state.processRateTimeRange
+  else if (state.selectedTimeRangeKey === 'hopper-inventories') return state.inventoryTimeRange
+  else if (state.selectedTimeRangeKey === 'hauloff-lengths') return state.hauloffTimeRange
 
   return ''
 }

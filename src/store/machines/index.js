@@ -339,6 +339,14 @@ const state = {
     timeTo: '00:00'
   },
 
+  hauloffTimeRange: {
+    timeRangeOption: 'last24Hours',
+    dateFrom: new Date().toISOString().substr(0, 10),
+    dateTo: new Date().toISOString().substr(0, 10),
+    timeFrom: '00:00',
+    timeTo: '00:00'
+  },
+
   selectedTimeRangeKey: 'inventory',
 
   valuesTgtWeightProduct: [],
@@ -350,8 +358,12 @@ const state = {
   totalRunningPercentage: 0,
 
   // GH Gravimetric Extrusion Control Hopper
+  loadingHopperInventories: false,
   hopperInventories: [],
+
+  loadingHauloffLengths: false,
   hauloffLengths: [],
+
   recipeSetPoints: [],
   recipeActualPoints: [],
 

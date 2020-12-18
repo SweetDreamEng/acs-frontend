@@ -64,6 +64,7 @@ export default {
           enabled: false
         },
         stroke: {
+          curve: 'straight',
           width: 2
         },
         xaxis: {

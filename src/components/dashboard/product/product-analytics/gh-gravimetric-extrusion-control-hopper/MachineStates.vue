@@ -25,7 +25,7 @@
               left
               :color="machineStates.system_steady ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ machineStates.system_steady ? 'Steady' : 'Not steady'}}
+            {{ machineStates.system_steady ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>
@@ -48,7 +48,7 @@
               left
               :color="machineStates.wtp ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ machineStates.wtp ? 'Steady' : 'Not steady'}}
+            {{ machineStates.wtp ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>
@@ -94,7 +94,7 @@
               left
               :color="machineStates.halloff ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ machineStates.halloff ? 'Steady' : 'Not steady'}}
+            {{ machineStates.halloff ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>

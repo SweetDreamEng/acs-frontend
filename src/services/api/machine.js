@@ -84,6 +84,14 @@ export default {
     })
   },
 
+  getHauloffLengths(data) {
+    return api.post('/analytics/product-hauloff-lengths', data).then((response) => response)
+  },
+
+  getHopperInventories(data) {
+    return api.post('/analytics/product-hopper-inventories', data).then((response) => response)
+  },
+
   getFeederStables(id) {
     return api.get(`/analytics/product-feeder-stables/${id}`).then((response) => {
       return response

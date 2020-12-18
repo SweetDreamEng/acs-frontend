@@ -200,6 +200,40 @@ const getMachineStates3 = async({ state, commit }, id) => {
   }
 }
 
+const getHopperInventories = async({ state, commit }, id) => {
+  state.loadingHopperInventories = true
+
+  try {
+    const response = await machineAPI.getHopperInventories({
+      id: id,
+      timeRange: state.inventoryTimeRange
+    })
+
+    state.hopperInventories = response.data.inventories
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingHopperInventories = false
+  }
+}
+
+const getHauloffLengths = async({ state, commit }, id) => {
+  state.loadingHauloffLengths = true
+
+  try {
+    const response = await machineAPI.getHauloffLengths({
+      id: id,
+      timeRange: state.hauloffTimeRange
+    })
+
+    state.hauloffLengths = response.data.lengths
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingHauloffLengths = false
+  }
+}
+
 const getFeederStables = async({ state, commit }, id) => {
   state.loadingFeederStables2 = true
 
@@ -335,6 +369,12 @@ const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   } else if (state.selectedTimeRangeKey === 'process-rate') {
     commit('SET_PROCESS_RATE_TIME_RANGE', data)
     dispatch('getProductionRate', data.id)
+  } else if (state.selectedTimeRangeKey === 'hopper-inventories') {
+    commit('SET_HOPPER_INVENTORY_TIME_RANGE', data)
+    dispatch('getHopperInventories', data.id)
+  } else if (state.selectedTimeRangeKey === 'hauloff-lengths') {
+    commit('SET_HAULOFF_LENGTH_TIME_RANGE', data)
+    dispatch('getHauloffLengths', data.id)
   }
 }
 
@@ -369,6 +409,8 @@ export default {
   getRecipe2,
   getSystemStates,
   getMachineStates3,
+  getHopperInventories,
+  getHauloffLengths,
   getFeederStables,
   getProductionRate,
   getWeeklyRunningHours,
