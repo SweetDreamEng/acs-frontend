@@ -26,6 +26,23 @@
       </v-col>
     </v-row>
     <v-row dense>
+      <v-col md="4" sm="12" xs="12">
+        <machine-state :loading="loadingSystemStates" :system-states="systemStates"></machine-state>
+      </v-col>
+      <v-col md="4" sm="12" xs="12">
+        <feeder-stable :loading="loadingFeederStables2" :feeders="feederStables"></feeder-stable>
+      </v-col>
+      <v-col md="4" sm="12" xs="12">
+        <production-rate
+          :loading="loadingProcessRate"
+          :rates="processRateSeries"
+          :time-range-label="timeRangeLabel('process-rate')"
+          @showTimeRange="onShowTimeRangeDlgOpen('process-rate')"
+        >
+        </production-rate>
+      </v-col>
+    </v-row>
+<!--     <v-row dense>
       <v-col md="8" sm="12" xs="12">
         <actual-target-recipe
           :targets="targetRecipeValues"
@@ -36,7 +53,7 @@
       </v-col>
       <v-col md="4" sm="12" xs="12">
       </v-col>
-    </v-row>
+    </v-row> -->
     <time-range-chooser
       :dlg="showTimeRangeChooser"
       :time-range-option="selectedTimeRange.timeRangeOption"
@@ -53,8 +70,11 @@
 <script>
 import Overview from '../Overview'
 import Utilization from '../Utilization'
-import ActualTargetRecipe from './accumeter-ovation-continuous-blender/ActualTargetRecipe'
+// import ActualTargetRecipe from './accumeter-ovation-continuous-blender/ActualTargetRecipe'
 import EnergyConsumption from '../EnergyConsumption'
+import MachineState from './accumeter-ovation-continuous-blender/MachineState'
+import FeederStable from './accumeter-ovation-continuous-blender/FeederStable'
+import ProductionRate from './accumeter-ovation-continuous-blender/ProductionRate'
 import TimeRangeChooser from '../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -63,8 +83,11 @@ export default {
   components: {
     Overview,
     Utilization,
-    ActualTargetRecipe,
+    // ActualTargetRecipe,
     EnergyConsumption,
+    MachineState,
+    FeederStable,
+    ProductionRate,
     TimeRangeChooser
   },
   props: {
@@ -83,21 +106,35 @@ export default {
       machine: (state) => state.machines.machine,
       actualRecipeValues: (state) => state.machines.actualRecipe2Values,
       targetRecipeValues: (state) => state.machines.targetRecipe2Values,
-      
+      systemStates: (state) => state.machines.systemStates,
+      feederStables: (state) => state.machines.feederStables,
+      processRateSeries: (state) => state.machines.processRateSeries,
+
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingRecipe: (state) => state.machines.loadingRecipe
+      loadingRecipe: (state) => state.machines.loadingRecipe,
+      loadingSystemStates: (state) => state.machines.loadingSystemStates,
+      loadingFeederStables2: (state) => state.machines.loadingFeederStables2,
+      loadingProcessRate: (state) => state.machines.loadingProcessRate
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
       selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
+  created() {
+    this.getSystemStates(this.productId)
+    this.getFeederStables(this.productId)
+    this.getProductionRate(this.productId)
+  },
   methods: {
     ...mapActions({
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
-      selectTimeRange: 'machines/selectTimeRange'
+      selectTimeRange: 'machines/selectTimeRange',
+      getSystemStates: 'machines/getSystemStates',
+      getFeederStables: 'machines/getFeederStables',
+      getProductionRate: 'machines/getProductionRate'
     }),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)

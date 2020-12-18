@@ -72,6 +72,22 @@ export default {
     })
   },
 
+  getSystemStates(id) {
+    return api.get(`/analytics/product-system-states/${id}`).then((response) => {
+      return response
+    })
+  },
+
+  getFeederStables(id) {
+    return api.get(`/analytics/product-feeder-stables/${id}`).then((response) => {
+      return response
+    })
+  },
+
+  getProductionRate(data) {
+    return api.post('/analytics/product-production-rate', data).then((response) => response)
+  },
+
   getWeeklyRunningHours(id) {
     return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {
       return response

@@ -228,6 +228,17 @@ const state = {
   actualRecipe2Values: [],
   targetRecipe2Values: [],
 
+  systemStates: {},
+  loadingSystemStates: false,
+
+  // Feeder stables in machine type 2
+  feederStables: [],
+  loadingFeederStables2: false,
+
+  // Production rate in machine type 2
+  processRateSeries: [],
+  loadingProcessRate: false,
+
   // Running hours per weekday
   loadingWeeklyRunningHours1: false,
   weeklyRuningHours: [],
@@ -313,6 +324,14 @@ const state = {
   paramInventory: 0,
 
   weightTimeRange: {
+    timeRangeOption: 'last24Hours',
+    dateFrom: new Date().toISOString().substr(0, 10),
+    dateTo: new Date().toISOString().substr(0, 10),
+    timeFrom: '00:00',
+    timeTo: '00:00'
+  },
+
+  processRateTimeRange: {
     timeRangeOption: 'last24Hours',
     dateFrom: new Date().toISOString().substr(0, 10),
     dateTo: new Date().toISOString().substr(0, 10),

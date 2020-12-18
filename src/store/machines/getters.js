@@ -30,6 +30,8 @@ const timeRangeLabel = (state) => (id) => {
     timeRange = state.utilizationTimeRange
   } else if (id === 'energy-consumption') {
     timeRange = state.energyConsumptionTimeRange
+  } else if (id === 'process-rate') {
+    timeRange = state.processRateTimeRange
   }
 
   if (timeRange.timeRangeOption !== 'custom') {

@@ -84,6 +84,8 @@ export default {
       state.selectedTimeRange = state.weightTimeRange
     } else if (key === 'utilization') {
       state.selectedTimeRange = state.utilizationTimeRange
+    } else if (key === 'process-rate') {
+      state.selectedTimeRange = state.processRateTimeRange
     }
   },
   SET_CURRENT_TIME_PARAM_KEY(state, key) { state.selectedTimeRangeKey = key },
@@ -91,6 +93,7 @@ export default {
   SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) },
   SET_UTILIZATION_TIME_RANGE(state, data) { state.utilizationTimeRange = Object.assign({}, data) },
   SET_ENERGY_CONSUMPTION_TIME_RANGE(state, data) { state.energyConsumptionTimeRange = Object.assign({}, data) },
+  SET_PROCESS_RATE_TIME_RANGE(state, data) { state.processRateTimeRange = Object.assign({}, data) },
   
   // Energy Consumption
   SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },

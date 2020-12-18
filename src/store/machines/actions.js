@@ -172,6 +172,51 @@ const getRecipe2 = async ({ state, commit }, id) => {
   }
 }
 
+const getSystemStates = async({ state, commit }, id) => {
+  state.loadingSystemStates = true
+
+  try {
+    const response = await machineAPI.getSystemStates(id)
+
+    state.systemStates = response.data.machine_states
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingSystemStates = false
+  }
+}
+
+const getFeederStables = async({ state, commit }, id) => {
+  state.loadingFeederStables2 = true
+
+  try {
+    const response = await machineAPI.getFeederStables(id)
+
+    state.feederStables = response.data.feeders
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingFeederStables2 = false
+  }
+}
+
+const getProductionRate = async({ state, commit }, id) => {
+  state.loadingProcessRate = true
+
+  try {
+    const response = await machineAPI.getProductionRate({
+      id: id,
+      timeRange: state.processRateTimeRange
+    })
+
+    state.processRateSeries = response.data.process_rate
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loadingProcessRate = false
+  }
+}
+
 const getWeeklyRunningHours = async ({ state, commit }, id) => {
   state.loadingWeeklyRunningHours1 = true
 
@@ -273,8 +318,12 @@ const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   } else if (state.selectedTimeRangeKey === 'energy-consumption') {
     commit('SET_ENERGY_CONSUMPTION_TIME_RANGE', data)
     dispatch('getEnergyConsumption', data.id)
+  } else if (state.selectedTimeRangeKey === 'process-rate') {
+    commit('SET_PROCESS_RATE_TIME_RANGE', data)
+    dispatch('getProductionRate', data.id)
   }
 }
+
 const getMachines = ({ commit }) => {
   return machineAPI.getMachines().then((response) => {
     commit('SET_MACHINES', response.data.machines)
@@ -304,6 +353,9 @@ export default {
   getRecipe,
   getWeight,
   getRecipe2,
+  getSystemStates,
+  getFeederStables,
+  getProductionRate,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,
