@@ -153,7 +153,7 @@ export default {
     this.getLocations()
     this.getZones()
     this.getOverview(this.$route.params.productId)
-    this.getWeeklyRunningHours(this.$route.params.productId)
+    // this.getWeeklyRunningHours(this.$route.params.productId)
     this.getUtilization(this.$route.params.productId)
     this.getEnergyConsumption(this.$route.params.productId)
     this.getInventory(this.$route.params.productId)

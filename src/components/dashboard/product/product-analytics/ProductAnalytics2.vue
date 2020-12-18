@@ -33,27 +33,27 @@
         <feeder-stable :loading="loadingFeederStables2" :feeders="feederStables"></feeder-stable>
       </v-col>
       <v-col md="4" sm="12" xs="12">
-        <production-rate
+        <process-rate
           :loading="loadingProcessRate"
           :rates="processRateSeries"
           :time-range-label="timeRangeLabel('process-rate')"
           @showTimeRange="onShowTimeRangeDlgOpen('process-rate')"
         >
-        </production-rate>
+        </process-rate>
       </v-col>
     </v-row>
-<!--     <v-row dense>
+    <v-row dense>
       <v-col md="8" sm="12" xs="12">
-        <actual-target-recipe
+        <recipe
           :targets="targetRecipeValues"
           :actuals="actualRecipeValues"
           :loading="loadingRecipe"
         >
-        </actual-target-recipe>
+        </recipe>
       </v-col>
       <v-col md="4" sm="12" xs="12">
       </v-col>
-    </v-row> -->
+    </v-row>
     <time-range-chooser
       :dlg="showTimeRangeChooser"
       :time-range-option="selectedTimeRange.timeRangeOption"
@@ -74,7 +74,8 @@ import Utilization from '../Utilization'
 import EnergyConsumption from '../EnergyConsumption'
 import MachineState from './accumeter-ovation-continuous-blender/MachineState'
 import FeederStable from './accumeter-ovation-continuous-blender/FeederStable'
-import ProductionRate from './accumeter-ovation-continuous-blender/ProductionRate'
+import ProcessRate from './accumeter-ovation-continuous-blender/ProcessRate'
+import Recipe from './accumeter-ovation-continuous-blender/Recipe'
 import TimeRangeChooser from '../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -87,7 +88,8 @@ export default {
     EnergyConsumption,
     MachineState,
     FeederStable,
-    ProductionRate,
+    ProcessRate,
+    Recipe,
     TimeRangeChooser
   },
   props: {
@@ -127,6 +129,7 @@ export default {
     this.getSystemStates(this.productId)
     this.getFeederStables(this.productId)
     this.getProductionRate(this.productId)
+    this.getRecipe2(this.productId)
   },
   methods: {
     ...mapActions({
@@ -134,9 +137,11 @@ export default {
       selectTimeRange: 'machines/selectTimeRange',
       getSystemStates: 'machines/getSystemStates',
       getFeederStables: 'machines/getFeederStables',
-      getProductionRate: 'machines/getProductionRate'
+      getProductionRate: 'machines/getProductionRate',
+      getRecipe2: 'machines/getRecipe2'
     }),
     onShowTimeRangeDlgOpen(key) {
+      console.log(key)
       this.selectTimeRange(key)
       this.$nextTick(() => {
         this.showTimeRangeChooser = true

@@ -84,6 +84,8 @@ export default {
       state.selectedTimeRange = state.weightTimeRange
     } else if (key === 'utilization') {
       state.selectedTimeRange = state.utilizationTimeRange
+    } else if (key === 'energy-consumption') {
+      state.selectedTimeRange = state.energyConsumptionTimeRange
     } else if (key === 'process-rate') {
       state.selectedTimeRange = state.processRateTimeRange
     }

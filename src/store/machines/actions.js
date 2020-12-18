@@ -36,7 +36,7 @@ const changeSelectedCompany = ({ commit }, company) => {
   commit('SET_SELECTED_COMPANY', company)
 }
 
-const selectTimeRange = ({ commit, dispatch, state }, key) => {
+const selectTimeRange = ({ commit }, key) => {
   commit('SET_CURRENT_TIME_PARAM_KEY', key)
   commit('SET_CURRENT_TIME_RANGE_ITEM', key)
 }

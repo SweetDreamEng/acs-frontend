@@ -1,11 +1,11 @@
 <template>
   <v-card
     height="100%"
-    :loading="isLoading"
-    :disabled="isLoading"
+    :loading="loading"
+    :disabled="loading"
   >
     <v-card-title class="d-flex justify-space-between">
-      Target & Actuals Weight
+      Target & Actuals Recipe
     </v-card-title>
     <v-card-text>
       <apexchart
@@ -27,23 +27,15 @@ export default {
   components: {
   },
   props: {
-    isLoading: {
+    loading: {
       type: Boolean,
       default: false
     },
-    timeRangeLabel: {
-      type: String,
-      default: ''
-    },
-    param: {
-      type: Number,
-      default: 1
-    },
-    valuesTgtWeight: {
+    targets: {
       type: Array,
       default: () => [{}]
     },
-    valuesActWeight: {
+    actuals: {
       type: Array,
       default: () => [{}]
     }
@@ -76,14 +68,14 @@ export default {
         },
         dataLabels: {
           enabled: true,
-          offsetX: 24,
+          offsetX: -10,
           style: {
             fontSize: '10px',
-            colors: ['#000']
+            colors: ['#fff']
           }
         },
         xaxis: {
-          categories: ['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6', 'Feeder 7', 'Feeder 8'],
+          categories: ['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6'],
           rotate: -45
         },
         legend: {
@@ -96,18 +88,17 @@ export default {
     }
   },
   computed: {
-    ...mapState('machines', ['weightTimeRange']),
     series() {
       return [
         {
           id: 1,
           name: 'Target',
-          data: this.valuesTgtWeight
+          data: this.targets
         },
         {
           id: 2,
           name: 'Actuals',
-          data: this.valuesActWeight
+          data: this.actuals
         }
       ]
     }
