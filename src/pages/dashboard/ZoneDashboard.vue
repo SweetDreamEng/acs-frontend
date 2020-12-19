@@ -7,20 +7,16 @@
       </v-container>
     </v-sheet>
     <v-container>
-      <machines-table></machines-table>
+      <machines-table
+        :loading="loadingMachinesTable"
+        :devices="devices"
+      >
+      </machines-table>
     </v-container>
   </div>
 </template>
 
 <script>
-
-/*
-|---------------------------------------------------------------------
-| Dashboard Page Component
-| url: /dashboard/analytics
-|---------------------------------------------------------------------
-|
-*/
 
 // import vuex helper functions
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -37,42 +33,13 @@ export default {
   },
   data() {
     return {
-      loadingInterval: null,
-
-      isLoading1: true,
-
-      series: [44, 55],
-
-      ordersSeries: [{
-        name: 'FPY',
-        data: [
-          ['2020-02-02', 34],
-          ['2020-02-03', 43],
-          ['2020-02-04', 40],
-          ['2020-02-05', 43]
-        ]
-      }],
-
-      customersSeries: [{
-        name: 'Avg FPY',
-        data: [
-          ['2020-02-02', 13],
-          ['2020-02-03', 11],
-          ['2020-02-04', 13],
-          ['2020-02-05', 12]
-        ]
-      }],
-
-      tab: 0,
-      locationDetailsView: false,
-
-      page: 1,
-      total: 9
     }
   },
   computed: {
     ...mapState({
-      machines: (state) => state.machines.data
+      loadingMachinesTable: (state) => state.machines.loadingMachinesTable,
+
+      devices: (state) => state.devices.data
     }),
     ...mapGetters({
       locationName: 'locations/locationName',
@@ -95,37 +62,19 @@ export default {
           disabled: true
         }
       ]
-    },
-    machinesForZone() {
-      return this.machines.filter((machine) => {
-        return parseInt(machine.location.id) === parseInt(this.$route.params.location)
-          && parseInt(machine.zone.id) === parseInt(this.$route.params.zone)
-      })
     }
   },
   mounted() {
     this.getLocations()
     this.getZones()
-
-    let count = 0
-
-    // DEMO delay for loading graphics
-    this.loadingInterval = setInterval(() => {
-      this[`isLoading${count++}`] = false
-      if (count === 4) this.clear()
-    }, 400)
-  },
-  beforeDestroy() {
-    this.clear()
+    this.initMachinesTable(this.$route.params.zone)
   },
   methods: {
     ...mapActions({
+      initMachinesTable: 'machines/initMachinesTable',
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones'
-    }),
-    clear() {
-      clearInterval(this.loadingInterval)
-    }
+    })
   }
 }
 </script>

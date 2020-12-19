@@ -250,6 +250,8 @@ const state = {
   // Zones table
   loadingZonesTable: false,
 
+  loadingMachinesTable: false,
+  
   modeWeightProduct: 'Weekly',
   modeInventory: 'Weekly',
 

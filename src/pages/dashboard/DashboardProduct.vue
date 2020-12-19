@@ -153,16 +153,9 @@ export default {
     this.getLocations()
     this.getZones()
     this.getOverview(this.$route.params.productId)
-    // this.getWeeklyRunningHours(this.$route.params.productId)
     this.getUtilization(this.$route.params.productId)
     this.getEnergyConsumption(this.$route.params.productId)
-    this.getInventory(this.$route.params.productId)
-    this.getRecipe(this.$route.params.productId)
-    this.getWeight(this.$route.params.productId)
     this.getProductAlarms(this.$route.params.productId)
-
-    // Accumeter Ovation Continuous Blender
-    this.getRecipe2(this.$route.params.productId)
 
     this.getNotes(this.$route.params.productId)
   },
@@ -181,14 +174,9 @@ export default {
       getOverview: 'machines/getOverview',
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
-      getInventory: 'machines/getInventory',
-      getRecipe: 'machines/getRecipe',
-      getWeight: 'machines/getWeight',
-      getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
       initProduct: 'machines/initProduct',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       getProductAlarms: 'alarms/getProductAlarms',
-      getRecipe2: 'machines/getRecipe2',
       getNotes: 'notes/getNotes'
     }),
     _onAlarmParamChange(params) {

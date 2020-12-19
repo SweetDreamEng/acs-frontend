@@ -154,11 +154,11 @@ const module = {
     },
 
     // Get customer devices with analytics in customer dashboard page
-    async getCustomerDevicesAnalytics({ state, commit }) {
+    async getCustomerDevicesAnalytics({ state, commit }, location_id = 0) {
       state.loadingDashboardDevicesTable = true
 
       try {
-        const response = await deviceAPI.getCustomerDevicesAnalytics()
+        const response = await deviceAPI.getCustomerDevicesAnalytics(location_id)
 
         commit('SET_DATA', response.data.devices)
       } catch (error) {

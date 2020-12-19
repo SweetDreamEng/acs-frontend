@@ -1,9 +1,8 @@
 <template>
-  <v-card>
-    <v-card-text
-      v-if="!loading"
-    >
+  <v-card :disabled="loading">
+    <v-card-text>
       <v-data-table
+        :loading="loading"
         :headers="headers"
         :items="locations"
         hide-default-footer
@@ -60,8 +59,6 @@
 
 <script>
 
-import { mapState } from 'vuex'
-
 import ProductionRateChart from '../charts/ProductionRateChart'
 import NoDowntime from './NoDowntime'
 import DowntimeLegend from './DowntimeLegend'
@@ -71,6 +68,10 @@ export default {
     ProductionRateChart, NoDowntime, DowntimeLegend
   },
   props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
     locations: {
       type: Array,
       default: () => []
@@ -203,11 +204,6 @@ export default {
         }
       }
     }
-  },
-  computed: {
-    ...mapState({
-      loading: (state) => state.machines.loadingLocationsTable
-    })
   },
   methods: {
     hasNoDowntime(distribution) {

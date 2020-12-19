@@ -16,7 +16,10 @@
       </v-container>
     </v-sheet>
     <v-container>
-      <zones-table :zones="zones">
+      <zones-table
+        :loading="loadingZonesTable"
+        :zones="zones"
+      >
       </zones-table>
 
       <br>
@@ -61,6 +64,8 @@ export default {
   },
   computed: {
     ...mapState({
+      loadingZonesTable: (state) => state.machines.loadingZonesTable,
+      
       machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
@@ -98,13 +103,13 @@ export default {
   mounted() {
     this.getLocations()
     this.initAcsDashboard()
-    this.initAcsZonesTable(this.$route.params.location)
+    this.initZonesTable(this.$route.params.location)
     this.getAcsDevicesAnalytics()
   },
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
-      initAcsZonesTable: 'machines/initAcsZonesTable',
+      initZonesTable: 'machines/initZonesTable',
       getAcsDevicesAnalytics: 'devices/getAcsDevicesAnalytics',
       changeSelectedCompany: 'machines/changeSelectedCompany',
       getLocations: 'locations/getLocations'

@@ -1,10 +1,10 @@
 <template>
-  <v-card>
+  <v-card :disabled="loading">
     <v-card-text>
       <v-data-table
+        :loading="loading"
         :headers="headers"
         :items="zones"
-        :loading="loading"
         hide-default-footer
       >
         <template v-slot:item.rate="{ item }">
@@ -68,6 +68,14 @@ export default {
     ProductionRateChart, NoDowntime, DowntimeLegend
   },
   props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    zones: {
+      type: Array,
+      default: () => []
+    }
   },
   data () {
     return {
@@ -184,12 +192,6 @@ export default {
         }
       }
     }
-  },
-  computed: {
-    ...mapState({
-      zones: (state) => state.zones.data,
-      loading: (state) => state.machines.loadingZonesTable
-    })
   },
   methods: {
     hasNoDowntime(distribution) {

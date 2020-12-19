@@ -13,19 +13,19 @@ export default {
   },
 
   initLocationsTable() {
-    return api.get('/acs-machines/init-locations-table').then((response) => {
+    return api.get('/dashboard/init-locations-table').then((response) => {
       return response
     })
   },
 
-  initAcsZonesTable(location_id) {
-    return api.get(`/acs-machines/init-zones-table/${location_id}`).then((response) => {
+  initZonesTable(location_id) {
+    return api.get(`/dashboard/init-zones-table/${location_id}`).then((response) => {
       return response
     })
   },
 
-  initAcsMachinesTable(zone_id) {
-    return api.get(`/acs-machines/init-machines-table/${zone_id}`).then((response) => {
+  initMachinesTable(zone_id) {
+    return api.get(`/dashboard/init-machines-table/${zone_id}`).then((response) => {
       return response
     })
   },

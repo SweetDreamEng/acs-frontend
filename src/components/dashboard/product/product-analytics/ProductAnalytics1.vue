@@ -108,8 +108,16 @@ export default {
       selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
+  created() {
+    this.getRecipe(this.productId)
+    this.getInventory(this.productId)
+    this.getWeight(this.productId)
+  },
   methods: {
     ...mapActions({
+      getInventory: 'machines/getInventory',
+      getRecipe: 'machines/getRecipe',
+      getWeight: 'machines/getWeight',
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
       selectTimeRange: 'machines/selectTimeRange'
     }),

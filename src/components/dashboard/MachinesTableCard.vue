@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card :disabled="loading">
     <v-card-title>
       Report
       <v-combobox
@@ -24,16 +24,12 @@
       </v-combobox>
     </v-card-title>
     <v-card-text>
-      <!-- <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
-        <v-progress-circular indeterminate color="primary"></v-progress-circular>
-      </div> -->
       <v-data-table
         id="machines-table"
         :headers="filtedHeaders"
         :items="devices"
         :search="searchQuery"
         :loading="loading"
-        :disabled="loading"
         @click:row="productView"
       >
         <template v-slot:header.status="{ header }">

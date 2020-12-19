@@ -18,7 +18,11 @@
     </v-sheet>
 
     <v-container>
-      <locations-table :locations="locations"></locations-table>
+      <locations-table
+        :loading="loadingLocationsTable"
+        :locations="locations"
+      >
+      </locations-table>
 
       <br>
 
@@ -63,6 +67,7 @@ export default {
   computed: {
     ...mapState({
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
+      loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
       
       machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,

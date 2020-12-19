@@ -16,6 +16,7 @@
     </v-sheet>
     <v-container>
       <machines-table
+        :loading="loadingMachinesTable"
         :devices="devices"
       >
       </machines-table>
@@ -54,6 +55,8 @@ export default {
   },
   computed: {
     ...mapState({
+      loadingMachinesTable: (state) => state.machines.loadingMachinesTable,
+      
       machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',

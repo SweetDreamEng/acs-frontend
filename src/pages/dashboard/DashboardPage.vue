@@ -8,7 +8,11 @@
     </v-sheet>
 
     <v-container>
-      <locations-table :locations="locations"></locations-table>
+      <locations-table
+        :loading="loadingLocationsTable"
+        :locations="locations"
+      >
+      </locations-table>
 
       <br>
 
@@ -49,6 +53,8 @@ export default {
   },
   computed: {
     ...mapState({
+      loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
+      
       devices: (state) => state.devices.data,
       locations: (state) => state.locations.data,
       zones: (state) => state.zones.data,
@@ -66,7 +72,6 @@ export default {
     })
 
     this.getCustomerDevicesAnalytics()
-    this.getLocations()
     this.getZones()
     this.initLocationsTable()
   },
@@ -74,7 +79,6 @@ export default {
     ...mapActions({
       initLocationsTable: 'machines/initLocationsTable',
       getCustomerDevicesAnalytics: 'devices/getCustomerDevicesAnalytics',
-      getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
       setInitialSetting: 'settings/setInitialSetting'
     })
