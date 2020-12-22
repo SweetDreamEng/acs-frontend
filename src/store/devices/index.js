@@ -22,7 +22,7 @@ const module = {
     assign_loading: false,              // status of uploading devices from excel file
     register_button_loading: false,
     loadingTableMachineMapping: false,
-    loadingBtnAssginZoneToMachine: false,
+    loadingBtnAssignZoneToMachine: false,
     loadingDashboardDevicesTable: false,    //Devices table loading value in ACS dashboard and user dashboard pages
     
     downtimePlanBtnLoading: false,
@@ -138,9 +138,9 @@ const module = {
     },
 
     async getCustomerDevices({
-      state, commit
+      commit
     }) {
-      state.loadingTableMachineMapping = true
+      commit('SET_LOADING_TABLE_MACHINE_MAPPING', true)
 
       try {
         const response = await deviceAPI.getCustomerDevices()
@@ -149,13 +149,13 @@ const module = {
       } catch (error) {
         console.log(error.response)
       } finally {
-        state.loadingTableMachineMapping = false
+        commit('SET_LOADING_TABLE_MACHINE_MAPPING', false)
       }
     },
 
     // Get customer devices with analytics in customer dashboard page
-    async getCustomerDevicesAnalytics({ state, commit }, location_id = 0) {
-      state.loadingDashboardDevicesTable = true
+    async getCustomerDevicesAnalytics({ commit }, location_id = 0) {
+      commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', true)
 
       try {
         const response = await deviceAPI.getCustomerDevicesAnalytics(location_id)
@@ -164,13 +164,13 @@ const module = {
       } catch (error) {
         console.log(error.response)
       } finally {
-        state.loadingDashboardDevicesTable = false
+        commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', false)
       }
     },
 
     // Get customer devices with analytics in acs dashboard
-    async getAcsDevicesAnalytics({ state, commit }) {
-      state.loadingDashboardDevicesTable = true
+    async getAcsDevicesAnalytics({ commit }) {
+      commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', true)
 
       try {
         const response = await deviceAPI.getAcsDevicesAnalytics()
@@ -179,14 +179,14 @@ const module = {
       } catch (error) {
         console.log(error.response)
       } finally {
-        state.loadingDashboardDevicesTable = false
+        commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', false)
       }
     },
 
     async assignZoneToDevice({
-      state, commit, dispatch
+      commit, dispatch
     }, data) {
-      state.loadingBtnAssginZoneToMachine = true
+      commit('SET_LOADING_BTN_ASSIGN_ZONE_TO_MACHINE', true)
 
       try {
         const response = await deviceAPI.assignZoneToDevice(data)
@@ -195,7 +195,7 @@ const module = {
       } catch (error) {
         console.log(error.response)
       } finally {
-        state.loadingBtnAssginZoneToMachine = false
+        commit('SET_LOADING_BTN_ASSIGN_ZONE_TO_MACHINE', false)
       }
     },
 
@@ -284,10 +284,10 @@ const module = {
       })
     },
     async getDowntimePlans({
-      commit, state
+      commit
     }) {
-      state.downtimePlansTableLoading = true
-
+      commit('SET_DOWNTIME_PLANS_TABLE_LOADING', true)
+      
       try {
         const response = await deviceAPI.getDowntimePlans()
 
@@ -296,14 +296,14 @@ const module = {
       } catch (error) {
         console.log(error.response)
       } finally {
-        state.downtimePlansTableLoading = false
+        commit('SET_DOWNTIME_PLANS_TABLE_LOADING', false)
       }
     },
 
     async updateDowntimePlan({
       state, commit, dispatch
     }, { data, id }) {
-      state.downtimePlanBtnLoading = true
+      commit('SET_DOWNTIME_PLAN_BTN_LOADING', true)
 
       try {
         const response = await deviceAPI.updateDowntimePlan(data, id)
@@ -315,14 +315,14 @@ const module = {
           error: error.response.data
         }, { root: true })
       } finally {
-        state.downtimePlanBtnLoading = false
+        commit('SET_DOWNTIME_PLAN_BTN_LOADING', false)
       }
     },
 
     async addDowntimePlan({
       state, commit, dispatch
     }, data) {
-      state.downtimePlanBtnLoading = true
+      commit('SET_DOWNTIME_PLAN_BTN_LOADING', true)
 
       try {
         const response = await deviceAPI.addDowntimePlan(data)
@@ -334,7 +334,7 @@ const module = {
           error: error.response.data
         }, { root: true })
       } finally {
-        state.downtimePlanBtnLoading = false
+        commit('SET_DOWNTIME_PLAN_BTN_LOADING', false)
       }
     },
 
@@ -349,6 +349,21 @@ const module = {
   mutations: {
     CLEAR_ERROR(state) {
       state.error = null
+    },
+    SET_LOADING_TABLE_MACHINE_MAPPING(state, data) {
+      state.loadingTableMachineMapping = data
+    },
+    SET_LOADING_DASHBOARD_DEVICES_TABLE(state, data) {
+      state.loadingDashboardDevicesTable = data
+    },
+    SET_LOADING_BTN_ASSIGN_ZONE_TO_MACHINE(state, data) {
+      state.loadingBtnAssignZoneToMachine = data
+    },
+    SET_DOWNTIME_PLANS_TABLE_LOADING(state, data) {
+      state.downtimePlansTableLoading = data
+    },
+    SET_DOWNTIME_PLAN_BTN_LOADING(state, data) {
+      state.downtimePlanBtnLoading = data
     },
     IMPORT_BUTTON_LOAD(state) {
       state.import_btn_loading = true

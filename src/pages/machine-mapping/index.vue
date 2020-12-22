@@ -84,8 +84,8 @@
               <v-btn
                 color="primary"
                 type="submit"
-                :disabled="loadingBtnAssginZoneToMachine"
-                :loading="loadingBtnAssginZoneToMachine"
+                :disabled="loadingBtnAssignZoneToMachine"
+                :loading="loadingBtnAssignZoneToMachine"
               >
                 Save
               </v-btn>
@@ -145,7 +145,7 @@ export default {
   computed: {
     ...mapState({
       loadingTableMachineMapping: (state) => state.devices.loadingTableMachineMapping,
-      loadingBtnAssginZoneToMachine: (state) => state.devices.loadingBtnAssginZoneToMachine,
+      loadingBtnAssignZoneToMachine: (state) => state.devices.loadingBtnAssignZoneToMachine,
       devices: (state) => state.devices.data,
       configurations: (state) => state.machines.machines,
       zones: (state) => state.zones.data,

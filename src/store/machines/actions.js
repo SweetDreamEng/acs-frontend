@@ -95,7 +95,7 @@ const getOverview = async ({ commit }, id) => {
 }
 
 const getUtilization = async ({ state, commit }, id) => {
-  state.loadingUtilization = true
+  commit('SET_LOADING_UTILIZATION', true)
 
   try {
     const response = await machineAPI.getUtilization({
@@ -107,12 +107,12 @@ const getUtilization = async ({ state, commit }, id) => {
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingUtilization = false
+    commit('SET_LOADING_UTILIZATION', false)
   }
 }
 
 const getEnergyConsumption = async ({ state, commit }, id) => {
-  state.loadingEnergyConsumption = true
+  commit('SET_LOADING_ENERGY_CONSUMPTION', true)
 
   try {
     const response = await machineAPI.getEnergyConsumption({
@@ -124,12 +124,12 @@ const getEnergyConsumption = async ({ state, commit }, id) => {
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingEnergyConsumption = false
+    commit('SET_LOADING_ENERGY_CONSUMPTION', false)
   }
 }
 
 const getRecipe = async ({ state, commit }, id) => {
-  state.loadingRecipe = true
+  commit('SET_LOADING_RECIPE', true)
 
   try {
     const response = await machineAPI.getRecipe(id)
@@ -138,12 +138,12 @@ const getRecipe = async ({ state, commit }, id) => {
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingRecipe = false
+    commit('SET_LOADING_RECIPE', false)
   }
 }
 
 const getWeight = async ({ state, commit }, id) => {
-  state.loadingWeight = true
+  commit('SET_LOADING_WEIGHT', true)
 
   try {
     const response = await machineAPI.getWeight(id)
@@ -153,55 +153,55 @@ const getWeight = async ({ state, commit }, id) => {
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingWeight = false
+    commit('SET_LOADING_WEIGHT', false)
   }
 }
 
 const getRecipe2 = async ({ state, commit }, id) => {
-  state.loadingRecipe = true
+  commit('SET_LOADING_RECIPE', true)
 
   try {
     const response = await machineAPI.getRecipe2(id)
 
-    state.actualRecipe2Values = response.data.actuals
-    state.targetRecipe2Values = response.data.targets
+    commit('SET_ACTUAL_RECIPE_TO_VALUES', response.data.actuals)
+    commit('SET_TARGET_RECIPE_TO_VALUES', response.data.targets)
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingRecipe = false
+    commit('SET_LOADING_RECIPE', false)
   }
 }
 
 const getSystemStates = async({ state, commit }, id) => {
-  state.loadingSystemStates = true
+  commit('SET_LOADING_SYSTEM_STATES', true)
 
   try {
     const response = await machineAPI.getSystemStates(id)
 
-    state.systemStates = response.data.machine_states
+    commit('SET_SYSTEM_STATES', response.data.machine_states)
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingSystemStates = false
+    commit('SET_LOADING_SYSTEM_STATES', false)
   }
 }
 
 const getMachineStates3 = async({ state, commit }, id) => {
-  state.loadingSystemStates = true
+  commit('SET_LOADING_SYSTEM_STATES', true)
 
   try {
     const response = await machineAPI.getMachineStates3(id)
 
-    state.systemStates = response.data.machine_states
+    commit('SET_SYSTEM_STATES', response.data.machine_states)
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingSystemStates = false
+    commit('SET_LOADING_SYSTEM_STATES', false)
   }
 }
 
 const getHopperInventories = async({ state, commit }, id) => {
-  state.loadingHopperInventories = true
+  commit('SET_LOADING_HOPPER_INVENTORIES', true)
 
   try {
     const response = await machineAPI.getHopperInventories({
@@ -209,16 +209,16 @@ const getHopperInventories = async({ state, commit }, id) => {
       timeRange: state.inventoryTimeRange
     })
 
-    state.hopperInventories = response.data.inventories
+    commit('SET_HOPPER_INVENTORIES', response.data.inventories)
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingHopperInventories = false
+    commit('SET_LOADING_HOPPER_INVENTORIES', false)
   }
 }
 
 const getHauloffLengths = async({ state, commit }, id) => {
-  state.loadingHauloffLengths = true
+  commit('SET_LOADING_HAUL_OFF_LENGTHS', true)
 
   try {
     const response = await machineAPI.getHauloffLengths({
@@ -226,30 +226,30 @@ const getHauloffLengths = async({ state, commit }, id) => {
       timeRange: state.hauloffTimeRange
     })
 
-    state.hauloffLengths = response.data.lengths
+    commit('SET_HAUL_OFF_LENGTHS', response.data.lengths)
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingHauloffLengths = false
+    commit('SET_LOADING_HAUL_OFF_LENGTHS', false)
   }
 }
 
-const getFeederStables = async({ state, commit }, id) => {
-  state.loadingFeederStables2 = true
+const getFeederStables = async({ commit }, id) => {
+  commit('SET_LOADING_FEEDER_STABLES2', true)
 
   try {
     const response = await machineAPI.getFeederStables(id)
 
-    state.feederStables = response.data.feeders
+    commit('SET_FEEDER_STABLES', response.data.feeders)
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingFeederStables2 = false
+    commit('SET_LOADING_FEEDER_STABLES2', false)
   }
 }
 
 const getProductionRate = async({ state, commit }, id) => {
-  state.loadingProcessRate = true
+  commit('SET_LOADING_PROCESS_RATE', true)
 
   try {
     const response = await machineAPI.getProductionRate({
@@ -257,16 +257,16 @@ const getProductionRate = async({ state, commit }, id) => {
       timeRange: state.processRateTimeRange
     })
 
-    state.processRateSeries = response.data.process_rate
+    commit('SET_PROCESS_RATE_SERIES', response.data.process_rate)
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingProcessRate = false
+    commit('SET_LOADING_PROCESS_RATE', false)
   }
 }
 
-const getWeeklyRunningHours = async ({ state, commit }, id) => {
-  state.loadingWeeklyRunningHours1 = true
+const getWeeklyRunningHours = async ({ commit }, id) => {
+  commit('SET_LOADING_WEEKLY_RUNNING_HOURS1', true)
 
   try {
     const response = await machineAPI.getWeeklyRunningHours(id)
@@ -275,12 +275,12 @@ const getWeeklyRunningHours = async ({ state, commit }, id) => {
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingWeeklyRunningHours1 = false
+    commit('SET_LOADING_WEEKLY_RUNNING_HOURS1', false)
   }
 }
 
-const initLocationsTable = async ({ state, commit }) => {
-  state.loadingLocationsTable = true
+const initLocationsTable = async ({ commit }) => {
+  commit('SET_LOADING_LOCATIONS_TABLE', true)
 
   try {
     const response = await machineAPI.initLocationsTable()
@@ -289,12 +289,12 @@ const initLocationsTable = async ({ state, commit }) => {
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingLocationsTable = false
+    commit('SET_LOADING_LOCATIONS_TABLE', false)
   }
 }
 
-const initZonesTable = async ({ state, commit }, location_id) => {
-  state.loadingZonesTable = true
+const initZonesTable = async ({ commit }, location_id) => {
+  commit('SET_LOADING_ZONES_TABLE', true)
 
   try {
     const response = await machineAPI.initZonesTable(location_id)
@@ -303,12 +303,12 @@ const initZonesTable = async ({ state, commit }, location_id) => {
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingZonesTable = false
+    commit('SET_LOADING_ZONES_TABLE', false)
   }
 }
 
-const initMachinesTable = async ({ state, commit }, zone) => {
-  state.loadingMachinesTable = true
+const initMachinesTable = async ({ commit }, zone) => {
+  commit('SET_LOADING_MACHINES_TABLE', true)
 
   try {
     const response = await machineAPI.initMachinesTable(zone)
@@ -317,7 +317,7 @@ const initMachinesTable = async ({ state, commit }, zone) => {
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingMachinesTable = false
+    commit('SET_LOADING_MACHINES_TABLE', false)
   }
 }
 
@@ -339,14 +339,14 @@ const onProductWeightParamChange = ({ commit, state }) => {
     })
 }
 
-const onProductInventoryParamChanged = ({ commit, dispatch, state }, data) => {
+const onProductInventoryParamChanged = ({ commit }, data) => {
   commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
 
   // dispatch('getInventory')
 }
 
-const getInventory = async ({ commit, state }, id) => {
-  state.loadingInventories = true
+const getInventory = async ({ commit }, id) => {
+  commit('SET_LOADING_INVENTORIES', true)
 
   try {
     const response = await machineAPI.getInventory(id)
@@ -355,7 +355,7 @@ const getInventory = async ({ commit, state }, id) => {
   } catch (error) {
     console.log(error)
   } finally {
-    state.loadingInventories = false
+    commit('SET_LOADING_INVENTORIES', false)
   }
 }
 

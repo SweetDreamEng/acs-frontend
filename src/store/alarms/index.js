@@ -73,8 +73,8 @@ const module = {
     /*
       get alarms for product
     */
-    async getProductAlarms({ state, commit }, productId) {
-      state.loadingAlarms = true
+    async getProductAlarms({ commit }, productId) {
+      commit('SET_LOADING_ALARMS', true)
 
       try {
         const response = await alarmAPI.getProductAlarms(productId)
@@ -85,25 +85,24 @@ const module = {
         console.log(error)
       }
 
-      state.loadingAlarms = false
+      commit('SET_LOADING_ALARMS', false)
     },
 
     /*
       Get alarms by machine
     */
-    async getAlarmsByMachine({ state, commit }) {
-      state.loadingAlarmsPerMachine = true
+    async getAlarmsByMachine({ commit }) {
+      commit('SET_LOADING_ALARMS_PER_MACHINE', true)
       
       try {
         const response = await alarmAPI.getAlarmsByMachine()
 
-        commit('SET_ALARMS_PER_MACHINE')
+        commit('SET_ALARMS_PER_MACHINE', response.data.devices)
       } catch (error) {
         console.log(error)
       }
 
-      state.loadingAlarmsPerMachine = false
-
+      commit('SET_LOADING_ALARMS_PER_MACHINE', false)
     },
 
     onAlarmParamChanged({
@@ -222,6 +221,14 @@ const module = {
     //set alarms
     SET_ALARMS(state, alarms) {
       state.alarms = alarms
+    },
+
+    SET_LOADING_ALARMS(state, data) {
+      state.loadingAlarms = data
+    },
+
+    SET_LOADING_ALARMS_PER_MACHINE(state, data) {
+      state.loadingAlarmsPerMachine = data
     },
 
     SET_ALARMS_AMOUNT_PER_MACHINE(state, alarmsAmountPerMachine) {

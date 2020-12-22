@@ -18,8 +18,8 @@ const module = {
       }
     },
 
-    async addNote ({ commit, state }, data) {
-      state.isNoteAdding = true
+    async addNote ({ commit }, data) {
+      commit('SET_IS_NOTE_ADDING', true)
 
       try {
         const response = await noteAPI.addNote(data)
@@ -28,7 +28,7 @@ const module = {
       } catch (error) {
         console.log(error)
       } finally {
-        state.isNoteAdding = false
+        commit('SET_IS_NOTE_ADDING', false)
       }
     }
   },
@@ -36,6 +36,9 @@ const module = {
   mutations: {
     SET_DATA(state, notes) {
       state.data = notes
+    },
+    SET_IS_NOTE_ADDING(state, data) {
+      state.isNoteAdding = data
     }
   }
 }
