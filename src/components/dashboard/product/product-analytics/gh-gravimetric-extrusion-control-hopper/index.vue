@@ -26,9 +26,26 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="8" sm="12" xs="12">
+      <v-col md="4" sm="12" xs="12">
+        <machine-states :loading="loadingMachineStates" :machine-states="machineStates"></machine-states>
       </v-col>
       <v-col md="4" sm="12" xs="12">
+        <accumulated-hopper-inventory
+          :loading="loadingHopperInventories"
+          :hopper-inventories="hopperInventories"
+          :time-range-label="timeRangeLabel('hopper-inventories')"
+          @showTimeRange="onShowTimeRangeDlgOpen('hopper-inventories')"
+        >
+        </accumulated-hopper-inventory>
+      </v-col>
+      <v-col md="4" sm="12" xs="12">
+        <accumulated-hauloff-length
+          :loading="loadingHauloffLengths"
+          :hauloff-lengths="hauloffLengths"
+          :time-range-label="timeRangeLabel('hauloff-lengths')"
+          @showTimeRange="onShowTimeRangeDlgOpen('hauloff-lengths')"
+        >
+        </accumulated-hauloff-length>
       </v-col>
     </v-row>
     <time-range-chooser
@@ -45,10 +62,13 @@
   </div>
 </template>
 <script>
-import Overview from '../Overview'
-import Utilization from '../Utilization'
-import EnergyConsumption from '../EnergyConsumption'
-import TimeRangeChooser from '../../TimeRangeChooser'
+import Overview from '../../common/Overview'
+import Utilization from '../../common/Utilization'
+import EnergyConsumption from '../../common/EnergyConsumption'
+import MachineStates from './MachineStates'
+import AccumulatedHopperInventory from './AccumulatedHopperInventory'
+import AccumulatedHauloffLength from './AccumulatedHauloffLength'
+import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -57,6 +77,9 @@ export default {
     Overview,
     Utilization,
     EnergyConsumption,
+    MachineStates,
+    AccumulatedHopperInventory,
+    AccumulatedHauloffLength,
     TimeRangeChooser
   },
   props: {
@@ -75,10 +98,16 @@ export default {
       machine: (state) => state.machines.machine,
       actualRecipeValues: (state) => state.machines.actualRecipe2Values,
       targetRecipeValues: (state) => state.machines.targetRecipe2Values,
-      
+      machineStates: (state) => state.machines.systemStates,
+      hopperInventories: (state) => state.machines.hopperInventories,
+      hauloffLengths: (state) => state.machines.hauloffLengths,
+
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
+      loadingMachineStates: (state) => state.machines.loadingSystemStates,
+      loadingHopperInventories: (state) => state.machines.loadingHopperInventories,
+      loadingHauloffLengths: (state) => state.machines.loadingHauloffLengths,
       loadingRecipe: (state) => state.machines.loadingRecipe
     }),
     ...mapGetters({
@@ -86,8 +115,16 @@ export default {
       selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
+  created() {
+    this.getMachineStates(this.productId)
+    this.getHopperInventories(this.productId)
+    this.getHauloffLengths(this.productId)
+  },
   methods: {
     ...mapActions({
+      getMachineStates: 'machines/getMachineStates3',
+      getHopperInventories: 'machines/getHopperInventories',
+      getHauloffLengths: 'machines/getHauloffLengths',
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
       selectTimeRange: 'machines/selectTimeRange'
     }),

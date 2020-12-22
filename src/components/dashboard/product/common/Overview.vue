@@ -11,7 +11,7 @@
     <v-img
       height="150"
       contain
-      src="../../../assets/imgs/blender.png"
+      src="../../../../assets/imgs/blender.png"
     ></v-img>
     <v-card-text>
       <div class="ml-2">

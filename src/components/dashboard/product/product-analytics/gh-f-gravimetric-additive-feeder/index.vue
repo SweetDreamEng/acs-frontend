@@ -27,23 +27,8 @@
     </v-row>
     <v-row dense>
       <v-col md="8" sm="12" xs="12">
-        <actual-target-weight
-          :values-tgt-weight="valuesTgtWeight"
-          :values-act-weight="valuesActWeight"
-          :is-loading="loadingWeight"
-        >
-        </actual-target-weight>
       </v-col>
       <v-col md="4" sm="12" xs="12">
-        <recipe></recipe>
-      </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="12" sm="12" xs="12">
-        <OEE
-          :is-loading="loadingInventories"
-        >
-        </OEE>
       </v-col>
     </v-row>
     <time-range-chooser
@@ -60,23 +45,17 @@
   </div>
 </template>
 <script>
-import Overview from '../Overview'
-import Utilization from '../Utilization'
-import ActualTargetWeight from '../ActualTargetWeight'
-import OEE from '../OEE'
-import EnergyConsumption from '../EnergyConsumption'
-import Recipe from './bd-batch-blender/Recipe'
-import TimeRangeChooser from '../../TimeRangeChooser'
+import Overview from '../../common/Overview'
+import Utilization from '../../common/Utilization'
+import EnergyConsumption from '../../common/EnergyConsumption'
+import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     Overview,
-    Recipe,
     Utilization,
-    ActualTargetWeight,
-    OEE,
     EnergyConsumption,
     TimeRangeChooser
   },
@@ -93,31 +72,22 @@ export default {
   },
   computed: {
     ...mapState({
-      loadingOverview: (state) => state.machines.loadingOverview,
-      loadingWeight: (state) => state.machines.loadingWeight,
       machine: (state) => state.machines.machine,
-      valuesTgtWeight: (state) => state.machines.targetWeights,
-      valuesActWeight: (state) => state.machines.actualWeights,
+      actualRecipeValues: (state) => state.machines.actualRecipe2Values,
+      targetRecipeValues: (state) => state.machines.targetRecipe2Values,
       
+      loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingInventories: (state) => state.machines.loadingInventories
+      loadingRecipe: (state) => state.machines.loadingRecipe
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
       selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
-  created() {
-    this.getRecipe(this.productId)
-    this.getInventory(this.productId)
-    this.getWeight(this.productId)
-  },
   methods: {
     ...mapActions({
-      getInventory: 'machines/getInventory',
-      getRecipe: 'machines/getRecipe',
-      getWeight: 'machines/getWeight',
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
       selectTimeRange: 'machines/selectTimeRange'
     }),

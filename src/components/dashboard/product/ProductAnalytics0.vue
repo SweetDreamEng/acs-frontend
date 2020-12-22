@@ -54,16 +54,16 @@
   </div>
 </template>
 <script>
-import Overview from './Overview'
+import Overview from './common/Overview'
 import HoursPerYear from './HoursPerYear'
 import Availability from './Availability'
-import Utilization from './Utilization'
+import Utilization from './common/Utilization'
 // import StatusSummary from './StatusSummary'
-import ActualTargetWeight from './ActualTargetWeight'
+import ActualTargetWeight from './common/ActualTargetWeight'
 import AverageUtilization from './AverageUtilization'
 import Cutting from './Cutting'
-import OEE from './OEE'
-import EnergyConsumption from './EnergyConsumption'
+import OEE from './common/OEE'
+import EnergyConsumption from './common/EnergyConsumption'
 
 import { mapState, mapActions } from 'vuex'
 
