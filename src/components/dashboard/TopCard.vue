@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row class="flex-grow-0" dense>
-      <v-col xs="12" sm="12" md="6" lg="6">
+      <v-col cols="12" md="6" lg="6">
         <v-row dense>
           <v-col
             cols="6"
@@ -48,7 +48,7 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="6" xs="12" sm="12">
+      <v-col cols="12" md="6" lg="6">
         <div class="d-flex flex-column flex-grow-1" style="height: 100%">
           <sales-card
             :value="1.832"
