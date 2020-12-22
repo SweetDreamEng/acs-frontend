@@ -1,10 +1,33 @@
 <template>
   <v-card height="100%">
-    <v-card-title>
-      Recipe
-    </v-card-title>
+    <v-toolbar
+      flat
+    >
+      <v-toolbar-title>Recipe</v-toolbar-title>
+
+      <template v-slot:extension>
+        <v-tabs
+          v-model="tab"
+          align-with-title
+        >
+          <v-tab
+            v-for="item in tabItems"
+            :key="item"
+          >
+            {{ item }}
+          </v-tab>
+        </v-tabs>
+      </template>
+    </v-toolbar>
     <v-card-text>
-      <apexchart type="donut" height="360" :options="chartOptions" :series="recipeValues"></apexchart>
+      <v-tabs-items v-model="tab">
+        <v-tab-item
+          v-for="item in tabItems"
+          :key="item"
+        >
+          <apexchart type="donut" height="360" :options="chartOptions" :series="recipeValues"></apexchart>
+        </v-tab-item>
+      </v-tabs-items>
     </v-card-text>
   </v-card>
 </template>
@@ -20,6 +43,8 @@ export default {
   },
   data() {
     return {
+      tab: null,
+      tabItems: ['Percentage', 'Parts', 'EZ mode'],
       chartOptions: {
         chart: {
           type: 'donut',

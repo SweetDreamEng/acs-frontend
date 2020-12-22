@@ -10,7 +10,7 @@
             <span class="display-1 white--text">{{ user.username | initials }}</span>
           </v-avatar>
         </v-avatar>
-        <h2 class="my-2 red--text">{{ user.username }}</h2>
+        <h2 class="my-2 primary--text">{{ user.username }}</h2>
         <div class="text-h6">{{ roleName(user.role) }}</div>
       </v-card-text>
     </v-card>
