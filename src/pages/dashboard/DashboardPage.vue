@@ -63,13 +63,6 @@ export default {
     })
   },
   mounted() {
-    this.setInitialSetting({}).then(() => {
-      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
-      if (this.privateColors.length >= 2) {
-        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
-        this.$vuetify.theme.themes.light.background = this.privateColors[2]
-      }
-    })
 
     this.getCustomerDevicesAnalytics()
     this.getZones()
@@ -79,8 +72,7 @@ export default {
     ...mapActions({
       initLocationsTable: 'machines/initLocationsTable',
       getCustomerDevicesAnalytics: 'devices/getCustomerDevicesAnalytics',
-      getZones: 'zones/getZones',
-      setInitialSetting: 'settings/setInitialSetting'
+      getZones: 'zones/getZones'
     })
   }
 }
