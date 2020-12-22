@@ -25,6 +25,7 @@ import router from './router'
 
 // PLUGINS
 import vuetify from './plugins/vuetify'
+import { mapState, mapActions } from 'vuex'
 import './plugins/vue-head'
 import './plugins/apexcharts'
 import './plugins/animate'
@@ -65,5 +66,24 @@ export default new Vue({
   vuetify,
   router,
   store,
+  computed: {
+    ...mapState({
+      privateColors: (state) => state.settings.private_colors
+    })
+  },
+  mounted() {
+    this.setInitialSetting().then(() => {
+      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
+      if (this.privateColors.length >= 2) {
+        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
+        this.$vuetify.theme.themes.light.background = this.privateColors[2]
+      } 
+    })
+  },
+  methods: {
+    ...mapActions({
+      setInitialSetting: 'settings/setInitialSetting'
+    })
+  },
   render: (h) => h(App)
 }).$mount('#app')

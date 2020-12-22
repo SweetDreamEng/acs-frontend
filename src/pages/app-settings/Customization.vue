@@ -167,7 +167,7 @@ export default {
         'Upload Image',
         'Choose Logo Color'
       ],
-      customizationColor: null,
+      customizationColor: this.privateColors[0],
       selectedFile: null,
       isSelecting: false
     }
@@ -177,16 +177,6 @@ export default {
       colors: (state) => state.settings.colors,
       privateColors: (state) => state.settings.private_colors,
       buttonLoading: (state) => state.settings.button_loading
-    })
-  },
-  mounted() {
-    this.setInitialSetting({}).then(() => {
-      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
-      if (this.privateColors.length >= 2) {
-        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
-        this.$vuetify.theme.themes.light.background = this.privateColors[2]
-      }
-      this.customizationColor = this.privateColors[0]
     })
   },
   methods: {

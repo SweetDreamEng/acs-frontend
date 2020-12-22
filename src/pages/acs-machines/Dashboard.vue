@@ -68,7 +68,6 @@ export default {
     ...mapState({
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
       loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
-      
       machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
@@ -94,21 +93,13 @@ export default {
     this.initAcsDashboard()
     this.initLocationsTable()
     this.getAcsDevicesAnalytics()
-    this.setInitialSetting({}).then(() => {
-      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
-      if (this.privateColors.length >= 2) {
-        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
-        this.$vuetify.theme.themes.light.background = this.privateColors[2]
-      }
-    })
   },
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
       initLocationsTable: 'machines/initLocationsTable',
       getAcsDevicesAnalytics: 'devices/getAcsDevicesAnalytics',
-      changeSelectedCompany: 'machines/changeSelectedCompany',
-      setInitialSetting: 'settings/setInitialSetting'
+      changeSelectedCompany: 'machines/changeSelectedCompany'
     }),
     onCompanyChanged(company) {
       this.changeSelectedCompany(company)

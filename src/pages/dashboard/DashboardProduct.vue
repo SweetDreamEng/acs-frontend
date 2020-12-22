@@ -12,15 +12,15 @@
             <v-progress-circular indeterminate color="primary"></v-progress-circular>
           </div>
           <template v-else>
-            <product-analytics1 v-if="machine.machine_id === 1" :product-id="$route.params.productId"></product-analytics1>
-            <product-analytics2 v-if="machine.machine_id === 2" :product-id="$route.params.productId"></product-analytics2>
-            <product-analytics3 v-if="machine.machine_id === 3" :product-id="$route.params.productId"></product-analytics3>
-            <product-analytics4 v-if="machine.machine_id === 4" :product-id="$route.params.productId"></product-analytics4>
-            <product-analytics5 v-if="machine.machine_id === 5" :product-id="$route.params.productId"></product-analytics5>
-            <product-analytics6 v-if="machine.machine_id === 6" :product-id="$route.params.productId"></product-analytics6>
-            <product-analytics7 v-if="machine.machine_id === 7" :product-id="$route.params.productId"></product-analytics7>
-            <product-analytics8 v-if="machine.machine_id === 8" :product-id="$route.params.productId"></product-analytics8>
-            <product-analytics9 v-if="machine.machine_id === 9" :product-id="$route.params.productId"></product-analytics9>
+            <bd-batch-blender v-if="machine.machine_id === 1" :product-id="$route.params.productId"></bd-batch-blender>
+            <accumeter-ovation-continuous-blender v-if="machine.machine_id === 2" :product-id="$route.params.productId"></accumeter-ovation-continuous-blender>
+            <gh-gravimetric-extrusion-control-hopper v-if="machine.machine_id === 3" :product-id="$route.params.productId"></gh-gravimetric-extrusion-control-hopper>
+            <gh-f-gravimetric-additive-feeder v-if="machine.machine_id === 4" :product-id="$route.params.productId"></gh-f-gravimetric-additive-feeder>
+            <vtc-plus-conveying-system v-if="machine.machine_id === 5" :product-id="$route.params.productId"></vtc-plus-conveying-system>
+            <ngx-dryer v-if="machine.machine_id === 6" :product-id="$route.params.productId"></ngx-dryer>
+            <ngx-nomad-dryer v-if="machine.machine_id === 7" :product-id="$route.params.productId"></ngx-nomad-dryer>
+            <t-50-central-granulator v-if="machine.machine_id === 8" :product-id="$route.params.productId"></t-50-central-granulator>
+            <gp-portable-chiller v-if="machine.machine_id === 9" :product-id="$route.params.productId"></gp-portable-chiller>
           </template>
         </v-col>
         <v-col cols="12">
@@ -76,20 +76,19 @@
 
 // import vuex helper functions
 import { mapState, mapGetters, mapActions } from 'vuex'
-
-import ProductAnalytics1 from '../../components/dashboard/product/product-analytics/ProductAnalytics1'
-import ProductAnalytics2 from '../../components/dashboard/product/product-analytics/ProductAnalytics2'
-import ProductAnalytics3 from '../../components/dashboard/product/product-analytics/ProductAnalytics3'
-import ProductAnalytics4 from '../../components/dashboard/product/product-analytics/ProductAnalytics4'
-import ProductAnalytics5 from '../../components/dashboard/product/product-analytics/ProductAnalytics5'
-import ProductAnalytics6 from '../../components/dashboard/product/product-analytics/ProductAnalytics6'
-import ProductAnalytics7 from '../../components/dashboard/product/product-analytics/ProductAnalytics7'
-import ProductAnalytics8 from '../../components/dashboard/product/product-analytics/ProductAnalytics8'
-import ProductAnalytics9 from '../../components/dashboard/product/product-analytics/ProductAnalytics9'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
 import NoteForm from '../../components/dashboard/NoteForm'
+import BdBatchBlender from '../../components/dashboard/product/product-analytics/BdBatchBlender.vue'
+import AccumeterOvationContinuousBlender from '../../components/dashboard/product/product-analytics/AccumeterOvationContinuousBlender.vue'
+import GhGravimetricExtrusionControlHopper from '../../components/dashboard/product/product-analytics/GhGravimetricExtrusionControlHopper.vue'
+import GhFGravimetricAdditiveFeeder from '../../components/dashboard/product/product-analytics/GhFGravimetricAdditiveFeeder.vue'
+import VtcPlusConveyingSystem from '../../components/dashboard/product/product-analytics/VtcPlusConveyingSystem.vue'
+import NgxDryer from '../../components/dashboard/product/product-analytics/NgxDryer.vue'
+import NgxNomadDryer from '../../components/dashboard/product/product-analytics/NgxNomadDryer.vue'
+import T50CentralGranulator from '../../components/dashboard/product/product-analytics/T50CentralGranulator.vue'
+import GpPortableChiller from '../../components/dashboard/product/product-analytics/GpPortableChiller.vue'
 
 export default {
   components: {
@@ -97,7 +96,15 @@ export default {
     NotesTimeline,
     NoteForm,
     AlarmTable,
-    ProductAnalytics1, ProductAnalytics2, ProductAnalytics3, ProductAnalytics4, ProductAnalytics5, ProductAnalytics6, ProductAnalytics7, ProductAnalytics8, ProductAnalytics9
+    BdBatchBlender,
+    AccumeterOvationContinuousBlender,
+    GhGravimetricExtrusionControlHopper,
+    GhFGravimetricAdditiveFeeder,
+    VtcPlusConveyingSystem,
+    NgxDryer,
+    NgxNomadDryer,
+    GpPortableChiller,
+    T50CentralGranulator
   },
   props: {
   },

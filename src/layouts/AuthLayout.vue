@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -31,8 +31,7 @@ export default {
     ...mapState('app', ['product']),
     ...mapState({
       authBackgroundFile: (state) => state.settings.auth_background_file,
-      logoFile: (state) => state.settings.logo_file,
-      privateColors: (state) => state.settings.private_colors
+      logoFile: (state) => state.settings.logo_file
     }),
     authBackground() {
       return {
@@ -46,19 +45,7 @@ export default {
       return this.logoImgError ? require('../assets/imgs/logo-aec.png') : this.logoFile
     }
   },
-  mounted() {
-    this.setInitialSetting({}).then(() => {
-      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
-      if (this.privateColors.length >= 2) {
-        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
-        this.$vuetify.theme.themes.light.background = this.privateColors[2]
-      }
-    })
-  },
   methods: {
-    ...mapActions({
-      setInitialSetting: 'settings/setInitialSetting'
-    }),
     onLogoImgError() {
       this.logoImgError = true
     }

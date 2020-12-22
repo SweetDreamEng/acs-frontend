@@ -73,24 +73,13 @@ export default {
   computed: {
     ...mapState({
       isLoading: (state) => state.auth.button_loading,
-      errorMessages: (state) => state.auth.error,      
-      privateColors: (state) => state.settings.private_colors
-    })
-  },
-  mounted() {
-    this.setInitialSetting({}).then(() => {
-      this.$vuetify.theme.themes.light.primary = this.privateColors[0]
-      if (this.privateColors.length >= 2) {
-        this.$vuetify.theme.themes.light.accent = this.privateColors[1]
-        this.$vuetify.theme.themes.light.background = this.privateColors[2]
-      }
+      errorMessages: (state) => state.auth.error
     })
   },
   methods: {
     ...mapActions({
       requestForgotPassword: 'auth/requestForgotPassword',
-      clearError: 'auth/clearError',
-      setInitialSetting: 'settings/setInitialSetting'
+      clearError: 'auth/clearError'
     }),
     submit(e) {
       if (this.$refs.form.validate()) {
