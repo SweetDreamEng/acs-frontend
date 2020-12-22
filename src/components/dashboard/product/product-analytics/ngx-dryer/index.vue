@@ -45,10 +45,10 @@
   </div>
 </template>
 <script>
-import Overview from '../Overview'
-import Utilization from '../Utilization'
-import EnergyConsumption from '../EnergyConsumption'
-import TimeRangeChooser from '../../TimeRangeChooser'
+import Overview from '../../common/Overview'
+import Utilization from '../../common/Utilization'
+import EnergyConsumption from '../../common/EnergyConsumption'
+import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 

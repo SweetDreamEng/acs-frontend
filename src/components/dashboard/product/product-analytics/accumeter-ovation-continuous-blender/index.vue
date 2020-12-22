@@ -27,25 +27,31 @@
     </v-row>
     <v-row dense>
       <v-col md="4" sm="12" xs="12">
-        <machine-states :loading="loadingMachineStates" :machine-states="machineStates"></machine-states>
+        <machine-state :loading="loadingSystemStates" :system-states="systemStates"></machine-state>
       </v-col>
       <v-col md="4" sm="12" xs="12">
-        <accumulated-hopper-inventory
-          :loading="loadingHopperInventories"
-          :hopper-inventories="hopperInventories"
-          :time-range-label="timeRangeLabel('hopper-inventories')"
-          @showTimeRange="onShowTimeRangeDlgOpen('hopper-inventories')"
-        >
-        </accumulated-hopper-inventory>
+        <feeder-stable :loading="loadingFeederStables2" :feeders="feederStables"></feeder-stable>
       </v-col>
       <v-col md="4" sm="12" xs="12">
-        <accumulated-hauloff-length
-          :loading="loadingHauloffLengths"
-          :hauloff-lengths="hauloffLengths"
-          :time-range-label="timeRangeLabel('hauloff-lengths')"
-          @showTimeRange="onShowTimeRangeDlgOpen('hauloff-lengths')"
+        <process-rate
+          :loading="loadingProcessRate"
+          :rates="processRateSeries"
+          :time-range-label="timeRangeLabel('process-rate')"
+          @showTimeRange="onShowTimeRangeDlgOpen('process-rate')"
         >
-        </accumulated-hauloff-length>
+        </process-rate>
+      </v-col>
+    </v-row>
+    <v-row dense>
+      <v-col md="8" sm="12" xs="12">
+        <recipe
+          :targets="targetRecipeValues"
+          :actuals="actualRecipeValues"
+          :loading="loadingRecipe"
+        >
+        </recipe>
+      </v-col>
+      <v-col md="4" sm="12" xs="12">
       </v-col>
     </v-row>
     <time-range-chooser
@@ -62,13 +68,14 @@
   </div>
 </template>
 <script>
-import Overview from '../Overview'
-import Utilization from '../Utilization'
-import EnergyConsumption from '../EnergyConsumption'
-import MachineStates from './gh-gravimetric-extrusion-control-hopper/MachineStates'
-import AccumulatedHopperInventory from './gh-gravimetric-extrusion-control-hopper/AccumulatedHopperInventory'
-import AccumulatedHauloffLength from './gh-gravimetric-extrusion-control-hopper/AccumulatedHauloffLength'
-import TimeRangeChooser from '../../TimeRangeChooser'
+import Overview from '../../common/Overview'
+import Utilization from '../../common/Utilization'
+import EnergyConsumption from '../../common/EnergyConsumption'
+import MachineState from './MachineState'
+import FeederStable from './FeederStable'
+import ProcessRate from './ProcessRate'
+import Recipe from './Recipe'
+import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -77,9 +84,10 @@ export default {
     Overview,
     Utilization,
     EnergyConsumption,
-    MachineStates,
-    AccumulatedHopperInventory,
-    AccumulatedHauloffLength,
+    MachineState,
+    FeederStable,
+    ProcessRate,
+    Recipe,
     TimeRangeChooser
   },
   props: {
@@ -98,17 +106,17 @@ export default {
       machine: (state) => state.machines.machine,
       actualRecipeValues: (state) => state.machines.actualRecipe2Values,
       targetRecipeValues: (state) => state.machines.targetRecipe2Values,
-      machineStates: (state) => state.machines.systemStates,
-      hopperInventories: (state) => state.machines.hopperInventories,
-      hauloffLengths: (state) => state.machines.hauloffLengths,
+      systemStates: (state) => state.machines.systemStates,
+      feederStables: (state) => state.machines.feederStables,
+      processRateSeries: (state) => state.machines.processRateSeries,
 
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingMachineStates: (state) => state.machines.loadingSystemStates,
-      loadingHopperInventories: (state) => state.machines.loadingHopperInventories,
-      loadingHauloffLengths: (state) => state.machines.loadingHauloffLengths,
-      loadingRecipe: (state) => state.machines.loadingRecipe
+      loadingRecipe: (state) => state.machines.loadingRecipe,
+      loadingSystemStates: (state) => state.machines.loadingSystemStates,
+      loadingFeederStables2: (state) => state.machines.loadingFeederStables2,
+      loadingProcessRate: (state) => state.machines.loadingProcessRate
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
@@ -116,19 +124,22 @@ export default {
     })
   },
   created() {
-    this.getMachineStates(this.productId)
-    this.getHopperInventories(this.productId)
-    this.getHauloffLengths(this.productId)
+    this.getSystemStates(this.productId)
+    this.getFeederStables(this.productId)
+    this.getProductionRate(this.productId)
+    this.getRecipe2(this.productId)
   },
   methods: {
     ...mapActions({
-      getMachineStates: 'machines/getMachineStates3',
-      getHopperInventories: 'machines/getHopperInventories',
-      getHauloffLengths: 'machines/getHauloffLengths',
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
-      selectTimeRange: 'machines/selectTimeRange'
+      selectTimeRange: 'machines/selectTimeRange',
+      getSystemStates: 'machines/getSystemStates',
+      getFeederStables: 'machines/getFeederStables',
+      getProductionRate: 'machines/getProductionRate',
+      getRecipe2: 'machines/getRecipe2'
     }),
     onShowTimeRangeDlgOpen(key) {
+      console.log(key)
       this.selectTimeRange(key)
       this.$nextTick(() => {
         this.showTimeRangeChooser = true
