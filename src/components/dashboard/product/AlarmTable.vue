@@ -51,7 +51,7 @@
               {{ alarmsCount(item) }}
             </v-chip>
           </template>
-<!--           <template v-slot:expanded-item="{ }">
+          <!--<template v-slot:expanded-item="{ }">
             <td :colspan="headers.length" class="px-4">
               <div
                 v-for="alarm in alarms"
