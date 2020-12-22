@@ -211,9 +211,6 @@ const module = {
     }
   },
   getters: {
-    hasToken: (state) => {
-      return state.token
-    },
     roleName: (state) => (role_key) => {
       return state.roles.find((role) => role.key === role_key).name
     },

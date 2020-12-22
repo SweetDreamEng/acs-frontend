@@ -278,9 +278,6 @@ const module = {
       } else {
         return state.dateFrom + ' ' + state.timeFrom + ' ~ ' + state.dateTo + ' ' + state.timeTo
       }
-    },
-    selectedMachineName(state) {
-      return state.selectedMachineName
     }
   }
 }
