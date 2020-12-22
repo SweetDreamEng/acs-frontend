@@ -1,18 +1,18 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="4" xs="12">
+      <v-col cols="4" xs="12">
         <overview
           :machine="machine"
         >
         </overview>
       </v-col>
-      <v-col md="8" sm="8" xs="12">
+      <v-col cols="8" xs="12">
         <utilization></utilization>
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="6" sm="12" xs="12">
+      <v-col cols="12" md="6">
         <OEE
           :mode="modeInventory"
           :param="paramInventory"
@@ -23,7 +23,7 @@
         >
         </OEE>
       </v-col>
-      <v-col md="6" sm="12" xs="12">
+      <v-col cols="12" md="6">
         <actual-target-weight
           :mode="modeWeight"
           :param="paramWeight"

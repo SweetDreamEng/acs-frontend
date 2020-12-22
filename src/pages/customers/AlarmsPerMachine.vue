@@ -24,7 +24,6 @@
               xs="12"
               sm="12"
               md="6"
-              lg="3"
             >
               <alarm-per-machine-card 
                 :name="alarm.name"

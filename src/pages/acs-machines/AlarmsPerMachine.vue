@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="space-between">
-      <v-col cols="4" sm="4" md="4" lg="4">
+      <v-col cols="4">
         <v-select
           :items="dropDownList"
           label="Select Product"
@@ -19,7 +19,6 @@
             xs="12"
             sm="12"
             md="6"
-            lg="3"
           >
             <alarm-per-machine-card />
           </v-col>

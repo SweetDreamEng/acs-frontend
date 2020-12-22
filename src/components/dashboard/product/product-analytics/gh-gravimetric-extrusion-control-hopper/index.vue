@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="12" xs="12">
+      <v-col cols="12" md="4">
         <overview
           :machine="machine"
           :loading="loadingOverview"
         >
         </overview>
       </v-col>
-      <v-col md="4" sm="12" xs="12">
+      <v-col cols="12" md="4">
         <utilization
           :loading="loadingUtilization"
           :time-range-label="timeRangeLabel('utilization')"
@@ -16,7 +16,7 @@
         >
         </utilization>
       </v-col>
-      <v-col md="4" sm="12" xs="12">
+      <v-col cols="12" md="4">
         <energy-consumption
           :loading="loadingEnergyConsumption"
           :time-range-label="timeRangeLabel('energy-consumption')"
@@ -26,10 +26,10 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="4" sm="12" xs="12">
+      <v-col cols="12" md="4">
         <machine-states :loading="loadingMachineStates" :machine-states="machineStates"></machine-states>
       </v-col>
-      <v-col md="4" sm="12" xs="12">
+      <v-col cols="12" md="4">
         <accumulated-hopper-inventory
           :loading="loadingHopperInventories"
           :hopper-inventories="hopperInventories"
@@ -38,7 +38,7 @@
         >
         </accumulated-hopper-inventory>
       </v-col>
-      <v-col md="4" sm="12" xs="12">
+      <v-col cols="12" md="4">
         <accumulated-hauloff-length
           :loading="loadingHauloffLengths"
           :hauloff-lengths="hauloffLengths"

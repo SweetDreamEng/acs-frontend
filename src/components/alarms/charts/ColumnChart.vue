@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="space-between">
-      <v-col cols="4" sm="4" md="4" lg="4">
+      <v-col cols="4">
         <v-select
           v-model="selectedMachineName"
           :items="dropDownList"
