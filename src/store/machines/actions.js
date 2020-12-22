@@ -18,18 +18,17 @@ const getAllConfigurations = async ({ commit }) => {
   }
 }
 
-const initAcsDashboard = ({ commit, state }) => {
-  machineAPI.initAcsDashboard()
-    .then((response) => {
-      commit('customers/SET_COMPANIES', response.data.companies, { root: true })
-      if (!state.selectedCompany)
-        commit('SET_SELECTED_COMPANY', response.data.companies[0])
-    })
-    .catch((error) => {
-      console.log(error.response)
-    })
-    .finally(() => {
-    })
+const initAcsDashboard = async ({ commit, state }) => {
+  try {
+    const response = await machineAPI.initAcsDashboard()
+
+    commit('customers/SET_COMPANIES', response.data.companies, { root: true })
+    if (!state.selectedCompany) {
+      commit('SET_SELECTED_COMPANY', response.data.companies[0])
+    }
+  } catch (error) {
+    console.log(error.response)
+  }
 }
 
 const changeSelectedCompany = ({ commit }, company) => {
@@ -42,42 +41,41 @@ const selectTimeRange = ({ commit }, key) => {
 }
 
 // product analytics init
-const initProduct = ({ commit, state }, id) => {
+const initProduct = async ({ commit, state }, id) => {
   commit('WEIGHT_PRODUCT_LOADING')
   commit('INVENTORY_PRODUCT_LOADING')
-  machineAPI.initProduct({
-    machineId: id,
-    param: state.paramWeightProduct,
-    paramInventory: state.paramInventory,
-    inventoryTimeRange: state.inventoryTimeRange,
-    weightTimeRange: state.weightTimeRange
-  })
-    .then((response) => {
-      commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
-      commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
-      commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
-      commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
-
-      // BD Batch Blender
-      commit('SET_RUNNING_PERCENTAGE', parseFloat((response.data.total_running_percentage * 100).toFixed(2)))
-      commit('SET_RECIPE_VALUES', response.data.recipe_values)
-
-      // GH Gravimetric Extrusion Control Hopper
-      commit('SET_HOPPER_INVENTORIES', response.data.hopper_inventories)
-      commit('SET_HAULOFF_LENGTHS', response.data.hauloff_lengths)
-      commit('SET_RECIPE_SET_POINTS', response.data.set_points)
-      commit('SET_RECIPE_ACTUAL_POINTS', response.data.actual_points)
-
-      commit('alarms/SET_ALARM_TYPES', response.data.alarm_types, { root: true })
-      commit('alarms/SET_ALARMS', response.data.alarms, { root: true })
+  try {
+    const response = await machineAPI.initProduct({
+      machineId: id,
+      param: state.paramWeightProduct,
+      paramInventory: state.paramInventory,
+      inventoryTimeRange: state.inventoryTimeRange,
+      weightTimeRange: state.weightTimeRange
     })
-    .catch((error) => {
-      console.log(error.response)
-    })
-    .finally(() => {
-      commit('WEIGHT_PRODUCT_LOADED')
-      commit('INVENTORY_PRODUCT_LOADED')
-    })
+
+    commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
+    commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
+    commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
+    commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
+
+    // BD Batch Blender
+    commit('SET_RUNNING_PERCENTAGE', parseFloat((response.data.total_running_percentage * 100).toFixed(2)))
+    commit('SET_RECIPE_VALUES', response.data.recipe_values)
+
+    // GH Gravimetric Extrusion Control Hopper
+    commit('SET_HOPPER_INVENTORIES', response.data.hopper_inventories)
+    commit('SET_HAULOFF_LENGTHS', response.data.hauloff_lengths)
+    commit('SET_RECIPE_SET_POINTS', response.data.set_points)
+    commit('SET_RECIPE_ACTUAL_POINTS', response.data.actual_points)
+
+    commit('alarms/SET_ALARM_TYPES', response.data.alarm_types, { root: true })
+    commit('alarms/SET_ALARMS', response.data.alarms, { root: true })
+  } catch (error) {
+    console.log(error.response)
+  } finally {
+    commit('WEIGHT_PRODUCT_LOADED')
+    commit('INVENTORY_PRODUCT_LOADED')
+  }
 }
 
 const getOverview = async ({ commit }, id) => {
@@ -86,7 +84,7 @@ const getOverview = async ({ commit }, id) => {
   try {
     const response = await machineAPI.getOverview(id)
 
-    commit('SET_OVERVIEW', response.data.overview)        
+    commit('SET_OVERVIEW', response.data.overview)
   } catch (error) {
     console.log(error)
   } finally {
@@ -172,7 +170,7 @@ const getRecipe2 = async ({ state, commit }, id) => {
   }
 }
 
-const getSystemStates = async({ state, commit }, id) => {
+const getSystemStates = async ({ state, commit }, id) => {
   commit('SET_LOADING_SYSTEM_STATES', true)
 
   try {
@@ -186,7 +184,7 @@ const getSystemStates = async({ state, commit }, id) => {
   }
 }
 
-const getMachineStates3 = async({ state, commit }, id) => {
+const getMachineStates3 = async ({ state, commit }, id) => {
   commit('SET_LOADING_SYSTEM_STATES', true)
 
   try {
@@ -200,7 +198,7 @@ const getMachineStates3 = async({ state, commit }, id) => {
   }
 }
 
-const getHopperInventories = async({ state, commit }, id) => {
+const getHopperInventories = async ({ state, commit }, id) => {
   commit('SET_LOADING_HOPPER_INVENTORIES', true)
 
   try {
@@ -217,7 +215,7 @@ const getHopperInventories = async({ state, commit }, id) => {
   }
 }
 
-const getHauloffLengths = async({ state, commit }, id) => {
+const getHauloffLengths = async ({ state, commit }, id) => {
   commit('SET_LOADING_HAUL_OFF_LENGTHS', true)
 
   try {
@@ -234,7 +232,7 @@ const getHauloffLengths = async({ state, commit }, id) => {
   }
 }
 
-const getFeederStables = async({ commit }, id) => {
+const getFeederStables = async ({ commit }, id) => {
   commit('SET_LOADING_FEEDER_STABLES2', true)
 
   try {
@@ -248,7 +246,7 @@ const getFeederStables = async({ commit }, id) => {
   }
 }
 
-const getProductionRate = async({ state, commit }, id) => {
+const getProductionRate = async ({ state, commit }, id) => {
   commit('SET_LOADING_PROCESS_RATE', true)
 
   try {
@@ -271,7 +269,7 @@ const getWeeklyRunningHours = async ({ commit }, id) => {
   try {
     const response = await machineAPI.getWeeklyRunningHours(id)
 
-    commit('SET_WEEKLY_RUNNING_HOURS', response.data.hours)        
+    commit('SET_WEEKLY_RUNNING_HOURS', response.data.hours)
   } catch (error) {
     console.log(error)
   } finally {
@@ -321,22 +319,21 @@ const initMachinesTable = async ({ commit }, zone) => {
   }
 }
 
-const onProductWeightParamChange = ({ commit, state }) => {
+const onProductWeightParamChange = async ({ commit, state }) => {
   commit('WEIGHT_PRODUCT_LOADING')
-  machineAPI.changeProductWeightMode({
-    param: state.paramWeightProduct,
-    timeRange: state.weightTimeRange
-  })
-    .then((response) => {
-      commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
-      commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
+  try {
+    const response = await machineAPI.changeProductWeightMode({
+      param: state.paramWeightProduct,
+      timeRange: state.weightTimeRange
     })
-    .catch((error) => {
-      console.log(error.response)
-    })
-    .finally(() => {
-      commit('WEIGHT_PRODUCT_LOADED')
-    })
+
+    commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
+    commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
+  } catch (error) {
+    console.log(error.response)
+  } finally {
+    commit('WEIGHT_PRODUCT_LOADED')
+  }
 }
 
 const onProductInventoryParamChanged = ({ commit }, data) => {
@@ -378,15 +375,23 @@ const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   }
 }
 
-const getMachines = ({ commit }) => {
-  return machineAPI.getMachines().then((response) => {
+const getMachines = async ({ commit }) => {
+  try {
+    const response = await machineAPI.getMachines()
+
     commit('SET_MACHINES', response.data.machines)
-  })
+  } catch (error) {
+    console.log(error.response)
+  }
 }
-const getMachinesByCompanyId = ({ commit }, { companyId }) => {
-  return machineAPI.getMachinesByCompanyId(companyId).then((response) => {
+const getMachinesByCompanyId = async ({ commit }, { companyId }) => {
+  try {
+    const response = await machineAPI.getMachinesByCompanyId(companyId)
+
     commit('SET_MACHINES', response.data.machines)
-  })
+  } catch (error) {
+    console.log(error.response)
+  }
 }
 
 export default {

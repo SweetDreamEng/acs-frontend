@@ -10,63 +10,46 @@ const module = {
   },
 
   actions: {
-    getLocations({
+    async getLocations({
       commit
     }) {
       commit('TABLE_LOAD')
 
-      return new Promise((resolve, reject) => {
-        locationAPI.getLocations()
-          .then((response) => {
-            commit('SET_DATA', response.data)
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('TABLE_LOADED')
-          })
-      })
+      try {
+        const response = await locationAPI.getLocations()
+
+        commit('SET_DATA', response.data)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('TABLE_LOADED')
+      }
     },
-    addLocation({
+    async addLocation({
       commit
     }, data) {
       commit('BTN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        locationAPI.addLocation(data)
-          .then((response) => {
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('BTN_LOADED')
-          })
-      })
+      try {
+        const response = await locationAPI.addLocation(data)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('BTN_LOADED')
+      }
     },
-    updateLocation({
+    async updateLocation({
       commit
     }, data) {
       commit('BTN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        locationAPI.updateLocation(data)
-          .then((response) => {
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('BTN_LOADED')
-          })
-      })
+      try {
+        const response = await locationAPI.updateLocation(data)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('BTN_LOADED')
+      }
     }
   },
 

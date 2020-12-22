@@ -20,7 +20,7 @@ const module = {
   actions: {
     async getAppSettings({ commit }) {
       try {
-        const response = settingAPI.appSettings()
+        const response = await settingAPI.appSettings()
 
         commit('SET_APP_SETTINGS', response.data)
       } catch (error) {
@@ -28,44 +28,42 @@ const module = {
       }
     },
 
-    grabColors({
+    async grabColors({
       commit
     }, {
       url
     }) {
       commit('BUTTON_LOAD', 'SUBMIT')
-      settingAPI.grabColors({
-        url
-      }).then((response) => {
-        commit('SET_COLORS', response['data']['colors'])
-      })
-        .catch((error) => {
+      try {
+        const response = await settingAPI.grabColors({ url })
 
-        })
-        .finally(() => {
-          commit('BUTTON_CLEAR')
-        })  
+        commit('SET_COLORS', response.data.colors)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('BUTTON_CLEAR')
+      }
     },
-    resetSettings({
+    async resetSettings({
       commit
     }) {
       commit('BUTTON_LOAD', 'RESET')
-      
-      return settingAPI.resetSettings().then((response) => {
 
-      })
-        .catch((error) => {
-
-        })
-        .finally(() => {
-          commit('BUTTON_CLEAR')
-        })  
+      try {
+        const response = await settingAPI.resetSettings()
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('BUTTON_CLEAR')
+      }
     },
-    setInitialSetting({
+    async setInitialSetting({
       commit
     }) {
-      return settingAPI.getSetting().then((response) => {     
-        response = response['data']['value']
+      try {
+        let response = await settingAPI.getSetting()
+
+        response = response.data.value
         const private_colors = response.filter((data) => data.type.includes('private_color'))
 
         if (private_colors.length) {
@@ -95,54 +93,49 @@ const module = {
         } else {
           commit('SET_LOGO_FILE', false)
         }
-      })
-        .catch((error) => {
-          console.log(error)
-        })
-        .finally(() => {
-        })  
+      } catch (error) {
+        console.log(error)
+      }
     },
-    applyPrivateColors({
+    async applyPrivateColors({
       commit
     }, {
       colors
     }) {
       commit('BUTTON_LOAD', 'APPLY')
-      settingAPI.setPrivateColors({
-        colors
-      }).then((response) => {
-        commit('SET_PRIVATE_COLORS', response['data']['private_colors'])
-      })
-        .catch((error) => {
+      try {
+        const response = await settingAPI.setPrivateColors({ colors })
 
-        })
-        .finally(() => {
-          commit('BUTTON_CLEAR')
-        })
+        commit('SET_PRIVATE_COLORS', response.data.private_colors)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('BUTTON_CLEAR')
+      }
     },
-    uploadLogo({
+    async uploadLogo({
       commit
     }, {
       formData
     }) {
-      settingAPI.uploadLogo(
-        formData
-      ).then((response) => {
+      try {
+        const response = await settingAPI.uploadLogo(formData)
+
         commit('SET_LOGO_FILE', response.data.filepath)
-      })      
+      } catch (error) {
+        console.log(error.response)
+      }
     },
-    updateAuthBackground({
+    async updateAuthBackground({
       commit
     }) {
-      settingAPI.updateAuthBackground().then((response) => {
-        commit('SET_AUTH_BACKGROUND_FILE', response.data.filepath)
-      })
-        .catch((error) => {
-          console.log('error', error)
-        })
-        .finally(() => {
+      try {
+        const response = await settingAPI.updateAuthBackground()
 
-        })
+        commit('SET_AUTH_BACKGROUND_FILE', response.data.filepath)
+      } catch (error) {
+        console.log('error', error)
+      }
     }
   },
 

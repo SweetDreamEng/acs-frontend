@@ -10,48 +10,38 @@ const module = {
   },
 
   actions: {
-    initLocationsZones({
+    async initLocationsZones({
       commit
     }) {
       commit('TABLE_LOAD')
       commit('locations/TABLE_LOAD', null, { root: true })
 
-      return new Promise((resolve, reject) => {
-        zoneAPI.initLocationsZones()
-          .then((response) => {
-            commit('SET_DATA', response.data.zones)
-            commit('locations/SET_DATA', response.data.locations, { root: true })
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('locations/TABLE_LOADED', null, { root: true })
-            commit('TABLE_LOADED')
-          })
-      })
+      try {
+        const response = await zoneAPI.initLocationsZones()
+
+        commit('SET_DATA', response.data.zones)
+        commit('locations/SET_DATA', response.data.locations, { root: true })
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('locations/TABLE_LOADED', null, { root: true })
+        commit('TABLE_LOADED')
+      }
     },
-    getZones({
+    async getZones({
       commit
     }) {
       commit('TABLE_LOAD')
 
-      return new Promise((resolve, reject) => {
-        zoneAPI.getZones()
-          .then((response) => {
-            commit('SET_DATA', response.data)
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('TABLE_LOADED')
-          })
-      })
+      try {
+        const response = await zoneAPI.getZones()
+
+        commit('SET_DATA', response.data)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('TABLE_LOADED')
+      }
     },
     async addZone({
       commit

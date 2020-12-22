@@ -24,14 +24,14 @@ const module = {
     loadingTableMachineMapping: false,
     loadingBtnAssignZoneToMachine: false,
     loadingDashboardDevicesTable: false,    //Devices table loading value in ACS dashboard and user dashboard pages
-    
+
     downtimePlanBtnLoading: false,
     downtimePlansTableLoading: false,
     downtimePlans: []
   },
 
   actions: {
-    getDevices({
+    async getDevices({
       commit
     }, pageNum) {
       commit('SET_PAGINATION_DATA', {
@@ -39,25 +39,20 @@ const module = {
       })
       commit('TABLE_LOAD')
 
-      return new Promise((resolve, reject) => {
-        deviceAPI.getDevices(pageNum)
-          .then((response) => {
-            commit('SET_PAGINATION_DATA', {
-              pageCount: response.data.last_page
-            })
-            commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
-            commit('machines/SET_MACHINES', response.data.machines, { root: true })
-            commit('SET_DATA', response.data.devices)
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('TABLE_LOAD_CLEAR')
-          })
-      })
+      try {
+        const response = await deviceAPI.getDevices(pageNum)
+
+        commit('SET_PAGINATION_DATA', {
+          pageCount: response.data.last_page
+        })
+        commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
+        commit('machines/SET_MACHINES', response.data.machines, { root: true })
+        commit('SET_DATA', response.data.devices)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('TABLE_LOAD_CLEAR')
+      }
     },
 
     async getAllDevices({
@@ -65,76 +60,62 @@ const module = {
     }) {
       try {
         const response = await deviceAPI.getAllDevices()
-        
+
         commit('SET_DATA', response.data.devices)
       } catch (error) {
         console.log(error)
       }
     },
 
-    importDevices({
+    async importDevices({
       commit
     }) {
       commit('IMPORT_BUTTON_LOAD')
-      
-      return new Promise((resolve, reject) => {
-        deviceAPI.importDevices()
-          .then((response) => {
-            commit('SET_ADDED', response.data.numAdded)
-            commit('SET_DUPLICATES', response.data.numDuplicates)
-            resolve(response)
-          })
-          .catch((error) => {
-            reject(error)
-          })
-          .finally(() => {
-            commit('IMPORT_BUTTON_CLEAR')
-          })
-      })
+
+      try {
+        const response = await deviceAPI.importDevices()
+
+        commit('SET_ADDED', response.data.numAdded)
+        commit('SET_DUPLICATES', response.data.numDuplicates)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('IMPORT_BUTTON_CLEAR')
+      }
     },
-    deviceAssigned({
+    async deviceAssigned({
       commit, dispatch
     }, data) {
       commit('ASSIGN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        deviceAPI.deviceAssigned(data)
-          .then((response) => {
-            commit('DEVICE_ASSIGN', data)
-            // dispatch('app/showSuccess', response.data, { root: true })
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('ASSIGN_CLEAR')
-          })
-      })
+      try {
+        const response = await deviceAPI.deviceAssigned(data)
+
+        commit('DEVICE_ASSIGN', data)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('ASSIGN_CLEAR')
+      }
     },
-    updateRegistered({
+    async updateRegistered({
       commit, dispatch
     }, data) {
       commit('REGISTER_BTN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        deviceAPI.updateRegistered(data)
-          .then((response) => {
-            commit('SET_REGISTERED', data)
-            dispatch('app/showSuccess', response.data, { root: true })
-            resolve(response)
-          })
-          .catch((error) => {
-            dispatch('app/showError', {
-              error: error.response.data
-            }, { root: true })
-            reject(error)
-          })
-          .finally(() => {
-            commit('REGISTER_BTN_CLEAR')
-          })
-      })
+      try {
+        const response = await deviceAPI.updateRegistered(data)
+
+        commit('SET_REGISTERED', data)
+        dispatch('app/showSuccess', response.data, { root: true })
+      } catch (error) {
+        console.log(error.response)
+        dispatch('app/showError', {
+          error: error.response.data
+        }, { root: true })
+      } finally {
+        commit('REGISTER_BTN_CLEAR')
+      }
     },
 
     async getCustomerDevices({
@@ -199,95 +180,72 @@ const module = {
       }
     },
 
-    querySIM({
+    async querySIM({
       commit
     }, device) {
       commit('QUERY_BTN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        deviceAPI.querySIM(device)
-          .then((response) => {
-            commit('SET_DEVICE_STATUS', {
-              device_id: response.data.id,
-              status: response.data.sim_status
-            })
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('QUERY_BTN_CLEAR')
-          })
-      })
+      try {
+        const response = await deviceAPI.querySIM(device)
+
+        commit('SET_DEVICE_STATUS', {
+          device_id: response.data.id,
+          status: response.data.sim_status
+        })
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('QUERY_BTN_CLEAR')
+      }
     },
     activateSIM({
       commit
     }, device) {
     },
-    suspendSIM({
+    async suspendSIM({
       commit, dispatch
     }, device) {
       commit('SUSPEND_BTN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        deviceAPI.suspendSIM(device)
-          .then((response) => {
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('SUSPEND_BTN_CLEAR')
-          })
-      })
+      try {
+        const response = await deviceAPI.suspendSIM(device)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('SUSPEND_BTN_CLEAR')
+      }
     },
-    remoteWeb({
+    async remoteWeb({
       commit, dispatch
     }, device) {
       commit('REMOTE_WEB_BTN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        deviceAPI.remoteWeb(device)
-          .then((response) => {
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('REMOTE_WEB_BTN_CLEAR')
-          })
-      })
+      try {
+        const response = await deviceAPI.remoteWeb(device)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('REMOTE_WEB_BTN_CLEAR')
+      }
     },
-    remoteCli({
+    async remoteCli({
       commit, dispatch
     }, device) {
       commit('REMOTE_CLI_BTN_LOAD')
 
-      return new Promise((resolve, reject) => {
-        deviceAPI.remoteCli(device)
-          .then((response) => {
-            resolve(response)
-          })
-          .catch((error) => {
-            console.log(error.response)
-            reject(error)
-          })
-          .finally(() => {
-            commit('REMOTE_CLI_BTN_CLEAR')
-          })
-      })
+      try {
+        const response = await deviceAPI.remoteCli(device)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('REMOTE_CLI_BTN_CLEAR')
+      }
     },
     async getDowntimePlans({
       commit
     }) {
       commit('SET_DOWNTIME_PLANS_TABLE_LOADING', true)
-      
+
       try {
         const response = await deviceAPI.getDowntimePlans()
 
@@ -430,18 +388,18 @@ const module = {
     },
     DEVICE_ASSIGN(state, data) {
       const _device = state.data.find((device) => device.id === data.device_id)
-      
+
       _device.company_id = data.company_id
       _device.machine_id = data.machine_id
     },
     SET_REGISTERED(state, data) {
       const _device = state.data.find((device) => device.id === data.device_id)
-      
+
       _device.registered = data.register
     },
     SET_DEVICE_STATUS(state, data) {
       const _device = state.data.find((device) => device.id === data.device_id)
-      
+
       _device.sim_status = data.status
     },
     RESET_STATUS(state) {
