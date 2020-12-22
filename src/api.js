@@ -4,8 +4,8 @@ import store from './store'
 import router from './router'
 
 const API = axios.create({
-  // baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
-  baseURL: 'http://localhost/acs-api/public/api',
+  baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
+  // baseURL: 'http://localhost/acs-api/public/api',
   timeout: 180000
 })
 
