@@ -11,7 +11,6 @@
           <v-col
             cols="12"
             sm="6"
-            md="6"
           >
             <v-radio-group
               v-model="locTimeRangeOption"
@@ -27,7 +26,6 @@
           <v-col
             cols="12"
             sm="6"
-            md="6"
           >
             <v-radio-group
               v-model="locTimeRangeOption"

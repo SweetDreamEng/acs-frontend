@@ -54,13 +54,13 @@
 
       <!-- Note form and timeline -->
       <v-row>
-        <v-col cols="12" md="5">
+        <v-col md="5" sm="12">
           <note-form
             :device-id="parseInt($route.params.productId)"
           >
           </note-form>
         </v-col>
-        <v-col cols="12" md="7">
+        <v-col md="7" sm="12">
           <notes-timeline
             :notes="notes"
           >

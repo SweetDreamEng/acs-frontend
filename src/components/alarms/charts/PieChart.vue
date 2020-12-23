@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row dense>
-      <v-col cols="12" md="3" lg="3">
+      <v-col md="3" sm="12">
         <apexchart
           height="200"
           :options="chartOptions"
@@ -9,7 +9,7 @@
         >
         </apexchart>
       </v-col>
-      <v-col cols="12" md="4" lg="4">
+      <v-col md="4" sm="12">
         <v-row>
           <v-col cols="6">
             <alarm-amount-cards
@@ -27,7 +27,7 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="12" md="4" lg="4">
+      <v-col md="4" sm="12">
         <v-row>
           <v-col 
             v-for="(value, idx) in 3"

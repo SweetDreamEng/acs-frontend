@@ -15,8 +15,9 @@
           <v-col 
             v-for="idx in 4"
             :key="idx"
-            cols="12"
+            lg="3"
             md="6"
+            sm="12"
           >
             <alarm-per-machine-card />
           </v-col>
