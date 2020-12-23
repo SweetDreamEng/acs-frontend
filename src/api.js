@@ -4,9 +4,9 @@ import store from './store'
 import router from './router'
 
 const API = axios.create({
-  // baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
-  baseURL: 'http://localhost/acs-api/public/api',
-  timeout: 8000
+  baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
+  // baseURL: 'http://localhost/acs-api/public/api',
+  timeout: 10000
 })
 
 API.interceptors.request.use(async (config) => {
