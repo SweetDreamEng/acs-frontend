@@ -20,9 +20,7 @@
             <v-col 
               v-for="(alarm, idx) in alarmsAmountPerMachine"
               :key="idx"
-              cols="3"
-              xs="12"
-              sm="12"
+              cols="12"
               md="6"
             >
               <alarm-per-machine-card 

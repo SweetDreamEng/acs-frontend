@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-row dense>
-      <v-col cols="12" md="4">
+      <v-col md="4" sm="12">
         <overview
           :machine="machine"
           :loading="loadingOverview"
         >
         </overview>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col md="4" sm="12">
         <utilization
           :loading="loadingUtilization"
           :time-range-label="timeRangeLabel('utilization')"
@@ -16,7 +16,7 @@
         >
         </utilization>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col md="4" sm="12">
         <energy-consumption
           :loading="loadingEnergyConsumption"
           :time-range-label="timeRangeLabel('energy-consumption')"
@@ -26,13 +26,13 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col cols="12" md="4">
+      <v-col md="4" sm="12">
         <machine-state :loading="loadingSystemStates" :system-states="systemStates"></machine-state>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col md="4" sm="12">
         <feeder-stable :loading="loadingFeederStables2" :feeders="feederStables"></feeder-stable>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col md="4" sm="12">
         <process-rate
           :loading="loadingProcessRate"
           :rates="processRateSeries"
@@ -43,7 +43,7 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col cols="12" md="8">
+      <v-col md="8" sm="12">
         <recipe
           :targets="targetRecipeValues"
           :actuals="actualRecipeValues"
@@ -51,7 +51,7 @@
         >
         </recipe>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col md="4" sm="12">
       </v-col>
     </v-row>
     <time-range-chooser
