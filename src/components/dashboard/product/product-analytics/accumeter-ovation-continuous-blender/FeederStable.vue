@@ -19,7 +19,7 @@
             <v-icon small left :color="feeder ? 'green' : 'red'">
               mdi-checkbox-blank-circle
             </v-icon>
-            {{ feeder ? 'Stable' : 'Unstable'}}
+            {{ feeder ? 'Stable' : 'Unstable' }}
           </v-chip>
         </div>
       </template>
