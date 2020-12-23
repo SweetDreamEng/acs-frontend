@@ -71,7 +71,7 @@
               left
               :color="machineStates.rpm ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ machineStates.rpm ? 'Steady' : 'Not steady'}}
+            {{ machineStates.rpm ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>

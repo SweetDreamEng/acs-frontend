@@ -310,7 +310,7 @@ const initMachinesTable = async ({ commit }, zone) => {
 
   try {
     const response = await machineAPI.initMachinesTable(zone)
-
+    
     commit('devices/SET_DATA', response.data.devices, { root: true })
   } catch (error) {
     console.log(error)

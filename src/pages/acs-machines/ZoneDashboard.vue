@@ -25,19 +25,9 @@
 </template>
 
 <script>
-
-/*
-|---------------------------------------------------------------------
-| Dashboard Page Component
-| url: /dashboard/analytics
-|---------------------------------------------------------------------
-|
-*/
-
 // import vuex helper functions
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-// DEMO Cards for dashboard
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
 import MachinesTable from '../../components/dashboard/dashboard-tables/MachinesTable'
 import SalesCard from '../../components/dashboard/SalesCard'
@@ -57,7 +47,6 @@ export default {
     ...mapState({
       loadingMachinesTable: (state) => state.machines.loadingMachinesTable,
       
-      machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
       devices: (state) => state.devices.data
@@ -66,12 +55,6 @@ export default {
       locationName: 'locations/locationName',
       zoneName: 'zones/zoneName'
     }),
-    machinesForZone() {
-      return this.machines.filter((machine) => {
-        return parseInt(machine.location.id) === parseInt(this.$route.params.location)
-          && parseInt(machine.zone.id) === parseInt(this.$route.params.zone)
-      })
-    },
     breadcrumbItems() {
       return [
         {
@@ -97,12 +80,12 @@ export default {
   mounted() {
     this.getLocations()
     this.getZones()
-    this.initAcsMachinesTable(this.$route.params.zone)
+    this.initMachinesTable(this.$route.params.zone)
     this.changeSelectedCompany()
   },
   methods: {
     ...mapActions({
-      initAcsMachinesTable: 'machines/initAcsMachinesTable',
+      initMachinesTable: 'machines/initMachinesTable',
       getAcsDevicesAnalytics: 'devices/getAcsDevicesAnalytics',
       changeSelectedCompany: 'machines/changeSelectedCompany',
       getLocations: 'locations/getLocations',

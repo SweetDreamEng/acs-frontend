@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
     <v-row>
-      <v-col cols="4" xs="12">
+      <v-col sm="4" xs="12">
         <Overview :user="user"></Overview>
       </v-col>
-      <v-col cols="8" xs="12">
+      <v-col sm="8" xs="12">
         <v-card>
           <v-card-text>
             <v-tabs v-model="tab">

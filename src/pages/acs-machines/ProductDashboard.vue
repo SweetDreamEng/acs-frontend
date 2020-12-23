@@ -199,7 +199,6 @@ export default {
       getRecipe: 'machines/getRecipe',
       getWeight: 'machines/getWeight',
       getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
-      initProduct: 'machines/initProduct',
       'selectMachine': 'machines/selectMachine',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       changeSelectedCompany: 'machines/changeSelectedCompany',

@@ -181,7 +181,6 @@ export default {
       getOverview: 'machines/getOverview',
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
-      initProduct: 'machines/initProduct',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       getProductAlarms: 'alarms/getProductAlarms',
       getNotes: 'notes/getNotes'
