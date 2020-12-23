@@ -132,7 +132,7 @@ export default {
     state.loadingMachinesTable = data
   },
   
-  SET_LOADING_INVENTIORIES(state, data) {
+  SET_LOADING_INVENTORIES(state, data) {
     state.loadingInventories = data
   },
 
