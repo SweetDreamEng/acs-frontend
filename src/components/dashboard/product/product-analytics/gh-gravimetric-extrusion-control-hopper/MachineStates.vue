@@ -13,7 +13,7 @@
           align="center"
           no-gutters
         >
-          <v-col cols="8">
+          <v-col cols="7">
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !machineStates.system_steady }"
@@ -36,7 +36,7 @@
           align="center"
           no-gutters
         >
-          <v-col cols="8">
+          <v-col cols="7">
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !machineStates.wtp }"
@@ -59,7 +59,7 @@
           align="center"
           no-gutters
         >
-          <v-col cols="8">
+          <v-col cols="7">
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !machineStates.rpm }"
@@ -82,7 +82,7 @@
           align="center"
           no-gutters
         >
-          <v-col cols="8">
+          <v-col cols="7">
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !machineStates.halloff }"

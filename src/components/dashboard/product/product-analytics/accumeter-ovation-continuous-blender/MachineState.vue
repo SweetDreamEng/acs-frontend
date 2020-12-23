@@ -13,13 +13,12 @@
           align="center"
           no-gutters
         >
-          <v-col class="grow">
+          <v-col cols="7">
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !systemStates.machine_running }"
             >Machine State</span>
           </v-col>
-          <v-spacer></v-spacer>
           <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.machine_running }">
             <v-icon
               small
@@ -37,13 +36,12 @@
           align="center"
           no-gutters
         >
-          <v-col class="grow">
+          <v-col cols="7">
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !systemStates.system_steady }"
             >System steady</span>
           </v-col>
-          <v-spacer></v-spacer>
           <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.system_steady }">
             <v-icon
               small
@@ -61,13 +59,12 @@
           align="center"
           no-gutters
         >
-          <v-col class="grow">
+          <v-col cols="7">
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !systemStates.mass_flow_hopper }"
             >Mass flow hopper</span>
           </v-col>
-          <v-spacer></v-spacer>
           <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.mass_flow_hopper }">
             <v-icon
               small
@@ -85,13 +82,12 @@
           align="center"
           no-gutters
         >
-          <v-col class="grow">
+          <v-col cols="7">
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !systemStates.rpm }"
             >RPM</span>
           </v-col>
-          <v-spacer></v-spacer>
           <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.rpm }">
             <v-icon
               small
