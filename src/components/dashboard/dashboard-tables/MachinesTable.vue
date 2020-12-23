@@ -28,7 +28,7 @@
           </div>
         </template>
         <template v-slot:item.customer_assigned_name="{ item }">
-          <router-link class="d-flex align-center" :to="item.serial_number" append>
+          <router-link class="d-flex align-center" :to="item.machine_id + '/' + item.serial_number" append>
             <v-icon>mdi-wrench</v-icon>
             <span class="title text-no-wrap ml-1">{{ item.customer_assigned_name }}</span>
           </router-link>

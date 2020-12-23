@@ -25,7 +25,7 @@
               left
               :color="systemStates.machine_running ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ systemStates.machine_running ? 'Running' : 'Not running'}}
+            {{ systemStates.machine_running ? 'Running' : 'Not running' }}
           </v-col>
         </v-row>
       </v-alert>
@@ -48,7 +48,7 @@
               left
               :color="systemStates.system_steady ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ systemStates.system_steady ? 'Steady' : 'Not steady'}}
+            {{ systemStates.system_steady ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>
@@ -71,7 +71,7 @@
               left
               :color="systemStates.mass_flow_hopper ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ systemStates.mass_flow_hopper ? 'Steady' : 'Not steady'}}
+            {{ systemStates.mass_flow_hopper ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>
@@ -94,7 +94,7 @@
               left
               :color="systemStates.rpm ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ systemStates.rpm ? 'Steady' : 'Not steady'}}
+            {{ systemStates.rpm ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>

@@ -2,11 +2,12 @@
   <v-card
     height="100%"
     :loading="loading"
+    :disabled="loading"
   >
     <v-card-title>{{ machine.customer_assigned_name }}</v-card-title>
     <v-card-subtitle>
       <div>{{ machine.name }}</div>
-      <div>{{ machine.configuration.name }}</div>
+      <div v-if="machine.configuration">{{ machine.configuration.name }}</div>
     </v-card-subtitle>
     <v-img
       height="150"
@@ -33,47 +34,12 @@ export default {
     },
     machine: {
       type: Object,
-      default: () => ({})
+      default: () => {}
     }
   },
   data() {
     return {
     }
-  },
-  computed: {
-    chartOptions() {
-      return {
-        chart: {
-          type: 'line',
-          zoom: {
-            enabled: false
-          },
-          toolbar: {
-            show: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          width: 2
-        },
-        grid: {
-          show: false
-        },
-        yaxis: {
-          show: false
-        },
-        xaxis: {
-          labels: {
-            show: false
-          },
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
-        }
-      }
-    }
-  },
-  methods: {
   }
 }
 </script>

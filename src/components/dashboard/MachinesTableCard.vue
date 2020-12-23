@@ -140,6 +140,7 @@ export default {
       this.$router.push({
         name: 'product-details',
         params: {
+          configurationId: item.machine_id,
           productId: item.serial_number
         }
       })

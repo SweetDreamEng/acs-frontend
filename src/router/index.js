@@ -26,7 +26,7 @@ export const routes = [{
     customerAdmin: true
   }
 }, {
-  path: '/dashboard/analytics/:location/:zone/:productId',
+  path: '/dashboard/analytics/:location/:zone/:configurationId/:productId',
   name: 'dashboard-product',
   component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/DashboardProduct.vue'),
   meta: {
@@ -50,7 +50,7 @@ export const routes = [{
     customerAdmin: true
   }
 }, {
-  path: '/products/:productId',
+  path: '/products/:configurationId/:productId',
   name: 'product-details',
   component: () => import(/* webpackChunkName: "product-details" */ '@/pages/dashboard/DashboardProduct.vue'),
   meta: {

@@ -17,20 +17,15 @@
     <v-container fluid>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
-          <div v-if="loadingAnalytics" class="d-flex flex-grow-1 align-center justify-center">
-            <v-progress-circular indeterminate color="primary"></v-progress-circular>
-          </div>
-          <template v-else>
-            <bd-batch-blender v-if="machine.machine_id === 1" :product-id="$route.params.productId"></bd-batch-blender>
-            <accumeter-ovation-continuous-blender v-if="machine.machine_id === 2" :product-id="$route.params.productId"></accumeter-ovation-continuous-blender>
-            <gh-gravimetric-extrusion-control-hopper v-if="machine.machine_id === 3" :product-id="$route.params.productId"></gh-gravimetric-extrusion-control-hopper>
-            <gh-f-gravimetric-additive-feeder v-if="machine.machine_id === 4" :product-id="$route.params.productId"></gh-f-gravimetric-additive-feeder>
-            <vtc-plus-conveying-system v-if="machine.machine_id === 5" :product-id="$route.params.productId"></vtc-plus-conveying-system>
-            <ngx-dryer v-if="machine.machine_id === 6" :product-id="$route.params.productId"></ngx-dryer>
-            <ngx-nomad-dryer v-if="machine.machine_id === 7" :product-id="$route.params.productId"></ngx-nomad-dryer>
-            <t-50-central-granulator v-if="machine.machine_id === 8" :product-id="$route.params.productId"></t-50-central-granulator>
-            <gp-portable-chiller v-if="machine.machine_id === 9" :product-id="$route.params.productId"></gp-portable-chiller>
-          </template>
+          <bd-batch-blender v-if="parseInt($route.params.configurationId) === 1" :product-id="$route.params.productId"></bd-batch-blender>
+          <accumeter-ovation-continuous-blender v-if="parseInt($route.params.configurationId) === 2" :product-id="$route.params.productId"></accumeter-ovation-continuous-blender>
+          <gh-gravimetric-extrusion-control-hopper v-if="parseInt($route.params.configurationId) === 3" :product-id="$route.params.productId"></gh-gravimetric-extrusion-control-hopper>
+          <gh-f-gravimetric-additive-feeder v-if="parseInt($route.params.configurationId) === 4" :product-id="$route.params.productId"></gh-f-gravimetric-additive-feeder>
+          <vtc-plus-conveying-system v-if="parseInt($route.params.configurationId) === 5" :product-id="$route.params.productId"></vtc-plus-conveying-system>
+          <ngx-dryer v-if="parseInt($route.params.configurationId) === 6" :product-id="$route.params.productId"></ngx-dryer>
+          <ngx-nomad-dryer v-if="parseInt($route.params.configurationId) === 7" :product-id="$route.params.productId"></ngx-nomad-dryer>
+          <t-50-central-granulator v-if="parseInt($route.params.configurationId) === 8" :product-id="$route.params.productId"></t-50-central-granulator>
+          <gp-portable-chiller v-if="parseInt($route.params.configurationId) === 9" :product-id="$route.params.productId"></gp-portable-chiller>
         </v-col>
         <v-col cols="12">
           <alarm-table

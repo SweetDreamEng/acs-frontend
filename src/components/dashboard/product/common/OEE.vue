@@ -19,6 +19,9 @@
           <div class="body-1" v-text="'Feeder ' + (i + 1)"></div>
         </div>
       </div>
+      <div v-else class="text-center">
+        No Data From Device
+      </div>
     </v-card-text>
   </v-card>
 </template>
