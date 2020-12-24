@@ -66,9 +66,9 @@
           </div>
         </template>
 
-        <template v-slot:item.sim_status="{ item }">
+        <template v-slot:item.plc_link="{ item }">
           <v-icon
-            :color="item.sim_status === 'Active' ? 'green' : 'red'"
+            :color="item.plc_link ? 'green' : 'red'"
           >
             mdi-checkbox-blank-circle
           </v-icon>
@@ -241,7 +241,7 @@ export default {
         { text: 'Machine Configuration', value: 'machine_id' },
         { text: 'REG Status', align: 'center', value: 'registered_view' },
         { text: 'Device Registration', align: 'center', value: 'registered_action', sortable: false },
-        { text: 'SIM Status', align: 'center', value: 'sim_status' },
+        { text: 'PLC Link', align: 'center', value: 'plc_link' },
         { text: 'Device checkin', align: 'center', value: 'checkin' },
         { text: 'Administration', value: 'data-table-expand', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
