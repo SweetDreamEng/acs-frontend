@@ -14,7 +14,8 @@ const module = {
     logo_file: null,
     auth_background_file: null,
 
-    logoFilePath: ''
+    logoFilePath: '',
+    uploadingLogo: false
   },
 
   actions: {
@@ -118,6 +119,8 @@ const module = {
     }, {
       formData
     }) {
+      commit('SET_LOGO_UPLOADING', true)
+
       try {
         const response = await settingAPI.uploadLogo(formData)
 
@@ -125,7 +128,10 @@ const module = {
       } catch (error) {
         console.log(error.response)
       }
+
+      commit('SET_LOGO_UPLOADING', false)
     },
+
     async updateAuthBackground({
       commit
     }) {
@@ -162,6 +168,9 @@ const module = {
     },
     SET_AUTH_BACKGROUND_FILE(state, filepath) {
       state.auth_background_file = filepath
+    },
+    SET_LOGO_UPLOADING(state, value) {
+      state.uploadingLogo = value
     }
   }
 }
