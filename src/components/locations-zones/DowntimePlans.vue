@@ -209,13 +209,9 @@
         </template>
 
         <template v-slot:item.actions="{ item }">
-          <v-icon
-            small
-            class="mr-2"
-            @click="editPlan(item)"
-          >
-            mdi-pencil
-          </v-icon>
+          <v-btn icon @click="editPlan(item)">
+            <v-icon small>mdi-pencil</v-icon>
+          </v-btn>
         </template>
       </v-data-table>
     </v-card-text>

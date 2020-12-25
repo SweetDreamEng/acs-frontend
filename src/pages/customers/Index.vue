@@ -33,7 +33,7 @@
 
         <template v-slot:item.action="{ item }">
           <div v-if="canCreateCompanies" class="actions">
-            <v-btn icon :to="editLink(item)">
+            <v-btn icon :to="`/customers/edit/${item.id}`">
               <v-icon small>mdi-pencil</v-icon>
             </v-btn>
           </div>
@@ -96,9 +96,6 @@ export default {
     }),
     open() {
       this.getCustomers()
-    },
-    editLink(item) {
-      return '/customers/edit/' + item.id
     }
   }
 }

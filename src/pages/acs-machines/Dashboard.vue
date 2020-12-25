@@ -90,6 +90,7 @@ export default {
     }
   },
   mounted() {
+    this.getZones()
     this.initAcsDashboard()
     this.initLocationsTable()
     this.getAcsDevicesAnalytics()
@@ -99,7 +100,8 @@ export default {
       initAcsDashboard: 'machines/initAcsDashboard',
       initLocationsTable: 'machines/initLocationsTable',
       getAcsDevicesAnalytics: 'devices/getAcsDevicesAnalytics',
-      changeSelectedCompany: 'machines/changeSelectedCompany'
+      changeSelectedCompany: 'machines/changeSelectedCompany',
+      getZones: 'zones/getZones'
     }),
     onCompanyChanged(company) {
       this.changeSelectedCompany(company)

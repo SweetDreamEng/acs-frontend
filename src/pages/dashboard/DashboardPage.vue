@@ -57,13 +57,11 @@ export default {
       
       devices: (state) => state.devices.data,
       locations: (state) => state.locations.data,
-      zones: (state) => state.zones.data,
       privateColors: (state) => state.settings.private_colors,
       downtimeDistribution: (state) => state.machines.downtimeDistribution
     })
   },
   mounted() {
-
     this.getCustomerDevicesAnalytics()
     this.getZones()
     this.initLocationsTable()
