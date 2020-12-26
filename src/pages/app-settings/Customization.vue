@@ -47,87 +47,74 @@
       <v-expansion-panel>
         <v-expansion-panel-header class="title">Application Customization</v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-card flat>
-            <!-- Input URL Form -->
-            <v-card-text>
-              <v-form ref="form" lazy-validation @submit.prevent="submit">
-                <v-text-field
-                  v-model="url"
-                  label="Input Website URL"
-                  outlined
-                  dense
-                  :rules="[$rules.required]"
-                />
-                <v-row justify="space-around">
-                  <v-btn
-                    class="ma-2 white--text"
-                    :loading="buttonLoading == 'SUBMIT'"
-                    :disabled="buttonLoading == 'SUBMIT'"
-                    color="info"
-                    @click="submit"
-                  >
-                    SUBMIT
-                  </v-btn>
-                  <v-sheet v-if="buttonLoading === 'APPLY' || buttonLoading === false">
-                    <v-btn
-                      class="ma-2"
-                      :loading="buttonLoading === 'APPLY'"
-                      :disabled="buttonLoading === 'APPLY'"
-                      color="success"
-                      @click="applyCustomization"                          
-                    >
-                      Apply Customization
-                    </v-btn>
-                    <v-btn
-                      fab
-                      large
-                      dark
-                      :color="customizationColor"
-                    ></v-btn>
-                  </v-sheet>
-                </v-row>
-              </v-form>
-            </v-card-text>
+          <v-form ref="form" lazy-validation @submit.prevent="submit">
             <v-text-field
-              v-if="buttonLoading"
-              color="success"
-              loading
-              disabled
-            ></v-text-field>
-            <v-card-text v-if="colors">
-              <v-row>
-                <v-col
-                  v-for="(color, idx) in colors"
-                  :key="idx"
-                  class="d-flex child-flex"
-                  cols="2"
+              v-model="url"
+              label="Input Website URL"
+              outlined
+              dense
+              :rules="[$rules.required]"
+            />
+            <v-row justify="space-around">
+              <v-btn
+                class="ma-2 white--text"
+                :loading="buttonLoading === 'SUBMIT'"
+                :disabled="buttonLoading === 'SUBMIT'"
+                color="info"
+                @click="submit"
+              >
+                SUBMIT
+              </v-btn>
+              <v-sheet v-if="buttonLoading === 'APPLY' || buttonLoading === false">
+                <v-btn
+                  class="ma-2"
+                  :loading="buttonLoading === 'APPLY'"
+                  :disabled="buttonLoading === 'APPLY'"
+                  color="success"
+                  @click="applyCustomization"                          
                 >
-                  <v-btn
-                    :key="idx"
-                    :color="color.Hex"
-                    elevation="11"
-                    height="100"
-                    @click="handleColorClicked(color.Hex)"
-                  ></v-btn>
-                </v-col>
-              </v-row>
-            </v-card-text>
+                  Apply Customization
+                </v-btn>
+                <v-btn
+                  fab
+                  large
+                  dark
+                  :color="customizationColor"
+                ></v-btn>
+              </v-sheet>
+            </v-row>
+          </v-form>
+          <v-row v-if="colors">
+            <v-col
+              v-for="(color, idx) in colors"
+              :key="idx"
+              class="d-flex child-flex"
+              cols="2"
+            >
+              <v-btn
+                :key="idx"
+                :color="color.Hex"
+                elevation="11"
+                height="100"
+                @click="handleColorClicked(color.Hex)"
+              ></v-btn>
+            </v-col>
+          </v-row>
 
-            <v-card-text v-if="!colors.length && buttonLoading == false">
-              <v-row justify="center">
-                Sorry, We can't find any colors from given URL.
-              </v-row>
-              <v-row justify="center">
-                <v-color-picker
-                  v-model="customizationColor"
-                  dot-size="25"
-                  show-swatches
-                  swatches-max-height="200"                          
-                  elevation="15"                          
-                ></v-color-picker>
-              </v-row>
-            </v-card-text>
-          </v-card>
+          <div v-if="!colors.length && buttonLoading == false">
+            <v-row justify="center">
+              Sorry, We can't find any colors from given URL.
+            </v-row>
+            <v-row justify="center">
+              <v-color-picker
+                v-model="customizationColor"
+                dot-size="25"
+                show-swatches
+                swatches-max-height="200"                          
+                elevation="15"                          
+              ></v-color-picker>
+            </v-row>
+          </div>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -135,11 +122,9 @@
     <br>
     
     <v-btn
-      depressed
       color="error"
-      style="width: 100%"
-      :loading="buttonLoading == 'SUBMIT'"
-      :disabled="buttonLoading == 'SUBMIT'"
+      :loading="buttonLoading === 'RESET'"
+      :disabled="buttonLoading === 'RESET'"
       @click="handleResetBtnClicked"
     >
       Set Default Settings
@@ -159,14 +144,8 @@ export default {
 
       url: '',
       tab: null,
-      items: [
-        'Upload Image',
-        'Choose Logo Color'
-      ],
       // customizationColor: this.privateColors[0],
-      customizationColor: null,
-      selectedFile: null,
-      isSelecting: false
+      customizationColor: null
     }
   },
   computed: {
@@ -193,9 +172,7 @@ export default {
     }),
     async submit () {
       if (this.$refs.form.validate()) {
-        this.grabColors({
-          url: this.url
-        })
+        this.grabColors(this.url)
 
         //-- Generic Random Images --//
         this.updateAuthBackground()
@@ -240,24 +217,6 @@ export default {
         })
       })
     },
-    handleFileUploadBtnClicked() {
-      this.isSelecting = true
-      window.addEventListener('focus', () => {
-        this.isSelecting = false
-      }, { once: true })
-
-      this.$refs.uploader.click()
-    },
-    onFileChanged(e) {
-      this.selectedFile = e.target.files[0]
-      const formData = new FormData()
-
-      formData.append('logo', this.selectedFile)
-      this.uploadLogo({
-        formData
-      })
-    },
-
     prepareLogo(file) {
       if (file) {
         const reader = new FileReader()

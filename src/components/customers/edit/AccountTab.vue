@@ -5,7 +5,13 @@
       <v-card-text>
         <div class="d-flex flex-column flex-sm-row">
           <div class="flex-grow-1 pt-2 pa-sm-2">
-            <v-form ref="accountForm" v-model="isAccountFormValid" lazy-validation @submit.prevent="submit">
+            <v-form
+              v-if="customerAccount"
+              ref="accountForm"
+              v-model="isAccountFormValid"
+              lazy-validation
+              @submit.prevent="submit"
+            >
               <v-combobox
                 v-model="customerAccount.companyName"
                 :items="companies"
@@ -121,11 +127,7 @@ export default {
   props: {
     customerAccount: {
       type: Object,
-      default: () => ({
-        name: '',
-        companyName: '',
-        email: ''
-      })
+      default: () => {}
     },
     companies: {
       type: Array,

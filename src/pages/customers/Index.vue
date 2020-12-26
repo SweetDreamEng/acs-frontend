@@ -7,11 +7,34 @@
       </div>
       <v-spacer></v-spacer>
       <v-btn v-if="canCreateCompanies" color="primary" to="/customers/add">
+        <v-icon left>mdi-plus</v-icon>
         Create Company
       </v-btn>
     </div>
 
     <v-card>
+      <v-row dense class="pa-2 align-center" justify="end">
+        <v-col sm="12" md="6" class="d-flex text-right align-center">
+          <v-text-field
+            v-model="searchQuery"
+            append-icon="mdi-magnify"
+            class="flex-grow-1 mr-md-2"
+            solo
+            hide-details
+            dense
+            clearable
+            placeholder="e.g. filter for company name, administrator name, etc"
+          ></v-text-field>
+          <v-btn
+            icon
+            small
+            class="ml-2"
+            @click="getCustomers"
+          >
+            <v-icon>mdi-refresh</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
       <v-data-table
         :headers="headers"
         :items="customerAdmins"

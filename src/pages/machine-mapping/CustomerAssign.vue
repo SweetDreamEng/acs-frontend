@@ -3,13 +3,12 @@
     <!-- import devices from excel file -->
     <device-import v-if="canImportDevices"></device-import>
 
-    <div class="pt-1"></div>
-
+    <br>
+    
     <!-- customer assignment table -->
     <v-card>
       <v-card-title>Customer Device Assignment</v-card-title>
       <v-data-table
-        v-model="selectedUsers"
         :headers="tableHeaders"
         :items="devices"
         class="flex-grow-1"
@@ -21,16 +20,28 @@
         :loading="table_loading"
       >
         <template v-slot:top>
-          <v-text-field
-            v-model="searchQuery"
-            append-icon="mdi-magnify"
-            solo
-            hide-details
-            dense
-            clearable
-            placeholder="Search"
-            class="mx-1"
-          ></v-text-field>
+          <v-row dense class="pa-2 align-center" justify="end">
+            <v-col sm="12" md="6" class="d-flex text-right align-center">
+              <v-text-field
+                v-model="searchQuery"
+                append-icon="mdi-magnify"
+                class="flex-grow-1 mr-md-2"
+                solo
+                hide-details
+                dense
+                clearable
+                placeholder="e.g. filter for serial number, device name, company name, etc"
+              ></v-text-field>
+              <v-btn
+                icon
+                small
+                class="ml-2"
+                @click="getDevices(loc_page)"
+              >
+                <v-icon>mdi-refresh</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
         </template>
         <!-- custom table header -->
 
@@ -219,17 +230,7 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
-      breadcrumbs: [{
-        text: 'Customer Assign',
-        disabled: false,
-        href: '#'
-      }, {
-        text: 'List'
-      }],
-
       searchQuery: '',
-      selectedUsers: [],
       tableHeaders: [
         { text: 'Serial Number', value: 'serial_number' },
         { text: 'Device Name', value: 'name' },

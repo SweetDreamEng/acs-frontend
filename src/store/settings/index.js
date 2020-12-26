@@ -1,7 +1,4 @@
-import Vue from 'vue'
-import router from '../../router'
 import settingAPI from '@/services/api/setting'
-import { first, inRange } from 'lodash'
 
 const module = {
   namespaced: true,
@@ -31,20 +28,19 @@ const module = {
 
     async grabColors({
       commit
-    }, {
-      url
-    }) {
+    }, url) {
       commit('BUTTON_LOAD', 'SUBMIT')
       try {
         const response = await settingAPI.grabColors({ url })
 
-        commit('SET_COLORS', response.data.colors)
+        commit('SET_COLORS', response.data.colors.slice(0, 10))
       } catch (error) {
         console.log(error.response)
       } finally {
         commit('BUTTON_CLEAR')
       }
     },
+
     async resetSettings({
       commit
     }) {

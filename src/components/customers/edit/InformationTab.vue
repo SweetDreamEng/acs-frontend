@@ -3,7 +3,13 @@
     <v-card class="my-2">
       <v-card-title>Account Information</v-card-title>
       <v-card-text>
-        <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation @submit.prevent="submit">
+        <v-form
+          v-if="customerProfile"
+          ref="profileForm"
+          v-model="isProfileFormValid"
+          lazy-validation
+          @submit.prevent="submit"
+        >
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field

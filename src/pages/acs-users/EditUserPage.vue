@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-grow-1">
+  <div v-if="user" class="flex-grow-1">
     <div class="d-flex align-center py-3">
       <div>
         <div class="display-1">Edit User {{ user.name && `- ${user.name}` }}</div>

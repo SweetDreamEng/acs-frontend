@@ -7,6 +7,7 @@
       </div>
       <v-spacer></v-spacer>
       <v-btn v-if="canCreateAcsUser" color="primary" to="/acs-admin/users/add">
+        <v-icon left>mdi-plus</v-icon>
         Create User
       </v-btn>
     </div>
