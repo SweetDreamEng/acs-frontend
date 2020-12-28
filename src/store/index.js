@@ -15,6 +15,7 @@ import cities from './cities'
 import roles from './roles'
 import alarms from './alarms'
 import notes from './notes'
+import configurations from './configurations'
 
 Vue.use(Vuex)
 
@@ -35,7 +36,8 @@ const store = new Vuex.Store({
     cities,
     roles,
     alarms,
-    notes
+    notes,
+    configurations
   }
 })
 

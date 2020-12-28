@@ -1,23 +1,5 @@
 import machineAPI from '@/services/api/machine'
 
-const selectMachine = ({ commit }, id) => {
-  commit('selectData', id)
-}
-
-const updateSelections = ({ commit }, selections) => {
-  commit('updateSelections', selections)
-}
-
-const getAllConfigurations = async ({ commit }) => {
-  try {
-    const response = await machineAPI.getAllConfigurations()
-
-    commit('SET_MACHINES', response.data.configurations)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 const initAcsDashboard = async ({ commit, state }) => {
   try {
     const response = await machineAPI.initAcsDashboard()
@@ -395,9 +377,6 @@ const getMachinesByCompanyId = async ({ commit }, { companyId }) => {
 }
 
 export default {
-  getAllConfigurations,
-  selectMachine,
-  updateSelections,
   initAcsDashboard,
   initLocationsTable,
   initZonesTable,

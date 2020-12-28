@@ -16,7 +16,8 @@ export default {
     text: '',
     key: '',
     items: [
-      { icon: 'mdi-view-dashboard-outline', text: 'App Settings', link: '/app-settings/customize-application' }
+      { icon: 'mdi-view-dashboard-outline', text: 'App Settings', link: '/app-settings/customize-application' },
+      { icon: 'mdi-devices', text: 'Configurations', link: '/app-settings/configurations' }
     ]
   }],
 

@@ -88,8 +88,6 @@ export default {
         { text: 'Prod Rate', value: 'rate', align: 'center' },
         { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false }
       ],
-      selectedMachineId: 0,
-
       searchQuery: '',
 
       chartOptions: {
