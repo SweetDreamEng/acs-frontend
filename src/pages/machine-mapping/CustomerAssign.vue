@@ -51,7 +51,7 @@
         </template>
 
         <template v-slot:item.machine_id="{ item }">
-          <span>{{ machineName(item.machine_id) }}</span>
+          <span>{{ configurationName(item.machine_id) }}</span>
         </template>
 
         <template v-slot:item.registered_view="{ item }">
@@ -141,7 +141,7 @@
             </v-select>
             <v-select
               v-model="editedItem.machine_id"
-              :items="machines"
+              :items="configurations"
               label="Choose Configuration"
               item-text="name"
               item-value="id"
@@ -279,22 +279,25 @@ export default {
     }),
     ...mapGetters({
       companies: 'customers/extendedCompanies',
-      machines: 'machines/extendedMachines',
-      canImportDevices: 'auth/canImportDevices'
+      configurations: 'configurations/extendedConfigurations',
+      canImportDevices: 'auth/canImportDevices',
+      configurationName: 'configurations/configurationName'
     })
   },
   mounted() {
     this.loc_page = this.page
+    this.getConfigurations()
     this.getDevices(this.page)
   },
   methods: {
     ...mapActions({
-      'getDevices': 'devices/getDevices',
-      'deviceAssigned': 'devices/deviceAssigned',
-      'updateRegistered': 'devices/updateRegistered',
-      'getDevicesStatus': 'devices/getDevicesStatus',
-      'activateSIM': 'devices/activateSIM',
-      'deactivateSIM': 'devices/deactivateSIM'
+      getConfigurations: 'configurations/getConfigurations',
+      getDevices: 'devices/getDevices',
+      deviceAssigned: 'devices/deviceAssigned',
+      updateRegistered: 'devices/updateRegistered',
+      getDevicesStatus: 'devices/getDevicesStatus',
+      activateSIM: 'devices/activateSIM',
+      deactivateSIM: 'devices/deactivateSIM'
     }),
     editItem (item) {
       this.editedIndex = this.devices.indexOf(item)
@@ -346,9 +349,9 @@ export default {
     confirmationMessage() {
       if (this.selectedItem) {
         if (!this.selectedItem.registered)
-          return `Device ${this.selectedItem.serial_number} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be configured with product <strong><i>${this.machineName(this.selectedItem.machine_id)}</i></strong>. Please confirm registration`
+          return `Device ${this.selectedItem.serial_number} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be configured with product <strong><i>${this.configurationName(this.selectedItem.machine_id)}</i></strong>. Please confirm registration`
         else
-          return `Device ${this.selectedItem.id} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be reset and product <strong><i>${this.machineName(this.selectedItem.machine_id)}</i></strong> configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
+          return `Device ${this.selectedItem.id} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be reset and product <strong><i>${this.configurationName(this.selectedItem.machine_id)}</i></strong> configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
       } else {
         return ''
       }
@@ -373,11 +376,6 @@ export default {
       const _company = this.companies.find((company) => company.id === company_id)
 
       return _company ? _company.name : 'Not Assigned'
-    },
-    machineName(machine_id) {
-      const _machine = this.machines.find((machine) => machine.id === machine_id)
-
-      return _machine ? _machine.name : 'Not Configured'
     }
   }
 }

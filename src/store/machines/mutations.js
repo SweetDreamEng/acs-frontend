@@ -1,15 +1,4 @@
 export default {
-  selectData: (state, id) => {
-    state.selectedId = parseInt(id)
-  },
-  updateSelections: (state, selections) => {
-    state.data.forEach( (_data) => {
-      if (_data.id === state.selectedId) {
-        _data.selections = selections
-      }
-    })
-  },
-
   OVERVIEW_LOADING(state) { state.loadingOverview = true },
   OVERVIEW_LOADED(state) { state.loadingOverview = false },
   SET_OVERVIEW(state, overview) { state.machine = overview },

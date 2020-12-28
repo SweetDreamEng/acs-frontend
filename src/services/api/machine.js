@@ -1,11 +1,5 @@
 import api from '@/api.js'
 export default {
-  getAllConfigurations() {
-    return api.get('/configurations/index').then((response) => {
-      return response
-    })
-  },
-
   initAcsDashboard() {
     return api.get('/acs-machines').then((response) => {
       return response
@@ -128,6 +122,11 @@ export default {
       return response
     })
   },
+  // getAllConfigurations() {
+  //   return api.get('/acs-machines/get-machines').then((response) => {
+  //     return response
+  //   })
+  // },
   getMachinesByCompanyId(id) {
     return api.get(`/acs-machines/get-machines-by-company-id/${id}`).then((response) => {
       return response

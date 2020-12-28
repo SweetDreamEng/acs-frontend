@@ -5,4 +5,18 @@ export default [{
   meta: {
     superAdmin: true
   }
+}, {
+  path: '/app-settings/configurations',
+  name: 'app-settings-configurations',
+  component: () => import(/* webpackChunkName: "app-settings-configurations" */ '@/pages/app-settings/configurations/Index.vue'),
+  meta: {
+    superAdmin: true
+  }
+}, {
+  path: '/app-settings/configurations/:id',
+  name: 'app-settings-configurations-edit',
+  component: () => import(/* webpackChunkName: "app-settings-configurations-edit" */ '@/pages/app-settings/configurations/Edit.vue'),
+  meta: {
+    superAdmin: true
+  }
 }]

@@ -40,9 +40,7 @@
           <div class="display-1">Parameters & Points</div>
         </v-col>
         <v-col cols="12">
-          <product-parameters-chart
-            :machine="selectedMachine"
-          >
+          <product-parameters-chart>
           </product-parameters-chart>
         </v-col>
       </v-row>
@@ -129,9 +127,6 @@ export default {
 
       loadingAnalytics: (state) => state.machines.loadingOverview
     }),
-    ...mapGetters('machines', [
-      'selectedMachine'
-    ]),
     ...mapGetters({
       zoneName: 'zones/zoneName',
       locationName: 'locations/locationName'
@@ -178,10 +173,6 @@ export default {
     this.getProductAlarms(this.$route.params.productId)
   },
 
-  mounted() {
-    this.selectMachine(this.$route.params.productId)
-  },
-
   methods: {
     ...mapActions({
       getLocations: 'locations/getLocations',
@@ -194,7 +185,6 @@ export default {
       getRecipe: 'machines/getRecipe',
       getWeight: 'machines/getWeight',
       getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
-      'selectMachine': 'machines/selectMachine',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       changeSelectedCompany: 'machines/changeSelectedCompany',
       getProductAlarms: 'alarms/getProductAlarms'

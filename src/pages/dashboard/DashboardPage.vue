@@ -56,9 +56,7 @@ export default {
       loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
       
       devices: (state) => state.devices.data,
-      locations: (state) => state.locations.data,
-      privateColors: (state) => state.settings.private_colors,
-      downtimeDistribution: (state) => state.machines.downtimeDistribution
+      locations: (state) => state.locations.data
     })
   },
   mounted() {

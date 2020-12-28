@@ -143,7 +143,7 @@ export default {
       loadingTableMachineMapping: (state) => state.devices.loadingTableMachineMapping,
       loadingBtnAssignZoneToMachine: (state) => state.devices.loadingBtnAssignZoneToMachine,
       devices: (state) => state.devices.data,
-      configurations: (state) => state.machines.machines,
+      configurations: (state) => state.configurations.configurations,
       zones: (state) => state.zones.data,
       locations: (state) => state.locations.data
     }),
@@ -164,14 +164,14 @@ export default {
   methods: {
     ...mapActions({
       getCustomerDevices: 'devices/getCustomerDevices',
-      getAllConfigurations: 'machines/getAllConfigurations',
+      getConfigurations: 'configurations/getConfigurations',
       getZones: 'zones/getZones',
       assignZoneToDevice: 'devices/assignZoneToDevice',
       getLocations: 'locations/getLocations'
     }),
     open() {
       this.getCustomerDevices()
-      this.getAllConfigurations()
+      this.getConfigurations()
       this.getZones()
       this.getLocations()
     },

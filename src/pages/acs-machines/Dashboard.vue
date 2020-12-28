@@ -68,11 +68,8 @@ export default {
     ...mapState({
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
       loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
-      machines: (state) => state.machines.data,
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
-      privateColors: (state) => state.settings.private_colors,
-      downtimeDistribution: (state) => state.machines.downtimeDistribution,
       devices: (state) => state.devices.data,
       locations: (state) => state.locations.data
     }),

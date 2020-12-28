@@ -21,7 +21,6 @@
         <v-col cols="12">
           <alarm-table
             label="Alarms"
-            :loading="isLoading1"
             :alarms="alarms"
             :alarm-types="alarmTypes"
             @change="_onAlarmParamChange"
@@ -33,8 +32,6 @@
         </v-col>
         <v-col cols="12">
           <product-parameters-chart
-            :machine="selectedMachine"
-            :loading="isLoading1"
           >
           </product-parameters-chart>
         </v-col>
@@ -106,8 +103,6 @@ export default {
   },
   data() {
     return {
-      loadingInterval: null,
-      isLoading1: false
     }
   },
   computed: {
@@ -120,9 +115,6 @@ export default {
 
       loadingAnalytics: (state) => state.machines.loadingOverview
     }),
-    ...mapGetters('machines', [
-      'selectedMachine'
-    ]),
     ...mapGetters({
       locationName: 'locations/locationName',
       zoneName: 'zones/zoneName'
