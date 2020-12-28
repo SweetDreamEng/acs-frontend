@@ -20,6 +20,10 @@ const state = {
   loadingOverview: false,
   machine: {},
 
+  actualValuesBar: [],
+  targetValuesBar: [],
+  outletValuesBar: [],
+
   // Machine overview
   loadingInventories: false,
   inventories: [],
@@ -47,6 +51,8 @@ const state = {
   processRateSeries: [],
   loadingProcessRate: false,
 
+  loadingActualTargetBar: false,
+
   // Running hours per weekday
   loadingWeeklyRunningHours1: false,
   weeklyRuningHours: [],
@@ -59,7 +65,7 @@ const state = {
   loadingZonesTable: false,
 
   loadingMachinesTable: false,
-  
+
   modeWeightProduct: 'Weekly',
   modeInventory: 'Weekly',
 

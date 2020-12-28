@@ -12,7 +12,7 @@
     <v-img
       height="150"
       contain
-      src="../../../../assets/imgs/blender.png"
+      :src="machineImage"
     ></v-img>
     <v-card-text>
       <div class="ml-2">
@@ -39,6 +39,14 @@ export default {
   },
   data() {
     return {
+    }
+  },
+  computed: {
+    machineImage() {
+      if (this.machine.machine_id)
+        return require(`../../../../assets/imgs/${this.machine.machine_id}.png`)
+      else
+        return ''
     }
   }
 }

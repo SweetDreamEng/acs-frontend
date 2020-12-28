@@ -117,6 +117,21 @@ export default {
       return response
     })
   },
+  getPumpHoursOil(id) {
+    return api.get(`/analytics/product-pump-hours-oil/${id}`).then((response) => {
+      return response
+    })
+  },
+  getDryingHopperStats(id) {
+    return api.get(`/analytics/product-drying-hopper-states/${id}`).then((response) => {
+      return response
+    })
+  },
+  getHopperTemperatures(id) {
+    return api.get(`/analytics/product-hopper-temperatures/${id}`).then((response) => {
+      return response
+    })
+  },
   getMachines() {
     return api.get('/acs-machines/get-machines').then((response) => {
       return response

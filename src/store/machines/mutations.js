@@ -49,6 +49,10 @@ export default {
     state.paramInventory = param
   },
 
+  SET_ACTUAL_BAR(state, actuals) { state.actualValuesBar = actuals },
+  SET_TARGET_BAR(state, targets) { state.targetValuesBar = targets },
+  SET_OUTLET_BAR(state, outlets) { state.outletValuesBar = outlets },
+
   SET_LOADING_UTILIZATION(state, data) {
     state.loadingUtilization = data
   },
@@ -128,7 +132,7 @@ export default {
   SET_LOADING_WEEKLY_RUNNING_HOURS1(state, data) {
     state.loadingWeeklyRunningHours1 = data
   },
-
+  SET_LOADING_ACTUAL_TARGET_BAR(state, loading) { state.loadingActualTargetBar = loading },
   INVENTORY_PRODUCT_LOADING(state) {
     state.isInventoryProductLoading = true
   },

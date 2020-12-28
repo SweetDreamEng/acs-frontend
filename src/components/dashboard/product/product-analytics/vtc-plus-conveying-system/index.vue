@@ -26,6 +26,18 @@
       </v-col>
     </v-row>
     <v-row dense>
+      <v-col cols="12" md="6">
+      </v-col>
+      <v-col cols="12" md="6">
+        <pump-hours-oil-change
+          :loading="loadingActualTargetBar"
+          :values-actual="actualPumpHoursOil"
+          :values-target="targetPumpHoursOil"
+        >
+        </pump-hours-oil-change>
+      </v-col>
+    </v-row>
+    <v-row dense>
       <v-col md="8" sm="12">
       </v-col>
       <v-col md="4" sm="12">
@@ -48,6 +60,7 @@
 import Overview from '../../common/Overview'
 import Utilization from '../../common/Utilization'
 import EnergyConsumption from '../../common/EnergyConsumption'
+import PumpHoursOilChange from './PumpHoursOilChange'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -57,6 +70,7 @@ export default {
     Overview,
     Utilization,
     EnergyConsumption,
+    PumpHoursOilChange,
     TimeRangeChooser
   },
   props: {
@@ -73,23 +87,27 @@ export default {
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
-      actualRecipeValues: (state) => state.machines.actualRecipe2Values,
-      targetRecipeValues: (state) => state.machines.targetRecipe2Values,
+      actualPumpHoursOil: (state) => state.machines.actualValuesBar,
+      targetPumpHoursOil: (state) => state.machines.targetValuesBar,
       
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingRecipe: (state) => state.machines.loadingRecipe
+      loadingActualTargetBar: (state) => state.machines.loadingActualTargetBar
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
       selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
+  created() {
+    this.getPumpHoursOil(this.productId)
+  },
   methods: {
     ...mapActions({
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
-      selectTimeRange: 'machines/selectTimeRange'
+      selectTimeRange: 'machines/selectTimeRange',
+      getPumpHoursOil: 'machines/getPumpHoursOil'
     }),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)

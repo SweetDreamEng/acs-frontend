@@ -245,6 +245,51 @@ const getProductionRate = async ({ state, commit }, id) => {
   }
 }
 
+const getPumpHoursOil = async ({ state, commit }, id) => {
+  commit('SET_LOADING_ACTUAL_TARGET_BAR', true)
+
+  try {
+    const response = await machineAPI.getPumpHoursOil(id)
+
+    commit('SET_ACTUAL_BAR', response.data.actuals)
+    commit('SET_TARGET_BAR', response.data.targets)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    commit('SET_LOADING_ACTUAL_TARGET_BAR', false)
+  }
+}
+
+const getDryingHopperStats = async ({ state, commit }, id) => {
+  commit('SET_LOADING_SYSTEM_STATES', true)
+
+  try {
+    const response = await machineAPI.getDryingHopperStats(id)
+
+    commit('SET_SYSTEM_STATES', response.data.states)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    commit('SET_LOADING_SYSTEM_STATES', false)
+  }
+}
+
+const getHopperTemperatures = async ({ state, commit }, id) => {
+  commit('SET_LOADING_ACTUAL_TARGET_BAR', true)
+
+  try {
+    const response = await machineAPI.getHopperTemperatures(id)
+
+    commit('SET_ACTUAL_BAR', response.data.inlets)
+    commit('SET_TARGET_BAR', response.data.targets)
+    commit('SET_OUTLET_BAR', response.data.outlets)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    commit('SET_LOADING_ACTUAL_TARGET_BAR', false)
+  }
+}
+
 const getWeeklyRunningHours = async ({ commit }, id) => {
   commit('SET_LOADING_WEEKLY_RUNNING_HOURS1', true)
 
@@ -397,6 +442,9 @@ export default {
   getHauloffLengths,
   getFeederStables,
   getProductionRate,
+  getPumpHoursOil,
+  getDryingHopperStats,
+  getHopperTemperatures,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,

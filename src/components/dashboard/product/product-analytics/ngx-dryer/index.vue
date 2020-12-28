@@ -26,9 +26,21 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="8" sm="12">
+      <v-col cols="12" md="6">
+        <drying-hopper-states
+          :loading="loadingSystemStates"
+          :drying-hoppers="dryingHoppers"
+        >
+        </drying-hopper-states>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="6">
+        <hopper-air-temperatures
+          :loading="loadingActualTargetBar"
+          :values-inlet="inletTemperatures"
+          :values-target="targetTemperatures"
+          :values-outlet="outletTemperatures"
+        >
+        </hopper-air-temperatures>
       </v-col>
     </v-row>
     <time-range-chooser
@@ -48,6 +60,8 @@
 import Overview from '../../common/Overview'
 import Utilization from '../../common/Utilization'
 import EnergyConsumption from '../../common/EnergyConsumption'
+import DryingHopperStates from './DryingHopperStates'
+import HopperAirTemperatures from './HopperAirTemperatures'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -57,6 +71,8 @@ export default {
     Overview,
     Utilization,
     EnergyConsumption,
+    DryingHopperStates,
+    HopperAirTemperatures,
     TimeRangeChooser
   },
   props: {
@@ -73,23 +89,32 @@ export default {
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
-      actualRecipeValues: (state) => state.machines.actualRecipe2Values,
-      targetRecipeValues: (state) => state.machines.targetRecipe2Values,
-      
+      dryingHoppers: (state) => state.machines.systemStates,
+      inletTemperatures: (state) => state.machines.actualValuesBar,
+      targetTemperatures: (state) => state.machines.targetValuesBar,
+      outletTemperatures: (state) => state.machines.outletValuesBar,
+
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingRecipe: (state) => state.machines.loadingRecipe
+      loadingSystemStates: (state) => state.machines.loadingSystemStates,
+      loadingActualTargetBar: (state) => state.machines.loadingActualTargetBar
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
       selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
+  created() {
+    this.getDryingHopperStats(this.productId)
+    this.getHopperTemperatures(this.productId)
+  },
   methods: {
     ...mapActions({
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
-      selectTimeRange: 'machines/selectTimeRange'
+      selectTimeRange: 'machines/selectTimeRange',
+      getDryingHopperStats: 'machines/getDryingHopperStats',
+      getHopperTemperatures: 'machines/getHopperTemperatures'
     }),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)
