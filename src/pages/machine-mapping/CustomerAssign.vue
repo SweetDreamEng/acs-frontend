@@ -150,7 +150,14 @@
               dense
             >
             </v-select>
-
+            <v-text-field
+              v-model="editedItem.plc_ip"
+              label="PLC IP"
+              :rules="[$rules.required]"
+              outlined
+              dense
+            >
+            </v-text-field>
             <v-checkbox
               v-model="editedItem.tcu_added"
               label="Include TrueTemp TCU"
@@ -255,12 +262,14 @@ export default {
       editedItem: {
         company_id: '',
         machine_id: '',
-        tcu_added: false
+        tcu_added: false,
+        plc_ip: ''
       },
       defaultItem: {
         company_id: '',
         machine_id: '',
-        tcu_added: false
+        tcu_added: false,
+        plc_ip: ''
       },
       editDialog: false,
 
@@ -328,7 +337,8 @@ export default {
           device_id: this.devices[this.editedIndex].id,
           company_id: this.editedItem.company_id,
           machine_id: this.editedItem.machine_id,
-          tcu_added: this.editedItem.tcu_added
+          tcu_added: this.editedItem.tcu_added,
+          plc_ip: this.editedItem.plc_ip
         })
           .then((response) => {
             this.getDevices(this.page)
