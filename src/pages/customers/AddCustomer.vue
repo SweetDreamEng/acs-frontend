@@ -215,11 +215,11 @@ export default {
     }
   },
   mounted() {
-    this.initAddCompany()
+    this.getCompanies()
   },
   methods: {
     ...mapActions({
-      initAddCompany: 'customers/initAddCompany',
+      getCompanies: 'customers/getCompanies',
       addCustomer: 'customers/addCustomer',
       getCities: 'cities/getCities',
       clearError: 'customers/clearError'

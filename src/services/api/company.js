@@ -1,10 +1,5 @@
 import api from '@/api.js'
 export default {
-  initAddCompany() {
-    return api.get('/customers/init-add-company').then((response) => {
-      return response
-    })
-  },
   getCustomers() {
     return api.get('/customers').then((response) => {
       return response

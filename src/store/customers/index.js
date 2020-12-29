@@ -18,18 +18,6 @@ const module = {
   },
 
   actions: {
-    async initAddCompany({
-      commit
-    }) {
-      try {
-        const response = await companyAPI.initAddCompany()
-
-        commit('SET_COMPANIES', response.data.companies)
-      } catch (error) {
-        console.log(error.response)
-      }
-    },
-
     async getCustomers({
       commit
     }) {

@@ -1,11 +1,5 @@
 import api from '@/api.js'
 export default {
-  initAcsDashboard() {
-    return api.get('/acs-machines').then((response) => {
-      return response
-    })
-  },
-
   initLocationsTable() {
     return api.get('/dashboard/init-locations-table').then((response) => {
       return response
@@ -134,21 +128,6 @@ export default {
   },
   getHopperTemperatures(id) {
     return api.get(`/analytics/product-hopper-temperatures/${id}`).then((response) => {
-      return response
-    })
-  },
-  getMachines() {
-    return api.get('/acs-machines/get-machines').then((response) => {
-      return response
-    })
-  },
-  // getAllConfigurations() {
-  //   return api.get('/acs-machines/get-machines').then((response) => {
-  //     return response
-  //   })
-  // },
-  getMachinesByCompanyId(id) {
-    return api.get(`/acs-machines/get-machines-by-company-id/${id}`).then((response) => {
       return response
     })
   }

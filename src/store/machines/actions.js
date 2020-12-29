@@ -1,8 +1,9 @@
 import machineAPI from '@/services/api/machine'
+import companyAPI from '@/services/api/company'
 
 const initAcsDashboard = async ({ commit, state }) => {
   try {
-    const response = await machineAPI.initAcsDashboard()
+    const response = await companyAPI.getCompanies()
 
     commit('customers/SET_COMPANIES', response.data.companies, { root: true })
     if (!state.selectedCompany) {
@@ -416,25 +417,6 @@ const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   }
 }
 
-const getMachines = async ({ commit }) => {
-  try {
-    const response = await machineAPI.getMachines()
-
-    commit('SET_MACHINES', response.data.machines)
-  } catch (error) {
-    console.log(error.response)
-  }
-}
-const getMachinesByCompanyId = async ({ commit }, { companyId }) => {
-  try {
-    const response = await machineAPI.getMachinesByCompanyId(companyId)
-
-    commit('SET_MACHINES', response.data.machines)
-  } catch (error) {
-    console.log(error.response)
-  }
-}
-
 export default {
   initAcsDashboard,
   initLocationsTable,
@@ -463,7 +445,5 @@ export default {
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,
-  onTimeRangeChanged,
-  getMachines,
-  getMachinesByCompanyId
+  onTimeRangeChanged
 }
