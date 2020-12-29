@@ -53,6 +53,9 @@ const state = {
 
   loadingActualTargetBar: false,
 
+  loadingPumpHours: false,
+  pumpHours: [],
+  
   // Running hours per weekday
   loadingWeeklyRunningHours1: false,
   weeklyRuningHours: [],

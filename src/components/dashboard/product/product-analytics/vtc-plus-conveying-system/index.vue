@@ -27,6 +27,11 @@
     </v-row>
     <v-row dense>
       <v-col cols="12" md="6">
+        <pump-hours
+          :loading="loadingPumpHours"
+          :hours="pumpHours"
+        >
+        </pump-hours>
       </v-col>
       <v-col cols="12" md="6">
         <pump-hours-oil-change
@@ -60,6 +65,7 @@
 import Overview from '../../common/Overview'
 import Utilization from '../../common/Utilization'
 import EnergyConsumption from '../../common/EnergyConsumption'
+import PumpHours from './PumpHours'
 import PumpHoursOilChange from './PumpHoursOilChange'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
@@ -70,6 +76,7 @@ export default {
     Overview,
     Utilization,
     EnergyConsumption,
+    PumpHours,
     PumpHoursOilChange,
     TimeRangeChooser
   },
@@ -87,12 +94,14 @@ export default {
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
+      pumpHours: (state) => state.machines.pumpHours,
       actualPumpHoursOil: (state) => state.machines.actualValuesBar,
       targetPumpHoursOil: (state) => state.machines.targetValuesBar,
       
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
+      loadingPumpHours: (state) => state.machines.loadingPumpHours,
       loadingActualTargetBar: (state) => state.machines.loadingActualTargetBar
     }),
     ...mapGetters({
@@ -101,13 +110,15 @@ export default {
     })
   },
   created() {
+    this.getPumpHours(this.productId)
     this.getPumpHoursOil(this.productId)
   },
   methods: {
     ...mapActions({
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
       selectTimeRange: 'machines/selectTimeRange',
-      getPumpHoursOil: 'machines/getPumpHoursOil'
+      getPumpHoursOil: 'machines/getPumpHoursOil',
+      getPumpHours: 'machines/getPumpHours'
     }),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)

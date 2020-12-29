@@ -260,6 +260,20 @@ const getPumpHoursOil = async ({ state, commit }, id) => {
   }
 }
 
+const getPumpHours = async ({ state, commit }, id) => {
+  commit('SET_LOADING_PUMP_HOURS', true)
+
+  try {
+    const response = await machineAPI.getPumpHours(id)
+
+    commit('SET_PUMP_HOURS', response.data.hours)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    commit('SET_LOADING_PUMP_HOURS', false)
+  }
+}
+
 const getDryingHopperStats = async ({ state, commit }, id) => {
   commit('SET_LOADING_SYSTEM_STATES', true)
 
@@ -443,6 +457,7 @@ export default {
   getFeederStables,
   getProductionRate,
   getPumpHoursOil,
+  getPumpHours,
   getDryingHopperStats,
   getHopperTemperatures,
   getWeeklyRunningHours,

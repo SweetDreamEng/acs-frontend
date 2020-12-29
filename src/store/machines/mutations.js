@@ -140,6 +140,9 @@ export default {
     state.isInventoryProductLoading = false
   },
 
+  SET_LOADING_PUMP_HOURS(state, loading) { state.loadingPumpHours = loading },
+  SET_PUMP_HOURS(state, hours) { state.pumpHours = hours },
+
   // BD Batch Blender
   SET_RUNNING_PERCENTAGE(state, totalRunningPercentage) { state.totalRunningPercentage = totalRunningPercentage },
   SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
