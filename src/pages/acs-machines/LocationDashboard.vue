@@ -104,13 +104,13 @@ export default {
     this.getLocations()
     this.initAcsDashboard()
     this.initZonesTable(this.$route.params.location)
-    this.getAcsDevicesAnalytics()
+    this.getDevicesAnalytics(this.$route.params.location)
   },
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
       initZonesTable: 'machines/initZonesTable',
-      getAcsDevicesAnalytics: 'devices/getAcsDevicesAnalytics',
+      getDevicesAnalytics: 'devices/getDevicesAnalytics',
       changeSelectedCompany: 'machines/changeSelectedCompany',
       getLocations: 'locations/getLocations'
     }),

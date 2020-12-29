@@ -133,27 +133,12 @@ const module = {
       }
     },
 
-    // Get customer devices with analytics in customer dashboard page
-    async getCustomerDevicesAnalytics({ commit }, location_id = 0) {
+    // Get devices with analytics in dashboard page
+    async getDevicesAnalytics({ commit }, location_id = 0) {
       commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', true)
 
       try {
-        const response = await deviceAPI.getCustomerDevicesAnalytics(location_id)
-
-        commit('SET_DATA', response.data.devices)
-      } catch (error) {
-        console.log(error.response)
-      } finally {
-        commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', false)
-      }
-    },
-
-    // Get customer devices with analytics in acs dashboard
-    async getAcsDevicesAnalytics({ commit }) {
-      commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', true)
-
-      try {
-        const response = await deviceAPI.getAcsDevicesAnalytics()
+        const response = await deviceAPI.getDevicesAnalytics(location_id)
 
         commit('SET_DATA', response.data.devices)
       } catch (error) {

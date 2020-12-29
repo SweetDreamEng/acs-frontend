@@ -60,14 +60,14 @@ export default {
     })
   },
   mounted() {
-    this.getCustomerDevicesAnalytics()
+    this.getDevicesAnalytics()
     this.getZones()
     this.initLocationsTable()
   },
   methods: {
     ...mapActions({
       initLocationsTable: 'machines/initLocationsTable',
-      getCustomerDevicesAnalytics: 'devices/getCustomerDevicesAnalytics',
+      getDevicesAnalytics: 'devices/getDevicesAnalytics',
       getZones: 'zones/getZones'
     })
   }

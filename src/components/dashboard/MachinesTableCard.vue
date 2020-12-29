@@ -125,16 +125,20 @@ export default {
   methods: {
     open(item) { },
     getColor (item) {
-      if (item.status === 'Warning') return 'orange'
-      else if (item.status === 'Alarm') return 'green'
-      else if (item.status === 'Not') return 'red'
-      else return 'green'
+      // if (item.status === 'Warning') return 'orange'
+      // else if (item.status === 'Alarm') return 'green'
+      // else if (item.status === 'Not') return 'red'
+      // else return 'green'
+      if (item.status) return 'green'
+      else return 'red'
     },
     getIcon(item) {
-      if (item.status === 'Warning') return 'mdi-alert'
-      else if (item.status === 'Alarm') return 'mdi-check-circle-outline'
-      else if (item.status === 'Not') return 'mdi-bell-circle'
-      else return 'mdi-check-circle-outline'
+      // if (item.status === 'Warning') return 'mdi-alert'
+      // else if (item.status === 'Alarm') return 'mdi-check-circle-outline'
+      // else if (item.status === 'Not') return 'mdi-bell-circle'
+      // else return 'mdi-check-circle-outline'
+      if (item.status) return 'mdi-check-circle-outline'
+      else return 'mdi-bell-circle'
     },
     productView(item) {
       this.$router.push({

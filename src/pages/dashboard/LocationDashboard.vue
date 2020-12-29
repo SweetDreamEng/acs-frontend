@@ -71,12 +71,12 @@ export default {
   },
   mounted() {
     this.initZonesTable(this.$route.params.location)
-    this.getCustomerDevicesAnalytics(this.$route.params.location)
+    this.getDevicesAnalytics(this.$route.params.location)
   },
   methods: {
     ...mapActions({
       initZonesTable: 'machines/initZonesTable',
-      getCustomerDevicesAnalytics: 'devices/getCustomerDevicesAnalytics'
+      getDevicesAnalytics: 'devices/getDevicesAnalytics'
     })
   }
 }
