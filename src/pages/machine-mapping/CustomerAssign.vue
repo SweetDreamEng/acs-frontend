@@ -150,6 +150,11 @@
             >
             </v-select>
 
+            <v-checkbox
+              v-model="editedItem.tcu_added"
+              label="TrueTemp TCU"
+            ></v-checkbox>
+
             <div class="d-flex">
               <v-spacer></v-spacer>
               <v-btn
@@ -234,25 +239,27 @@ export default {
       tableHeaders: [
         { text: 'Serial Number', value: 'serial_number' },
         { text: 'Device Name', value: 'name' },
+        { text: 'Edit', value: 'actions', sortable: false, align: 'center' },
         { text: 'Company Name', value: 'company_id' },
         { text: 'Machine Configuration', value: 'machine_id' },
         { text: 'REG Status', align: 'center', value: 'registered_view' },
         { text: 'Device Registration', align: 'center', value: 'registered_action', sortable: false },
         { text: 'PLC Link', align: 'center', value: 'plc_link' },
         { text: 'Device checkin', align: 'center', value: 'checkin' },
-        { text: 'Administration', value: 'data-table-expand', sortable: false },
-        { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
+        { text: 'Administration', value: 'data-table-expand', sortable: false }
       ],
       expanded: [],
 
       editedIndex: -1,
       editedItem: {
         company_id: '',
-        machine_id: ''
+        machine_id: '',
+        tcu_added: false
       },
       defaultItem: {
         company_id: '',
-        machine_id: ''
+        machine_id: '',
+        tcu_added: false
       },
       editDialog: false,
 
@@ -319,9 +326,11 @@ export default {
         this.deviceAssigned({
           device_id: this.devices[this.editedIndex].id,
           company_id: this.editedItem.company_id,
-          machine_id: this.editedItem.machine_id
+          machine_id: this.editedItem.machine_id,
+          tcu_added: this.editedItem.tcu_added
         })
           .then((response) => {
+            this.getDevices(this.page)
             this.close()
           })
       }
