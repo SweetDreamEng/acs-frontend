@@ -26,14 +26,14 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="4">
         <drying-hopper-states
           :loading="loadingSystemStates"
           :drying-hoppers="dryingHoppers"
         >
         </drying-hopper-states>
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="8">
         <hopper-air-temperatures
           :loading="loadingActualTargetBar"
           :values-inlet="inletTemperatures"

@@ -17,6 +17,7 @@
       <br>
 
       <machines-table-card
+        :loading="loadingDashboardDevicesTable"
         :devices="devices"
       ></machines-table-card>
     </v-container>
@@ -54,6 +55,7 @@ export default {
   computed: {
     ...mapState({
       loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
+      loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
       
       devices: (state) => state.devices.data,
       locations: (state) => state.locations.data

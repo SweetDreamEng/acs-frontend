@@ -8,6 +8,7 @@
     <v-card-text>
       <v-alert
         :color="backgroundColor(dryingHoppers.hopper1)"
+        :style="`color: ${textColor(dryingHoppers.hopper1)}`"
       >
         <v-row
           align="center"
@@ -15,10 +16,10 @@
         >
           <v-col cols="7">
             <span
-              :class="`font-weight-bold ${textColor(dryingHoppers.hopper1)}`"
+              class="font-weight-bold"
             >Drying Hopper 1</span>
           </v-col>
-          <v-col :class="`d-flex body-2 ${textColor(dryingHoppers.hopper1)}`">
+          <v-col class="d-flex body-2">
             <v-icon
               small
               left
@@ -30,6 +31,7 @@
       </v-alert>
       <v-alert
         :color="backgroundColor(dryingHoppers.hopper2)"
+        :style="`color: ${textColor(dryingHoppers.hopper2)}`"
       >
         <v-row
           align="center"
@@ -37,10 +39,10 @@
         >
           <v-col cols="7">
             <span
-              :class="`font-weight-bold ${textColor(dryingHoppers.hopper2)}`"
+              class="font-weight-bold"
             >Drying Hopper 2</span>
           </v-col>
-          <v-col :class="`d-flex body-2 ${textColor(dryingHoppers.hopper2)}`">
+          <v-col class="d-flex body-2">
             <v-icon
               small
               left
@@ -52,6 +54,7 @@
       </v-alert>
       <v-alert
         :color="backgroundColor(dryingHoppers.hopper3)"
+        :style="`color: ${textColor(dryingHoppers.hopper3)}`"
       >
         <v-row
           align="center"
@@ -59,10 +62,10 @@
         >
           <v-col cols="7">
             <span
-              :class="`font-weight-bold ${textColor(dryingHoppers.hopper3)}`"
+              class="font-weight-bold"
             >Drying Hopper 3</span>
           </v-col>
-          <v-col :class="`d-flex body-2 ${textColor(dryingHoppers.hopper3)}`">
+          <v-col class="d-flex body-2">
             <v-icon
               small
               left
@@ -111,8 +114,8 @@ export default {
       else if (value === 5) return 'red'
     },
     textColor(value) {
-      if (value === 0) return 'grey--text'
-      else if (value === 2) return ''
+      if (value === 0) return '#9e9e9e'
+      else return '#193d66'
     },
     valueText(value) {
       if (value === 0) return 'Disabled'
