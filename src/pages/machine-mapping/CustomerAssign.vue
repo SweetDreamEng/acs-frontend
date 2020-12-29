@@ -68,7 +68,8 @@
         <template v-slot:item.registered_action="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <v-btn
-              dark
+              :dark="item.machine_id !== null"
+              :disabled="!item.machine_id"
               :color="item.registered ? 'red' : 'green'"
               @click="onRegisterChange(item)"
             >
@@ -152,7 +153,7 @@
 
             <v-checkbox
               v-model="editedItem.tcu_added"
-              label="TrueTemp TCU"
+              label="Include TrueTemp TCU"
             ></v-checkbox>
 
             <div class="d-flex">
