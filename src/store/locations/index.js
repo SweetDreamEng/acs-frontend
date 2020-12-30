@@ -18,7 +18,7 @@ const module = {
       try {
         const response = await locationAPI.getLocations()
 
-        commit('SET_DATA', response.data)
+        commit('SET_DATA', response.data.locations)
       } catch (error) {
         console.log(error.response)
       } finally {

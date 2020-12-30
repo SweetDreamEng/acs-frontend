@@ -154,14 +154,15 @@ export default {
   },
   methods: {
     ...mapActions({
-      initLocationsZones: 'zones/initLocationsZones',
       getZones: 'zones/getZones',
+      getLocations: 'locations/getLocations',
       addZone: 'zones/addZone',
       updateZone: 'zones/updateZone'
     }),
 
     open() {
-      this.initLocationsZones()
+      this.getLocations()
+      this.getZones()
     },
     editZone(item) {
       this.editedIndex = this.zones.indexOf(item)

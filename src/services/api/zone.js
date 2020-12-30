@@ -1,19 +1,5 @@
 import api from '@/api.js'
 export default {
-
-  /*
-    Get zones, locations
-    response: {
-      locations: Array,
-      zones: Array
-    }
-  */
-  initLocationsZones(pageNum) {
-    return api.get('/locations-zones').then((response) => {
-      return response
-    })
-  },
-
   /*
     Get zones
   */

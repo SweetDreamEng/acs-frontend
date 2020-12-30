@@ -10,24 +10,6 @@ const module = {
   },
 
   actions: {
-    async initLocationsZones({
-      commit
-    }) {
-      commit('TABLE_LOAD')
-      commit('locations/TABLE_LOAD', null, { root: true })
-
-      try {
-        const response = await zoneAPI.initLocationsZones()
-
-        commit('SET_DATA', response.data.zones)
-        commit('locations/SET_DATA', response.data.locations, { root: true })
-      } catch (error) {
-        console.log(error.response)
-      } finally {
-        commit('locations/TABLE_LOADED', null, { root: true })
-        commit('TABLE_LOADED')
-      }
-    },
     async getZones({
       commit
     }) {
