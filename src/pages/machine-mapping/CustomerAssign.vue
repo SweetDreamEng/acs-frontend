@@ -88,9 +88,9 @@
 
         <template v-slot:item.checkin="{ item }">
           <v-icon
-            :color="item.checkin === 1 ? 'green' : 'red'"
+            :color="item.checkin ? 'green' : 'red'"
           >
-            {{ item.checkin === 1 ? 'mdi-check-circle-outline' : 'mdi-close-circle-outline' }}
+            {{ item.checkin ? 'mdi-check-circle-outline' : 'mdi-close-circle-outline' }}
           </v-icon>
         </template>
 
