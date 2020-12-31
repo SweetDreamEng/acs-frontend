@@ -40,7 +40,9 @@
           <div class="display-1">Parameters & Points</div>
         </v-col>
         <v-col cols="12">
-          <product-parameters-chart>
+          <product-parameters-chart
+            :tags="productTags"
+          >
           </product-parameters-chart>
         </v-col>
       </v-row>
@@ -156,6 +158,28 @@ export default {
           disabled: true
         }
       ]
+    },
+    productTags() {
+      switch (parseInt(this.$route.params.configurationId)) {
+      case 1:
+        return ['batch size', 'batch counter', 'blender capability', 'process rate', 'feeder calibration factor', 'load cell A zero bits', 'load cell A cal bits', 'load cell B zero bits', 'load cell B cal bits', 'weight hopper tare', 'hopper stable', 'station conveying']
+      case 2:
+        return ['manual mode engaged', 'current target rate', 'feeder speed', 'accumulated hop inventory', 'feeder calibration value', 'blender capability']
+      case 3:
+        return ['extruder rpm setpoint', 'extruder rpm actual', 'extruder target throughput', 'extruder actual throughput', 'extruder wtp/rpm value', 'hauloff setpoint', 'hauloff actual', 'layflat setting', 'hopper dumping']
+      case 4:
+        return ['feeder rpm setpoint', 'tracking extruder rpm', 'tracking extruder max rpm', 'feeder target throughput', 'feeder actual throughput', 'feeder wtp/rpm value', 'hopper dumping']
+      case 5:
+        return ['system online', 'station online', 'pumps online', 'station conveying', 'pump blowback engaged', 'pump hours between oil changes']
+      case 6:
+        return ['switch on DP setpoint', 'regen exhaust air temperature', 'bed-break set point', 'cool break set point', 'left bed in regen', 'left bed regen heating', 'left bed regen cooling', 'Notification word', 'dryer online', 'dryer sequenced shutdown', 'dirty filter bit', 'DH1 Online Hrs - Maint', 'DH1 Online Hrs - Total', 'DH2 Online Hrs - Maint', 'DH2 Online Hrs - Total', 'DH3 Online Hrs - Maint', 'DH3 Online Hrs - Total', 'Filter Hrs', 'Regen valve cycles', 'Right Bed Regen Cycles - Total', 'Left Bed Regen Cycles - Total', 'Dryer Online Hrs - Maint', 'Dryer Online Hrs - Total', 'Process Blower Run Hrs - Maint', 'Process Blower Run Hrs - Total', 'Process valve cycles - Total', 'Power On Hrs', 'Left Regen Heater hours - Maint', 'Left Regen Heater hours – Total', 'Right Regen Heater hours', 'Right Regen Heater hours']
+      case 7:
+        return ['bed-break set point', 'cool break set point', 'left bed in regen', 'left bed regen heating', 'left bed regen cooling', 'right bed in regen', 'right bed regen heating', 'right bed regen cooling', 'Notification word', 'dryer sequenced shutdown', 'dirty filter bit', 'Filter Hrs – Maint', 'Left Bed Regen Cycles', 'Dryer Online Hrs – Maint', 'Dryer Online Hrs – Total', 'Process Blower Run Hrs - Maint', 'Process Blower Run Hrs – Total', 'Process valve cycles – Total', 'Power On Hrs – Total', 'Left Regen Heater hours - Maint', 'Left Regen Heater hours – Total', 'Right Regen Heater hours - Maint', 'Right Regen Heater hours – Total', 'Regen valve cycles – Total', 'Right Bed Regen Cycles – Total']
+      case 9:
+        return []
+      default:
+        return []
+      }
     }
   },
   

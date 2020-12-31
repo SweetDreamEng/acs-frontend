@@ -7,7 +7,7 @@
       <v-card-title class="primary--text">
         <v-combobox
           v-model="parameters"
-          :items="parameterOptions"
+          :items="tags"
           chips
           solo
           label="Add/Remove parameters"
@@ -73,46 +73,15 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    tags: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
       parameters: [],
-      parameterOptions: [
-        'batch size', 'batch targets and action weights', 'blender capability', 'process rate', 'hopper stable', 'station conveying'
-      ],
-      parameterSeries: [
-        {
-          id: 1,
-          name: 'batch size',
-          data: [14, 16, 30, 32, 17]
-        },
-        {
-          id: 2,
-          name: 'batch targets and action weights',
-          data: [17, 26, 25, 15, 32]
-        },
-        {
-          id: 3,
-          name: 'blender capability',
-          data: [8, 22, 15, 20, 15]
-        },
-        {
-          id: 4,
-          name: 'process rate',
-          data: [32, 9, 9, 38, 35]
-        },
-        {
-          id: 5,
-          name: 'hopper stable',
-          data: [18, 6, 18, 18, 12]
-        },
-        {
-          id: 6,
-          name: 'station conveying',
-          data: [22, 32, 12, 8, 10]
-        }
-      ],
       chartOptions: {
         chart: {
           type: 'area',
@@ -145,6 +114,14 @@ export default {
     computedParameters() {
       return this.parameterSeries.filter( (param) => {
         return this.parameters.includes(param.name) 
+      })
+    },
+    parameterSeries() {
+      return this.tags.map((tag) => {
+        return {
+          name: tag,
+          data: [Math.floor(Math.random() * 30), Math.floor(Math.random() * 30), Math.floor(Math.random() * 30), Math.floor(Math.random() * 30), Math.floor(Math.random() * 30)]
+        }
       })
     }
   },
