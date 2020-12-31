@@ -67,13 +67,17 @@ const module = {
     },
 
     async importDevices({
-      commit
+      commit, dispatch
     }) {
       commit('IMPORT_BUTTON_LOAD')
 
       try {
         const response = await deviceAPI.importDevices()
 
+        const addedCount = response.data.numAdded
+        const txtNotofication = addedCount === 0 ? 'No device imported' : `${addedCount} devices imported`
+
+        dispatch('app/showSuccess', txtNotofication, { root: true })
         commit('SET_ADDED', response.data.numAdded)
         commit('SET_DUPLICATES', response.data.numDuplicates)
       } catch (error) {
