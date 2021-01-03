@@ -33,14 +33,14 @@ const module = {
   actions: {
     async getDevices({
       commit
-    }, pageNum) {
+    }, { filterForm, page }) {
       commit('SET_PAGINATION_DATA', {
-        page: pageNum
+        page: page
       })
       commit('TABLE_LOAD')
 
       try {
-        const response = await deviceAPI.getDevices(pageNum)
+        const response = await deviceAPI.getDevices(filterForm, page)
 
         commit('SET_PAGINATION_DATA', {
           pageCount: response.data.last_page

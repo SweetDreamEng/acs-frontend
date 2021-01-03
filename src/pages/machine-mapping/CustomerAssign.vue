@@ -4,7 +4,7 @@
     <device-import v-if="canImportDevices"></device-import>
 
     <br>
-    
+
     <!-- customer assignment table -->
     <v-card>
       <v-card-title>Customer Device Assignment</v-card-title>
@@ -16,32 +16,68 @@
         hide-default-footer
         :expanded.sync="expanded"
         :single-expand="true"
-        :search="searchQuery"
         :loading="table_loading"
       >
         <template v-slot:top>
-          <v-row dense class="pa-2 align-center" justify="end">
-            <v-col sm="12" md="6" class="d-flex text-right align-center">
-              <v-text-field
-                v-model="searchQuery"
-                append-icon="mdi-magnify"
-                class="flex-grow-1 mr-md-2"
-                solo
-                hide-details
-                dense
-                clearable
-                placeholder="e.g. filter for serial number, device name, company name, etc"
-              ></v-text-field>
-              <v-btn
-                icon
-                small
-                class="ml-2"
-                @click="getDevices(loc_page)"
-              >
-                <v-icon>mdi-refresh</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
+          <div class="d-flex align-center">
+            <v-row dense class="pa-2 flex-grow-1">
+              <v-col cols="12" md="6">
+                <v-chip-group
+                  v-model="filterForm.filters"
+                  column
+                  multiple
+                >
+                  <v-chip
+                    filter
+                    outlined
+                    value="active"
+                    @click="filterDevices"
+                  >
+                    Active
+                  </v-chip>
+                  <v-chip
+                    filter
+                    outlined
+                    value="PLCLink"
+                    @click="filterDevices"
+                  >
+                    PLC Link
+                  </v-chip>
+                  <v-chip
+                    filter
+                    outlined
+                    value="registered"
+                    @click="filterDevices"
+                  >
+                    Registered
+                  </v-chip>
+                </v-chip-group>
+              </v-col>
+              <v-col cols="12" md="6">
+                <div class="d-flex align-center">
+                  <v-text-field
+                    v-model="filterForm.searchQuery"
+                    append-icon="mdi-magnify"
+                    class="flex-grow-1 mr-md-2 elevation-4 rounded-xl"
+                    solo
+                    hide-details
+                    dense
+                    clearable
+                    placeholder="e.g. filter for serial number, device name, customer assigned name"
+                    @click:append="filterDevices"
+                  ></v-text-field>
+                  <v-btn
+                    icon
+                    small
+                    class="mr-2"
+                    @click="filterDevices"
+                  >
+                    <v-icon>mdi-refresh</v-icon>
+                  </v-btn>
+                </div>
+              </v-col>
+            </v-row>
+          </div>
         </template>
         <!-- custom table header -->
 
@@ -243,7 +279,6 @@ export default {
   },
   data() {
     return {
-      searchQuery: '',
       tableHeaders: [
         { text: 'Serial Number', value: 'serial_number' },
         { text: 'Device Name', value: 'name' },
@@ -278,7 +313,12 @@ export default {
       confirmDialog: false,
       selectedItem: null,
       
-      loc_page: this.page
+      loc_page: this.page,
+
+      filterForm: {
+        filters: [],
+        searchQuery: ''
+      }
     }
   },
   computed: {
@@ -304,7 +344,7 @@ export default {
   mounted() {
     this.loc_page = this.page
     this.getConfigurations()
-    this.getDevices(this.page)
+    this.filterDevices()
   },
   methods: {
     ...mapActions({
@@ -341,7 +381,7 @@ export default {
           plc_ip: this.editedItem.plc_ip
         })
           .then((response) => {
-            this.getDevices(this.page)
+            this.filterDevices()
             this.close()
           })
       }
@@ -390,12 +430,20 @@ export default {
         })
     },
     onPageChange() {
-      this.getDevices(this.loc_page)
+      this.filterDevices(this.loc_page)
     },
     companyName(company_id) {
       const _company = this.companies.find((company) => company.id === company_id)
 
       return _company ? _company.name : 'Not Assigned'
+    },
+    filterDevices() {
+      this.$nextTick(() => {
+        this.getDevices({
+          filterForm: this.filterForm,
+          page: this.loc_page
+        })
+      })
     }
   }
 }

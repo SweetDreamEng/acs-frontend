@@ -21,8 +21,13 @@ export default {
       return response
     })
   },
-  getDevices(pageNum) {
-    return api.get(`/devices/${pageNum}`).then((response) => {
+  getDevices(filterForm, page) {
+    const data = {
+      filterForm,
+      page
+    }
+
+    return api.post('/devices', data).then((response) => {
       return response
     })
   },
