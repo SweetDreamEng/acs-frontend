@@ -116,12 +116,18 @@ export default {
     })
   },
   created() {
+    this.getOverview(this.productId)
+    this.getUtilization(this.productId)
+    this.getEnergyConsumption(this.productId)
     this.getMachineStates(this.productId)
     this.getHopperInventories(this.productId)
     this.getHauloffLengths(this.productId)
   },
   methods: {
     ...mapActions({
+      getOverview: 'machines/getOverview',
+      getUtilization: 'machines/getUtilization',
+      getEnergyConsumption: 'machines/getEnergyConsumption',
       getMachineStates: 'machines/getMachineStates3',
       getHopperInventories: 'machines/getHopperInventories',
       getHauloffLengths: 'machines/getHauloffLengths',

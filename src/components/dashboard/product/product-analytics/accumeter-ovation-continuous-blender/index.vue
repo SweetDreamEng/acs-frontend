@@ -124,6 +124,9 @@ export default {
     })
   },
   created() {
+    this.getOverview(this.productId)
+    this.getUtilization(this.productId)
+    this.getEnergyConsumption(this.productId)
     this.getSystemStates(this.productId)
     this.getFeederStables(this.productId)
     this.getProductionRate(this.productId)
@@ -133,6 +136,9 @@ export default {
     ...mapActions({
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
       selectTimeRange: 'machines/selectTimeRange',
+      getOverview: 'machines/getOverview',
+      getUtilization: 'machines/getUtilization',
+      getEnergyConsumption: 'machines/getEnergyConsumption',
       getSystemStates: 'machines/getSystemStates',
       getFeederStables: 'machines/getFeederStables',
       getProductionRate: 'machines/getProductionRate',

@@ -106,6 +106,9 @@ export default {
     })
   },
   created() {
+    this.getOverview(this.productId)
+    this.getUtilization(this.productId)
+    this.getEnergyConsumption(this.productId)
     this.getDryingHopperStats(this.productId)
     this.getHopperTemperatures(this.productId)
   },
@@ -113,6 +116,9 @@ export default {
     ...mapActions({
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
       selectTimeRange: 'machines/selectTimeRange',
+      getOverview: 'machines/getOverview',
+      getUtilization: 'machines/getUtilization',
+      getEnergyConsumption: 'machines/getEnergyConsumption',
       getDryingHopperStats: 'machines/getDryingHopperStats',
       getHopperTemperatures: 'machines/getHopperTemperatures'
     }),

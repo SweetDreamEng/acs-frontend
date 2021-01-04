@@ -110,6 +110,9 @@ export default {
     })
   },
   created() {
+    this.getOverview(this.productId)
+    this.getUtilization(this.productId)
+    this.getEnergyConsumption(this.productId)
     this.getPumpHours(this.productId)
     this.getPumpHoursOil(this.productId)
   },
@@ -117,6 +120,9 @@ export default {
     ...mapActions({
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
       selectTimeRange: 'machines/selectTimeRange',
+      getOverview: 'machines/getOverview',
+      getUtilization: 'machines/getUtilization',
+      getEnergyConsumption: 'machines/getEnergyConsumption',
       getPumpHoursOil: 'machines/getPumpHoursOil',
       getPumpHours: 'machines/getPumpHours'
     }),

@@ -17,6 +17,7 @@
           <ngx-nomad-dryer v-if="parseInt($route.params.configurationId) === 7" :product-id="$route.params.productId"></ngx-nomad-dryer>
           <t-50-central-granulator v-if="parseInt($route.params.configurationId) === 8" :product-id="$route.params.productId"></t-50-central-granulator>
           <gp-portable-chiller v-if="parseInt($route.params.configurationId) === 9" :product-id="$route.params.productId"></gp-portable-chiller>
+          <truetemp-tcu v-if="parseInt($route.params.configurationId) === 11" :product-id="$route.params.productId"></truetemp-tcu>
         </v-col>
         <v-col cols="12">
           <alarm-table
@@ -83,6 +84,7 @@ import NgxDryer from '../../components/dashboard/product/product-analytics/ngx-d
 import NgxNomadDryer from '../../components/dashboard/product/product-analytics/ngx-nomad-dryer'
 import T50CentralGranulator from '../../components/dashboard/product/product-analytics/t50-central-granulator'
 import GpPortableChiller from '../../components/dashboard/product/product-analytics/gp-portable-chiller'
+import TruetempTcu from '../../components/dashboard/product/product-analytics/truetemp-ctu/Index.vue'
 
 export default {
   components: {
@@ -98,7 +100,8 @@ export default {
     NgxDryer,
     NgxNomadDryer,
     GpPortableChiller,
-    T50CentralGranulator
+    T50CentralGranulator,
+    TruetempTcu
   },
   props: {
   },
@@ -168,9 +171,6 @@ export default {
   created() {
     this.getLocations()
     this.getZones()
-    this.getOverview(this.$route.params.productId)
-    this.getUtilization(this.$route.params.productId)
-    this.getEnergyConsumption(this.$route.params.productId)
     this.getProductAlarms(this.$route.params.productId)
 
     this.getNotes(this.$route.params.productId)
@@ -187,9 +187,6 @@ export default {
     ...mapActions({
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
-      getOverview: 'machines/getOverview',
-      getUtilization: 'machines/getUtilization',
-      getEnergyConsumption: 'machines/getEnergyConsumption',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       getProductAlarms: 'alarms/getProductAlarms',
       getNotes: 'notes/getNotes'

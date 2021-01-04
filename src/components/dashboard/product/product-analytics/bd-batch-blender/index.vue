@@ -109,12 +109,18 @@ export default {
     })
   },
   created() {
+    this.getOverview(this.productId)
+    this.getUtilization(this.productId)
+    this.getEnergyConsumption(this.productId)
     this.getRecipe(this.productId)
     this.getInventory(this.productId)
     this.getWeight(this.productId)
   },
   methods: {
     ...mapActions({
+      getOverview: 'machines/getOverview',
+      getUtilization: 'machines/getUtilization',
+      getEnergyConsumption: 'machines/getEnergyConsumption',
       getInventory: 'machines/getInventory',
       getRecipe: 'machines/getRecipe',
       getWeight: 'machines/getWeight',

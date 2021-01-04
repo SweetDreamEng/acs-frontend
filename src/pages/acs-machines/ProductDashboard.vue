@@ -26,6 +26,7 @@
           <ngx-nomad-dryer v-if="parseInt($route.params.configurationId) === 7" :product-id="$route.params.productId"></ngx-nomad-dryer>
           <t-50-central-granulator v-if="parseInt($route.params.configurationId) === 8" :product-id="$route.params.productId"></t-50-central-granulator>
           <gp-portable-chiller v-if="parseInt($route.params.configurationId) === 9" :product-id="$route.params.productId"></gp-portable-chiller>
+          <truetemp-tcu v-if="parseInt($route.params.configurationId) === 11" :product-id="$route.params.productId"></truetemp-tcu>
         </v-col>
         <v-col cols="12">
           <alarm-table
@@ -88,6 +89,7 @@ import NgxDryer from '../../components/dashboard/product/product-analytics/ngx-d
 import NgxNomadDryer from '../../components/dashboard/product/product-analytics/ngx-nomad-dryer'
 import T50CentralGranulator from '../../components/dashboard/product/product-analytics/t50-central-granulator'
 import GpPortableChiller from '../../components/dashboard/product/product-analytics/gp-portable-chiller'
+import TruetempTcu from '../../components/dashboard/product/product-analytics/truetemp-ctu/Index.vue'
 import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
@@ -109,6 +111,7 @@ export default {
     NgxNomadDryer,
     GpPortableChiller,
     T50CentralGranulator,
+    TruetempTcu,
     CompanyMenu
   },
   props: {
@@ -187,13 +190,7 @@ export default {
     this.getLocations()
     this.getZones()
     this.getCompanies()
-    this.getOverview(this.$route.params.productId)
     this.getWeeklyRunningHours(this.$route.params.productId)
-    this.getUtilization(this.$route.params.productId)
-    this.getEnergyConsumption(this.$route.params.productId)
-    this.getInventory(this.$route.params.productId)
-    this.getRecipe(this.$route.params.productId)
-    this.getWeight(this.$route.params.productId)
     this.getProductAlarms(this.$route.params.productId)
   },
 
@@ -202,12 +199,6 @@ export default {
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
       getCompanies: 'customers/getCompanies',
-      getOverview: 'machines/getOverview',
-      getUtilization: 'machines/getUtilization',
-      getEnergyConsumption: 'machines/getEnergyConsumption',
-      getInventory: 'machines/getInventory',
-      getRecipe: 'machines/getRecipe',
-      getWeight: 'machines/getWeight',
       getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       changeSelectedCompany: 'machines/changeSelectedCompany',

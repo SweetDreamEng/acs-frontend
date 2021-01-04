@@ -86,10 +86,18 @@ export default {
       selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
+  created() {
+    this.getOverview(this.productId)
+    this.getUtilization(this.productId)
+    this.getEnergyConsumption(this.productId)
+  },
   methods: {
     ...mapActions({
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
-      selectTimeRange: 'machines/selectTimeRange'
+      selectTimeRange: 'machines/selectTimeRange',
+      getOverview: 'machines/getOverview',
+      getUtilization: 'machines/getUtilization',
+      getEnergyConsumption: 'machines/getEnergyConsumption'
     }),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)
