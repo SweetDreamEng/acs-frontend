@@ -40,7 +40,7 @@
           <v-col cols="7">
             <span
               class="font-weight-bold"
-            >Drying Hopper 2</span>
+            >Heater Status</span>
           </v-col>
           <v-col class="d-flex body-2">
             <v-icon
