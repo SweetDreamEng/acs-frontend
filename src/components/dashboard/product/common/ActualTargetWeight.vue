@@ -76,7 +76,8 @@ export default {
         },
         dataLabels: {
           enabled: true,
-          offsetX: 28,
+          textAnchor: 'start',
+          offsetX: 20,
           style: {
             fontSize: '10px',
             colors: ['#000']
