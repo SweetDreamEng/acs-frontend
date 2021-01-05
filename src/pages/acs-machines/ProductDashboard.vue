@@ -30,7 +30,6 @@
         </v-col>
         <v-col cols="12">
           <alarm-table
-            label="Alarms"
             :alarms="alarms"
             :alarm-types="alarmTypes"
             @change="_onAlarmParamChange"
