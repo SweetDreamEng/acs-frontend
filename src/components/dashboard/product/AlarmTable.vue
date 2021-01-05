@@ -43,13 +43,7 @@
             {{ lastActivated(item) }}
           </template>
           <template v-slot:item.status="{ item }">
-            <v-chip
-              :color="isAlarmActivated(item) ? 'red' : 'green'"
-              dark
-              small
-            >
-              {{ alarmsCount(item) }}
-            </v-chip>
+            <v-icon :color="isAlarmActivated(item) ? 'red' : 'green'">mdi-checkbox-blank-circle</v-icon>
           </template>
           <!-- 
           <template v-slot:expanded-item="{ }">
@@ -141,14 +135,18 @@ export default {
       })
     },
     lastActivated(type) {
-      if (this.alarmsOfType(type).length === 0) {
-        return 'No Alarm Detected'
+      if (this.isAlarmActivated(type)) {
+        const alarm = this.alarms.find((alarm) => alarm.tag_id === type.tag_id)
+
+        return this.$options.filters.formatDate(alarm.timestamp)
       } else {
-        return ''
+        return 'No Alarm Detected'
       }
     },
     isAlarmActivated(alarmType) {
-      return this.alarms.some((alarm) => alarm.tag_id === alarmType.tag_id)
+      const alarm = this.alarms.find((alarm) => alarm.tag_id === alarmType.tag_id)
+      
+      return (alarm) ? alarm.values : false
     },
     alarmsCount(alarmType) {
       const alarms = this.alarms.filter((alarm) => alarm.tag_id === alarmType.tag_id)
