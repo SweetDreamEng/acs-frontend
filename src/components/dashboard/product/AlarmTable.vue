@@ -136,7 +136,7 @@ export default {
     },
     lastActivated(type) {
       if (this.isAlarmActivated(type)) {
-        const alarm = this.alarms.find((alarm) => alarm.tag_id === type.tag_id)
+        const alarm = this.alarms.find((alarm) => alarm.type_id === type.id)
 
         return this.$options.filters.formatDate(alarm.timestamp)
       } else {
@@ -144,14 +144,9 @@ export default {
       }
     },
     isAlarmActivated(alarmType) {
-      const alarm = this.alarms.find((alarm) => alarm.tag_id === alarmType.tag_id)
+      const alarm = this.alarms.find((alarm) => alarm.type_id === alarmType.id)
       
       return (alarm) ? alarm.values : false
-    },
-    alarmsCount(alarmType) {
-      const alarms = this.alarms.filter((alarm) => alarm.tag_id === alarmType.tag_id)
-
-      return alarms.length ? alarms.length : ''
     }
   }
 }
