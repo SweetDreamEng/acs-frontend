@@ -6,7 +6,7 @@
     >
       <v-card-title color="primary">
         Alarms
-        <v-btn
+<!--         <v-btn
           rounded
           outlined
           color="primary"
@@ -15,14 +15,12 @@
           @click="showTimeRangeChooser = true"
         >
           Local Time: {{ timeRangeLabel }}
-        </v-btn>
+        </v-btn> -->
       </v-card-title>
       <v-card-text>
         <v-data-table
           :headers="headers"
           :items="alarmTypes"
-          :expanded.sync="expanded"
-          show-expand
         >
           <!-- custom table header -->
           <template v-slot:header.alarm="{ header }">
@@ -45,24 +43,22 @@
           <template v-slot:item.status="{ item }">
             <v-icon :color="isAlarmActivated(item) ? 'red' : 'green'">mdi-checkbox-blank-circle</v-icon>
           </template>
-          <!-- 
-          <template v-slot:expanded-item="{ }">
+          <!-- <template v-slot:expanded-item="{ item }">
             <td :colspan="headers.length" class="px-4">
               <div
-                v-for="alarm in alarms"
-                :key="alarm.id"
+                v-for="(alarm, i) in alarmsForType(item)"
+                :key="i"
                 class="pa-1"
               >
-                Alarm generated at {{ alarm.timestamp }} time
+                Alarm generated at {{ alarm.timestamp | formatDate }}
               </div>
             </td>
-          </template>
-           -->
+          </template> -->
         </v-data-table>
       </v-card-text>
     </v-card>
 
-    <time-range-chooser
+<!--     <time-range-chooser
       :dlg="showTimeRangeChooser"
       :date-from="dateFrom"
       :date-to="dateTo"
@@ -71,7 +67,7 @@
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"
     >
-    </time-range-chooser>
+    </time-range-chooser> -->
   </div>
 </template>
 
@@ -84,13 +80,13 @@
 | Table that lists alarms of a certain product
 |
 */
-import TimeRangeChooser from '../TimeRangeChooser'
+// import TimeRangeChooser from '../TimeRangeChooser'
 
 import { mapState, mapGetters } from 'vuex'
 
 export default {
   components: {
-    TimeRangeChooser
+    // TimeRangeChooser
   },
   props: {
     loading: {
@@ -146,7 +142,10 @@ export default {
     isAlarmActivated(alarmType) {
       const alarm = this.alarms.find((alarm) => alarm.type_id === alarmType.id)
       
-      return (alarm) ? alarm.values : false
+      return (alarm) ? alarm.active : false
+    },
+    alarmsForType(alarmType) {
+      return this.alarms.filter((alarm) => alarm.type_id === alarmType.id)
     }
   }
 }

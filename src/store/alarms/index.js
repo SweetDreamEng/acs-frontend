@@ -55,7 +55,7 @@ const module = {
       }
     ],
     
-    loadingAlarms: false,
+    loadingAlarmsTable: false,
 
     loadingAlarmsPerMachine: false,
     alamrsPerMachine: [],
@@ -224,7 +224,7 @@ const module = {
     },
 
     SET_LOADING_ALARMS(state, data) {
-      state.loadingAlarms = data
+      state.loadingAlarmsTable = data
     },
 
     SET_LOADING_ALARMS_PER_MACHINE(state, data) {

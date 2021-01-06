@@ -9,6 +9,8 @@
     "dev": "npm run serve"
   },
   "dependencies": {
+    "@sentry/tracing": "^5.29.2",
+    "@sentry/vue": "^5.29.2",
     "animate.css": "^4.1.0",
     "apexcharts": "^3.19.2",
     "axios": "^0.21.0",

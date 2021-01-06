@@ -21,6 +21,7 @@
         </v-col>
         <v-col cols="12">
           <alarm-table
+            :loading="loadingAlarmsTable"
             :alarms="alarms"
             :alarm-types="alarmTypes"
             @change="_onAlarmParamChange"
@@ -116,7 +117,7 @@ export default {
       isLoading: (state) => state.machines.isNoteAdding,
       notes: (state) => state.notes.data,
 
-      loadingAnalytics: (state) => state.machines.loadingOverview
+      loadingAlarmsTable: (state) => state.alarms.loadingAlarmsTable
     }),
     ...mapGetters({
       locationName: 'locations/locationName',

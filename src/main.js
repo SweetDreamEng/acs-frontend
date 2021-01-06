@@ -8,6 +8,23 @@ Vue.use(Auth)
 import VueMask from 'v-mask'
 Vue.use(VueMask)
 
+import * as Sentry from '@sentry/browser'
+import { Integrations } from '@sentry/tracing'
+
+Sentry.init({
+  Vue,
+  dsn: 'https://3b9791a8547949d89f696bffb6ab47ee@o500701.ingest.sentry.io/5580915',
+  autoSessionTracking: true,
+  integrations: [
+    new Integrations.BrowserTracing()
+  ],
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+  logErrors: true
+})
+
 // import Echo from 'laravel-echo'
 // window.Pusher = require('pusher-js')
 // window.Echo = new Echo({
