@@ -193,7 +193,13 @@ export default {
     this.getWeeklyRunningHours(this.$route.params.productId)
     this.getProductAlarms(this.$route.params.productId)
   },
-
+  mounted() {
+    this.$channel.bind('alarm.created', (data) => {
+      console.log(data.deviceId)
+      if (parseInt(this.$route.params.productId) === data.deviceId)
+        this.onNewAlarms(data)
+    })
+  },
   methods: {
     ...mapActions({
       getLocations: 'locations/getLocations',
@@ -202,7 +208,8 @@ export default {
       getWeeklyRunningHours: 'machines/getWeeklyRunningHours',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       changeSelectedCompany: 'machines/changeSelectedCompany',
-      getProductAlarms: 'alarms/getProductAlarms'
+      getProductAlarms: 'alarms/getProductAlarms',
+      onNewAlarms: 'alarms/onNewAlarms'
     }),
     _onAlarmParamChange(params) {
       this.onAlarmParamChanged(params)

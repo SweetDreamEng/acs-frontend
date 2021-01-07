@@ -177,6 +177,7 @@ export default {
 
   mounted() {
     this.$channel.bind('alarm.created', (data) => {
+      console.log(data.deviceId)
       if (parseInt(this.$route.params.productId) === data.deviceId)
         this.onNewAlarms(data)
     })
