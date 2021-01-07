@@ -89,7 +89,6 @@ const module = {
     },
 
     async onNewAlarms({ state, commit }, data) {
-      console.log(data)
       const alarmTypesForTag = state.alarmTypes.filter((alarmType) => {
         return alarmType.tag_id === data.tagId
       })
@@ -242,6 +241,8 @@ const module = {
     UPDATE_ALARMS(state, alarmData) {
       const [value32] = alarmData.data.values
 
+      console.log(value32)
+      
       state.alarms[alarmData.i].timestamp = alarmData.data.timestamp * 1000
       state.alarms[alarmData.i].active = alarmData.alarmType.bytes === 0 ? value32 : (value32 >> alarmData.alarmType.offset) & alarmData.alarmType.bytes
     },
