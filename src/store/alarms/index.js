@@ -89,6 +89,7 @@ const module = {
     },
 
     async onNewAlarms({ state, commit }, data) {
+      console.log(data)
       const alarmTypesForTag = state.alarmTypes.filter((alarmType) => {
         return alarmType.tag_id === data.tagId
       })
