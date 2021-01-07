@@ -88,6 +88,21 @@ const module = {
       commit('SET_LOADING_ALARMS', false)
     },
 
+    async onNewAlarms({ state, commit }, data) {
+      const alarmTypesForTag = state.alarmTypes.filter((alarmType) => {
+        return alarmType.tag_id === data.tagId
+      })
+
+      alarmTypesForTag.forEach((alarmType) => {
+        for (let i = state.alarms.length - 1; i >= 0; i--) {
+          if (state.alarms[i].type_id === alarmType.id) {
+            commit('UPDATE_ALARMS', { i, data, alarmType })
+            break
+          }
+        }
+      })
+    },
+
     /*
       Get alarms by machine
     */
@@ -221,6 +236,13 @@ const module = {
     //set alarms
     SET_ALARMS(state, alarms) {
       state.alarms = alarms
+    },
+
+    UPDATE_ALARMS(state, alarmData) {
+      const [value32] = alarmData.data.values
+
+      state.alarms[alarmData.i].timestamp = alarmData.data.timestamp * 1000
+      state.alarms[alarmData.i].active = alarmData.alarmType.bytes === 0 ? value32 : (value32 >> alarmData.alarmType.offset) & alarmData.alarmType.bytes
     },
 
     SET_LOADING_ALARMS(state, data) {

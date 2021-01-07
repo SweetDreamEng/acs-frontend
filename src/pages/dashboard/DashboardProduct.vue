@@ -172,14 +172,13 @@ export default {
     this.getLocations()
     this.getZones()
     this.getProductAlarms(this.$route.params.productId)
-
     this.getNotes(this.$route.params.productId)
   },
 
   mounted() {
-
     this.$channel.bind('alarm.created', (data) => {
-      console.log(data)
+      if (parseInt(this.$route.params.productId) === data.deviceId)
+        this.onNewAlarms(data)
     })
   },
 
@@ -189,6 +188,7 @@ export default {
       getZones: 'zones/getZones',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       getProductAlarms: 'alarms/getProductAlarms',
+      onNewAlarms: 'alarms/onNewAlarms',
       getNotes: 'notes/getNotes'
     }),
     _onAlarmParamChange(params) {
