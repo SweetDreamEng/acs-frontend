@@ -210,6 +210,8 @@ const module = {
 
       try {
         const response = await deviceAPI.remoteWeb(device)
+
+        return response
       } catch (error) {
         console.log(error.response)
       } finally {
@@ -223,6 +225,8 @@ const module = {
 
       try {
         const response = await deviceAPI.remoteCli(device)
+
+        return response
       } catch (error) {
         console.log(error.response)
       } finally {

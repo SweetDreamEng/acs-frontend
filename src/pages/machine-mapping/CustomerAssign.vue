@@ -64,6 +64,7 @@
                     dense
                     clearable
                     placeholder="e.g. filter for serial number, device name, customer assigned name"
+                    @keyup.enter="filterDevices"
                     @click:append="filterDevices"
                   ></v-text-field>
                   <v-btn

@@ -20,7 +20,7 @@
     <v-card-text>
       <apexchart
         type="area"
-        height="180"
+        height="220"
         :options="chartOptions"
         :series="series"
       >
