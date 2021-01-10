@@ -137,19 +137,6 @@
               <div class="error--text title">Danger Zone</div>
               <div class="subtitle mb-2">Full administrator with access to this dashboard.</div>
 
-              <div class="my-2">
-                <v-btn
-                  v-if="user.role === 'ADMIN'"
-                  color="primary"
-                  @click="user.role = 'USER'"
-                >
-                  <v-icon left small>mdi-security</v-icon>Remove admin access
-                </v-btn>
-                <v-btn v-else color="primary" @click="user.role = 'ADMIN'">
-                  <v-icon left small>mdi-security</v-icon>Set User as Admin
-                </v-btn>
-              </div>
-
               <v-divider></v-divider>
 
               <div class="subtitle mt-3 mb-2">Prevent the user from signing in on the platform.</div>

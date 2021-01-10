@@ -11,14 +11,6 @@
       </v-btn>
     </div>
 
-    <div
-      v-if="user.role === 'ADMIN'"
-      class="d-flex align-center font-weight-bold primary--text my-2"
-    >
-      <v-icon small color="primary">mdi-security</v-icon>
-      <span class="ma-1">Administrator</span>
-    </div>
-
     <div class="mb-4">
       <div class="d-flex">
         <span class="font-weight-bold">Email</span>

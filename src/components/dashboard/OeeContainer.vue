@@ -1,12 +1,12 @@
 <template>
-  <v-card>
-    <div class="d-flex flex-wrap justify-center pa-2">
+  <v-card light>
+    <div class="d-flex flex-wrap align-center justify-center pa-2">
       <v-slide-group
         multiple
         show-arrows
       >
         <v-slide-item
-          v-for="(box, n) in boxes"
+          v-for="(box, n) in oees"
           :key="n"
         >
           <v-card
@@ -17,10 +17,10 @@
             class="d-flex flex-column flex-grow-1 mx-1"
           >
             <div class="pa-1 pb-0">
-              <div class="caption">{{ box.zone }} </div>
+              <div class="caption">{{ box.location }} </div>
               <div class="pl-2">
                 <small>OEE </small>
-                <div class="">{{ box.value }}</div>
+                <div>{{ box.value }}</div>
               </div>
             </div>
             <v-spacer></v-spacer>
@@ -38,6 +38,12 @@
   </v-card>
 </template>
 <script>
+import moment from 'moment'
+
+function formatDate(date) {
+  return date ? moment(date).format('D MMM') : ''
+}
+
 export default {
   components: {
   },
@@ -65,11 +71,14 @@ export default {
     options: {
       type: Object,
       default: () => ({})
+    },
+    oees: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
-      loading: true,
       customersSeries: [{
         name: 'Avg FPY',
         data: [
@@ -121,68 +130,18 @@ export default {
           }
         },
         ...this.options
-      },
-
-      boxes: [
-        {
-          zone: 'Zone 1',
-          value: 75,
-          series: [{
-            name: 'Avg FPY',
-            data: [
-              ['2020-02-02', 13],
-              ['2020-02-03', 11],
-              ['2020-02-04', 13],
-              ['2020-02-05', 12]
-            ]
-          }]
-        },
-        {
-          zone: 'Zone 2',
-          value: 52,
-          series: [{
-            name: 'Avg FPY',
-            data: [
-              ['2020-02-02', 13],
-              ['2020-02-03', 11],
-              ['2020-02-04', 13],
-              ['2020-02-05', 12]
-            ]
-          }]
-        },
-        {
-          zone: 'Zone 3',
-          value: 78,
-          series: [{
-            name: 'Avg FPY',
-            data: [
-              ['2020-02-02', 13],
-              ['2020-02-03', 11],
-              ['2020-02-04', 13],
-              ['2020-02-05', 12]
-            ]
-          }]
-        },
-        {
-          zone: 'Zone 4',
-          value: 75,
-          series: [{
-            name: 'Avg FPY',
-            data: [
-              ['2020-02-02', 13],
-              ['2020-02-03', 11],
-              ['2020-02-04', 13],
-              ['2020-02-05', 12]
-            ]
-          }]
-        }
-      ]
+      }
     }
-  },
-  mounted() {
-    setTimeout(() => {
-      this.loading = false
-    }, 500)
   }
 }
 </script>
+
+<style lang="scss">
+.stats-slide {
+  flex: 1;
+  .v-slide-group__content {
+    min-width: 100%;
+    justify-content: center;
+  }
+}
+</style>
