@@ -17,6 +17,11 @@ import alarms from './alarms'
 import notes from './notes'
 import configurations from './configurations'
 
+import bdBlenderAnalytics from '../components/dashboard/product/product-analytics/bd-batch-blender/store'
+import accumeterOvationBlender from '../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender/store'
+import ngxDryer from '../components/dashboard/product/product-analytics/ngx-dryer/store'
+import vtcPlusConveying from '../components/dashboard/product/product-analytics/vtc-plus-conveying-system/store'
+
 Vue.use(Vuex)
 
 /**
@@ -37,7 +42,12 @@ const store = new Vuex.Store({
     roles,
     alarms,
     notes,
-    configurations
+    configurations,
+    
+    bdBlenderAnalytics,
+    accumeterOvationBlender,
+    ngxDryer,
+    vtcPlusConveying
   }
 })
 

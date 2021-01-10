@@ -5,8 +5,6 @@ export default {
 
   SET_UTILIZATION(state, utilization) { state.utilizationSeries = utilization },
   SET_INVENTORIES(state, inventories) { state.inventories = inventories },
-  SET_ACTUAL_WEIGHTS(state, actualWeights) { state.actualWeights = actualWeights },
-  SET_TARGET_WEIGHTS(state, targetWeights) { state.targetWeights = targetWeights },
 
   SET_WEEKLY_RUNNING_HOURS(state, hours) { state.weeklyRuningHours = hours },
 
@@ -125,23 +123,15 @@ export default {
     state.loadingMachinesTable = data
   },
   
-  SET_LOADING_INVENTORIES(state, data) {
-    state.loadingInventories = data
-  },
-
   SET_LOADING_WEEKLY_RUNNING_HOURS1(state, data) {
     state.loadingWeeklyRunningHours1 = data
   },
-  SET_LOADING_ACTUAL_TARGET_BAR(state, loading) { state.loadingActualTargetBar = loading },
   INVENTORY_PRODUCT_LOADING(state) {
     state.isInventoryProductLoading = true
   },
   INVENTORY_PRODUCT_LOADED(state) {
     state.isInventoryProductLoading = false
   },
-
-  SET_LOADING_PUMP_HOURS(state, loading) { state.loadingPumpHours = loading },
-  SET_PUMP_HOURS(state, hours) { state.pumpHours = hours },
 
   // BD Batch Blender
   SET_RUNNING_PERCENTAGE(state, totalRunningPercentage) { state.totalRunningPercentage = totalRunningPercentage },

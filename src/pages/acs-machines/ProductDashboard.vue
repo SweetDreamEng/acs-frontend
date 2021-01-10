@@ -80,12 +80,12 @@
 // import vuex helper functions
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import BdBatchBlender from '../../components/dashboard/product/product-analytics/bd-batch-blender'
-import AccumeterOvationContinuousBlender from '../../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender'
+import BdBatchBlender from '../../components/dashboard/product/product-analytics/bd-batch-blender/BDBatchAnalytics'
+import AccumeterOvationContinuousBlender from '../../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender/AccumeterOvationBlender'
 import GhGravimetricExtrusionControlHopper from '../../components/dashboard/product/product-analytics/gh-gravimetric-extrusion-control-hopper'
 import GhFGravimetricAdditiveFeeder from '../../components/dashboard/product/product-analytics/gh-f-gravimetric-additive-feeder'
-import VtcPlusConveyingSystem from '../../components/dashboard/product/product-analytics/vtc-plus-conveying-system'
-import NgxDryer from '../../components/dashboard/product/product-analytics/ngx-dryer'
+import VtcPlusConveyingSystem from '../../components/dashboard/product/product-analytics/vtc-plus-conveying-system/VtcPlusConveying'
+import NgxDryer from '../../components/dashboard/product/product-analytics/ngx-dryer/NgxDryer'
 import NgxNomadDryer from '../../components/dashboard/product/product-analytics/ngx-nomad-dryer'
 import T50CentralGranulator from '../../components/dashboard/product/product-analytics/t50-central-granulator'
 import GpPortableChiller from '../../components/dashboard/product/product-analytics/gp-portable-chiller'

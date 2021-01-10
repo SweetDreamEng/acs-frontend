@@ -73,13 +73,10 @@ export default {
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
-      actualRecipeValues: (state) => state.machines.actualRecipe2Values,
-      targetRecipeValues: (state) => state.machines.targetRecipe2Values,
       
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
-      loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingRecipe: (state) => state.machines.loadingRecipe
+      loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',

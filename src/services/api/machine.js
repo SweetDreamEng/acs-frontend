@@ -18,12 +18,6 @@ export default {
     })
   },
 
-  initProduct(data) {
-    return api.post('/analytics/init-product', data).then((response) => {
-      return response
-    })
-  },
-
   getOverview(id) {
     return api.get(`/analytics/product-overview/${id}`).then((response) => {
       return response
@@ -32,12 +26,6 @@ export default {
 
   getUtilization(data) {
     return api.post('/analytics/product-utilization', data).then((response) => {
-      return response
-    })
-  },
-
-  getWeight(id) {
-    return api.get(`/analytics/product-weight/${id}`).then((response) => {
       return response
     })
   },
@@ -80,16 +68,6 @@ export default {
     return api.post('/analytics/product-hopper-inventories', data).then((response) => response)
   },
 
-  getFeederStables(id) {
-    return api.get(`/analytics/product-feeder-stables/${id}`).then((response) => {
-      return response
-    })
-  },
-
-  getProductionRate(data) {
-    return api.post('/analytics/product-production-rate', data).then((response) => response)
-  },
-
   getWeeklyRunningHours(id) {
     return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {
       return response
@@ -103,31 +81,6 @@ export default {
   },
   onProductInventoryParamChanged(data) {
     return api.post('/analytics/product-inventory', data).then((response) => {
-      return response
-    })
-  },
-  getInventory(id) {
-    return api.get(`/analytics/product-inventory/${id}`).then((response) => {
-      return response
-    })
-  },
-  getPumpHoursOil(id) {
-    return api.get(`/analytics/product-pump-hours-oil/${id}`).then((response) => {
-      return response
-    })
-  },
-  getPumpHours(id) {
-    return api.get(`/analytics/product-pump-hours/${id}`).then((response) => {
-      return response
-    })
-  },
-  getDryingHopperStats(id) {
-    return api.get(`/analytics/product-drying-hopper-states/${id}`).then((response) => {
-      return response
-    })
-  },
-  getHopperTemperatures(id) {
-    return api.get(`/analytics/product-hopper-temperatures/${id}`).then((response) => {
       return response
     })
   }

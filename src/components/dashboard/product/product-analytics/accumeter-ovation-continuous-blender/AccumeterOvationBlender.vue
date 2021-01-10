@@ -26,24 +26,30 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col cols="12" md="6">
-        <pump-hours
-          :loading="loadingPumpHours"
-          :hours="pumpHours"
-        >
-        </pump-hours>
+      <v-col md="4" sm="12">
+        <machine-state :loading="loadingSystemStates" :system-states="systemStates"></machine-state>
       </v-col>
-      <v-col cols="12" md="6">
-        <pump-hours-oil-change
-          :loading="loadingActualTargetBar"
-          :values-actual="actualPumpHoursOil"
-          :values-target="targetPumpHoursOil"
+      <v-col md="4" sm="12">
+        <feeder-stable :loading="loadingFeederStables" :feeders="feederStables"></feeder-stable>
+      </v-col>
+      <v-col md="4" sm="12">
+        <process-rate
+          :loading="loadingProcessRate"
+          :rates="processRateSeries"
+          :time-range-label="timeRangeLabel('process-rate')"
+          @showTimeRange="onShowTimeRangeDlgOpen('process-rate')"
         >
-        </pump-hours-oil-change>
+        </process-rate>
       </v-col>
     </v-row>
     <v-row dense>
       <v-col md="8" sm="12">
+        <recipe
+          :targets="targetRecipeValues"
+          :actuals="actualRecipeValues"
+          :loading="loadingRecipe"
+        >
+        </recipe>
       </v-col>
       <v-col md="4" sm="12">
       </v-col>
@@ -62,11 +68,13 @@
   </div>
 </template>
 <script>
-import Overview from '../../common/Overview'
-import Utilization from '../../common/Utilization'
-import EnergyConsumption from '../../common/EnergyConsumption'
-import PumpHours from './PumpHours'
-import PumpHoursOilChange from './PumpHoursOilChange'
+import Overview from '../common/components/Overview'
+import Utilization from '../common/components/Utilization'
+import EnergyConsumption from '../common/components/EnergyConsumption'
+import MachineState from './components/MachineState'
+import FeederStable from './components/FeederStable'
+import ProcessRate from './components/ProcessRate'
+import Recipe from './components/Recipe'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -76,8 +84,10 @@ export default {
     Overview,
     Utilization,
     EnergyConsumption,
-    PumpHours,
-    PumpHoursOilChange,
+    MachineState,
+    FeederStable,
+    ProcessRate,
+    Recipe,
     TimeRangeChooser
   },
   props: {
@@ -93,16 +103,20 @@ export default {
   },
   computed: {
     ...mapState({
-      machine: (state) => state.machines.machine,
-      pumpHours: (state) => state.machines.pumpHours,
-      actualPumpHoursOil: (state) => state.machines.actualValuesBar,
-      targetPumpHoursOil: (state) => state.machines.targetValuesBar,
-      
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingPumpHours: (state) => state.machines.loadingPumpHours,
-      loadingActualTargetBar: (state) => state.machines.loadingActualTargetBar
+      loadingRecipe: (state) => state.accumeterOvationBlender.loadingRecipe,
+      loadingSystemStates: (state) => state.accumeterOvationBlender.loadingSystemStates,
+      loadingFeederStables: (state) => state.accumeterOvationBlender.loadingFeederStables,
+      loadingProcessRate: (state) => state.accumeterOvationBlender.loadingProcessRate,
+
+      machine: (state) => state.machines.machine,
+      actualRecipeValues: (state) => state.accumeterOvationBlender.actualRecipeValues,
+      targetRecipeValues: (state) => state.accumeterOvationBlender.targetRecipeValues,
+      systemStates: (state) => state.accumeterOvationBlender.systemStates,
+      feederStables: (state) => state.accumeterOvationBlender.feederStables,
+      processRateSeries: (state) => state.accumeterOvationBlender.processRateSeries
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
@@ -113,8 +127,10 @@ export default {
     this.getOverview(this.productId)
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
-    this.getPumpHours(this.productId)
-    this.getPumpHoursOil(this.productId)
+    this.getSystemStates(this.productId)
+    this.getFeederStables(this.productId)
+    this.getProductionRate(this.productId)
+    this.getRecipe(this.productId)
   },
   methods: {
     ...mapActions({
@@ -123,10 +139,13 @@ export default {
       getOverview: 'machines/getOverview',
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
-      getPumpHoursOil: 'machines/getPumpHoursOil',
-      getPumpHours: 'machines/getPumpHours'
+      getSystemStates: 'accumeterOvationBlender/getSystemStates',
+      getFeederStables: 'accumeterOvationBlender/getFeederStables',
+      getProductionRate: 'accumeterOvationBlender/getProductionRate',
+      getRecipe: 'accumeterOvationBlender/getRecipe'
     }),
     onShowTimeRangeDlgOpen(key) {
+      console.log(key)
       this.selectTimeRange(key)
       this.$nextTick(() => {
         this.showTimeRangeChooser = true

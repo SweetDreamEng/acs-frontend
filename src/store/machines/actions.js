@@ -23,44 +23,6 @@ const selectTimeRange = ({ commit }, key) => {
   commit('SET_CURRENT_TIME_RANGE_ITEM', key)
 }
 
-// product analytics init
-const initProduct = async ({ commit, state }, id) => {
-  commit('WEIGHT_PRODUCT_LOADING')
-  commit('INVENTORY_PRODUCT_LOADING')
-  try {
-    const response = await machineAPI.initProduct({
-      machineId: id,
-      param: state.paramWeightProduct,
-      paramInventory: state.paramInventory,
-      inventoryTimeRange: state.inventoryTimeRange,
-      weightTimeRange: state.weightTimeRange
-    })
-
-    commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
-    commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
-    commit('SET_HOP_INVENTORY_VALUES', response.data.hops)
-    commit('SET_FRT_INVENTORY_VALUES', response.data.fractions)
-
-    // BD Batch Blender
-    commit('SET_RUNNING_PERCENTAGE', parseFloat((response.data.total_running_percentage * 100).toFixed(2)))
-    commit('SET_RECIPE_VALUES', response.data.recipe_values)
-
-    // GH Gravimetric Extrusion Control Hopper
-    commit('SET_HOPPER_INVENTORIES', response.data.hopper_inventories)
-    commit('SET_HAULOFF_LENGTHS', response.data.hauloff_lengths)
-    commit('SET_RECIPE_SET_POINTS', response.data.set_points)
-    commit('SET_RECIPE_ACTUAL_POINTS', response.data.actual_points)
-
-    commit('alarms/SET_ALARM_TYPES', response.data.alarm_types, { root: true })
-    commit('alarms/SET_ALARMS', response.data.alarms, { root: true })
-  } catch (error) {
-    console.log(error.response)
-  } finally {
-    commit('WEIGHT_PRODUCT_LOADED')
-    commit('INVENTORY_PRODUCT_LOADED')
-  }
-}
-
 const getOverview = async ({ commit }, id) => {
   commit('OVERVIEW_LOADING')
 
@@ -106,50 +68,6 @@ const getEnergyConsumption = async ({ state, commit }, id) => {
     console.log(error)
   } finally {
     commit('SET_LOADING_ENERGY_CONSUMPTION', false)
-  }
-}
-
-const getRecipe = async ({ state, commit }, id) => {
-  commit('SET_LOADING_RECIPE', true)
-
-  try {
-    const response = await machineAPI.getRecipe(id)
-
-    commit('SET_RECIPE_VALUES', response.data.recipe_values)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_RECIPE', false)
-  }
-}
-
-const getWeight = async ({ state, commit }, id) => {
-  commit('SET_LOADING_WEIGHT', true)
-
-  try {
-    const response = await machineAPI.getWeight(id)
-
-    commit('SET_ACTUAL_WEIGHTS', response.data.actuals)
-    commit('SET_TARGET_WEIGHTS', response.data.targets)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_WEIGHT', false)
-  }
-}
-
-const getRecipe2 = async ({ state, commit }, id) => {
-  commit('SET_LOADING_RECIPE', true)
-
-  try {
-    const response = await machineAPI.getRecipe2(id)
-
-    commit('SET_ACTUAL_RECIPE_TO_VALUES', response.data.actuals)
-    commit('SET_TARGET_RECIPE_TO_VALUES', response.data.targets)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_RECIPE', false)
   }
 }
 
@@ -215,20 +133,6 @@ const getHauloffLengths = async ({ state, commit }, id) => {
   }
 }
 
-const getFeederStables = async ({ commit }, id) => {
-  commit('SET_LOADING_FEEDER_STABLES2', true)
-
-  try {
-    const response = await machineAPI.getFeederStables(id)
-
-    commit('SET_FEEDER_STABLES', response.data.feeders)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_FEEDER_STABLES2', false)
-  }
-}
-
 const getProductionRate = async ({ state, commit }, id) => {
   commit('SET_LOADING_PROCESS_RATE', true)
 
@@ -243,65 +147,6 @@ const getProductionRate = async ({ state, commit }, id) => {
     console.log(error)
   } finally {
     commit('SET_LOADING_PROCESS_RATE', false)
-  }
-}
-
-const getPumpHoursOil = async ({ state, commit }, id) => {
-  commit('SET_LOADING_ACTUAL_TARGET_BAR', true)
-
-  try {
-    const response = await machineAPI.getPumpHoursOil(id)
-
-    commit('SET_ACTUAL_BAR', response.data.actuals)
-    commit('SET_TARGET_BAR', response.data.targets)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_ACTUAL_TARGET_BAR', false)
-  }
-}
-
-const getPumpHours = async ({ state, commit }, id) => {
-  commit('SET_LOADING_PUMP_HOURS', true)
-
-  try {
-    const response = await machineAPI.getPumpHours(id)
-
-    commit('SET_PUMP_HOURS', response.data.hours)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_PUMP_HOURS', false)
-  }
-}
-
-const getDryingHopperStats = async ({ state, commit }, id) => {
-  commit('SET_LOADING_SYSTEM_STATES', true)
-
-  try {
-    const response = await machineAPI.getDryingHopperStats(id)
-
-    commit('SET_SYSTEM_STATES', response.data.states)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_SYSTEM_STATES', false)
-  }
-}
-
-const getHopperTemperatures = async ({ state, commit }, id) => {
-  commit('SET_LOADING_ACTUAL_TARGET_BAR', true)
-
-  try {
-    const response = await machineAPI.getHopperTemperatures(id)
-
-    commit('SET_ACTUAL_BAR', response.data.inlets)
-    commit('SET_TARGET_BAR', response.data.targets)
-    commit('SET_OUTLET_BAR', response.data.outlets)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_ACTUAL_TARGET_BAR', false)
   }
 }
 
@@ -384,20 +229,6 @@ const onProductInventoryParamChanged = ({ commit }, data) => {
   // dispatch('getInventory')
 }
 
-const getInventory = async ({ commit }, id) => {
-  commit('SET_LOADING_INVENTORIES', true)
-
-  try {
-    const response = await machineAPI.getInventory(id)
-
-    commit('SET_INVENTORIES', response.data.inventories)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_INVENTORIES', false)
-  }
-}
-
 const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   if (state.selectedTimeRangeKey === 'utilization') {
     commit('SET_UTILIZATION_TIME_RANGE', data)
@@ -424,24 +255,14 @@ export default {
   initMachinesTable,
   changeSelectedCompany,
   selectTimeRange,
-  initProduct,
   getOverview,
   getUtilization,
   getEnergyConsumption,
-  getInventory,
-  getRecipe,
-  getWeight,
-  getRecipe2,
   getSystemStates,
   getMachineStates3,
   getHopperInventories,
   getHauloffLengths,
-  getFeederStables,
   getProductionRate,
-  getPumpHoursOil,
-  getPumpHours,
-  getDryingHopperStats,
-  getHopperTemperatures,
   getWeeklyRunningHours,
   onProductWeightParamChange,
   onProductInventoryParamChanged,

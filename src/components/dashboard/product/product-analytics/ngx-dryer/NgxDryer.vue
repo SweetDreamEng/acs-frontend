@@ -26,32 +26,21 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col md="4" sm="12">
-        <machine-state :loading="loadingSystemStates" :system-states="systemStates"></machine-state>
-      </v-col>
-      <v-col md="4" sm="12">
-        <feeder-stable :loading="loadingFeederStables2" :feeders="feederStables"></feeder-stable>
-      </v-col>
-      <v-col md="4" sm="12">
-        <process-rate
-          :loading="loadingProcessRate"
-          :rates="processRateSeries"
-          :time-range-label="timeRangeLabel('process-rate')"
-          @showTimeRange="onShowTimeRangeDlgOpen('process-rate')"
+      <v-col cols="12" md="4">
+        <drying-hopper-states
+          :loading="loadingDryingHoppers"
+          :drying-hoppers="dryingHoppers"
         >
-        </process-rate>
+        </drying-hopper-states>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="8" sm="12">
-        <recipe
-          :targets="targetRecipeValues"
-          :actuals="actualRecipeValues"
-          :loading="loadingRecipe"
+      <v-col cols="12" md="8">
+        <hopper-air-temperatures
+          :loading="loadingTemperatures"
+          :values-inlet="inletTemperatures"
+          :values-target="targetTemperatures"
+          :values-outlet="outletTemperatures"
         >
-        </recipe>
-      </v-col>
-      <v-col md="4" sm="12">
+        </hopper-air-temperatures>
       </v-col>
     </v-row>
     <time-range-chooser
@@ -71,10 +60,8 @@
 import Overview from '../../common/Overview'
 import Utilization from '../../common/Utilization'
 import EnergyConsumption from '../../common/EnergyConsumption'
-import MachineState from './MachineState'
-import FeederStable from './FeederStable'
-import ProcessRate from './ProcessRate'
-import Recipe from './Recipe'
+import DryingHopperStates from './components/DryingHopperStates'
+import HopperAirTemperatures from './components/HopperAirTemperatures'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -84,10 +71,8 @@ export default {
     Overview,
     Utilization,
     EnergyConsumption,
-    MachineState,
-    FeederStable,
-    ProcessRate,
-    Recipe,
+    DryingHopperStates,
+    HopperAirTemperatures,
     TimeRangeChooser
   },
   props: {
@@ -104,19 +89,16 @@ export default {
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
-      actualRecipeValues: (state) => state.machines.actualRecipe2Values,
-      targetRecipeValues: (state) => state.machines.targetRecipe2Values,
-      systemStates: (state) => state.machines.systemStates,
-      feederStables: (state) => state.machines.feederStables,
-      processRateSeries: (state) => state.machines.processRateSeries,
+      dryingHoppers: (state) => state.ngxDryer.dryingHoppers,
+      inletTemperatures: (state) => state.ngxDryer.inletTemperatures,
+      targetTemperatures: (state) => state.ngxDryer.targetTemperatures,
+      outletTemperatures: (state) => state.ngxDryer.outletTemperatures,
 
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingRecipe: (state) => state.machines.loadingRecipe,
-      loadingSystemStates: (state) => state.machines.loadingSystemStates,
-      loadingFeederStables2: (state) => state.machines.loadingFeederStables2,
-      loadingProcessRate: (state) => state.machines.loadingProcessRate
+      loadingDryingHoppers: (state) => state.ngxDryer.loadingDryingHoppers,
+      loadingTemperatures: (state) => state.ngxDryer.loadingTemperatures
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
@@ -127,10 +109,8 @@ export default {
     this.getOverview(this.productId)
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
-    this.getSystemStates(this.productId)
-    this.getFeederStables(this.productId)
-    this.getProductionRate(this.productId)
-    this.getRecipe2(this.productId)
+    this.getDryingHopperStats(this.productId)
+    this.getHopperTemperatures(this.productId)
   },
   methods: {
     ...mapActions({
@@ -139,13 +119,10 @@ export default {
       getOverview: 'machines/getOverview',
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
-      getSystemStates: 'machines/getSystemStates',
-      getFeederStables: 'machines/getFeederStables',
-      getProductionRate: 'machines/getProductionRate',
-      getRecipe2: 'machines/getRecipe2'
+      getDryingHopperStats: 'ngxDryer/getDryingHopperStats',
+      getHopperTemperatures: 'ngxDryer/getHopperTemperatures'
     }),
     onShowTimeRangeDlgOpen(key) {
-      console.log(key)
       this.selectTimeRange(key)
       this.$nextTick(() => {
         this.showTimeRangeChooser = true

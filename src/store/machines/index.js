@@ -24,18 +24,6 @@ const state = {
   targetValuesBar: [],
   outletValuesBar: [],
 
-  // Machine overview
-  loadingInventories: false,
-  inventories: [],
-
-  // Product Weight
-  loadingWeight: false,
-  actualWeights: [],
-  targetWeights: [],
-
-  loadingRecipe: false,
-  recipeValues: [],
-
   // Accumeter Ovation Continuous Blender
   actualRecipe2Values: [],
   targetRecipe2Values: [],

@@ -35,15 +35,20 @@
         </actual-target-weight>
       </v-col>
       <v-col md="4" sm="12">
-        <recipe></recipe>
+        <recipe
+          :loading="loadingRecipe"
+          :recipes="recipeValues"
+        >
+        </recipe>
       </v-col>
     </v-row>
     <v-row dense>
       <v-col cols="12">
-        <OEE
+        <inventory
           :is-loading="loadingInventories"
+          :inventories="inventories"
         >
-        </OEE>
+        </inventory>
       </v-col>
     </v-row>
     <time-range-chooser
@@ -60,12 +65,12 @@
   </div>
 </template>
 <script>
-import Overview from '../../common/Overview'
-import Utilization from '../../common/Utilization'
-import ActualTargetWeight from '../../common/ActualTargetWeight'
-import OEE from '../../common/OEE'
-import EnergyConsumption from '../../common/EnergyConsumption'
-import Recipe from './Recipe'
+import Overview from '../common/components/Overview'
+import Utilization from '../common/components/Utilization'
+import EnergyConsumption from '../common/components/EnergyConsumption'
+import Recipe from './components/Recipe'
+import Inventory from './components/Inventory'
+import ActualTargetWeight from './components/ActualTargetWeight'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -76,7 +81,7 @@ export default {
     Recipe,
     Utilization,
     ActualTargetWeight,
-    OEE,
+    Inventory,
     EnergyConsumption,
     TimeRangeChooser
   },
@@ -94,14 +99,17 @@ export default {
   computed: {
     ...mapState({
       loadingOverview: (state) => state.machines.loadingOverview,
-      loadingWeight: (state) => state.machines.loadingWeight,
-      machine: (state) => state.machines.machine,
-      valuesTgtWeight: (state) => state.machines.targetWeights,
-      valuesActWeight: (state) => state.machines.actualWeights,
-      
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingInventories: (state) => state.machines.loadingInventories
+      loadingWeight: (state) => state.bdBlenderAnalytics.loadingWeight,
+      loadingInventories: (state) => state.bdBlenderAnalytics.loadingInventories,
+      loadingRecipe: (state) => state.bdBlenderAnalytics.loadingRecipe,
+      
+      machine: (state) => state.machines.machine,
+      valuesTgtWeight: (state) => state.bdBlenderAnalytics.targetWeights,
+      valuesActWeight: (state) => state.bdBlenderAnalytics.actualWeights,
+      inventories: (state) => state.bdBlenderAnalytics.inventories,
+      recipeValues: (state) => state.bdBlenderAnalytics.recipeValues
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
@@ -121,9 +129,9 @@ export default {
       getOverview: 'machines/getOverview',
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
-      getInventory: 'machines/getInventory',
-      getRecipe: 'machines/getRecipe',
-      getWeight: 'machines/getWeight',
+      getInventory: 'bdBlenderAnalytics/getInventory',
+      getRecipe: 'bdBlenderAnalytics/getRecipe',
+      getWeight: 'bdBlenderAnalytics/getWeight',
       onTimeRangeChanged: 'machines/onTimeRangeChanged',
       selectTimeRange: 'machines/selectTimeRange'
     }),

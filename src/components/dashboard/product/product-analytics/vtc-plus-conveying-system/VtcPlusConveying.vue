@@ -26,21 +26,26 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col cols="12" md="4">
-        <drying-hopper-states
-          :loading="loadingSystemStates"
-          :drying-hoppers="dryingHoppers"
+      <v-col cols="12" md="6">
+        <pump-hours
+          :loading="loadingPumpHours"
+          :hours="pumpHours"
         >
-        </drying-hopper-states>
+        </pump-hours>
       </v-col>
-      <v-col cols="12" md="8">
-        <hopper-air-temperatures
-          :loading="loadingActualTargetBar"
-          :values-inlet="inletTemperatures"
-          :values-target="targetTemperatures"
-          :values-outlet="outletTemperatures"
+      <v-col cols="12" md="6">
+        <pump-hours-oil-change
+          :loading="loadingPumpHoursOil"
+          :values-actual="actualPumpHoursOil"
+          :values-target="targetPumpHoursOil"
         >
-        </hopper-air-temperatures>
+        </pump-hours-oil-change>
+      </v-col>
+    </v-row>
+    <v-row dense>
+      <v-col md="8" sm="12">
+      </v-col>
+      <v-col md="4" sm="12">
       </v-col>
     </v-row>
     <time-range-chooser
@@ -60,8 +65,8 @@
 import Overview from '../../common/Overview'
 import Utilization from '../../common/Utilization'
 import EnergyConsumption from '../../common/EnergyConsumption'
-import DryingHopperStates from './DryingHopperStates'
-import HopperAirTemperatures from './HopperAirTemperatures'
+import PumpHours from './components/PumpHours'
+import PumpHoursOilChange from './components/PumpHoursOilChange'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -71,8 +76,8 @@ export default {
     Overview,
     Utilization,
     EnergyConsumption,
-    DryingHopperStates,
-    HopperAirTemperatures,
+    PumpHours,
+    PumpHoursOilChange,
     TimeRangeChooser
   },
   props: {
@@ -89,16 +94,15 @@ export default {
   computed: {
     ...mapState({
       machine: (state) => state.machines.machine,
-      dryingHoppers: (state) => state.machines.systemStates,
-      inletTemperatures: (state) => state.machines.actualValuesBar,
-      targetTemperatures: (state) => state.machines.targetValuesBar,
-      outletTemperatures: (state) => state.machines.outletValuesBar,
-
+      pumpHours: (state) => state.vtcPlusConveying.pumpHours,
+      actualPumpHoursOil: (state) => state.vtcPlusConveying.actualValuesBar,
+      targetPumpHoursOil: (state) => state.vtcPlusConveying.targetValuesBar,
+      
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,
       loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingSystemStates: (state) => state.machines.loadingSystemStates,
-      loadingActualTargetBar: (state) => state.machines.loadingActualTargetBar
+      loadingPumpHours: (state) => state.vtcPlusConveying.loadingPumpHours,
+      loadingPumpHoursOil: (state) => state.vtcPlusConveying.loadingPumpHoursOil
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
@@ -109,8 +113,8 @@ export default {
     this.getOverview(this.productId)
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
-    this.getDryingHopperStats(this.productId)
-    this.getHopperTemperatures(this.productId)
+    this.getPumpHours(this.productId)
+    this.getPumpHoursOil(this.productId)
   },
   methods: {
     ...mapActions({
@@ -119,8 +123,8 @@ export default {
       getOverview: 'machines/getOverview',
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
-      getDryingHopperStats: 'machines/getDryingHopperStats',
-      getHopperTemperatures: 'machines/getHopperTemperatures'
+      getPumpHoursOil: 'vtcPlusConveying/getPumpHoursOil',
+      getPumpHours: 'vtcPlusConveying/getPumpHours'
     }),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)

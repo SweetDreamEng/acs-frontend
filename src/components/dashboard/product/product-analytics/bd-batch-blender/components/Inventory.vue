@@ -28,25 +28,20 @@
 
 <script>
 
-import { mapState } from 'vuex'
-
 export default {
-  components: {
-  },
   props: {
     isLoading: {
       type: Boolean,
       default: false
+    },
+    inventories: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
     }
-  },
-  computed: {
-    ...mapState({
-      inventories: (state) => state.machines.inventories
-    })
   },
   methods: {
   }

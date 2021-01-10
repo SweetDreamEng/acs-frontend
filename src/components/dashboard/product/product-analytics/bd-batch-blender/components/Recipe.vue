@@ -1,8 +1,6 @@
 <template>
-  <v-card height="100%">
-    <v-toolbar
-      flat
-    >
+  <v-card height="100%" :loading="loading" :disabled="loading">
+    <v-toolbar flat>
       <v-toolbar-title>Recipe</v-toolbar-title>
 
       <template v-slot:extension>
@@ -25,7 +23,7 @@
           v-for="item in tabItems"
           :key="item"
         >
-          <apexchart type="donut" height="360" :options="chartOptions" :series="recipeValues"></apexchart>
+          <apexchart type="donut" height="360" :options="chartOptions" :series="recipes"></apexchart>
         </v-tab-item>
       </v-tabs-items>
     </v-card-text>
@@ -37,9 +35,15 @@
 import { mapState } from 'vuex'
 
 export default {
-  components: {
-  },
   props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    recipes: {
+      type: Array,
+      default: () => []
+    }
   },
   data() {
     return {
@@ -66,15 +70,6 @@ export default {
         }
       }
     }
-  },
-  computed: {
-    ...mapState({
-      recipeValues: (state) => state.machines.recipeValues
-    })
-  },
-  mounted() {
-  },
-  methods: {
   }
 }
 </script>
