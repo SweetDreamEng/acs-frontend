@@ -16,6 +16,7 @@ const module = {
 
   actions: {
     async getRecipe({ commit }, id) {
+      commit('SET_RECIPE_VALUES', [])
       commit('SET_LOADING_RECIPE', true)
 
       try {
@@ -30,6 +31,8 @@ const module = {
     },
 
     async getWeight({ commit }, id) {
+      commit('SET_ACTUAL_WEIGHTS', [])
+      commit('SET_TARGET_WEIGHTS', [])
       commit('SET_LOADING_WEIGHT', true)
 
       try {
@@ -45,6 +48,7 @@ const module = {
     },
 
     async getInventory({ commit }, id) {
+      commit('SET_INVENTORIES', [])
       commit('SET_LOADING_INVENTORIES', true)
 
       try {

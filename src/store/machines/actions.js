@@ -24,6 +24,7 @@ const selectTimeRange = ({ commit }, key) => {
 }
 
 const getOverview = async ({ commit }, id) => {
+  commit('SET_OVERVIEW', {})
   commit('OVERVIEW_LOADING')
 
   try {
@@ -206,29 +207,6 @@ const initMachinesTable = async ({ commit }, zone) => {
   }
 }
 
-const onProductWeightParamChange = async ({ commit, state }) => {
-  commit('WEIGHT_PRODUCT_LOADING')
-  try {
-    const response = await machineAPI.changeProductWeightMode({
-      param: state.paramWeightProduct,
-      timeRange: state.weightTimeRange
-    })
-
-    commit('SET_TGT_WEIGHT_VALUES', response.data.targets)
-    commit('SET_ACT_WEIGHT_VALUES', response.data.actuals)
-  } catch (error) {
-    console.log(error.response)
-  } finally {
-    commit('WEIGHT_PRODUCT_LOADED')
-  }
-}
-
-const onProductInventoryParamChanged = ({ commit }, data) => {
-  commit('SET_PRODUCT_INVENTORY_PARAM', data.param)
-
-  // dispatch('getInventory')
-}
-
 const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   if (state.selectedTimeRangeKey === 'utilization') {
     commit('SET_UTILIZATION_TIME_RANGE', data)
@@ -264,7 +242,5 @@ export default {
   getHauloffLengths,
   getProductionRate,
   getWeeklyRunningHours,
-  onProductWeightParamChange,
-  onProductInventoryParamChanged,
   onTimeRangeChanged
 }

@@ -13,6 +13,8 @@ const module = {
 
   actions: {
     async getPumpHoursOil({ state, commit }, id) {
+      commit('SET_ACTUAL_PUMP_OURS_OIL', [])
+      commit('SET_TARGET_PUMP_OURS_OIL', [])
       commit('SET_LOADING_PUMP_HOURS_OIL', true)
 
       try {
@@ -28,6 +30,7 @@ const module = {
     },
 
     async getPumpHours({ state, commit }, id) {
+      commit('SET_PUMP_HOURS', [])
       commit('SET_LOADING_PUMP_HOURS', true)
 
       try {

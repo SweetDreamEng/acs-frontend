@@ -36,18 +36,6 @@ export default {
     })
   },
 
-  getRecipe(id) {
-    return api.get(`/analytics/product-recipe/${id}`).then((response) => {
-      return response
-    })
-  },
-  
-  getRecipe2(id) {
-    return api.get(`/analytics/product-actual-target-recipe/${id}`).then((response) => {
-      return response
-    })
-  },
-
   getSystemStates(id) {
     return api.get(`/analytics/product-system-states/${id}`).then((response) => {
       return response
@@ -70,17 +58,6 @@ export default {
 
   getWeeklyRunningHours(id) {
     return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {
-      return response
-    })
-  },
-
-  changeProductWeightMode(data) {
-    return api.post('/analytics/product-weight', data).then((response) => {
-      return response
-    })
-  },
-  onProductInventoryParamChanged(data) {
-    return api.post('/analytics/product-inventory', data).then((response) => {
       return response
     })
   }

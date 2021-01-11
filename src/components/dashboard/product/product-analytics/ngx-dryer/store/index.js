@@ -14,6 +14,7 @@ const module = {
 
   actions: {
     async getDryingHopperStats({ state, commit }, id) {
+      commit('SET_DRYING_HOPPERS', {})
       commit('SET_LOADING_DRYING_HOPPERS', true)
 
       try {
@@ -27,6 +28,9 @@ const module = {
       }
     },
     async getHopperTemperatures ({ state, commit }, id) {
+      commit('SET_INLET_TEMPERATURE', [])
+      commit('SET_OUTLET_TEMPERATURE', [])
+      commit('SET_SET_TEMPERATURE', [])
       commit('SET_LOADING_TEMPERATURES', true)
 
       try {

@@ -27,6 +27,7 @@ const module = {
 
   actions: {
     async getSystemStates({ commit }, id) {
+      commit('SET_SYSTEM_STATES', {})
       commit('SET_LOADING_SYSTEM_STATES', true)
 
       try {
@@ -40,6 +41,7 @@ const module = {
       }
     },
     async getFeederStables({ commit }, id) {
+      commit('SET_FEEDER_STABLES', [])
       commit('SET_LOADING_FEEDER_STABLES', true)
 
       try {
@@ -53,6 +55,7 @@ const module = {
       }
     },
     async getProductionRate({ state, commit }, id) {
+      commit('SET_PROCESS_RATE_SERIES', [])
       commit('SET_LOADING_PROCESS_RATE', true)
 
       try {
@@ -69,6 +72,8 @@ const module = {
       }
     },
     async getRecipe({ state, commit }, id) {
+      commit('SET_ACTUAL_RECIPE_TO_VALUES', [])
+      commit('SET_TARGET_RECIPE_TO_VALUES', [])
       commit('SET_LOADING_RECIPE', true)
 
       try {
