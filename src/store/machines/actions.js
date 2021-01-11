@@ -207,6 +207,21 @@ const initMachinesTable = async ({ commit }, zone) => {
   }
 }
 
+const getDashboardMachinesTable = async ({ commit }, data) => {
+  commit('SET_LOADING_MACHINES_TABLE', true)
+
+  try {
+    const response = await machineAPI.getDashboardMachinesTable(data)
+
+    commit('devices/SET_DATA', response.data.devices.data, { root: true })
+    commit('devices/SET_TOTAL_DEVICES', response.data.devices.total, { root: true })
+  } catch (error) {
+    console.log(error)
+  } finally {
+    commit('SET_LOADING_MACHINES_TABLE', false)
+  }
+}
+
 const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
   if (state.selectedTimeRangeKey === 'utilization') {
     commit('SET_UTILIZATION_TIME_RANGE', data)
@@ -231,6 +246,7 @@ export default {
   initLocationsTable,
   initZonesTable,
   initMachinesTable,
+  getDashboardMachinesTable,
   changeSelectedCompany,
   selectTimeRange,
   getOverview,

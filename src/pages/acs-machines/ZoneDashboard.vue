@@ -15,11 +15,7 @@
       </v-container>
     </v-sheet>
     <v-container>
-      <machines-table
-        :loading="loadingMachinesTable"
-        :devices="devices"
-      >
-      </machines-table>
+      <machines-table></machines-table>
     </v-container>
   </div>
 </template>
@@ -80,12 +76,10 @@ export default {
   mounted() {
     this.getLocations()
     this.getZones()
-    this.initMachinesTable(this.$route.params.zone)
     this.changeSelectedCompany()
   },
   methods: {
     ...mapActions({
-      initMachinesTable: 'machines/initMachinesTable',
       getAcsDevicesAnalytics: 'devices/getAcsDevicesAnalytics',
       changeSelectedCompany: 'machines/changeSelectedCompany',
       getLocations: 'locations/getLocations',

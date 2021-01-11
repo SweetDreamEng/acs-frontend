@@ -18,6 +18,12 @@ export default {
     })
   },
 
+  getDashboardMachinesTable(data) {
+    return api.post('/dashboard/devices-for-dashboard-table', data).then((response) => {
+      return response
+    })
+  },
+
   getOverview(id) {
     return api.get(`/analytics/product-overview/${id}`).then((response) => {
       return response

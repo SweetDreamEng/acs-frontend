@@ -5,7 +5,9 @@
         :loading="loading"
         :headers="headers"
         :items="devices"
-        hide-default-footer
+        :items-per-page="5"
+        :options.sync="options"
+        :server-items-length="totalDevices"
       >
         <template v-slot:item.rate="{ item }">
           <production-rate-chart
@@ -58,7 +60,7 @@
 
 <script>
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 import ProductionRateChart from '../charts/ProductionRateChart'
 import NoDowntime from './NoDowntime'
@@ -69,14 +71,6 @@ export default {
     ProductionRateChart, NoDowntime, DowntimeLegend
   },
   props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    devices: {
-      type: Array,
-      default: () => []
-    }
   },
   data () {
     return {
@@ -89,6 +83,8 @@ export default {
         { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false }
       ],
       searchQuery: '',
+
+      options: {},
 
       chartOptions: {
         chart: {
@@ -194,7 +190,42 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      loading: (state) => state.machines.loadingMachinesTable,
+      devices: (state) => state.devices.data,
+      totalDevices: (state) => state.devices.totalDevices
+    })
+  },
+  watch: {
+    options: {
+      handler () {
+        this.getDevices()
+      },
+      deep: true
+    }
+  },
+  mounted() {
+    this.getDashboardMachinesTable({
+      location: this.$route.params.location,
+      zone: this.$route.params.zone,
+      page: 1
+    })
+  },
   methods: {
+    ...mapActions({
+      getDashboardMachinesTable: 'machines/getDashboardMachinesTable'
+    }),
+    getDevices() {
+      const { sortBy, sortDesc, page, itemsPerPage } = this.options
+
+      this.getDashboardMachinesTable({
+        location: this.$route.params.location,
+        zone: this.$route.params.zone,
+        page: page,
+        itemsPerPage
+      })
+    },
     hasNoDowntime(distribution) {
       let sum = 0
 

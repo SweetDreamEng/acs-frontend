@@ -4,6 +4,7 @@ const module = {
   namespaced: true,
   state: {
     data: [],                           // paginated devices fetched from backend
+    totalDevices: 0,
 
     numAdded: 0,                        // number of added devices when uploading devices in excel file
     numDuplicates: 0,                   // number of duplicate devices when uploading devices in excel file
@@ -374,6 +375,9 @@ const module = {
     },
     SET_ADDED(state, numAdded) {
       state.numAdded = numAdded
+    },
+    SET_TOTAL_DEVICES(state, total) {
+      state.totalDevices = total
     },
     SET_DUPLICATES(state, numDuplicates) {
       state.numDuplicates = numDuplicates
