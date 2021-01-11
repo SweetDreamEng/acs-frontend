@@ -11,7 +11,10 @@ const module = {
     targetWeights: [],
 
     loadingRecipe: false,
-    recipeValues: []
+    recipeValues: [],
+
+    loadingStationConveyings: false,
+    stationConveyingSeries: []
   },
 
   actions: {
@@ -60,6 +63,21 @@ const module = {
       } finally {
         commit('SET_LOADING_INVENTORIES', false)
       }
+    },
+
+    async getStationConveyings({ commit }, id) {
+      commit('SET_STATION_CONVEYINGS', [])
+      commit('SET_LOADING_STATION_CONVEYINGS', true)
+
+      try {
+        const response = await api.getStationConveyings(id)
+
+        commit('SET_STATION_CONVEYINGS', response.data.conveyings)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_STATION_CONVEYINGS', false)
+      }
     }
   },
 
@@ -67,11 +85,13 @@ const module = {
     SET_LOADING_RECIPE(state, isLoading) { state.loadingRecipe = isLoading },
     SET_LOADING_WEIGHT(state, isLoading) { state.loadingWeight = isLoading },
     SET_LOADING_INVENTORIES(state, isLoading) { state.loadingInventories = isLoading },
+    SET_LOADING_STATION_CONVEYINGS(state, isLoading) { state.loadingStationConveyings = isLoading },
 
     SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
     SET_INVENTORIES(state, inventories) { state.inventories = inventories },
     SET_ACTUAL_WEIGHTS(state, actualWeights) { state.actualWeights = actualWeights },
-    SET_TARGET_WEIGHTS(state, targetWeights) { state.targetWeights = targetWeights }
+    SET_TARGET_WEIGHTS(state, targetWeights) { state.targetWeights = targetWeights },
+    SET_STATION_CONVEYINGS(state, conveyings) { state.stationConveyingSeries = conveyings }
   },
 
   getters: {

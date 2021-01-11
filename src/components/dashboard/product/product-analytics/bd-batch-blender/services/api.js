@@ -14,5 +14,10 @@ export default {
     return api.get(`/analytics/product-inventory/${id}`).then((response) => {
       return response
     })
+  },
+  getStationConveyings(id) {
+    return api.get(`/analytics/product-station-conveyings/${id}`).then((response) => {
+      return response
+    })
   }
 }

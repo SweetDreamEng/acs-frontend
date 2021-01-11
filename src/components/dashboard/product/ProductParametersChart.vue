@@ -1,51 +1,58 @@
 <template>
-  <v-card class="d-flex flex-column flex-grow-1">
-    <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </div>
-    <div v-else class="d-flex flex-column flex-grow-1">
-      <v-card-title class="primary--text">
-        <v-combobox
-          v-model="parameters"
-          :items="tags"
-          chips
-          solo
-          label="Add/Remove parameters"
-          multiple
-          class="flex-grow-0 ml-auto"
-        >
-          <template v-slot:selection="{ attrs, item }">
-            <v-chip
-              v-bind="attrs"
-              close
-              small
-              @click:close="remove(item)"
-            >
-              {{ item }}
-            </v-chip>
-          </template>
-        </v-combobox>
-      </v-card-title>
-
-      <v-card-text>
-        <div class="px-2 pb-2">
-          <v-divider></v-divider>
-          <div class="mt-2">
-            <v-icon color="secondary">mdi-magnify</v-icon><span class="mx-1">Zoom</span>
-            <v-icon color="secondary">mdi-flag</v-icon><span class="mx-1">Marker</span>
-            <v-icon color="secondary">mdi-chart-areaspline</v-icon><span class="mx-1">Lines</span>
-          </div>
-          <apexchart
-            type="area"
-            height="450"
-            :options="chartOptions"
-            :series="computedParameters"
+  <div>
+    <v-row dense>
+      <v-col cols="12">
+        <bd-batch-blender v-if="parseInt($route.params.configurationId) === 1" :product-id="$route.params.productId"></bd-batch-blender>
+      </v-col>
+    </v-row>
+    <v-card class="d-flex flex-column flex-grow-1">
+      <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
+        <v-progress-circular indeterminate color="primary"></v-progress-circular>
+      </div>
+      <div v-else class="d-flex flex-column flex-grow-1">
+        <v-card-title class="primary--text">
+          <v-combobox
+            v-model="parameters"
+            :items="tags"
+            chips
+            solo
+            label="Add/Remove parameters"
+            multiple
+            class="flex-grow-0 ml-auto"
           >
-          </apexchart>
-        </div>
-      </v-card-text>
-    </div>
-  </v-card>
+            <template v-slot:selection="{ attrs, item }">
+              <v-chip
+                v-bind="attrs"
+                close
+                small
+                @click:close="remove(item)"
+              >
+                {{ item }}
+              </v-chip>
+            </template>
+          </v-combobox>
+        </v-card-title>
+
+        <v-card-text>
+          <div class="px-2 pb-2">
+            <v-divider></v-divider>
+            <div class="mt-2">
+              <v-icon color="secondary">mdi-magnify</v-icon><span class="mx-1">Zoom</span>
+              <v-icon color="secondary">mdi-flag</v-icon><span class="mx-1">Marker</span>
+              <v-icon color="secondary">mdi-chart-areaspline</v-icon><span class="mx-1">Lines</span>
+            </div>
+            <apexchart
+              type="area"
+              height="450"
+              :options="chartOptions"
+              :series="computedParameters"
+            >
+            </apexchart>
+          </div>
+        </v-card-text>
+      </div>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -58,8 +65,10 @@
 | where update parameters of a certain product
 |
 */
+import BdBatchBlender from './product-analytics/bd-batch-blender/BDBatchProperties'
 export default {
   components: {
+    BdBatchBlender
   },
   props: {
     label: {
