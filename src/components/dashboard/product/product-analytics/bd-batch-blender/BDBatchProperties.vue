@@ -2,6 +2,20 @@
   <div>
     <v-row dense>
       <v-col md="4" sm="12">
+        <feeder-calibration-factor
+          :loading="loadingCalibrationFactors"
+          :feeders="calibrationFactors"
+        >
+        </feeder-calibration-factor>
+      </v-col>
+      <v-col md="4" sm="12">
+        <hopper-stable
+          :loading="loadingHopperStables"
+          :stables="hopperStables"
+        >
+        </hopper-stable>
+      </v-col>
+      <v-col md="4" sm="12">
         <bar-graph
           title="Station Conveying"
           :loading="loadingStationConveyings"
@@ -18,9 +32,13 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import BarGraph from '../../common/BarGraph'
+import HopperStable from './components/HopperStable'
+import FeederCalibrationFactor from './components/FeederCalibrationFactor'
 export default {
   components: {
-    BarGraph
+    BarGraph,
+    HopperStable,
+    FeederCalibrationFactor
   },
   props: {
     productId: {
@@ -36,8 +54,12 @@ export default {
   computed: {
     ...mapState({
       loadingStationConveyings: (state) => state.bdBlenderAnalytics.loadingStationConveyings,
+      loadingHopperStables: (state) => state.bdBlenderAnalytics.loadingHopperStables,
+      loadingCalibrationFactors: (state) => state.bdBlenderAnalytics.loadingCalibrationFactors,
 
-      stationConveyingSeries: (state) => state.bdBlenderAnalytics.stationConveyingSeries
+      stationConveyingSeries: (state) => state.bdBlenderAnalytics.stationConveyingSeries,
+      hopperStables: (state) => state.bdBlenderAnalytics.hopperStables,
+      calibrationFactors: (state) => state.bdBlenderAnalytics.calibrationFactors
     }),
     conveyingSeries() {
       return [{
@@ -47,10 +69,14 @@ export default {
   },
   created() {
     this.getStationConveyings(this.productId)
+    this.getHopperStables(this.productId)
+    this.getFeederCalibrationFactors(this.productId)
   },
   methods: {
     ...mapActions({
-      getStationConveyings: 'bdBlenderAnalytics/getStationConveyings'
+      getStationConveyings: 'bdBlenderAnalytics/getStationConveyings',
+      getHopperStables: 'bdBlenderAnalytics/getHopperStables',
+      getFeederCalibrationFactors: 'bdBlenderAnalytics/getFeederCalibrationFactors'
     })
   }
 }

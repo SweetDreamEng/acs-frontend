@@ -10,7 +10,7 @@
     <v-card-text>
       <apexchart
         type="bar"
-        height="320"
+        height="340"
         :options="chartOptions"
         :series="series"
       >

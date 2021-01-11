@@ -14,7 +14,13 @@ const module = {
     recipeValues: [],
 
     loadingStationConveyings: false,
-    stationConveyingSeries: []
+    stationConveyingSeries: [],
+
+    loadingHopperStables: false,
+    hopperStables: [],
+
+    loadingCalibrationFactors: false,
+    calibrationFactors: []
   },
 
   actions: {
@@ -78,6 +84,36 @@ const module = {
       } finally {
         commit('SET_LOADING_STATION_CONVEYINGS', false)
       }
+    },
+
+    async getHopperStables({ commit }, id) {
+      commit('SET_HOPPER_STABLES', [])
+      commit('SET_LOADING_HOPPER_STABLES', true)
+
+      try {
+        const response = await api.getHopperStables(id)
+
+        commit('SET_HOPPER_STABLES', response.data.stables)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_HOPPER_STABLES', false)
+      }
+    },
+
+    async getFeederCalibrationFactors({ commit }, id) {
+      commit('SET_CALIBRATION_FACTORS', [])
+      commit('SET_LOADING_CALIBRATION_FACTORS', true)
+
+      try {
+        const response = await api.getFeederCalibrationFactors(id)
+
+        commit('SET_CALIBRATION_FACTORS', response.data.calibration_factors)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_CALIBRATION_FACTORS', false)
+      }
     }
   },
 
@@ -86,12 +122,16 @@ const module = {
     SET_LOADING_WEIGHT(state, isLoading) { state.loadingWeight = isLoading },
     SET_LOADING_INVENTORIES(state, isLoading) { state.loadingInventories = isLoading },
     SET_LOADING_STATION_CONVEYINGS(state, isLoading) { state.loadingStationConveyings = isLoading },
+    SET_LOADING_HOPPER_STABLES(state, isLoading) { state.loadingHopperStables = isLoading },
+    SET_LOADING_CALIBRATION_FACTORS(state, isLoading) { state.loadingCalibrationFactors = isLoading },
 
     SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
     SET_INVENTORIES(state, inventories) { state.inventories = inventories },
     SET_ACTUAL_WEIGHTS(state, actualWeights) { state.actualWeights = actualWeights },
     SET_TARGET_WEIGHTS(state, targetWeights) { state.targetWeights = targetWeights },
-    SET_STATION_CONVEYINGS(state, conveyings) { state.stationConveyingSeries = conveyings }
+    SET_STATION_CONVEYINGS(state, conveyings) { state.stationConveyingSeries = conveyings },
+    SET_HOPPER_STABLES(state, stables) { state.hopperStables = stables },
+    SET_CALIBRATION_FACTORS(state, factors) { state.calibrationFactors = factors }
   },
 
   getters: {
