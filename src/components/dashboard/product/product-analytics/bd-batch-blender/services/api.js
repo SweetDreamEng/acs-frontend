@@ -19,5 +19,10 @@ export default {
     return api.get(`/analytics/product-station-conveyings/${id}`).then((response) => {
       return response
     })
+  },
+  getHopperStables(id) {
+    return api.get(`/analytics/product-hopper-stables/${id}`).then((response) => {
+      return response
+    })
   }
 }

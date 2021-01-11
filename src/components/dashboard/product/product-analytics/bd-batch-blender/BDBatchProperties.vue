@@ -1,6 +1,13 @@
 <template>
   <div>
     <v-row dense>
+<!--       <v-col md="4" sm="12">
+        <hopper-stable
+          :loading="loadingHopperStables"
+          :stables="hopperStables"
+        >
+        </hopper-stable>
+      </v-col> -->
       <v-col md="4" sm="12">
         <bar-graph
           title="Station Conveying"
@@ -18,9 +25,11 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import BarGraph from '../../common/BarGraph'
+// import HopperStable from './common/HopperStable'
 export default {
   components: {
     BarGraph
+    // HopperStable
   },
   props: {
     productId: {
@@ -36,8 +45,10 @@ export default {
   computed: {
     ...mapState({
       loadingStationConveyings: (state) => state.bdBlenderAnalytics.loadingStationConveyings,
+      loadingHopperStables: (state) => state.bdBlenderAnalytics.loadingHopperStables,
 
-      stationConveyingSeries: (state) => state.bdBlenderAnalytics.stationConveyingSeries
+      stationConveyingSeries: (state) => state.bdBlenderAnalytics.stationConveyingSeries,
+      hopperStables: (state) => state.bdBlenderAnalytics.hopperStables
     }),
     conveyingSeries() {
       return [{
@@ -47,10 +58,12 @@ export default {
   },
   created() {
     this.getStationConveyings(this.productId)
+    // this.getHopperStables(this.productId)
   },
   methods: {
     ...mapActions({
-      getStationConveyings: 'bdBlenderAnalytics/getStationConveyings'
+      getStationConveyings: 'bdBlenderAnalytics/getStationConveyings',
+      getHopperStables: 'bdBlenderAnalytics/getHopperStables'
     })
   }
 }
