@@ -3,6 +3,7 @@
     <v-row dense>
       <v-col md="4" sm="12">
         <bar-graph
+          title="Station Conveying"
           :loading="loadingStationConveyings"
           :series="conveyingSeries"
           :categories="conveyingCategories"
