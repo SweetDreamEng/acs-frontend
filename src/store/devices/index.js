@@ -379,6 +379,9 @@ const module = {
     SET_TOTAL_DEVICES(state, total) {
       state.totalDevices = total
     },
+    SET_PAGE_COUNT(state, count) {
+      state.pageCount = count
+    },
     SET_DUPLICATES(state, numDuplicates) {
       state.numDuplicates = numDuplicates
     },

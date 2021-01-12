@@ -215,6 +215,7 @@ const getDashboardMachinesTable = async ({ commit }, data) => {
 
     commit('devices/SET_DATA', response.data.devices.data, { root: true })
     commit('devices/SET_TOTAL_DEVICES', response.data.devices.total, { root: true })
+    commit('devices/SET_PAGE_COUNT', response.data.devices.last_page, { root: true })
   } catch (error) {
     console.log(error)
   } finally {

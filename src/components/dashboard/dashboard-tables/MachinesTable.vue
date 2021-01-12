@@ -6,8 +6,8 @@
         :headers="headers"
         :items="devices"
         :items-per-page="5"
-        :options.sync="options"
-        :server-items-length="totalDevices"
+        :page.sync="page"
+        hide-default-footer
       >
         <template v-slot:item.rate="{ item }">
           <production-rate-chart
@@ -54,6 +54,12 @@
       <div class="d-flex justify-end mr-4">
         <downtime-legend></downtime-legend>
       </div>
+
+      <v-pagination
+        v-model="page"
+        :length="pageCount"
+        @input="getDevices"
+      ></v-pagination>
     </v-card-text>
   </v-card>
 </template>
@@ -79,12 +85,12 @@ export default {
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'start', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },
-        { text: 'Prod Rate', value: 'rate', align: 'center' },
-        { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false }
+        { text: 'Prod Rate', value: 'rate', align: 'center', width: '1%' },
+        { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false, width: '1%' }
       ],
       searchQuery: '',
-
-      options: {},
+      page: 1,
+      itemsPerPage: 5,
 
       chartOptions: {
         chart: {
@@ -194,22 +200,16 @@ export default {
     ...mapState({
       loading: (state) => state.machines.loadingMachinesTable,
       devices: (state) => state.devices.data,
-      totalDevices: (state) => state.devices.totalDevices
+      totalDevices: (state) => state.devices.totalDevices,
+      pageCount: (state) => state.devices.pageCount
     })
-  },
-  watch: {
-    options: {
-      handler () {
-        this.getDevices()
-      },
-      deep: true
-    }
   },
   mounted() {
     this.getDashboardMachinesTable({
       location: this.$route.params.location,
       zone: this.$route.params.zone,
-      page: 1
+      page: 1,
+      itemsPerPage: this.itemsPerPage
     })
   },
   methods: {
@@ -217,13 +217,11 @@ export default {
       getDashboardMachinesTable: 'machines/getDashboardMachinesTable'
     }),
     getDevices() {
-      const { sortBy, sortDesc, page, itemsPerPage } = this.options
-
       this.getDashboardMachinesTable({
         location: this.$route.params.location,
         zone: this.$route.params.zone,
-        page: page,
-        itemsPerPage
+        page: this.page,
+        itemsPerPage: this.itemsPerPage
       })
     },
     hasNoDowntime(distribution) {
