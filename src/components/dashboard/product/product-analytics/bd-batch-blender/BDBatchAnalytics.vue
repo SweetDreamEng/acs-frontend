@@ -38,6 +38,7 @@
         <recipe
           :loading="loadingRecipe"
           :recipes="recipeValues"
+          :mode="recipeMode"
         >
         </recipe>
       </v-col>
@@ -109,7 +110,8 @@ export default {
       valuesTgtWeight: (state) => state.bdBlenderAnalytics.targetWeights,
       valuesActWeight: (state) => state.bdBlenderAnalytics.actualWeights,
       inventories: (state) => state.bdBlenderAnalytics.inventories,
-      recipeValues: (state) => state.bdBlenderAnalytics.recipeValues
+      recipeValues: (state) => state.bdBlenderAnalytics.recipeValues,
+      recipeMode: (state) => state.bdBlenderAnalytics.recipeMode
     }),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',

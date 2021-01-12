@@ -1,5 +1,14 @@
 <template>
   <div>
+<!--     <v-row dense>
+      <v-col md="4" sm="12">
+        <load-cell-bits
+          :loading="loadingCellBits"
+          :bits="cellBits"
+        >
+        </load-cell-bits>
+      </v-col>
+    </v-row> -->
     <v-row dense>
       <v-col md="4" sm="12">
         <feeder-calibration-factor
@@ -34,11 +43,13 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import BarGraph from '../../common/BarGraph'
 import HopperStable from './components/HopperStable'
 import FeederCalibrationFactor from './components/FeederCalibrationFactor'
+// import LoadCellBits from './components/LoadCellBits'
 export default {
   components: {
     BarGraph,
     HopperStable,
     FeederCalibrationFactor
+    // LoadCellBits
   },
   props: {
     productId: {
@@ -56,10 +67,12 @@ export default {
       loadingStationConveyings: (state) => state.bdBlenderAnalytics.loadingStationConveyings,
       loadingHopperStables: (state) => state.bdBlenderAnalytics.loadingHopperStables,
       loadingCalibrationFactors: (state) => state.bdBlenderAnalytics.loadingCalibrationFactors,
+      loadingCellBits: (state) => state.bdBlenderAnalytics.loadingCellBits,
 
       stationConveyingSeries: (state) => state.bdBlenderAnalytics.stationConveyingSeries,
       hopperStables: (state) => state.bdBlenderAnalytics.hopperStables,
-      calibrationFactors: (state) => state.bdBlenderAnalytics.calibrationFactors
+      calibrationFactors: (state) => state.bdBlenderAnalytics.calibrationFactors,
+      cellBits: (state) => state.bdBlenderAnalytics.cellBits
     }),
     conveyingSeries() {
       return [{
@@ -71,12 +84,14 @@ export default {
     this.getStationConveyings(this.productId)
     this.getHopperStables(this.productId)
     this.getFeederCalibrationFactors(this.productId)
+    this.getLoadingCellBits(this.productId)
   },
   methods: {
     ...mapActions({
       getStationConveyings: 'bdBlenderAnalytics/getStationConveyings',
       getHopperStables: 'bdBlenderAnalytics/getHopperStables',
-      getFeederCalibrationFactors: 'bdBlenderAnalytics/getFeederCalibrationFactors'
+      getFeederCalibrationFactors: 'bdBlenderAnalytics/getFeederCalibrationFactors',
+      getLoadingCellBits: 'bdBlenderAnalytics/getLoadingCellBits'
     })
   }
 }

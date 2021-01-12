@@ -1,31 +1,11 @@
 <template>
   <v-card height="100%" :loading="loading" :disabled="loading">
-    <v-toolbar flat>
-      <v-toolbar-title>Recipe</v-toolbar-title>
-
-      <template v-slot:extension>
-        <v-tabs
-          v-model="tab"
-          align-with-title
-        >
-          <v-tab
-            v-for="item in tabItems"
-            :key="item"
-          >
-            {{ item }}
-          </v-tab>
-        </v-tabs>
-      </template>
-    </v-toolbar>
+    <v-card-title>
+      Recipe
+      <div class="caption font-italic ml-1">({{ recipeMode }})</div>
+    </v-card-title>
     <v-card-text>
-      <v-tabs-items v-model="tab">
-        <v-tab-item
-          v-for="item in tabItems"
-          :key="item"
-        >
-          <apexchart type="donut" height="360" :options="chartOptions" :series="recipes"></apexchart>
-        </v-tab-item>
-      </v-tabs-items>
+      <apexchart type="donut" height="360" :options="chartOptions" :series="recipes"></apexchart>
     </v-card-text>
   </v-card>
 </template>
@@ -43,6 +23,10 @@ export default {
     recipes: {
       type: Array,
       default: () => []
+    },
+    mode: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -68,6 +52,20 @@ export default {
             vertical: 10
           }
         }
+      }
+    }
+  },
+  computed: {
+    recipeMode() {
+      switch (this.mode) {
+      case 0:
+        return 'Percentage'
+      case 1:
+        return 'Parts'
+      case 2:
+        return 'EZ mode'
+      default:
+        return ''
       }
     }
   }

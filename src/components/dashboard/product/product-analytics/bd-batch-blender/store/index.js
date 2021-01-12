@@ -12,6 +12,7 @@ const module = {
 
     loadingRecipe: false,
     recipeValues: [],
+    recipeMode: 0,
 
     loadingStationConveyings: false,
     stationConveyingSeries: [],
@@ -20,7 +21,10 @@ const module = {
     hopperStables: [],
 
     loadingCalibrationFactors: false,
-    calibrationFactors: []
+    calibrationFactors: [],
+
+    loadingCellBits: false,
+    cellBits: []
   },
 
   actions: {
@@ -32,6 +36,7 @@ const module = {
         const response = await api.getRecipe(id)
 
         commit('SET_RECIPE_VALUES', response.data.recipe_values)
+        commit('SET_RECIPE_MODE', response.data.mode)
       } catch (error) {
         console.log(error)
       } finally {
@@ -114,6 +119,23 @@ const module = {
       } finally {
         commit('SET_LOADING_CALIBRATION_FACTORS', false)
       }
+    },
+
+    async getLoadingCellBits({ commit }, id) {
+      // commit('SET_LOADING_CELL_BITS', true)
+
+      // try {
+      //   const response = await machineAPI.getUtilization({
+      //     id: id,
+      //     timeRange: state.utilizationTimeRange
+      //   })
+
+      //   commit('SET_UTILIZATION', response.data.utilizations)
+      // } catch (error) {
+      //   console.log(error)
+      // } finally {
+      //   commit('SET_LOADING_CELL_BITS', false)
+      // }
     }
   },
 
@@ -124,8 +146,10 @@ const module = {
     SET_LOADING_STATION_CONVEYINGS(state, isLoading) { state.loadingStationConveyings = isLoading },
     SET_LOADING_HOPPER_STABLES(state, isLoading) { state.loadingHopperStables = isLoading },
     SET_LOADING_CALIBRATION_FACTORS(state, isLoading) { state.loadingCalibrationFactors = isLoading },
+    SET_LOADING_CELL_BITS(state, isLoading) { state.loadingCellBits = isLoading },
 
     SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
+    SET_RECIPE_MODE(state, mode) { state.recipeMode = mode },
     SET_INVENTORIES(state, inventories) { state.inventories = inventories },
     SET_ACTUAL_WEIGHTS(state, actualWeights) { state.actualWeights = actualWeights },
     SET_TARGET_WEIGHTS(state, targetWeights) { state.targetWeights = targetWeights },

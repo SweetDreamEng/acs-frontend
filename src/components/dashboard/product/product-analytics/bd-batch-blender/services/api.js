@@ -1,7 +1,7 @@
 import api from '@/api.js'
 export default {
   getRecipe(id) {
-    return api.get(`/analytics/product-pump-hours-oil/${id}`).then((response) => {
+    return api.get(`/analytics/product-current-recipe/${id}`).then((response) => {
       return response
     })
   },
