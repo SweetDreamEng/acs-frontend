@@ -29,5 +29,10 @@ export default {
     return api.get(`/analytics/product-calibration-factors/${id}`).then((response) => {
       return response
     })
+  },
+  getProcessRate(data) {
+    return api.post('/analytics/blender/process-rate', data).then((response) => {
+      return response
+    })
   }
 }

@@ -24,7 +24,19 @@ const module = {
     calibrationFactors: [],
 
     loadingCellBits: false,
-    cellBits: []
+    cellBits: [],
+
+    loadingProcessRates: false,
+    processRates: [],
+    processRateTimeRange: {
+      timeRangeOption: 'last24Hours',
+      dateFrom: new Date().toISOString().substr(0, 10),
+      dateTo: new Date().toISOString().substr(0, 10),
+      timeFrom: '00:00',
+      timeTo: '00:00'
+    },
+
+    selectedTimeRangeKey: 'process-rate'
   },
 
   actions: {
@@ -125,7 +137,7 @@ const module = {
       // commit('SET_LOADING_CELL_BITS', true)
 
       // try {
-      //   const response = await machineAPI.getUtilization({
+      //   const response = await api.getUtilization({
       //     id: id,
       //     timeRange: state.utilizationTimeRange
       //   })
@@ -136,6 +148,39 @@ const module = {
       // } finally {
       //   commit('SET_LOADING_CELL_BITS', false)
       // }
+    },
+
+    async getProcessRate({ state, commit }, id) {
+      commit('SET_LOADING_PROCESS_RATE', true)
+
+      try {
+        const response = await api.getProcessRate({
+          id: id,
+          timeRange: state.processRateTimeRange
+        })
+
+        commit('SET_PROCESS_RATE', response.data.process_rate)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_PROCESS_RATE', false)
+      }
+    },
+
+    async selectTimeRange({ commit }, key) {
+      commit('SET_CURRENT_TIME_KEY', key)
+      commit('SET_CURRENT_TIME', key)
+    },
+
+    async onTimeRangeChanged({ commit, dispatch, state }, data) {
+      switch (state.selectedTimeRangeKey) {
+      case 'process-rate':
+        commit('SET_PROCESS_RATE_TIME_RANGE', data)
+        dispatch('getProcessRate', data.id)
+        break
+      default:
+        break
+      }
     }
   },
 
@@ -147,6 +192,7 @@ const module = {
     SET_LOADING_HOPPER_STABLES(state, isLoading) { state.loadingHopperStables = isLoading },
     SET_LOADING_CALIBRATION_FACTORS(state, isLoading) { state.loadingCalibrationFactors = isLoading },
     SET_LOADING_CELL_BITS(state, isLoading) { state.loadingCellBits = isLoading },
+    SET_LOADING_PROCESS_RATE(state, isLoading) { state.loadingProcessRates = isLoading },
 
     SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
     SET_RECIPE_MODE(state, mode) { state.recipeMode = mode },
@@ -155,10 +201,32 @@ const module = {
     SET_TARGET_WEIGHTS(state, targetWeights) { state.targetWeights = targetWeights },
     SET_STATION_CONVEYINGS(state, conveyings) { state.stationConveyingSeries = conveyings },
     SET_HOPPER_STABLES(state, stables) { state.hopperStables = stables },
-    SET_CALIBRATION_FACTORS(state, factors) { state.calibrationFactors = factors }
+    SET_CALIBRATION_FACTORS(state, factors) { state.calibrationFactors = factors },
+    SET_PROCESS_RATE(state, processRates) { state.processRates = processRates },
+    SET_PROCESS_RATE_TIME_RANGE(state, data) { state.processRateTimeRange = Object.assign({}, data) },
+
+    SET_CURRENT_TIME_KEY(state, key) { state.selectedTimeRangeKey = key },
+    SET_CURRENT_TIME(state, key) {
+      switch (key) {
+      case 'process-rate':
+        this.selectedTimeRange = state.processRateTimeRange
+        break
+      default:
+        break
+      }
+    }
   },
 
   getters: {
+    timeRangeLabel: (state, getters, rootState) => (timeRange) => {
+      const timeRangeOptions = rootState.machines.timeRageOptions
+
+      if (timeRange.timeRangeOption === 'custom') {
+        return `${timeRange.dateFrom} ${timeRange.timeFrom} ~ ${timeRange.dateTo} ${timeRange.timeTo}`
+      } else {
+        return timeRangeOptions.find((item) => item.value === timeRange.timeRangeOption).label
+      }
+    }
   }
 }
 
