@@ -17,16 +17,11 @@
     <v-container fluid>
       <v-row class="flex-grow-0" dense>
         <v-col cols="12">
-          <bd-batch-blender v-if="parseInt($route.params.configurationId) === 1" :product-id="$route.params.productId"></bd-batch-blender>
-          <accumeter-ovation-continuous-blender v-if="parseInt($route.params.configurationId) === 2" :product-id="$route.params.productId"></accumeter-ovation-continuous-blender>
-          <gh-gravimetric-extrusion-control-hopper v-if="parseInt($route.params.configurationId) === 3" :product-id="$route.params.productId"></gh-gravimetric-extrusion-control-hopper>
-          <gh-f-gravimetric-additive-feeder v-if="parseInt($route.params.configurationId) === 4" :product-id="$route.params.productId"></gh-f-gravimetric-additive-feeder>
-          <vtc-plus-conveying-system v-if="parseInt($route.params.configurationId) === 5" :product-id="$route.params.productId"></vtc-plus-conveying-system>
-          <ngx-dryer v-if="parseInt($route.params.configurationId) === 6" :product-id="$route.params.productId"></ngx-dryer>
-          <ngx-nomad-dryer v-if="parseInt($route.params.configurationId) === 7" :product-id="$route.params.productId"></ngx-nomad-dryer>
-          <t-50-central-granulator v-if="parseInt($route.params.configurationId) === 8" :product-id="$route.params.productId"></t-50-central-granulator>
-          <gp-portable-chiller v-if="parseInt($route.params.configurationId) === 9" :product-id="$route.params.productId"></gp-portable-chiller>
-          <truetemp-tcu v-if="parseInt($route.params.configurationId) === 11" :product-id="$route.params.productId"></truetemp-tcu>
+          <component 
+            :is="analyticsComponent($route.params.configurationId)" 
+            :product-id="$route.params.productId"
+          >
+          </component>
         </v-col>
         <v-col cols="12">
           <alarm-table
@@ -211,6 +206,23 @@ export default {
       getProductAlarms: 'alarms/getProductAlarms',
       onNewAlarms: 'alarms/onNewAlarms'
     }),
+    analyticsComponent() {
+      const configId = parseInt(this.$route.params.configurationId)
+
+      switch (configId) {
+      case 1: return 'BdBatchBlender'
+      case 2: return 'AccumeterOvationContinuousBlender'
+      case 3: return 'GhGravimetricExtrusionControlHopper'
+      case 4: return 'GhFGravimetricAdditiveFeeder'
+      case 5: return 'VtcPlusConveyingSystem'
+      case 6: return 'NgxDryer'
+      case 7: return 'NgxNomadDryer'
+      case 8: return 'T50CentralGranulator'
+      case 9: return 'GpPortableChiller'
+      case 11: return 'TruetempTcu'
+      default: return ''
+      }
+    },
     _onAlarmParamChange(params) {
       this.onAlarmParamChanged(params)
     },

@@ -9,7 +9,7 @@
           </v-list-item-content>
 
           <v-list-item-action class="my-1">
-            <div class="align-center">
+            <div class="align-center" style="width: 100px;">
               <v-icon left :color="stable ? 'green' : 'grey'">mdi-circle</v-icon> {{ stable ? 'Stable' : 'Unstable' }}
             </div>
           </v-list-item-action>
