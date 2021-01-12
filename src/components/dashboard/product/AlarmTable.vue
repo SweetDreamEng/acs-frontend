@@ -76,7 +76,11 @@ export default {
       timeRangeLabel: 'alarms/timeRangeLabel'
     }),
     tableItems() {
-      return this.alarmTypes.filter((alarmType) => { this.alarms.find((alarm) => alarm.type_id === alarmType.id) })
+      return this.alarmTypes.filter((alarmType) => {
+        const alarm = this.alarms.find((alarm) => alarm.type_id === alarmType.id)
+
+        return alarm && alarm.active
+      })
     }
   },
   methods: {
