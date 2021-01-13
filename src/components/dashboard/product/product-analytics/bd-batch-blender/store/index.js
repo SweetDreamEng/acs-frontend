@@ -13,7 +13,8 @@ const module = {
     loadingRecipe: false,
     recipeValues: [],
     recipeMode: 0,
-
+    ezTypes: [],
+    
     loadingStationConveyings: false,
     stationConveyingSeries: [],
 
@@ -43,12 +44,13 @@ const module = {
     async getRecipe({ commit }, id) {
       commit('SET_RECIPE_VALUES', [])
       commit('SET_LOADING_RECIPE', true)
-
+      commit('SET_EZ_TYPES', [])
       try {
         const response = await api.getRecipe(id)
 
         commit('SET_RECIPE_VALUES', response.data.recipe_values)
         commit('SET_RECIPE_MODE', response.data.mode)
+        commit('SET_EZ_TYPES', response.data.ez_types)
       } catch (error) {
         console.log(error)
       } finally {
@@ -196,6 +198,7 @@ const module = {
 
     SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
     SET_RECIPE_MODE(state, mode) { state.recipeMode = mode },
+    SET_EZ_TYPES(state, types) { state.ezTypes = types },
     SET_INVENTORIES(state, inventories) { state.inventories = inventories },
     SET_ACTUAL_WEIGHTS(state, actualWeights) { state.actualWeights = actualWeights },
     SET_TARGET_WEIGHTS(state, targetWeights) { state.targetWeights = targetWeights },

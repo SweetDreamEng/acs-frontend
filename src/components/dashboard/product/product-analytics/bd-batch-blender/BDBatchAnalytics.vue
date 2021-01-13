@@ -38,6 +38,7 @@
         <recipe
           :loading="loadingRecipe"
           :recipes="recipeValues"
+          :ezTypes="ezTypes"
           :mode="recipeMode"
         >
         </recipe>
@@ -111,6 +112,7 @@ export default {
       valuesActWeight: (state) => state.bdBlenderAnalytics.actualWeights,
       inventories: (state) => state.bdBlenderAnalytics.inventories,
       recipeValues: (state) => state.bdBlenderAnalytics.recipeValues,
+      ezTypes: (state) => state.bdBlenderAnalytics.ezTypes,
       recipeMode: (state) => state.bdBlenderAnalytics.recipeMode
     }),
     ...mapGetters({

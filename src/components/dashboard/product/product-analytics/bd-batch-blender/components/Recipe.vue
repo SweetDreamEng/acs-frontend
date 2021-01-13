@@ -5,7 +5,7 @@
       <div class="caption font-italic ml-1">({{ recipeMode }})</div>
     </v-card-title>
     <v-card-text>
-      <apexchart type="donut" height="360" :options="chartOptions" :series="recipes"></apexchart>
+      <apexchart type="donut" height="360" :options="chartOptions" :series="recipeSeries"></apexchart>
     </v-card-text>
   </v-card>
 </template>
@@ -24,6 +24,10 @@ export default {
       type: Array,
       default: () => []
     },
+    ezTypes: {
+      type: Array,
+      default: () => []
+    },
     mode: {
       type: Number,
       default: 0
@@ -32,27 +36,7 @@ export default {
   data() {
     return {
       tab: null,
-      tabItems: ['Percentage', 'Parts', 'EZ mode'],
-      chartOptions: {
-        chart: {
-          type: 'donut',
-          height: 300
-        },
-        labels: ['Feed 1', 'Feed 2', 'Feed 3', 'Feed 4', 'Feed 5', 'Feed 6', 'Feed 7', 'Feed 8'],
-        dataLabels: {
-          formatter(val, opts) {
-            return [val.toFixed(2) + '%']
-          }
-        },
-        legend: {
-          show: true,
-          position: 'bottom',
-          itemMargin: {
-            horizontal: 25,
-            vertical: 10
-          }
-        }
-      }
+      tabItems: ['Percentage', 'Parts', 'EZ mode']
     }
   },
   computed: {
@@ -67,6 +51,95 @@ export default {
       default:
         return ''
       }
+    },
+    chartOptions() {
+      return {
+        chart: {
+          type: 'donut',
+          height: 300
+        },
+        labels: this.labels,
+        dataLabels: {
+          formatter(val, opts) {
+            return [val.toFixed(2) + '%']
+          }
+        },
+        legend: {
+          show: true,
+          position: 'bottom',
+          horizontalAlign: 'left',
+          itemMargin: {
+            horizontal: 25,
+            vertical: 10
+          }
+        }
+      }
+    },
+    recipeSeries() {
+      if (this.mode === 0 || this.mode === 1)
+        return this.recipes
+      else if (this.mode === 2) {
+        return [this.totalRegrid, 100 - this.totalRegrid]
+      } else {
+        return []
+      }
+    },
+    labels() {
+      if (this.mode === 0 || this.mode === 1)
+        return ['Feed 1', 'Feed 2', 'Feed 3', 'Feed 4', 'Feed 5', 'Feed 6', 'Feed 7', 'Feed 8']
+      else if (this.mode === 2) {
+        return [this.regridLabel, this.additiveLabel]
+      } else {
+        return ['']
+      }
+    },
+    totalRegrid() {
+      let ret = 0
+
+      for (let i = 0; i < 8; i++) {
+        if (this.ezTypes[i] === 2) {
+          ret += this.recipes[i] / 100
+        }
+      }
+
+      return ret
+    },
+    regridLabel() {
+      let ret = ''
+
+      for (let i = 0; i < 8; i++) {
+        if (this.ezTypes[i] === 2) {
+          ret += `Hop ${i + 1} REG ${this.recipes[i] / 100}%&nbsp;&nbsp;`
+        }
+      }
+
+      return ret
+    },
+    additiveLabel() {
+      const naturals = []
+      let ret = ''
+
+      for (let i = 0; i < 8; i++) {
+        if (this.ezTypes[i] === 0)
+          naturals.push(i)
+      }
+
+      if (naturals.length === 1) {
+        ret = `Hop ${naturals[0]} AUTO&nbsp;&nbsp;`
+      } else {
+        for (let i = 0; i < naturals.length; i++) {
+          ret += `Hop ${naturals[0]} ${100 / naturals.length}&nbsp;&nbsp;`
+        }
+      }
+
+      for (let i = 0; i < 8; i++) {
+        if (this.ezTypes[i] === 1) {
+          ret += `Hop ${i + 1} ADD ${this.recipes[i] / 100}%`
+        }
+        ret += '&nbsp;&nbsp;'
+      }
+
+      return ret
     }
   }
 }
