@@ -72,10 +72,12 @@
 */
 import BdBatchBlender from './product-analytics/bd-batch-blender/BDBatchProperties'
 import AccumeterOvationBlender from './product-analytics/accumeter-ovation-continuous-blender/AccumeterOvationBlenderProperties'
+import TruetempTcu from './product-analytics/truetemp-tcu/TruetempTcuProperties'
 export default {
   components: {
     BdBatchBlender,
-    AccumeterOvationBlender
+    AccumeterOvationBlender,
+    TruetempTcu
   },
   props: {
     label: {
@@ -155,7 +157,7 @@ export default {
       // case 7: return 'NgxNomadDryer'
       // case 8: return 'T50CentralGranulator'
       // case 9: return 'GpPortableChiller'
-      // case 11: return 'TruetempTcu'
+      case 11: return 'TruetempTcu'
       default: return ''
       }
     },

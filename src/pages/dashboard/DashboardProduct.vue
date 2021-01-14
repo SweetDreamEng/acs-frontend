@@ -79,7 +79,7 @@ import NgxDryer from '../../components/dashboard/product/product-analytics/ngx-d
 import NgxNomadDryer from '../../components/dashboard/product/product-analytics/ngx-nomad-dryer'
 import T50CentralGranulator from '../../components/dashboard/product/product-analytics/t50-central-granulator'
 import GpPortableChiller from '../../components/dashboard/product/product-analytics/gp-portable-chiller'
-import TruetempTcu from '../../components/dashboard/product/product-analytics/truetemp-ctu/Index.vue'
+import TruetempTcu from '../../components/dashboard/product/product-analytics/truetemp-tcu/TruetempTcuAnalytics.vue'
 
 export default {
   components: {
