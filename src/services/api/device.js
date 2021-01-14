@@ -91,8 +91,8 @@ export default {
   /*
     Get devices with analytics for a certain customer in customer dashboard pages
   */
-  getDevicesAnalytics(location_id = 0) {
-    return api.get(`/devices/devices-analytics/${location_id}`).then((response) => {
+  getDevicesAnalytics(data) {
+    return api.post('/devices/devices-analytics', data).then((response) => {
       return response
     })
   },

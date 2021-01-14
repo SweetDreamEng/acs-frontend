@@ -58,6 +58,7 @@
       <v-pagination
         v-model="page"
         :length="pageCount"
+        :total-visible="7"
         @input="getDevices"
       ></v-pagination>
     </v-card-text>

@@ -1,5 +1,5 @@
 <template>
-  <v-card :disabled="loading">
+  <v-card :disabled="loadingDashboardDevicesTable">
     <v-card-title>
       Report
       <v-combobox
@@ -29,7 +29,10 @@
         :headers="filtedHeaders"
         :items="devices"
         :search="searchQuery"
-        :loading="loading"
+        :loading="loadingDashboardDevicesTable"
+        :items-per-page="5"
+        :page.sync="page"
+        hide-default-footer
         @click:row="productView"
       >
         <template v-slot:header.status="{ header }">
@@ -64,12 +67,18 @@
           {{ zoneName(item.zone_id) }}
         </template>
       </v-data-table>
+      <v-pagination
+        v-model="page"
+        :length="pageCountReport"
+        :total-visible="7"
+        @input="getDevicesAnalytics({ page: page, location_id: location })"
+      ></v-pagination>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 /*
 |---------------------------------------------------------------------
 | Machines Table Card Component
@@ -82,13 +91,9 @@ export default {
   components: {
   },
   props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    devices: {
-      type: Array,
-      default: () => []
+    location: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -101,7 +106,7 @@ export default {
         { text: 'Locations', align: 'center', value: 'location_id' },
         { text: 'Zones', align: 'center', value: 'zone_id' }
       ],
-
+      page: 1,
       hours: 8,
       searchQuery: '',
       row: '',
@@ -109,6 +114,11 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      devices: (state) => state.devices.data,
+      loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
+      pageCountReport: (state) => state.devices.pageCountReport
+    }),
     ...mapGetters({
       locationName: 'locations/locationName',
       zoneName: 'zones/zoneName'
@@ -122,7 +132,16 @@ export default {
       return this.headers.map((header) => header.text)
     }
   },
+  mounted() {
+    this.getDevicesAnalytics({
+      page: this.page,
+      location_id: this.location
+    })
+  },
   methods: {
+    ...mapActions({
+      getDevicesAnalytics: 'devices/getDevicesAnalytics'
+    }),
     open(item) { },
     getColor (item) {
       // if (item.status === 'Warning') return 'orange'

@@ -26,10 +26,7 @@
 
       <br>
 
-      <machines-table-card
-        :devices="devices"
-        :loading="loadingDashboardDevicesTable"
-      ></machines-table-card>
+      <machines-table-card></machines-table-card>
     </v-container>
   </div>
 </template>
@@ -180,11 +177,9 @@ export default {
   },
   computed: {
     ...mapState({
-      loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
       loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
-      devices: (state) => state.devices.data,
       locations: (state) => state.locations.data
     }),
 
@@ -204,13 +199,11 @@ export default {
     this.getZones()
     this.initAcsDashboard()
     this.initLocationsTable()
-    this.getDevicesAnalytics()
   },
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
       initLocationsTable: 'machines/initLocationsTable',
-      getDevicesAnalytics: 'devices/getDevicesAnalytics',
       changeSelectedCompany: 'machines/changeSelectedCompany',
       getZones: 'zones/getZones'
     }),

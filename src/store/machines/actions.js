@@ -167,6 +167,7 @@ const getWeeklyRunningHours = async ({ commit }, id) => {
 
 const initLocationsTable = async ({ commit }) => {
   commit('SET_LOADING_LOCATIONS_TABLE', true)
+  commit('locations/SET_DATA', [], { root: true })
 
   try {
     const response = await machineAPI.initLocationsTable()
@@ -181,6 +182,7 @@ const initLocationsTable = async ({ commit }) => {
 
 const initZonesTable = async ({ commit }, location_id) => {
   commit('SET_LOADING_ZONES_TABLE', true)
+  commit('zones/SET_DATA', [], { root: true })
 
   try {
     const response = await machineAPI.initZonesTable(location_id)
@@ -195,6 +197,7 @@ const initZonesTable = async ({ commit }, location_id) => {
 
 const initMachinesTable = async ({ commit }, zone) => {
   commit('SET_LOADING_MACHINES_TABLE', true)
+  commit('devices/SET_DATA', [], { root: true })
 
   try {
     const response = await machineAPI.initMachinesTable(zone)

@@ -84,8 +84,8 @@ export default {
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'center', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },
-        { text: 'Prod Rate', value: 'rate', align: 'center' },
-        { text: 'Downtime Distrubton', align: 'right', value: 'downtimeDistribution', sortable: false }
+        { text: 'Prod Rate', value: 'rate', align: 'center', width: '1%' },
+        { text: 'Downtime Distrubton', align: 'right', value: 'downtimeDistribution', width: '1%', sortable: false }
       ],
 
       selected: ['name1', 'name2', 'name3'],

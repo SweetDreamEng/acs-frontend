@@ -16,10 +16,7 @@
 
       <br>
 
-      <machines-table-card
-        :loading="loadingDashboardDevicesTable"
-        :devices="devices"
-      ></machines-table-card>
+      <machines-table-card :location="parseInt($route.params.location)"></machines-table-card>
     </v-container>
   </div>
 </template>
@@ -108,7 +105,6 @@ export default {
       loadingZonesTable: (state) => state.machines.loadingZonesTable,
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
 
-      devices: (state) => state.devices.data,
       zones: (state) => state.zones.data
     }),
     ...mapGetters({
@@ -130,13 +126,13 @@ export default {
     }
   },
   mounted() {
+    this.getLocations()
     this.initZonesTable(this.$route.params.location)
-    this.getDevicesAnalytics(this.$route.params.location)
   },
   methods: {
     ...mapActions({
       initZonesTable: 'machines/initZonesTable',
-      getDevicesAnalytics: 'devices/getDevicesAnalytics'
+      getLocations: 'locations/getLocations'
     })
   }
 }

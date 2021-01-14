@@ -11,6 +11,8 @@ const module = {
 
     pageCount: 0,                       // total pages for devices
     page: 1,                            // current page of pagination
+    pageCountReport: 0,
+    pageReport: 1,
 
     error: null,
     table_loading: false,               // status of loading devices into the table
@@ -139,13 +141,20 @@ const module = {
     },
 
     // Get devices with analytics in dashboard page
-    async getDevicesAnalytics({ commit }, location_id = 0) {
+    async getDevicesAnalytics({ commit }, { page = 1, location_id = 0, itemsPerPage = 5 }) {
       commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', true)
+      commit('SET_DATA', [])
 
       try {
-        const response = await deviceAPI.getDevicesAnalytics(location_id)
+        const data = {
+          itemsPerPage,
+          page,
+          location_id
+        }
+        const response = await deviceAPI.getDevicesAnalytics(data)
 
-        commit('SET_DATA', response.data.devices)
+        commit('SET_DATA', response.data.devices.data)
+        commit('SET_REPORT_PAGINATION', response.data.devices.last_page)
       } catch (error) {
         console.log(error.response)
       } finally {
@@ -408,6 +417,7 @@ const module = {
     SET_PAGINATION_DATA(state, data) {
       Object.assign(state, data)
     },
+    SET_REPORT_PAGINATION(state, count) { state.pageCountReport = count },
     SET_DOWNTIME_PLANS(state, plans) { state.downtimePlans = plans }
   },
 

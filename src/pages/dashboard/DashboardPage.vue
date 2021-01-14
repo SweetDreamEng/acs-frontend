@@ -16,10 +16,7 @@
 
       <br>
 
-      <machines-table-card
-        :loading="loadingDashboardDevicesTable"
-        :devices="devices"
-      ></machines-table-card>
+      <machines-table-card></machines-table-card>
     </v-container>
   </div>
 </template>
@@ -171,19 +168,16 @@ export default {
       loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
       
-      devices: (state) => state.devices.data,
       locations: (state) => state.locations.data
     })
   },
   mounted() {
-    this.getDevicesAnalytics()
     this.getZones()
     this.initLocationsTable()
   },
   methods: {
     ...mapActions({
       initLocationsTable: 'machines/initLocationsTable',
-      getDevicesAnalytics: 'devices/getDevicesAnalytics',
       getZones: 'zones/getZones'
     })
   }
