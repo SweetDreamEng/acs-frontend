@@ -25,8 +25,8 @@ export default {
       return response
     })
   },
-  getFeederCalibrationFactors(id) {
-    return api.get(`/analytics/product-calibration-factors/${id}`).then((response) => {
+  getFeederCalibrationFactors(data) {
+    return api.post('/analytics/blender/calibration-factors', data).then((response) => {
       return response
     })
   },

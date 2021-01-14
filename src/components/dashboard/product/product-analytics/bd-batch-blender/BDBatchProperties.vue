@@ -2,16 +2,11 @@
   <div>
     <v-row dense>
       <v-col md="4" sm="12">
-        <!-- <load-cell-bits
-          :loading="loadingCellBits"
-          :bits="cellBits"
-        >
-        </load-cell-bits> -->
         <area-graph
           title="Process Rate"
           unit-string="kgs/hr"
           :loading="loadingProcessRates"
-          :series="processRateSeries"
+          :series="lineSeries('Process Rate', processRates)"
           :time-range-label="timeRangeLabel(processRateTimeRange)"
           @showTimeRange="onShowTimeRangeDlgOpen('process-rate')"
         >
@@ -20,11 +15,16 @@
     </v-row>
     <v-row dense>
       <v-col md="4" sm="12">
-        <feeder-calibration-factor
+        <area-graph
+          title="Calibration Factor"
+          unit-string="kgs/hr"
+          :height="320"
           :loading="loadingCalibrationFactors"
-          :feeders="calibrationFactors"
+          :series="feederSeries(calibrationFactors)"
+          :time-range-label="timeRangeLabel(calibrationFactorTimeRange)"
+          @showTimeRange="onShowTimeRangeDlgOpen('calibration-factor')"
         >
-        </feeder-calibration-factor>
+        </area-graph>
       </v-col>
       <v-col md="4" sm="12">
         <hopper-stable
@@ -59,8 +59,6 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import BarGraph from '../../common/BarGraph'
 import AreaGraph from '../../common/AreaGraph'
 import HopperStable from './components/HopperStable'
-import FeederCalibrationFactor from './components/FeederCalibrationFactor'
-// import LoadCellBits from './components/LoadCellBits'
 import TimeRangeChooser from '../../../TimeRangeChooser1'
 
 export default {
@@ -68,8 +66,6 @@ export default {
     BarGraph,
     AreaGraph,
     HopperStable,
-    FeederCalibrationFactor,
-    // LoadCellBits,
     TimeRangeChooser
   },
   props: {
@@ -81,7 +77,6 @@ export default {
   data() {
     return {
       showTimeRangeChooser: false,
-      selectedTimeRange: this.processRateTimeRange,
       conveyingCategories: ['Loader 1', 'Loader 2', 'Loader 3', 'Loader 4', 'Loader 5', 'Loader 6', 'Loader 7', 'Loader 8', 'Loader 9']
     }
   },
@@ -95,10 +90,13 @@ export default {
 
       stationConveyingSeries: (state) => state.bdBlenderAnalytics.stationConveyingSeries,
       hopperStables: (state) => state.bdBlenderAnalytics.hopperStables,
-      calibrationFactors: (state) => state.bdBlenderAnalytics.calibrationFactors,
       cellBits: (state) => state.bdBlenderAnalytics.cellBits,
       processRates: (state) => state.bdBlenderAnalytics.processRates,
-      processRateTimeRange: (state) => state.bdBlenderAnalytics.processRateTimeRange
+      processRateTimeRange: (state) => state.bdBlenderAnalytics.processRateTimeRange,
+      calibrationFactors: (state) => state.bdBlenderAnalytics.calibrationFactors,
+      calibrationFactorTimeRange: (state) => state.bdBlenderAnalytics.calibrationFactorTimeRange,
+
+      selectedTimeRange: (state) => state.bdBlenderAnalytics.selectedTimeRange
     }),
     ...mapGetters({
       timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel'
@@ -106,12 +104,6 @@ export default {
     conveyingSeries() {
       return [{
         data: this.stationConveyingSeries
-      }]
-    },
-    processRateSeries() {
-      return [{
-        name: 'Process Rate',
-        data: this.processRates
       }]
     }
   },
@@ -133,6 +125,22 @@ export default {
       onTimeRangeChanged: 'bdBlenderAnalytics/onTimeRangeChanged',
       selectTimeRange: 'bdBlenderAnalytics/selectTimeRange'
     }),
+    feederSeries(feederValues) {
+      const feeders = [0, 1, 2, 3, 4, 5, 6, 7]
+
+      return feeders.map((i) => {
+        return {
+          name: `Feeder ${i + 1}`,
+          data: feederValues.map((value) => [value[0], value[1][i].toFixed(2)])
+        }
+      })
+    },
+    lineSeries(name, values) {
+      return [{
+        name: name,
+        data: values
+      }]
+    },
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)
       this.showTimeRangeChooser = true

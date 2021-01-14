@@ -20,7 +20,7 @@
     <v-card-text>
       <apexchart
         type="area"
-        height="220"
+        :height="height"
         :options="chartOptions"
         :series="series"
       >
@@ -43,6 +43,10 @@ export default {
     unitString: {
       type: String,
       default: ''
+    },
+    height: {
+      type: Number,
+      default: 220
     },
     timeRangeLabel: {
       type: String,
