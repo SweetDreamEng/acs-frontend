@@ -1,6 +1,12 @@
 import store from '../store'
 import api from '../api'
 
+const elemLoading = document.getElementById('loading')
+
+function hideLoading() {
+  elemLoading.style.display = 'none'
+}
+
 async function bootstrap() {
   const token = localStorage.getItem('token')
   let user = null
@@ -24,6 +30,8 @@ async function bootstrap() {
     user,
     token
   }, { root: true })
+
+  setTimeout(hideLoading, 100)
 }
 
 export default bootstrap

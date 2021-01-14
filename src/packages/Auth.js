@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from 'axios'
 import store from '../store/index'
 
 export default function (Vue) {
@@ -28,7 +28,7 @@ export default function (Vue) {
     },
 
     check(role = '') {
-      return axios.post('/auth/check', {
+      return api.post('/auth/check', {
         role
       })
         .then((response) =>  {

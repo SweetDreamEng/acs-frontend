@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="d-flex flex-grow-1"
-  >
+  <div class="d-flex flex-grow-1">
     <!-- Navigation -->
     <v-navigation-drawer
       v-model="drawer"

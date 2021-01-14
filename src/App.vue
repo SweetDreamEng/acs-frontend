@@ -75,9 +75,6 @@ export default {
       }
     }
   },
-  mounted() {
-    document.getElementById('loading').style.display = 'none'
-  },
   head: {
     link: [
       // adds config/icons into the html head tag
