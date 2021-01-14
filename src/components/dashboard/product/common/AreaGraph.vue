@@ -71,7 +71,7 @@ export default {
         },
         yaxis: {
           title: {
-            text: `${this.title} (${this.unitString})`
+            text: this.unitString ? `${this.title} (${this.unitString})` : `${this.title}`
           }
         },
         dataLabels: {

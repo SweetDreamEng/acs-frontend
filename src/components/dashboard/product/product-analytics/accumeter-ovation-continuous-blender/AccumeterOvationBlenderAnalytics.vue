@@ -11,7 +11,7 @@
       <v-col md="4" sm="12">
         <utilization
           :loading="loadingUtilization"
-          :time-range-label="timeRangeLabel('utilization')"
+          :time-range-label="timeRangeLabel(utilizationTimeRange)"
           @showTimeRange="onShowTimeRangeDlgOpen('utilization')"
         >
         </utilization>
@@ -19,7 +19,7 @@
       <v-col md="4" sm="12">
         <energy-consumption
           :loading="loadingEnergyConsumption"
-          :time-range-label="timeRangeLabel('energy-consumption')"
+          :time-range-label="timeRangeLabel(energyConsumptionTimeRange)"
           @showTimeRange="onShowTimeRangeDlgOpen('energy-consumption')"
         >
         </energy-consumption>
@@ -33,13 +33,15 @@
         <feeder-stable :loading="loadingFeederStables" :feeders="feederStables"></feeder-stable>
       </v-col>
       <v-col md="4" sm="12">
-        <process-rate
+        <area-graph
+          title="Process Rate"
+          unit-string="kgs/hr"
           :loading="loadingProcessRate"
-          :rates="processRateSeries"
-          :time-range-label="timeRangeLabel('process-rate')"
+          :series="processRateSeries"
+          :time-range-label="timeRangeLabel(processRateTimeRange)"
           @showTimeRange="onShowTimeRangeDlgOpen('process-rate')"
         >
-        </process-rate>
+        </area-graph>
       </v-col>
     </v-row>
     <v-row dense>
@@ -56,11 +58,7 @@
     </v-row>
     <time-range-chooser
       :dlg="showTimeRangeChooser"
-      :time-range-option="selectedTimeRange.timeRangeOption"
-      :date-from="selectedTimeRange.dateFrom"
-      :date-to="selectedTimeRange.dateTo"
-      :time-from="selectedTimeRange.timeFrom"
-      :time-to="selectedTimeRange.timeTo"
+      :time-range="selectedTimeRange"
       @close="showTimeRangeChooser = false"
       @submit="_onTimeRangeChanged"
     >
@@ -68,25 +66,25 @@
   </div>
 </template>
 <script>
+import AreaGraph from '../../common/AreaGraph'
 import Overview from '../common/components/Overview'
 import Utilization from '../common/components/Utilization'
 import EnergyConsumption from '../common/components/EnergyConsumption'
 import MachineState from './components/MachineState'
 import FeederStable from './components/FeederStable'
-import ProcessRate from './components/ProcessRate'
 import Recipe from './components/Recipe'
-import TimeRangeChooser from '../../../TimeRangeChooser'
+import TimeRangeChooser from '../../../TimeRangeChooser1'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
+    AreaGraph,
     Overview,
     Utilization,
     EnergyConsumption,
     MachineState,
     FeederStable,
-    ProcessRate,
     Recipe,
     TimeRangeChooser
   },
@@ -116,12 +114,22 @@ export default {
       targetRecipeValues: (state) => state.accumeterOvationBlender.targetRecipeValues,
       systemStates: (state) => state.accumeterOvationBlender.systemStates,
       feederStables: (state) => state.accumeterOvationBlender.feederStables,
-      processRateSeries: (state) => state.accumeterOvationBlender.processRateSeries
+      processRates: (state) => state.accumeterOvationBlender.processRateSeries,
+
+      utilizationTimeRange: (state) => state.machines.utilizationTimeRange,
+      energyConsumptionTimeRange: (state) => state.machines.energyConsumptionTimeRange,
+      processRateTimeRange: (state) => state.accumeterOvationBlender.processRateTimeRange
     }),
     ...mapGetters({
-      timeRangeLabel: 'machines/timeRangeLabel',
+      timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel',
       selectedTimeRange: 'machines/selectedTimeRange'
-    })
+    }),
+    processRateSeries() {
+      return [{
+        name: 'Process Rate',
+        data: this.processRates
+      }]
+    }
   },
   created() {
     this.getOverview(this.productId)
@@ -134,22 +142,20 @@ export default {
   },
   methods: {
     ...mapActions({
-      onTimeRangeChanged: 'machines/onTimeRangeChanged',
-      selectTimeRange: 'machines/selectTimeRange',
       getOverview: 'machines/getOverview',
       getUtilization: 'machines/getUtilization',
       getEnergyConsumption: 'machines/getEnergyConsumption',
       getSystemStates: 'accumeterOvationBlender/getSystemStates',
       getFeederStables: 'accumeterOvationBlender/getFeederStables',
       getProductionRate: 'accumeterOvationBlender/getProductionRate',
-      getRecipe: 'accumeterOvationBlender/getRecipe'
+      getRecipe: 'accumeterOvationBlender/getRecipe',
+
+      onTimeRangeChanged: 'accumeterOvationBlender/onTimeRangeChanged',
+      selectTimeRange: 'accumeterOvationBlender/selectTimeRange'
     }),
     onShowTimeRangeDlgOpen(key) {
-      console.log(key)
       this.selectTimeRange(key)
-      this.$nextTick(() => {
-        this.showTimeRangeChooser = true
-      })
+      this.showTimeRangeChooser = true
     },
     _onTimeRangeChanged(data) {
       data.id = this.productId

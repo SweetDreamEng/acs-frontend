@@ -76,7 +76,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import BdBatchBlender from '../../components/dashboard/product/product-analytics/bd-batch-blender/BDBatchAnalytics'
-import AccumeterOvationContinuousBlender from '../../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender/AccumeterOvationBlender'
+import AccumeterOvationContinuousBlender from '../../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender/AccumeterOvationBlenderAnalytics'
 import GhGravimetricExtrusionControlHopper from '../../components/dashboard/product/product-analytics/gh-gravimetric-extrusion-control-hopper'
 import GhFGravimetricAdditiveFeeder from '../../components/dashboard/product/product-analytics/gh-f-gravimetric-additive-feeder'
 import VtcPlusConveyingSystem from '../../components/dashboard/product/product-analytics/vtc-plus-conveying-system/VtcPlusConveying'

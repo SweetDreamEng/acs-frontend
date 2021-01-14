@@ -2,7 +2,12 @@
   <div>
     <v-row dense>
       <v-col cols="12">
-        <bd-batch-blender v-if="parseInt($route.params.configurationId) === 1" :product-id="$route.params.productId"></bd-batch-blender>
+        <component 
+          :is="propertiesComponent($route.params.configurationId)" 
+          :product-id="$route.params.productId"
+        >
+        </component>
+        <!-- <bd-batch-blender v-if="parseInt($route.params.configurationId) === 1" :product-id="$route.params.productId"></bd-batch-blender> -->
       </v-col>
     </v-row>
 <!--     <v-card class="d-flex flex-column flex-grow-1">
@@ -66,9 +71,11 @@
 |
 */
 import BdBatchBlender from './product-analytics/bd-batch-blender/BDBatchProperties'
+import AccumeterOvationBlender from './product-analytics/accumeter-ovation-continuous-blender/AccumeterOvationBlenderProperties'
 export default {
   components: {
-    BdBatchBlender
+    BdBatchBlender,
+    AccumeterOvationBlender
   },
   props: {
     label: {
@@ -135,6 +142,23 @@ export default {
     }
   },
   methods: {
+    propertiesComponent() {
+      const configId = parseInt(this.$route.params.configurationId)
+
+      switch (configId) {
+      case 1: return 'BdBatchBlender'
+      case 2: return 'AccumeterOvationBlender'
+      // case 3: return 'GhGravimetricExtrusionControlHopper'
+      // case 4: return 'GhFGravimetricAdditiveFeeder'
+      // case 5: return 'VtcPlusConveyingSystem'
+      // case 6: return 'NgxDryer'
+      // case 7: return 'NgxNomadDryer'
+      // case 8: return 'T50CentralGranulator'
+      // case 9: return 'GpPortableChiller'
+      // case 11: return 'TruetempTcu'
+      default: return ''
+      }
+    },
     remove (item) {
       this.parameters.splice(this.parameters.indexOf(item), 1)
     }

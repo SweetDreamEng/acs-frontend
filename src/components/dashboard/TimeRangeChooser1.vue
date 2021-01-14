@@ -193,7 +193,7 @@ export default {
       this.locDateFrom = newValue.dateFrom
       this.locTimeFrom = newValue.timeFrom
       this.locDateTo = newValue.dateTo
-      this.locTimeTo = newValue.timeT
+      this.locTimeTo = newValue.timeTo
     }
   },
   methods: {

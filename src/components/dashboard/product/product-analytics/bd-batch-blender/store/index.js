@@ -212,7 +212,7 @@ const module = {
     SET_CURRENT_TIME(state, key) {
       switch (key) {
       case 'process-rate':
-        this.selectedTimeRange = state.processRateTimeRange
+        state.selectedTimeRange = state.processRateTimeRange
         break
       default:
         break
