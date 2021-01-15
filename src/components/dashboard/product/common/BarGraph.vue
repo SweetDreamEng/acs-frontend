@@ -48,6 +48,10 @@ export default {
     series: {
       type: Array,
       default: () => []
+    },
+    options: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
@@ -76,7 +80,6 @@ export default {
             dataLabels: {
               position: 'top'
             },
-            barHeight: '70%',
             endingShape: 'rounded'
           }
         },
@@ -103,7 +106,8 @@ export default {
           markers: {
             fillColors: ['#002855', '#008ffb', '#feb019']
           }
-        }
+        },
+        ...this.options
       }
     },
     seriesMax() {

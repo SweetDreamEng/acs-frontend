@@ -17,9 +17,7 @@ const module = {
     // inventories: [],
 
     loadingActTgtTemperatures: false,
-    actTemperatures: [],
-    tgtTemperatures: [],
-    actTgtTemeratureTimeRange: defaultTimeRange(),
+    actTgtTemperatures: [],
 
     selectedTimeRangeKey: 'actual-target-temperature',
     selectedTimeRange: defaultTimeRange()
@@ -30,13 +28,9 @@ const module = {
       commit('SET_LOADING_TEMPERATURES', true)
 
       try {
-        const response = await api.getActTgtTemperatures({
-          id: id,
-          timeRange: state.actTgtTemeratureTimeRange
-        })
+        const response = await api.getActTgtTemperatures(id)
 
-        commit('SET_ACTUAL_TEMPERATURES', response.data.actuals)
-        commit('SET_TARGET_TEMPERATURES', response.data.targets)
+        commit('SET_ACTUAL_TARGET_TEMPERATURES', response.data.temps)
       } catch (error) {
         console.log(error)
       } finally {
@@ -51,10 +45,6 @@ const module = {
 
     async onTimeRangeChanged({ commit, dispatch, state }, data) {
       switch (state.selectedTimeRangeKey) {
-      case 'actual-target-temperature':
-        commit('SET_ACT_TGT_TEMPERATURE_TIME_RANGE', data)
-        dispatch('getActTgtTemperatures', data.id)
-        break
       default:
         break
       }
@@ -64,17 +54,11 @@ const module = {
   mutations: {
     SET_LOADING_TEMPERATURES(state, isLoading) { state.loadingActTgtTemperatures = isLoading },
 
-    SET_ACTUAL_TEMPERATURES(state, temps) { state.actTemperatures = temps },
-    SET_TARGET_TEMPERATURES(state, temps) { state.tgtTemperatures = temps },
-
-    SET_ACT_TGT_TEMPERATURE_TIME_RANGE(state, data) { state.actTgtTemeratureTimeRange = Object.assign({}, data) },
+    SET_ACTUAL_TARGET_TEMPERATURES(state, temps) { state.actTgtTemperatures = temps },
 
     SET_CURRENT_TIME_KEY(state, key) { state.selectedTimeRangeKey = key },
     SET_CURRENT_TIME(state, key) {
       switch (key) {
-      case 'actual-target-temperature':
-        state.selectedTimeRange = state.actTgtTemeratureTimeRange
-        break
       default:
         break
       }

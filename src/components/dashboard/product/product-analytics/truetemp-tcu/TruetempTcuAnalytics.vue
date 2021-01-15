@@ -15,15 +15,16 @@
         ></machine-state>
       </v-col>
       <v-col md="4" sm="12">
-        <area-graph
+        <bar-graph
           title="Actual Target Temperature"
-          unit-string="ºC"
           :loading="loadingActTgtTemperatures"
+          :height="320"
+          unit="ºC"
           :series="actTgtTemperatureSeries"
-          :time-range-label="timeRangeLabel(actTgtTemeratureTimeRange)"
-          @showTimeRange="onShowTimeRangeDlgOpen('actual-target-temperature')"
+          :categories="[['Actual', 'Temperature'], ['Set point', 'Temperature']]"
+          :options="temperatureOptions"
         >
-        </area-graph>
+        </bar-graph>
       </v-col>
     </v-row>
     <time-range-chooser
@@ -38,7 +39,7 @@
 <script>
 import Overview from '../../common/Overview'
 import MachineState from './components/MachineState'
-import AreaGraph from '../../common/AreaGraph'
+import BarGraph from '../../common/BarGraph'
 import TimeRangeChooser from '../../../TimeRangeChooser1'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -47,7 +48,7 @@ export default {
   components: {
     Overview,
     MachineState,
-    AreaGraph,
+    BarGraph,
     TimeRangeChooser
   },
   props: {
@@ -58,7 +59,19 @@ export default {
   },
   data() {
     return {
-      showTimeRangeChooser: false
+      showTimeRangeChooser: false,
+      temperatureOptions: {
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            barHeight: '20%',
+            dataLabels: {
+              position: 'top'
+            },
+            endingShape: 'rounded'
+          }
+        }
+      }
     }
   },
   computed: {
@@ -70,22 +83,17 @@ export default {
       machineState: (state) => state.machines.systemStates,
 
       loadingActTgtTemperatures: (state) => state.truetempTcu.loadingActTgtTemperatures,
-      actTemperatures: (state) => state.truetempTcu.actTemperatures,
-      tgtTemperatures: (state) => state.truetempTcu.tgtTemperatures,
-      actTgtTemeratureTimeRange: (state) => state.truetempTcu.actTgtTemeratureTimeRange,
+      actTgtTemperatures: (state) => state.truetempTcu.actTgtTemperatures,
 
       selectedTimeRange: (state) => state.truetempTcu.selectedTimeRange
     }),
     ...mapGetters({
       timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel'
     }),
+
     actTgtTemperatureSeries() {
       return [{
-        name: 'Actual Temperature',
-        data: this.actTemperatures
-      }, {
-        name: 'Set point',
-        data: this.tgtTemperatures
+        data: this.actTgtTemperatures
       }]
     }
   },
