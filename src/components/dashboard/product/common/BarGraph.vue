@@ -21,8 +21,6 @@
 
 <script>
 
-import { mapState } from 'vuex'
-
 export default {
   components: {
   },
@@ -45,9 +43,7 @@ export default {
     },
     series: {
       type: Array,
-      default: () => [{
-        data: [0]
-      }]
+      default: () => []
     }
   },
   data() {

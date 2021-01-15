@@ -72,11 +72,15 @@
 */
 import BdBatchBlender from './product-analytics/bd-batch-blender/BDBatchProperties'
 import AccumeterOvationBlender from './product-analytics/accumeter-ovation-continuous-blender/AccumeterOvationBlenderProperties'
+import GhGravimetricExtrusionControlHopper from './product-analytics/gh-gravimetric-extrusion-control-hopper/GhGravimetricProperties'
+import VtcPlusConveyingSystem from './product-analytics/vtc-plus-conveying-system/VtcPlusConveyingProperties'
 import TruetempTcu from './product-analytics/truetemp-tcu/TruetempTcuProperties'
 export default {
   components: {
     BdBatchBlender,
     AccumeterOvationBlender,
+    GhGravimetricExtrusionControlHopper,
+    VtcPlusConveyingSystem,
     TruetempTcu
   },
   props: {
@@ -150,9 +154,9 @@ export default {
       switch (configId) {
       case 1: return 'BdBatchBlender'
       case 2: return 'AccumeterOvationBlender'
-      // case 3: return 'GhGravimetricExtrusionControlHopper'
+      case 3: return 'GhGravimetricExtrusionControlHopper'
       // case 4: return 'GhFGravimetricAdditiveFeeder'
-      // case 5: return 'VtcPlusConveyingSystem'
+      case 5: return 'VtcPlusConveyingSystem'
       // case 6: return 'NgxDryer'
       // case 7: return 'NgxNomadDryer'
       // case 8: return 'T50CentralGranulator'

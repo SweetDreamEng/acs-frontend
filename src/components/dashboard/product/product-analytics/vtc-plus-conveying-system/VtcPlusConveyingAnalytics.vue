@@ -95,8 +95,8 @@ export default {
     ...mapState({
       machine: (state) => state.machines.machine,
       pumpHours: (state) => state.vtcPlusConveying.pumpHours,
-      actualPumpHoursOil: (state) => state.vtcPlusConveying.actualValuesBar,
-      targetPumpHoursOil: (state) => state.vtcPlusConveying.targetValuesBar,
+      actualPumpHoursOil: (state) => state.vtcPlusConveying.actualPumpHoursOil,
+      targetPumpHoursOil: (state) => state.vtcPlusConveying.targetPumpHoursOil,
       
       loadingOverview: (state) => state.machines.loadingOverview,
       loadingUtilization: (state) => state.machines.loadingUtilization,

@@ -79,7 +79,7 @@ import BdBatchBlender from '../../components/dashboard/product/product-analytics
 import AccumeterOvationContinuousBlender from '../../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender/AccumeterOvationBlenderAnalytics'
 import GhGravimetricExtrusionControlHopper from '../../components/dashboard/product/product-analytics/gh-gravimetric-extrusion-control-hopper/GhGravimetricAnalytics'
 import GhFGravimetricAdditiveFeeder from '../../components/dashboard/product/product-analytics/gh-f-gravimetric-additive-feeder'
-import VtcPlusConveyingSystem from '../../components/dashboard/product/product-analytics/vtc-plus-conveying-system/VtcPlusConveying'
+import VtcPlusConveyingSystem from '../../components/dashboard/product/product-analytics/vtc-plus-conveying-system/VtcPlusConveyingAnalytics'
 import NgxDryer from '../../components/dashboard/product/product-analytics/ngx-dryer/NgxDryer'
 import NgxNomadDryer from '../../components/dashboard/product/product-analytics/ngx-nomad-dryer'
 import T50CentralGranulator from '../../components/dashboard/product/product-analytics/t50-central-granulator'

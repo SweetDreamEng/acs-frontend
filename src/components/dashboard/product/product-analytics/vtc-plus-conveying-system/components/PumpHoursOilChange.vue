@@ -42,7 +42,25 @@ export default {
   },
   data() {
     return {
-      chartOptions: {
+    }
+  },
+  computed: {
+    series() {
+      return [
+        {
+          id: 1,
+          name: 'Target',
+          data: this.valuesTarget
+        },
+        {
+          id: 2,
+          name: 'Actuals',
+          data: this.valuesActual
+        }
+      ]
+    },
+    chartOptions() {
+      return {
         chart: {
           animations: {
             speed: 400
@@ -62,13 +80,13 @@ export default {
             dataLabels: {
               position: 'top'
             },
-            barHeight: '70%',
+            barHeight: '80%',
             endingShape: 'rounded'
           }
         },
         dataLabels: {
           enabled: true,
-          offsetX: 26,
+          offsetX: 20,
           textAnchor: 'start',
           style: {
             fontSize: '10px',
@@ -80,7 +98,8 @@ export default {
         },
         xaxis: {
           categories: ['Pump 1', 'Pump 2', 'Pump 3', 'Pump 4', 'Pump 5', 'Pump 6', 'Pump 7', 'Pump 8', 'Pump 9', 'Pump 10', 'Pump 11', 'Pump 12'],
-          rotate: -45
+          rotate: -45,
+          max: Math.max(...this.valuesTarget, ...this.valuesActual) * 1.1
         },
         legend: {
           show: true,
@@ -89,22 +108,6 @@ export default {
           }
         }
       }
-    }
-  },
-  computed: {
-    series() {
-      return [
-        {
-          id: 1,
-          name: 'Target',
-          data: this.valuesTarget
-        },
-        {
-          id: 2,
-          name: 'Actuals',
-          data: this.valuesActual
-        }
-      ]
     }
   }
 }

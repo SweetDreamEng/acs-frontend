@@ -65,9 +65,9 @@
 import Overview from '../../common/Overview'
 import Utilization from '../../common/Utilization'
 import EnergyConsumption from '../../common/EnergyConsumption'
-import MachineStates from './MachineStates'
-import AccumulatedHopperInventory from './AccumulatedHopperInventory'
-import AccumulatedHauloffLength from './AccumulatedHauloffLength'
+import MachineStates from './components/MachineStates'
+import AccumulatedHopperInventory from './components/AccumulatedHopperInventory'
+import AccumulatedHauloffLength from './components/AccumulatedHauloffLength'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'

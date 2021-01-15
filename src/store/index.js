@@ -21,6 +21,7 @@ import bdBlenderAnalytics from '../components/dashboard/product/product-analytic
 import accumeterOvationBlender from '../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender/store'
 import ngxDryer from '../components/dashboard/product/product-analytics/ngx-dryer/store'
 import vtcPlusConveying from '../components/dashboard/product/product-analytics/vtc-plus-conveying-system/store'
+import ghGravimetricControlHopper from '../components/dashboard/product/product-analytics/gh-gravimetric-extrusion-control-hopper/store'
 import truetempTcu from '../components/dashboard/product/product-analytics/truetemp-tcu/store'
 
 Vue.use(Vuex)
@@ -47,6 +48,7 @@ const store = new Vuex.Store({
     
     bdBlenderAnalytics,
     accumeterOvationBlender,
+    ghGravimetricControlHopper,
     ngxDryer,
     vtcPlusConveying,
     truetempTcu

@@ -9,5 +9,15 @@ export default {
     return api.get(`/analytics/product-pump-hours/${id}`).then((response) => {
       return response
     })
+  },
+  getPumpOnlines(id) {
+    return api.get(`/analytics/vtc-plus/pump-onlines/${id}`).then((response) => {
+      return response
+    })
+  },
+  getPumpBlowBacks(id) {
+    return api.get(`/analytics/vtc-plus/pump-blowbacks/${id}`).then((response) => {
+      return response
+    })
   }
 }
