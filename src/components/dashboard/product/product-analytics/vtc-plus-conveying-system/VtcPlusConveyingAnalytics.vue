@@ -27,19 +27,26 @@
     </v-row>
     <v-row dense>
       <v-col cols="12" md="6">
-        <pump-hours
+        <bar-graph
+          title="Pump Hours"
           :loading="loadingPumpHours"
-          :hours="pumpHours"
+          height="500"
+          unit="h"
+          :categories="pumpHoursOilCategories"
+          :series="pumpHoursSeries"
         >
-        </pump-hours>
+        </bar-graph>
       </v-col>
       <v-col cols="12" md="6">
-        <pump-hours-oil-change
+        <bar-graph
+          title="Pump Hours Oil Change"
           :loading="loadingPumpHoursOil"
-          :values-actual="actualPumpHoursOil"
-          :values-target="targetPumpHoursOil"
+          height="500"
+          unit="h"
+          :categories="pumpHoursOilCategories"
+          :series="pumpHoursOilSeries"
         >
-        </pump-hours-oil-change>
+        </bar-graph>
       </v-col>
     </v-row>
     <v-row dense>
@@ -62,22 +69,20 @@
   </div>
 </template>
 <script>
+import BarGraph from '../../common/BarGraph'
 import Overview from '../../common/Overview'
 import Utilization from '../../common/Utilization'
 import EnergyConsumption from '../../common/EnergyConsumption'
-import PumpHours from './components/PumpHours'
-import PumpHoursOilChange from './components/PumpHoursOilChange'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
+    BarGraph,
     Overview,
     Utilization,
     EnergyConsumption,
-    PumpHours,
-    PumpHoursOilChange,
     TimeRangeChooser
   },
   props: {
@@ -107,7 +112,30 @@ export default {
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
       selectedTimeRange: 'machines/selectedTimeRange'
-    })
+    }),
+    pumpHoursOilCategories() {
+      return ['Pump 1', 'Pump 2', 'Pump 3', 'Pump 4', 'Pump 5', 'Pump 6', 'Pump 7', 'Pump 8', 'Pump 9', 'Pump 10', 'Pump 11', 'Pump 12']
+    },
+    pumpHoursOilSeries() {
+      return [
+        {
+          name: 'Target',
+          data: this.targetPumpHoursOil
+        },
+        {
+          name: 'Actuals',
+          data: this.actualPumpHoursOil
+        }
+      ]
+    },
+    pumpHoursSeries() {
+      return [
+        {
+          name: 'Pump Hours',
+          data: this.pumpHours
+        }
+      ]
+    }
   },
   created() {
     this.getOverview(this.productId)

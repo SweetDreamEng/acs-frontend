@@ -37,6 +37,7 @@
         <bar-graph
           title="Station Conveying"
           :loading="loadingStationConveyings"
+          :height="320"
           :series="conveyingSeries"
           :categories="conveyingCategories"
         >

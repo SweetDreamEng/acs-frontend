@@ -34,13 +34,15 @@
         </drying-hopper-states>
       </v-col>
       <v-col cols="12" md="8">
-        <hopper-air-temperatures
+        <bar-graph
+          title="Hopper Air Temperatures"
           :loading="loadingTemperatures"
-          :values-inlet="inletTemperatures"
-          :values-target="targetTemperatures"
-          :values-outlet="outletTemperatures"
+          :height="320"
+          unit="°"
+          :series="hopperAirTemperatureSeries"
+          :categories="hopperAirTemperatureCategories"
         >
-        </hopper-air-temperatures>
+        </bar-graph>
       </v-col>
     </v-row>
     <time-range-chooser
@@ -57,22 +59,24 @@
   </div>
 </template>
 <script>
+import BarGraph from '../../common/BarGraph'
 import Overview from '../../common/Overview'
 import Utilization from '../../common/Utilization'
 import EnergyConsumption from '../../common/EnergyConsumption'
 import DryingHopperStates from './components/DryingHopperStates'
-import HopperAirTemperatures from './components/HopperAirTemperatures'
+// import HopperAirTemperatures from './components/HopperAirTemperatures'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
+    BarGraph,
     Overview,
     Utilization,
     EnergyConsumption,
     DryingHopperStates,
-    HopperAirTemperatures,
+    // HopperAirTemperatures,
     TimeRangeChooser
   },
   props: {
@@ -103,7 +107,22 @@ export default {
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
       selectedTimeRange: 'machines/selectedTimeRange'
-    })
+    }),
+    hopperAirTemperatureSeries() {
+      return [{
+        name: 'Outlet Temperature',
+        data: this.outletTemperatures
+      }, {
+        name: 'Inlet Temperature',
+        data: this.inletTemperatures
+      }, {
+        name: 'Set Point',
+        data: this.targetTemperatures
+      }]
+    },
+    hopperAirTemperatureCategories() {
+      return ['Hopper 1', 'Hopper 2', 'Hopper 3']
+    }
   },
   created() {
     this.getOverview(this.productId)

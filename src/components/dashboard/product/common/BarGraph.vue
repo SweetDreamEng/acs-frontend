@@ -1,6 +1,6 @@
 <template>
   <v-card
-    :height="height"
+    height="100%"
     :loading="loading"
     :disabled="loading"
   >
@@ -10,7 +10,7 @@
     <v-card-text>
       <apexchart
         type="bar"
-        height="340"
+        :height="height"
         :options="chartOptions"
         :series="series"
       >
@@ -34,8 +34,12 @@ export default {
       default: ''
     },
     height: {
+      type: Number,
+      default: 300
+    },
+    unit: {
       type: String,
-      default: '100%'
+      default: ''
     },
     categories: {
       type: Array,
@@ -78,17 +82,21 @@ export default {
         },
         dataLabels: {
           enabled: true,
-          offsetX: 22,
+          offsetX: 20,
+          textAnchor: 'start',
           style: {
             fontSize: '10px',
             colors: ['#000']
+          },
+          formatter: (value, { seriesIndex, dataPointIndex, w }) => {
+            const unit = this.unit ? this.unit : ''
+
+            return value + unit
           }
-          // formatter: function(value, { seriesIndex, dataPointIndex, w }) {
-          //   return value + '°'
-          // }
         },
         xaxis: {
-          categories: this.categories
+          categories: this.categories,
+          max: (this.seriesMax + 2) * 1.1
         },
         legend: {
           show: true,
@@ -97,6 +105,15 @@ export default {
           }
         }
       }
+    },
+    seriesMax() {
+      let max = 0
+
+      this.series.forEach((item) => {
+        max = Math.max(Math.max(...item.data), max)
+      })
+
+      return max
     }
   }
 }
