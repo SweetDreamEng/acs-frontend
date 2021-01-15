@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
-    <v-row>
+    <v-row dense>
       <v-col sm="4" xs="12">
         <Overview :user="user"></Overview>
       </v-col>
@@ -35,12 +35,21 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row dense>
+      <v-col cols="12" md="6">
+        <time-zone
+          @submit="submitTimezone"
+        >
+        </time-zone>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
 import PersonalInfo from '../../components/profile/PersonalInfo'
 import PasswordReset from '../../components/profile/PasswordReset'
 import Overview from '../../components/profile/Overview'
+import TimeZone from '../../components/profile/TimeZone'
 
 import { mapState, mapActions } from 'vuex'
 
@@ -48,7 +57,8 @@ export default {
   components: {
     PasswordReset,
     PersonalInfo,
-    Overview
+    Overview,
+    TimeZone
   },
   data() {
     return {
@@ -65,10 +75,14 @@ export default {
   methods: {
     ...mapActions({
       updatePassword: 'auth/updatePassword',
+      updateTimezome: 'auth/updateTimezome',
       clearError: 'auth/clearError'
     }),
     submitPassword(data) {
       this.updatePassword(data)
+    },
+    submitTimezone(data) {
+      this.updateTimezome(data)
     }
   }
 }

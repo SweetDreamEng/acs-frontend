@@ -25,9 +25,17 @@ export default {
       email: email
     }
 
-    console.log(data)
-
     return api.post('/auth/password-reset', data).then((response) => {
+      return response
+    })
+  },
+  getTimezoneNames(timezone) {
+    return api.get('/profile/timezones').then((response) => {
+      return response
+    })
+  },
+  updateTimezone(timezone) {
+    return api.post('/profile/timezone', { timezone }).then((response) => {
       return response
     })
   },

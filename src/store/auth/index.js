@@ -34,6 +34,12 @@ const module = {
         'name': 'Customer Operator'
       }
     ],
+
+    updatingTimezone: false,
+    loadingTimezone: false,
+    userTimeZone: 'America/Belize',
+    timeZoneNames: [],
+
     error: null,
     loading: true,
     button_loading: false
@@ -142,7 +148,6 @@ const module = {
 
       try {
         await authAPI.requestForgotPassword(email)
-
       } catch (error) {
         if (error.response.status === 404) {
           commit('SET_ERROR', {
@@ -152,6 +157,38 @@ const module = {
       }
       
       commit('BUTTON_CLEAR')
+    },
+
+    async getTimezoneNames({
+      commit
+    }) {
+      commit('SET_LOADING_TIME_ZONE', true)
+
+      try {
+        const response = await authAPI.getTimezoneNames()
+
+        commit('SET_TIMEZONES', response.data.timezones)
+      } catch (error) {
+        console.log(error)
+      }
+      
+      commit('SET_LOADING_TIME_ZONE', false)
+    },
+
+    async updateTimezone({
+      commit, dispatch
+    }, timezone) {
+      commit('SET_UPDATING_TIME_ZONE', true)
+
+      try {
+        const response = await authAPI.updateTimezone(timezone)
+
+        dispatch('app/showSuccess', response.data.message, { root: true })
+      } catch (error) {
+        console.log(error)
+      }
+      
+      commit('SET_UPDATING_TIME_ZONE', false)
     },
 
     clearAuthData({
@@ -208,7 +245,12 @@ const module = {
 
     BUTTON_CLEAR(state) {
       state.button_loading = false
-    }
+    },
+
+    SET_LOADING_TIME_ZONE(state, loading) { state.loadingTimezone = loading },
+    SET_UPDATING_TIME_ZONE(state, loading) { state.updatingTimezone = loading },
+
+    SET_TIMEZONES(state, timezones) { state.timeZoneNames = timezones}
   },
   getters: {
     roleName: (state) => (role_key) => {
