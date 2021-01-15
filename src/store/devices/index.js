@@ -206,7 +206,7 @@ const module = {
       commit('SUSPEND_BTN_LOAD')
 
       try {
-        const response = await deviceAPI.suspendSIM(device)
+        await deviceAPI.suspendSIM(device)
       } catch (error) {
         console.log(error.response)
       } finally {

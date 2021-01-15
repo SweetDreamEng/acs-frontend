@@ -38,7 +38,7 @@
         <recipe
           :loading="loadingRecipe"
           :recipes="recipeValues"
-          :ezTypes="ezTypes"
+          :ez-types="ezTypes"
           :mode="recipeMode"
         >
         </recipe>

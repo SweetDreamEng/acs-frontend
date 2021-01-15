@@ -10,7 +10,7 @@
         <!-- <bd-batch-blender v-if="parseInt($route.params.configurationId) === 1" :product-id="$route.params.productId"></bd-batch-blender> -->
       </v-col>
     </v-row>
-<!--     <v-card class="d-flex flex-column flex-grow-1">
+    <!--     <v-card class="d-flex flex-column flex-grow-1">
       <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
         <v-progress-circular indeterminate color="primary"></v-progress-circular>
       </div>

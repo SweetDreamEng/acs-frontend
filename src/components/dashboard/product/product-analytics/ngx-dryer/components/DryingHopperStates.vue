@@ -105,6 +105,8 @@ export default {
       else if (value === 3) return 'blue lighten-4'
       else if (value === 4) return 'yellow lighten-4'
       else if (value === 5) return 'red lighten-4'
+
+      return ''
     },
     circleColor(value) {
       if (value === 0) return 'grey'
@@ -112,6 +114,8 @@ export default {
       else if (value === 3) return 'blue'
       else if (value === 4) return 'yellow'
       else if (value === 5) return 'red'
+
+      return ''
     },
     textColor(value) {
       if (value === 0) return '#9e9e9e'
@@ -124,6 +128,8 @@ export default {
       else if (value === 3) return 'Setback'
       else if (value === 4) return 'Autotune'
       else if (value === 5) return 'Alarmed'
+
+      return ''
     }
   }
 }
