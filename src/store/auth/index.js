@@ -13,6 +13,9 @@ const module = {
       username: null,
       companyId: null
     },
+    profile: {
+
+    },
     roles: [
       {
         'key': 'super_admin',
@@ -110,6 +113,18 @@ const module = {
         router.push({
           name: 'auth-signin'
         })
+      }
+    },
+
+    async getUser({
+      commit
+    }) {
+      try {
+        const response = await authAPI.getUser()
+
+        commit('SET_AUTH_PROFILE', response.data.user)
+      } catch (error) {
+        console.log(error)
       }
     },
 
@@ -250,7 +265,8 @@ const module = {
     SET_LOADING_TIME_ZONE(state, loading) { state.loadingTimezone = loading },
     SET_UPDATING_TIME_ZONE(state, loading) { state.updatingTimezone = loading },
 
-    SET_TIMEZONES(state, timezones) { state.timeZoneNames = timezones}
+    SET_TIMEZONES(state, timezones) { state.timeZoneNames = timezones},
+    SET_AUTH_PROFILE(state, user) { state.profile = user }
   },
   getters: {
     roleName: (state) => (role_key) => {

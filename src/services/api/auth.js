@@ -10,6 +10,11 @@ export default {
       return response
     })
   },
+  getUser() {
+    return api.get('/auth/user').then((response) => {
+      return response
+    })
+  },
   updatePassword(currentPassword, newPassword) {
     const data = {
       current_password: currentPassword,

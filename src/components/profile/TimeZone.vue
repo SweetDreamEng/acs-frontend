@@ -4,7 +4,9 @@
     <v-card-text>
       <v-form ref="accountForm" v-model="isAccountValidForm" lazy-validation @submit.prevent="submit">
         <v-combobox
-          v-model="timezone"
+          :loading="loading"
+          :disabled="loading"
+          v-model="locTimezone"
           :items="timeZones"
           label="Timezone"
           item-text="name"
@@ -14,7 +16,7 @@
           dense
         ></v-combobox>
         <div class="mt-2">
-          <v-btn type="submit" color="primary" :loading="loading">Save</v-btn>
+          <v-btn type="submit" color="primary" :loading="updating">Save</v-btn>
         </div>
       </v-form>
     </v-card-text>
@@ -28,42 +30,54 @@ export default {
   data() {
     return {
       isAccountValidForm: true,
-      timezone: 'America/Belize'
+      locTimezone: null
     }
   },
   computed: {
     ...mapState({
-      loading: (state) => state.auth.updatingTimezone,
-      timeZoneNames: (state) => state.auth.timeZoneNames,
-      userTimeZone: (state) => state.auth.userTimeZone
+      updating: (state) => state.auth.updatingTimezone,
+      loading: (state) => state.auth.loadingTimezone,
+      profile: (state) => state.auth.profile.profile,
+      timeZoneNames: (state) => state.auth.timeZoneNames
     }),
     timeZones() {
       const date = new Date
       
       return this.timeZoneNames.map((timeZone) => {
-        const _t = date.toLocaleString('en-US', {
-          timeZone: `${timeZone.name}`
-        })
+        const minutes = moment.tz(timeZone.name).utcOffset()
+        const h = minutes / 60 | 0, m = minutes % 60 | 0
+        const _t = moment.utc().hours(h).minutes(m).format('hh:mm')
 
         return {
           id: timeZone.id,
-          name: `${timeZone.name} (${_t})`
+          name: `${timeZone.name} (UTC ${_t})`
         }
       })
+    },
+    userTimezone() {
+      return this.timeZones.find((item) => item.id === this.profile.timezone)
     }
   },
   mounted() {
-    this.getTimezoneNames()
+    this.getUser().then(() => {
+      if (this.timeZoneNames)
+        this.locTimezone = this.userTimezone
+    })
+    this.getTimezoneNames().then(() => {
+      if (this.profile)
+        this.locTimezone = this.userTimezone
+    })
     // console.log(moment.tz('America/Los_Angeles').utcOffset())
   },
   methods: {
     ...mapActions({
+      getUser: 'auth/getUser',
       updateTimezone: 'auth/updateTimezone',
       getTimezoneNames: 'auth/getTimezoneNames'
     }),
     submit() {
       if (this.$refs.accountForm.validate()) {
-        this.updateTimezone(this.timezone.id)
+        this.updateTimezone(this.locTimezone.id)
       }
     }
   }
