@@ -43,23 +43,22 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      loadingPumpOnlines: (state) => state.vtcPlusConveying.loadingPumpOnlines,
-      loadingPumpBlowBacks: (state) => state.vtcPlusConveying.loadingPumpBlowBacks,
-
-      pumpOnlines: (state) => state.vtcPlusConveying.pumpOnlines,
-      pumpBlowBacks: (state) => state.vtcPlusConveying.pumpBlowBacks
-    })
+    ...mapState('vtcPlusConveying', [
+      'loadingPumpOnlines',
+      'loadingPumpBlowBacks',
+      'pumpOnlines',
+      'pumpBlowBacks'
+    ])
   },
   mounted() {
     this.getPumpOnlines(this.productId)
     this.getPumpBlowBacks(this.productId)
   },
   methods: {
-    ...mapActions({
-      getPumpOnlines: 'vtcPlusConveying/getPumpOnlines',
-      getPumpBlowBacks: 'vtcPlusConveying/getPumpBlowBacks'
-    })
+    ...mapActions('vtcPlusConveying', [
+      'getPumpOnlines',
+      'getPumpBlowBacks'
+    ])
   }
 }
 </script>

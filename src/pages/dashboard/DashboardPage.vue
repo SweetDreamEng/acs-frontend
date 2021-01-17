@@ -8,11 +8,12 @@
     </v-sheet>
 
     <v-container>
-      <locations-table
+      <dashboard-table
         :loading="loadingLocationsTable"
-        :locations="locations"
+        :items="locations"
+        table-type="location"
       >
-      </locations-table>
+      </dashboard-table>
 
       <br>
 
@@ -35,13 +36,13 @@ import { mapState, mapActions } from 'vuex'
 
 import TopCard from '../../components/dashboard/TopCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
-import LocationsTable from '../../components/dashboard/dashboard-tables/LocationsTable'
+import DashboardTable from '../../components/dashboard/dashboard-tables/DashboardTable'
 import OeeContainer from '../../components/dashboard/OeeContainer'
 
 export default {
   components: {
     MachinesTableCard,
-    LocationsTable,
+    DashboardTable,
     TopCard,
     OeeContainer
   },

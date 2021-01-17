@@ -97,18 +97,19 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      machine: (state) => state.machines.machine,
-      pumpHours: (state) => state.vtcPlusConveying.pumpHours,
-      actualPumpHoursOil: (state) => state.vtcPlusConveying.actualPumpHoursOil,
-      targetPumpHoursOil: (state) => state.vtcPlusConveying.targetPumpHoursOil,
-      
-      loadingOverview: (state) => state.machines.loadingOverview,
-      loadingUtilization: (state) => state.machines.loadingUtilization,
-      loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingPumpHours: (state) => state.vtcPlusConveying.loadingPumpHours,
-      loadingPumpHoursOil: (state) => state.vtcPlusConveying.loadingPumpHoursOil
-    }),
+    ...mapState('machines', [
+      'machine',
+      'loadingOverview',
+      'loadingUtilization',
+      'loadingEnergyConsumption'
+    ]),
+    ...mapState('vtcPlusConveying', [
+      'pumpHours',
+      'actualPumpHoursOil',
+      'targetPumpHoursOil',
+      'loadingPumpHours',
+      'loadingPumpHoursOil'
+    ]),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
       selectedTimeRange: 'machines/selectedTimeRange'
@@ -145,15 +146,17 @@ export default {
     this.getPumpHoursOil(this.productId)
   },
   methods: {
-    ...mapActions({
-      onTimeRangeChanged: 'machines/onTimeRangeChanged',
-      selectTimeRange: 'machines/selectTimeRange',
-      getOverview: 'machines/getOverview',
-      getUtilization: 'machines/getUtilization',
-      getEnergyConsumption: 'machines/getEnergyConsumption',
-      getPumpHoursOil: 'vtcPlusConveying/getPumpHoursOil',
-      getPumpHours: 'vtcPlusConveying/getPumpHours'
-    }),
+    ...mapActions('machines', [
+      'onTimeRangeChanged',
+      'selectTimeRange',
+      'getOverview',
+      'getUtilization',
+      'getEnergyConsumption'
+    ]),
+    ...mapActions('vtcPlusConveying', [
+      'getPumpHoursOil',
+      'getPumpHours'
+    ]),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)
       this.$nextTick(() => {

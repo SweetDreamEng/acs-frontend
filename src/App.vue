@@ -105,4 +105,7 @@ export default {
 .fade-leave-active {
   opacity: 0;
 }
+.prod-rate-header {
+  white-space: nowrap;
+}
 </style>

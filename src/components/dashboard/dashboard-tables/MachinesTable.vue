@@ -22,7 +22,7 @@
           </production-rate-chart>
         </template>
         <template v-slot:item.utilization="{ item }">
-          <div class="d-flex align-center" style="width: 180px;">
+          <div class="d-flex align-center mx-auto" style="width: 180px;">
             <apexchart
               type="line"
               width="100%"
@@ -251,8 +251,3 @@ export default {
   }
 }
 </script>
-<style>
-  .prod-rate-header {
-    white-space: nowrap;
-  }
-</style>

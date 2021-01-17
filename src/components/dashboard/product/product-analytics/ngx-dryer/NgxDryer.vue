@@ -91,23 +91,21 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      machine: (state) => state.machines.machine,
-      dryingHoppers: (state) => state.ngxDryer.dryingHoppers,
-      inletTemperatures: (state) => state.ngxDryer.inletTemperatures,
-      targetTemperatures: (state) => state.ngxDryer.targetTemperatures,
-      outletTemperatures: (state) => state.ngxDryer.outletTemperatures,
-
-      loadingOverview: (state) => state.machines.loadingOverview,
-      loadingUtilization: (state) => state.machines.loadingUtilization,
-      loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingDryingHoppers: (state) => state.ngxDryer.loadingDryingHoppers,
-      loadingTemperatures: (state) => state.ngxDryer.loadingTemperatures
-    }),
-    ...mapGetters({
-      timeRangeLabel: 'machines/timeRangeLabel',
-      selectedTimeRange: 'machines/selectedTimeRange'
-    }),
+    ...mapState('machines', [
+      'machine',
+      'loadingOverview',
+      'loadingUtilization',
+      'loadingEnergyConsumption'
+    ]),
+    ...mapState('ngxDryer', [
+      'dryingHoppers',
+      'inletTemperatures',
+      'targetTemperatures',
+      'outletTemperatures',
+      'loadingDryingHoppers',
+      'loadingTemperatures'
+    ]),
+    ...mapGetters('machines', ['timeRangeLabel', 'selectedTimeRange']),
     hopperAirTemperatureSeries() {
       return [{
         name: 'Outlet Temperature',
@@ -132,15 +130,17 @@ export default {
     this.getHopperTemperatures(this.productId)
   },
   methods: {
-    ...mapActions({
-      onTimeRangeChanged: 'machines/onTimeRangeChanged',
-      selectTimeRange: 'machines/selectTimeRange',
-      getOverview: 'machines/getOverview',
-      getUtilization: 'machines/getUtilization',
-      getEnergyConsumption: 'machines/getEnergyConsumption',
-      getDryingHopperStats: 'ngxDryer/getDryingHopperStats',
-      getHopperTemperatures: 'ngxDryer/getHopperTemperatures'
-    }),
+    ...mapActions('machines', [
+      'onTimeRangeChanged',
+      'selectTimeRange',
+      'getOverview',
+      'getUtilization',
+      'getEnergyConsumption'
+    ]),
+    ...mapActions('ngxDryer', [
+      'getDryingHopperStats',
+      'getHopperTemperatures'
+    ]),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)
       this.$nextTick(() => {

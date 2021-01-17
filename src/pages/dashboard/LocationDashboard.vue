@@ -8,11 +8,12 @@
       </v-container>
     </v-sheet>
     <v-container>
-      <zones-table
+      <dashboard-table
         :loading="loadingZonesTable"
-        :zones="zones"
+        :items="zones"
+        table-type="zone"
       >
-      </zones-table>
+      </dashboard-table>
 
       <br>
 
@@ -27,14 +28,14 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
-import ZonesTable from '../../components/dashboard/dashboard-tables/ZonesTable'
+import DashboardTable from '../../components/dashboard/dashboard-tables/DashboardTable'
 import TopCard from '../../components/dashboard/TopCard'
 import OeeContainer from '../../components/dashboard/OeeContainer'
 
 export default {
   components: {
     MachinesTableCard,
-    ZonesTable,
+    DashboardTable,
     TopCard,
     OeeContainer
   },

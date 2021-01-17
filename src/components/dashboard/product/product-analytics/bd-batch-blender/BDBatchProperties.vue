@@ -82,23 +82,21 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      loadingStationConveyings: (state) => state.bdBlenderAnalytics.loadingStationConveyings,
-      loadingHopperStables: (state) => state.bdBlenderAnalytics.loadingHopperStables,
-      loadingCalibrationFactors: (state) => state.bdBlenderAnalytics.loadingCalibrationFactors,
-      loadingCellBits: (state) => state.bdBlenderAnalytics.loadingCellBits,
-      loadingProcessRates: (state) => state.bdBlenderAnalytics.loadingProcessRates,
-
-      stationConveyingSeries: (state) => state.bdBlenderAnalytics.stationConveyingSeries,
-      hopperStables: (state) => state.bdBlenderAnalytics.hopperStables,
-      cellBits: (state) => state.bdBlenderAnalytics.cellBits,
-      processRates: (state) => state.bdBlenderAnalytics.processRates,
-      processRateTimeRange: (state) => state.bdBlenderAnalytics.processRateTimeRange,
-      calibrationFactors: (state) => state.bdBlenderAnalytics.calibrationFactors,
-      calibrationFactorTimeRange: (state) => state.bdBlenderAnalytics.calibrationFactorTimeRange,
-
-      selectedTimeRange: (state) => state.bdBlenderAnalytics.selectedTimeRange
-    }),
+    ...mapState('bdBlenderAnalytics', [
+      'loadingStationConveyings',
+      'loadingHopperStables',
+      'loadingCalibrationFactors',
+      'loadingCellBits',
+      'loadingProcessRates',
+      'stationConveyingSeries',
+      'hopperStables',
+      'cellBits',
+      'processRates',
+      'processRateTimeRange',
+      'calibrationFactors',
+      'calibrationFactorTimeRange',
+      'selectedTimeRange'
+    ]),
     ...mapGetters({
       timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel'
     }),
@@ -116,16 +114,15 @@ export default {
     this.getProcessRate(this.productId)
   },
   methods: {
-    ...mapActions({
-      getStationConveyings: 'bdBlenderAnalytics/getStationConveyings',
-      getHopperStables: 'bdBlenderAnalytics/getHopperStables',
-      getFeederCalibrationFactors: 'bdBlenderAnalytics/getFeederCalibrationFactors',
-      getLoadingCellBits: 'bdBlenderAnalytics/getLoadingCellBits',
-      getProcessRate: 'bdBlenderAnalytics/getProcessRate',
-
-      onTimeRangeChanged: 'bdBlenderAnalytics/onTimeRangeChanged',
-      selectTimeRange: 'bdBlenderAnalytics/selectTimeRange'
-    }),
+    ...mapActions('bdBlenderAnalytics', [
+      'getStationConveyings',
+      'getHopperStables',
+      'getFeederCalibrationFactors',
+      'getLoadingCellBits',
+      'getProcessRate',
+      'onTimeRangeChanged',
+      'selectTimeRange'
+    ]),
     feederSeries(feederValues) {
       const feeders = [0, 1, 2, 3, 4, 5, 6, 7]
 

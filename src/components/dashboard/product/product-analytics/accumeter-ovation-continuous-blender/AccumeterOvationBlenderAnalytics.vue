@@ -100,25 +100,27 @@ export default {
     }
   },
   computed: {
+    ...mapState('machines', [
+      'loadingOverview',
+      'loadingUtilization',
+      'loadingEnergyConsumption',
+      'machine',
+      'utilizationTimeRange',
+      'energyConsumptionTimeRange'
+    ]),
+    ...mapState('accumeterOvationBlender', [
+      'loadingRecipe',
+      'loadingSystemStates',
+      'loadingFeederStables',
+      'loadingProcessRate',
+      'actualRecipeValues',
+      'targetRecipeValues',
+      'systemStates',
+      'feederStables',
+      'processRateTimeRange'
+    ]),
     ...mapState({
-      loadingOverview: (state) => state.machines.loadingOverview,
-      loadingUtilization: (state) => state.machines.loadingUtilization,
-      loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingRecipe: (state) => state.accumeterOvationBlender.loadingRecipe,
-      loadingSystemStates: (state) => state.accumeterOvationBlender.loadingSystemStates,
-      loadingFeederStables: (state) => state.accumeterOvationBlender.loadingFeederStables,
-      loadingProcessRate: (state) => state.accumeterOvationBlender.loadingProcessRate,
-
-      machine: (state) => state.machines.machine,
-      actualRecipeValues: (state) => state.accumeterOvationBlender.actualRecipeValues,
-      targetRecipeValues: (state) => state.accumeterOvationBlender.targetRecipeValues,
-      systemStates: (state) => state.accumeterOvationBlender.systemStates,
-      feederStables: (state) => state.accumeterOvationBlender.feederStables,
-      processRates: (state) => state.accumeterOvationBlender.processRateSeries,
-
-      utilizationTimeRange: (state) => state.machines.utilizationTimeRange,
-      energyConsumptionTimeRange: (state) => state.machines.energyConsumptionTimeRange,
-      processRateTimeRange: (state) => state.accumeterOvationBlender.processRateTimeRange
+      processRates: (state) => state.accumeterOvationBlender.processRateSeries
     }),
     ...mapGetters({
       timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel',
@@ -141,18 +143,19 @@ export default {
     this.getRecipe(this.productId)
   },
   methods: {
-    ...mapActions({
-      getOverview: 'machines/getOverview',
-      getUtilization: 'machines/getUtilization',
-      getEnergyConsumption: 'machines/getEnergyConsumption',
-      getSystemStates: 'accumeterOvationBlender/getSystemStates',
-      getFeederStables: 'accumeterOvationBlender/getFeederStables',
-      getProductionRate: 'accumeterOvationBlender/getProductionRate',
-      getRecipe: 'accumeterOvationBlender/getRecipe',
-
-      onTimeRangeChanged: 'accumeterOvationBlender/onTimeRangeChanged',
-      selectTimeRange: 'accumeterOvationBlender/selectTimeRange'
-    }),
+    ...mapActions('machines', [
+      'getOverview',
+      'getUtilization',
+      'getEnergyConsumption'
+    ]),
+    ...mapActions('accumeterOvationBlender', [
+      'getSystemStates',
+      'getFeederStables',
+      'getProductionRate',
+      'getRecipe',
+      'onTimeRangeChanged',
+      'selectTimeRange'
+    ]),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)
       this.showTimeRangeChooser = true

@@ -28,8 +28,8 @@
     <v-row dense>
       <v-col md="8" sm="12">
         <actual-target-weight
-          :values-tgt-weight="valuesTgtWeight"
-          :values-act-weight="valuesActWeight"
+          :values-tgt-weight="targetWeights"
+          :values-act-weight="actualWeights"
           :is-loading="loadingWeight"
         >
         </actual-target-weight>
@@ -99,26 +99,27 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      loadingOverview: (state) => state.machines.loadingOverview,
-      loadingUtilization: (state) => state.machines.loadingUtilization,
-      loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
-      loadingWeight: (state) => state.bdBlenderAnalytics.loadingWeight,
-      loadingInventories: (state) => state.bdBlenderAnalytics.loadingInventories,
-      loadingRecipe: (state) => state.bdBlenderAnalytics.loadingRecipe,
-      
-      machine: (state) => state.machines.machine,
-      valuesTgtWeight: (state) => state.bdBlenderAnalytics.targetWeights,
-      valuesActWeight: (state) => state.bdBlenderAnalytics.actualWeights,
-      inventories: (state) => state.bdBlenderAnalytics.inventories,
-      recipeValues: (state) => state.bdBlenderAnalytics.recipeValues,
-      ezTypes: (state) => state.bdBlenderAnalytics.ezTypes,
-      recipeMode: (state) => state.bdBlenderAnalytics.recipeMode
-    }),
-    ...mapGetters({
-      timeRangeLabel: 'machines/timeRangeLabel',
-      selectedTimeRange: 'machines/selectedTimeRange'
-    })
+    ...mapState('machines', [
+      'loadingOverview',
+      'loadingUtilization',
+      'loadingEnergyConsumption',
+      'machine'
+    ]),
+    ...mapState('bdBlenderAnalytics', [
+      'loadingWeight',
+      'loadingInventories',
+      'loadingRecipe',
+      'targetWeights',
+      'actualWeights',
+      'inventories',
+      'recipeValues',
+      'ezTypes',
+      'recipeMode'
+    ]),
+    ...mapGetters('machines', [
+      'timeRangeLabel', 
+      'selectedTimeRange'
+    ])
   },
   created() {
     this.getOverview(this.productId)
@@ -129,16 +130,18 @@ export default {
     this.getWeight(this.productId)
   },
   methods: {
-    ...mapActions({
-      getOverview: 'machines/getOverview',
-      getUtilization: 'machines/getUtilization',
-      getEnergyConsumption: 'machines/getEnergyConsumption',
-      getInventory: 'bdBlenderAnalytics/getInventory',
-      getRecipe: 'bdBlenderAnalytics/getRecipe',
-      getWeight: 'bdBlenderAnalytics/getWeight',
-      onTimeRangeChanged: 'machines/onTimeRangeChanged',
-      selectTimeRange: 'machines/selectTimeRange'
-    }),
+    ...mapActions('machines', [
+      'getOverview',
+      'getUtilization',
+      'getEnergyConsumption',
+      'onTimeRangeChanged',
+      'selectTimeRange'
+    ]),
+    ...mapActions('bdBlenderAnalytics', [
+      'getInventory',
+      'getRecipe',
+      'getWeight'
+    ]),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)
       this.$nextTick(() => {

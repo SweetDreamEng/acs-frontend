@@ -81,23 +81,21 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      loadingBlenderCapabilities: (state) => state.accumeterOvationBlender.loadingBlenderCapabilities,
-      loadingFeederCalibrations: (state) => state.accumeterOvationBlender.loadingFeederCalibrations,
-      loadingFeederSpeeds: (state) => state.accumeterOvationBlender.loadingFeederSpeeds,
-      loadingTargetRates: (state) => state.accumeterOvationBlender.loadingTargetRates,
-
-      feederCalibrations: (state) => state.accumeterOvationBlender.feederCalibrations,
-      feederCalibrationTimeRange: (state) => state.accumeterOvationBlender.feederCalibrationTimeRange,
-      blenderCapabilities: (state) => state.accumeterOvationBlender.blenderCapabilities,
-      blenderCapabilityTimeRange: (state) => state.accumeterOvationBlender.blenderCapabilityTimeRange,
-      feederSpeeds: (state) => state.accumeterOvationBlender.feederSpeeds,
-      feederSpeedTimeRange: (state) => state.accumeterOvationBlender.feederSpeedTimeRange,
-      targetRates: (state) => state.accumeterOvationBlender.targetRates,
-      targetRateTimeRange: (state) => state.accumeterOvationBlender.targetRateTimeRange,
-
-      selectedTimeRange: (state) => state.accumeterOvationBlender.selectedTimeRange
-    }),
+    ...mapState('accumeterOvationBlender', [
+      'loadingBlenderCapabilities',
+      'loadingFeederCalibrations',
+      'loadingFeederSpeeds',
+      'loadingTargetRates',
+      'feederCalibrations',
+      'feederCalibrationTimeRange',
+      'blenderCapabilities',
+      'blenderCapabilityTimeRange',
+      'feederSpeeds',
+      'feederSpeedTimeRange',
+      'targetRates',
+      'targetRateTimeRange',
+      'selectedTimeRange'
+    ]),
     ...mapGetters({
       timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel'
     })
@@ -109,15 +107,14 @@ export default {
     this.getTargetRates(this.productId)
   },
   methods: {
-    ...mapActions({
-      getBlenderCapabilities: 'accumeterOvationBlender/getBlenderCapabilities',
-      getFeederCalibrations: 'accumeterOvationBlender/getFeederCalibrations',
-      getFeederSpeeds: 'accumeterOvationBlender/getFeederSpeeds',
-      getTargetRates: 'accumeterOvationBlender/getTargetRates',
-
-      onTimeRangeChanged: 'accumeterOvationBlender/onTimeRangeChanged',
-      selectTimeRange: 'accumeterOvationBlender/selectTimeRange'
-    }),
+    ...mapActions('accumeterOvationBlender', [
+      'getBlenderCapabilities',
+      'getFeederCalibrations',
+      'getFeederSpeeds',
+      'getTargetRates',
+      'onTimeRangeChanged',
+      'selectTimeRange'
+    ]),
     feederSeries(feederValues) {
       const feeders = [0, 1, 2, 3, 4, 5]
 

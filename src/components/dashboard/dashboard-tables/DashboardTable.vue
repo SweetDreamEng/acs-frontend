@@ -4,20 +4,19 @@
       <v-data-table
         :loading="loading"
         :headers="headers"
-        :items="locations"
+        :items="items"
         hide-default-footer
+        @click:row="rowClicked"
       >
         <template v-slot:item.rate="{ item }">
-          <div style="max-width: 100px" class="d-flex align-center justify-center mx-auto">
-            <production-rate-chart
-              :height="120"
-              :series="[item.rate]"
-            >
-            </production-rate-chart>
-          </div>
+          <production-rate-chart
+            :height="120"
+            :series="[item.rate]"
+          >
+          </production-rate-chart>
         </template>
         <template v-slot:item.utilization="{ item }">
-          <div class="d-flex align-center">
+          <div class="d-flex align-center mx-auto" style="width: 180px;">
             <apexchart
               type="line"
               width="160"
@@ -28,14 +27,8 @@
             {{ item.utilization }}
           </div>
         </template>
-        <template v-slot:item.name="{ item }">
-          <router-link :to="item.id.toString()" append class="d-flex align-center">
-            <v-icon>mdi-google-maps</v-icon>
-            <span class="title text-no-wrap ml-1">{{ item.name }}</span>
-          </router-link>
-        </template>
         <template v-slot:item.downtimeDistribution="{ item }">
-          <div v-if="item && item.downtimeDistribution" class="d-flex align-end justify-end">
+          <div v-if="item && item.downtimeDistribution" class="mx-auto">
             <no-downtime v-if="hasNoDowntime(item.downtimeDistribution)"></no-downtime>
             <apexchart
               v-else
@@ -72,26 +65,17 @@ export default {
       type: Boolean,
       default: false
     },
-    locations: {
+    items: {
       type: Array,
       default: () => []
+    },
+    tableType: {
+      type: String,
+      default: ''
     }
   },
   data () {
     return {
-      headers: [
-        { text: 'Location', value: 'name' },
-        { text: 'Utilization', align: 'center', value: 'utilization' },
-        { text: 'OEE', align: 'center', value: 'oee' },
-        { text: 'Actual Performance', align: 'center', value: 'performance' },
-        { text: 'Prod Rate', value: 'rate', align: 'center', width: '1%' },
-        { text: 'Downtime Distrubton', align: 'right', value: 'downtimeDistribution', width: '1%', sortable: false }
-      ],
-
-      selected: ['name1', 'name2', 'name3'],
-
-      searchQuery: '',
-
       chartOptions: {
         chart: {
           type: 'bar',
@@ -205,6 +189,30 @@ export default {
       }
     }
   },
+  computed: {
+    headers() {
+      return [
+        { text: this.headerLabel, value: 'name' },
+        { text: 'Utilization', align: 'center', value: 'utilization' },
+        { text: 'OEE', align: 'center', value: 'oee' },
+        { text: 'Actual Performance', align: 'center', value: 'performance' },
+        { text: 'Prod Rate', value: 'rate', align: 'center', width: '1%', class: 'prod-rate-header' },
+        { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', width: '1%', sortable: false }
+      ]
+    },
+    headerLabel() {
+      switch (this.tableType) {
+      case 'location':
+        return 'Locations'
+      case 'zone':
+        return 'Zones'
+      case 'machine':
+        return 'Machines'
+      default:
+        return ''
+      }
+    }
+  },
   methods: {
     hasNoDowntime(distribution) {
       let sum = 0
@@ -229,12 +237,23 @@ export default {
           data: [distribution[2]]
         }
       ]
+    },
+
+    rowClicked(item) {
+      switch (this.tableType) {
+      case 'location':
+        this.$router.push({ path: item.id.toString(), append: true })
+        break
+      case 'zone':
+        this.$router.push({ path: item.id.toString(), append: true })
+        break
+      case 'machine':
+        this.$router.push({ path: item.machine_id + '/' + item.serial_number, append: true })
+        break
+      default:
+        break 
+      }
     }
   }
 }
 </script>
-<style scoped>
-  a {
-    text-decoration: none;
-  }
-</style>

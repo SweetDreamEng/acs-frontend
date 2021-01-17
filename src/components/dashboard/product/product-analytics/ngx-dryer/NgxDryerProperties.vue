@@ -81,22 +81,20 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      loadingBedStates: (state) => state.ngxDryer.loadingBedStates,
-      loadingDHOnlineHours: (state) => state.ngxDryer.loadingDHOnlineHours,
-      loadingDryerOnlineHours: (state) => state.ngxDryer.loadingDryerOnlineHours,
-      loadingBlowerRunHours: (state) => state.ngxDryer.loadingBlowerRunHours,
-
-      bedStates: (state) => state.ngxDryer.bedStates,
-      dhOnlineHours: (state) => state.ngxDryer.dhOnlineHours,
-      dhOnlineHoursTimeRange: (state) => state.ngxDryer.dhOnlineHoursTimeRange,
-      dryerOnlineHours: (state) => state.ngxDryer.dryerOnlineHours,
-      dryerOnlineHoursTimeRange: (state) => state.ngxDryer.dryerOnlineHoursTimeRange,
-      blowerRunHours: (state) => state.ngxDryer.blowerRunHours,
-      blowerRunHoursTimeRange: (state) => state.ngxDryer.blowerRunHoursTimeRange,
-
-      selectedTimeRange: (state) => state.ngxDryer.selectedTimeRange
-    }),
+    ...mapState('ngxDryer', [
+      'loadingBedStates',
+      'loadingDHOnlineHours',
+      'loadingDryerOnlineHours',
+      'loadingBlowerRunHours',
+      'bedStates',
+      'dhOnlineHours',
+      'dhOnlineHoursTimeRange',
+      'dryerOnlineHours',
+      'dryerOnlineHoursTimeRange',
+      'blowerRunHours',
+      'blowerRunHoursTimeRange',
+      'selectedTimeRange'
+    ]),
     ...mapGetters({
       timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel'
     })
@@ -108,15 +106,14 @@ export default {
     this.getBlowerRunHours(this.productId)
   },
   methods: {
-    ...mapActions({
-      getBedStates: 'ngxDryer/getBedStates',
-      getDhOnlineHours: 'ngxDryer/getDhOnlineHours',
-      getDryerOnlineHours: 'ngxDryer/getDryerOnlineHours',
-      getBlowerRunHours: 'ngxDryer/getBlowerRunHours',
-
-      onTimeRangeChanged: 'ngxDryer/onTimeRangeChanged',
-      selectTimeRange: 'ngxDryer/selectTimeRange'
-    }),
+    ...mapActions('ngxDryer', [
+      'getBedStates',
+      'getDhOnlineHours',
+      'getDryerOnlineHours',
+      'getBlowerRunHours',
+      'onTimeRangeChanged',
+      'selectTimeRange'
+    ]),
     dhOnlineHoursSeries() {
       const items = ['DH1 Online Hrs - Maint', 'DH1 Online Hrs – Total', 'DH2 Online Hrs - Maint', 'DH2 Online Hrs – Total', 'DH3 Online Hrs - Maint', 'DH3 Online Hrs – Total']
 
