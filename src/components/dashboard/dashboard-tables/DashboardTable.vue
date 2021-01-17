@@ -6,8 +6,12 @@
         :headers="headers"
         :items="items"
         hide-default-footer
+        class="link-table"
         @click:row="rowClicked"
       >
+        <template v-slot:item.name="{ item }">
+          <span class="primary--text font-weight-bold">{{ item.name }}</span>
+        </template>
         <template v-slot:item.rate="{ item }">
           <production-rate-chart
             :height="120"

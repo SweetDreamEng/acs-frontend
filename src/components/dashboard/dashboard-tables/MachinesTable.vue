@@ -7,12 +7,16 @@
         :items="devices"
         :items-per-page="5"
         :page.sync="page"
+        class="link-table"
         hide-default-footer
         @click:row="(item) => $router.push({ path: item.machine_id + '/' + item.serial_number, append: true })"
       >
         <template v-slot:header.customer_assigned_name="{ header }">
           <v-icon small color="primary">mdi-wrench</v-icon>
           {{ header.text }}
+        </template>
+        <template v-slot:item.customer_assigned_name="{ item }">
+          <span class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
         </template>
         <template v-slot:item.rate="{ item }">
           <production-rate-chart

@@ -32,6 +32,7 @@
         :loading="loadingDashboardDevicesTable"
         :items-per-page="5"
         :page.sync="page"
+        class="link-table"
         hide-default-footer
         @click:row="productView"
       >
@@ -175,8 +176,3 @@ export default {
   }
 }
 </script>
-<style>
-  #machines-table table tbody tr {
-    cursor: pointer;
-  }
-</style>

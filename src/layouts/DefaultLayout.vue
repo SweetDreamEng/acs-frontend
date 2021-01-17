@@ -17,13 +17,8 @@
           <v-img v-else-if="logoFile === false" :src="require('../assets/imgs/logo-aec.png')" > </v-img>
         </div>
       </template>
-
-      <!-- Navigation menu -->
-      <main-menu v-if="userRole === 'super_admin'" :menu="navigation.superAdminMenu" />
-      <main-menu v-if="userRole === 'acs_admin' || userRole === 'acs_manager'" :menu="navigation.menu" />
-      <main-menu v-if="userRole === 'acs_viewer'" :menu="navigation.acsViewerMenu" />
-      <main-menu v-if="userRole === 'customer_admin' || userRole === 'customer_manager'" :menu="navigation.customerMenu" />
-      <main-menu v-if="userRole === 'customer_operator'" :menu="navigation.customerOperatorMenu" />
+      
+      <main-menu :menu="userMenu" />
 
       <!-- Navigation menu footer -->
       <template v-slot:append>
@@ -101,6 +96,24 @@ export default {
       userRole: (state) => state.auth.user.role,
       logoFile: (state) => state.settings.logo_file
     }),
+    userMenu() {
+      switch (this.userRole) {
+      case 'super_admin':
+        return this.navigation.superAdminMenu
+      case 'acs_admin':
+      case 'acs_manager':
+        return this.navigation.menu
+      case 'acs_viewer':
+        return this.navigation.acsViewerMenu
+      case 'customer_admin':
+      case 'customer_manager':
+        return this.navigation.customerMenu
+      case 'customer_operator':
+        return this.navigation.customerOperatorMenu
+      default:
+        return null
+      }
+    },
     logoFilePath() {
       return this.logoImgError ? require('../assets/imgs/logo-aec.png') : this.logoFile
     }

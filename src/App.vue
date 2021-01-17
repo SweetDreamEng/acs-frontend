@@ -108,4 +108,7 @@ export default {
 .prod-rate-header {
   white-space: nowrap;
 }
+.link-table table tbody tr {
+  cursor: pointer;
+}
 </style>
