@@ -10,35 +10,34 @@ function hideLoading() {
 
 async function bootstrap() {
   const token = localStorage.getItem('token')
-  const p1 = new Promise((resolve, reject) => {
-    api.post('/auth/check', {}, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    }).then((response) => {
-      store.commit('auth/BOOTSTRAP', {
-        user: response.data,
-        token
-      }, { root: true })
+  let user = null
 
-      resolve(response)
-    }).catch ((err) => {
+  if (token) {
+    try {
+      const response = await api.post('/auth/check', {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      user = response.data
+    } catch (error) {
       localStorage.removeItem('token')
       window.location = '/auth/signin'
+    }
+  }
 
-      reject(err)
-    })
-  })
+  try {
+    await store.dispatch('settings/setInitialSetting')
+  } catch (error) {
+    console.log(error)
+  }
 
-  const p2 = new Promise((resolve, reject) => {
-    store.dispatch('settings/setInitialSetting')
-      .then((response) => {
-        resolve(response)
-      })
-  })
+  store.commit('auth/BOOTSTRAP', {
+    user,
+    token
+  }, { root: true })
 
-  await Promise.all([p1, p2])
-  
   setTimeout(hideLoading, 100)
 }
 
