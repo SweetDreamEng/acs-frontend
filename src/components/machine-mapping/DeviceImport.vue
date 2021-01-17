@@ -42,8 +42,14 @@ export default {
     }),
     submit() {
       this.importDevices()
-        .then((response) => {
-          this.getDevices(1)
+        .then(() => {
+          this.getDevices({
+            filterForm: {
+              filters: [],
+              searchQuery: ''
+            },
+            page: 1
+          })
         })
     },
     resetErrors() {

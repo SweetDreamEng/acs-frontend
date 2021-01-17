@@ -8,7 +8,12 @@
         :items-per-page="5"
         :page.sync="page"
         hide-default-footer
+        @click:row="(item) => $router.push({ path: item.machine_id + '/' + item.serial_number, append: true })"
       >
+        <template v-slot:header.customer_assigned_name="{ header }">
+          <v-icon small color="primary">mdi-wrench</v-icon>
+          {{ header.text }}
+        </template>
         <template v-slot:item.rate="{ item }">
           <production-rate-chart
             :height="120"
@@ -17,10 +22,10 @@
           </production-rate-chart>
         </template>
         <template v-slot:item.utilization="{ item }">
-          <div class="d-flex align-center">
+          <div class="d-flex align-center" style="width: 180px;">
             <apexchart
               type="line"
-              width="160"
+              width="100%"
               height="100"
               :options="utilizationChartOptions"
               :series="utilizationSeries"
@@ -28,12 +33,6 @@
             </apexchart>
             {{ item.utilization }}
           </div>
-        </template>
-        <template v-slot:item.customer_assigned_name="{ item }">
-          <router-link class="d-flex align-center" :to="item.machine_id + '/' + item.serial_number" append>
-            <v-icon>mdi-wrench</v-icon>
-            <span class="title text-no-wrap ml-1">{{ item.customer_assigned_name }}</span>
-          </router-link>
         </template>
         <template v-slot:item.downtimeDistribution="{ item }">
           <div v-if="item && item.downtimeDistribution" class="d-flex align-end justify-end">
@@ -86,7 +85,7 @@ export default {
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'start', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },
-        { text: 'Prod Rate', value: 'rate', align: 'center', width: '1%' },
+        { text: 'Prod Rate', value: 'rate', align: 'center', width: '1%', class: 'prod-rate-header' },
         { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false, width: '1%' }
       ],
       searchQuery: '',
@@ -252,8 +251,8 @@ export default {
   }
 }
 </script>
-<style scoped>
-  a {
-    text-decoration: none;
+<style>
+  .prod-rate-header {
+    white-space: nowrap;
   }
 </style>

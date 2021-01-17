@@ -92,7 +92,7 @@
         </template>
 
         <template v-slot:item.registered_view="{ item }">
-          <div class="font-weight-bold d-flex align-center text-no-wrap">
+          <div class="font-weight-bold d-flex align-center">
             <v-icon
               left
               :color="item.registered ? 'green' : 'red'"
