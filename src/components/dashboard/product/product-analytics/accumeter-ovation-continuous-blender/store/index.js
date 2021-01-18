@@ -48,12 +48,15 @@ const module = {
   },
 
   actions: {
-    async getSystemStates({ commit }, id) {
+    async getSystemStates({ commit }, { id, isAdditional }) {
       commit('SET_SYSTEM_STATES', {})
       commit('SET_LOADING_SYSTEM_STATES', true)
 
       try {
-        const response = await api.getSystemStates(id)
+        const response = await api.getSystemStates({
+          id,
+          isAdditional
+        })
 
         commit('SET_SYSTEM_STATES', response.data.machine_states)
       } catch (error) {

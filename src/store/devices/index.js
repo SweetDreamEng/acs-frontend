@@ -69,6 +69,8 @@ const module = {
     async getDeviceConfiguration({
       commit
     }, id) {
+      commit('SET_DEVICE_CONFIGURATION', {})
+
       try {
         const response = await deviceAPI.getDeviceConfiguration(id)
 

@@ -54,6 +54,7 @@
               <component
                 :is="analyticsComponent(11)" 
                 :product-id="$route.params.productId"
+                :is-additional="true"
               >
               </component>
             </v-col>

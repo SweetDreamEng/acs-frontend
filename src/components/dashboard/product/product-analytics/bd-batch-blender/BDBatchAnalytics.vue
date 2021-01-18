@@ -122,7 +122,10 @@ export default {
     ])
   },
   created() {
-    this.getOverview(this.productId)
+    this.getOverview({
+      id: this.productId,
+      isAdditional: false
+    })
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
     this.getRecipe(this.productId)

@@ -6,8 +6,8 @@ export default {
     })
   },
 
-  getSystemStates(id) {
-    return api.get(`/analytics/product-system-states/${id}`).then((response) => {
+  getSystemStates(data) {
+    return api.post('/analytics/product-system-states', data).then((response) => {
       return response
     })
   },

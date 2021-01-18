@@ -43,8 +43,8 @@ export default {
   },
   computed: {
     machineImage() {
-      if (this.machine.machine_id)
-        return require(`../../../../../../assets/imgs/${this.machine.machine_id}.png`)
+      if (this.machine.configuration)
+        return require(`../../../../../../assets/imgs/${this.machine.configuration.id}.png`)
       else
         return ''
     }

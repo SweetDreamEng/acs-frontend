@@ -133,11 +133,17 @@ export default {
       }]
     }
   },
-  created() {
-    this.getOverview(this.productId)
+  mounted() {
+    this.getOverview({
+      id: this.productId,
+      isAdditional: false
+    })
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
-    this.getSystemStates(this.productId)
+    this.getSystemStates({
+      id: this.productId,
+      isAdditional: false
+    })
     this.getFeederStables(this.productId)
     this.getProductionRate(this.productId)
     this.getRecipe(this.productId)

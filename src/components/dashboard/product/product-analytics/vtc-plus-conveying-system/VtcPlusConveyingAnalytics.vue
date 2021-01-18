@@ -70,9 +70,9 @@
 </template>
 <script>
 import BarGraph from '../../common/BarGraph'
-import Overview from '../../common/Overview'
-import Utilization from '../../common/Utilization'
-import EnergyConsumption from '../../common/EnergyConsumption'
+import Overview from '../common/components/Overview'
+import Utilization from '../common/components/Utilization'
+import EnergyConsumption from '../common/components/EnergyConsumption'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -138,8 +138,11 @@ export default {
       ]
     }
   },
-  created() {
-    this.getOverview(this.productId)
+  mounted() {
+    this.getOverview({
+      id: this.productId,
+      isAdditional: false
+    })
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
     this.getPumpHours(this.productId)

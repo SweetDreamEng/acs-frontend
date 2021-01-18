@@ -23,12 +23,16 @@ const selectTimeRange = ({ commit }, key) => {
   commit('SET_CURRENT_TIME_RANGE_ITEM', key)
 }
 
-const getOverview = async ({ commit }, id) => {
+const getOverview = async ({ commit }, { id, isAdditional }) => {
   commit('SET_OVERVIEW', {})
   commit('OVERVIEW_LOADING')
 
   try {
-    const response = await machineAPI.getOverview(id)
+    const data = {
+      id,
+      isAdditional
+    }
+    const response = await machineAPI.getOverview(data)
 
     commit('SET_OVERVIEW', response.data.overview)
   } catch (error) {

@@ -62,9 +62,9 @@
   </div>
 </template>
 <script>
-import Overview from '../../common/Overview'
-import Utilization from '../../common/Utilization'
-import EnergyConsumption from '../../common/EnergyConsumption'
+import Overview from '../common/components/Overview'
+import Utilization from '../common/components/Utilization'
+import EnergyConsumption from '../common/components/EnergyConsumption'
 import MachineStates from './components/MachineStates'
 import AccumulatedHopperInventory from './components/AccumulatedHopperInventory'
 import AccumulatedHauloffLength from './components/AccumulatedHauloffLength'
@@ -115,8 +115,11 @@ export default {
       selectedTimeRange: 'machines/selectedTimeRange'
     })
   },
-  created() {
-    this.getOverview(this.productId)
+  mounted() {
+    this.getOverview({
+      id: this.productId,
+      isAdditional: false
+    })
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
     this.getMachineStates(this.productId)

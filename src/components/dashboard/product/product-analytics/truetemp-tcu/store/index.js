@@ -13,8 +13,11 @@ function defaultTimeRange() {
 const module = {
   namespaced: true,
   state: {
-    // loadingInventories: false,
-    // inventories: [],
+    loadingOverview: false,
+    overview: {},
+    
+    loadingMachineState: false,
+    machineState: {},
 
     loadingActTgtTemperatures: false,
     actTgtTemperatures: [],
@@ -37,32 +40,50 @@ const module = {
         commit('SET_LOADING_TEMPERATURES', false)
       }
     },
+    async getOverview ({ commit }, { id, isAdditional }) {
+      commit('SET_OVERVIEW', {})
+      commit('SET_LOADING_OVERVIEW', true)
 
-    async selectTimeRange({ commit }, key) {
-      commit('SET_CURRENT_TIME_KEY', key)
-      commit('SET_CURRENT_TIME', key)
+      try {
+        const data = {
+          id,
+          isAdditional
+        }
+        const response = await api.getOverview(data)
+
+        commit('SET_OVERVIEW', response.data.overview)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_OVERVIEW', false)
+      }
     },
+    async getSystemStates({ state, commit }, { id, isAdditional }) {
+      commit('SET_LOADING_SYSTEM_STATES', true)
 
-    async onTimeRangeChanged({ commit, dispatch, state }, data) {
-      switch (state.selectedTimeRangeKey) {
-      default:
-        break
+      try {
+        const response = await api.getSystemStates({
+          id,
+          isAdditional
+        })
+
+        commit('SET_SYSTEM_STATES', response.data.machine_states)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_SYSTEM_STATES', false)
       }
     }
   },
 
   mutations: {
     SET_LOADING_TEMPERATURES(state, isLoading) { state.loadingActTgtTemperatures = isLoading },
+    SET_LOADING_OVERVIEW(state, isLoading) { state.loadingOverview = isLoading },
+    SET_LOADING_SYSTEM_STATES(state, data) { state.loadingMachineState = data },
 
+    SET_OVERVIEW(state, overview) { state.overview = overview },
     SET_ACTUAL_TARGET_TEMPERATURES(state, temps) { state.actTgtTemperatures = temps },
-
-    SET_CURRENT_TIME_KEY(state, key) { state.selectedTimeRangeKey = key },
-    SET_CURRENT_TIME(state, key) {
-      switch (key) {
-      default:
-        break
-      }
-    }
+    SET_SYSTEM_STATES(state, data) { state.machineState = data }
   }
 }
 

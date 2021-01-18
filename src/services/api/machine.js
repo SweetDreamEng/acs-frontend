@@ -24,8 +24,8 @@ export default {
     })
   },
 
-  getOverview(id) {
-    return api.get(`/analytics/product-overview/${id}`).then((response) => {
+  getOverview(data) {
+    return api.post('/analytics/product-overview', data).then((response) => {
       return response
     })
   },
@@ -42,7 +42,7 @@ export default {
     })
   },
 
-  getSystemStates(id) {
+  getSystemStates(data) {
     return api.get(`/analytics/product-system-states/${id}`).then((response) => {
       return response
     })

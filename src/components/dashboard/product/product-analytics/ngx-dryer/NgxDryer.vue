@@ -60,9 +60,9 @@
 </template>
 <script>
 import BarGraph from '../../common/BarGraph'
-import Overview from '../../common/Overview'
-import Utilization from '../../common/Utilization'
-import EnergyConsumption from '../../common/EnergyConsumption'
+import Overview from '../common/components/Overview'
+import Utilization from '../common/components/Utilization'
+import EnergyConsumption from '../common/components/EnergyConsumption'
 import DryingHopperStates from './components/DryingHopperStates'
 // import HopperAirTemperatures from './components/HopperAirTemperatures'
 import TimeRangeChooser from '../../../TimeRangeChooser'
@@ -122,8 +122,11 @@ export default {
       return ['Hopper 1', 'Hopper 2', 'Hopper 3']
     }
   },
-  created() {
-    this.getOverview(this.productId)
+  mounted() {
+    this.getOverview({
+      id: this.productId,
+      isAdditional: false
+    })
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
     this.getDryingHopperStats(this.productId)

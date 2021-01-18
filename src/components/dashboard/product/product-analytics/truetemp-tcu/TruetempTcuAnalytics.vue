@@ -3,7 +3,7 @@
     <v-row dense>
       <v-col md="4" sm="12">
         <overview
-          :machine="machine"
+          :machine="overview"
           :loading="loadingOverview"
         >
         </overview>
@@ -27,20 +27,12 @@
         </bar-graph>
       </v-col>
     </v-row>
-    <time-range-chooser
-      :dlg="showTimeRangeChooser"
-      :time-range="selectedTimeRange"
-      @close="showTimeRangeChooser = false"
-      @submit="_onTimeRangeChanged"
-    >
-    </time-range-chooser>
   </div>
 </template>
 <script>
-import Overview from '../../common/Overview'
+import Overview from '../common/components/Overview'
 import MachineState from './components/MachineState'
 import BarGraph from '../../common/BarGraph'
-import TimeRangeChooser from '../../../TimeRangeChooser1'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -48,13 +40,16 @@ export default {
   components: {
     Overview,
     MachineState,
-    BarGraph,
-    TimeRangeChooser
+    BarGraph
   },
   props: {
     productId: {
       type: String,
       default: ''
+    },
+    isAdditional: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -76,52 +71,38 @@ export default {
   },
   computed: {
     ...mapState({
-      loadingOverview: (state) => state.machines.loadingOverview,
-      loadingMachineState: (state) => state.machines.loadingSystemStates,
-      
-      machine: (state) => state.machines.machine,
-      machineState: (state) => state.machines.systemStates,
+      loadingOverview: (state) => state.truetempTcu.loadingOverview,
+      loadingMachineState: (state) => state.truetempTcu.loadingMachineState,
+
+      overview: (state) => state.truetempTcu.overview,
+      machineState: (state) => state.truetempTcu.machineState,
 
       loadingActTgtTemperatures: (state) => state.truetempTcu.loadingActTgtTemperatures,
-      actTgtTemperatures: (state) => state.truetempTcu.actTgtTemperatures,
-
-      selectedTimeRange: (state) => state.truetempTcu.selectedTimeRange
+      actTgtTemperatures: (state) => state.truetempTcu.actTgtTemperatures
     }),
-    ...mapGetters({
-      timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel'
-    }),
-
     actTgtTemperatureSeries() {
       return [{
         data: this.actTgtTemperatures
       }]
     }
   },
-  created() {
-    this.getOverview(this.productId)
-    this.getSystemStates(this.productId)
+  mounted() {
+    this.getOverview({
+      id: this.productId,
+      isAdditional: this.isAdditional
+    })
+    this.getSystemStates({
+      id: this.productId,
+      isAdditional: this.isAdditional
+    })
     this.getActTgtTemperatures(this.productId)
   },
   methods: {
     ...mapActions({
-      getOverview: 'machines/getOverview',
-      getSystemStates: 'machines/getSystemStates',
-      getActTgtTemperatures: 'truetempTcu/getActTgtTemperatures',
-
-      onTimeRangeChanged: 'truetempTcu/onTimeRangeChanged',
-      selectTimeRange: 'truetempTcu/selectTimeRange'
-    }),
-    onShowTimeRangeDlgOpen(key) {
-      this.selectTimeRange(key)
-      this.$nextTick(() => {
-        this.showTimeRangeChooser = true
-      })
-    },
-    _onTimeRangeChanged(data) {
-      data.id = this.productId
-      this.onTimeRangeChanged(data)
-      this.showTimeRangeChooser = false
-    }
+      getOverview: 'truetempTcu/getOverview',
+      getSystemStates: 'truetempTcu/getSystemStates',
+      getActTgtTemperatures: 'truetempTcu/getActTgtTemperatures'
+    })
   }
 }
 </script>
