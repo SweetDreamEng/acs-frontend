@@ -2,7 +2,16 @@
   <div class="d-flex flex-grow-1 flex-column">
     <v-sheet color="surface2" class="my-n8 py-8">
       <v-container class="pb-0">
-        <v-breadcrumbs :items="breadcrumbItems"></v-breadcrumbs>
+        <div v-if="$route.name === 'location-acs-dashboard'" class="d-flex mt-2 align-center">
+          <v-breadcrumbs :items="acsBreadcrumbItems"></v-breadcrumbs>
+          <v-spacer></v-spacer>
+          <company-menu
+            :companies="companies"
+            @companyChanged="onCompanyChanged"
+          >
+          </company-menu>
+        </div>
+        <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
         <top-card></top-card>
         <oee-container :oees="oees"></oee-container>
       </v-container>
@@ -27,6 +36,7 @@
 // import vuex helper functions
 import { mapState, mapGetters, mapActions } from 'vuex'
 
+import CompanyMenu from '../../components/dashboard/CompanyMenu'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
 import DashboardTable from '../../components/dashboard/dashboard-tables/DashboardTable'
 import TopCard from '../../components/dashboard/TopCard'
@@ -34,6 +44,7 @@ import OeeContainer from '../../components/dashboard/OeeContainer'
 
 export default {
   components: {
+    CompanyMenu,
     MachinesTableCard,
     DashboardTable,
     TopCard,
@@ -106,10 +117,14 @@ export default {
       loadingZonesTable: (state) => state.machines.loadingZonesTable,
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
 
-      zones: (state) => state.zones.data
+      zones: (state) => state.zones.data,
+
+      companies: (state) => state.customers.companies,
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
     ...mapGetters({
-      locationName: 'locations/locationName'
+      locationName: 'locations/locationName',
+      canViewCompanies: 'auth/canViewCompanies'
     }),
     breadcrumbItems() {
       return  [
@@ -124,17 +139,40 @@ export default {
           disabled: true
         }
       ]
+    },
+    acsBreadcrumbItems() {
+      return [
+        {
+          text: this.selectedCompanyName,
+          disabled: true
+        }, {
+          text: 'Dashboard',
+          disabled: false,
+          exact: true,
+          to: '/acs-machines'
+        }, {
+          text: this.locationName(parseInt(this.$route.params.location)),
+          disabled: true
+        }
+      ]
     }
   },
   mounted() {
+    if (this.canViewCompanies)
+      this.initAcsDashboard()
     this.getLocations()
     this.initZonesTable(this.$route.params.location)
   },
   methods: {
     ...mapActions({
+      initAcsDashboard: 'machines/initAcsDashboard',
       initZonesTable: 'machines/initZonesTable',
-      getLocations: 'locations/getLocations'
-    })
+      getLocations: 'locations/getLocations',
+      changeSelectedCompany: 'machines/changeSelectedCompany'
+    }),
+    onCompanyChanged(company) {
+      this.changeSelectedCompany(company)
+    }
   }
 }
 </script>

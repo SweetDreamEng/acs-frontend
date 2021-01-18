@@ -2,7 +2,7 @@ export default [
   {
     path: '/acs-machines',
     name: 'acs-machines',
-    component: () => import(/* webpackChunkName: "acs-machines" */ '@/pages/acs-machines/Dashboard.vue'),
+    component: () => import(/* webpackChunkName: "acs-machines" */ '@/pages/dashboard/DashboardPage.vue'),
     meta: {
     	layout: 'dashboard',
       acsAdmin: true
@@ -17,7 +17,7 @@ export default [
   }, {
     path: '/acs-machines/:location',
     name: 'location-acs-dashboard',
-    component: () => import(/* webpackChunkName: "location-acs-dashboard" */ '@/pages/acs-machines/LocationDashboard.vue'),
+    component: () => import(/* webpackChunkName: "location-acs-dashboard" */ '@/pages/dashboard/LocationDashboard.vue'),
     meta: {
       layout: 'dashboard',
       acsAdmin: true
@@ -25,7 +25,7 @@ export default [
   }, {
     path: '/acs-machines/:location/:zone',
     name: 'zone-acs-dashboard',
-    component: () => import(/* webpackChunkName: "zone-acs-dashboard" */ '@/pages/acs-machines/ZoneDashboard.vue'),
+    component: () => import(/* webpackChunkName: "zone-acs-dashboard" */ '@/pages/dashboard/ZoneDashboard.vue'),
     meta: {
       layout: 'dashboard',
       acsAdmin: true
@@ -33,7 +33,7 @@ export default [
   }, {
     path: '/acs-machines/:location/:zone/:configurationId/:productId',
     name: 'product-acs-dashboard',
-    component: () => import(/* webpackChunkName: "product-acs-dashboard" */ '@/pages/acs-machines/ProductDashboard.vue'),
+    component: () => import(/* webpackChunkName: "product-acs-dashboard" */ '@/pages/dashboard/DashboardProduct.vue'),
     meta: {
       layout: 'dashboard',
       acsAdmin: true

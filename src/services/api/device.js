@@ -32,6 +32,12 @@ export default {
     })
   },
 
+  getDeviceConfiguration(id) {
+    return api.get(`/devices/${id}/configuration`).then((response) => {
+      return response
+    })
+  },
+
   /*
     Get all devices for acs users
   */

@@ -2,39 +2,82 @@
   <div class="d-flex flex-grow-1 flex-column">
     <v-sheet v-if="$route.name !== 'product-details'" color="surface2" class="my-n8 py-8">
       <v-container class="pb-0" fluid>
-        <v-breadcrumbs :items="breadcrumbItems"></v-breadcrumbs>
+        <div v-if="$route.name === 'product-acs-dashboard'" class="d-flex mt-2 align-center">
+          <v-breadcrumbs :items="acsBreadcrumbItems"></v-breadcrumbs>
+          <v-spacer></v-spacer>
+          <company-menu
+            :companies="companies"
+          >
+          </company-menu>
+        </div>
+        <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
       </v-container>
     </v-sheet>
     <v-container fluid>
-      <v-row class="flex-grow-0" dense>
-        <v-col cols="12">
-          <component 
-            :is="analyticsComponent($route.params.configurationId)" 
-            :product-id="$route.params.productId"
-          >
-          </component>
-        </v-col>
-        <v-col cols="12">
-          <alarm-table
-            :loading="loadingAlarmsTable"
-            :alarms="alarms"
-            :alarm-types="alarmTypes"
-            @change="_onAlarmParamChange"
-          >
-          </alarm-table>
-        </v-col>
-        <v-col cols="12">
-          <div class="display-1">Parameters & Points</div>
-        </v-col>
-        <v-col cols="12">
-          <product-parameters-chart
-            :tags="productTags"
-          >
-          </product-parameters-chart>
-        </v-col>
-      </v-row>
-
-      <!-- Note form and timeline -->
+      <v-tabs v-if="deviceConfiguration.tcu_added" v-model="tabModel">
+        <v-tab>{{ deviceConfiguration.name }}</v-tab>
+        <v-tab>TruetempTcu</v-tab>
+      </v-tabs>
+      <v-tabs-items v-model="tabModel">
+        <v-tab-item>
+          <v-row class="flex-grow-0" dense>
+            <v-col cols="12">
+              <component 
+                :is="analyticsComponent(parseInt($route.params.configurationId))" 
+                :product-id="$route.params.productId"
+              >
+              </component>
+            </v-col>
+            <v-col cols="12">
+              <alarm-table
+                :loading="loadingAlarmsTable"
+                :alarms="alarms"
+                :alarm-types="alarmTypes"
+                @change="_onAlarmParamChange"
+              >
+              </alarm-table>
+            </v-col>
+            <v-col cols="12">
+              <div class="display-1">Parameters & Points</div>
+            </v-col>
+            <v-col cols="12">
+              <product-parameters-chart
+                :tags="productTags"
+              >
+              </product-parameters-chart>
+            </v-col>
+          </v-row>
+        </v-tab-item>
+        <v-tab-item>
+          <v-row class="flex-grow-0" dense>
+            <v-col cols="12">
+              <component
+                :is="analyticsComponent(11)" 
+                :product-id="$route.params.productId"
+              >
+              </component>
+            </v-col>
+            <v-col cols="12">
+              <alarm-table
+                :loading="loadingAlarmsTable"
+                :alarms="alarms"
+                :alarm-types="alarmTypes"
+                @change="_onAlarmParamChange"
+              >
+              </alarm-table>
+            </v-col>
+            <v-col cols="12">
+              <div class="display-1">Parameters & Points</div>
+            </v-col>
+            <v-col cols="12">
+              <product-parameters-chart
+                :tags="productTags"
+              >
+              </product-parameters-chart>
+            </v-col>
+          </v-row>
+        </v-tab-item>
+      </v-tabs-items>
       <v-row>
         <v-col cols="12" md="5">
           <note-form
@@ -81,8 +124,11 @@ import T50CentralGranulator from '../../components/dashboard/product/product-ana
 import GpPortableChiller from '../../components/dashboard/product/product-analytics/gp-portable-chiller'
 import TruetempTcu from '../../components/dashboard/product/product-analytics/truetemp-tcu/TruetempTcuAnalytics.vue'
 
+import CompanyMenu from '../../components/dashboard/CompanyMenu'
+
 export default {
   components: {
+    CompanyMenu,
     ProductParametersChart,
     NotesTimeline,
     NoteForm,
@@ -102,21 +148,26 @@ export default {
   },
   data() {
     return {
+      tabModel: 0
     }
   },
   computed: {
     ...mapState({
+      loadingAlarmsTable: (state) => state.alarms.loadingAlarmsTable,
+      deviceConfiguration: (state) => state.devices.deviceConfiguration,
       machine: (state) => state.machines.machine,
       alarmTypes: (state) => state.alarms.alarmTypes,
       alarms: (state) => state.alarms.alarms,
       isLoading: (state) => state.machines.isNoteAdding,
       notes: (state) => state.notes.data,
 
-      loadingAlarmsTable: (state) => state.alarms.loadingAlarmsTable
+      companies: (state) => state.customers.companies,
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
     ...mapGetters({
       locationName: 'locations/locationName',
-      zoneName: 'zones/zoneName'
+      zoneName: 'zones/zoneName',
+      canViewCompanies: 'auth/canViewCompanies'
     }),
     breadcrumbItems() {
       return [
@@ -135,6 +186,32 @@ export default {
           disabled: false,
           exact: true,
           to: `/dashboard/analytics/${this.$route.params.location}/${this.$route.params.zone}`
+        }, {
+          text: this.machine.customer_assigned_name,
+          disabled: true
+        }
+      ]
+    },
+    acsBreadcrumbItems() {
+      return [
+        {
+          text: this.selectedCompanyName,
+          disabled: true
+        }, {
+          text: 'Dashboard',
+          disabled: false,
+          exact: true,
+          to: '/acs-machines'
+        }, {
+          text: this.locationName(parseInt(this.$route.params.location)),
+          disabled: false,
+          exact: true,
+          to: `/acs-machines/${this.$route.params.location}`
+        }, {
+          text: this.zoneName(parseInt(this.$route.params.zone)),
+          disabled: false,
+          exact: true,
+          to: `/acs-machines/${this.$route.params.location}/${this.$route.params.zone}`
         }, {
           text: this.machine.customer_assigned_name,
           disabled: true
@@ -162,15 +239,16 @@ export default {
       }
     }
   },
-  
-  created() {
+
+  mounted() {
+    if (this.canViewCompanies)
+      this.initAcsDashboard()
+    this.getDeviceConfiguration(this.$route.params.productId)
     this.getLocations()
     this.getZones()
     this.getProductAlarms(this.$route.params.productId)
     this.getNotes(this.$route.params.productId)
-  },
 
-  mounted() {
     this.$channel.bind('alarm.created', (data) => {
       if (parseInt(this.$route.params.productId) === data.deviceId) {
         this.onNewAlarms(data)
@@ -180,6 +258,8 @@ export default {
 
   methods: {
     ...mapActions({
+      getDeviceConfiguration: 'devices/getDeviceConfiguration',
+      initAcsDashboard: 'machines/initAcsDashboard',
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
@@ -187,10 +267,8 @@ export default {
       onNewAlarms: 'alarms/onNewAlarms',
       getNotes: 'notes/getNotes'
     }),
-    analyticsComponent() {
-      const configId = parseInt(this.$route.params.configurationId)
-
-      switch (configId) {
+    analyticsComponent(configurationId) {
+      switch (configurationId) {
       case 1: return 'BdBatchBlender'
       case 2: return 'AccumeterOvationContinuousBlender'
       case 3: return 'GhGravimetricExtrusionControlHopper'

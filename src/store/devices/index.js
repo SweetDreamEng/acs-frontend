@@ -4,6 +4,12 @@ const module = {
   namespaced: true,
   state: {
     data: [],                           // paginated devices fetched from backend
+    deviceConfiguration: {
+      configuration_id: 0,
+      name: '',
+      tcu_added: false
+    },
+
     totalDevices: 0,
 
     numAdded: 0,                        // number of added devices when uploading devices in excel file
@@ -51,9 +57,24 @@ const module = {
         commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
         commit('SET_DATA', response.data.devices)
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('TABLE_LOAD_CLEAR')
+      }
+    },
+
+    /*
+      description: get device configuration - configuration_id, tcu_added
+    */
+    async getDeviceConfiguration({
+      commit
+    }, id) {
+      try {
+        const response = await deviceAPI.getDeviceConfiguration(id)
+
+        commit('SET_DEVICE_CONFIGURATION', response.data.configuration)
+      } catch (error) {
+        console.log(error)
       }
     },
 
@@ -84,7 +105,7 @@ const module = {
         commit('SET_ADDED', response.data.numAdded)
         commit('SET_DUPLICATES', response.data.numDuplicates)
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('IMPORT_BUTTON_CLEAR')
       }
@@ -99,7 +120,7 @@ const module = {
 
         commit('DEVICE_ASSIGN', data)
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('ASSIGN_CLEAR')
       }
@@ -115,7 +136,7 @@ const module = {
         commit('SET_REGISTERED', data)
         dispatch('app/showSuccess', response.data, { root: true })
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
         dispatch('app/showError', {
           error: error.response.data
         }, { root: true })
@@ -134,7 +155,7 @@ const module = {
 
         commit('SET_DATA', response.data.devices)
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('SET_LOADING_TABLE_MACHINE_MAPPING', false)
       }
@@ -156,7 +177,7 @@ const module = {
         commit('SET_DATA', response.data.devices.data)
         commit('SET_REPORT_PAGINATION', response.data.devices.last_page)
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', false)
       }
@@ -172,7 +193,7 @@ const module = {
 
         dispatch('app/showSuccess', response.data, { root: true })
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('SET_LOADING_BTN_ASSIGN_ZONE_TO_MACHINE', false)
       }
@@ -191,7 +212,7 @@ const module = {
           status: response.data.sim_status
         })
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('QUERY_BTN_CLEAR')
       }
@@ -208,7 +229,7 @@ const module = {
       try {
         await deviceAPI.suspendSIM(device)
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('SUSPEND_BTN_CLEAR')
       }
@@ -223,7 +244,7 @@ const module = {
 
         return response
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('REMOTE_WEB_BTN_CLEAR')
       }
@@ -238,7 +259,7 @@ const module = {
 
         return response
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('REMOTE_CLI_BTN_CLEAR')
       }
@@ -254,7 +275,7 @@ const module = {
         commit('SET_DOWNTIME_PLANS', response.data.downtimePlans)
         commit('machines/SET_MACHINES', response.data.machines, { root: true })
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         commit('SET_DOWNTIME_PLANS_TABLE_LOADING', false)
       }
@@ -382,6 +403,8 @@ const module = {
     SET_DATA(state, devices) {
       state.data = devices
     },
+    SET_DEVICE_CONFIGURATION(state, configuration) { state.deviceConfiguration = configuration },
+
     SET_ADDED(state, numAdded) {
       state.numAdded = numAdded
     },

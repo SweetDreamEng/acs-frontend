@@ -272,18 +272,11 @@ const module = {
     roleName: (state) => (role_key) => {
       return state.roles.find((role) => role.key === role_key).name
     },
-    canCreateAcsUser: (state) => {
-      return state.user.role === 'acs_admin'
-    },
-    canCreateCompanies: (state) => {
-      return state.user.role === 'acs_admin' || state.user.role === 'acs_manager'
-    },
-    canImportDevices: (state) => {
-      return state.user.role === 'acs_admin' || state.user.role === 'acs_manager'
-    },
-    canCreateCustomerUser: (state) => {
-      return state.user.role === 'customer_admin'
-    }
+    canCreateAcsUser: (state) => state.user.role === 'acs_admin',
+    canCreateCompanies: (state) => ['acs_admin', 'acs_manager'].includes(state.user.role),
+    canViewCompanies: (state) => ['acs_admin', 'acs_manager', 'acs_viewer'].includes(state.user.role),
+    canImportDevices: (state) => ['acs_admin', 'acs_manager'].includes(state.user.role),
+    canCreateCustomerUser: (state) => state.user.role === 'customer_admin'
   }
 }
 

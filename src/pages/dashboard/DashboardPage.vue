@@ -2,6 +2,16 @@
   <div class="d-flex flex-grow-1 flex-column">
     <v-sheet color="surface2" class="my-n8 py-8">
       <v-container class="pb-0">
+        <div v-if="$route.name === 'acs-machines'" class="d-flex mt-2 align-center">
+          <v-breadcrumbs :items="breadcrumbItems"></v-breadcrumbs>
+          <v-spacer></v-spacer>
+          <company-menu
+            :companies="companies"
+            @companyChanged="onCompanyChanged"
+          >
+          </company-menu>
+        </div>
+
         <top-card></top-card>
         <oee-container :oees="oees"></oee-container>
       </v-container>
@@ -32,8 +42,9 @@
 |
 */
 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
+import CompanyMenu from '../../components/dashboard/CompanyMenu'
 import TopCard from '../../components/dashboard/TopCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
 import DashboardTable from '../../components/dashboard/dashboard-tables/DashboardTable'
@@ -41,6 +52,7 @@ import OeeContainer from '../../components/dashboard/OeeContainer'
 
 export default {
   components: {
+    CompanyMenu,
     MachinesTableCard,
     DashboardTable,
     TopCard,
@@ -169,18 +181,39 @@ export default {
       loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
       
-      locations: (state) => state.locations.data
-    })
+      locations: (state) => state.locations.data,
+      companies: (state) => state.customers.companies,
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
+    }),
+    ...mapGetters('auth', ['canViewCompanies']),
+    breadcrumbItems() {
+      return [
+        {
+          text: this.selectedCompanyName,
+          disabled: true
+        }, {
+          text: 'Dashboard',
+          disabled: true
+        }
+      ]
+    }
   },
   mounted() {
+    if (this.canViewCompanies)
+      this.initAcsDashboard()
     this.getZones()
     this.initLocationsTable()
   },
   methods: {
     ...mapActions({
+      initAcsDashboard: 'machines/initAcsDashboard',
       initLocationsTable: 'machines/initLocationsTable',
-      getZones: 'zones/getZones'
-    })
+      getZones: 'zones/getZones',
+      changeSelectedCompany: 'machines/changeSelectedCompany'
+    }),
+    onCompanyChanged(company) {
+      this.changeSelectedCompany(company)
+    }
   }
 }
 </script>
