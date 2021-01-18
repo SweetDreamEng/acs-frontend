@@ -6,9 +6,7 @@ export default {
     })
   },
   getWeight(id) {
-    return api.get(`/analytics/product-weight/${id}`).then((response) => {
-      return response
-    })
+    return api.get(`/analytics/product-weight/${id}`)
   },
   getInventory(id) {
     return api.get(`/analytics/product-inventory/${id}`).then((response) => {
@@ -16,9 +14,7 @@ export default {
     })
   },
   getStationConveyings(id) {
-    return api.get(`/analytics/product-station-conveyings/${id}`).then((response) => {
-      return response
-    })
+    return api.get(`/analytics/product-station-conveyings/${id}`)
   },
   getHopperStables(id) {
     return api.get(`/analytics/product-hopper-stables/${id}`).then((response) => {

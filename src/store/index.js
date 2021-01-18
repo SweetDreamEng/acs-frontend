@@ -17,6 +17,8 @@ import alarms from './alarms'
 import notes from './notes'
 import configurations from './configurations'
 
+import barGraph from '../components/dashboard/product/common/bar-graph/store'
+
 import bdBlenderAnalytics from '../components/dashboard/product/product-analytics/bd-batch-blender/store'
 import accumeterOvationBlender from '../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender/store'
 import ngxDryer from '../components/dashboard/product/product-analytics/ngx-dryer/store'
@@ -45,6 +47,8 @@ const store = new Vuex.Store({
     alarms,
     notes,
     configurations,
+
+    barGraph,
     
     bdBlenderAnalytics,
     accumeterOvationBlender,

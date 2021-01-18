@@ -16,12 +16,12 @@
       </v-col>
       <v-col md="4" sm="12">
         <bar-graph
+          namespace="barGraph-id1"
           title="Actual Target Temperature"
-          :loading="loadingActTgtTemperatures"
           :height="320"
-          unit="ºC"
-          :series="actTgtTemperatureSeries"
-          :categories="[['Actual', 'Temperature'], ['Set point', 'Temperature']]"
+          :fetch="getActTgtTemperatures"
+          :product-id="parseInt(productId)"
+          :categories="['Actual', 'Set point']"
           :options="temperatureOptions"
         >
         </bar-graph>
@@ -30,9 +30,10 @@
   </div>
 </template>
 <script>
+import api from './services/api'
+import BarGraph from '../../common/bar-graph/BarGraph'
 import Overview from '../common/components/Overview'
 import MachineState from './components/MachineState'
-import BarGraph from '../../common/BarGraph'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -66,7 +67,8 @@ export default {
             endingShape: 'rounded'
           }
         }
-      }
+      },
+      getActTgtTemperatures: api.getActTgtTemperatures
     }
   },
   computed: {
@@ -75,16 +77,8 @@ export default {
       loadingMachineState: (state) => state.truetempTcu.loadingMachineState,
 
       overview: (state) => state.truetempTcu.overview,
-      machineState: (state) => state.truetempTcu.machineState,
-
-      loadingActTgtTemperatures: (state) => state.truetempTcu.loadingActTgtTemperatures,
-      actTgtTemperatures: (state) => state.truetempTcu.actTgtTemperatures
-    }),
-    actTgtTemperatureSeries() {
-      return [{
-        data: this.actTgtTemperatures
-      }]
-    }
+      machineState: (state) => state.truetempTcu.machineState
+    })
   },
   mounted() {
     this.getOverview({
@@ -95,13 +89,11 @@ export default {
       id: this.productId,
       isAdditional: this.isAdditional
     })
-    this.getActTgtTemperatures(this.productId)
   },
   methods: {
     ...mapActions({
       getOverview: 'truetempTcu/getOverview',
-      getSystemStates: 'truetempTcu/getSystemStates',
-      getActTgtTemperatures: 'truetempTcu/getActTgtTemperatures'
+      getSystemStates: 'truetempTcu/getSystemStates'
     })
   }
 }

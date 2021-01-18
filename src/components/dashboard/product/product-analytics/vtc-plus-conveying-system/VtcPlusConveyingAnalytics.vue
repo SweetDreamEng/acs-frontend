@@ -28,23 +28,26 @@
     <v-row dense>
       <v-col cols="12" md="6">
         <bar-graph
+          namespace="barGraph-id1"
           title="Pump Hours"
-          :loading="loadingPumpHours"
-          height="500"
+          :height="500"
+          :fetch="getPumpHours"
           unit="h"
+          :product-id="parseInt(productId)"
           :categories="pumpHoursOilCategories"
-          :series="pumpHoursSeries"
         >
         </bar-graph>
       </v-col>
       <v-col cols="12" md="6">
         <bar-graph
+          namespace="barGraph-id2"
           title="Pump Hours Oil Change"
-          :loading="loadingPumpHoursOil"
-          height="500"
+          :height="500"
+          :fetch="getPumpHoursOil"
           unit="h"
+          :names="['Actual', 'Target']"
+          :product-id="parseInt(productId)"
           :categories="pumpHoursOilCategories"
-          :series="pumpHoursOilSeries"
         >
         </bar-graph>
       </v-col>
@@ -69,7 +72,8 @@
   </div>
 </template>
 <script>
-import BarGraph from '../../common/BarGraph'
+import api from './services/api'
+import BarGraph from '../../common/bar-graph/BarGraph'
 import Overview from '../common/components/Overview'
 import Utilization from '../common/components/Utilization'
 import EnergyConsumption from '../common/components/EnergyConsumption'
@@ -93,7 +97,9 @@ export default {
   },
   data() {
     return {
-      showTimeRangeChooser: false
+      showTimeRangeChooser: false,
+      getPumpHours: api.getPumpHours,
+      getPumpHoursOil: api.getPumpHoursOil
     }
   },
   computed: {
@@ -103,39 +109,12 @@ export default {
       'loadingUtilization',
       'loadingEnergyConsumption'
     ]),
-    ...mapState('vtcPlusConveying', [
-      'pumpHours',
-      'actualPumpHoursOil',
-      'targetPumpHoursOil',
-      'loadingPumpHours',
-      'loadingPumpHoursOil'
-    ]),
     ...mapGetters({
       timeRangeLabel: 'machines/timeRangeLabel',
       selectedTimeRange: 'machines/selectedTimeRange'
     }),
     pumpHoursOilCategories() {
       return ['Pump 1', 'Pump 2', 'Pump 3', 'Pump 4', 'Pump 5', 'Pump 6', 'Pump 7', 'Pump 8', 'Pump 9', 'Pump 10', 'Pump 11', 'Pump 12']
-    },
-    pumpHoursOilSeries() {
-      return [
-        {
-          name: 'Target',
-          data: this.targetPumpHoursOil
-        },
-        {
-          name: 'Actuals',
-          data: this.actualPumpHoursOil
-        }
-      ]
-    },
-    pumpHoursSeries() {
-      return [
-        {
-          name: 'Pump Hours',
-          data: this.pumpHours
-        }
-      ]
     }
   },
   mounted() {
@@ -145,8 +124,6 @@ export default {
     })
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
-    this.getPumpHours(this.productId)
-    this.getPumpHoursOil(this.productId)
   },
   methods: {
     ...mapActions('machines', [
@@ -155,10 +132,6 @@ export default {
       'getOverview',
       'getUtilization',
       'getEnergyConsumption'
-    ]),
-    ...mapActions('vtcPlusConveying', [
-      'getPumpHoursOil',
-      'getPumpHours'
     ]),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)

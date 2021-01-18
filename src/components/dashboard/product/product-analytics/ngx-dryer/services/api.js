@@ -6,9 +6,7 @@ export default {
     })
   },
   getHopperTemperatures(id) {
-    return api.get(`/analytics/product-hopper-temperatures/${id}`).then((response) => {
-      return response
-    })
+    return api.get(`/analytics/product-hopper-temperatures/${id}`)
   },
   getBedStates(id) {
     return api.get(`/analytics/ngx-dryer/bed-states/${id}`).then((response) => {

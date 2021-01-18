@@ -1,8 +1,8 @@
 <template>
   <v-card
     height="100%"
-    :loading="loading"
-    :disabled="loading"
+    :loading="isLoading"
+    :disabled="isLoading"
   >
     <v-card-title class="d-flex justify-space-between">
       {{ title }}
@@ -20,14 +20,23 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import barGraphStore from './store'
 
 export default {
-  components: {
-  },
+  name: 'BarGraph',
   props: {
-    loading: {
-      type: Boolean,
-      default: false
+    namespace: {
+      type: String,
+      default: ''
+    },
+    fetch: {
+      type: Function,
+      default: () => {}
+    },
+    productId: {
+      type: Number,
+      default: 0
     },
     title: {
       type: String,
@@ -41,11 +50,11 @@ export default {
       type: String,
       default: ''
     },
-    categories: {
+    names: {
       type: Array,
       default: () => []
     },
-    series: {
+    categories: {
       type: Array,
       default: () => []
     },
@@ -59,6 +68,22 @@ export default {
     }
   },
   computed: {
+    isLoading() {
+      return this.$store.state[this.namespace]['isLoading']
+    },
+    series() {
+      if (this.names.length) 
+        return this.names.map((name, index) => {
+          return {
+            name,
+            data: (this.$store.state[this.namespace]['items'].length) ? (this.$store.state[this.namespace]['items'][index]) : []
+          }
+        })
+      else
+        return [{
+          data: (this.$store.state[this.namespace]['items']) ? (this.$store.state[this.namespace]['items']) : []
+        }]
+    },
     chartOptions() {
       return {
         chart: {
@@ -113,11 +138,49 @@ export default {
     seriesMax() {
       let max = 0
 
-      this.series.forEach((item) => {
-        max = Math.max(Math.max(...item.data), max)
-      })
+      try {
+        this.series.forEach((item) => {
+          max = Math.max(Math.max(...item.data), max)
+        })
 
-      return max
+        return max
+      } catch (err) {
+        return 2
+      }
+    }
+  },
+  created() {
+    if (!this.isModuleCreated([this.namespace])) {
+      this.registerModule()
+    }
+  },
+  mounted() {
+    this.getSeries({
+      productId: this.productId
+    })
+  },
+  methods: {
+    ...mapActions({
+      getSeries(dispatch, payload) {
+        return dispatch(this.namespace + '/getSeries', payload)
+      }
+    }),
+    isModuleCreated(path) {
+      let m = this.$store._modules.root
+
+      return path.every((p) => {
+        m = m._children[p]
+
+        return m
+      })
+    },
+    registerModule() {
+      this.$store.registerModule(this.namespace, {
+        namespaced: true,
+        state: barGraphStore.barGraphState(),
+        actions: barGraphStore.barGraphActions(this.fetch),
+        mutations: barGraphStore.barGraphMutations()
+      })
     }
   }
 }

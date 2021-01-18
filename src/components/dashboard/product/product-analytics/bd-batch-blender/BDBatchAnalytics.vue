@@ -27,12 +27,16 @@
     </v-row>
     <v-row dense>
       <v-col md="8" sm="12">
-        <actual-target-weight
-          :values-tgt-weight="targetWeights"
-          :values-act-weight="actualWeights"
-          :is-loading="loadingWeight"
+        <bar-graph
+          namespace="barGraph-id1"
+          title="Actual Target Weight"
+          :height="360"
+          :fetch="getWeight"
+          :product-id="parseInt(productId)"
+          :names="['Actual', 'Target']"
+          :categories="['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6', 'Feeder 7', 'Feeder 8']"
         >
-        </actual-target-weight>
+        </bar-graph>
       </v-col>
       <v-col md="4" sm="12">
         <recipe
@@ -67,22 +71,23 @@
   </div>
 </template>
 <script>
+import api from './services/api'
+import BarGraph from '../../common/bar-graph/BarGraph'
 import Overview from '../common/components/Overview'
 import Utilization from '../common/components/Utilization'
 import EnergyConsumption from '../common/components/EnergyConsumption'
 import Recipe from './components/Recipe'
 import Inventory from './components/Inventory'
-import ActualTargetWeight from './components/ActualTargetWeight'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
+    BarGraph,
     Overview,
     Recipe,
     Utilization,
-    ActualTargetWeight,
     Inventory,
     EnergyConsumption,
     TimeRangeChooser
@@ -95,7 +100,8 @@ export default {
   },
   data() {
     return {
-      showTimeRangeChooser: false
+      showTimeRangeChooser: false,
+      getWeight: api.getWeight
     }
   },
   computed: {
@@ -106,11 +112,8 @@ export default {
       'machine'
     ]),
     ...mapState('bdBlenderAnalytics', [
-      'loadingWeight',
       'loadingInventories',
       'loadingRecipe',
-      'targetWeights',
-      'actualWeights',
       'inventories',
       'recipeValues',
       'ezTypes',
@@ -130,7 +133,6 @@ export default {
     this.getEnergyConsumption(this.productId)
     this.getRecipe(this.productId)
     this.getInventory(this.productId)
-    this.getWeight(this.productId)
   },
   methods: {
     ...mapActions('machines', [
@@ -142,8 +144,7 @@ export default {
     ]),
     ...mapActions('bdBlenderAnalytics', [
       'getInventory',
-      'getRecipe',
-      'getWeight'
+      'getRecipe'
     ]),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)

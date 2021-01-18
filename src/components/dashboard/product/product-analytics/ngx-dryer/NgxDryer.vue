@@ -35,11 +35,12 @@
       </v-col>
       <v-col cols="12" md="8">
         <bar-graph
+          namespace="barGraph-id1"
           title="Hopper Air Temperatures"
-          :loading="loadingTemperatures"
           :height="320"
-          unit="°"
-          :series="hopperAirTemperatureSeries"
+          :fetch="getHopperTemperatures"
+          :product-id="parseInt(productId)"
+          :names="['Outlet Temperature', 'Inlet Temperature', 'Set Point']"
           :categories="hopperAirTemperatureCategories"
         >
         </bar-graph>
@@ -59,12 +60,12 @@
   </div>
 </template>
 <script>
-import BarGraph from '../../common/BarGraph'
+import api from './services/api'
+import BarGraph from '../../common/bar-graph/BarGraph'
 import Overview from '../common/components/Overview'
 import Utilization from '../common/components/Utilization'
 import EnergyConsumption from '../common/components/EnergyConsumption'
 import DryingHopperStates from './components/DryingHopperStates'
-// import HopperAirTemperatures from './components/HopperAirTemperatures'
 import TimeRangeChooser from '../../../TimeRangeChooser'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -76,7 +77,6 @@ export default {
     Utilization,
     EnergyConsumption,
     DryingHopperStates,
-    // HopperAirTemperatures,
     TimeRangeChooser
   },
   props: {
@@ -87,7 +87,8 @@ export default {
   },
   data() {
     return {
-      showTimeRangeChooser: false
+      showTimeRangeChooser: false,
+      getHopperTemperatures: api.getHopperTemperatures
     }
   },
   computed: {
@@ -99,25 +100,9 @@ export default {
     ]),
     ...mapState('ngxDryer', [
       'dryingHoppers',
-      'inletTemperatures',
-      'targetTemperatures',
-      'outletTemperatures',
-      'loadingDryingHoppers',
-      'loadingTemperatures'
+      'loadingDryingHoppers'
     ]),
     ...mapGetters('machines', ['timeRangeLabel', 'selectedTimeRange']),
-    hopperAirTemperatureSeries() {
-      return [{
-        name: 'Outlet Temperature',
-        data: this.outletTemperatures
-      }, {
-        name: 'Inlet Temperature',
-        data: this.inletTemperatures
-      }, {
-        name: 'Set Point',
-        data: this.targetTemperatures
-      }]
-    },
     hopperAirTemperatureCategories() {
       return ['Hopper 1', 'Hopper 2', 'Hopper 3']
     }
@@ -130,7 +115,6 @@ export default {
     this.getUtilization(this.productId)
     this.getEnergyConsumption(this.productId)
     this.getDryingHopperStats(this.productId)
-    this.getHopperTemperatures(this.productId)
   },
   methods: {
     ...mapActions('machines', [
@@ -141,8 +125,7 @@ export default {
       'getEnergyConsumption'
     ]),
     ...mapActions('ngxDryer', [
-      'getDryingHopperStats',
-      'getHopperTemperatures'
+      'getDryingHopperStats'
     ]),
     onShowTimeRangeDlgOpen(key) {
       this.selectTimeRange(key)

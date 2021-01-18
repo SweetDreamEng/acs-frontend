@@ -19,27 +19,11 @@ const module = {
     loadingMachineState: false,
     machineState: {},
 
-    loadingActTgtTemperatures: false,
-    actTgtTemperatures: [],
-
     selectedTimeRangeKey: 'actual-target-temperature',
     selectedTimeRange: defaultTimeRange()
   },
 
   actions: {
-    async getActTgtTemperatures({ state, commit }, id) {
-      commit('SET_LOADING_TEMPERATURES', true)
-
-      try {
-        const response = await api.getActTgtTemperatures(id)
-
-        commit('SET_ACTUAL_TARGET_TEMPERATURES', response.data.temps)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        commit('SET_LOADING_TEMPERATURES', false)
-      }
-    },
     async getOverview ({ commit }, { id, isAdditional }) {
       commit('SET_OVERVIEW', {})
       commit('SET_LOADING_OVERVIEW', true)
@@ -77,12 +61,10 @@ const module = {
   },
 
   mutations: {
-    SET_LOADING_TEMPERATURES(state, isLoading) { state.loadingActTgtTemperatures = isLoading },
     SET_LOADING_OVERVIEW(state, isLoading) { state.loadingOverview = isLoading },
     SET_LOADING_SYSTEM_STATES(state, data) { state.loadingMachineState = data },
 
     SET_OVERVIEW(state, overview) { state.overview = overview },
-    SET_ACTUAL_TARGET_TEMPERATURES(state, temps) { state.actTgtTemperatures = temps },
     SET_SYSTEM_STATES(state, data) { state.machineState = data }
   }
 }

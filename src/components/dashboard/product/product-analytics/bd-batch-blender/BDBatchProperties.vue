@@ -35,10 +35,11 @@
       </v-col>
       <v-col md="4" sm="12">
         <bar-graph
+          namespace="barGraph-id2"
           title="Station Conveying"
-          :loading="loadingStationConveyings"
           :height="320"
-          :series="conveyingSeries"
+          :fetch="getStationConveyings"
+          :product-id="parseInt(productId)"
           :categories="conveyingCategories"
         >
         </bar-graph>
@@ -57,7 +58,8 @@
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import BarGraph from '../../common/BarGraph'
+import api from './services/api'
+import BarGraph from '../../common/bar-graph/BarGraph'
 import AreaGraph from '../../common/AreaGraph'
 import HopperStable from './components/HopperStable'
 import TimeRangeChooser from '../../../TimeRangeChooser1'
@@ -78,17 +80,16 @@ export default {
   data() {
     return {
       showTimeRangeChooser: false,
-      conveyingCategories: ['Loader 1', 'Loader 2', 'Loader 3', 'Loader 4', 'Loader 5', 'Loader 6', 'Loader 7', 'Loader 8', 'Loader 9']
+      conveyingCategories: ['Loader 1', 'Loader 2', 'Loader 3', 'Loader 4', 'Loader 5', 'Loader 6', 'Loader 7', 'Loader 8', 'Loader 9'],
+      getStationConveyings: api.getStationConveyings
     }
   },
   computed: {
     ...mapState('bdBlenderAnalytics', [
-      'loadingStationConveyings',
       'loadingHopperStables',
       'loadingCalibrationFactors',
       'loadingCellBits',
       'loadingProcessRates',
-      'stationConveyingSeries',
       'hopperStables',
       'cellBits',
       'processRates',
@@ -99,15 +100,9 @@ export default {
     ]),
     ...mapGetters({
       timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel'
-    }),
-    conveyingSeries() {
-      return [{
-        data: this.stationConveyingSeries
-      }]
-    }
+    })
   },
   mounted() {
-    this.getStationConveyings(this.productId)
     this.getHopperStables(this.productId)
     this.getFeederCalibrationFactors(this.productId)
     this.getLoadingCellBits(this.productId)
@@ -115,7 +110,6 @@ export default {
   },
   methods: {
     ...mapActions('bdBlenderAnalytics', [
-      'getStationConveyings',
       'getHopperStables',
       'getFeederCalibrationFactors',
       'getLoadingCellBits',

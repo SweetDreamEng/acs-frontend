@@ -1,9 +1,7 @@
 import api from '@/api.js'
 export default {
   getActTgtTemperatures(id) {
-    return api.get(`/analytics/tcu/actual-target-temperature/${id}`).then((response) => {
-      return response
-    })
+    return api.get(`/analytics/tcu/actual-target-temperature/${id}`)
   },
   getOverview(data) {
     return api.post('/analytics/product-overview', data).then((response) => {
