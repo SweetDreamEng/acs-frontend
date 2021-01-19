@@ -22,13 +22,9 @@ export default {
     })
   },
   getFeederCalibrationFactors(data) {
-    return api.post('/analytics/blender/calibration-factors', data).then((response) => {
-      return response
-    })
+    return api.post('/analytics/blender/calibration-factors', data)
   },
   getProcessRate(data) {
-    return api.post('/analytics/blender/process-rate', data).then((response) => {
-      return response
-    })
+    return api.post('/analytics/blender/process-rate', data)
   }
 }

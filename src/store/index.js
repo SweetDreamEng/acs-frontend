@@ -18,6 +18,7 @@ import notes from './notes'
 import configurations from './configurations'
 
 import barGraph from '../components/dashboard/product/common/bar-graph/store'
+import overviewCard from '../components/dashboard/product/common/overview/store'
 
 import bdBlenderAnalytics from '../components/dashboard/product/product-analytics/bd-batch-blender/store'
 import accumeterOvationBlender from '../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender/store'
@@ -49,6 +50,7 @@ const store = new Vuex.Store({
     configurations,
 
     barGraph,
+    overviewCard,
     
     bdBlenderAnalytics,
     accumeterOvationBlender,

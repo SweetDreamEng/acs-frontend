@@ -1,9 +1,7 @@
 import api from '@/api.js'
 export default {
   getRecipe(id) {
-    return api.get(`/analytics/product-actual-target-recipe/${id}`).then((response) => {
-      return response
-    })
+    return api.get(`/analytics/accumeter/recipe/${id}`)
   },
 
   getSystemStates(data) {
@@ -19,7 +17,7 @@ export default {
   },
 
   getProductionRate(data) {
-    return api.post('/analytics/product-production-rate', data).then((response) => response)
+    return api.post('/analytics/product-production-rate', data)
   },
 
   getBlenderCapabilities(data) {

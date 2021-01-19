@@ -3,26 +3,33 @@
     <v-row dense>
       <v-col md="4" sm="12">
         <overview
-          :machine="machine"
-          :loading="loadingOverview"
+          namespace="overview-id3"
+          :product-id="parseInt(productId)"
+          :fetch="getOverview"
         >
         </overview>
       </v-col>
       <v-col md="4" sm="12">
-        <utilization
-          :loading="loadingUtilization"
-          :time-range-label="timeRangeLabel('utilization')"
-          @showTimeRange="onShowTimeRangeDlgOpen('utilization')"
+        <area-graph
+          namespace="areaGraph-gh-utilization"
+          title="Capacity Utilization"
+          :height="220"
+          :fetch="getUtilization"
+          :product-id="parseInt(productId)"
+          :names="['Utilization']"
         >
-        </utilization>
+        </area-graph>
       </v-col>
       <v-col md="4" sm="12">
-        <energy-consumption
-          :loading="loadingEnergyConsumption"
-          :time-range-label="timeRangeLabel('energy-consumption')"
-          @showTimeRange="onShowTimeRangeDlgOpen('energy-consumption')"
+        <area-graph
+          namespace="areaGraph-gh-consumption"
+          title="Energy Consumption"
+          :height="220"
+          :fetch="getEnergyConsumption"
+          :product-id="parseInt(productId)"
+          :names="['Energy Consumption']"
         >
-        </energy-consumption>
+        </area-graph>
       </v-col>
     </v-row>
     <v-row dense>
@@ -62,9 +69,10 @@
   </div>
 </template>
 <script>
-import Overview from '../common/components/Overview'
-import Utilization from '../common/components/Utilization'
-import EnergyConsumption from '../common/components/EnergyConsumption'
+import commonApi from '../../common/fetches/api'
+
+import AreaGraph from '../../common/area-graph/AreaGraph'
+import Overview from '../../common/overview/Overview'
 import MachineStates from './components/MachineStates'
 import AccumulatedHopperInventory from './components/AccumulatedHopperInventory'
 import AccumulatedHauloffLength from './components/AccumulatedHauloffLength'
@@ -74,9 +82,8 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
+    AreaGraph,
     Overview,
-    Utilization,
-    EnergyConsumption,
     MachineStates,
     AccumulatedHopperInventory,
     AccumulatedHauloffLength,
@@ -90,21 +97,20 @@ export default {
   },
   data() {
     return {
-      showTimeRangeChooser: false
+      showTimeRangeChooser: false,
+      getOverview: commonApi.getOverview,
+      getUtilization: commonApi.getUtilization,
+      getEnergyConsumption: commonApi.getEnergyConsumption
     }
   },
   computed: {
     ...mapState({
-      machine: (state) => state.machines.machine,
       actualRecipeValues: (state) => state.machines.actualRecipe2Values,
       targetRecipeValues: (state) => state.machines.targetRecipe2Values,
       machineStates: (state) => state.machines.systemStates,
       hopperInventories: (state) => state.machines.hopperInventories,
       hauloffLengths: (state) => state.machines.hauloffLengths,
 
-      loadingOverview: (state) => state.machines.loadingOverview,
-      loadingUtilization: (state) => state.machines.loadingUtilization,
-      loadingEnergyConsumption: (state) => state.machines.loadingEnergyConsumption,
       loadingMachineStates: (state) => state.machines.loadingSystemStates,
       loadingHopperInventories: (state) => state.machines.loadingHopperInventories,
       loadingHauloffLengths: (state) => state.machines.loadingHauloffLengths,
@@ -116,21 +122,12 @@ export default {
     })
   },
   mounted() {
-    this.getOverview({
-      id: this.productId,
-      isAdditional: false
-    })
-    this.getUtilization(this.productId)
-    this.getEnergyConsumption(this.productId)
     this.getMachineStates(this.productId)
     this.getHopperInventories(this.productId)
     this.getHauloffLengths(this.productId)
   },
   methods: {
     ...mapActions({
-      getOverview: 'machines/getOverview',
-      getUtilization: 'machines/getUtilization',
-      getEnergyConsumption: 'machines/getEnergyConsumption',
       getMachineStates: 'machines/getMachineStates3',
       getHopperInventories: 'machines/getHopperInventories',
       getHauloffLengths: 'machines/getHauloffLengths',

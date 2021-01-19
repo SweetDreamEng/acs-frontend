@@ -3,26 +3,33 @@
     <v-row dense>
       <v-col md="4" sm="12">
         <overview
-          :machine="machine"
-          :loading="loadingOverview"
+          namespace="overview-id2"
+          :product-id="parseInt(productId)"
+          :fetch="getOverview"
         >
         </overview>
       </v-col>
       <v-col md="4" sm="12">
-        <utilization
-          :loading="loadingUtilization"
-          :time-range-label="timeRangeLabel(utilizationTimeRange)"
-          @showTimeRange="onShowTimeRangeDlgOpen('utilization')"
+        <area-graph
+          namespace="areaGraph-accumeterBlender-utilization"
+          title="Capacity Utilization"
+          :height="220"
+          :fetch="getUtilization"
+          :product-id="parseInt(productId)"
+          :names="['Utilization']"
         >
-        </utilization>
+        </area-graph>
       </v-col>
       <v-col md="4" sm="12">
-        <energy-consumption
-          :loading="loadingEnergyConsumption"
-          :time-range-label="timeRangeLabel(energyConsumptionTimeRange)"
-          @showTimeRange="onShowTimeRangeDlgOpen('energy-consumption')"
+        <area-graph
+          namespace="areaGraph-accumeterBlender-consumption"
+          title="Energy Consumption"
+          :height="220"
+          :fetch="getEnergyConsumption"
+          :product-id="parseInt(productId)"
+          :names="['Energy Consumption']"
         >
-        </energy-consumption>
+        </area-graph>
       </v-col>
     </v-row>
     <v-row dense>
@@ -34,59 +41,53 @@
       </v-col>
       <v-col md="4" sm="12">
         <area-graph
+          namespace="areaGraph-accumeterBlender-rate"
           title="Process Rate"
-          unit-string="kgs/hr"
-          :loading="loadingProcessRate"
-          :series="processRateSeries"
-          :time-range-label="timeRangeLabel(processRateTimeRange)"
-          @showTimeRange="onShowTimeRangeDlgOpen('process-rate')"
+          :height="220"
+          :fetch="getProductionRate"
+          :product-id="parseInt(productId)"
+          :names="['Process Rate']"
         >
         </area-graph>
       </v-col>
     </v-row>
     <v-row dense>
       <v-col md="8" sm="12">
-        <recipe
-          :targets="targetRecipeValues"
-          :actuals="actualRecipeValues"
-          :loading="loadingRecipe"
+        <bar-graph
+          namespace="barGraph-id2"
+          title="Actual Target Recipe"
+          :height="360"
+          :fetch="getRecipe"
+          :product-id="parseInt(productId)"
+          :names="['Actual', 'Target']"
+          :categories="['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6']"
         >
-        </recipe>
+        </bar-graph>
       </v-col>
       <v-col md="4" sm="12">
       </v-col>
     </v-row>
-    <time-range-chooser
-      :dlg="showTimeRangeChooser"
-      :time-range="selectedTimeRange"
-      @close="showTimeRangeChooser = false"
-      @submit="_onTimeRangeChanged"
-    >
-    </time-range-chooser>
   </div>
 </template>
 <script>
-import AreaGraph from '../../common/AreaGraph'
-import Overview from '../common/components/Overview'
-import Utilization from '../common/components/Utilization'
-import EnergyConsumption from '../common/components/EnergyConsumption'
+import api from './services/api'
+import commonApi from '../../common/fetches/api'
+
+import Overview from '../../common/overview/Overview'
+import AreaGraph from '../../common/area-graph/AreaGraph'
+import BarGraph from '../../common/bar-graph/BarGraph'
 import MachineState from './components/MachineState'
 import FeederStable from './components/FeederStable'
-import Recipe from './components/Recipe'
-import TimeRangeChooser from '../../../TimeRangeChooser1'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     AreaGraph,
+    BarGraph,
     Overview,
-    Utilization,
-    EnergyConsumption,
     MachineState,
-    FeederStable,
-    Recipe,
-    TimeRangeChooser
+    FeederStable
   },
   props: {
     productId: {
@@ -96,81 +97,29 @@ export default {
   },
   data() {
     return {
-      showTimeRangeChooser: false
+      getOverview: commonApi.getOverview,
+      getUtilization: commonApi.getUtilization,
+      getEnergyConsumption: commonApi.getEnergyConsumption,
+      getProductionRate: api.getProductionRate,
+      getRecipe: api.getRecipe
     }
   },
   computed: {
-    ...mapState('machines', [
-      'loadingOverview',
-      'loadingUtilization',
-      'loadingEnergyConsumption',
-      'machine',
-      'utilizationTimeRange',
-      'energyConsumptionTimeRange'
-    ]),
     ...mapState('accumeterOvationBlender', [
-      'loadingRecipe',
       'loadingSystemStates',
       'loadingFeederStables',
-      'loadingProcessRate',
-      'actualRecipeValues',
-      'targetRecipeValues',
       'systemStates',
-      'feederStables',
-      'processRateTimeRange'
-    ]),
-    ...mapState({
-      processRates: (state) => state.accumeterOvationBlender.processRateSeries
-    }),
-    ...mapGetters({
-      timeRangeLabel: 'bdBlenderAnalytics/timeRangeLabel',
-      selectedTimeRange: 'machines/selectedTimeRange'
-    }),
-    processRateSeries() {
-      return [{
-        name: 'Process Rate',
-        data: this.processRates
-      }]
-    }
+      'feederStables'
+    ])
   },
   mounted() {
-    this.getOverview({
-      id: this.productId,
-      isAdditional: false
-    })
-    this.getUtilization(this.productId)
-    this.getEnergyConsumption(this.productId)
-    this.getSystemStates({
-      id: this.productId,
-      isAdditional: false
-    })
     this.getFeederStables(this.productId)
-    this.getProductionRate(this.productId)
-    this.getRecipe(this.productId)
   },
   methods: {
-    ...mapActions('machines', [
-      'getOverview',
-      'getUtilization',
-      'getEnergyConsumption'
-    ]),
     ...mapActions('accumeterOvationBlender', [
       'getSystemStates',
-      'getFeederStables',
-      'getProductionRate',
-      'getRecipe',
-      'onTimeRangeChanged',
-      'selectTimeRange'
-    ]),
-    onShowTimeRangeDlgOpen(key) {
-      this.selectTimeRange(key)
-      this.showTimeRangeChooser = true
-    },
-    _onTimeRangeChanged(data) {
-      data.id = this.productId
-      this.onTimeRangeChanged(data)
-      this.showTimeRangeChooser = false
-    }
+      'getFeederStables'
+    ])
   }
 }
 </script>

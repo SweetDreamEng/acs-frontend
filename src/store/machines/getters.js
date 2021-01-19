@@ -19,27 +19,11 @@ const extendedMachines = (state) => {
   return _machines
 }
 
-const timeRangeLabel = (state) => (id) => {
-  let timeRange = null
-
-  if (id === 'inventory') {
-    timeRange = state.inventoryTimeRange
-  } else if (id === 'weight') {
-    timeRange = state.weightTimeRange
-  } else if (id === 'utilization') {
-    timeRange = state.utilizationTimeRange
-  } else if (id === 'energy-consumption') {
-    timeRange = state.energyConsumptionTimeRange
-  } else if (id === 'process-rate') {
-    timeRange = state.processRateTimeRange
-  } else if (id === 'hopper-inventories') {
-    timeRange = state.inventoryTimeRange
-  } else if (id === 'hauloff-lengths') {
-    timeRange = state.hauloffTimeRange
-  }
-
+const timeRangeLabel = (state) => (timeRange) => {
   if (timeRange.timeRangeOption !== 'custom') {
-    return state.timeRageOptions.find((item) => item.value === timeRange.timeRangeOption).label
+    const tr = state.timeRageOptions.find((item) => item.value === timeRange.timeRangeOption)
+
+    return tr ? tr.label : ''
   } else {
     return timeRange.dateFrom + ' ' + timeRange.timeFrom + ' ~ ' + timeRange.dateTo + ' ' + timeRange.timeTo
   }

@@ -1,9 +1,4 @@
 export default {
-  OVERVIEW_LOADING(state) { state.loadingOverview = true },
-  OVERVIEW_LOADED(state) { state.loadingOverview = false },
-  SET_OVERVIEW(state, overview) { state.machine = overview },
-
-  SET_UTILIZATION(state, utilization) { state.utilizationSeries = utilization },
   SET_INVENTORIES(state, inventories) { state.inventories = inventories },
 
   SET_WEEKLY_RUNNING_HOURS(state, hours) { state.weeklyRuningHours = hours },
@@ -50,14 +45,6 @@ export default {
   SET_ACTUAL_BAR(state, actuals) { state.actualValuesBar = actuals },
   SET_TARGET_BAR(state, targets) { state.targetValuesBar = targets },
   SET_OUTLET_BAR(state, outlets) { state.outletValuesBar = outlets },
-
-  SET_LOADING_UTILIZATION(state, data) {
-    state.loadingUtilization = data
-  },
-
-  SET_LOADING_ENERGY_CONSUMPTION(state, data) {
-    state.loadingEnergyConsumption = data
-  },
 
   SET_LOADING_RECIPE(state, data) {
     state.loadingRecipe = data
@@ -148,10 +135,6 @@ export default {
       state.selectedTimeRange = state.inventoryTimeRange
     } else if (key === 'weight') {
       state.selectedTimeRange = state.weightTimeRange
-    } else if (key === 'utilization') {
-      state.selectedTimeRange = state.utilizationTimeRange
-    } else if (key === 'energy-consumption') {
-      state.selectedTimeRange = state.energyConsumptionTimeRange
     } else if (key === 'process-rate') {
       state.selectedTimeRange = state.processRateTimeRange
     } else if (key === 'hauloff-lengths') {
@@ -163,11 +146,7 @@ export default {
   SET_HOPPER_INVENTORY_TIME_RANGE(state, data) { state.inventoryTimeRange = Object.assign({}, data) },
   SET_HAULOFF_LENGTH_TIME_RANGE(state, data) { state.hauloffTimeRange = Object.assign({}, data) },
   SET_WEIGHT_TIME_RANGE(state, data) { state.weightTimeRange = Object.assign({}, data) },
-  SET_UTILIZATION_TIME_RANGE(state, data) { state.utilizationTimeRange = Object.assign({}, data) },
-  SET_ENERGY_CONSUMPTION_TIME_RANGE(state, data) { state.energyConsumptionTimeRange = Object.assign({}, data) },
   SET_PROCESS_RATE_TIME_RANGE(state, data) { state.processRateTimeRange = Object.assign({}, data) },
   
-  // Energy Consumption
-  SET_ENERGY_CONSUMPTION(state, energyConsumption) { state.energyConsumption = energyConsumption },
   SET_DOWNTIME_DISTRIBUTION(state, data) { state.downtimeDistribution = data }
 }

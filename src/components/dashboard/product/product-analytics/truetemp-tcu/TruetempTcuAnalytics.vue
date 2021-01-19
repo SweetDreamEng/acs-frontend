@@ -3,8 +3,9 @@
     <v-row dense>
       <v-col md="4" sm="12">
         <overview
-          :machine="overview"
-          :loading="loadingOverview"
+          namespace="overview-id11"
+          :product-id="parseInt(productId)"
+          :fetch="getOverview"
         >
         </overview>
       </v-col>
@@ -31,8 +32,10 @@
 </template>
 <script>
 import api from './services/api'
+import commonApi from '../../common/fetches/api'
+
 import BarGraph from '../../common/bar-graph/BarGraph'
-import Overview from '../common/components/Overview'
+import Overview from '../../common/overview/Overview'
 import MachineState from './components/MachineState'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -68,23 +71,18 @@ export default {
           }
         }
       },
-      getActTgtTemperatures: api.getActTgtTemperatures
+      getActTgtTemperatures: api.getActTgtTemperatures,
+      getOverview: commonApi.getOverview
     }
   },
   computed: {
     ...mapState({
-      loadingOverview: (state) => state.truetempTcu.loadingOverview,
       loadingMachineState: (state) => state.truetempTcu.loadingMachineState,
 
-      overview: (state) => state.truetempTcu.overview,
       machineState: (state) => state.truetempTcu.machineState
     })
   },
   mounted() {
-    this.getOverview({
-      id: this.productId,
-      isAdditional: this.isAdditional
-    })
     this.getSystemStates({
       id: this.productId,
       isAdditional: this.isAdditional
@@ -92,7 +90,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      getOverview: 'truetempTcu/getOverview',
       getSystemStates: 'truetempTcu/getSystemStates'
     })
   }

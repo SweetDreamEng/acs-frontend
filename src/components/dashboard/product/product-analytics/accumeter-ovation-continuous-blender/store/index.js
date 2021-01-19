@@ -22,11 +22,6 @@ const module = {
 
     loadingFeederStables: false,
     feederStables: [],
-
-    loadingProcessRate: false,
-    processRateSeries: [],
-    processRateTimeRange: defaultTimeRange(),
-
     loadingBlenderCapabilities: false,
     blenderCapabilities: [],
     blenderCapabilityTimeRange: defaultTimeRange(),
@@ -77,23 +72,6 @@ const module = {
         console.log(error)
       } finally {
         commit('SET_LOADING_FEEDER_STABLES', false)
-      }
-    },
-    async getProductionRate({ state, commit }, id) {
-      commit('SET_PROCESS_RATE_SERIES', [])
-      commit('SET_LOADING_PROCESS_RATE', true)
-
-      try {
-        const response = await api.getProductionRate({
-          id: id,
-          timeRange: state.processRateTimeRange
-        })
-
-        commit('SET_PROCESS_RATE_SERIES', response.data.process_rate)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        commit('SET_LOADING_PROCESS_RATE', false)
       }
     },
     async getRecipe({ state, commit }, id) {
@@ -188,10 +166,6 @@ const module = {
 
     async onTimeRangeChanged({ commit, dispatch, state }, data) {
       switch (state.selectedTimeRangeKey) {
-      case 'process-rate':
-        commit('SET_PROCESS_RATE_TIME_RANGE', data)
-        dispatch('getProductionRate', data.id)
-        break
       case 'blender-capability':
         commit('SET_BLENDER_CAPABIITY_TIME_RANGE', data)
         dispatch('getBlenderCapabilities', data.id)
@@ -217,7 +191,6 @@ const module = {
   mutations: {
     SET_LOADING_SYSTEM_STATES(state, isLoading) { state.loadingSystemStates = isLoading },
     SET_LOADING_FEEDER_STABLES(state, isLoading) { state.loadingFeederStables = isLoading },
-    SET_LOADING_PROCESS_RATE(state, isLoading) { state.loadingProcessRate = isLoading },
     SET_LOADING_RECIPE(state, isLoading) { state.loadingRecipe = isLoading },
     SET_LOADING_BLENDER_CAPABILITIES(state, isLoading) { state.loadingBlenderCapabilities = isLoading },
     SET_LOADING_FEEDER_CALIBRATIONS(state, isLoading) { state.loadingFeederCalibrations = isLoading },
@@ -226,7 +199,6 @@ const module = {
     
     SET_SYSTEM_STATES(state, data) { state.systemStates = data },
     SET_FEEDER_STABLES(state, data) { state.feederStables = data },
-    SET_PROCESS_RATE_SERIES(state, data) { state.processRateSeries = data },
     SET_ACTUAL_RECIPE_TO_VALUES(state, data) { state.actualRecipeValues = data },
     SET_TARGET_RECIPE_TO_VALUES(state, data) { state.targetRecipeValues = data },
     SET_BLENDER_CAPABILITIES(state, data) { state.blenderCapabilities = data },
@@ -235,7 +207,6 @@ const module = {
     SET_TARGET_RATES(state, data) { state.targetRates = data },
 
     SET_BLENDER_CAPABIITY_TIME_RANGE(state, data) { state.blenderCapabilityTimeRange = Object.assign({}, data) },
-    SET_PROCESS_RATE_TIME_RANGE(state, data) { state.processRateTimeRange = Object.assign({}, data) },
     SET_FEEDER_CALIBRATION_TIME_RANGE(state, data) { state.feederCalibrationTimeRange = Object.assign({}, data) },
     SET_FEEDER_SPEED_TIME_RANGE(state, data) { state.feederSpeedTimeRange = Object.assign({}, data) },
     SET_TARGET_RATE_TIME_RANGE(state, data) { state.targetRateTimeRange = Object.assign({}, data) },
@@ -243,9 +214,6 @@ const module = {
     SET_CURRENT_TIME_KEY(state, key) { state.selectedTimeRangeKey = key },
     SET_CURRENT_TIME(state, key) {
       switch (key) {
-      case 'process-rate':
-        state.selectedTimeRange = state.processRateTimeRange
-        break
       case 'blender-capability':
         state.selectedTimeRange = state.blenderCapabilityTimeRange
         break

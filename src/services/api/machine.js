@@ -23,13 +23,7 @@ export default {
       return response
     })
   },
-
-  getOverview(data) {
-    return api.post('/analytics/product-overview', data).then((response) => {
-      return response
-    })
-  },
-
+  
   getUtilization(data) {
     return api.post('/analytics/product-utilization', data).then((response) => {
       return response

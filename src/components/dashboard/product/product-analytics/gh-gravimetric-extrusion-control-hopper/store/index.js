@@ -13,33 +13,11 @@ function defaultTimeRange() {
 const module = {
   namespaced: true,
   state: {
-    loadingProcessRate: false,
-    processRateSeries: [],
-    processRateTimeRange: defaultTimeRange(),
-
     selectedTimeRangeKey: 'blender-capability',
     selectedTimeRange: defaultTimeRange()
   },
 
   actions: {
-    async getProductionRate({ state, commit }, id) {
-      commit('SET_PROCESS_RATE_SERIES', [])
-      commit('SET_LOADING_PROCESS_RATE', true)
-
-      try {
-        const response = await api.getProductionRate({
-          id: id,
-          timeRange: state.processRateTimeRange
-        })
-
-        commit('SET_PROCESS_RATE_SERIES', response.data.process_rate)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        commit('SET_LOADING_PROCESS_RATE', false)
-      }
-    },
-
     async selectTimeRange({ commit }, key) {
       commit('SET_CURRENT_TIME_KEY', key)
       commit('SET_CURRENT_TIME', key)
@@ -47,10 +25,6 @@ const module = {
 
     async onTimeRangeChanged({ commit, dispatch, state }, data) {
       switch (state.selectedTimeRangeKey) {
-      case 'process-rate':
-        commit('SET_PROCESS_RATE_TIME_RANGE', data)
-        dispatch('getProductionRate', data.id)
-        break
       default:
         break
       }

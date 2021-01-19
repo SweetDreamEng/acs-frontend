@@ -23,59 +23,6 @@ const selectTimeRange = ({ commit }, key) => {
   commit('SET_CURRENT_TIME_RANGE_ITEM', key)
 }
 
-const getOverview = async ({ commit }, { id, isAdditional }) => {
-  commit('SET_OVERVIEW', {})
-  commit('OVERVIEW_LOADING')
-
-  try {
-    const data = {
-      id,
-      isAdditional
-    }
-    const response = await machineAPI.getOverview(data)
-
-    commit('SET_OVERVIEW', response.data.overview)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('OVERVIEW_LOADED')
-  }
-}
-
-const getUtilization = async ({ state, commit }, id) => {
-  commit('SET_LOADING_UTILIZATION', true)
-
-  try {
-    const response = await machineAPI.getUtilization({
-      id: id,
-      timeRange: state.utilizationTimeRange
-    })
-
-    commit('SET_UTILIZATION', response.data.utilizations)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_UTILIZATION', false)
-  }
-}
-
-const getEnergyConsumption = async ({ state, commit }, id) => {
-  commit('SET_LOADING_ENERGY_CONSUMPTION', true)
-
-  try {
-    const response = await machineAPI.getEnergyConsumption({
-      id: id,
-      timeRange: state.energyConsumptionTimeRange
-    })
-
-    commit('SET_ENERGY_CONSUMPTION', response.data.energy_consumption)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_ENERGY_CONSUMPTION', false)
-  }
-}
-
 const getSystemStates = async ({ state, commit }, id) => {
   commit('SET_LOADING_SYSTEM_STATES', true)
 
@@ -231,13 +178,7 @@ const getDashboardMachinesTable = async ({ commit }, data) => {
 }
 
 const onTimeRangeChanged = ({ commit, dispatch, state }, data) => {
-  if (state.selectedTimeRangeKey === 'utilization') {
-    commit('SET_UTILIZATION_TIME_RANGE', data)
-    dispatch('getUtilization', data.id)
-  } else if (state.selectedTimeRangeKey === 'energy-consumption') {
-    commit('SET_ENERGY_CONSUMPTION_TIME_RANGE', data)
-    dispatch('getEnergyConsumption', data.id)
-  } else if (state.selectedTimeRangeKey === 'process-rate') {
+  if (state.selectedTimeRangeKey === 'process-rate') {
     commit('SET_PROCESS_RATE_TIME_RANGE', data)
     dispatch('getProductionRate', data.id)
   } else if (state.selectedTimeRangeKey === 'hopper-inventories') {
@@ -257,9 +198,6 @@ export default {
   getDashboardMachinesTable,
   changeSelectedCompany,
   selectTimeRange,
-  getOverview,
-  getUtilization,
-  getEnergyConsumption,
   getSystemStates,
   getMachineStates3,
   getHopperInventories,

@@ -1,15 +1,5 @@
 import api from '../services/api'
 
-function defaultTimeRange() {
-  return {
-    timeRangeOption: 'last24Hours',
-    dateFrom: new Date().toISOString().substr(0, 10),
-    dateTo: new Date().toISOString().substr(0, 10),
-    timeFrom: '00:00',
-    timeTo: '00:00'
-  }
-}
-
 const module = {
   namespaced: true,
   state: {
@@ -25,18 +15,7 @@ const module = {
     hopperStables: [],
 
     loadingCellBits: false,
-    cellBits: [],
-
-    loadingProcessRates: false,
-    processRates: [],
-    processRateTimeRange: defaultTimeRange(),
-
-    loadingCalibrationFactors: false,
-    calibrationFactors: [],
-    calibrationFactorTimeRange: defaultTimeRange(),
-
-    selectedTimeRangeKey: 'process-rate',
-    selectedTimeRange: defaultTimeRange()
+    cellBits: []
   },
 
   actions: {
@@ -87,24 +66,6 @@ const module = {
       }
     },
 
-    async getFeederCalibrationFactors({ state, commit }, id) {
-      commit('SET_CALIBRATION_FACTORS', [])
-      commit('SET_LOADING_CALIBRATION_FACTORS', true)
-
-      try {
-        const response = await api.getFeederCalibrationFactors({
-          id: id,
-          timeRange: state.calibrationFactorTimeRange
-        })
-
-        commit('SET_CALIBRATION_FACTORS', response.data.calibration_factors)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        commit('SET_LOADING_CALIBRATION_FACTORS', false)
-      }
-    },
-
     async getLoadingCellBits({ commit }, id) {
       // commit('SET_LOADING_CELL_BITS', true)
 
@@ -120,43 +81,6 @@ const module = {
       // } finally {
       //   commit('SET_LOADING_CELL_BITS', false)
       // }
-    },
-
-    async getProcessRate({ state, commit }, id) {
-      commit('SET_LOADING_PROCESS_RATE', true)
-
-      try {
-        const response = await api.getProcessRate({
-          id: id,
-          timeRange: state.processRateTimeRange
-        })
-
-        commit('SET_PROCESS_RATE', response.data.process_rate)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        commit('SET_LOADING_PROCESS_RATE', false)
-      }
-    },
-
-    async selectTimeRange({ commit }, key) {
-      commit('SET_CURRENT_TIME_KEY', key)
-      commit('SET_CURRENT_TIME', key)
-    },
-
-    async onTimeRangeChanged({ commit, dispatch, state }, data) {
-      switch (state.selectedTimeRangeKey) {
-      case 'process-rate':
-        commit('SET_PROCESS_RATE_TIME_RANGE', data)
-        dispatch('getProcessRate', data.id)
-        break
-      case 'calibration-factor':
-        commit('SET_CALIBRATION_FACTOR_TIME_RANGE', data)
-        dispatch('getFeederCalibrationFactors', data.id)
-        break
-      default:
-        break
-      }
     }
   },
 
@@ -164,34 +88,13 @@ const module = {
     SET_LOADING_RECIPE(state, isLoading) { state.loadingRecipe = isLoading },
     SET_LOADING_INVENTORIES(state, isLoading) { state.loadingInventories = isLoading },
     SET_LOADING_HOPPER_STABLES(state, isLoading) { state.loadingHopperStables = isLoading },
-    SET_LOADING_CALIBRATION_FACTORS(state, isLoading) { state.loadingCalibrationFactors = isLoading },
     SET_LOADING_CELL_BITS(state, isLoading) { state.loadingCellBits = isLoading },
-    SET_LOADING_PROCESS_RATE(state, isLoading) { state.loadingProcessRates = isLoading },
 
     SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
     SET_RECIPE_MODE(state, mode) { state.recipeMode = mode },
     SET_EZ_TYPES(state, types) { state.ezTypes = types },
     SET_INVENTORIES(state, inventories) { state.inventories = inventories },
-    SET_HOPPER_STABLES(state, stables) { state.hopperStables = stables },
-    SET_CALIBRATION_FACTORS(state, factors) { state.calibrationFactors = factors },
-    SET_PROCESS_RATE(state, processRates) { state.processRates = processRates },
-
-    SET_PROCESS_RATE_TIME_RANGE(state, data) { state.processRateTimeRange = Object.assign({}, data) },
-    SET_CALIBRATION_FACTOR_TIME_RANGE(state, data) { state.calibrationFactorTimeRange = Object.assign({}, data) },
-
-    SET_CURRENT_TIME_KEY(state, key) { state.selectedTimeRangeKey = key },
-    SET_CURRENT_TIME(state, key) {
-      switch (key) {
-      case 'process-rate':
-        state.selectedTimeRange = state.processRateTimeRange
-        break
-      case 'calibration-factor':
-        state.selectedTimeRange = state.calibrationFactorTimeRange
-        break
-      default:
-        break
-      }
-    }
+    SET_HOPPER_STABLES(state, stables) { state.hopperStables = stables }
   },
 
   getters: {
