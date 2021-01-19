@@ -23,39 +23,12 @@ export default {
       return response
     })
   },
-  
-  getUtilization(data) {
-    return api.post('/analytics/product-utilization', data).then((response) => {
-      return response
-    })
-  },
-
-  getEnergyConsumption(data) {
-    return api.post('/analytics/product-energy-consumption', data).then((response) => {
-      return response
-    })
-  },
 
   getSystemStates(data) {
     return api.get(`/analytics/product-system-states/${id}`).then((response) => {
       return response
     })
   },
-
-  getMachineStates3(id) {
-    return api.get(`/analytics/product-system-states-3/${id}`).then((response) => {
-      return response
-    })
-  },
-
-  getHauloffLengths(data) {
-    return api.post('/analytics/product-hauloff-lengths', data).then((response) => response)
-  },
-
-  getHopperInventories(data) {
-    return api.post('/analytics/product-hopper-inventories', data).then((response) => response)
-  },
-
   getWeeklyRunningHours(id) {
     return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {
       return response

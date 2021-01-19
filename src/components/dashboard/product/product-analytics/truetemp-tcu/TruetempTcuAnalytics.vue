@@ -6,6 +6,7 @@
           namespace="overview-id11"
           :product-id="parseInt(productId)"
           :fetch="getOverview"
+          :is-additional="isAdditional"
         >
         </overview>
       </v-col>

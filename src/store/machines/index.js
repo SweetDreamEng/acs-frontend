@@ -8,10 +8,6 @@ const state = {
 
   selectedCompany: null,
   
-  actualValuesBar: [],
-  targetValuesBar: [],
-  outletValuesBar: [],
-
   // Accumeter Ovation Continuous Blender
   actualRecipe2Values: [],
   targetRecipe2Values: [],
@@ -23,15 +19,8 @@ const state = {
   feederStables: [],
   loadingFeederStables2: false,
 
-  // Production rate in machine type 2
-  processRateSeries: [],
-  loadingProcessRate: false,
-
   loadingActualTargetBar: false,
 
-  loadingPumpHours: false,
-  pumpHours: [],
-  
   // Running hours per weekday
   loadingWeeklyRunningHours1: false,
   weeklyRuningHours: [],
@@ -44,9 +33,6 @@ const state = {
   loadingZonesTable: false,
 
   loadingMachinesTable: false,
-
-  modeWeightProduct: 'Weekly',
-  modeInventory: 'Weekly',
 
   timeRageOptions: [
     {
@@ -91,63 +77,8 @@ const state = {
     }
   ],
 
-  inventoryTimeRange: {
-    timeRangeOption: 'last24Hours',
-    dateFrom: new Date().toISOString().substr(0, 10),
-    dateTo: new Date().toISOString().substr(0, 10),
-    timeFrom: '00:00',
-    timeTo: '00:00'
-  },
-
-  paramWeightProduct: 0,
-  paramInventory: 0,
-
-  weightTimeRange: {
-    timeRangeOption: 'last24Hours',
-    dateFrom: new Date().toISOString().substr(0, 10),
-    dateTo: new Date().toISOString().substr(0, 10),
-    timeFrom: '00:00',
-    timeTo: '00:00'
-  },
-
-  processRateTimeRange: {
-    timeRangeOption: 'last24Hours',
-    dateFrom: new Date().toISOString().substr(0, 10),
-    dateTo: new Date().toISOString().substr(0, 10),
-    timeFrom: '00:00',
-    timeTo: '00:00'
-  },
-
-  hauloffTimeRange: {
-    timeRangeOption: 'last24Hours',
-    dateFrom: new Date().toISOString().substr(0, 10),
-    dateTo: new Date().toISOString().substr(0, 10),
-    timeFrom: '00:00',
-    timeTo: '00:00'
-  },
-
-  selectedTimeRangeKey: 'inventory',
-
-  valuesTgtWeightProduct: [],
-  valuesActWeightProduct: [],
-  valuesHopInventory: [],
-  valuesFrtInventory: [],
-
   // BD Batch Blender
-  totalRunningPercentage: 0,
-
-  // GH Gravimetric Extrusion Control Hopper
-  loadingHopperInventories: false,
-  hopperInventories: [],
-
-  loadingHauloffLengths: false,
-  hauloffLengths: [],
-
-  recipeSetPoints: [],
-  recipeActualPoints: [],
-
-  isWeightProductLoading: false,
-  isInventoryProductLoading: false
+  totalRunningPercentage: 0
 }
 
 export default {
