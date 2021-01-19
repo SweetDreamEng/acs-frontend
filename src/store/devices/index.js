@@ -7,6 +7,7 @@ const module = {
     deviceConfiguration: {
       configuration_id: 0,
       name: '',
+      device_name: '',
       tcu_added: false
     },
 

@@ -156,7 +156,6 @@ export default {
     ...mapState({
       loadingAlarmsTable: (state) => state.alarms.loadingAlarmsTable,
       deviceConfiguration: (state) => state.devices.deviceConfiguration,
-      machine: (state) => state.machines.machine,
       alarmTypes: (state) => state.alarms.alarmTypes,
       alarms: (state) => state.alarms.alarms,
       isLoading: (state) => state.machines.isNoteAdding,
@@ -188,7 +187,7 @@ export default {
           exact: true,
           to: `/dashboard/analytics/${this.$route.params.location}/${this.$route.params.zone}`
         }, {
-          text: this.machine.customer_assigned_name,
+          text: this.deviceConfiguration.device_name,
           disabled: true
         }
       ]
@@ -214,7 +213,7 @@ export default {
           exact: true,
           to: `/acs-machines/${this.$route.params.location}/${this.$route.params.zone}`
         }, {
-          text: this.machine.customer_assigned_name,
+          text: this.deviceConfiguration.device_name,
           disabled: true
         }
       ]
