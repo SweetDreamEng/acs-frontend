@@ -1,15 +1,5 @@
 import api from '../services/api'
 
-function defaultTimeRange() {
-  return {
-    timeRangeOption: 'last24Hours',
-    dateFrom: new Date().toISOString().substr(0, 10),
-    dateTo: new Date().toISOString().substr(0, 10),
-    timeFrom: '00:00',
-    timeTo: '00:00'
-  }
-}
-
 const module = {
   namespaced: true,
   state: {
@@ -17,10 +7,7 @@ const module = {
     overview: {},
     
     loadingMachineState: false,
-    machineState: {},
-
-    selectedTimeRangeKey: 'actual-target-temperature',
-    selectedTimeRange: defaultTimeRange()
+    machineState: {}
   },
 
   actions: {

@@ -102,9 +102,7 @@ export default {
           }
         })
       else
-        return [{
-          data: (this.$store.state[this.namespace]['items']) ? (this.$store.state[this.namespace]['items']) : []
-        }]
+        return (this.$store.state[this.namespace]['items']) ? (this.$store.state[this.namespace]['items']) : [[]]
     },
     chartOptions() {
       return {

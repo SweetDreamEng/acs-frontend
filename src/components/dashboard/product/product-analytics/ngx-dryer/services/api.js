@@ -14,18 +14,12 @@ export default {
     })
   },
   getDhOnlineHours(data) {
-    return api.post('/analytics/ngx-dryer/dh-online-hours', data).then((response) => {
-      return response
-    })
+    return api.post('/analytics/ngx-dryer/dh-online-hours', data)
   },
   getDryerOnlineHours(data) {
-    return api.post('/analytics/ngx-dryer/dryer-online-hours', data).then((response) => {
-      return response
-    })
+    return api.post('/analytics/ngx-dryer/dryer-online-hours', data)
   },
   getBlowerRunHours(data) {
-    return api.post('/analytics/ngx-dryer/blower-run-hours', data).then((response) => {
-      return response
-    })
+    return api.post('/analytics/ngx-dryer/blower-run-hours', data)
   }
 }
