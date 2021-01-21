@@ -53,6 +53,20 @@
         </bar-graph>
       </v-col>
     </v-row>
+    <v-row dense>
+      <v-col cols="12" md="4">
+        <area-graph
+          namespace="areaGraph-ngxDryer-dew-temperature"
+          title="Dew Point Temperature"
+          :height="220"
+          unit="ºC"
+          :fetch="getDewPointTemperature"
+          :product-id="parseInt(productId)"
+          :names="['Dew Point Temperature']"
+        >
+        </area-graph>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
@@ -82,6 +96,7 @@ export default {
   data() {
     return {
       getHopperTemperatures: api.getHopperTemperatures,
+      getDewPointTemperature: api.getDewPointTemperature,
       getOverview: commonApi.getOverview,
       getUtilization: commonApi.getUtilization,
       getEnergyConsumption: commonApi.getEnergyConsumption

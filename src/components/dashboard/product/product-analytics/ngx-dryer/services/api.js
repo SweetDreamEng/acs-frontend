@@ -16,6 +16,9 @@ export default {
   getDhOnlineHours(data) {
     return api.post('/analytics/ngx-dryer/dh-online-hours', data)
   },
+  getDewPointTemperature(data) {
+    return api.post('/analytics/ngx-dryer/dew-point-temperature', data)
+  },
   getDryerOnlineHours(data) {
     return api.post('/analytics/ngx-dryer/dryer-online-hours', data)
   },
