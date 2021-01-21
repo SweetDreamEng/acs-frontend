@@ -44,6 +44,7 @@
           namespace="areaGraph-accumeterBlender-rate"
           title="Process Rate"
           :height="220"
+          unit="kgs/hr"
           :fetch="getProductionRate"
           :product-id="parseInt(productId)"
           :names="['Process Rate']"
@@ -54,7 +55,8 @@
     <v-row dense>
       <v-col md="8" sm="12">
         <bar-graph
-          namespace="barGraph-id2"
+          namespace="barGraph-id1"
+          :persist="false"
           title="Actual Target Recipe"
           :height="360"
           :fetch="getRecipe"
@@ -113,6 +115,10 @@ export default {
     ])
   },
   mounted() {
+    this.getSystemStates({
+      id: this.productId,
+      isAdditional: false
+    })
     this.getFeederStables(this.productId)
   },
   methods: {

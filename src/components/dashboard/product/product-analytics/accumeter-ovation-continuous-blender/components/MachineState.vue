@@ -40,7 +40,7 @@
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !systemStates.system_steady }"
-            >System steady</span>
+            >System</span>
           </v-col>
           <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.system_steady }">
             <v-icon
@@ -63,7 +63,7 @@
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !systemStates.mass_flow_hopper }"
-            >Mass flow hopper</span>
+            >Massflow</span>
           </v-col>
           <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.mass_flow_hopper }">
             <v-icon
@@ -71,7 +71,7 @@
               left
               :color="systemStates.mass_flow_hopper ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ systemStates.mass_flow_hopper ? 'Steady' : 'Not steady' }}
+            {{ systemStates.mass_flow_hopper ? 'Stable' : 'Waiting for Stable' }}
           </v-col>
         </v-row>
       </v-alert>
@@ -86,7 +86,7 @@
             <span
               class="font-weight-bold"
               :class="{ 'red--text': !systemStates.rpm }"
-            >RPM</span>
+            >Extrude WTP/RPM</span>
           </v-col>
           <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.rpm }">
             <v-icon
@@ -94,7 +94,7 @@
               left
               :color="systemStates.rpm ? 'green' : 'red'"
             >mdi-checkbox-blank-circle</v-icon>
-            {{ systemStates.rpm ? 'Steady' : 'Not steady' }}
+            {{ systemStates.rpm ? 'Stable' : 'Waiting for Stable' }}
           </v-col>
         </v-row>
       </v-alert>

@@ -42,7 +42,7 @@
       </v-col>
       <v-col cols="12" md="8">
         <bar-graph
-          namespace="barGraph-id1"
+          namespace="barGraph-ngxDryer-id1"
           title="Hopper Air Temperatures"
           :height="320"
           :fetch="getHopperTemperatures"

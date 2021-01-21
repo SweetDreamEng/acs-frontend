@@ -8,14 +8,17 @@ const module = {
     targetRecipeValues: [],
 
     loadingSystemStates: false,
-    systemStates: {}
+    systemStates: {},
+
+    loadingFeederStables: false,
+    feederStables: []
   },
 
   actions: {
     async getSystemStates({ commit }, { id, isAdditional }) {
       commit('SET_SYSTEM_STATES', {})
       commit('SET_LOADING_SYSTEM_STATES', true)
-
+      
       try {
         const response = await api.getSystemStates({
           id,

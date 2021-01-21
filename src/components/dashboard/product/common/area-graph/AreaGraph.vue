@@ -78,6 +78,10 @@ export default {
     height: {
       type: Number,
       default: 220
+    },
+    persist: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -147,6 +151,9 @@ export default {
       isAdditional: this.isAdditional,
       timeRange: this.timeRange
     })
+  },
+  beforeDestroy() {
+    if (!this.persist) this.$store.unregisterModule(this.namespace)
   },
   methods: {
     ...mapActions({

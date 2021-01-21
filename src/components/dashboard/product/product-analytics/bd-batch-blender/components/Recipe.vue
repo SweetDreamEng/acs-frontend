@@ -56,7 +56,7 @@ export default {
       return {
         chart: {
           type: 'donut',
-          height: 300
+          height: 340
         },
         labels: this.labels,
         dataLabels: {
@@ -69,7 +69,7 @@ export default {
           position: 'bottom',
           horizontalAlign: 'left',
           itemMargin: {
-            horizontal: 25,
+            horizontal: 10,
             vertical: 10
           }
         }

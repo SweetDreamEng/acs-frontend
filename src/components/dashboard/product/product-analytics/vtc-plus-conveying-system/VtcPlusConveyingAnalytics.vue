@@ -35,7 +35,7 @@
     <v-row dense>
       <v-col cols="12" md="6">
         <bar-graph
-          namespace="barGraph-id1"
+          namespace="barGraph-vtc-id1"
           title="Pump Hours"
           :height="500"
           :fetch="getPumpHours"
@@ -47,7 +47,7 @@
       </v-col>
       <v-col cols="12" md="6">
         <bar-graph
-          namespace="barGraph-id2"
+          namespace="barGraph-vtc-id2"
           title="Pump Hours Oil Change"
           :height="500"
           :fetch="getPumpHoursOil"

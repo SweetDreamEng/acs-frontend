@@ -35,7 +35,7 @@
       </v-col>
       <v-col md="4" sm="12">
         <bar-graph
-          namespace="barGraph-id2"
+          namespace="barGraph-dbBlender-id2"
           title="Station Conveying"
           :height="320"
           :fetch="getStationConveyings"

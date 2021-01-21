@@ -35,8 +35,8 @@
     <v-row dense>
       <v-col md="8" sm="12">
         <bar-graph
-          namespace="barGraph-id1"
-          title="Actual Target Weight"
+          namespace="barGraph-dbBlender-id1"
+          title="Target Weights vs Actual Weights"
           :height="360"
           :fetch="getWeight"
           :product-id="parseInt(productId)"
