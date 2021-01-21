@@ -5,7 +5,7 @@
       <div class="caption font-italic ml-1">({{ recipeMode }})</div>
     </v-card-title>
     <v-card-text>
-      <apexchart type="donut" height="360" :options="chartOptions" :series="recipeSeries"></apexchart>
+      <apexchart type="pie" height="360" :options="chartOptions" :series="recipeSeries"></apexchart>
     </v-card-text>
   </v-card>
 </template>

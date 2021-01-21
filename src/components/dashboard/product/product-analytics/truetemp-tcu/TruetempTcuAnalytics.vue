@@ -19,11 +19,12 @@
       <v-col md="4" sm="12">
         <bar-graph
           namespace="barGraph-id1"
-          title="Actual Target Temperature"
+          title="TCU Temperature"
           :height="320"
+          unit="ºC"
           :fetch="getActTgtTemperatures"
           :product-id="parseInt(productId)"
-          :categories="['Actual', 'Set point']"
+          :categories="[['Actual Return', 'Temperature'], ['Actual Return', 'Temperature'], ['Target', 'Setpoint 1']]"
           :options="temperatureOptions"
         >
         </bar-graph>
@@ -40,7 +41,6 @@ import Overview from '../../common/overview/Overview'
 import MachineState from './components/MachineState'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
-
 export default {
   components: {
     Overview,
@@ -63,12 +63,20 @@ export default {
       temperatureOptions: {
         plotOptions: {
           bar: {
-            horizontal: true,
-            barHeight: '20%',
+            horizontal: false,
+            columnWidth: '20%',
             dataLabels: {
               position: 'top'
             },
+            space: 0.25,
             endingShape: 'rounded'
+          }
+        },
+        dataLabels: {
+          textAnchor: 'middle',
+          offsetY: -20,
+          style: {
+            colors: ['#000']
           }
         }
       },

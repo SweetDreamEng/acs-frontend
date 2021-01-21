@@ -60,6 +60,22 @@
       </v-col>
     </v-row>
     <v-row dense>
+      <v-col cols="12" md="6">
+        <bar-graph
+          namespace="barGraph-vtc-id3"
+          title="Online Life"
+          :height="500"
+          :fetch="getPumpOnlineLife"
+          unit="%"
+          :product-id="parseInt(productId)"
+          :categories="pumpHoursOilCategories"
+        >
+        </bar-graph>
+      </v-col>
+      <v-col cols="12" md="6">
+      </v-col>
+    </v-row>
+    <v-row dense>
       <v-col md="8" sm="12">
       </v-col>
       <v-col md="4" sm="12">
@@ -93,6 +109,7 @@ export default {
     return {
       getPumpHours: api.getPumpHours,
       getPumpHoursOil: api.getPumpHoursOil,
+      getPumpOnlineLife: api.getPumpOnlineLife,
       getOverview: commonApi.getOverview,
       getUtilization: commonApi.getUtilization,
       getEnergyConsumption: commonApi.getEnergyConsumption
