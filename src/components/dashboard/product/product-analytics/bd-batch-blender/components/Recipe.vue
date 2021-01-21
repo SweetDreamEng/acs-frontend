@@ -55,7 +55,7 @@ export default {
     chartOptions() {
       return {
         chart: {
-          type: 'donut',
+          type: 'pie',
           height: 340
         },
         labels: this.labels,
