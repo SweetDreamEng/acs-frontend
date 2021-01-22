@@ -101,6 +101,10 @@ export default {
     tags: {
       type: Array,
       default: () => []
+    },
+    deviceConfiguration: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
@@ -151,7 +155,7 @@ export default {
   },
   methods: {
     propertiesComponent() {
-      const configId = parseInt(this.$route.params.configurationId)
+      const configId = this.deviceConfiguration && this.deviceConfiguration.tcu_added ? 11 : parseInt(this.$route.params.configurationId)
 
       switch (configId) {
       case 1: return 'BdBatchBlender'

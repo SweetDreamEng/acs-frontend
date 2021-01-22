@@ -43,6 +43,10 @@ export default {
       type: Number,
       default: 0
     },
+    machineId: {
+      type: Number,
+      default: 0
+    },
     isAdditional: {
       type: Boolean,
       default: false
@@ -74,6 +78,7 @@ export default {
   mounted() {
     this.getOverview({
       id: this.productId,
+      machineId: this.machineId,
       isAdditional: this.isAdditional
     })
   },

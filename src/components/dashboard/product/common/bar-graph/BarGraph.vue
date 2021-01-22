@@ -94,6 +94,9 @@ export default {
             show: false
           }
         },
+        noData: {
+          text: 'No Data From Devce'
+        },
         fill: {
           colors: ['#002855', '#008ffb', '#feb019'],
           opacity: 0.9,

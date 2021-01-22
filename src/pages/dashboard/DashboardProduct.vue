@@ -73,6 +73,7 @@
             <v-col cols="12">
               <product-parameters-chart
                 :tags="productTags"
+                :device-configuration="deviceConfiguration"
               >
               </product-parameters-chart>
             </v-col>

@@ -16,6 +16,7 @@
           :height="220"
           :fetch="getUtilization"
           :product-id="parseInt(productId)"
+          :is-additional="isAdditional"
           :names="['Utilization']"
         >
         </area-graph>
@@ -90,6 +91,10 @@ export default {
     productId: {
       type: String,
       default: ''
+    },
+    isAdditional: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
