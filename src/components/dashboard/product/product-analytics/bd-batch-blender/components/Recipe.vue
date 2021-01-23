@@ -64,6 +64,9 @@ export default {
             return [val.toFixed(2) + '%']
           }
         },
+        noData: {
+          text: 'No Data From Devce'
+        },
         legend: {
           show: true,
           position: 'bottom',
