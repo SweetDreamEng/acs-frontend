@@ -62,29 +62,30 @@ const module = {
         commit('SET_TOKEN', response.data.access_token)
         
         Vue.auth.setToken(response.data.access_token)
+        
+        try {
+          const checkResponse = await authAPI.check()
 
-        authAPI.check().then((response) => {
           commit('CLEAR_ERROR')
-          commit('SET_AUTH_DATA', response.data)
-          Vue.auth.setUser(response.data)
+          commit('SET_AUTH_DATA', checkResponse.data)
+          Vue.auth.setUser(checkResponse.data)
 
-          if (response.data.role === 'acs_admin' || response.data.role === 'acs_manager' || response.data.role === 'acs_viewer') {
+          if (checkResponse.data.role === 'acs_admin' || checkResponse.data.role === 'acs_manager' || checkResponse.data.role === 'acs_viewer') {
             router.push({
               name: 'acs-machines'
             })
-          } else if (response.data.role === 'customer_admin' || response.data.role === 'customer_manager' || response.data.role === 'customer_operator') {
+          } else if (checkResponse.data.role === 'customer_admin' || checkResponse.data.role === 'customer_manager' || checkResponse.data.role === 'customer_operator') {
             router.push({
               name: 'dashboard-analytics'
             })
-          } else if (response.data.role === 'super_admin') {
+          } else if (checkResponse.data.role === 'super_admin') {
             router.push({
               name: 'app-settings-customize-application'
             })
           }
-        })
-          .catch((error) => {
-            console.log(error)
-          })
+        } catch (error) {
+          console.log(error)
+        }
       } catch (error) {
         if (error.response.status === 401) {
           commit('SET_ERROR', {

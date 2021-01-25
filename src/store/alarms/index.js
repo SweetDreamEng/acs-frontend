@@ -120,56 +120,50 @@ const module = {
       commit('SET_LOADING_ALARMS_PER_MACHINE', false)
     },
 
-    onAlarmParamChanged({
-      commit
-    }, data) {
+    async onAlarmParamChanged({ commit }, data) {
       commit('SET_ALARM_PARAMS', data)
       commit('ALARMS_LOADING')
-      alarmAPI.getAlarms(data)
-        .then((response) => {
-          commit('SET_ALARMS', response.data.alarms)
-        })
-        .catch((error) => {
-          console.log(error.response)
-        })
-        .finally(() => {
-          commit('ALARMS_LOADED')
-        })
+      try {
+        const response = await alarmAPI.getAlarms(data)
+
+        commit('SET_ALARMS', response.data.alarms)
+        commit('ALARMS_LOADED')
+      } catch (error) {
+        console.log(error)
+      }
     },
-    getCorrespondingAlarmTypes({
-      commit
-    }, machine_id) {
-      return alarmAPI.getCorrespondingAlarmTypes(machine_id)
-        .then((response) => {
-          commit('SET_ALARM_TYPES', response.data.alarm_types)
-        })
-        .catch((error) => {
-          console.log(error.response)
-        })
-        .finally(() => {
-          
-        })
+
+    async getCorrespondingAlarmTypes({ commit }, machine_id) {
+      try {
+        const response = await alarmAPI.getCorrespondingAlarmTypes(machine_id)
+
+        commit('SET_ALARM_TYPES', response.data.alarm_types)
+      } catch (error) {
+        console.log(error)
+      }
     },
-    getAlarmsByCompanyId({
-      commit
-    }, company_id) {
-      return alarmAPI.getAlarmsByCompanyId(company_id)
-        .then((response) => {
-          commit('SET_ALARMS', response.data.alarms)
-        })
+
+    async getAlarmsByCompanyId({ commit }, company_id) {
+      try {
+        const response = await alarmAPI.getAlarmsByCompanyId(company_id)
+
+        commit('SET_ALARMS', response.data.alarms)
+      } catch (error) {
+        console.log(error)
+      }
     },
-    getSeverityByCompanyId({
-      commit
-    }, data ) {
-      return alarmAPI.getSeverityByCompanyId(data)
-        .then((response) => {
-          commit('SET_SEVERITY', response.data.severity)
-        })
+
+    async getSeverityByCompanyId({ commit }, data ) {
+      try {
+        const response = await alarmAPI.getSeverityByCompanyId(data)
+
+        commit('SET_SEVERITY', response.data.severity)
+      } catch (error) {
+        console.log(error)
+      }
     },
-    getAlarmsPerTypeByMachine({
-      commit,
-      state
-    }, data ) {
+
+    async getAlarmsPerTypeByMachine({ commit, state }, data ) {
       if (data.machine_name) {
         commit('SET_SELECTED_MACHINE_NAME', {
           type: 'Alarms Per Type',
@@ -179,15 +173,16 @@ const module = {
         data.machine_name = state.selectedMachineName['Alarms Per Type']
       }
 
-      return alarmAPI.getAlarmsPerTypeByMachine(data)
-        .then((response) => {
-          commit('SET_ALARMS_PER_TYPE', response.data.alarms)
-        })
+      try {
+        const response = await alarmAPI.getAlarmsPerTypeByMachine(data)
+
+        commit('SET_ALARMS_PER_TYPE', response.data.alarms)
+      } catch (error) {
+        console.log(error)
+      }
     },
-    getAlarmsDistributionByMachine({
-      commit,
-      state
-    }, data ) {
+
+    async getAlarmsDistributionByMachine({ commit, state }, data ) {
       if (data.machine_name) {
         commit('SET_SELECTED_MACHINE_NAME', {
           type: 'Alarms Distribution',
@@ -197,25 +192,26 @@ const module = {
         data.machine_name = state.selectedMachineName['Alarms Distribution']
       }
       
-      return alarmAPI.getAlarmsDistributionByMachine(data)
-        .then((response) => {
-          commit('SET_ALARMS_DISTRIBUTION', response.data.results)
-        })
+      try {
+        const response = await alarmAPI.getAlarmsDistributionByMachine(data)
+
+        commit('SET_ALARMS_DISTRIBUTION', response.data.results)
+      } catch (error) {
+        console.log(error)
+      }
     },
-    getAlarmsAmountPerMachineByCompanyId({
-      commit
-    }, data ) {
-      return alarmAPI.getAlarmsAmountPerMachineByCompanyId(data)
-        .then((response) => {
-          commit('SET_ALARMS_AMOUNT_PER_MACHINE', response.data.results)
-        })
+
+    async getAlarmsAmountPerMachineByCompanyId({ commit }, data ) {
+      try {
+        const response = await alarmAPI.getAlarmsAmountPerMachineByCompanyId(data)
+        
+        commit('SET_ALARMS_AMOUNT_PER_MACHINE', response.data.results)
+      } catch (error) {
+        console.log(error)
+      }
     },
-    setDateRange({
-      commit
-    }, {
-      type,
-      dates
-    }) {
+
+    setDateRange({ commit }, { type, dates }) {
       return commit('SET_DATE_RANGE', {
         type,
         dates
