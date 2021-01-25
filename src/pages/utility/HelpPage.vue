@@ -1,6 +1,6 @@
 <template>
   <div class="py-3 min-w-0 w-full">
-    <div class="display-1">{{ $t('common.faq') }}</div>
+    <div class="display-1">FAQ</div>
     <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
 
     <!-- search card -->
@@ -46,8 +46,8 @@
     </v-row>
 
     <div class="caption mt-2 text-center">
-      {{ $t('faq.call') }}
-      <router-link to="">{{ $t('common.contact') }}</router-link>
+      Have other questions? Please reach out 
+      <router-link to="">Contact Us</router-link>
     </div>
   </div>
 </template>

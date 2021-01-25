@@ -8,7 +8,8 @@ export default {
       { icon: 'mdi-near-me', text: 'Alarms', link: '/acs-machines/alarms' },
       { icon: 'mdi-swap-horizontal', text: 'Customer Assign', link: '/customer-assign' },
       { icon: 'mdi-city', text: 'Companies', link: '/customers/list' },
-      { icon: 'mdi-account-multiple', text: 'Users', link: '/acs-admin/users/list' }
+      { icon: 'mdi-account-multiple', text: 'Users', link: '/acs-admin/users/list' },
+      { icon: 'mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],
 
