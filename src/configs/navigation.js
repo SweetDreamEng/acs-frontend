@@ -18,7 +18,8 @@ export default {
     key: '',
     items: [
       { icon: 'mdi-view-dashboard-outline', text: 'App Settings', link: '/app-settings/customize-application' },
-      { icon: 'mdi-devices', text: 'Configurations', link: '/app-settings/configurations' }
+      { icon: 'mdi-devices', text: 'Configurations', link: '/app-settings/configurations' },
+      { icon: 'mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],
 
@@ -28,7 +29,8 @@ export default {
     items: [
       { icon: 'mdi-view-dashboard-outline', text: 'ACS Machines', link: '/acs-machines' },
       { icon: 'mdi-city', text: 'Companies', link: '/customers/list' },
-      { icon: 'mdi-account-multiple', text: 'Users', link: '/acs-admin/users/list' }
+      { icon: 'mdi-account-multiple', text: 'Users', link: '/acs-admin/users/list' },
+      { icon: 'mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],
 
@@ -46,7 +48,8 @@ export default {
       //   ]
       // },
       { icon: 'mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
-      { icon: 'mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' }
+      { icon: 'mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' },
+      { icon: 'mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],
   customerOperatorMenu: [{
@@ -61,7 +64,8 @@ export default {
           { text: 'Add Threshold', link: '/threshold/add' }
         ]
       },
-      { icon: 'mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' }
+      { icon: 'mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
+      { icon: 'mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],
 
