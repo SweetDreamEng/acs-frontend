@@ -170,6 +170,7 @@
                   :rules="[$rules.required]"
                   outlined
                   dense
+                  readonly
                 >
                 </v-text-field>
               </v-col>
