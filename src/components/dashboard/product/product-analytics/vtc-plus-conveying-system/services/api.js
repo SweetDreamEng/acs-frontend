@@ -1,15 +1,15 @@
 import api from '@/api.js'
 export default {
-  async getPumpHoursOil(id) {
-    return await api.get(`/analytics/vtc-plus/pump-hours-oil/${id}`)
+  getPumpHoursOil(id) {
+    return api.get(`/analytics/vtc-plus/pump-hours-oil/${id}`)
   },
 
-  async getPumpHours(id) {
-    return await api.get(`/analytics/vtc-plus/pump-hours/${id}`)
+  getPumpHours(id) {
+    return api.get(`/analytics/vtc-plus/pump-hours/${id}`)
   },
 
-  async getPumpOnlineLife(id) {
-    return await api.get(`/analytics/vtc-plus/pump-online-life/${id}`)
+  getPumpOnlineLife(id) {
+    return api.get(`/analytics/vtc-plus/pump-online-life/${id}`)
   },
 
   async getPumpOnlines(id) {

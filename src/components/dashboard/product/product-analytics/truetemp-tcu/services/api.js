@@ -1,7 +1,7 @@
 import api from '@/api.js'
 export default {
-  async getActTgtTemperatures(id) {
-    return await api.get(`/analytics/tcu/actual-target-temperature/${id}`)
+  getActTgtTemperatures(id) {
+    return api.get(`/analytics/tcu/actual-target-temperature/${id}`)
   },
 
   async getOverview(data) {

@@ -1,7 +1,7 @@
 import api from '@/api.js'
 export default {
-  async getRecipe(id) {
-    return await api.get(`/analytics/accumeter/recipe/${id}`)
+  getRecipe(id) {
+    return api.get(`/analytics/accumeter/recipe/${id}`)
   },
 
   async getSystemStates(data) {
@@ -12,23 +12,23 @@ export default {
     return await api.get(`/analytics/product-feeder-stables/${id}`)
   },
 
-  async getProductionRate(data) {
-    return await api.post('/analytics/product-production-rate', data)
+  getProductionRate(data) {
+    return api.post('/analytics/product-production-rate', data)
   },
 
-  async getBlenderCapabilities(data) {
-    return await api.post('/analytics/accumeter/blender-capabilities', data)
+  getBlenderCapabilities(data) {
+    return api.post('/analytics/accumeter/blender-capabilities', data)
   },
 
-  async getFeederCalibrations(data) {
-    return await api.post('/analytics/accumeter/feeder-calibrations', data)
+  getFeederCalibrations(data) {
+    return api.post('/analytics/accumeter/feeder-calibrations', data)
   },
 
-  async getFeederSpeeds(data) {
-    return await api.post('/analytics/accumeter/feeder-speeds', data)
+  getFeederSpeeds(data) {
+    return api.post('/analytics/accumeter/feeder-speeds', data)
   },
 
-  async getTargetRates(data) {
-    return await api.post('/analytics/accumeter/target-rate', data)
+  getTargetRates(data) {
+    return api.post('/analytics/accumeter/target-rate', data)
   }
 }

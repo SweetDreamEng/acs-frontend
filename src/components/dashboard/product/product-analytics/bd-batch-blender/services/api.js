@@ -1,19 +1,19 @@
 import api from '@/api.js'
 export default {
   async getRecipe(id) {
-    return api.get(`/analytics/product-current-recipe/${id}`)
+    return await api.get(`/analytics/product-current-recipe/${id}`)
   },
 
-  async getWeight(id) {
-    return await api.get(`/analytics/product-weight/${id}`)
+  getWeight(id) {
+    return api.get(`/analytics/product-weight/${id}`)
   },
 
   async getInventory(id) {
     return await api.get(`/analytics/product-inventory/${id}`)
   },
 
-  async getStationConveyings(id) {
-    return await api.get(`/analytics/product-station-conveyings/${id}`)
+  getStationConveyings(id) {
+    return api.get(`/analytics/product-station-conveyings/${id}`)
   },
 
   async getHopperStables(id) {
@@ -24,7 +24,7 @@ export default {
     return await api.post('/analytics/blender/calibration-factors', data)
   },
 
-  async getProcessRate(data) {
-    return await api.post('/analytics/blender/process-rate', data)
+  getProcessRate(data) {
+    return api.post('/analytics/blender/process-rate', data)
   }
 }
