@@ -1,18 +1,14 @@
 import api from '@/api.js'
 export default {
-  getConfigurations() {
-    return api.get('/configurations').then((response) => {
-      return response
-    })
+  async getConfigurations() {
+    return await api.get('/configurations')
   },
-  getConfiguration(id) {
-    return api.get(`/configurations/${id}`).then((response) => {
-      return response
-    })
+
+  async getConfiguration(id) {
+    return await api.get(`/configurations/${id}`)
   },
-  saveConfiguration(configuration) {
-    return api.post(`/configurations/${configuration.id}`, configuration).then((response) => {
-      return response
-    })
+
+  async saveConfiguration(configuration) {
+    return await api.post(`/configurations/${configuration.id}`, configuration)
   }
 }

@@ -28,22 +28,19 @@ export default function (Vue) {
     },
 
     check(role = '') {
-      return api.post('/auth/check', {
-        role
-      })
-        .then((response) =>  {
-          // store.dispatch('SET_USER', response.data.user)
-          if (!response.data) {
-            store.dispatch('auth/clearAuthData')
-          }
+      try {
+        const response = api.post('/auth/check', { role })
+        
+        if (!response.data) {
+          store.dispatch('auth/clearAuthData')
+        }
 
-          return (response.data)
-        })
-        .catch(() => {
-          this.removeToken('token')
+        return (response.data)
+      } catch (error) {
+        this.removeToken('token')
 
-          return false
-        })
+        return false
+      }
     }
   }
 

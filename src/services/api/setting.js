@@ -1,43 +1,30 @@
 import api from '@/api.js'
 export default {
-  appSettings() {
-    return api.get('/settings/app-settings').then((response) => {
-      return response
-    })
+  async appSettings() {
+    return await api.get('/settings/app-settings')
   },
-  grabColors(data) {
-    return api.post('/app-settings/grab-colors', data).then((response) => {
-      return response
-    })
+  
+  async grabColors(data) {
+    return await api.post('/app-settings/grab-colors', data)
   },
 
-  setPrivateColors(data) {
-    return api.post('/app-settings/set-private-colors', data).then((response) => {
-      return response
-    })
+  async setPrivateColors(data) {
+    return await api.post('/app-settings/set-private-colors', data)
   },
 
-  getSetting(data) {
-    return api.post('/app-settings/get-setting', data).then((response) => {
-      return response
-    })
+  async getSetting(data) {
+    return await api.post('/app-settings/get-setting', data)
   },
 
-  updateAuthBackground() {
-    return api.post('/app-settings/update-auth-background').then((response) => {
-      return response
-    })
+  async updateAuthBackground() {
+    return await api.post('/app-settings/update-auth-background')
   },
 
-  uploadLogo(data) {
-    return api.post('/app-settings/upload-logo', data).then((response) => {
-      return response
-    })
+  async uploadLogo(data) {
+    return await api.post('/app-settings/upload-logo', data)
   },
 
-  resetSettings() {
-    return api.post('/app-settings/reset').then((response) => {
-      return response
-    })
+  async resetSettings() {
+    return await api.post('/app-settings/reset')
   }
 }

@@ -7,10 +7,8 @@ export default {
       locations: Array
     }
   */
-  getLocations(pageNum) {
-    return api.get('/locations').then((response) => {
-      return response
-    })
+  async getLocations(pageNum) {
+    return await api.get('/locations')
   },
 
   /*
@@ -20,10 +18,8 @@ export default {
         location: String
       }
   */
-  addLocation(data) {
-  	return api.post('/locations/add', data).then((response) => {
-      return response
-    })
+  async addLocation(data) {
+  	return await api.post('/locations/add', data)
   },
 
   /*
@@ -34,9 +30,7 @@ export default {
         location: String
       }
   */
-  updateLocation(data) {
-    return api.patch('/locations/update', data).then((response) => {
-      return response
-    })
+  async updateLocation(data) {
+    return await api.patch('/locations/update', data)
   }
 }

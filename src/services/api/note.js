@@ -1,13 +1,10 @@
 import api from '@/api.js'
 export default {
-  addNote(data) {
-    return api.post('/notes/store', data).then((response) => {
-      return response
-    })
+  async addNote(data) {
+    return await api.post('/notes/store', data)
   },
-  getNotes(device_id) {
-    return api.get(`/notes/${device_id}`).then((response) => {
-      return response
-    })
+
+  async getNotes(device_id) {
+    return await api.get(`/notes/${device_id}`)
   }
 }

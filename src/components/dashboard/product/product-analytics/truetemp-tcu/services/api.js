@@ -1,16 +1,14 @@
 import api from '@/api.js'
 export default {
-  getActTgtTemperatures(id) {
-    return api.get(`/analytics/tcu/actual-target-temperature/${id}`)
+  async getActTgtTemperatures(id) {
+    return await api.get(`/analytics/tcu/actual-target-temperature/${id}`)
   },
-  getOverview(data) {
-    return api.post('/analytics/product-overview', data).then((response) => {
-      return response
-    })
+
+  async getOverview(data) {
+    return await api.post('/analytics/product-overview', data)
   },
-  getSystemStates(data) {
-    return api.post('/analytics/product-system-states', data).then((response) => {
-      return response
-    })
+  
+  async getSystemStates(data) {
+    return await api.post('/analytics/product-system-states', data)
   }
 }

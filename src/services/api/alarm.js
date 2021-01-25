@@ -1,56 +1,38 @@
 import api from '@/api.js'
 export default {
-  getProductAlarms(productId) {
-    return api.post(`/alarms/${productId}`).then((response) => {
-      return response
-    })
+  async getProductAlarms(productId) {
+    return await api.post(`/alarms/${productId}`)
   },
 
-  getAlarmsByMachine() {
-    return api.post('/alarms/alarms-for-customer-devices').then((response) => {
-      return response
-    })
+  async getAlarmsByMachine() {
+    return await api.post('/alarms/alarms-for-customer-devices')
   },
 
-  getAlarms(data) {
-    return api.post('/alarms', data).then((response) => {
-      return response
-    })
+  async getAlarms(data) {
+    return await api.post('/alarms', data)
   },
 
-  getCorrespondingAlarmTypes(machine_id) {
-    return api.get(`/alarms/alarm-types/${machine_id}`).then((response) => {
-      return response
-    })
+  async getCorrespondingAlarmTypes(machine_id) {
+    return api.get(`/alarms/alarm-types/${machine_id}`)
   },
 
-  getAlarmsByCompanyId(company_id) {
-    return api.get(`/alarms/alarms-by-company-id/${company_id}`).then((response) => {
-      return response
-    })
+  async getAlarmsByCompanyId(company_id) {
+    return api.get(`/alarms/alarms-by-company-id/${company_id}`)
   },
   
-  getSeverityByCompanyId(data) {
-    return api.post('/alarms/severity-by-company-id', data).then((response) => {
-      return response
-    })
+  async getSeverityByCompanyId(data) {
+    return await api.post('/alarms/severity-by-company-id', data)
   },
 
-  getAlarmsPerTypeByMachine(data) {
-    return api.post('/alarms/alarms-per-type-by-machine', data).then((response) => {
-      return response
-    })
+  async getAlarmsPerTypeByMachine(data) {
+    return await api.post('/alarms/alarms-per-type-by-machine', data)
   },
 
-  getAlarmsDistributionByMachine(data) {
-    return api.post('/alarms/alarms-distribution-by-machine', data).then((response) => {
-      return response
-    })
+  async getAlarmsDistributionByMachine(data) {
+    return await api.post('/alarms/alarms-distribution-by-machine', data)
   },
 
-  getAlarmsAmountPerMachineByCompanyId(data) {
-    return api.post('/alarms/alarms-amount-per-machine-by-company-id', data).then((response) => {
-      return response
-    })
+  async getAlarmsAmountPerMachineByCompanyId(data) {
+    return await api.post('/alarms/alarms-amount-per-machine-by-company-id', data)
   }
 }

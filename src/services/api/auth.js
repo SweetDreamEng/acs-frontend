@@ -1,57 +1,48 @@
 import api from '@/api.js'
 export default {
-  signIn(email, password) {
+  async signIn(email, password) {
     const data = {
       email,
       password
     }
 
-    return api.post('/auth/signin', data).then((response) => {
-      return response
-    })
+    return await api.post('/auth/signin', data)
   },
-  getUser() {
-    return api.get('/auth/user').then((response) => {
-      return response
-    })
+
+  async getUser() {
+    return await api.get('/auth/user')
   },
-  updatePassword(currentPassword, newPassword) {
+
+  async updatePassword(currentPassword, newPassword) {
     const data = {
       current_password: currentPassword,
       new_password: newPassword
     }
 
-    return api.post('/auth/update-password', data).then((response) => {
-      return response
-    })
+    return await api.post('/auth/update-password', data)
   },
-  requestForgotPassword(email) {
+
+  async requestForgotPassword(email) {
     const data = {
       email: email
     }
 
-    return api.post('/auth/password-reset', data).then((response) => {
-      return response
-    })
+    return await api.post('/auth/password-reset', data)
   },
-  getTimezoneNames(timezone) {
-    return api.get('/profile/timezones').then((response) => {
-      return response
-    })
+
+  async getTimezoneNames(timezone) {
+    return await api.get('/profile/timezones')
   },
-  updateTimezone(timezone) {
-    return api.post('/profile/timezone', { timezone }).then((response) => {
-      return response
-    })
+
+  async updateTimezone(timezone) {
+    return await api.post('/profile/timezone', { timezone })
   },
-  signOut() {
-    return api.get('/auth/logout').then((response) => {
-      return response
-    })
+
+  async signOut() {
+    return await api.get('/auth/logout')
   },
-  check() {
-    return api.post('/auth/check').then((response) => {
-      return response
-    })
+
+  async check() {
+    return await api.post('/auth/check')
   }
 }
