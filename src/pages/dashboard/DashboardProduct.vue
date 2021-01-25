@@ -123,7 +123,7 @@ import VtcPlusConveyingSystem from '../../components/dashboard/product/product-a
 import NgxDryer from '../../components/dashboard/product/product-analytics/ngx-dryer/NgxDryer'
 import NgxNomadDryer from '../../components/dashboard/product/product-analytics/ngx-nomad-dryer'
 import T50CentralGranulator from '../../components/dashboard/product/product-analytics/t50-central-granulator'
-import GpPortableChiller from '../../components/dashboard/product/product-analytics/gp-portable-chiller'
+import GpPortableChiller from '../../components/dashboard/product/product-analytics/gp-portable-chiller/PortableChillerAnalytics'
 import TruetempTcu from '../../components/dashboard/product/product-analytics/truetemp-tcu/TruetempTcuAnalytics.vue'
 
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
