@@ -1,9 +1,11 @@
 import api from '@/api.js'
 export default {
-  getRecipe(id) {
-    return api.get(`/analytics/accumeter/recipe/${id}`)
+  // getRecipe(id) {
+  //   return api.get(`/analytics/accumeter/recipe/${id}`)
+  // },
+  async getRecipe(id) {
+    return await api.get(`/analytics/accumeter/recipe/${id}`)
   },
-
   getSystemStates(data) {
     return api.post('/analytics/product-system-states', data).then((response) => {
       return response

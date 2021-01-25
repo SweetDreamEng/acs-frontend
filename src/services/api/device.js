@@ -52,6 +52,13 @@ export default {
       return response
     })
   },
+
+  submitDeviceConfig(data) {
+    return api.post('/devices/device-configuration', data).then((response) => {
+      return response
+    })
+  },
+  
   deviceAssigned(data) {
     return api.post('/devices/device-assigned', data).then((response) => {
       return response

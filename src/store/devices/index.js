@@ -37,7 +37,9 @@ const module = {
 
     downtimePlanBtnLoading: false,
     downtimePlansTableLoading: false,
-    downtimePlans: []
+    downtimePlans: [],
+
+    loadingDeviceConfig: false
   },
 
   actions: {
@@ -145,6 +147,25 @@ const module = {
         }, { root: true })
       } finally {
         commit('REGISTER_BTN_CLEAR')
+      }
+    },
+
+    async submitDeviceConfig({
+      commit, dispatch
+    }, data) {
+      commit('SET_LOADING_DEVICE_CONFIG', true)
+
+      try {
+        const response = await deviceAPI.submitDeviceConfig(data)
+
+        dispatch('app/showSuccess', response.data, { root: true })
+      } catch (error) {
+        console.log(error)
+        dispatch('app/showError', {
+          error: error.response.data
+        }, { root: true })
+      } finally {
+        commit('SET_LOADING_DEVICE_CONFIG', false)
       }
     },
 
@@ -373,6 +394,7 @@ const module = {
     REGISTER_BTN_CLEAR(state) {
       state.register_button_loading = false
     },
+    SET_LOADING_DEVICE_CONFIG(state, isLoading) { state.loadingDeviceConfig = isLoading },
     QUERY_BTN_LOAD(state) {
       state.refresh_btn_loading = true
     },
