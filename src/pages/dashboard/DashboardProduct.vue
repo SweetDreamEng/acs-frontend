@@ -22,9 +22,34 @@
         <v-tab-item>
           <v-row class="flex-grow-0" dense>
             <v-col cols="12">
+              <div>
+                <v-combobox
+                  v-model="selectedParameters"
+                  :items="parameters.filter((item) => item.machine_id === parseInt($route.params.configurationId))"
+                  solo
+                  label="Add/Remove parameters"
+                  multiple
+                  item-text="name"
+                  item-value="id"
+                  class="flex-grow-0 ml-auto"
+                  @input="onEnabledPropertiesChanged(false)"
+                >
+                  <template v-slot:selection="{ attrs, item }">
+                    <v-chip
+                      v-bind="attrs"
+                      close
+                      small
+                      @click:close="remove(item, false)"
+                    >
+                      {{ item.name }}
+                    </v-chip>
+                  </template>
+                </v-combobox>
+              </div>
               <component 
                 :is="analyticsComponent(parseInt($route.params.configurationId))" 
                 :product-id="$route.params.productId"
+                :parameters="selectedParameters.map((item) => item.id)"
               >
               </component>
             </v-col>
@@ -42,7 +67,7 @@
             </v-col>
             <v-col cols="12">
               <product-parameters-chart
-                :tags="productTags"
+                :enabled-properties="enabledProperties"
               >
               </product-parameters-chart>
             </v-col>
@@ -51,10 +76,33 @@
         <v-tab-item>
           <v-row class="flex-grow-0" dense>
             <v-col cols="12">
+              <v-combobox
+                v-model="selectedParametersForTcu"
+                :items="parameters.filter((item) => item.machine_id === 11)"
+                solo
+                label="Add/Remove parameters"
+                multiple
+                item-text="name"
+                item-value="id"
+                class="flex-grow-0 ml-auto"
+                @input="onEnabledPropertiesChanged(true)"
+              >
+                <template v-slot:selection="{ attrs, item }">
+                  <v-chip
+                    v-bind="attrs"
+                    close
+                    small
+                    @click:close="remove(item, true)"
+                  >
+                    {{ item.name }}
+                  </v-chip>
+                </template>
+              </v-combobox>
               <component
                 :is="analyticsComponent(11)" 
                 :product-id="$route.params.productId"
                 :is-additional="true"
+                :parameters="selectedParametersForTcu.map((item) => item.id)"
               >
               </component>
             </v-col>
@@ -72,8 +120,8 @@
             </v-col>
             <v-col cols="12">
               <product-parameters-chart
-                :tags="productTags"
                 :device-configuration="deviceConfiguration"
+                :enabled-properties="enabledProperties"
               >
               </product-parameters-chart>
             </v-col>
@@ -150,7 +198,26 @@ export default {
   },
   data() {
     return {
-      tabModel: 0
+      tabModel: 0,
+      parameters: [
+        { id: 1, machine_id: 1, name: 'Capacity Utilization' },
+        { id: 2, machine_id: 1, name: 'Energy Consumption' },
+        { id: 3, machine_id: 1, name: 'Weight' },
+        { id: 4, machine_id: 1, name: 'Recipe' },
+        { id: 5, machine_id: 1, name: 'Inventories' },
+
+        { id: 1, machine_id: 2, name: 'Capacity Utilization' },
+        { id: 2, machine_id: 2, name: 'Energy Consumption' },
+        { id: 3, machine_id: 2, name: 'System States' },
+        { id: 4, machine_id: 2, name: 'Feeder Stable' },
+        { id: 5, machine_id: 2, name: 'Process Rate' },
+        { id: 6, machine_id: 2, name: 'Recipe' },
+
+        { id: 1, machine_id: 11, name: 'System States' },
+        { id: 2, machine_id: 11, name: 'TCU Temperature' }
+      ],
+      selectedParameters: [],
+      selectedParametersForTcu: []
     }
   },
   computed: {
@@ -161,6 +228,8 @@ export default {
       alarms: (state) => state.alarms.alarms,
       isLoading: (state) => state.machines.isNoteAdding,
       notes: (state) => state.notes.data,
+
+      enabledProperties: (state) => state.machines.enabledProperties,
 
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
@@ -242,6 +311,30 @@ export default {
   },
 
   mounted() {
+    this.getEnabledProperties().then(() => {
+      this.selectedParameters = this.parameters.filter((parameter) => {
+        const machineProperty = this.enabledProperties.find((property) => property.machine_id === parseInt(this.$route.params.configurationId))
+        const machinePropertyIds = machineProperty ? JSON.parse(machineProperty.property_ids) : []
+
+        return parameter.machine_id === parseInt(this.$route.params.configurationId) && machinePropertyIds.includes(parameter.id)
+      })
+
+      if (!this.selectedParameters.length) {
+        this.selectedParameters = this.parameters.filter((item) => item.machine_id === parseInt(this.$route.params.configurationId))
+      }
+
+      this.selectedParametersForTcu = this.parameters.filter((parameter) => {
+        const machineProperty = this.enabledProperties.find((property) => property.machine_id === 11)
+        const machinePropertyIds = machineProperty ? JSON.parse(machineProperty.property_ids) : []
+
+        return parameter.machine_id === 11 && machinePropertyIds.includes(parameter.id)
+      })
+
+      if (!this.selectedParametersForTcu.length) {
+        this.selectedParametersForTcu = this.parameters.filter((item) => item.machine_id === 11)
+      }
+    })
+
     if (this.canViewCompanies)
       this.initAcsDashboard()
     this.getDeviceConfiguration(this.$route.params.productId)
@@ -266,7 +359,9 @@ export default {
       onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       getProductAlarms: 'alarms/getProductAlarms',
       onNewAlarms: 'alarms/onNewAlarms',
-      getNotes: 'notes/getNotes'
+      getNotes: 'notes/getNotes',
+      getEnabledProperties: 'machines/getEnabledProperties',
+      updateEnabledProperties: 'machines/updateEnabledProperties'
     }),
     analyticsComponent(configurationId) {
       switch (configurationId) {
@@ -285,6 +380,18 @@ export default {
     },
     _onAlarmParamChange(params) {
       this.onAlarmParamChanged(params)
+    },
+    remove (item, isAdditional) {
+      this.selectedParameters.splice(this.selectedParameters.indexOf(item), 1)
+      this.onEnabledPropertiesChanged(isAdditional)
+    },
+    onEnabledPropertiesChanged(isAdditional) {
+      if (!isAdditional) {
+        this.updateEnabledProperties({ id: this.$route.params.configurationId, isImportant: true, enabledProperties: this.selectedParameters.map((item) => item.id) })
+      } else {
+        this.updateEnabledProperties({ id: 11, isImportant: true, enabledProperties: this.selectedParametersForTcu.map((item) => item.id) })
+      }
+
     }
   }
 }

@@ -33,5 +33,11 @@ export default {
     return api.get(`/analytics/weekly-running-hours/${id}`).then((response) => {
       return response
     })
+  },
+  getEnabledProperties(payload) {
+    return api.get('/machines/enabled-properties')
+  },
+  updateEnabledProperties(payload) {
+    return api.patch(`/machines/enabled-properties/${payload.id}`, payload)
   }
 }

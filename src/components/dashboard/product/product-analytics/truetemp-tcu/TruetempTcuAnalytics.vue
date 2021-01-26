@@ -8,13 +8,13 @@
         >
         </Overview>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(1)" md="4" sm="12">
         <machine-state
           :loading="loadingMachineState"
           :machine="machineState"
         ></machine-state>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(2)" md="4" sm="12">
         <bar-graph
           namespace="barGraph-id1"
           title="TCU Temperature"
@@ -53,6 +53,10 @@ export default {
     isAdditional: {
       type: Boolean,
       default: false
+    },
+    parameters: {
+      type: Array,
+      default: () => []
     }
   },
   data() {

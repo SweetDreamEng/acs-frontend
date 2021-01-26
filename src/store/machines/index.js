@@ -78,7 +78,10 @@ const state = {
   ],
 
   // BD Batch Blender
-  totalRunningPercentage: 0
+  totalRunningPercentage: 0,
+
+  loadingEnabledProperties: false,
+  enabledProperties: []
 }
 
 export default {

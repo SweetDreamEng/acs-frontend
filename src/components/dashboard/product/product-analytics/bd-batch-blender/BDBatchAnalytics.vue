@@ -9,7 +9,7 @@
         >
         </overview>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(1)" md="4" sm="12">
         <area-graph
           namespace="areaGraph-dbBlender-utilization"
           title="Capacity Utilization"
@@ -22,7 +22,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(2)" md="4" sm="12">
         <area-graph
           namespace="areaGraph-dbBlender-consumption"
           title="Energy Consumption"
@@ -34,9 +34,7 @@
         >
         </area-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="8" sm="12">
+      <v-col v-if="parameters.includes(3)" md="8" sm="12">
         <bar-graph
           namespace="barGraph-dbBlender-id1"
           title="Target Weights vs Actual Weights"
@@ -48,7 +46,7 @@
         >
         </bar-graph>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(4)" md="4" sm="12">
         <recipe
           :loading="loadingRecipe"
           :recipes="recipeValues"
@@ -57,9 +55,7 @@
         >
         </recipe>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col cols="12">
+      <v-col v-if="parameters.includes(5)" cols="12">
         <inventory
           :is-loading="loadingInventories"
           :inventories="inventories"
@@ -97,6 +93,10 @@ export default {
     isAdditional: {
       type: Boolean,
       default: false
+    },
+    parameters: {
+      type: Array,
+      default: () => []
     }
   },
   data() {

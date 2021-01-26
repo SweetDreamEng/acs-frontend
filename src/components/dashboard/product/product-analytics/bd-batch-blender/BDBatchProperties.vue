@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(101)" md="4" sm="12">
         <area-graph
           namespace="areaGraph-dbBlender-process-rate"
           title="Process Rate"
@@ -12,9 +12,7 @@
         >
         </area-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(102)" md="4" sm="12">
         <area-graph
           namespace="areaGraph-dbBlender-calibration"
           title="Calibration Factor"
@@ -26,14 +24,14 @@
         >
         </area-graph>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(103)" md="4" sm="12">
         <hopper-stable
           :loading="loadingHopperStables"
           :stables="hopperStables"
         >
         </hopper-stable>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(104)" md="4" sm="12">
         <bar-graph
           namespace="barGraph-dbBlender-id2"
           title="Station Conveying"
@@ -66,6 +64,10 @@ export default {
     productId: {
       type: String,
       default: ''
+    },
+    parameters: {
+      type: Array,
+      default: () => []
     }
   },
   data() {

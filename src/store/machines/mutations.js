@@ -54,6 +54,9 @@ export default {
     state.loadingWeeklyRunningHours1 = data
   },
 
+  SET_LOADING_ENABLED_PROPERTIES(state, isLoading) { state.loadingEnabledProperties = isLoading },
+  SET_ENABLED_PROPERTIES(state, properties) { state.enabledProperties = properties },
+  
   // BD Batch Blender
   SET_RUNNING_PERCENTAGE(state, totalRunningPercentage) { state.totalRunningPercentage = totalRunningPercentage },
   SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },

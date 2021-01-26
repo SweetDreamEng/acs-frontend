@@ -9,7 +9,7 @@
         >
         </overview>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(1)" md="4" sm="12">
         <area-graph
           namespace="areaGraph-accumeterBlender-utilization"
           title="Capacity Utilization"
@@ -21,7 +21,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(2)" md="4" sm="12">
         <area-graph
           namespace="areaGraph-accumeterBlender-consumption"
           title="Energy Consumption"
@@ -33,15 +33,13 @@
         >
         </area-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(3)" md="4" sm="12">
         <machine-state :loading="loadingSystemStates" :system-states="systemStates"></machine-state>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(4)" md="4" sm="12">
         <feeder-stable :loading="loadingFeederStables" :feeders="feederStables"></feeder-stable>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col v-if="parameters.includes(5)" md="4" sm="12">
         <area-graph
           namespace="areaGraph-accumeterBlender-rate"
           title="Process Rate"
@@ -53,9 +51,7 @@
         >
         </area-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="8" sm="12">
+      <v-col v-if="parameters.includes(6)" md="8" sm="12">
         <bar-graph
           namespace="barGraph-id1"
           :persist="false"
@@ -97,6 +93,10 @@ export default {
     productId: {
       type: String,
       default: ''
+    },
+    parameters: {
+      type: Array,
+      default: () => []
     }
   },
   data() {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row dense>
-      <v-col cols="12" md="4">
+      <v-col v-if="parameters.includes(101)" cols="12" md="4">
         <area-graph
           namespace="areaGraph-accumeterBlender-id1"
           title="Blender Capability"
@@ -12,7 +12,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col v-if="parameters.includes(102)" cols="12" md="4">
         <area-graph
           namespace="areaGraph-accumeterBlender-id2"
           title="Target Rate"
@@ -23,9 +23,7 @@
         >
         </area-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col cols="12" md="6">
+      <v-col v-if="parameters.includes(103)" cols="12" md="6">
         <area-graph
           namespace="areaGraph-accumeterBlender-id3"
           title="Feeder Calibration"
@@ -34,7 +32,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col v-if="parameters.includes(104)" cols="12" md="6">
         <area-graph
           namespace="areaGraph-accumeterBlender-id4"
           title="Feeder Speed"
@@ -60,6 +58,10 @@ export default {
     productId: {
       type: String,
       default: ''
+    },
+    parameters: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
