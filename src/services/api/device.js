@@ -117,5 +117,7 @@ export default {
     return api.post('/devices/assign-zone', data).then((response) => {
       return response
     })
-  }
+  },
+
+  toggleActiveDevices() { return api.post('devices/toggle-active-devices', {}) }
 }

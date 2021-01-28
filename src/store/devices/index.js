@@ -4,12 +4,6 @@ const module = {
   namespaced: true,
   state: {
     data: [],                           // paginated devices fetched from backend
-    deviceConfiguration: {
-      configuration_id: 0,
-      name: '',
-      device_name: '',
-      tcu_added: false
-    },
 
     totalDevices: 0,
 
@@ -20,6 +14,10 @@ const module = {
     page: 1,                            // current page of pagination
     pageCountReport: 0,
     pageReport: 1,
+
+    isVisibleOnly: false,
+    hiddenDevices: 0,
+    loadingToggleActiveDevices: false,
 
     error: null,
     table_loading: false,               // status of loading devices into the table
@@ -39,7 +37,13 @@ const module = {
     downtimePlansTableLoading: false,
     downtimePlans: [],
 
-    loadingDeviceConfig: false
+    loadingDeviceConfig: false,
+    deviceConfiguration: {
+      configuration_id: 0,
+      name: '',
+      device_name: '',
+      tcu_added: false
+    }
   },
 
   actions: {
@@ -58,7 +62,7 @@ const module = {
           pageCount: response.data.last_page
         })
         commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
-        commit('SET_DATA', response.data.devices)
+        commit('SET_CUSTOMER_DATA', response.data)
       } catch (error) {
         console.log(error)
       } finally {
@@ -72,6 +76,7 @@ const module = {
     async getDeviceConfiguration({
       commit
     }, id) {
+      commit('SET_LOADING_DEVICE_CONFIGURATION', true)
       commit('SET_DEVICE_CONFIGURATION', {})
 
       try {
@@ -80,6 +85,8 @@ const module = {
         commit('SET_DEVICE_CONFIGURATION', response.data.configuration)
       } catch (error) {
         console.log(error)
+      } finally {
+        commit('SET_LOADING_DEVICE_CONFIGURATION', false)
       }
     },
 
@@ -343,6 +350,23 @@ const module = {
       }
     },
 
+    async toggleActiveDevices({
+      state, commit, dispatch
+    }) {
+      commit('SET_LOADING_ACTIVE_DEVICES', true)
+
+      try {
+        await deviceAPI.toggleActiveDevices()
+      } catch (error) {
+        console.log(error)
+        dispatch('app/showError', {
+          error: error.response.data
+        }, { root: true })
+      } finally {
+        commit('SET_LOADING_ACTIVE_DEVICES', false)
+      }
+    },
+
     clearError({ commit }) {
       commit('CLEAR_ERROR')
     },
@@ -428,6 +452,12 @@ const module = {
     SET_DATA(state, devices) {
       state.data = devices
     },
+    SET_CUSTOMER_DATA(state, res) {
+      state.data = res.devices
+      state.isVisibleOnly = res.is_visible_only
+      state.hiddenDevices = res.hidden_devices
+    },
+    SET_LOADING_DEVICE_CONFIGURATION(state, loading) { state.loadingDeviceConfig = loading },
     SET_DEVICE_CONFIGURATION(state, configuration) { state.deviceConfiguration = configuration },
 
     SET_ADDED(state, numAdded) {
@@ -466,7 +496,8 @@ const module = {
       Object.assign(state, data)
     },
     SET_REPORT_PAGINATION(state, count) { state.pageCountReport = count },
-    SET_DOWNTIME_PLANS(state, plans) { state.downtimePlans = plans }
+    SET_DOWNTIME_PLANS(state, plans) { state.downtimePlans = plans },
+    SET_LOADING_ACTIVE_DEVICES(state, isLoading) { state.loadingToggleActiveDevices = isLoading }
   },
 
   getters: {

@@ -6,6 +6,7 @@
           namespace="areaGraph-dbBlender-process-rate"
           title="Process Rate"
           unit="kgs/hr"
+          :height="300"
           :fetch="getProcessRate"
           :product-id="parseInt(productId)"
           :names="['Process Rate']"

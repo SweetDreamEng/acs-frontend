@@ -19,6 +19,15 @@
         :loading="table_loading"
       >
         <template v-slot:top>
+          <div v-if="!table_loading" class="px-2 text-right">
+            <v-btn
+              color="primary"
+              @click="activeDevicesToggled()"
+              :loading="loadingToggleActiveDevices"
+              :disabled="loadingToggleActiveDevices"
+            >{{ isVisibleOnly ? 'Show All Devices' : 'Hide Inactive Devices' }}</v-btn>
+            <span v-if="isVisibleOnly" class="ml-2">{{ hiddenDevices }} Devices are hidden</span>
+          </div>
           <div class="d-flex align-center">
             <v-row dense class="pa-2 flex-grow-1">
               <v-col cols="12" md="6">
@@ -329,8 +338,11 @@ export default {
       activate_button_loading: (state) => state.devices.activate_button_loading,
       deactivate_button_loading: (state) => state.devices.deactivate_button_loading,
       register_button_loading: (state) => state.devices.register_button_loading,
+      loadingToggleActiveDevices: (state) => state.devices.loadingToggleActiveDevices,
 
       devices: (state) => state.devices.data,
+      isVisibleOnly: (state) => state.devices.isVisibleOnly,
+      hiddenDevices: (state) => state.devices.hiddenDevices,
 
       pageCount: (state) => state.devices.pageCount,
       page: (state) => state.devices.page
@@ -355,7 +367,8 @@ export default {
       updateRegistered: 'devices/updateRegistered',
       getDevicesStatus: 'devices/getDevicesStatus',
       activateSIM: 'devices/activateSIM',
-      deactivateSIM: 'devices/deactivateSIM'
+      deactivateSIM: 'devices/deactivateSIM',
+      toggleActiveDevices: 'devices/toggleActiveDevices'
     }),
     editItem (item) {
       this.editedIndex = this.devices.indexOf(item)
@@ -444,6 +457,14 @@ export default {
           filterForm: this.filterForm,
           page: this.loc_page
         })
+      })
+    },
+    async activeDevicesToggled() {
+      await this.toggleActiveDevices()
+
+      this.getDevices({
+        filterForm: this.filterForm,
+        page: this.loc_page
       })
     }
   }
