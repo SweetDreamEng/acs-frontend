@@ -1,30 +1,30 @@
 import api from '@/api.js'
 export default {
-  async appSettings() {
+  appSettings() {
     return api.get('/settings/app-settings')
   },
   
-  async grabColors(data) {
+  grabColors(data) {
     return api.post('/app-settings/grab-colors', data)
   },
 
-  async setPrivateColors(data) {
+  setPrivateColors(data) {
     return api.post('/app-settings/set-private-colors', data)
   },
 
-  async getSetting(data) {
+  getSetting(data) {
     return api.post('/app-settings/get-setting', data)
   },
 
-  async updateAuthBackground() {
+  updateAuthBackground() {
     return api.post('/app-settings/update-auth-background')
   },
 
-  async uploadLogo(data) {
+  uploadLogo(data) {
     return api.post('/app-settings/upload-logo', data)
   },
 
-  async resetSettings() {
+  resetSettings() {
     return api.post('/app-settings/reset')
   }
 }

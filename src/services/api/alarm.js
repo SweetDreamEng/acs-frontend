@@ -1,14 +1,14 @@
 import api from '@/api.js'
 export default {
-  async getProductAlarms(productId) {
+  getProductAlarms(productId) {
     return api.post(`/alarms/${productId}`)
   },
 
-  async getAlarmsByMachine() {
+  getAlarmsByMachine() {
     return api.post('/alarms/alarms-for-customer-devices')
   },
 
-  async getAlarms(data) {
+  getAlarms(data) {
     return api.post('/alarms', data)
   },
 
@@ -20,19 +20,19 @@ export default {
     return api.get(`/alarms/alarms-by-company-id/${company_id}`)
   },
   
-  async getSeverityByCompanyId(data) {
+  getSeverityByCompanyId(data) {
     return api.post('/alarms/severity-by-company-id', data)
   },
 
-  async getAlarmsPerTypeByMachine(data) {
+  getAlarmsPerTypeByMachine(data) {
     return api.post('/alarms/alarms-per-type-by-machine', data)
   },
 
-  async getAlarmsDistributionByMachine(data) {
+  getAlarmsDistributionByMachine(data) {
     return api.post('/alarms/alarms-distribution-by-machine', data)
   },
 
-  async getAlarmsAmountPerMachineByCompanyId(data) {
+  getAlarmsAmountPerMachineByCompanyId(data) {
     return api.post('/alarms/alarms-amount-per-machine-by-company-id', data)
   }
 }

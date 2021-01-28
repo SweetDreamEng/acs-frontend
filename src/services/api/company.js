@@ -1,14 +1,14 @@
 import api from '@/api.js'
 export default {
-  async getCustomers() {
+  getCustomers() {
     return api.get('/customers')
   },
 
-  async getCompanies() {
+  getCompanies() {
     return api.get('/companies')
   },
 
-  async addCustomer(data) {
+  addCustomer(data) {
 
     Object.assign(data, {
       company_name: data.companyName,
@@ -19,11 +19,11 @@ export default {
     return api.post('/customers/add', data)
   },
 
-  async getCustomer(id) {
+  getCustomer(id) {
     return api.get(`/customers/${id}`)
   },
 
-  async updateAccount(accountInfo) {
+  updateAccount(accountInfo) {
     return api.post(`/customers/update-account/${accountInfo.id}`, {
       name: accountInfo.companyName,
       administrator_name: accountInfo.name,
@@ -31,7 +31,7 @@ export default {
     })
   },
 
-  async updateProfile(data) {
+  updateProfile(data) {
     return api.post(`/customers/update-profile/${data.id}`, {
       address_1: data.address_1,
       address_2: data.address_2,

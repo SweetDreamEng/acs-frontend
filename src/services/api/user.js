@@ -1,11 +1,11 @@
 import api from '@/api.js'
 export default {
 
-  async initCreateAccount() {
+  initCreateAccount() {
     return api.get('/company-users/init-create-account')
   },
 
-  async openEditCompanyUser(id) {
+  openEditCompanyUser(id) {
     return api.get('/company-users/init-edit-account/' + id)
   },
   /*
@@ -14,45 +14,45 @@ export default {
       users: Array
     }
   */
-  async getCompanyUsers() {
+  getCompanyUsers() {
     return api.get('/company-users')
   },
 
-  async addCompanyUser(data) {
+  addCompanyUser(data) {
     return api.post('/company-users/store', data)
   },
 
-  async updateCompanyUserAccount(data) {
+  updateCompanyUserAccount(data) {
     return api.post('/company-users/update-account/' + data.id, data)
   },
 
-  async updateCompanyUserInformation(data) {
+  updateCompanyUserInformation(data) {
     return api.post('/company-users/update-information/' + data.id, data)
   },
 
   // init acs users page
-  async initAcsUsers() {
+  initAcsUsers() {
     return api.get('/acs-users')
   },
 
   // init acs user create page
-  async initCreateAcsUser() {
+  initCreateAcsUser() {
     return api.get('/acs-users/init-create')
   },
 
-  async initAcsUserEdit(id) {
+  initAcsUserEdit(id) {
     return api.get('/acs-users/init-edit/' + id)
   },
   
-  async addAcsUser(data) {
+  addAcsUser(data) {
     return api.post('/acs-users/store', data)
   },
 
-  async updateAcsUserAccount(data) {
+  updateAcsUserAccount(data) {
     return api.post('/acs-users/update-account/' + data.id, data)
   },
 
-  async updateAcsUserInformation(data) {
+  updateAcsUserInformation(data) {
     return api.post('/acs-users/update-information/' + data.id, data)
   }
 }

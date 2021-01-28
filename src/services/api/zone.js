@@ -3,7 +3,7 @@ export default {
   /*
     Get zones
   */
-  async getZones(pageNum) {
+  getZones(pageNum) {
     return api.get('/zones')
   },
 
@@ -15,7 +15,7 @@ export default {
         location_id: Integer
       }
   */
-  async addZone(data) {
+  addZone(data) {
   	return api.post('/zones/add', data)
   },
 
@@ -28,7 +28,7 @@ export default {
         location_id: Integer
       }
   */
-  async updateZone(data) {
+  updateZone(data) {
     return api.patch('/zones/update', data)
   }
 }

@@ -1,6 +1,6 @@
 import api from '@/api.js'
 export default {
-  async signIn(email, password) {
+  signIn(email, password) {
     const data = {
       email,
       password
@@ -9,11 +9,11 @@ export default {
     return api.post('/auth/signin', data)
   },
 
-  async getUser() {
+  getUser() {
     return api.get('/auth/user')
   },
 
-  async updatePassword(currentPassword, newPassword) {
+  updatePassword(currentPassword, newPassword) {
     const data = {
       current_password: currentPassword,
       new_password: newPassword
@@ -22,7 +22,7 @@ export default {
     return api.post('/auth/update-password', data)
   },
 
-  async requestForgotPassword(email) {
+  requestForgotPassword(email) {
     const data = {
       email: email
     }
@@ -30,19 +30,19 @@ export default {
     return api.post('/auth/password-reset', data)
   },
 
-  async getTimezoneNames(timezone) {
+  getTimezoneNames(timezone) {
     return api.get('/profile/timezones')
   },
 
-  async updateTimezone(timezone) {
+  updateTimezone(timezone) {
     return api.post('/profile/timezone', { timezone })
   },
 
-  async signOut() {
+  signOut() {
     return api.get('/auth/logout')
   },
 
-  async check() {
+  check() {
     return api.post('/auth/check')
   }
 }

@@ -7,7 +7,7 @@ export default {
       locations: Array
     }
   */
-  async getLocations(pageNum) {
+  getLocations(pageNum) {
     return api.get('/locations')
   },
 
@@ -18,7 +18,7 @@ export default {
         location: String
       }
   */
-  async addLocation(data) {
+  addLocation(data) {
   	return api.post('/locations/add', data)
   },
 
@@ -30,7 +30,7 @@ export default {
         location: String
       }
   */
-  async updateLocation(data) {
+  updateLocation(data) {
     return api.patch('/locations/update', data)
   }
 }
