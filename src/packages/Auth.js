@@ -11,10 +11,6 @@ export default function (Vue) {
       return localStorage.getItem('token')
     },
 
-    removeToken() {
-      localStorage.removeItem('token')
-    },
-
     getUser() {
       localStorage.getItem('user')
     },
@@ -28,22 +24,19 @@ export default function (Vue) {
     },
 
     check(role = '') {
-      return api.post('/auth/check', {
-        role
-      })
-        .then((response) =>  {
-          // store.dispatch('SET_USER', response.data.user)
-          if (!response.data) {
-            store.dispatch('auth/clearAuthData')
-          }
+      try {
+        const response = api.post('/auth/check', { role })
+        
+        if (!response.data) {
+          store.commit('auth/SET_LOGOUT_AUTH')
+        }
 
-          return (response.data)
-        })
-        .catch(() => {
-          this.removeToken('token')
+        return (response.data)
+      } catch (error) {
+        localStorage.removeItem('token')
 
-          return false
-        })
+        return false
+      }
     }
   }
 

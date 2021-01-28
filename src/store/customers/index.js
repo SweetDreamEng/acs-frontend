@@ -1,4 +1,4 @@
-import companyAPI from '@/services/api/company'
+import companyAPI from '../../services/api/company'
 import router from '../../router'
 
 const module = {
@@ -142,11 +142,6 @@ const module = {
       } finally {
         commit('BUTTON_CLEAR')
       }
-      
-    },
-
-    clearError({ commit }) {
-      commit('CLEAR_ERROR')
     }
   },
 

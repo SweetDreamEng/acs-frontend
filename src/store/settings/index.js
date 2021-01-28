@@ -1,4 +1,4 @@
-import settingAPI from '@/services/api/setting'
+import settingAPI from '../../services/api/setting'
 
 const module = {
   namespaced: true,

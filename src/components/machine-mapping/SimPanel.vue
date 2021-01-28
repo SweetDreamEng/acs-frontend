@@ -27,7 +27,6 @@
         class="mr-2"
         :loading="activate_btn_loading"
         :disabled="activate_btn_loading"
-        @click="activateSIM(item)"
       >Activate SIM</v-btn>
       <v-btn
         small

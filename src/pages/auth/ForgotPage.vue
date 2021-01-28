@@ -78,8 +78,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      requestForgotPassword: 'auth/requestForgotPassword',
-      clearError: 'auth/clearError'
+      requestForgotPassword: 'auth/requestForgotPassword'
     }),
     submit(e) {
       if (this.$refs.form.validate()) {
@@ -87,7 +86,7 @@ export default {
       }
     },
     resetErrors() {
-      this.clearError()
+      this.$store.commit('auth/CLEAR_ERROR')
     }
   }
 }

@@ -30,15 +30,13 @@ export default {
     })
   },
   mounted() {
-    this.resetStatus()
-    this.resetErrors()
+    this.$store.commit('devices/RESET_STATUS')
+    this.$store.commit('devices/CLEAR_ERROR')
   },
   methods: {
     ...mapActions({
       'importDevices': 'devices/importDevices',
-      'getDevices': 'devices/getDevices',
-      'clearError': 'devices/clearError',
-      'resetStatus': 'devices/resetStatus'
+      'getDevices': 'devices/getDevices'
     }),
     submit() {
       this.importDevices()
@@ -51,12 +49,6 @@ export default {
             page: 1
           })
         })
-    },
-    resetErrors() {
-      this.clearError()
-    },
-    resetNums() {
-      this.resetStatus()
     }
   }
 }

@@ -134,12 +134,11 @@ export default {
     })
   },
   mounted() {
-    this.clearError()
+    this.resetErrors()
   },
   methods: {
     ...mapActions({
-      'signup': 'auth/signup',
-      'clearError': 'auth/clearError'
+      'signup': 'auth/signup'
     }),
     submit() {
       if (this.$refs.form.validate()) {
@@ -152,16 +151,7 @@ export default {
     },
     signInProvider(provider) {},
     resetErrors() {
-      this.clearError()
-      // this.errorName = false
-      // this.errorEmail = false
-      // this.errorPassword = false
-      // this.errorNameMessage = ''
-      // this.errorEmailMessage = ''
-      // this.errorPasswordMessage = ''
-
-      // this.errorProvider = false
-      // this.errorProviderMessages = ''
+      this.$store.commit('auth/CLEAR_ERROR')
     }
   }
 }

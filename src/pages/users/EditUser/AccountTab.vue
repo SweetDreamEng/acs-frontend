@@ -211,7 +211,7 @@
 <script>
 import ErrorComponent from '../../../components/common/ErrorComponent'
 
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -267,9 +267,6 @@ export default {
   mounted() {
   },
   methods: {
-    ...mapActions({
-      clearError: 'users/clearError'
-    }),
     save() {
       if (this.$refs.form.validate()) {
         const data = {
@@ -286,6 +283,9 @@ export default {
     },
     zonesOfLocation(location_id) {
       return this.zones.filter((zone) => zone.location_id === location_id)
+    },
+    clearError() {
+      this.$store.commit('users/CLEAR_ERROR')
     }
   }
 }

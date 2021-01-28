@@ -1,4 +1,4 @@
-import deviceAPI from '@/services/api/device'
+import deviceAPI from '../../services/api/device'
 
 const module = {
   namespaced: true,
@@ -248,10 +248,6 @@ const module = {
         commit('QUERY_BTN_CLEAR')
       }
     },
-    activateSIM({
-      commit
-    }, device) {
-    },
     async suspendSIM({
       commit, dispatch
     }, device) {
@@ -365,13 +361,6 @@ const module = {
       } finally {
         commit('SET_LOADING_ACTIVE_DEVICES', false)
       }
-    },
-
-    clearError({ commit }) {
-      commit('CLEAR_ERROR')
-    },
-    resetStatus({ commit }) {
-      commit('RESET_STATUS')
     }
   },
 

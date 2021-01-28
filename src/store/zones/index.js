@@ -1,4 +1,4 @@
-import zoneAPI from '@/services/api/zone'
+import zoneAPI from '../../services/api/zone'
 
 const module = {
   namespaced: true,

@@ -366,7 +366,6 @@ export default {
       deviceAssigned: 'devices/deviceAssigned',
       updateRegistered: 'devices/updateRegistered',
       getDevicesStatus: 'devices/getDevicesStatus',
-      activateSIM: 'devices/activateSIM',
       deactivateSIM: 'devices/deactivateSIM',
       toggleActiveDevices: 'devices/toggleActiveDevices'
     }),

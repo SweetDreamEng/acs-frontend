@@ -1,15 +1,12 @@
 import api from '@/api.js'
 export default {
 
-  initCreateAccount() {
-    return api.get('/company-users/init-create-account').then((response) => {
-      return response
-    })
+  async initCreateAccount() {
+    return api.get('/company-users/init-create-account')
   },
-  openEditCompanyUser(id) {
-    return api.get('/company-users/init-edit-account/' + id).then((response) => {
-      return response
-    })
+
+  async openEditCompanyUser(id) {
+    return api.get('/company-users/init-edit-account/' + id)
   },
   /*
     Get users
@@ -17,59 +14,45 @@ export default {
       users: Array
     }
   */
-  getCompanyUsers() {
-    return api.get('/company-users').then((response) => {
-      return response
-    })
+  async getCompanyUsers() {
+    return api.get('/company-users')
   },
 
-  addCompanyUser(data) {
-    return api.post('/company-users/store', data).then((response) => {
-      return response
-    })
+  async addCompanyUser(data) {
+    return api.post('/company-users/store', data)
   },
-  updateCompanyUserAccount(data) {
-    return api.post('/company-users/update-account/' + data.id, data).then((response) => {
-      return response
-    })
+
+  async updateCompanyUserAccount(data) {
+    return api.post('/company-users/update-account/' + data.id, data)
   },
-  updateCompanyUserInformation(data) {
-    return api.post('/company-users/update-information/' + data.id, data).then((response) => {
-      return response
-    })
+
+  async updateCompanyUserInformation(data) {
+    return api.post('/company-users/update-information/' + data.id, data)
   },
 
   // init acs users page
-  initAcsUsers() {
-    return api.get('/acs-users').then((response) => {
-      return response
-    })
+  async initAcsUsers() {
+    return api.get('/acs-users')
   },
+
   // init acs user create page
-  initCreateAcsUser() {
-    return api.get('/acs-users/init-create').then((response) => {
-      return response
-    })
+  async initCreateAcsUser() {
+    return api.get('/acs-users/init-create')
   },
-  initAcsUserEdit(id) {
-    return api.get('/acs-users/init-edit/' + id).then((response) => {
-      return response
-    })
+
+  async initAcsUserEdit(id) {
+    return api.get('/acs-users/init-edit/' + id)
   },
   
-  addAcsUser(data) {
-    return api.post('/acs-users/store', data).then((response) => {
-      return response
-    })
+  async addAcsUser(data) {
+    return api.post('/acs-users/store', data)
   },
-  updateAcsUserAccount(data) {
-    return api.post('/acs-users/update-account/' + data.id, data).then((response) => {
-      return response
-    })
+
+  async updateAcsUserAccount(data) {
+    return api.post('/acs-users/update-account/' + data.id, data)
   },
-  updateAcsUserInformation(data) {
-    return api.post('/acs-users/update-information/' + data.id, data).then((response) => {
-      return response
-    })
+
+  async updateAcsUserInformation(data) {
+    return api.post('/acs-users/update-information/' + data.id, data)
   }
 }

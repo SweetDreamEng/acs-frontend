@@ -175,7 +175,7 @@
 <script>
 import ErrorComponent from '../../../components/common/ErrorComponent'
 
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -209,12 +209,7 @@ export default {
       errorMessages: (state) => state.users.error
     })
   },
-  mounted() {
-  },
   methods: {
-    ...mapActions({
-      clearError: 'users/clearError'
-    }),
     save() {
       if (this.$refs.form.validate()) {
         const data = {
@@ -228,6 +223,9 @@ export default {
 
         this.$emit('submit', data)
       }
+    },
+    clearError() {
+      this.$store.commit('users/CLEAR_ERROR')
     }
   }
 }

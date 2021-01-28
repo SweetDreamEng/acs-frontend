@@ -221,8 +221,7 @@ export default {
     ...mapActions({
       getCompanies: 'customers/getCompanies',
       addCustomer: 'customers/addCustomer',
-      getCities: 'cities/getCities',
-      clearError: 'customers/clearError'
+      getCities: 'cities/getCities'
     }),
     onStateChange() {
       this.getCities(this.customer.state)
@@ -244,6 +243,9 @@ export default {
       if (this.$refs.profileForm.validate()) {
         this.tab = 0
       }
+    },
+    clearError() {
+      this.$store.commit('customers/CLEAR_ERROR')
     }
   }
 }

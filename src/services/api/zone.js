@@ -3,10 +3,8 @@ export default {
   /*
     Get zones
   */
-  getZones(pageNum) {
-    return api.get('/zones').then((response) => {
-      return response
-    })
+  async getZones(pageNum) {
+    return api.get('/zones')
   },
 
   /*
@@ -17,10 +15,8 @@ export default {
         location_id: Integer
       }
   */
-  addZone(data) {
-  	return api.post('/zones/add', data).then((response) => {
-      return response
-    })
+  async addZone(data) {
+  	return api.post('/zones/add', data)
   },
 
   /*
@@ -32,9 +28,7 @@ export default {
         location_id: Integer
       }
   */
-  updateZone(data) {
-    return api.patch('/zones/update', data).then((response) => {
-      return response
-    })
+  async updateZone(data) {
+    return api.patch('/zones/update', data)
   }
 }

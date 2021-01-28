@@ -1,4 +1,4 @@
-import userAPI from '@/services/api/user'
+import userAPI from '../../services/api/user'
 import router from '../../router'
 
 const module = {
@@ -240,9 +240,6 @@ const module = {
       } finally {
         commit('BUTTON_CLEAR')
       }
-    },
-    clearError({ commit }) {
-      commit('CLEAR_ERROR')
     }
   },
 

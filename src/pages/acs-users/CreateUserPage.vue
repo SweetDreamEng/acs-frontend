@@ -139,6 +139,7 @@
                   :rules="[$rules.required]"
                   outlined
                   dense
+                  readonly
                 >
                 </v-text-field>
               </v-col>
@@ -238,8 +239,7 @@ export default {
     ...mapActions({
       open: 'users/initCreateAcsUser',
       addAcsUser: 'users/addAcsUser',
-      getCities: 'cities/getCities',
-      clearError: 'users/clearError'
+      getCities: 'cities/getCities'
     }),
     submit() {
       if (this.$refs.accountForm.validate()) {
@@ -261,6 +261,9 @@ export default {
     },
     onStateChange() {
       this.getCities(this.user.state)
+    },
+    clearError() {
+      this.$store.commit('users/CLEAR_ERROR')
     }
   }
 }

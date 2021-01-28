@@ -21,23 +21,23 @@ export default {
   props: {
     iconColor: {
       type: String,
-      default: () => ('#000000')
+      default: '#000000'
     },
     time: {
       type: String,
-      default: () => ('')
+      default: ''
     },
     amount: {
       type: Number,
-      default: () => (0)
+      default: 0
     },
     iconType: {
       type: String,
-      default: () => ('')
+      default: ''
     },
     isAlarmInfo: {
       type: Boolean,
-      default: () => (false)
+      default: false
     }
   }
 }

@@ -1,4 +1,4 @@
-import locationAPI from '@/services/api/location'
+import locationAPI from '../../services/api/location'
 
 const module = {
   namespaced: true,

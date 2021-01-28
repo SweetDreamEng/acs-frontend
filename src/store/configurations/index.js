@@ -1,4 +1,4 @@
-import configurationAPI from '@/services/api/configuration'
+import configurationAPI from '../../services/api/configuration'
 
 const module = {
   namespaced: true,

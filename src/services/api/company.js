@@ -1,18 +1,14 @@
 import api from '@/api.js'
 export default {
-  getCustomers() {
-    return api.get('/customers').then((response) => {
-      return response
-    })
+  async getCustomers() {
+    return api.get('/customers')
   },
 
-  getCompanies() {
-    return api.get('/companies').then((response) => {
-      return response
-    })
+  async getCompanies() {
+    return api.get('/companies')
   },
 
-  addCustomer(data) {
+  async addCustomer(data) {
 
     Object.assign(data, {
       company_name: data.companyName,
@@ -20,25 +16,22 @@ export default {
       administrator_email: data.administratorEmail
     })
 
-    return api.post('/customers/add', data).then((response) => {
-      return response
-    })
+    return api.post('/customers/add', data)
   },
-  getCustomer(id) {
-    return api.get(`/customers/${id}`).then((response) => {
-      return response
-    })
+
+  async getCustomer(id) {
+    return api.get(`/customers/${id}`)
   },
-  updateAccount(accountInfo) {
+
+  async updateAccount(accountInfo) {
     return api.post(`/customers/update-account/${accountInfo.id}`, {
       name: accountInfo.companyName,
       administrator_name: accountInfo.name,
       administrator_email: accountInfo.email
-    }).then((response) => {
-      return response
     })
   },
-  updateProfile(data) {
+
+  async updateProfile(data) {
     return api.post(`/customers/update-profile/${data.id}`, {
       address_1: data.address_1,
       address_2: data.address_2,
@@ -47,8 +40,6 @@ export default {
       city: data.city,
       country: data.country,
       phone: data.phone
-    }).then((response) => {
-      return response
     })
   }
 }

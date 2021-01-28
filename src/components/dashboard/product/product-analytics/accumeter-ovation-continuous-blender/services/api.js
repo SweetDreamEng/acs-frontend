@@ -1,21 +1,15 @@
 import api from '@/api.js'
 export default {
-  // getRecipe(id) {
-  //   return api.get(`/analytics/accumeter/recipe/${id}`)
-  // },
   async getRecipe(id) {
     return await api.get(`/analytics/accumeter/recipe/${id}`)
   },
-  getSystemStates(data) {
-    return api.post('/analytics/product-system-states', data).then((response) => {
-      return response
-    })
+
+  async getSystemStates(data) {
+    return await api.post('/analytics/product-system-states', data)
   },
 
-  getFeederStables(id) {
-    return api.get(`/analytics/product-feeder-stables/${id}`).then((response) => {
-      return response
-    })
+  async getFeederStables(id) {
+    return await api.get(`/analytics/product-feeder-stables/${id}`)
   },
 
   getProductionRate(data) {

@@ -5,7 +5,8 @@ import router from './router'
 
 const API = axios.create({
   baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
-  timeout: 50000
+  // baseURL: 'http://localhost/acs-api/public/api',
+  timeout: 5000
 })
 
 API.interceptors.request.use(async (config) => {
@@ -26,7 +27,7 @@ API.interceptors.response.use((response) => {
 }, (error) => {
   if (401 === error.response.status) {
 
-    Vue.auth.removeToken()
+    localStorage.removeItem('token')
     Vue.auth.removeUser()
 
     store.commit('auth/SET_LOGOUT_AUTH', { root: true })

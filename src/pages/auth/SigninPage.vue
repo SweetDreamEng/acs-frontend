@@ -94,12 +94,11 @@ export default {
     })
   },
   mounted() {
-    this.clearError()
+    this.resetErrors()
   },
   methods: {
     ...mapActions({
-      'signIn': 'auth/signIn',
-      'clearError': 'auth/clearError'
+      'signIn': 'auth/signIn'
     }),
     submit() {
       if (this.$refs.form.validate()) {
@@ -109,9 +108,8 @@ export default {
         })
       }
     },
-    signInProvider(provider) {},
     resetErrors() {
-      this.clearError()
+      this.$store.commit('auth/CLEAR_ERROR')
     }
   }
 }

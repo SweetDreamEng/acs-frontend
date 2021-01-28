@@ -157,8 +157,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      updateAccount: 'customers/updateAccount',
-      clearError: 'customers/clearError'
+      updateAccount: 'customers/updateAccount'
     }),
     submit() {
       if (this.$refs.accountForm.validate()) {
@@ -166,7 +165,7 @@ export default {
       }
     },
     resetErrors() {
-      this.clearError()
+      this.$store.commit('auth/CLEAR_ERROR')
     }
   }
 }

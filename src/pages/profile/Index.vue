@@ -75,14 +75,16 @@ export default {
   methods: {
     ...mapActions({
       updatePassword: 'auth/updatePassword',
-      updateTimezome: 'auth/updateTimezome',
-      clearError: 'auth/clearError'
+      updateTimezome: 'auth/updateTimezome'
     }),
     submitPassword(data) {
       this.updatePassword(data)
     },
     submitTimezone(data) {
       this.updateTimezome(data)
+    },
+    clearError() {
+      this.$store.commit('auth/CLEAR_ERROR')
     }
   }
 }

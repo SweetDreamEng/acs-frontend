@@ -1,4 +1,4 @@
-import cityAPI from '@/services/api/city'
+import cityAPI from '../../services/api/city'
 
 const module = {
   namespaced: true,
@@ -7,20 +7,18 @@ const module = {
   },
 
   actions: {
-    getCities({
+    async getCities({
       commit, dispatch
     }, state) {
-      return new Promise((resolve, reject) => {
-        cityAPI.getCities(state).then((response) => {
-          commit('cities/SET_DATA', response.data, { root: true })
-          resolve(response)
-        })
-          .catch((error) => {
-            reject(error)
-          })
-          .finally(() => {
-          })
-      })
+      try {
+        const response = await cityAPI.getCities(state)
+
+        commit('cities/SET_DATA', response.data, { root: true })
+
+        return response
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
 

@@ -31,19 +31,19 @@ export default {
   props: {
     title: {
       type: String,
-      default: () => ('')
+      default: ''
     },
     series: {
       type: Array,
-      default: () => ([])
+      default: () => []
     },
     dropDownList: {
       type: Array,
-      default: () => ([])
+      default: () => []
     },
     categories: {
       type: Array,
-      default: () => ([])
+      default: () => []
     }
   },
   data() {

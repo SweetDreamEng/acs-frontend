@@ -30,15 +30,15 @@ export default {
   props: {
     title: {
       type: String,
-      default: () => ('')
+      default: ''
     },
     series: {
       type: Array,
-      default: () => (null)
+      default: null
     },
     dropDownList: {
       type: Array,
-      default: () => ([])
+      default: () => []
     }
   },
   data() {

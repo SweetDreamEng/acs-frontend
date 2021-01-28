@@ -24,11 +24,11 @@ export default {
   props: {
     name: {
       type: String,
-      default: () => ('')
+      default: ''
     },
     amount: {
       type: Number,
-      default: () => (0)
+      default: 0
     }
   }
 }

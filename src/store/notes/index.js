@@ -1,4 +1,4 @@
-import noteAPI from '@/services/api/note'
+import noteAPI from '../../services/api/note'
 
 const module = {
   namespaced: true,

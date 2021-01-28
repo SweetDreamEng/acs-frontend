@@ -1,5 +1,5 @@
-import machineAPI from '@/services/api/machine'
-import companyAPI from '@/services/api/company'
+import machineAPI from '../../services/api/machine'
+import companyAPI from '../../services/api/company'
 
 const initAcsDashboard = async ({ commit, state }) => {
   try {
