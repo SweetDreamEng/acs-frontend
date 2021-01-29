@@ -1,18 +1,7 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 module.exports = {
-  // https://cli.vuejs.org/config/#productionsourcemap
   productionSourceMap: false,
-
-  // development server
-  // devServer: {
-  //   proxy: {
-  //     '^/api': {
-  //       target: VUE_APP_SERVER_API_ENDPOINT || 'http://localhost:8000/api',
-  //       changeOrigin: true
-  //     }
-  //   }
-  // },
-
-  // https://cli.vuejs.org/config/#css-extract
   css: {
     extract: { ignoreOrder: true },
     loaderOptions: {
@@ -28,5 +17,8 @@ module.exports = {
   // https://cli.vuejs.org/config/#transpiledependencies
   transpileDependencies: [
     'vuetify'
-  ]
+  ],
+  configureWebpack: {
+    plugins: [new BundleAnalyzerPlugin()]
+  }
 }

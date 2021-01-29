@@ -36,12 +36,7 @@
 </template>
 
 <script>
-import moment from 'moment'
 import TrendPercent from '../common/TrendPercent'
-
-function formatDate(date) {
-  return date ? moment(date).format('D MMM') : ''
-}
 
 /*
 |---------------------------------------------------------------------
@@ -123,16 +118,16 @@ export default {
         },
         tooltip: {
           followCursor: true,
-          theme: 'dark', //this.$vuetify.theme.isDark ? 'light' : 'dark',
-          custom: function({ ctx, series, seriesIndex, dataPointIndex, w }) {
-            const seriesName = w.config.series[seriesIndex].name
-            const dataPoint = w.config.series[seriesIndex].data[dataPointIndex]
+          theme: 'dark' //this.$vuetify.theme.isDark ? 'light' : 'dark',
+          // custom: function({ ctx, series, seriesIndex, dataPointIndex, w }) {
+          //   const seriesName = w.config.series[seriesIndex].name
+          //   const dataPoint = w.config.series[seriesIndex].data[dataPointIndex]
 
-            return `<div class="rounded-lg pa-1 caption">
-              <div class="font-weight-bold">${formatDate(dataPoint[0])}</div>
-              <div>${dataPoint[1]} ${seriesName}</div>
-            </div>`
-          }
+          //   return `<div class="rounded-lg pa-1 caption">
+          //     <div class="font-weight-bold">${formatDate(dataPoint[0])}</div>
+          //     <div>${dataPoint[1]} ${seriesName}</div>
+          //   </div>`
+          // }
         },
         ...this.options
       }

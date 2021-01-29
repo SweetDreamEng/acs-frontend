@@ -58,12 +58,7 @@
 </template>
 
 <script>
-import moment from 'moment'
 import TrendPercent from '../common/TrendPercent'
-
-function formatDate(date) {
-  return date ? moment(date).format('D MMM') : ''
-}
 
 /*
 |---------------------------------------------------------------------
@@ -161,15 +156,7 @@ export default {
         xaxis: this.xaxis,
         tooltip: {
           followCursor: true,
-          theme: 'dark',
-          custom: function({ ctx, series, seriesIndex, dataPointIndex, w }) {
-            const seriesName = w.config.series[seriesIndex].name
-
-            return `<div class="rounded-lg pa-1 caption">
-              <div class="font-weight-bold">${formatDate(w.globals.labels[dataPointIndex])}</div>
-              <div>${series[seriesIndex][dataPointIndex]} ${seriesName}</div>
-            </div>`
-          }
+          theme: 'dark'
         },
         ...this.options
       }

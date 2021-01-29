@@ -13,8 +13,7 @@
           <template v-slot:opposite>
             <span
               :class="`subtitle font-weight-bold secondary--text`"
-              v-text="formatDate(note.created_at)"
-            ></span>
+            >{{ note.created_at | formatDate('PPpp') }}</span>
           </template>
           {{ note.note }}
         </v-timeline-item>
@@ -31,7 +30,6 @@
 | Timeline and notes for the timeline component
 |
 */
-import moment from 'moment'
 export default {
   props: {
     notes: {
@@ -44,9 +42,6 @@ export default {
     }
   },
   methods: {
-    formatDate(date) {
-      return date ? moment(date).format('MMMM Do, YYYY H:m A ') + 'EST' : ''
-    }
   }
 }
 </script>

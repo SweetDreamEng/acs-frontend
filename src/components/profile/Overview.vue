@@ -1,20 +1,18 @@
 <template>
-  <div class="w-100">
-    <v-card>
-      <v-card-text class="text-center">
-        <v-avatar size="160">
-          <v-avatar
-            color="primary"
-            size="88"
-          >
-            <span class="display-1 white--text">{{ user.username | initials }}</span>
-          </v-avatar>
+  <v-card height="300">
+    <v-card-text class="text-center">
+      <v-avatar size="160">
+        <v-avatar
+          color="primary"
+          size="88"
+        >
+          <span class="display-1 white--text">{{ user.username | initials }}</span>
         </v-avatar>
-        <h2 class="my-2 primary--text">{{ user.username }}</h2>
-        <div class="text-h6">{{ roleName(user.role) }}</div>
-      </v-card-text>
-    </v-card>
-  </div>
+      </v-avatar>
+      <h2 class="my-2 primary--text">{{ user.username }}</h2>
+      <div class="text-h6">{{ roleName(user.role) }}</div>
+    </v-card-text>
+  </v-card>
 </template>
 <script>
 import { mapGetters } from 'vuex'

@@ -97,7 +97,7 @@
         </template>
 
         <template v-slot:item.created_at="{ item }">
-          <div>{{ item.created_at | formatDate('ll') }}</div>
+          <div>{{ item.created_at | formatDate('yyyy-MM-dd') }}</div>
         </template>
 
         <template v-slot:item.action="{ item }">

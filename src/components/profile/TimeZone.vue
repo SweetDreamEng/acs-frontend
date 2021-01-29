@@ -24,8 +24,9 @@
 </template>
 <script>
 
-import moment from 'moment'
+// import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -44,13 +45,9 @@ export default {
       const date = new Date
       
       return this.timeZoneNames.map((timeZone) => {
-        const minutes = moment.tz(timeZone.name).utcOffset()
-        const h = minutes / 60 | 0, m = minutes % 60 | 0
-        const _t = moment.utc().hours(h).minutes(m).format('hh:mm')
-
         return {
           id: timeZone.id,
-          name: `${timeZone.name} (UTC ${_t})`
+          name: timeZone.name
         }
       })
     },
@@ -67,7 +64,6 @@ export default {
       if (this.profile)
         this.locTimezone = this.userTimezone
     })
-    // console.log(moment.tz('America/Los_Angeles').utcOffset())
   },
   methods: {
     ...mapActions({

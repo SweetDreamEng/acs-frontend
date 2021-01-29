@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
 import ColumnChart from '../../components/alarms/charts/ColumnChart'
 import PieChart from '../../components/alarms/charts/PieChart'

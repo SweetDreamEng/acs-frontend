@@ -1,6 +1,6 @@
 import api from '@/api.js'
 export default {
-	/*
+  /*
     Add a new note for a product
     params:
       {

@@ -171,10 +171,10 @@
           <v-expansion-panel-header class="title">Metadata</v-expansion-panel-header>
           <v-expansion-panel-content class="body-2">
             <span class="font-weight-bold">Created</span>
-            {{ user.created | formatDate('lll') }}
+            {{ user.created | formatDate('yyyy-MM-dd') }}
             <br />
             <span class="font-weight-bold">Last Sign In</span>
-            {{ user.lastSignIn | formatDate('lll') }}
+            {{ user.lastSignIn | formatDate('yyyy-MM-dd') }}
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
