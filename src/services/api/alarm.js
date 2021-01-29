@@ -12,11 +12,11 @@ export default {
     return api.post('/alarms', data)
   },
 
-  async getCorrespondingAlarmTypes(machine_id) {
+  getCorrespondingAlarmTypes(machine_id) {
     return api.get(`/alarms/alarm-types/${machine_id}`)
   },
 
-  async getAlarmsByCompanyId(company_id) {
+  getAlarmsByCompanyId(company_id) {
     return api.get(`/alarms/alarms-by-company-id/${company_id}`)
   },
   
