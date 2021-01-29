@@ -1,5 +1,3 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
 module.exports = {
   productionSourceMap: false,
   css: {
@@ -17,8 +15,5 @@ module.exports = {
   // https://cli.vuejs.org/config/#transpiledependencies
   transpileDependencies: [
     'vuetify'
-  ],
-  configureWebpack: {
-    plugins: [new BundleAnalyzerPlugin()]
-  }
+  ]
 }
