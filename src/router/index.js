@@ -10,7 +10,6 @@ import ACSMachines from './acs-machines.routes'
 import PagesRoutes from './pages.routes'
 import UsersRoutes from './users.routes'
 import CustomersRoutes from './customers.routes'
-import AcsAdminUsersRoutes from './acs-admin.users.routes'
 
 Vue.use(Router)
 
@@ -58,7 +57,6 @@ export const routes = [{
 },
 ...AppSettingsRoutes,
 ...ACSMachines,
-...AcsAdminUsersRoutes,
 ...PagesRoutes,
 ...UsersRoutes,
 ...CustomersRoutes,

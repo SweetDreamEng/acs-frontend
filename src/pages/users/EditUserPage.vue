@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-grow-1">
+  <div v-if="user" class="flex-grow-1">
     <div class="d-flex align-center py-3">
       <div>
         <div class="display-1">Edit User {{ user.name && `- ${user.name}` }}</div>
@@ -35,10 +35,10 @@
       <v-tab-item value="tabs-account">
         <account-tab
           :user="user"
-          :roles="roles"
+          :roles="availableRoles"
           :locations="locations"
           :zones="zones"
-          :button_loading="button_loading"
+          :button-loading="button_loading"
           @submit="submitAccount"
         >
         </account-tab>
@@ -47,8 +47,8 @@
       <v-tab-item value="tabs-information">
         <information-tab
           :user="user"
-          :button_loading="button_loading"
-          @submit="submitInformation"
+          :button-loading="button_loading"
+          @submit="submitAccount"
         >
         </information-tab>
       </v-tab-item>
@@ -80,8 +80,20 @@ export default {
   },
   data() {
     return {
-      tab: null,
-      breadcrumbs: [
+      tab: null
+    }
+  },
+  computed: {
+    ...mapState({
+      userRole: (state) => state.auth.user.role,
+      user: (state) => state.users.user,
+      button_loading: (state) => state.users.button_loading,
+      roles: (state) => state.auth.roles,
+      locations: (state) => state.locations.data,
+      zones: (state) => state.zones.data
+    }),
+    breadcrumbs() {
+      return [
         {
           text: 'Users',
           to: '/users/list',
@@ -91,31 +103,35 @@ export default {
           text: 'Edit User'
         }
       ]
+    },
+    isAcsUser() {
+      return ['acs_admin', 'acs_manager', 'acs_viewer'].includes(this.userRole)
+    },
+    availableRoles() {
+      if (this.isAcsUser)
+        return this.roles.filter((role) => ['acs_admin', 'acs_manager', 'acs_viewer'].includes(role.key))
+      else
+        return this.roles.filter((role) => ['customer_admin', 'customer_manager', 'customer_operator'].includes(role.key))
     }
   },
-  computed: {
-    ...mapState({
-      user: (state) => state.users.user,
-      button_loading: (state) => state.users.button_loading,
-      roles: (state) => state.roles.data,
-      locations: (state) => state.locations.data,
-      zones: (state) => state.zones.data
-    })
-  },
   mounted() {
-    this.openEditCompanyUser(this.$route.params.id)
+    this.openEditUser(this.$route.params.id)
+    if (!this.isAcsUser) {
+      this.getLocations()
+      this.getZones()
+    }
   },
   methods: {
     ...mapActions({
-      openEditCompanyUser: 'users/openEditCompanyUser',
-      updateCompanyUserAccount: 'users/updateCompanyUserAccount',
-      updateCompanyUserInformation: 'users/updateCompanyUserInformation'
+      openEditUser: 'users/openEditUser',
+      getLocations: 'locations/getLocations',
+      getZones: 'zones/getZones',
+      updateUserAccount: 'users/updateUserAccount'
     }),
     submitAccount(data) {
-      this.updateCompanyUserAccount(data)
-    },
-    submitInformation(data) {
-      this.updateCompanyUserInformation(data)
+      Object.assign(this.user, data)
+
+      this.updateUserAccount(this.user)
     }
   }
 }

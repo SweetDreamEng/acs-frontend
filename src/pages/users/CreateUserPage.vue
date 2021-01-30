@@ -6,7 +6,6 @@
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
     </div>
-
     <v-tabs v-model="tab" :show-arrows="false" background-color="transparent">
       <v-tab>Account</v-tab>
       <v-tab>Information</v-tab>
@@ -55,7 +54,7 @@
               </v-text-field>
               <v-select
                 v-model="user.role"
-                :items="roles"
+                :items="availableRoles"
                 label="Role"
                 placeholder="Role"
                 item-value="id"
@@ -66,7 +65,7 @@
                 @input="clearError"
               >
               </v-select>
-              
+
               <div v-if="user.role !== 4">
                 <div
                   v-for="(location, i) in locations"
@@ -109,8 +108,8 @@
               <div class="mt-2">
                 <v-btn
                   color="primary"
-                  :loading="button_loading"
-                  :disabled="button_loading"
+                  :loading="isBtnLoading"
+                  :disabled="isBtnLoading"
                   @click="submit"
                 >Save</v-btn>
               </div>
@@ -144,13 +143,15 @@
                 >
                 </v-select>
                 <v-combobox
+                  v-if="user.state"
                   v-model="user.city"
                   :items="cities"
                   label="City"
                   item-text="city"
                   :return-object="false"
                   :rules="[$rules.required]"
-                  :disabled="!user.state"
+                  :disabled="loadingCities"
+                  :loading="loadingCities"
                   outlined
                   dense
                 ></v-combobox>
@@ -222,17 +223,6 @@ export default {
   data() {
     return {
       tab: 0,
-      breadcrumbs: [
-        {
-          text: 'Users',
-          to: '/users/list',
-          exact: true
-        },
-        {
-          text: 'Add New User'
-        }
-      ],
-
       states,
 
       user: {
@@ -255,17 +245,40 @@ export default {
   },
   computed: {
     ...mapState({
-      button_loading: (state) => state.users.button_loading,
-      roles: (state) => state.roles.data,
+      userRole: (state) => state.auth.user.role, // role of current loggedin user
+      isBtnLoading: (state) => state.users.button_loading,
+      loadingCities: (state) => state.cities.loadingCities,
       cities: (state) => state.cities.data,
       locations: (state) => state.locations.data,
       zones: (state) => state.zones.data,
+      roles: (state) => state.auth.roles,
       errorMessages: (state) => state.users.error
     }),
     zipCode() {
       const _zip = this.cities.find((city) => city.city === this.user.city)
 
       return _zip ? _zip.zip : ''
+    },
+    breadcrumbs() {
+      return [
+        {
+          text: 'Users',
+          to: this.isAcsUser ? '/acs-admin/users/list' : '/users/list',
+          exact: true
+        },
+        {
+          text: 'Add New User'
+        }
+      ]
+    },
+    isAcsUser() {
+      return ['acs_admin', 'acs_manager', 'acs_viewer'].includes(this.userRole)
+    },
+    availableRoles() {
+      if (this.isAcsUser)
+        return this.roles.filter((role) => ['acs_admin', 'acs_manager', 'acs_viewer'].includes(role.key))
+      else
+        return this.roles.filter((role) => ['customer_admin', 'customer_manager', 'customer_operator'].includes(role.key))
     }
   },
   mounted() {
@@ -273,22 +286,35 @@ export default {
   },
   methods: {
     ...mapActions({
-      open: 'users/initCreateAccount',
-      addCompanyUser: 'users/addCompanyUser',
+      addUser: 'users/addUser',
+      getLocations: 'locations/getLocations',
+      getZones: 'zones/getZones',
       getCities: 'cities/getCities'
     }),
+    open() {
+      if (!this.isAcsUser) {
+        this.getLocations()
+        this.getZones()
+      }
+    },
     submit() {
       if (this.$refs.accountForm.validate()) {
         if (this.$refs.profileForm.validate()) {
-          const data = Object.assign(this.user, {
-            zip: this.zipCode,
-            locations: this.selectedLocations,
-            zones: this.selectedZones
-          })
-          
-          console.log(data)
+          if (this.isAcsUser) {
+            const data = Object.assign(this.user, {
+              zip: this.zipCode
+            })
 
-          this.addCompanyUser(data)
+            this.addUser(data)
+          } else {
+            const data = Object.assign(this.user, {
+              zip: this.zipCode,
+              locations: this.selectedLocations,
+              zones: this.selectedZones
+            })
+
+            this.addUser(data)
+          }
         } else {
           this.tab = 1
         }

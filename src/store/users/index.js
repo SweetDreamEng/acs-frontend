@@ -5,7 +5,6 @@ const module = {
   namespaced: true,
   state: {
     data: [],
-    roles: [],
 
     user: null,
 
@@ -16,152 +15,26 @@ const module = {
   },
 
   actions: {
-    async initCreateAccount({
-      commit
-    }) {
+    async getUsers({ commit }) {
+      commit('TABLE_LOAD', true)
+      commit('SET_DATA', [])
       try {
-        const response = await userAPI.initCreateAccount()
-
-        commit('locations/SET_DATA', response.data.locations, { root: true })
-        commit('zones/SET_DATA', response.data.zones, { root: true })
-        commit('roles/SET_DATA', response.data.roles, { root: true })
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    async openEditCompanyUser({
-      commit
-    }, id) {
-      try {
-        const response = await userAPI.openEditCompanyUser(id)
-
-        commit('locations/SET_DATA', response.data.locations, { root: true })
-        commit('zones/SET_DATA', response.data.zones, { root: true })
-        commit('roles/SET_DATA', response.data.roles, { root: true })
-        commit('SET_USER', response.data.user)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    async getCompanyUsers({
-      commit
-    }) {
-      commit('TABLE_LOAD')
-      try {
-        const response = await userAPI.getCompanyUsers()
+        const response = await userAPI.getUsers()
 
         commit('SET_DATA', response.data.users)
       } catch (error) {
         console.log(error)
-      } finally {
-        commit('TABLE_LOADED')
       }
-    },
-    async addCompanyUser({
-      commit, dispatch
-    }, data) {
-      commit('BUTTON_LOAD')
 
-      try {
-        const response = await userAPI.addCompanyUser(data)
-
-        dispatch('app/showSuccess', response.data, { root: true })
-        router.push({
-          name: 'users-list'
-        })
-      } catch (error) {
-        if (error.response.status === 422) {
-          const errors = Object.values(error.response.data.error).flat()
-
-          commit('SET_ERROR', {
-            'error': errors[0]
-          })
-        }
-      } finally {
-        commit('BUTTON_CLEAR')
-      }
-    },
-    async updateCompanyUserAccount({
-      commit, dispatch
-    }, data) {
-      commit('BUTTON_LOAD')
-
-      try {
-        const response = await userAPI.updateCompanyUserAccount(data)
-
-        dispatch('app/showSuccess', response.data, { root: true })
-        router.push({
-          name: 'users-list'
-        })
-      } catch (error) {
-        if (error.response.status === 422) {
-          const errors = Object.values(error.response.data.error).flat()
-
-          commit('SET_ERROR', {
-            'error': errors[0]
-          })
-        }
-      } finally {
-        commit('BUTTON_CLEAR')
-      }
-    },
-    async updateCompanyUserInformation({
-      commit, dispatch
-    }, data) {
-      commit('BUTTON_LOAD')
-
-      try {
-        const response = await userAPI.updateCompanyUserInformation(data)
-
-        dispatch('app/showSuccess', response.data, { root: true })
-        router.push({
-          name: 'users-list'
-        })
-      } catch (error) {
-        if (error.response.status === 422) {
-          const errors = Object.values(error.response.data.error).flat()
-
-          commit('SET_ERROR', {
-            'error': errors[0]
-          })
-        }
-      } finally {
-        commit('BUTTON_CLEAR')
-      }
+      commit('TABLE_LOAD', false)
     },
 
-    async initAcsUsers({
-      commit
-    }) {
-      commit('TABLE_LOAD')
-      try {
-        const response = await userAPI.initAcsUsers()
-
-        commit('SET_DATA', response.data.users)
-      } catch (error) {
-        console.log(error.response)
-      } finally {
-        commit('TABLE_LOADED')
-      }
-    },
-    async initCreateAcsUser({
-      commit
-    }) {
-      try {
-        const response = await userAPI.initCreateAcsUser()
-
-        commit('SET_ROLES', response.data.roles)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    async initAcsUserEdit({
+    async openEditUser({
       commit
     }, id) {
       try {
-        const response = await userAPI.initAcsUserEdit(id)
+        const response = await userAPI.openEditUser(id)
 
-        commit('SET_ROLES', response.data.roles)
         commit('SET_USER', response.data.user)
         commit('cities/SET_DATA', response.data.cities, { root: true })
       } catch (error) {
@@ -169,18 +42,21 @@ const module = {
       }
     },
 
-    async addAcsUser({
-      commit, dispatch
-    }, data) {
+    async addUser({ commit, rootState, dispatch }, data) {
       commit('BUTTON_LOAD')
 
       try {
-        const response = await userAPI.addAcsUser(data)
+        const response = await userAPI.addUser(data)
 
         dispatch('app/showSuccess', response.data, { root: true })
-        router.push({
-          name: 'acs-users-list'
-        })
+        if (rootState.auth.user.role === 'acs_admin')
+          router.push({
+            name: 'acs-users-list'
+          })
+        else if (rootState.auth.user.role === 'customer_admin')
+          router.push({
+            name: 'users-list'
+          })
       } catch (error) {
         if (error.response.status === 422) {
           const errors = Object.values(error.response.data.error).flat()
@@ -193,43 +69,19 @@ const module = {
         commit('BUTTON_CLEAR')
       }
     },
-    async updateAcsUserAccount({
+    async updateUserAccount({
       commit, dispatch
     }, data) {
       commit('BUTTON_LOAD')
 
       try {
-        const response = await userAPI.updateAcsUserAccount(data)
+        const response = await userAPI.updateUserAccount(data)
 
         dispatch('app/showSuccess', response.data, { root: true })
-        router.push({
-          name: 'acs-users-list'
-        })
+        // router.back()
       } catch (error) {
-        if (error.response.status === 422) {
-          const errors = Object.values(error.response.data.error).flat()
+        console.log(error)
 
-          commit('SET_ERROR', {
-            'error': errors[0]
-          })
-        }
-      } finally {
-        commit('BUTTON_CLEAR')
-      }
-    },
-    async updateAcsUserInformation({
-      commit, dispatch
-    }, data) {
-      commit('BUTTON_LOAD')
-
-      try {
-        const response = await userAPI.updateAcsUserInformation(data)
-
-        dispatch('app/showSuccess', response.data, { root: true })
-        router.push({
-          name: 'acs-users-list'
-        })
-      } catch (error) {
         if (error.response.status === 422) {
           const errors = Object.values(error.response.data.error).flat()
 
@@ -256,15 +108,7 @@ const module = {
     CLEAR_ERROR(state) {
       state.error = null
     },
-    SET_ROLES(state, roles) {
-      state.roles = roles
-    },
-    TABLE_LOAD(state) {
-      state.isUsersTableLoading = true
-    },
-    TABLE_LOADED(state) {
-      state.isUsersTableLoading = false
-    },
+    TABLE_LOAD(state, loading) { state.isUsersTableLoading = loading },
     BUTTON_LOAD(state) {
       state.button_loading = true
     },

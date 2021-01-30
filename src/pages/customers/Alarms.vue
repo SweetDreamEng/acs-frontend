@@ -13,7 +13,7 @@
 
     <br>
 
-    <v-card v-if="!loadingAlarmsPerMachine" :loading="loadingAlarmsPerMachine" :disabled="loadingAlarmsPerMachine">
+    <v-card :loading="loadingAlarmsPerMachine" :disabled="loadingAlarmsPerMachine">
       <v-card-title>
         Alarms By Machine
         <v-btn

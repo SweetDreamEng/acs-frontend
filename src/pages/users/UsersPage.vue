@@ -6,7 +6,7 @@
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
       <v-spacer></v-spacer>
-      <v-btn v-if="canCreateCustomerUser" color="primary" to="/users/add">
+      <v-btn v-if="canCreateCustomerUser || canCreateAcsUser" color="primary" to="add" :append="true">
         Create User
       </v-btn>
     </div>
@@ -46,14 +46,13 @@
             dense
             clearable
             placeholder="e.g. filter for id, email, name, etc"
-            @keyup.enter="searchUser(searchQuery)"
           ></v-text-field>
           <v-btn
             :loading="isLoading"
             icon
             small
             class="ml-2"
-            @click
+            @click="getUsers"
           >
             <v-icon>mdi-refresh</v-icon>
           </v-btn>
@@ -100,8 +99,8 @@
         </template>
 
         <template v-slot:item.action="{ item }">
-          <div v-if="canCreateCustomerUser" class="actions">
-            <v-btn icon :to="'/users/edit/' + item.id">
+          <div v-if="canCreateCustomerUser || canCreateAcsUser" class="actions">
+            <v-btn icon :to="`edit/${item.id}`" :append="true">
               <v-icon small>mdi-pencil</v-icon>
             </v-btn>
           </div>
@@ -153,45 +152,36 @@ export default {
   },
   computed: {
     ...mapState({
+      userRole: (state) => state.auth.user.role, // role of current loggedin user
       users: (state) => state.users.data,
       isUsersTableLoading: (state) => state.users.isUsersTableLoading
     }),
     ...mapGetters({
-      canCreateCustomerUser: 'auth/canCreateCustomerUser'
-    })
-  },
-  watch: {
-    selectedUsers(val) {
-
+      canCreateCustomerUser: 'auth/canCreateCustomerUser',
+      canCreateAcsUser: 'auth/canCreateAcsUser'
+    }),
+    isAcsUser() {
+      return ['acs_admin', 'acs_manager', 'acs_viewer'].includes(this.userRole)
+    },
+    canManagerUser() {
+      return ['acs_admin', 'customer_admin'].includes(this.userRole)
     }
   },
   mounted() {
-    this.getCompanyUsers()
+    this.getUsers()
   },
   methods: {
     ...mapActions({
-      getCompanyUsers: 'users/getCompanyUsers'
+      getUsers: 'users/getUsers',
+      getCompanyUsers: 'users/getCompanyUsers',
+      initAcsUsers: 'users/initAcsUsers'
     }),
-    searchUser() {},
     roleColor(role) {
-      if (role.key === 'customer_admin') return 'primary'
+      if (role.key === 'customer_admin' || role.key === 'acs_admin') return 'primary'
       else if (role.key === 'customer_manager') return '#4CAF50'
+      else if (role.key === 'acs_manager') return '#4CAF50'
       else return '#F79803'
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.slide-fade-enter-active {
-  transition: all 0.3s ease;
-}
-.slide-fade-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.slide-fade-enter,
-.slide-fade-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
-}
-</style>

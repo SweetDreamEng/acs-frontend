@@ -224,9 +224,7 @@ export default {
     },
     user: {
       type: Object,
-      default: () => ({
-        name: ''
-      })
+      default: () => {}
     },
     roles: {
       type: Array,

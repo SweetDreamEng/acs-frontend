@@ -18,21 +18,31 @@ const module = {
     },
     roles: [
       {
+        'id': 100,
         'key': 'super_admin',
         'name': 'Super Admin'
       }, {
+        'id': 1,
         'key': 'acs_admin',
         'name': 'ACS Administrator'
       }, {
+        'id': 2,
         'key': 'acs_manager',
         'name': 'ACS Manager'
       }, {
+        'id': 3,
+        'key': 'acs_viewer',
+        'name': 'ACS Viewer'
+      }, {
+        'id': 4,
         'key': 'customer_admin',
         'name': 'Customer Administrator'
       }, {
+        'id': 5,
         'key': 'customer_manager',
         'name': 'Customer Manager'
       }, {
+        'id': 6,
         'key': 'customer_operator',
         'name': 'Customer Operator'
       }

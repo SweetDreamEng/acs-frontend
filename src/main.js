@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-// packages
-import Auth from './packages/Auth'
-Vue.use(Auth)
-
 import VueMask from 'v-mask'
 Vue.use(VueMask)
 

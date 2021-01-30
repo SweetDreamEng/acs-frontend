@@ -3,6 +3,7 @@ import cityAPI from '../../services/api/city'
 const module = {
   namespaced: true,
   state: {
+    loadingCities: false,
     data: []
   },
 
@@ -11,21 +12,21 @@ const module = {
       commit, dispatch
     }, state) {
       try {
+        commit('SET_LOADING_CITIES', true)
         const response = await cityAPI.getCities(state)
 
-        commit('cities/SET_DATA', response.data, { root: true })
-
-        return response
+        commit('SET_DATA', response.data)
       } catch (error) {
         console.log(error)
       }
+
+      commit('SET_LOADING_CITIES', false)
     }
   },
 
   mutations: {
-    SET_DATA(state, cities) {
-      state.data = cities
-    }
+    SET_DATA(state, cities) { state.data = cities },
+    SET_LOADING_CITIES(state, loading) { state.loadingCities = loading }
   }
 }
 

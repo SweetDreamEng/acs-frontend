@@ -1,5 +1,5 @@
 <template>
-  <v-card height="300">
+  <v-card class="h-full">
     <v-card-text class="text-center">
       <v-avatar size="160">
         <v-avatar

@@ -28,7 +28,6 @@ API.interceptors.response.use((response) => {
   if (401 === error.response.status) {
 
     localStorage.removeItem('token')
-    Vue.auth.removeUser()
 
     store.commit('auth/SET_LOGOUT_AUTH', { root: true })
 

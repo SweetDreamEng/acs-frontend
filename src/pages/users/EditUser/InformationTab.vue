@@ -137,8 +137,6 @@ export default {
           zip: this.zipCode
         })
 
-        console.log(data)
-
         this.$emit('submit', data)
       }
     }

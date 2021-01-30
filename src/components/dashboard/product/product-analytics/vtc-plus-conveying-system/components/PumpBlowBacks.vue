@@ -19,7 +19,7 @@
           </v-list>
         </v-col>
         <v-col cols="12" md="6">
-          <v-list v-if="blowBacks.length">
+          <v-list>
             <v-list-item v-for="(item, i) in blowBacks.slice(6)" :key="i" style="min-height: 36px;">
               <v-list-item-content class="py-1">
                 {{ `Pump ${i + 1}` }}

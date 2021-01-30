@@ -96,13 +96,15 @@
                 >
                 </v-select>
                 <v-combobox
+                  v-if="customer.state"
                   v-model="customer.city"
                   :items="cities"
                   label="City"
                   item-text="city"
                   :return-object="false"
                   :rules="[$rules.required]"
-                  :disabled="!customer.state"
+                  :disabled="loadingCities"
+                  :loading="loadingCities"
                   outlined
                   dense
                 ></v-combobox>
@@ -122,6 +124,7 @@
                   label="Country"
                   outlined
                   dense
+                  disabled
                 >
                 </v-text-field>
               </v-col>
@@ -206,7 +209,8 @@ export default {
       button_loading: (state) => state.customers.button_loading,
       cities: (state) => state.cities.data,
       errorMessages: (state) => state.customers.error,
-      companies: (state) => state.customers.companies
+      companies: (state) => state.customers.companies,
+      loadingCities: (state) => state.cities.loadingCities
     }),
     zipCode() {
       const _zip = this.cities.find((city) => city.city === this.customer.city)

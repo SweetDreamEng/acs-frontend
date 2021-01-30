@@ -16,10 +16,7 @@
             Add
           </v-btn>
         </template>
-        <v-card
-          :loading="isLocationCardLoading"
-          :disabled="isLocationCardLoading"
-        >
+        <v-card>
           <v-card-title class="primary white--text">
             <span class="headline">{{ editTitle }}</span>
           </v-card-title>
@@ -45,13 +42,15 @@
               >
               </v-select>
               <v-combobox
+                v-if="editedItem.state"
                 v-model="editedItem.city"
                 :items="cities"
                 label="City"
                 item-text="city"
                 :return-object="false"
                 :rules="[$rules.required]"
-                :disabled="!editedItem.state"
+                :disabled="loadingCities"
+                :loading="loadingCities"
                 outlined
                 dense
               ></v-combobox>
@@ -141,8 +140,6 @@ export default {
 
       states,
 
-      isLocationCardLoading: false,
-
       editedIndex: -1,
 
       dialog: false,
@@ -168,7 +165,8 @@ export default {
     ...mapState({
       btn_loading: (state) => state.locations.btn_loading,
       table_loading: (state) => state.locations.table_loading,
-      cities: (state) => state.cities.data
+      cities: (state) => state.cities.data,
+      loadingCities: (state) => state.cities.loadingCities
     }),
     editTitle() {
       return this.editedIndex === -1 ? 'Add Location' : 'Edit Location'
@@ -224,14 +222,7 @@ export default {
       }
     },
     onStateChange() {
-      this.isLocationCardLoading = true
       this.getCities(this.editedItem.state)
-        .then(() => {
-          this.isLocationCardLoading = false
-        })
-        .finally(() => {
-          this.isLocationCardLoading = false
-        })
     }
   }
 }
