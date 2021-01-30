@@ -4,8 +4,6 @@ export default {
   * Get acs users or customer users depending on auth user.
   *
   * @param {}
-  * @return {array} users
-  *
   * @example
   *
   *     getUsers()
@@ -18,8 +16,6 @@ export default {
   * Get existing user to edit page
   *
   * @param {number}
-  * @return {object} user
-  *
   * @example
   *
   *     openEditUser(2)
@@ -32,8 +28,6 @@ export default {
   * Add a new user
   *
   * @param {Object} user object for a new user
-  * @return {Object} response
-  *
   * @example
   *
   *     addUser(user)
@@ -46,8 +40,6 @@ export default {
   * Update a user
   *
   * @param {Object} user object
-  * @return {Object} response
-  *
   * @example
   *
   *     updateUserAccount(user)
