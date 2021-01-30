@@ -9,6 +9,7 @@
           v-for="(note, i) in notes"
           :key="i"
           color="success"
+          :class="{ 'text-right': i % 2 }"
         >
           <template v-slot:opposite>
             <span
@@ -21,27 +22,14 @@
     </v-card-text>
   </v-card>
 </template>
+
 <script>
-/*
-|---------------------------------------------------------------------
-| Note and Timeline Card Component
-|---------------------------------------------------------------------
-|
-| Timeline and notes for the timeline component
-|
-*/
 export default {
   props: {
     notes: {
       type: Array,
       default: () => ([])
     }
-  },
-  data() {
-    return {
-    }
-  },
-  methods: {
   }
 }
 </script>
