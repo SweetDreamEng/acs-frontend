@@ -29,7 +29,7 @@
             icon
             small
             class="ml-2"
-            @click="getCustomers"
+            @click="getCompanyAdmins"
           >
             <v-icon>mdi-refresh</v-icon>
           </v-btn>
@@ -37,15 +37,12 @@
       </v-row>
       <v-data-table
         :headers="headers"
-        :items="customerAdmins"
+        :items="companyAdmins"
         :search="searchQuery"
         class="flex-grow-1"
         hide-default-footer
         :loading="isTableLoading"
       >
-        <!--         <template v-slot:item.id="{ item }">
-          <div># {{ item.id }}</div>
-        </template> -->
         <template v-slot:item.created_at="{ item }">
           <div>{{ item.created_at | formatDate('yyyy-MM-dd') }}</div>
         </template>
@@ -85,35 +82,31 @@ export default {
 
       searchQuery: '',
       headers: [
-        // { text: 'Id', align: 'left', value: 'id' },
         { text: 'Company Name', value: 'companyName' },
         { text: 'Administrator Name', value: 'administratorName' },
         { text: 'Created At', value: 'created_at' },
-        // { text: 'Last SignIn', value: 'lastSignIn' },
         { text: '', sortable: false, align: 'right', value: 'action' }
       ]
     }
   },
   computed: {
     ...mapState({
-      customerAdmins: (state) => state.customers.customerAdmins,
+      companyAdmins: (state) => state.customers.companyAdmins,
       isTableLoading: (state) => state.customers.isTableLoading
     }),
     ...mapGetters({
       canCreateCompanies: 'auth/canCreateCompanies'
     })
   },
-  watch: {
-  },
   mounted() {
     this.open()
   },
   methods: {
     ...mapActions({
-      getCustomers: 'customers/getCustomers'
+      getCompanyAdmins: 'customers/getCompanyAdmins'
     }),
     open() {
-      this.getCustomers()
+      this.getCompanyAdmins()
     }
   }
 }

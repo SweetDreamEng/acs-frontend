@@ -69,17 +69,15 @@ export default {
     })
   },
   mounted() {
-    // get customer information on mounted
     this.open()
-  },
-  destoryed() {
-
   },
   methods: {
     ...mapActions({
-      getCustomer: 'customers/getCustomer'
+      getCustomer: 'customers/getCustomer',
+      getCompanies: 'customers/getCompanies'
     }),
     open() {
+      this.getCompanies()
       this.getCustomer(this.$route.params.id)
     }
   }

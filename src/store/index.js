@@ -12,7 +12,6 @@ import zones from './zones'
 import locations from './locations'
 import devices from './devices'
 import cities from './cities'
-import roles from './roles'
 import alarms from './alarms'
 import notes from './notes'
 import configurations from './configurations'
@@ -44,7 +43,6 @@ const store = new Vuex.Store({
     customers,
     devices,
     cities,
-    roles,
     alarms,
     notes,
     configurations,

@@ -16,7 +16,7 @@
         class="mr-2"
         :loading="refresh_btn_loading"
         :disabled="refresh_btn_loading"
-        @click="querySIM(item)"
+        @click="querySIM(item.iccid)"
       >
         <v-icon left>mdi-refresh</v-icon>
         Refresh SIM Status
@@ -34,7 +34,7 @@
         class="mr-2"
         :loading="suspend_btn_loading"
         :disabled="suspend_btn_loading"
-        @click="suspendSIM(item)"
+        @click="suspendSIM(item.iccid)"
       >Suspend SIM</v-btn>
       <v-btn
         small
@@ -42,7 +42,7 @@
         class="mr-2"
         :loading="remote_web_btn_loading"
         :disabled="remote_web_btn_loading"
-        @click="onRemoteWeb(item)"
+        @click="onRemoteWeb(item.device_id)"
       >Remote WebUI</v-btn>
       <v-btn
         small
@@ -50,7 +50,7 @@
         class="mr-2"
         :loading="remote_cli_btn_loading"
         :disabled="remote_cli_btn_loading"
-        @click="onRemoteCli(item)"
+        @click="onRemoteCli(item.device_id)"
       >Remote CLI</v-btn>
       <v-btn
         small
@@ -269,8 +269,8 @@ export default {
       'remoteCli',
       'submitDeviceConfig'
     ]),
-    onRemoteWeb(item) {
-      this.remoteWeb(item).then((response) => {
+    onRemoteWeb(device_id) {
+      this.remoteWeb(device_id).then((response) => {
         const arr  = response.data
 
         if ( arr.length > 0 ) {

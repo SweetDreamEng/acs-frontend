@@ -10,7 +10,7 @@ const module = {
     error: null,
     
     data: [],                                 // companies
-    customerAdmins: [],
+    companyAdmins: [],
     companies: [],
 
     customerAccount: null,                    
@@ -18,19 +18,19 @@ const module = {
   },
 
   actions: {
-    async getCustomers({
+    async getCompanyAdmins({
       commit
     }) {
       commit('TABLE_LOAD')
       
       try {
-        const response = await companyAPI.getCustomers()
+        const response = await companyAPI.getCompanyAdmins()
 
         commit('SET_CUSTOMER_ADMINS', response.data.customer_admins)
       } catch (error) {
         console.log(error.response)
       }
-      
+
       commit('TABLE_LOADED')
     },
 
@@ -89,7 +89,6 @@ const module = {
 
         commit('SET_CUSTOMER_ACCOUNT', response.data.customer)
         commit('SET_CUSTOMER_PROFILE', response.data.profile)
-        commit('SET_COMPANIES', response.data.companies)
         commit('cities/SET_DATA', response.data.cities, { root: true } )
       } catch (error) {
         console.log(error.response.data)
@@ -178,16 +177,9 @@ const module = {
       state.companies = companies
     },
 
-    SET_CUSTOMER_ADMINS(state, customerAdmins) {
-      state.customerAdmins = customerAdmins
-    },
-
-    SET_CUSTOMER_ACCOUNT(state, customerAccount) {
-      state.customerAccount = customerAccount
-    },
-    SET_CUSTOMER_PROFILE(state, customerProfile) {
-      state.customerProfile = customerProfile
-    }
+    SET_CUSTOMER_ADMINS(state, companyAdmins) { state.companyAdmins = companyAdmins },
+    SET_CUSTOMER_ACCOUNT(state, customerAccount) { state.customerAccount = customerAccount },
+    SET_CUSTOMER_PROFILE(state, customerProfile) { state.customerProfile = customerProfile }
   },
 
   getters: {

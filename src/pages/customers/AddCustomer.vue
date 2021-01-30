@@ -236,7 +236,7 @@ export default {
           const data = Object.assign(this.customer, {
             zip: this.zipCode
           })
-          
+
           this.addCustomer(data)
         } else {
           this.tab = 1

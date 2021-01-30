@@ -232,11 +232,11 @@ const module = {
 
     async querySIM({
       commit
-    }, device) {
+    }, iccid) {
       commit('QUERY_BTN_LOAD')
 
       try {
-        const response = await deviceAPI.querySIM(device)
+        const response = await deviceAPI.querySIM(iccid)
 
         commit('SET_DEVICE_STATUS', {
           device_id: response.data.id,
@@ -250,24 +250,25 @@ const module = {
     },
     async suspendSIM({
       commit, dispatch
-    }, device) {
+    }, iccid) {
       commit('SUSPEND_BTN_LOAD')
 
       try {
-        await deviceAPI.suspendSIM(device)
+        await deviceAPI.suspendSIM(iccid)
       } catch (error) {
         console.log(error)
       } finally {
         commit('SUSPEND_BTN_CLEAR')
       }
     },
+    
     async remoteWeb({
       commit, dispatch
-    }, device) {
+    }, device_id) {
       commit('REMOTE_WEB_BTN_LOAD')
 
       try {
-        const response = await deviceAPI.remoteWeb(device)
+        const response = await deviceAPI.remoteWeb(device_id)
 
         return response
       } catch (error) {
@@ -276,13 +277,14 @@ const module = {
         commit('REMOTE_WEB_BTN_CLEAR')
       }
     },
+
     async remoteCli({
       commit, dispatch
-    }, device) {
+    }, device_id) {
       commit('REMOTE_CLI_BTN_LOAD')
 
       try {
-        const response = await deviceAPI.remoteCli(device)
+        const response = await deviceAPI.remoteCli(device_id)
 
         return response
       } catch (error) {
