@@ -5,11 +5,8 @@ const module = {
   namespaced: true,
   state: {
     data: [],
-
     user: null,
-
     error: null,
-
     isUsersTableLoading: false,
     button_loading: false
   },
@@ -28,10 +25,7 @@ const module = {
 
       commit('TABLE_LOAD', false)
     },
-
-    async openEditUser({
-      commit
-    }, id) {
+    async openEditUser({ commit }, id) {
       try {
         const response = await userAPI.openEditUser(id)
 
@@ -41,7 +35,6 @@ const module = {
         console.log(error)
       }
     },
-
     async addUser({ commit, rootState, dispatch }, data) {
       commit('BUTTON_LOAD')
 
@@ -69,16 +62,21 @@ const module = {
         commit('BUTTON_CLEAR')
       }
     },
-    async updateUserAccount({
-      commit, dispatch
-    }, data) {
+    async updateUserAccount({ commit, dispatch }, data) {
       commit('BUTTON_LOAD')
 
       try {
         const response = await userAPI.updateUserAccount(data)
 
         dispatch('app/showSuccess', response.data, { root: true })
-        // router.back()
+        if (rootState.auth.user.role === 'acs_admin')
+          router.push({
+            name: 'acs-users-list'
+          })
+        else if (rootState.auth.user.role === 'customer_admin')
+          router.push({
+            name: 'users-list'
+          })
       } catch (error) {
         console.log(error)
 
