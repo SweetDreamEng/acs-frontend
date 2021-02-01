@@ -78,7 +78,7 @@ export default {
   * @param {number} device serial number
   * @example
   *
-  *     getDeviceConfiguration(1106335254)
+  *     getDeviceConfiguration(1106550521)
   */
   getDeviceConfiguration(serial_number) {
     return api.get(`/devices/${serial_number}/configuration`)
@@ -205,6 +205,22 @@ export default {
   */
   getDevicesAnalytics(data) {
     return api.post('/devices/devices-analytics', data)
+  },
+
+  /**
+  * Update enabled properties for user in product page
+  *
+  * @param {Object} form object
+  * @example
+  *
+  *     updateEnabledProperties({
+  *       serial_number: 687931403,
+  *       isImportant: true,
+  *       enabled_properties: [1, 2]
+  *     })
+  */
+  updateEnabledProperties(payload) {
+    return api.post('/devices/enabled-properties', payload)
   },
 
   /**

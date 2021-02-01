@@ -2,13 +2,13 @@
   <div>
     <div>
       <v-combobox
-        v-model="selectedParameters"
-        :items="parameters.filter((item) => item.machine_id === configId)"
+        v-model="selectedGraphs"
+        :items="graphs"
         solo
         label="Add/Remove parameters"
         multiple
-        item-text="name"
-        item-value="id"
+        item-text="graph_name"
+        item-value="graph_id"
         class="flex-grow-0 ml-auto"
         @input="onEnabledPropertiesChanged()"
       >
@@ -19,16 +19,15 @@
             small
             @click:close="remove(item)"
           >
-            {{ item.name }}
+            {{ item.graph_name }}
           </v-chip>
         </template>
       </v-combobox>
     </div>
-
     <component 
-      :is="propertiesComponent()" 
+      :is="analyticsComponent()" 
       :product-id="$route.params.productId"
-      :parameters="selectedParameters.map((item) => item.id)"
+      :parameters="selectedGraphs.map((graph) => graph.graph_id)"
     >
     </component>
   </div>
@@ -44,109 +43,81 @@
 | where update parameters of a certain product
 |
 */
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
-import BdBatchBlender from './product-analytics/bd-batch-blender/BDBatchProperties'
-import AccumeterOvationBlender from './product-analytics/accumeter-ovation-continuous-blender/AccumeterOvationBlenderProperties'
-import GhGravimetricExtrusionControlHopper from './product-analytics/gh-gravimetric-extrusion-control-hopper/GhGravimetricProperties'
-import VtcPlusConveyingSystem from './product-analytics/vtc-plus-conveying-system/VtcPlusConveyingProperties'
-import NgxDryer from './product-analytics/ngx-dryer/NgxDryerProperties'
-import TruetempTcu from './product-analytics/truetemp-tcu/TruetempTcuProperties'
+import BdBatchBlender from './product-analytics/bd-batch-blender/BDBatchAnalytics'
+import AccumeterOvationContinuousBlender from './product-analytics/accumeter-ovation-continuous-blender/AccumeterOvationBlenderAnalytics'
+import GhGravimetricExtrusionControlHopper from './product-analytics/gh-gravimetric-extrusion-control-hopper/GhGravimetricAnalytics'
+import GhFGravimetricAdditiveFeeder from './product-analytics/gh-f-gravimetric-additive-feeder'
+import VtcPlusConveyingSystem from './product-analytics/vtc-plus-conveying-system/VtcPlusConveyingAnalytics'
+import NgxDryer from './product-analytics/ngx-dryer/NgxDryer'
+import NgxNomadDryer from './product-analytics/ngx-nomad-dryer'
+import T50CentralGranulator from './product-analytics/t50-central-granulator'
+import GpPortableChiller from './product-analytics/gp-portable-chiller/PortableChillerAnalytics'
+import TruetempTcu from './product-analytics/truetemp-tcu/TruetempTcuAnalytics.vue'
 
 export default {
   components: {
     BdBatchBlender,
-    AccumeterOvationBlender,
+    AccumeterOvationContinuousBlender,
     GhGravimetricExtrusionControlHopper,
+    GhFGravimetricAdditiveFeeder,
     VtcPlusConveyingSystem,
     NgxDryer,
+    NgxNomadDryer,
+    GpPortableChiller,
+    T50CentralGranulator,
     TruetempTcu
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
-    value: {
+    machineId: {
       type: Number,
       default: 0
     },
-    loading: {
-      type: Boolean,
-      default: false
+    serialNumber: {
+      type: Number,
+      default: 0
     },
-    tags: {
+    graphs: {
       type: Array,
       default: () => []
     },
-    deviceConfiguration: {
-      type: Object,
-      default: () => {}
-    },
-    enabledProperties: {
+    enabledGraphs: {
       type: Array,
       default: () => []
     }
   },
   data() {
     return {
-      parameters: [
-        { id: 101, machine_id: 1, name: 'process rate' },
-        { id: 102, machine_id: 1, name: 'calibration factor' },
-        { id: 103, machine_id: 1, name: 'hopper stable' },
-        { id: 104, machine_id: 1, name: 'station conveying' },
-
-        { id: 101, machine_id: 2, name: 'blender capability' },
-        { id: 102, machine_id: 2, name: 'target rate' },
-        { id: 103, machine_id: 2, name: 'feeder calibration' },
-        { id: 104, machine_id: 2, name: 'feeder speed' }
-      ],
-      selectedParameters: []
+      selectedGraphs: this.enabledGraphs
     }
   },
   computed: {
-    selectedParametersForMachine() {
-      const item = this.enabledProperties.find((property) => property.machine_id === parseInt(this.configId))
-
-      return item ? JSON.parse(item.property_ids) : []
-    },
-    configId() {
-      return this.deviceConfiguration && this.deviceConfiguration.tcu_added ? 11 : parseInt(this.$route.params.configurationId)
-    }
-  },
-  watch: {
-    enabledProperties(properties) {
-      this.selectedParameters = this.parameters.filter((parameter) => parameter.machine_id === parseInt(this.configId) && this.selectedParametersForMachine.includes(parameter.id) )
-
-      if (!this.selectedParameters.length) {
-        this.selectedParameters = this.parameters.filter((item) => item.machine_id === this.configId)
-      }
-    }
   },
   methods: {
-    ...mapActions('machines', ['updateEnabledProperties']),
+    ...mapActions('devices', ['updateEnabledProperties']),
 
-    propertiesComponent() {
-      switch (this.configId) {
+    analyticsComponent() {
+      switch (this.machineId) {
       case 1: return 'BdBatchBlender'
-      case 2: return 'AccumeterOvationBlender'
+      case 2: return 'AccumeterOvationContinuousBlender'
       case 3: return 'GhGravimetricExtrusionControlHopper'
-      // case 4: return 'GhFGravimetricAdditiveFeeder'
+      case 4: return 'GhFGravimetricAdditiveFeeder'
       case 5: return 'VtcPlusConveyingSystem'
       case 6: return 'NgxDryer'
-      // case 7: return 'NgxNomadDryer'
-      // case 8: return 'T50CentralGranulator'
-      // case 9: return 'GpPortableChiller'
+      case 7: return 'NgxNomadDryer'
+      case 8: return 'T50CentralGranulator'
+      case 9: return 'GpPortableChiller'
       case 11: return 'TruetempTcu'
-      default: return ''
+      default: return null
       }
     },
     remove (item) {
-      this.selectedParameters.splice(this.selectedParameters.indexOf(item), 1)
+      this.selectedGraphs.splice(this.selectedGraphs.indexOf(item), 1)
       this.onEnabledPropertiesChanged()
     },
     onEnabledPropertiesChanged() {
-      this.updateEnabledProperties({ id: this.configId, isImportant: false, enabledProperties: this.selectedParameters.map((item) => item.id) })
+      this.updateEnabledProperties({ serial_number: this.serialNumber, isImportant: true, enabled_properties: this.selectedGraphs.map((item) => item.graph_id) })
     }
   }
 }

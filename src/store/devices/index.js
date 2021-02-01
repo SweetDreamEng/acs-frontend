@@ -38,12 +38,8 @@ const module = {
     downtimePlans: [],
 
     loadingDeviceConfig: false,
-    deviceConfiguration: {
-      configuration_id: 0,
-      name: '',
-      device_name: '',
-      tcu_added: false
-    }
+    sendingDeviceConfig: false,
+    deviceConfiguration: {}
   },
 
   actions: {
@@ -87,6 +83,14 @@ const module = {
         console.log(error)
       } finally {
         commit('SET_LOADING_DEVICE_CONFIGURATION', false)
+      }
+    },
+
+    async updateEnabledProperties({ commit }, payload) {
+      try {
+        await deviceAPI.updateEnabledProperties(payload)
+      } catch (error) {
+        console.log(error)
       }
     },
 
@@ -409,7 +413,7 @@ const module = {
     REGISTER_BTN_CLEAR(state) {
       state.register_button_loading = false
     },
-    SET_LOADING_DEVICE_CONFIG(state, isLoading) { state.loadingDeviceConfig = isLoading },
+    SET_LOADING_DEVICE_CONFIG(state, isLoading) { state.sendingDeviceConfig = isLoading },
     QUERY_BTN_LOAD(state) {
       state.refresh_btn_loading = true
     },

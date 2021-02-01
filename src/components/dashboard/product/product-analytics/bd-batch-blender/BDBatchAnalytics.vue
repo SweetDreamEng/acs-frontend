@@ -46,7 +46,7 @@
         >
         </bar-graph>
       </v-col>
-      <v-col v-if="parameters.includes(4)" md="4" sm="12">
+      <v-col v-if="parameters.includes(5)" md="4" sm="12">
         <recipe
           :loading="loadingRecipe"
           :recipes="recipeValues"
@@ -55,7 +55,7 @@
         >
         </recipe>
       </v-col>
-      <v-col v-if="parameters.includes(5)" cols="12">
+      <v-col v-if="parameters.includes(4)" cols="12">
         <inventory
           :is-loading="loadingInventories"
           :inventories="inventories"

@@ -106,28 +106,6 @@ const getDashboardMachinesTable = async ({ commit }, data) => {
   }
 }
 
-const getEnabledProperties = async ({ commit }, payload) => {
-  commit('SET_LOADING_ENABLED_PROPERTIES', true)
-
-  try {
-    const response = await machineAPI.getEnabledProperties(payload)
-
-    commit('SET_ENABLED_PROPERTIES', response.data.properties)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    commit('SET_LOADING_ENABLED_PROPERTIES', false)
-  }
-}
-
-const updateEnabledProperties = async ({ commit }, payload) => {
-  try {
-    await machineAPI.updateEnabledProperties(payload)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 export default {
   initAcsDashboard,
   initLocationsTable,
@@ -136,7 +114,5 @@ export default {
   getDashboardMachinesTable,
   changeSelectedCompany,
   getSystemStates,
-  getWeeklyRunningHours,
-  getEnabledProperties,
-  updateEnabledProperties
+  getWeeklyRunningHours
 }

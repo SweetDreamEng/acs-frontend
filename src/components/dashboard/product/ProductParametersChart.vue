@@ -2,13 +2,13 @@
   <div>
     <div>
       <v-combobox
-        v-model="selectedParameters"
-        :items="parameters.filter((item) => item.machine_id === configId)"
+        v-model="selectedGraphs"
+        :items="graphs"
         solo
         label="Add/Remove parameters"
         multiple
-        item-text="name"
-        item-value="id"
+        item-text="graph_name"
+        item-value="graph_id"
         class="flex-grow-0 ml-auto"
         @input="onEnabledPropertiesChanged()"
       >
@@ -19,16 +19,16 @@
             small
             @click:close="remove(item)"
           >
-            {{ item.name }}
+            {{ item.graph_name }}
           </v-chip>
         </template>
       </v-combobox>
     </div>
 
-    <component 
+    <component
       :is="propertiesComponent()" 
       :product-id="$route.params.productId"
-      :parameters="selectedParameters.map((item) => item.id)"
+      :parameters="selectedGraphs.map((item) => item.graph_id)"
     >
     </component>
   </div>
@@ -63,71 +63,33 @@ export default {
     TruetempTcu
   },
   props: {
-    label: {
-      type: String,
-      default: ''
-    },
-    value: {
+    machineId: {
       type: Number,
       default: 0
     },
-    loading: {
-      type: Boolean,
-      default: false
+    serialNumber: {
+      type: Number,
+      default: 0
     },
-    tags: {
+    graphs: {
       type: Array,
       default: () => []
     },
-    deviceConfiguration: {
-      type: Object,
-      default: () => {}
-    },
-    enabledProperties: {
+    enabledGraphs: {
       type: Array,
       default: () => []
     }
   },
   data() {
     return {
-      parameters: [
-        { id: 101, machine_id: 1, name: 'process rate' },
-        { id: 102, machine_id: 1, name: 'calibration factor' },
-        { id: 103, machine_id: 1, name: 'hopper stable' },
-        { id: 104, machine_id: 1, name: 'station conveying' },
-
-        { id: 101, machine_id: 2, name: 'blender capability' },
-        { id: 102, machine_id: 2, name: 'target rate' },
-        { id: 103, machine_id: 2, name: 'feeder calibration' },
-        { id: 104, machine_id: 2, name: 'feeder speed' }
-      ],
-      selectedParameters: []
-    }
-  },
-  computed: {
-    selectedParametersForMachine() {
-      const item = this.enabledProperties.find((property) => property.machine_id === parseInt(this.configId))
-
-      return item ? JSON.parse(item.property_ids) : []
-    },
-    configId() {
-      return this.deviceConfiguration && this.deviceConfiguration.tcu_added ? 11 : parseInt(this.$route.params.configurationId)
-    }
-  },
-  watch: {
-    enabledProperties(properties) {
-      this.selectedParameters = this.parameters.filter((parameter) => parameter.machine_id === parseInt(this.configId) && this.selectedParametersForMachine.includes(parameter.id) )
-
-      if (!this.selectedParameters.length) {
-        this.selectedParameters = this.parameters.filter((item) => item.machine_id === this.configId)
-      }
+      selectedGraphs: this.enabledGraphs
     }
   },
   methods: {
-    ...mapActions('machines', ['updateEnabledProperties']),
+    ...mapActions('devices', ['updateEnabledProperties']),
 
     propertiesComponent() {
-      switch (this.configId) {
+      switch (this.machineId) {
       case 1: return 'BdBatchBlender'
       case 2: return 'AccumeterOvationBlender'
       case 3: return 'GhGravimetricExtrusionControlHopper'
@@ -142,11 +104,11 @@ export default {
       }
     },
     remove (item) {
-      this.selectedParameters.splice(this.selectedParameters.indexOf(item), 1)
+      this.selectedGraphs.splice(this.selectedGraphs.indexOf(item), 1)
       this.onEnabledPropertiesChanged()
     },
     onEnabledPropertiesChanged() {
-      this.updateEnabledProperties({ id: this.configId, isImportant: false, enabledProperties: this.selectedParameters.map((item) => item.id) })
+      this.updateEnabledProperties({ serial_number: this.serialNumber, isImportant: false, enabled_properties: this.selectedGraphs.map((item) => item.graph_id) })
     }
   }
 }

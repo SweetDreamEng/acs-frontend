@@ -62,7 +62,7 @@ const module = {
         commit('BUTTON_CLEAR')
       }
     },
-    async updateUserAccount({ commit, dispatch }, data) {
+    async updateUserAccount({ commit, rootState, dispatch }, data) {
       commit('BUTTON_LOAD')
 
       try {

@@ -100,7 +100,6 @@ export default {
       type: Object,
       default: () => ({
         address_1: '',
-        address_2: '',
         zip: '',
         state: '',
         city: '',
