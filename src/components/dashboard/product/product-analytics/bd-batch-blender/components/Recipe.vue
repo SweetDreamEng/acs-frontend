@@ -67,6 +67,7 @@ export default {
         noData: {
           text: 'No Data From Devce'
         },
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary],
         legend: {
           show: true,
           position: 'bottom',

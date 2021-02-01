@@ -1,49 +1,51 @@
 <template>
-  <v-menu offset-y left transition="slide-y-transition">
-    <template v-slot:activator="{ on }">
-      <v-btn
-        icon
-        small
-        v-on="on"
-      >
-        <v-avatar
-          color="primary"
-          size="28"
+  <div class="ml-2">
+    <v-menu offset-y right transition="slide-y-transition">
+      <template v-slot:activator="{ on }">
+        <v-btn
+          icon
+          small
+          v-on="on"
         >
-          <span class="white--text">{{ username | initials }}</span>
-        </v-avatar>
-      </v-btn>
-    </template>
+          <v-avatar
+            color="primary"
+            size="28"
+          >
+            <span class="white--text">{{ username | initials }}</span>
+          </v-avatar>
+        </v-btn>
+      </template>
 
-    <v-list dense nav>
-      <v-list-item
-        v-for="(item, index) in menu"
-        :key="index"
-        :to="item.link"
-        :exact="item.exact"
-        :disabled="item.disabled"
-        link
-      >
-        <v-list-item-icon>
-          <v-icon small :class="{ 'grey--text': item.disabled }">{{ item.icon }}</v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>{{ item.text }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <v-list dense nav>
+        <v-list-item
+          v-for="(item, index) in menu"
+          :key="index"
+          :to="item.link"
+          :exact="item.exact"
+          :disabled="item.disabled"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon small :class="{ 'grey--text': item.disabled }">{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.text }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
 
-      <v-divider class="my-1"></v-divider>
+        <v-divider class="my-1"></v-divider>
 
-      <v-list-item @click="signOut">
-        <v-list-item-icon>
-          <v-icon small>mdi-logout-variant</v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Logout</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
-  </v-menu>
+        <v-list-item @click="signOut">
+          <v-list-item-icon>
+            <v-icon small>mdi-logout-variant</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </div>
 </template>
 
 <script>

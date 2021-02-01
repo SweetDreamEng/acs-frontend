@@ -1,10 +1,12 @@
 import settingAPI from '../../services/api/setting'
+import vuetify from '../../plugins/vuetify'
 
 const module = {
   namespaced: true,
   state: {
     private_colors: null,
     colors: [],
+
     error: null,
     loading: true,
     button_loading: null,
@@ -33,7 +35,7 @@ const module = {
       try {
         const response = await settingAPI.grabColors({ url })
 
-        commit('SET_COLORS', response.data.colors.slice(0, 10))
+        commit('SET_COLORS', response.data.colors)
       } catch (error) {
         console.log(error.response)
       } finally {
@@ -61,18 +63,31 @@ const module = {
         let response = await settingAPI.getSetting()
 
         response = response.data.value
-        const private_colors = response.filter((data) => data.type.includes('private_color'))
 
-        if (private_colors.length) {
-          const colors = []
+        // const private_colors = response.filter((data) => data.type.includes('private_color'))
 
-          for (let i = 0; i < private_colors.length; i++) {
-            colors.push(private_colors[i]['value'])
-          }
-          commit('SET_PRIVATE_COLORS', colors)
-        } else {
-          commit('SET_PRIVATE_COLORS', ['#092954'])
-        }
+        // if (private_colors.length) {
+        //   const colors = []
+
+        //   for (let i = 0; i < private_colors.length; i++) {
+        //     colors.push(private_colors[i]['value'])
+        //   }
+        //   commit('SET_PRIVATE_COLORS', colors)
+        // } else {
+        //   commit('SET_PRIVATE_COLORS', ['#092954'])
+        // }
+        const primaryColor = response.find((colorItem) => colorItem.type === 'color_primary')
+        const secondaryColor = response.find((colorItem) => colorItem.type === 'color_secondary')
+        const accentColor = response.find((colorItem) => colorItem.type === 'color_accent')
+        const surfaceColor = response.find((colorItem) => colorItem.type === 'color_surface')
+        const backgroundColor = response.find((colorItem) => colorItem.type === 'color_background')
+
+        vuetify.framework.theme.themes.light.background = backgroundColor ? backgroundColor.value : '#ffffff'
+        vuetify.framework.theme.themes.light.primary = primaryColor ? primaryColor.value : '#ffffff'
+        vuetify.framework.theme.themes.light.secondary = secondaryColor ? secondaryColor.value : '#ffffff'
+        vuetify.framework.theme.themes.light.accent = accentColor ? accentColor.value : '#ffffff'
+        vuetify.framework.theme.themes.light.surface = surfaceColor ? surfaceColor.value : '#ffffff'
+
         let auth_background_file = response.filter((data) => data.type.includes('auth_background_filepath'))
 
         if (auth_background_file.length) {
@@ -94,16 +109,22 @@ const module = {
         console.log(error)
       }
     },
-    async applyPrivateColors({
-      commit
+    async applyWebsiteColors({
+      commit, dispatch
     }, {
       colors
     }) {
       commit('BUTTON_LOAD', 'APPLY')
       try {
-        const response = await settingAPI.setPrivateColors({ colors })
+        const response = await settingAPI.applyWebsiteColors({ colors })
 
-        commit('SET_PRIVATE_COLORS', response.data.private_colors)
+        vuetify.framework.theme.themes.light.background = colors[0].color
+        vuetify.framework.theme.themes.light.primary = colors[1].color
+        vuetify.framework.theme.themes.light.secondary = colors[2].color
+        vuetify.framework.theme.themes.light.accent = colors[3].color
+        vuetify.framework.theme.themes.light.surface = colors[4].color
+
+        dispatch('app/showSuccess', response.data.message, { root: true })
       } catch (error) {
         console.log(error.response)
       } finally {

@@ -10,7 +10,7 @@
           >
             <track-card
               label="First Pass Yield"
-              color="#8c9eff"
+              :color="$vuetify.theme.themes.light.primary"
               value="87%"
               :percentage="1.7"
               percentage-label="vs last week"
@@ -31,7 +31,7 @@
           >
             <track-card
               label="Avg First Pass Yield"
-              color="#06d6a0"
+              :color="$vuetify.theme.themes.light.primary"
               value="84%"
               :percentage="4.3"
               percentage-label="vs last week"

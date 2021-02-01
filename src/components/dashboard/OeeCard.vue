@@ -62,6 +62,7 @@ export default {
         dataLabels: {
           enabled: false
         },
+        colors: [this.$vuetify.theme.themes.light.primary],
         stroke: {
           curve: 'smooth',
           width: '2'

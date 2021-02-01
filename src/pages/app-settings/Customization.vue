@@ -53,68 +53,66 @@
               label="Input Website URL"
               outlined
               dense
+              class="mx-2"
               :rules="[$rules.required]"
             />
-            <v-row justify="space-around">
+            <div class="text-right">
               <v-btn
-                class="ma-2 white--text"
+                class="mx-2 white--text"
                 :loading="buttonLoading === 'SUBMIT'"
                 :disabled="buttonLoading === 'SUBMIT'"
-                color="info"
+                color="primary"
                 @click="submit"
               >
                 SUBMIT
               </v-btn>
+            </div>
+          </v-form>
+          <v-row dense>
+            <v-col cols="12" md="6">
+              <v-data-table
+                :headers="headers"
+                :items="colorSettings"
+                :items-per-page="5"
+                class="elevation-1"
+                hide-default-footer
+              >
+                <template v-slot:item.color="{ item }">
+                  <drop
+                    class="my-2"
+                    :style="`width: 40px; height: 40px; background: ${item.color}; border-radius: 50%; border: solid 1px grey;`"
+                    @dragover="handleDragover(item)"
+                    @drop="handleDrop"
+                  >
+                  </drop>
+                </template>
+              </v-data-table>
               <v-sheet v-if="buttonLoading === 'APPLY' || buttonLoading === false">
                 <v-btn
                   class="ma-2"
                   :loading="buttonLoading === 'APPLY'"
                   :disabled="buttonLoading === 'APPLY'"
-                  color="success"
-                  @click="applyCustomization"                          
+                  color="primary"
+                  @click="applyCustomColors"                          
                 >
                   Apply Customization
                 </v-btn>
-                <v-btn
-                  fab
-                  large
-                  dark
-                  :color="customizationColor"
-                ></v-btn>
               </v-sheet>
-            </v-row>
-          </v-form>
-          <v-row v-if="colors">
-            <v-col
-              v-for="(color, idx) in colors"
-              :key="idx"
-              class="d-flex child-flex"
-              cols="2"
-            >
-              <v-btn
-                :key="idx"
-                :color="color.Hex"
-                elevation="11"
-                height="100"
-                @click="handleColorClicked(color.Hex)"
-              ></v-btn>
+            </v-col>
+            <v-col cols="12" md="6">
+              <div v-if="colors" class="d-flex flex-wrap" style="max-height: 500px; overflow-y: scroll;">
+                <div
+                  v-for="(color, idx) in colors"
+                  :key="idx"
+                  class="text-center"
+                  style="width: 100px;"
+                >
+                  <drag class="ma-2" :style="`width: 80px; height: 80px; background: ${color.Hex}`" :transfer-data="{ color }"></drag>
+                  {{ color.Hex }}
+                </div>
+              </div>
             </v-col>
           </v-row>
-
-          <div v-if="!colors.length && buttonLoading == false">
-            <v-row justify="center">
-              Sorry, We can't find any colors from given URL.
-            </v-row>
-            <v-row justify="center">
-              <v-color-picker
-                v-model="customizationColor"
-                dot-size="25"
-                show-swatches
-                swatches-max-height="200"                          
-                elevation="15"                          
-              ></v-color-picker>
-            </v-row>
-          </div>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -134,8 +132,10 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { Drag, Drop } from 'vue-drag-drop'
 
 export default {
+  components: { Drag, Drop },
   data () {
     return {
       panel: [1],
@@ -145,7 +145,37 @@ export default {
       url: '',
       tab: null,
       // customizationColor: this.privateColors[0],
-      customizationColor: null
+      customizationColor: null,
+
+      selectedItem: null,
+
+      headers: [
+        { text: 'Color name', value: 'name' },
+        { text: 'Color', value: 'color' }
+      ],
+      colorSettings: [
+        {
+          name: 'Background',
+          key: 'color_background',
+          color: '#ffffff'
+        }, {
+          name: 'Primary',
+          key: 'color_primary',
+          color: '#ffffff'
+        }, {
+          name: 'Secondary',
+          key: 'color_secondary',
+          color: '#ffffff'
+        }, {
+          name: 'Accent',
+          key: 'color_accent',
+          color: '#ffffff'
+        }, {
+          name: 'Surface',
+          key: 'color_surface',
+          color: '#ffffff'
+        }
+      ]
     }
   },
   computed: {
@@ -166,7 +196,7 @@ export default {
       'grabColors': 'settings/grabColors',
       'resetSettings': 'settings/resetSettings',
       'setInitialSetting': 'settings/setInitialSetting',
-      'applyPrivateColors': 'settings/applyPrivateColors',
+      'applyWebsiteColors': 'settings/applyWebsiteColors',
       'uploadLogo': 'settings/uploadLogo',
       'updateAuthBackground': 'settings/updateAuthBackground'
     }),
@@ -178,29 +208,30 @@ export default {
         this.updateAuthBackground()
       }
     },
-    applyCustomization () {
-      if (this.customizationColor.hex) {
-        this.customizationColor = this.customizationColor.hex
-      }
-      this.$vuetify.theme.themes.light.primary = this.customizationColor      
-      let colors = [
-        this.customizationColor
-      ]
+    applyCustomColors () {
 
-      if (this.colors.length) {
-        this.$vuetify.theme.themes.light.accent = this.colors[1].Hex
-        this.$vuetify.theme.themes.light.background = this.colors[2].Hex
-        colors = [
-          this.customizationColor,
-          this.colors[1].Hex,
-          this.colors[2].Hex
-        ]
-      }
-      this.applyPrivateColors({
-        colors
+      // if (this.customizationColor.hex) {
+      //   this.customizationColor = this.customizationColor.hex
+      // }
+      // this.$vuetify.theme.themes.light.primary = this.customizationColor      
+      // let colors = [
+      //   this.customizationColor
+      // ]
+
+      // if (this.colors.length) {
+      //   this.$vuetify.theme.themes.light.accent = this.colors[1].Hex
+      //   this.$vuetify.theme.themes.light.background = this.colors[2].Hex
+      //   colors = [
+      //     this.customizationColor,
+      //     this.colors[1].Hex,
+      //     this.colors[2].Hex
+      //   ]
+      // }
+      this.applyWebsiteColors({
+        colors: this.colorSettings
       })
 
-      this.updateAuthBackground()
+      // this.updateAuthBackground()
     },
     handleColorClicked (color) {
       this.customizationColor = color
@@ -234,6 +265,14 @@ export default {
       this.uploadLogo({
         formData
       })
+    },
+    handleDrop(data, event) {
+      const selectedSetting = this.colorSettings.find((setting) => setting.name === this.selectedItem.name)
+
+      selectedSetting.color = data.color.Hex
+    },
+    handleDragover(item) {
+      this.selectedItem = item
     }
   }
 }

@@ -10,7 +10,7 @@
           :key="n"
         >
           <v-card
-            :color="box.value < 60 ? 'error' : 'success darken-1'"
+            :color="box.value < 60 ? 'primary' : 'secondary darken-2'"
             dark
             max-width="100"
             height="100"

@@ -8,8 +8,8 @@ export default {
     return api.post('/app-settings/grab-colors', data)
   },
 
-  setPrivateColors(data) {
-    return api.post('/app-settings/set-private-colors', data)
+  applyWebsiteColors(data) {
+    return api.post('/app-settings/website-colors', data)
   },
 
   getSetting(data) {

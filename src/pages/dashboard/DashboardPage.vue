@@ -3,7 +3,15 @@
     <v-sheet color="surface2" class="my-n8 py-8">
       <v-container class="pb-0">
         <div v-if="$route.name === 'acs-machines'" class="d-flex mt-2 align-center">
-          <v-breadcrumbs :items="breadcrumbItems"></v-breadcrumbs>
+          <v-breadcrumbs :items="breadcrumbItems">
+            <template v-slot:item="{ item }">
+              <v-breadcrumbs-item
+                :disabled="item.disabled"
+              >
+                {{ item.text }}
+              </v-breadcrumbs-item>
+            </template>
+          </v-breadcrumbs>
           <v-spacer></v-spacer>
           <company-menu
             :companies="companies"

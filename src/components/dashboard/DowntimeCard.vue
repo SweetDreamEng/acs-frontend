@@ -46,7 +46,7 @@
         <v-spacer></v-spacer>
         <v-btn
           text
-          color="green accent-4"
+          color="primary"
         >
           View Report
           <v-icon right>mdi-chart-bar</v-icon>
@@ -91,9 +91,9 @@ export default {
         dataLabels: {
           enabled: false
         },
-        colors: ['#d6d93d', '#219ae2', '#999'],
+        colors: ['#d6d93d', this.$vuetify.theme.themes.light.primary, '#999'],
         fill: {
-          colors: ['#d6d93d', '#219ae2', '#999']
+          colors: ['#d6d93d', this.$vuetify.theme.themes.light.primary, '#999']
         },
         xaxis: {
           labels: {

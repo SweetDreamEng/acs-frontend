@@ -159,6 +159,7 @@ export default {
             show: false
           }
         },
+        colors: [this.$vuetify.theme.themes.light.primary],
         dataLabels: {
           enabled: false
         },

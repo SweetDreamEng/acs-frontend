@@ -98,7 +98,7 @@ export default {
           text: 'No Data From Devce'
         },
         fill: {
-          colors: ['#002855', '#008ffb', '#feb019'],
+          colors: [this.$vuetify.theme.themes.light.primary, `${this.$vuetify.theme.themes.light.primary}90`, `${this.$vuetify.theme.themes.light.primary}50`],
           opacity: 0.9,
           type: 'solid'
         },
@@ -132,7 +132,7 @@ export default {
         legend: {
           show: true,
           markers: {
-            fillColors: ['#002855', '#008ffb', '#feb019']
+            fillColors: [this.$vuetify.theme.themes.light.primary, `${this.$vuetify.theme.themes.light.primary}90`, `${this.$vuetify.theme.themes.light.primary}50`]
           }
         },
         ...this.options

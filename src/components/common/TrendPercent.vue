@@ -3,8 +3,8 @@
     <span v-if="value === 0">
       {{ value }}%
     </span>
-    <span v-else-if="value > 0" class="success--text">
-      <v-icon small color="success">mdi-arrow-top-right</v-icon> {{ value }}%
+    <span v-else-if="value > 0" :style="textColor">
+      <v-icon small :style="textColor">mdi-arrow-top-right</v-icon> {{ value }}%
     </span>
     <span v-else class="error--text">
       <v-icon small color="error">mdi-arrow-bottom-right</v-icon> {{ Math.abs(value) }}%
@@ -27,6 +27,15 @@ export default {
     value: {
       type: Number,
       default: 0
+    },
+    color: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    textColor() {
+      return this.color ? `color: ${this.color};` : 'color: #15aab1;'
     }
   }
 }

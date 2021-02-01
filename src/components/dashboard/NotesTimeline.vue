@@ -8,12 +8,12 @@
         <v-timeline-item
           v-for="(note, i) in notes"
           :key="i"
-          color="success"
+          color="primary lighten-2"
           :class="{ 'text-right': i % 2 }"
         >
           <template v-slot:opposite>
             <span
-              :class="`subtitle font-weight-bold secondary--text`"
+              :class="`subtitle font-weight-bold primary--text`"
             >{{ note.created_at | formatDate('PPpp') }}</span>
           </template>
           {{ note.note }}

@@ -1,7 +1,7 @@
 <template>
   <v-card class="d-flex flex-column flex-grow-1" light height="100%" min-height="220">
     <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
-      <v-progress-circular indeterminate color="secondary"></v-progress-circular>
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </div>
     <div v-else class="d-flex flex-column flex-grow-1">
       <v-card-title>
@@ -47,6 +47,7 @@ import TrendPercent from '../common/TrendPercent'
 | your own dashboard component
 |
 */
+
 export default {
   components: {
     TrendPercent
@@ -118,16 +119,7 @@ export default {
         },
         tooltip: {
           followCursor: true,
-          theme: 'dark' //this.$vuetify.theme.isDark ? 'light' : 'dark',
-          // custom: function({ ctx, series, seriesIndex, dataPointIndex, w }) {
-          //   const seriesName = w.config.series[seriesIndex].name
-          //   const dataPoint = w.config.series[seriesIndex].data[dataPointIndex]
-
-          //   return `<div class="rounded-lg pa-1 caption">
-          //     <div class="font-weight-bold">${formatDate(dataPoint[0])}</div>
-          //     <div>${dataPoint[1]} ${seriesName}</div>
-          //   </div>`
-          // }
+          theme: 'dark'
         },
         ...this.options
       }

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex primary flex-grow-1 darken-2 elevation-0" dark height="100%">
+  <v-card class="d-flex flex-grow-1 elevation-0 primary--text" height="100%">
 
     <!-- loading spinner -->
     <div v-if="loading" class="d-flex flex-grow-1 align-center justify-center">
@@ -7,11 +7,11 @@
     </div>
 
     <!-- information -->
-    <div v-else class="d-flex flex-column flex-grow-1">
+    <div v-else class="d-flex flex-column flex-grow-1" :style="cardStyle">
       <v-card-title>
         <div>Daily Production</div>
         <v-spacer></v-spacer>
-        <v-btn text color="secondary" @click="$emit('action-clicked')">{{ actionLabel }}</v-btn>
+        <v-btn text color="primary" @click="$emit('action-clicked')">{{ actionLabel }}</v-btn>
       </v-card-title>
 
       <div class="d-flex flex-column flex-grow-1">
@@ -20,7 +20,7 @@
             152
             <!-- {{ 58.49 | percentageLabel }} -->
           </div>
-          <div class="primary--text text--lighten-4 mt-1">
+          <div class="primary--text mt-1">
             <!-- {{ 1.04 | percentageLabel }} {{ $t('dashboard.lastweek') }} -->
             {{ 42 }} vs last week
           </div>
@@ -39,9 +39,9 @@
             <v-spacer></v-spacer>
             <div class="d-flex flex-column text-right">
               <div class="font-weight-bold">
-                <trend-percent :value="percentage" />
+                <trend-percent :color="$vuetify.theme.themes.light.primary" :value="percentage" />
               </div>
-              <div class="caption">{{ percentageLabel }}</div>
+              <div class="black--text caption">{{ percentageLabel }}</div>
             </div>
           </div>
         </div>
@@ -128,9 +128,7 @@ export default {
   },
   computed: {
     chartOptions() {
-      const primaryColor = this.$vuetify.theme.isDark
-        ? this.$vuetify.theme.themes.dark.secondary
-        : this.$vuetify.theme.themes.light.secondary
+      const primaryColor = this.$vuetify.theme.themes.light.primary
 
       return {
         chart: {
@@ -160,6 +158,9 @@ export default {
         },
         ...this.options
       }
+    },
+    cardStyle() {
+      return `background: ${this.$vuetify.theme.themes.light.primary}20`
     }
   }
 }

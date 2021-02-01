@@ -43,6 +43,9 @@ export default {
         chart: {
           type: 'radialBar'
         },
+        fill: {
+          colors: [this.$vuetify.theme.themes.light.primary]
+        },
         plotOptions: {
           radialBar: {
             startAngle: -90,

@@ -119,6 +119,7 @@ export default {
             show: false
           }
         },
+        colors: [this.$vuetify.theme.themes.light.primary],
         noData: {
           text: 'No Data From Devce'
         },

@@ -16,6 +16,8 @@
             v-bind="attrs"
             close
             small
+            color="primary lighten-2"
+            outlined
             @click:close="remove(item)"
           >
             {{ item }}
@@ -149,8 +151,9 @@ export default {
       // else if (item.status === 'Alarm') return 'green'
       // else if (item.status === 'Not') return 'red'
       // else return 'green'
-      if (item.status) return 'green'
-      else return 'red'
+      // if (item.status) return 'green'
+      // else return 'primary'
+      return 'primary'
     },
     getIcon(item) {
       // if (item.status === 'Warning') return 'mdi-alert'

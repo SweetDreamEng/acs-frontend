@@ -40,6 +40,7 @@
                     filter
                     outlined
                     value="active"
+                    color="primary lighten-2"
                     @click="filterDevices"
                   >
                     Active
@@ -48,6 +49,7 @@
                     filter
                     outlined
                     value="PLCLink"
+                    color="primary lighten-2"
                     @click="filterDevices"
                   >
                     PLC Link
@@ -56,6 +58,7 @@
                     filter
                     outlined
                     value="registered"
+                    color="primary lighten-2"
                     @click="filterDevices"
                   >
                     Registered

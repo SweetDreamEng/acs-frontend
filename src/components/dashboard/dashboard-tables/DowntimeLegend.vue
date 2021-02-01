@@ -6,7 +6,7 @@
       Unplanned
     </div>
     <div>
-      <v-icon class="ml-2 mr-0" color="#26e7a5">mdi-checkbox-blank</v-icon>
+      <v-icon class="ml-2 mr-0" :color="$vuetify.theme.themes.light.primary">mdi-checkbox-blank</v-icon>
       Planned
     </div>
     <div>

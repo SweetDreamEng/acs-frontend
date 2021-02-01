@@ -14,7 +14,7 @@
       </v-container>
     </v-sheet>
     <v-container fluid>
-      <div v-if="loadingDeviceConfig" class="d-flex flex-column flex-grow-1 align-center justify-center">
+      <div v-if="loadingDeviceConfig" class="d-flex flex-column flex-grow-1 align-center justify-center mt-6">
         <v-progress-circular indeterminate color="primary"></v-progress-circular>
         Loading configuration...
       </div>
@@ -186,7 +186,7 @@ export default {
           exact: true,
           to: `/dashboard/analytics/${this.$route.params.location}/${this.$route.params.zone}`
         }, {
-          text: this.deviceConfiguration.device_name,
+          text: this.deviceConfiguration.plcMachineName,
           disabled: true
         }
       ]
@@ -212,7 +212,7 @@ export default {
           exact: true,
           to: `/acs-machines/${this.$route.params.location}/${this.$route.params.zone}`
         }, {
-          text: this.deviceConfiguration.device_name,
+          text: this.deviceConfiguration.plcMachineName,
           disabled: true
         }
       ]

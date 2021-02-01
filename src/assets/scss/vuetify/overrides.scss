@@ -118,3 +118,8 @@
 .v-tab {
   max-width: 400px !important;
 }
+
+.v-breadcrumbs li:first-child .v-breadcrumbs__item {
+  color: var(--v-primary-base);
+  font-weight: bold;
+}

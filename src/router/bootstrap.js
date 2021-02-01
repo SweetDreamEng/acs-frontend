@@ -1,6 +1,6 @@
 import store from '../store'
+import storeSettings from '../store/settings'
 import api from '../api'
-import vuetify from '../plugins/vuetify'
 
 const elemLoading = document.getElementById('loading')
 
@@ -27,11 +27,7 @@ async function bootstrap() {
     }
   }
 
-  try {
-    await store.dispatch('settings/setInitialSetting')
-  } catch (error) {
-    console.log(error)
-  }
+  await store.dispatch('settings/setInitialSetting')
 
   store.commit('auth/BOOTSTRAP', {
     user,
