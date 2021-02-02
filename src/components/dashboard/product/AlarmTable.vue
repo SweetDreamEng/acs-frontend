@@ -65,16 +65,11 @@ export default {
         { text: 'Alarm', align: 'start', value: 'name' },
         { text: 'Alarm activated at', align: 'start', value: 'createdAt' },
         { text: '', value: 'data-table-expand' }
-      ],
-      showTimeRangeChooser: false,
-      expanded: []
+      ]
     }
   },
   computed: {
     ...mapState('alarms', ['dateFrom', 'dateTo', 'timeFrom', 'timeTo']),
-    ...mapGetters({
-      timeRangeLabel: 'alarms/timeRangeLabel'
-    }),
     tableItems() {
       return this.alarmTypes.filter((alarmType) => {
         const alarm = this.alarms.find((alarm) => alarm.type_id === alarmType.id)
@@ -84,10 +79,6 @@ export default {
     }
   },
   methods: {
-    onTimeRangeChanged(data) {
-      this.$emit('change', data)
-      this.showTimeRangeChooser = false
-    },
     alarmsOfType(type) {
       return this.alarms.filter((alarm) => {
         return alarm.typeId === type.id

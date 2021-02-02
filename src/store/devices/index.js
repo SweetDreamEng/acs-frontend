@@ -80,7 +80,11 @@ const module = {
 
         commit('SET_DEVICE_CONFIGURATION', response.data.configuration)
       } catch (error) {
-        console.log(error)
+        if (error.response.status === 404 && error.response.data.status === 'device_not_connected') {
+          commit('SET_ERROR', {
+            error: error.response.data
+          })
+        }
       } finally {
         commit('SET_LOADING_DEVICE_CONFIGURATION', false)
       }
@@ -371,9 +375,8 @@ const module = {
   },
 
   mutations: {
-    CLEAR_ERROR(state) {
-      state.error = null
-    },
+    SET_ERROR(state, error) { state.error = error },
+    CLEAR_ERROR(state) { state.error = null },
     SET_LOADING_TABLE_MACHINE_MAPPING(state, data) {
       state.loadingTableMachineMapping = data
     },

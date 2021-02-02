@@ -19,92 +19,103 @@
         Loading configuration...
       </div>
       <div v-else>
-        <v-tabs v-if="deviceConfiguration.isTcuConnected" v-model="tabModel">
-          <v-tab>{{ deviceConfiguration.plcMachineName }}</v-tab>
-          <v-tab>{{ deviceConfiguration.tcuMachineName }}</v-tab>
-        </v-tabs>
-        <v-tabs-items v-model="tabModel">
-          <v-tab-item>
-            <v-row class="flex-grow-0" dense>
-              <v-col cols="12">
-                <product-analytics
-                  :machine-id="deviceConfiguration.plcMachineId"
-                  :serial-number="parseInt(deviceConfiguration.plcSerialNumber)"
-                  :enabled-graphs="deviceConfiguration.plcEnabledAnalyticsGraphs"
-                  :graphs="deviceConfiguration.plcAnalyticsGraphs"
-                >
-                </product-analytics>
-              </v-col>
-              <v-col cols="12">
-                <alarm-table
-                  :loading="loadingAlarmsTable"
-                  :alarms="alarms"
-                  :alarm-types="alarmTypes"
-                  @change="_onAlarmParamChange"
-                >
-                </alarm-table>
-              </v-col>
-              <v-col cols="12">
-                <div class="display-1">Parameters & Points</div>
-                <product-parameters-chart
-                  :machine-id="deviceConfiguration.plcMachineId"
-                  :serial-number="parseInt(deviceConfiguration.plcSerialNumber)"
-                  :enabled-graphs="deviceConfiguration.plcEnabledPropertiesGraphs"
-                  :graphs="deviceConfiguration.plcPropertiesGraphs"
-                >
-                </product-parameters-chart>
-              </v-col>
-            </v-row>
-          </v-tab-item>
-          <v-tab-item>
-            <v-row class="flex-grow-0" dense>
-              <v-col cols="12">
-                <product-analytics
-                  :machine-id="11"
-                  :serial-number="parseInt(deviceConfiguration.tcuSerialNumber)"
-                  :enabled-graphs="deviceConfiguration.tcuEnabledAnalyticsGraphs"
-                  :graphs="deviceConfiguration.tcuAnalyticsGraphs"
-                >
-                </product-analytics>
-              </v-col>
-              <v-col cols="12">
-                <alarm-table
-                  :loading="loadingAlarmsTable"
-                  :alarms="alarms"
-                  :alarm-types="alarmTypes"
-                  @change="_onAlarmParamChange"
-                >
-                </alarm-table>
-              </v-col>
-              <v-col cols="12">
-                <div class="display-1">Parameters & Points</div>
-              </v-col>
-              <v-col cols="12">
-                <product-parameters-chart
-                  :machine-id="11"
-                  :serial-number="parseInt(deviceConfiguration.tcuSerialNumber)"
-                  :enabled-graphs="deviceConfiguration.tcuEnabledPropertiesGraphs"
-                  :graphs="deviceConfiguration.tcuPropertiesGraphs"
-                >
-                </product-parameters-chart>
-              </v-col>
-            </v-row>
-          </v-tab-item>
-        </v-tabs-items>
-        <v-row>
-          <v-col cols="12" md="5">
-            <note-form
-              :device-id="parseInt($route.params.productId)"
-            >
-            </note-form>
-          </v-col>
-          <v-col cols="12" md="7">
-            <notes-timeline
-              :notes="notes"
-            >
-            </notes-timeline>
-          </v-col>
-        </v-row>
+        <v-alert
+          v-if="error"
+          dense
+          outlined
+          type="error"
+          width="500"
+          class="mx-auto"
+          style="margin-top: 160px;"
+        >
+          Device <i class="font-weight-bold">{{ $route.params.productId }}</i> is not connected.
+        </v-alert>
+        <div v-else>
+          <v-tabs v-if="deviceConfiguration.isTcuConnected" v-model="tabModel">
+            <v-tab>{{ deviceConfiguration.plcMachineName }}</v-tab>
+            <v-tab>{{ deviceConfiguration.tcuMachineName }}</v-tab>
+          </v-tabs>
+          <v-tabs-items v-model="tabModel">
+            <v-tab-item>
+              <v-row class="flex-grow-0" dense>
+                <v-col cols="12">
+                  <product-analytics
+                    :machine-id="deviceConfiguration.plcMachineId"
+                    :serial-number="parseInt(deviceConfiguration.plcSerialNumber)"
+                    :enabled-graphs="deviceConfiguration.plcEnabledAnalyticsGraphs"
+                    :graphs="deviceConfiguration.plcAnalyticsGraphs"
+                  >
+                  </product-analytics>
+                </v-col>
+                <v-col cols="12">
+                  <alarm-table
+                    :loading="loadingAlarmsTable"
+                    :alarms="alarms"
+                    :alarm-types="alarmTypes"
+                  >
+                  </alarm-table>
+                </v-col>
+                <v-col cols="12">
+                  <div class="display-1">Parameters & Points</div>
+                  <product-parameters-chart
+                    :machine-id="deviceConfiguration.plcMachineId"
+                    :serial-number="parseInt(deviceConfiguration.plcSerialNumber)"
+                    :enabled-graphs="deviceConfiguration.plcEnabledPropertiesGraphs"
+                    :graphs="deviceConfiguration.plcPropertiesGraphs"
+                  >
+                  </product-parameters-chart>
+                </v-col>
+              </v-row>
+            </v-tab-item>
+            <v-tab-item>
+              <v-row class="flex-grow-0" dense>
+                <v-col cols="12">
+                  <product-analytics
+                    :machine-id="11"
+                    :serial-number="parseInt(deviceConfiguration.tcuSerialNumber)"
+                    :enabled-graphs="deviceConfiguration.tcuEnabledAnalyticsGraphs"
+                    :graphs="deviceConfiguration.tcuAnalyticsGraphs"
+                  >
+                  </product-analytics>
+                </v-col>
+                <v-col cols="12">
+                  <alarm-table
+                    :loading="loadingAlarmsTable"
+                    :alarms="alarms"
+                    :alarm-types="alarmTypes"
+                  >
+                  </alarm-table>
+                </v-col>
+                <v-col cols="12">
+                  <div class="display-1">Parameters & Points</div>
+                </v-col>
+                <v-col cols="12">
+                  <product-parameters-chart
+                    :machine-id="11"
+                    :serial-number="parseInt(deviceConfiguration.tcuSerialNumber)"
+                    :enabled-graphs="deviceConfiguration.tcuEnabledPropertiesGraphs"
+                    :graphs="deviceConfiguration.tcuPropertiesGraphs"
+                  >
+                  </product-parameters-chart>
+                </v-col>
+              </v-row>
+            </v-tab-item>
+          </v-tabs-items>
+          <v-row>
+            <v-col cols="12" md="5">
+              <note-form
+                :device-id="parseInt($route.params.productId)"
+              >
+              </note-form>
+            </v-col>
+            <v-col cols="12" md="7">
+              <notes-timeline
+                :notes="notes"
+              >
+              </notes-timeline>
+            </v-col>
+          </v-row>
+        </div>
       </div>
     </v-container>
   </div>
@@ -149,20 +160,14 @@ export default {
     }
   },
   computed: {
+    ...mapState('devices', ['loadingDeviceConfig', 'error', 'deviceConfiguration']),
     ...mapState({
-      loadingAlarmsTable: (state) => state.alarms.loadingAlarmsTable,
-      loadingDeviceConfig: (state) => state.devices.loadingDeviceConfig,
-      deviceConfiguration: (state) => state.devices.deviceConfiguration,
-      alarmTypes: (state) => state.alarms.alarmTypes,
-      alarms: (state) => state.alarms.alarms,
-      isLoading: (state) => state.machines.isNoteAdding,
       notes: (state) => state.notes.data,
-
-      enabledProperties: (state) => state.machines.enabledProperties,
-
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
+    ...mapState('alarms', ['loadingAlarmsTable', 'alarmTypes', 'alarms']),
+
     ...mapGetters({
       locationName: 'locations/locationName',
       zoneName: 'zones/zoneName',
@@ -219,20 +224,24 @@ export default {
     }
   },
 
-  mounted() {
-    this.getDeviceConfiguration(this.$route.params.productId)
+  async mounted() {
     if (this.canViewCompanies)
       this.initAcsDashboard()
     this.getLocations()
     this.getZones()
-    this.getProductAlarms(this.$route.params.productId)
-    this.getNotes(this.$route.params.productId)
 
-    this.$channel.bind('alarm.created', (data) => {
-      if (parseInt(this.$route.params.productId) === data.deviceId) {
-        this.onNewAlarms(data)
-      }
-    })
+    await this.getDeviceConfiguration(this.$route.params.productId)
+    
+    if (!this.error) {
+      this.getProductAlarms(this.$route.params.productId)
+      this.getNotes(this.$route.params.productId)
+      
+      this.$channel.bind('alarm.created', (data) => {
+        if (parseInt(this.$route.params.productId) === data.deviceId) {
+          this.onNewAlarms(data)
+        }
+      })
+    }
   },
 
   methods: {
@@ -241,28 +250,10 @@ export default {
       initAcsDashboard: 'machines/initAcsDashboard',
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
-      onAlarmParamChanged: 'alarms/onAlarmParamChanged',
       getProductAlarms: 'alarms/getProductAlarms',
       onNewAlarms: 'alarms/onNewAlarms',
-      getNotes: 'notes/getNotes',
-      getEnabledProperties: 'machines/getEnabledProperties',
-      updateEnabledProperties: 'machines/updateEnabledProperties'
-    }),
-    _onAlarmParamChange(params) {
-      this.onAlarmParamChanged(params)
-    },
-    remove (item, isAdditional) {
-      this.selectedParameters.splice(this.selectedParameters.indexOf(item), 1)
-      this.onEnabledPropertiesChanged(isAdditional)
-    },
-    onEnabledPropertiesChanged(isAdditional) {
-      if (!isAdditional) {
-        this.updateEnabledProperties({ id: this.$route.params.configurationId, isImportant: true, enabledProperties: this.selectedParameters.map((item) => item.id) })
-      } else {
-        this.updateEnabledProperties({ id: 11, isImportant: true, enabledProperties: this.selectedParametersForTcu.map((item) => item.id) })
-      }
-
-    }
+      getNotes: 'notes/getNotes'
+    })
   }
 }
 </script>
