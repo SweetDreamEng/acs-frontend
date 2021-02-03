@@ -239,12 +239,11 @@ export default {
     handleResetBtnClicked () {
       this.resetSettings().then(() => {
         this.setInitialSetting({}).then(() => {
-          this.$vuetify.theme.themes.light.primary = this.privateColors[0]
-          if (this.privateColors.length >= 2) {
-            this.$vuetify.theme.themes.light.accent = this.privateColors[1]
-            this.$vuetify.theme.themes.light.background = this.privateColors[2]
-          }
-          this.customizationColor = this.privateColors[0]
+          this.$vuetify.theme.themes.light.background = '#ffffff'
+          this.$vuetify.theme.themes.light.primary = '#092954'
+          this.$vuetify.theme.themes.light.secondary = '#508FF0'
+          this.$vuetify.theme.themes.light.accent = '#003066'
+          this.$vuetify.theme.themes.light.surface = '#f2f5f8'
         })
       })
     },
