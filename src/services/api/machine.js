@@ -21,8 +21,5 @@ export default {
   },
   getWeeklyRunningHours(id) {
     return api.get(`/analytics/weekly-running-hours/${id}`)
-  },
-  getEnabledProperties(payload) {
-    return api.get('/machines/enabled-properties')
   }
 }

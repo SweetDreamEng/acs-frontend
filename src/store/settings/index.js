@@ -18,16 +18,6 @@ const module = {
   },
 
   actions: {
-    async getAppSettings({ commit }) {
-      try {
-        const response = await settingAPI.appSettings()
-
-        commit('SET_APP_SETTINGS', response.data)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-
     async grabColors({
       commit
     }, url) {
