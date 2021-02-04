@@ -5,6 +5,7 @@
         <overview
           namespace="overview-id2"
           :product-id="parseInt(productId)"
+          :serial-number="serialNumber"
           :fetch="getOverview"
         >
         </overview>
@@ -93,6 +94,10 @@ export default {
     productId: {
       type: String,
       default: ''
+    },
+    serialNumber: {
+      type: Number,
+      default: 0
     },
     parameters: {
       type: Array,

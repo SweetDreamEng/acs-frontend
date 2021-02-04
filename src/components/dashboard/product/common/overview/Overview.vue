@@ -4,23 +4,38 @@
     :loading="isLoading"
     :disabled="isLoading"
   >
-    <v-card-title>{{ overview.customer_assigned_name }}</v-card-title>
-    <v-card-subtitle>
-      <div>{{ overview.name }}</div>
-      <div v-if="overview.configuration">{{ overview.configuration.name }}</div>
-    </v-card-subtitle>
-    <v-img
-      height="150"
-      contain
-      :src="machineImage"
-    ></v-img>
-    <v-card-text>
-      <div class="ml-2">
-        <div>PLC Software Version: <small>{{ overview.version }}</small></div>
-        <div>PLC Software Build: <small>{{ overview.software_build }}</small></div>
-        <div>Serial Number: <small>{{ overview.serial }}</small></div>
-      </div>
-    </v-card-text>
+    <template v-if="overview.machineId !== 11">
+      <v-card-title>{{ overview.customer_assigned_name }}</v-card-title>
+      <v-card-subtitle>
+        <div>{{ overview.name }}</div>
+        <div>{{ overview.machineName }}</div>
+      </v-card-subtitle>
+      <v-img
+        height="150"
+        contain
+        :src="machineImage"
+      ></v-img>
+      <v-card-text>
+        <div class="ml-2">
+          <div>PLC Software Version: <small>{{ overview.version }}</small></div>
+          <div>PLC Software Build: <small>{{ overview.software_build }}</small></div>
+          <div>Serial Number: <small>{{ overview.serial }}</small></div>
+        </div>
+      </v-card-text>
+    </template>
+    <template v-else>
+      <v-card-title>{{ overview.machineName }}</v-card-title>
+      <v-img
+        height="150"
+        contain
+        :src="machineImage"
+      ></v-img>
+      <v-card-text>
+        <div class="ml-2">
+          <div>PLC Software Version: <small>{{ overview.version }}</small></div>
+        </div>
+      </v-card-text>
+    </template>
   </v-card>
 </template>
 
@@ -43,13 +58,9 @@ export default {
       type: Number,
       default: 0
     },
-    machineId: {
+    serialNumber: {
       type: Number,
       default: 0
-    },
-    isAdditional: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -64,10 +75,7 @@ export default {
       return this.$store.state[this.namespace]['overview']
     },
     machineImage() {
-      if (this.overview.configuration)
-        return require(`../../../../../assets/imgs/${this.overview.configuration.id}.png`)
-      else
-        return ''
+      return this.overview.machineId ? require(`../../../../../assets/imgs/${this.overview.machineId}.png`) : ''
     }
   },
   created() {
@@ -77,9 +85,8 @@ export default {
   },
   mounted() {
     this.getOverview({
-      id: this.productId,
-      machineId: this.machineId,
-      isAdditional: this.isAdditional
+      productId: this.productId,
+      serialNumber: this.serialNumber
     })
   },
   methods: {

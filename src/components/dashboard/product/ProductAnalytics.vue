@@ -26,10 +26,11 @@
         </template>
       </v-combobox>
     </div>
-    <component 
+    <component
       :is="analyticsComponent()" 
       :product-id="$route.params.productId"
       :parameters="selectedGraphs.map((graph) => graph.graph_id)"
+      :serial-number="serialNumber"
     >
     </component>
   </div>
