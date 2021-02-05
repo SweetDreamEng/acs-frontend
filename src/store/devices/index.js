@@ -74,6 +74,7 @@ const module = {
     }, id) {
       commit('SET_LOADING_DEVICE_CONFIGURATION', true)
       commit('SET_DEVICE_CONFIGURATION', {})
+      commit('SET_ERROR', null)
 
       try {
         const response = await deviceAPI.getDeviceConfiguration(id)
