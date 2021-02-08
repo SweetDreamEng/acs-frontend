@@ -11,7 +11,7 @@ export default {
   *     })
   */
   grabColors(data) {
-    return api.post('/app-settings/grab-colors', data)
+    return api.$post('/app-settings/grab-colors', data)
   },
 
   /**
@@ -23,7 +23,7 @@ export default {
   *     applyWebsiteColors(colors)
   */
   applyWebsiteColors(data) {
-    return api.post('/app-settings/website-colors', data)
+    return api.$post('/app-settings/website-colors', data)
   },
 
   /**
@@ -34,7 +34,7 @@ export default {
   *     getSetting()
   */
   getSetting(data) {
-    return api.post('/app-settings/get-setting', data)
+    return api.$post('/app-settings/get-setting', data)
   },
 
   /**
@@ -45,7 +45,7 @@ export default {
   *     updateAuthBackground()
   */
   updateAuthBackground() {
-    return api.post('/app-settings/update-auth-background')
+    return api.$post('/app-settings/update-auth-background')
   },
 
   /**
@@ -59,7 +59,7 @@ export default {
   *     })
   */
   uploadLogo(data) {
-    return api.post('/app-settings/upload-logo', data)
+    return api.$post('/app-settings/upload-logo', data)
   },
 
   /**
@@ -70,6 +70,6 @@ export default {
   *     resetSettings()
   */
   resetSettings() {
-    return api.post('/app-settings/reset')
+    return api.$post('/app-settings/reset')
   }
 }

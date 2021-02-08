@@ -10,7 +10,7 @@ export default {
   *     getConfigurations()
   */
   getConfigurations() {
-    return api.get('/configurations')
+    return api.$get('/configurations')
   },
 
   /**
@@ -22,7 +22,7 @@ export default {
   *     getConfiguration(1)
   */
   getConfiguration(id) {
-    return api.get(`/configurations/${id}`)
+    return api.$get(`/configurations/${id}`)
   },
 
   /**
@@ -37,6 +37,6 @@ export default {
   *     })
   */
   saveConfiguration(configuration) {
-    return api.patch(`/configurations/${configuration.id}`, configuration)
+    return api.$patch(`/configurations/${configuration.id}`, configuration)
   }
 }

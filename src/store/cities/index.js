@@ -15,7 +15,7 @@ const module = {
         commit('SET_LOADING_CITIES', true)
         const response = await cityAPI.getCities(state)
 
-        commit('SET_DATA', response.data)
+        commit('SET_DATA', response)
       } catch (error) {
         console.log(error)
       }

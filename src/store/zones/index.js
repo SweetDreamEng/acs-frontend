@@ -18,7 +18,7 @@ const module = {
       try {
         const response = await zoneAPI.getZones()
 
-        commit('SET_DATA', response.data)
+        commit('SET_DATA', response)
       } catch (error) {
         console.log(error.response)
       } finally {

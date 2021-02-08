@@ -5,9 +5,9 @@ const initAcsDashboard = async ({ commit, state }) => {
   try {
     const response = await companyAPI.getCompanies()
 
-    commit('customers/SET_COMPANIES', response.data.companies, { root: true })
+    commit('customers/SET_COMPANIES', response.companies, { root: true })
     if (!state.selectedCompany) {
-      commit('SET_SELECTED_COMPANY', response.data.companies[0])
+      commit('SET_SELECTED_COMPANY', response.companies[0])
     }
   } catch (error) {
     console.log(error.response)
@@ -24,7 +24,7 @@ const getSystemStates = async ({ state, commit }, id) => {
   try {
     const response = await machineAPI.getSystemStates(id)
 
-    commit('SET_SYSTEM_STATES', response.data.machine_states)
+    commit('SET_SYSTEM_STATES', response.machine_states)
   } catch (error) {
     console.log(error)
   } finally {
@@ -37,7 +37,7 @@ const getWeeklyRunningHours = async ({ commit }, id) => {
   try {
     const response = await machineAPI.getWeeklyRunningHours(id)
 
-    commit('SET_WEEKLY_RUNNING_HOURS', response.data.hours)
+    commit('SET_WEEKLY_RUNNING_HOURS', response.hours)
   } catch (error) {
     console.log(error)
   } finally {
@@ -52,7 +52,7 @@ const initLocationsTable = async ({ commit }) => {
   try {
     const response = await machineAPI.initLocationsTable()
 
-    commit('locations/SET_DATA', response.data.locations, { root: true })
+    commit('locations/SET_DATA', response.locations, { root: true })
   } catch (error) {
     console.log(error)
   } finally {
@@ -67,7 +67,7 @@ const initZonesTable = async ({ commit }, location_id) => {
   try {
     const response = await machineAPI.initZonesTable(location_id)
 
-    commit('zones/SET_DATA', response.data.zones, { root: true })
+    commit('zones/SET_DATA', response.zones, { root: true })
   } catch (error) {
     console.log(error)
   } finally {
@@ -82,7 +82,7 @@ const initMachinesTable = async ({ commit }, zone) => {
   try {
     const response = await machineAPI.initMachinesTable(zone)
     
-    commit('devices/SET_DATA', response.data.devices, { root: true })
+    commit('devices/SET_DATA', response.devices, { root: true })
   } catch (error) {
     console.log(error)
   } finally {
@@ -96,9 +96,9 @@ const getDashboardMachinesTable = async ({ commit }, data) => {
   try {
     const response = await machineAPI.getDashboardMachinesTable(data)
 
-    commit('devices/SET_DATA', response.data.devices.data, { root: true })
-    commit('devices/SET_TOTAL_DEVICES', response.data.devices.total, { root: true })
-    commit('devices/SET_PAGE_COUNT', response.data.devices.last_page, { root: true })
+    commit('devices/SET_DATA', response.devices.data, { root: true })
+    commit('devices/SET_TOTAL_DEVICES', response.devices.total, { root: true })
+    commit('devices/SET_PAGE_COUNT', response.devices.last_page, { root: true })
   } catch (error) {
     console.log(error)
   } finally {

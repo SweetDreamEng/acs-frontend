@@ -9,7 +9,7 @@ export default {
   *     addUser(user)
   */
   addNote(data) {
-    return api.post('/notes', data)
+    return api.$post('/notes', data)
   },
 
   /**
@@ -21,6 +21,6 @@ export default {
   *     getNotes(2)
   */
   getNotes(device_id) {
-    return api.get(`/notes/${device_id}`)
+    return api.$get(`/notes/${device_id}`)
   }
 }

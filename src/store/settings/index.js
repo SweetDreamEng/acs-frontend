@@ -25,7 +25,7 @@ const module = {
       try {
         const response = await settingAPI.grabColors({ url })
 
-        commit('SET_COLORS', response.data.colors)
+        commit('SET_COLORS', response.colors)
       } catch (error) {
         console.log(error.response)
       } finally {
@@ -52,7 +52,7 @@ const module = {
       try {
         let response = await settingAPI.getSetting()
 
-        response = response.data.value
+        response = response.value
 
         // const private_colors = response.filter((data) => data.type.includes('private_color'))
 
@@ -114,7 +114,7 @@ const module = {
         vuetify.framework.theme.themes.light.accent = colors[3].color
         vuetify.framework.theme.themes.light.surface = colors[4].color
 
-        dispatch('app/showSuccess', response.data.message, { root: true })
+        dispatch('app/showSuccess', response.message, { root: true })
       } catch (error) {
         console.log(error.response)
       } finally {
@@ -131,7 +131,7 @@ const module = {
       try {
         const response = await settingAPI.uploadLogo(formData)
 
-        commit('SET_LOGO_FILE', response.data.filepath)
+        commit('SET_LOGO_FILE', response.filepath)
       } catch (error) {
         console.log(error.response)
       }
@@ -145,7 +145,7 @@ const module = {
       try {
         const response = await settingAPI.updateAuthBackground()
 
-        commit('SET_AUTH_BACKGROUND_FILE', response.data.filepath)
+        commit('SET_AUTH_BACKGROUND_FILE', response.filepath)
       } catch (error) {
         console.log('error', error)
       }

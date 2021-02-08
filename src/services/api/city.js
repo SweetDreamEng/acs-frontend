@@ -9,6 +9,6 @@ export default {
   *     getCities('Alabama')
   */
   getCities(state) {
-    return api.get('/cities/' + state)
+    return api.$get('/cities/' + state)
   }
 }

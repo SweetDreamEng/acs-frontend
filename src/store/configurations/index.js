@@ -17,7 +17,7 @@ const module = {
       try {
         const response = await configurationAPI.getConfigurations()
 
-        commit('SET_CONFIGURATIONS', response.data.configurations)
+        commit('SET_CONFIGURATIONS', response.configurations)
       } catch (error) {
         console.log(error)
       }
@@ -29,7 +29,7 @@ const module = {
       try {
         const response = await configurationAPI.getConfiguration(id)
 
-        commit('SET_CONFIGURATION', response.data.configuration)
+        commit('SET_CONFIGURATION', response.configuration)
       } catch (error) {
         console.log(error)
       }
@@ -41,7 +41,7 @@ const module = {
       try {
         const response = await configurationAPI.saveConfiguration(configuration)
 
-        dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
         console.log(error)
       }

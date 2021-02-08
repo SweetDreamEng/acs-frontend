@@ -9,7 +9,7 @@ export default {
   *     getZones()
   */
   getZones() {
-    return api.get('/zones')
+    return api.$get('/zones')
   },
 
   /**
@@ -24,7 +24,7 @@ export default {
   *     })
   */
   addZone(data) {
-  	return api.post('/zones', data)
+  	return api.$post('/zones', data)
   },
   
   /**
@@ -40,6 +40,6 @@ export default {
   *     })
   */
   updateZone(data) {
-    return api.patch(`/zones/${data.id}`, data)
+    return api.$patch(`/zones/${data.id}`, data)
   }
 }

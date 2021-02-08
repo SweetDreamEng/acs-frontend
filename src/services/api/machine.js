@@ -1,25 +1,25 @@
 import api from '@/api.js'
 export default {
   initLocationsTable() {
-    return api.get('/dashboard/init-locations-table')
+    return api.$get('/dashboard/init-locations-table')
   },
 
   initZonesTable(location_id) {
-    return api.get(`/dashboard/init-zones-table/${location_id}`)
+    return api.$get(`/dashboard/init-zones-table/${location_id}`)
   },
 
   initMachinesTable(zone_id) {
-    return api.get(`/dashboard/init-machines-table/${zone_id}`)
+    return api.$get(`/dashboard/init-machines-table/${zone_id}`)
   },
 
   getDashboardMachinesTable(data) {
-    return api.post('/dashboard/devices-for-dashboard-table', data)
+    return api.$post('/dashboard/devices-for-dashboard-table', data)
   },
 
   getSystemStates(data) {
-    return api.get(`/analytics/product-system-states/${id}`)
+    return api.$get(`/analytics/product-system-states/${id}`)
   },
   getWeeklyRunningHours(id) {
-    return api.get(`/analytics/weekly-running-hours/${id}`)
+    return api.$get(`/analytics/weekly-running-hours/${id}`)
   }
 }

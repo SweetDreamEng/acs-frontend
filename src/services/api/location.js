@@ -9,7 +9,7 @@ export default {
   *     getLocations()
   */
   getLocations() {
-    return api.get('/locations')
+    return api.$get('/locations')
   },
 
   /**
@@ -26,7 +26,7 @@ export default {
   *     })
   */
   addLocation(data) {
-  	return api.post('/locations', data)
+  	return api.$post('/locations', data)
   },
 
   /**
@@ -45,6 +45,6 @@ export default {
   *     })
   */
   updateLocation(data) {
-    return api.patch(`/locations/${data.id}`, data)
+    return api.$patch(`/locations/${data.id}`, data)
   }
 }
