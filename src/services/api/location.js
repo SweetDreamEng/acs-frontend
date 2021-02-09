@@ -15,7 +15,11 @@ export default {
   /**
   * Add a new customer location
   *
-  * @param {Object} new location object
+  * @param {Object} data New location object
+  * @param {string} data.name Location name
+  * @param {string} data.state State state
+  * @param {string} data.city City name
+  * @param {string} data.zip Zip code
   * @example
   *
   *     addLocation({
@@ -32,7 +36,12 @@ export default {
   /**
   * Update a customer location
   *
-  * @param {Object} user object
+  * @param {Object} data Location data
+  * @param {number} data.id The id of location
+  * @param {string} data.name Location name
+  * @param {string} data.state State state
+  * @param {string} data.city City name
+  * @param {string} data.zip Zip code
   * @example
   *
   *     updateLocation({

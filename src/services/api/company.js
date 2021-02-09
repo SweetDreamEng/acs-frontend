@@ -28,7 +28,16 @@ export default {
   * Add a new customer and/or company
   * The company can be a new or an existing one 
   *
-  * @param {Object} user object for a new user
+  * @param {Object} data object for a new user
+  * @param {string} data.company_name The name of company
+  * @param {string} data.administrator_name The name of administrator
+  * @param {string} data.administrator_email The email of administrator
+  * @param {string} data.address_1 The address
+  * @param {string} data.zip The zip code
+  * @param {string} data.state The name of state
+  * @param {string} data.city The name of city
+  * @param {string} data.country The name of country
+  * @param {string} data.phone The phone number
   * @example
   *
   *     addCustomer({
@@ -57,7 +66,7 @@ export default {
   /**
   * Get customer user and his company
   *
-  * @param {number}
+  * @param {number} id The id of customer
   * @example
   *
   *     getCustomer(2)
@@ -69,7 +78,11 @@ export default {
   /**
   * Update an existing company/customer account info
   *
-  * @param {Object}
+  * @param {Object} accountInfo object data for account
+  * @param {string} accountInfo.id The id of account
+  * @param {string} accountInfo.name The name of company
+  * @param {string} accountInfo.administrator_name The name of administrator
+  * @param {string} accountInfo.administrator_email The email of administrator
   * @example
   *
   *     updateAccount({
@@ -78,7 +91,6 @@ export default {
   *       administrator_email: 'almesri@machinecdn.com'
   *     })
   */
-  
   updateAccount(accountInfo) {
     return api.post(`/customers/update-account/${accountInfo.id}`, {
       name: accountInfo.companyName,
@@ -90,7 +102,15 @@ export default {
   /**
   * Update an existing customer profile info
   *
-  * @param {Object}
+  * @param {Object} data object data for new profile
+  * @param {string} data.id The id of profile
+  * @param {string} data.address_1 The address of customer
+  * @param {string} data.address_2 The address of customer
+  * @param {string} data.zip The zip code of customer
+  * @param {string} data.state The state name of customer
+  * @param {string} data.city The city name of customer
+  * @param {string} data.country The country name of customer
+  * @param {string} data.phone The phone number of customer
   * @example
   *
   *     updateProfile({

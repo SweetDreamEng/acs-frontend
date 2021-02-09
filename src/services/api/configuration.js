@@ -16,7 +16,7 @@ export default {
   /**
   * Get existing configuration
   *
-  * @param {number}
+  * @param {number} id The configuration id
   * @example
   *
   *     getConfiguration(1)
@@ -28,7 +28,9 @@ export default {
   /**
   * Update a configuration - mainly name and full json
   *
-  * @param {Object} configuration object
+  * @param {Object} configuration Configuration object
+  * @param {string} configuration.name Configuration name
+  * @param {string} configuration.new_json Json data for Configuration
   * @example
   *
   *     saveConfiguration({

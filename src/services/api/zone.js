@@ -15,7 +15,9 @@ export default {
   /**
   * Add a new customer zone
   *
-  * @param {Object} new zone object
+  * @param {Object} data New zone object
+  * @param {string} data.name The name of zone
+  * @param {number} data.location_id The id of location
   * @example
   *
   *     addZone({
@@ -30,7 +32,10 @@ export default {
   /**
   * Update a customer zone
   *
-  * @param {Object} zone object
+  * @param {Object} data Zone object
+  * @param {number} data.id Location id
+  * @param {name} data.name Zone name
+  * @param {number} data.location_id The location id
   * @example
   *
   *     updateLocation({

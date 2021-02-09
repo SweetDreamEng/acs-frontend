@@ -15,7 +15,7 @@ export default {
   /**
   * Get existing user to edit page
   *
-  * @param {number}
+  * @param {number} id The id of user
   * @example
   *
   *     openEditUser(2)

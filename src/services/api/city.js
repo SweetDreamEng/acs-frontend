@@ -3,7 +3,7 @@ export default {
   /**
   * Get cities of a state
   *
-  * @param {}
+  * @param {string} state The name of state
   * @example
   *
   *     getCities('Alabama')
