@@ -75,7 +75,7 @@ export default {
       return this.$store.state[this.namespace]['overview']
     },
     machineImage() {
-      return this.overview.machineId ? require(`../../../../../assets/imgs/${this.overview.machineId}.png`) : ''
+      return this.overview.machineId ? require(`@/assets/imgs/${this.overview.machineId}.png`) : ''
     }
   },
   created() {

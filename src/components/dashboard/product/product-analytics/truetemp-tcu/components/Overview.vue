@@ -42,7 +42,7 @@ export default {
   computed: {
     machineImage() {
       if (this.overview.configuration)
-        return require(`../../../../../../assets/imgs/${this.overview.configuration.id}.png`)
+        return require(`@/assets/imgs/${this.overview.configuration.id}.png`)
       else
         return ''
     }

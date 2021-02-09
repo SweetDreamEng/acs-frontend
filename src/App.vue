@@ -74,13 +74,7 @@ export default {
         return (this.$route.meta.layout || 'default') + 'Layout'
       }
     }
-  },
-  head: {
-    link: [
-      // adds config/icons into the html head tag
-      ...config.icons.map((href) => ({ rel: 'stylesheet', href }))
-    ]
-  }  
+  }
 }
 </script>
 

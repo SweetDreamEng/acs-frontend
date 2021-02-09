@@ -3,7 +3,7 @@ export default {
   /**
   * Query SIM Status
   *
-  * @param {string} device iccid
+  * @param {string} iccid Device iccid
   * @example
   *
   *     querySIM('8901260882276399075')
@@ -15,7 +15,7 @@ export default {
   /**
   * Suspend SIM Status
   *
-  * @param {string} device iccid
+  * @param {string} iccid Device iccid
   * @example
   *
   *     suspendSIM('8901260882276399075')
@@ -27,7 +27,7 @@ export default {
   /**
   * Get remote webui url
   *
-  * @param {string} device_id
+  * @param {string} device_id The id of device
   * @example
   *
   *     remoteWeb(221881)
@@ -39,7 +39,7 @@ export default {
   /**
   * Get remote cli url
   *
-  * @param {string} device_id
+  * @param {string} device_id The id of device
   * @example
   *
   *     remoteCli(221881)
@@ -51,7 +51,9 @@ export default {
   /**
   * Get devices in customer assign page
   *
-  * @param {Object} filterForm
+  * @param {Object} filterForm The filter data
+  * @param {string[]} filterForm.filters The filter array
+  * @param {string} filterForm.searchQuery
   * @param {number} page for pagination
   * @example
   *
@@ -75,7 +77,7 @@ export default {
   /**
   * Get device configuration
   *
-  * @param {number} device serial number
+  * @param {number} serial_number Device serial number
   * @example
   *
   *     getDeviceConfiguration(1106550521)
@@ -98,7 +100,9 @@ export default {
   /**
   * Register device and simulate iothub message to device
   *
-  * @param {Object} form object
+  * @param {Object} data object
+  * @param {bool} data.register Value deciding if registered
+  * @param {number} data.device_id The id of device
   * @example
   *
   *     updateRegistered({
@@ -113,7 +117,9 @@ export default {
   /**
   * Simulate device configuration from iot hub to device
   *
-  * @param {Object} form object
+  * @param {Object} data object
+  * @param {string} data.device_id Device id
+  * @param {Object} data.device_configuration_form The configuration data
   * @example
   *
   *     submitDeviceConfig({
@@ -141,7 +147,11 @@ export default {
   /**
   * Assign device configuration and customer in customer assign page
   *
-  * @param {Object} form object
+  * @param {Object} data Data for device assign
+  * @param {string} data.device_id The id of device
+  * @param {string} data.company_id The id of company
+  * @param {string} data.machine_id The id of machine
+  * @param {string} data.plc_ip Plc ip
   * @example
   *
   *     deviceAssigned({
@@ -195,7 +205,9 @@ export default {
   /**
   * Get devices with analytics for machines table in dashboard
   *
-  * @param {Object} form object
+  * @param {Object} data object
+  * @param {number} data.location_id string
+  * @param {number} data.itemsPerPage The limit num per page
   * @example
   *
   *     getDevicesAnalytics({
@@ -210,7 +222,10 @@ export default {
   /**
   * Update enabled properties for user in product page
   *
-  * @param {Object} form object
+  * @param {Object} payload Update data
+  * @param {string} payload.serial_number The serial number
+  * @param {bool} payload.isImportant The value to decide if important data
+  * @param {number[]} payload.enabled_properties Array of enable properties
   * @example
   *
   *     updateEnabledProperties({
@@ -226,7 +241,9 @@ export default {
   /**
   * Assing zone to the device in machine mapping page
   *
-  * @param {Object} form object
+  * @param {Object} data object
+  * @param {string} data.customer_assigned_name The name of customer
+  * @param {number} data.id Zone id
   * @example
   *
   *     assignZoneToDevice({
