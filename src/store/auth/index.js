@@ -270,7 +270,9 @@ const module = {
   },
   getters: {
     roleName: (state) => (role_key) => {
-      return state.roles.find((role) => role.key === role_key).name
+      const currentRole = state.roles.find((role) => role.key === role_key)
+
+      return currentRole ? currentRole.name : ''
     },
     canCreateAcsUser: (state) => state.user.role === 'acs_admin',
     canCreateCompanies: (state) => ['acs_admin', 'acs_manager'].includes(state.user.role),
