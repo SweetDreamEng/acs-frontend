@@ -79,8 +79,8 @@ const module = {
       try {
         const response = await alarmAPI.getProductAlarms(productId)
 
-        commit('SET_ALARMS', response.data.alarms)
-        commit('SET_ALARM_TYPES', response.data.alarm_types)
+        commit('SET_ALARMS', response.alarms)
+        commit('SET_ALARM_TYPES', response.alarm_types)
       } catch (error) {
         console.log(error)
       }
@@ -112,7 +112,7 @@ const module = {
       try {
         const response = await alarmAPI.getAlarmsByMachine()
 
-        commit('SET_ALARMS_PER_MACHINE', response.data.devices)
+        commit('SET_ALARMS_PER_MACHINE', response.devices)
       } catch (error) {
         console.log(error)
       }
@@ -126,7 +126,7 @@ const module = {
       try {
         const response = await alarmAPI.getAlarms(data)
 
-        commit('SET_ALARMS', response.data.alarms)
+        commit('SET_ALARMS', response.alarms)
         commit('ALARMS_LOADED')
       } catch (error) {
         console.log(error)
@@ -137,7 +137,7 @@ const module = {
       try {
         const response = await alarmAPI.getCorrespondingAlarmTypes(machine_id)
 
-        commit('SET_ALARM_TYPES', response.data.alarm_types)
+        commit('SET_ALARM_TYPES', response.alarm_types)
       } catch (error) {
         console.log(error)
       }
@@ -147,7 +147,7 @@ const module = {
       try {
         const response = await alarmAPI.getAlarmsByCompanyId(company_id)
 
-        commit('SET_ALARMS', response.data.alarms)
+        commit('SET_ALARMS', response.alarms)
       } catch (error) {
         console.log(error)
       }
@@ -157,7 +157,7 @@ const module = {
       try {
         const response = await alarmAPI.getSeverityByCompanyId(data)
 
-        commit('SET_SEVERITY', response.data.severity)
+        commit('SET_SEVERITY', response.severity)
       } catch (error) {
         console.log(error)
       }
@@ -176,7 +176,7 @@ const module = {
       try {
         const response = await alarmAPI.getAlarmsPerTypeByMachine(data)
 
-        commit('SET_ALARMS_PER_TYPE', response.data.alarms)
+        commit('SET_ALARMS_PER_TYPE', response.alarms)
       } catch (error) {
         console.log(error)
       }
@@ -195,7 +195,7 @@ const module = {
       try {
         const response = await alarmAPI.getAlarmsDistributionByMachine(data)
 
-        commit('SET_ALARMS_DISTRIBUTION', response.data.results)
+        commit('SET_ALARMS_DISTRIBUTION', response.results)
       } catch (error) {
         console.log(error)
       }
@@ -205,7 +205,7 @@ const module = {
       try {
         const response = await alarmAPI.getAlarmsAmountPerMachineByCompanyId(data)
         
-        commit('SET_ALARMS_AMOUNT_PER_MACHINE', response.data.results)
+        commit('SET_ALARMS_AMOUNT_PER_MACHINE', response.results)
       } catch (error) {
         console.log(error)
       }

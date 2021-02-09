@@ -12,7 +12,7 @@ const module = {
       try {
         const response = await noteAPI.getNotes(product_id)
 
-        commit('SET_DATA', response.data.notes)
+        commit('SET_DATA', response.notes)
       } catch (error) {
         console.log(error)
       }
@@ -24,7 +24,7 @@ const module = {
       try {
         const response = await noteAPI.addNote(data)
 
-        commit('SET_DATA', response.data.notes)
+        commit('SET_DATA', response.notes)
       } catch (error) {
         console.log(error)
       } finally {

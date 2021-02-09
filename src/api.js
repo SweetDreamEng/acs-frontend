@@ -6,7 +6,7 @@ import router from './router'
 const API = axios.create({
   baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
   // baseURL: 'http://localhost/acs-api/public/api',
-  timeout: 5000
+  timeout: 50000
 })
 
 API.interceptors.request.use(async (config) => {
@@ -40,5 +40,10 @@ API.interceptors.response.use((response) => {
     return Promise.reject(error)
   }
 })
+
+// Request helpers ($get, $post, ...) to retrieve data directly
+for (const method of ['request', 'delete', 'get', 'head', 'options', 'post', 'put', 'patch']) {
+  API['$' + method] = (...args) => (API[method](...args).then((res) => (res && res.data)))
+}
 
 export default API
