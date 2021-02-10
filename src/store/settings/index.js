@@ -6,7 +6,7 @@ const module = {
   state: {
     private_colors: null,
     colors: [],
-
+    basicColors: {},
     error: null,
     loading: true,
     button_loading: null,
@@ -71,6 +71,14 @@ const module = {
         const accentColor = response.find((colorItem) => colorItem.type === 'color_accent')
         const surfaceColor = response.find((colorItem) => colorItem.type === 'color_surface')
         const backgroundColor = response.find((colorItem) => colorItem.type === 'color_background')
+
+        commit('SET_COLOR_SETTINGS', {
+          'color_primary': primaryColor ? primaryColor.value : '#ffffff',
+          'color_secondary': secondaryColor ? secondaryColor.value : '#ffffff',
+          'color_accent': accentColor ? accentColor.value : '#ffffff',
+          'color_surface': surfaceColor ? surfaceColor.value : '#ffffff',
+          'color_background': backgroundColor ? backgroundColor.value : '#ffffff'
+        })
 
         vuetify.framework.theme.themes.light.background = backgroundColor ? backgroundColor.value : '#ffffff'
         vuetify.framework.theme.themes.light.primary = primaryColor ? primaryColor.value : '#ffffff'
@@ -169,6 +177,9 @@ const module = {
     },
     SET_PRIVATE_COLORS(state, private_colors) {
       state.private_colors = private_colors
+    },
+    SET_COLOR_SETTINGS(state, colors) {
+      state.basicColors = colors
     },
     SET_LOGO_FILE(state, filepath) {
       state.logo_file = filepath
