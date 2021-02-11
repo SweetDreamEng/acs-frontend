@@ -16,7 +16,16 @@
           {{ header.text }}
         </template>
         <template v-slot:item.customer_assigned_name="{ item }">
-          <span class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
+          <span v-if="item.running" class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
+          <v-badge
+            v-else
+            bordered
+            color="error"
+            icon="mdi-lan-disconnect"
+            overlap
+          >
+            <span class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
+          </v-badge>
         </template>
         <template v-slot:item.rate="{ item }">
           <production-rate-chart
