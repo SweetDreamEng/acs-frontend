@@ -16,7 +16,7 @@
           {{ header.text }}
         </template>
         <template v-slot:item.customer_assigned_name="{ item }">
-          <span v-if="item.running" class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
+          <span v-if="item.connected" class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
           <v-badge
             v-else
             bordered
