@@ -41,4 +41,8 @@ API.interceptors.response.use((response) => {
   }
 })
 
+// Request helpers ($get, $post, ...) to retrieve data directly
+for (const method of ['request', 'delete', 'get', 'head', 'options', 'post', 'put', 'patch']) {
+  API['$' + method] = (...args) => (API[method](...args).then((res) => (res && res.data)))
+}
 export default API
