@@ -32,7 +32,7 @@
         :items="devices"
         :search="searchQuery"
         :loading="loadingDashboardDevicesTable"
-        :items-per-page="5"
+        :items-per-page="20"
         :page.sync="page"
         class="link-table"
         hide-default-footer
@@ -61,16 +61,7 @@
 
         <!-- -->
         <template v-slot:item.status="{ item }">
-          <v-icon v-if="item.status" :color="getColor(item)" v-bind:style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
-          <v-badge
-            v-else
-            bordered
-            color="error"
-            icon="mdi-lan-disconnect"
-            overlap
-          >
-            <v-icon :color="getColor(item)" v-bind:style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
-          </v-badge>
+          <v-icon :color="getColor(item)" v-bind:style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
         </template>
         <template v-slot:item.location_id="{ item }">
           {{ locationName(item.location_id) }}
@@ -147,7 +138,8 @@ export default {
   mounted() {
     this.getDevicesAnalytics({
       page: this.page,
-      location_id: this.location
+      location_id: this.location,
+      itemsPerPage: 20
     })
   },
   methods: {
@@ -162,7 +154,9 @@ export default {
       // else return 'green'
       // if (item.status) return 'green'
       // else return 'primary'
-      return 'primary'
+      if (item.status) return 'primary'
+      else if (!item.teltonika_configuration) return 'error'
+      else return 'warning'
     },
     getIcon(item) {
       // if (item.status === 'Warning') return 'mdi-alert'
@@ -170,6 +164,7 @@ export default {
       // else if (item.status === 'Not') return 'mdi-bell-circle'
       // else return 'mdi-check-circle-outline'
       if (item.status) return 'mdi-check-circle-outline'
+      else if (!item.teltonika_configuration) return 'mdi-lan-disconnect'
       else return 'mdi-bell-circle'
     },
     productView(item) {
