@@ -185,11 +185,15 @@ export default {
       logoFile: (state) => state.settings.logo_file,
       colors: (state) => state.settings.colors,
       privateColors: (state) => state.settings.private_colors,
+      basicColors: (state) => state.settings.basicColors,
       buttonLoading: (state) => state.settings.button_loading
     }),
     logoFilePath() {
       return this.logoFile ? this.logoFile : require('../../assets/imgs/logo-aec.png')
     }
+  },
+  mounted() {
+    this.setBasicColors()
   },
   methods: {
     ...mapActions({
@@ -272,6 +276,13 @@ export default {
     },
     handleDragover(item) {
       this.selectedItem = item
+    },
+    setBasicColors() {
+      this.colorSettings.map((item) => {
+        if (this.basicColors[item.key]) {
+          item.color = this.basicColors[item.key]
+        }
+      })
     }
   }
 }

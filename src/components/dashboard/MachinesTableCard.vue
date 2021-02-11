@@ -42,7 +42,7 @@
           <v-icon color="primary">mdi-chevron-double-right</v-icon>
           {{ header.text }}
         </template>
-        <template v-slot:header.machinename="{ header }">
+        <template v-slot:header.name="{ header }">
           <v-icon small color="primary">mdi-wrench</v-icon>
           {{ header.text }}
         </template>
@@ -54,14 +54,23 @@
           <v-icon class="mdi-rotate-90" color="primary">mdi-battery-30</v-icon>
           {{ header.text }}
         </template>
-        <template v-slot:header.department="{ header }">
+        <template v-slot:header.location_id="{ header }">
           <v-icon small color="primary">mdi-factory</v-icon>
           {{ header.text }}
         </template>
 
         <!-- -->
         <template v-slot:item.status="{ item }">
-          <v-icon :color="getColor(item)">{{ getIcon(item) }}</v-icon>
+          <v-icon v-if="item.status" :color="getColor(item)" v-bind:style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
+          <v-badge
+            v-else
+            bordered
+            color="error"
+            icon="mdi-lan-disconnect"
+            overlap
+          >
+            <v-icon :color="getColor(item)" v-bind:style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
+          </v-badge>
         </template>
         <template v-slot:item.location_id="{ item }">
           {{ locationName(item.location_id) }}
