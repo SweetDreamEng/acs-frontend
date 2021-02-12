@@ -136,8 +136,8 @@ export default {
       }],
       pieSeries: [231.225, 529.313, 526.458],
       pieHours: [2000, 1600, 200],
-      categories: null,
-      selectedMachineName: null
+      categories: [],
+      selectedMachineName: ''
     }
   },
   computed: {

@@ -5,12 +5,12 @@ const initAcsDashboard = async ({ commit, state }) => {
   try {
     const response = await companyAPI.getCompanies()
 
-    commit('customers/SET_COMPANIES', response.companies, { root: true })
+    commit('customers/SET_COMPANIES', response.data.companies, { root: true })
     if (!state.selectedCompany) {
-      commit('SET_SELECTED_COMPANY', response.companies[0])
+      commit('SET_SELECTED_COMPANY', response.data.companies[0])
     }
   } catch (error) {
-    console.log(error.response)
+    console.log(error)
   }
 }
 
