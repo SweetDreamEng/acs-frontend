@@ -19,7 +19,7 @@
               class="font-weight-bold"
             >Pump Status</span>
           </v-col>
-          <v-col class="d-flex body-2">
+          <v-col class="d-flex text-body-2">
             <v-icon
               small
               left
@@ -42,7 +42,7 @@
               class="font-weight-bold"
             >Heater Status</span>
           </v-col>
-          <v-col class="d-flex body-2">
+          <v-col class="d-flex text-body-2">
             <v-icon
               small
               left
@@ -65,7 +65,7 @@
               class="font-weight-bold"
             >Vent Status</span>
           </v-col>
-          <v-col class="d-flex body-2">
+          <v-col class="d-flex text-body-2">
             <v-icon
               small
               left

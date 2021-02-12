@@ -4,7 +4,6 @@ export default {
   * Get all configurations
   * Each configuration has full json
   *
-  * @param {}
   * @example
   *
   *     getConfigurations()
@@ -29,6 +28,7 @@ export default {
   * Update a configuration - mainly name and full json
   *
   * @param {Object} configuration Configuration object
+  * @param {string} configuration.id Configuration id
   * @param {string} configuration.name Configuration name
   * @param {string} configuration.new_json Json data for Configuration
   * @example

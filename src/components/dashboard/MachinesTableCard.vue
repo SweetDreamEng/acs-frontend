@@ -61,7 +61,7 @@
 
         <!-- -->
         <template v-slot:item.status="{ item }">
-          <v-icon v-if="item.status" :color="getColor(item)" v-bind:style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
+          <v-icon v-if="item.status" :color="getColor(item)" :style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
           <v-badge
             v-else
             bordered
@@ -69,7 +69,7 @@
             icon="mdi-lan-disconnect"
             overlap
           >
-            <v-icon :color="getColor(item)" v-bind:style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
+            <v-icon :color="getColor(item)" :style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
           </v-badge>
         </template>
         <template v-slot:item.location_id="{ item }">

@@ -2,7 +2,7 @@
   <div class="d-flex flex-column flex-grow-1">
     <div class="d-flex align-center py-3">
       <div>
-        <div class="display-1">Threshold</div>
+        <div class="text-h4">Threshold</div>
       </div>
     </div>
     <v-card>
@@ -130,7 +130,7 @@
               </v-form>
             </v-tab-item>
           </v-tabs-items>
-          
+
           <v-btn color="primary mt-2">
             Submit
           </v-btn>

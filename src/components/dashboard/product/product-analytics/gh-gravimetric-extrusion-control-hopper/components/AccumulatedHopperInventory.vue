@@ -3,7 +3,7 @@
     <v-card-title>
       <div>
         <div>Accumulated Hopper Inventory</div>
-        <div class="caption font-italic">({{ timeRangeLabel }})</div>
+        <div class="text-caption font-italic">({{ timeRangeLabel }})</div>
       </div>
       <v-btn
         icon

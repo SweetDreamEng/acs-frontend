@@ -2,7 +2,7 @@
   <div>
     <v-row dense>
       <v-col cols="12" md="4">
-<!--         <area-graph
+        <!--         <area-graph
           title="Blender Capability"
           unit-string="kgs/hr"
           :loading="loadingBlenderCapabilities"

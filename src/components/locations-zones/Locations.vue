@@ -18,7 +18,7 @@
         </template>
         <v-card>
           <v-card-title class="primary white--text">
-            <span class="headline">{{ editTitle }}</span>
+            <span class="text-h5">{{ editTitle }}</span>
           </v-card-title>
 
           <v-card-text class="mt-4">

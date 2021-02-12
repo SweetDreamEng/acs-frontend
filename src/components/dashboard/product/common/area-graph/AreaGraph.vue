@@ -7,8 +7,8 @@
     <v-card-title>
       <div>
         <div>{{ title }}</div>
-        <div class="caption font-italic">({{ timeRangeLabel(timeRange) }})</div>
-        <!-- <div class="caption font-italic">(timeRangeLabel)</div> -->
+        <div class="text-caption font-italic">({{ timeRangeLabel(timeRange) }})</div>
+        <!-- <div class="text-caption font-italic">(timeRangeLabel)</div> -->
       </div>
       <v-btn
         icon
@@ -98,7 +98,7 @@ export default {
       return this.$store.state[this.namespace]['timeRange']
     },
     series() {
-      if (this.names.length) 
+      if (this.names.length)
         return this.names.map((name, index) => {
           return {
             name,

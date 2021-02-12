@@ -17,7 +17,7 @@
               <div class="font-weight-bold">
                 <trend-percent :value="percentage" />
               </div>
-              <div class="caption">{{ percentageLabel }}</div>
+              <div class="text-caption">{{ percentageLabel }}</div>
             </div>
           </div>
         </div>

@@ -21,7 +21,7 @@
                 color="primary"
                 size="68"
               >
-                <span class="white--text headline">{{ user.name | initials }}</span>
+                <span class="white--text text-h5">{{ user.name | initials }}</span>
               </v-avatar>
             </div>
             <v-form
@@ -169,7 +169,7 @@
         </v-expansion-panel>
         <v-expansion-panel>
           <v-expansion-panel-header class="title">Metadata</v-expansion-panel-header>
-          <v-expansion-panel-content class="body-2">
+          <v-expansion-panel-content class="text-body-2">
             <span class="font-weight-bold">Created</span>
             {{ user.created | formatDate('yyyy-MM-dd') }}
             <br />
@@ -183,7 +183,7 @@
     <!-- disable modal -->
     <v-dialog v-model="disableDialog" max-width="290">
       <v-card>
-        <v-card-title class="headline">Disable User</v-card-title>
+        <v-card-title class="text-h5">Disable User</v-card-title>
         <v-card-text>Are you sure you want to disable this user?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -196,7 +196,7 @@
     <!-- delete modal -->
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
-        <v-card-title class="headline">Delete User</v-card-title>
+        <v-card-title class="text-h5">Delete User</v-card-title>
         <v-card-text>Are you sure you want to delete this user?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

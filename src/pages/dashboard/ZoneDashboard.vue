@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="surface2" class="my-n8 py-8">
+    <v-sheet color="surface2" class="my-n8 pt-8 py-7">
       <v-container class="pb-0">
         <div v-if="$route.name === 'zone-acs-dashboard'" class="d-flex mt-2 align-center">
           <v-breadcrumbs :items="acsBreadcrumbItems"></v-breadcrumbs>

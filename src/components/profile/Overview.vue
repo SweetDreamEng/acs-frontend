@@ -6,7 +6,7 @@
           color="primary"
           size="88"
         >
-          <span class="display-1 white--text">{{ user.username | initials }}</span>
+          <span class="text-h4 white--text">{{ user.username | initials }}</span>
         </v-avatar>
       </v-avatar>
       <h2 class="my-2 primary--text">{{ user.username }}</h2>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card class="pa-1">
-      <v-card-title class="justify-center display-1 mb-2">Welcome</v-card-title>
+      <v-card-title class="justify-center text-h4 mb-2">Welcome</v-card-title>
       <v-card-subtitle>Sign in to your account</v-card-subtitle>
 
       <!-- sign in form -->

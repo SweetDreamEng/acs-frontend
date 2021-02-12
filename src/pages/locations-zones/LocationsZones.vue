@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
-    <div class="display-1 mt-2">Location/Zones</div>
+    <div class="text-h4 mt-2">Location/Zones</div>
     <locations :locations="locations"></locations>
-    
+
     <v-card class="mt-2">
       <v-card-title>
         Zones
@@ -22,7 +22,7 @@
           </template>
           <v-card>
             <v-card-title class="primary white--text">
-              <span class="headline">{{ editTitle }}</span>
+              <span class="text-h5">{{ editTitle }}</span>
             </v-card-title>
 
             <v-card-text class="mt-4">

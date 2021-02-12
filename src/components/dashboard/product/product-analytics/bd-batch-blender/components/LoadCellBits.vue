@@ -7,7 +7,7 @@
     <v-card-title>
       <div>
         <div>Load Cell Bits</div>
-        <div class="caption font-italic">({{ timeRangeLabel }})</div>
+        <div class="text-caption font-italic">({{ timeRangeLabel }})</div>
       </div>
       <v-btn
         icon

@@ -1,7 +1,7 @@
 <template>
   <v-card class="pa-2">
     <h1>Please verify the email</h1>
-    <div class="mb-6 overline">Please check your email for the link to verify the email.</div>
+    <div class="mb-6 text-overline">Please check your email for the link to verify the email.</div>
 
     <v-btn
       :loading="isLoading"

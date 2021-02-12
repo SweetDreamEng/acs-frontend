@@ -101,7 +101,7 @@ export default {
   * Register device and simulate iothub message to device
   *
   * @param {Object} data object
-  * @param {bool} data.register Value deciding if registered
+  * @param {Boolean} data.register Value deciding if registered
   * @param {number} data.device_id The id of device
   * @example
   *
@@ -224,7 +224,7 @@ export default {
   *
   * @param {Object} payload Update data
   * @param {string} payload.serial_number The serial number
-  * @param {bool} payload.isImportant The value to decide if important data
+  * @param {Boolean} payload.isImportant The value to decide if important data
   * @param {number[]} payload.enabled_properties Array of enable properties
   * @example
   *

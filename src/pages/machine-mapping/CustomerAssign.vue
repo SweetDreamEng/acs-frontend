@@ -22,9 +22,9 @@
           <div v-if="!table_loading" class="px-2 text-right">
             <v-btn
               color="primary"
-              @click="activeDevicesToggled()"
               :loading="loadingToggleActiveDevices"
               :disabled="loadingToggleActiveDevices"
+              @click="activeDevicesToggled()"
             >{{ isVisibleOnly ? 'Show All Devices' : 'Hide Inactive Devices' }}</v-btn>
             <span v-if="isVisibleOnly" class="ml-2">{{ hiddenDevices }} Devices are hidden</span>
           </div>

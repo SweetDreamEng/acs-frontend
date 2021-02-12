@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card class="text-center pa-1">
-      <v-card-title class="justify-center display-1 mb-2">Forgot Password?</v-card-title>
+      <v-card-title class="justify-center text-h4 mb-2">Forgot Password?</v-card-title>
       <v-card-subtitle>
         Enter your account email address and we will send you a link to reset your password.
       </v-card-subtitle>

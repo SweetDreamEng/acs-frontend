@@ -8,12 +8,12 @@ const module = {
     isTableLoading: false,
 
     error: null,
-    
+
     data: [],                                 // companies
     companyAdmins: [],
     companies: [],
 
-    customerAccount: null,                    
+    customerAccount: null,
     customerProfile: null
   },
 
@@ -22,7 +22,7 @@ const module = {
       commit
     }) {
       commit('TABLE_LOAD')
-      
+
       try {
         const response = await companyAPI.getCompanyAdmins()
 
@@ -80,7 +80,7 @@ const module = {
 
       commit('BUTTON_CLEAR')
     },
-    
+
     async getCustomer({
       commit
     }, id) {
@@ -99,10 +99,10 @@ const module = {
       commit, dispatch
     }, account) {
       commit('BUTTON_LOAD')
-      
+
       try {
         const response = await companyAPI.updateAccount(account)
-        
+
         dispatch('app/showSuccess', response.data, { root: true })
         router.push({
           name: 'customers-list'
@@ -122,7 +122,7 @@ const module = {
           }
         }
       }
-      
+
       commit('BUTTON_CLEAR')
     },
 
@@ -133,7 +133,7 @@ const module = {
 
       try {
         const response = await companyAPI.updateProfile(data)
-        
+
         dispatch('app/showSuccess', response.data, { root: true })
         router.push({
           name: 'customers-list'

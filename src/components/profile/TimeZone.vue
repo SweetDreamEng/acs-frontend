@@ -4,9 +4,9 @@
     <v-card-text>
       <v-form ref="accountForm" v-model="isAccountValidForm" lazy-validation @submit.prevent="submit">
         <v-combobox
+          v-model="locTimezone"
           :loading="loading"
           :disabled="loading"
-          v-model="locTimezone"
           :items="timeZones"
           label="Timezone"
           item-text="name"

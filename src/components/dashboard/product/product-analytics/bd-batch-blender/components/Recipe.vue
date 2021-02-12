@@ -2,7 +2,7 @@
   <v-card height="100%" :loading="loading" :disabled="loading">
     <v-card-title>
       Recipe
-      <div class="caption font-italic ml-1">({{ recipeMode }})</div>
+      <div class="text-caption font-italic ml-1">({{ recipeMode }})</div>
     </v-card-title>
     <v-card-text>
       <apexchart type="pie" height="360" :options="chartOptions" :series="recipeSeries"></apexchart>

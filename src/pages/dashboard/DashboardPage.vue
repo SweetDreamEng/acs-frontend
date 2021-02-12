@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="surface2" class="my-n8 py-8">
+    <v-sheet color="surface2" class="my-n8 pt-9 py-7">
       <v-container class="pb-0">
         <div v-if="$route.name === 'acs-machines'" class="d-flex mt-2 align-center">
           <v-breadcrumbs :items="breadcrumbItems">
@@ -21,7 +21,7 @@
         </div>
 
         <top-card></top-card>
-        <oee-container :oees="oees"></oee-container>
+        <oee-container class="mt-2" :oees="oees"></oee-container>
       </v-container>
     </v-sheet>
 
@@ -188,7 +188,7 @@ export default {
     ...mapState({
       loadingLocationsTable: (state) => state.machines.loadingLocationsTable,
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
-      
+
       locations: (state) => state.locations.data,
       companies: (state) => state.customers.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''

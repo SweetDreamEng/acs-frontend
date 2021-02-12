@@ -3,7 +3,6 @@ export default {
   /**
   * Get user locations
   *
-  * @param {}
   * @example
   *
   *     getLocations()

@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <v-toolbar 
+      <v-toolbar
         color="grey"
         flat
         dense
@@ -33,23 +33,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.alarmIcon {
-  font-size: 5px;
-}
-.alarmAmount {
-  margin-top: 15px;
-  font-size: 20px;
-  font-weight: bold;
-}
-.totalAmount {
-  margin-top: 15px;
-  font-size: 30px;
-  font-weight: bold;
-}
-.alarmTitle {
-  margin-top: 10px;
-  font-size: 15px;
-}
-</style>

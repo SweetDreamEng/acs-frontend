@@ -3,7 +3,6 @@ export default {
   /**
   * Get user zones
   *
-  * @param {}
   * @example
   *
   *     getZones()
@@ -28,7 +27,7 @@ export default {
   addZone(data) {
   	return api.$post('/zones', data)
   },
-  
+
   /**
   * Update a customer zone
   *

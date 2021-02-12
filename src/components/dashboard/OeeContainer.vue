@@ -17,7 +17,7 @@
             class="d-flex flex-column flex-grow-1 mx-1"
           >
             <div class="pa-1 pb-0">
-              <div class="caption">{{ box.location }} </div>
+              <div class="text-caption">{{ box.location }} </div>
               <div class="pl-2">
                 <small>OEE </small>
                 <div>{{ box.value }}</div>

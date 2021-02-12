@@ -15,7 +15,6 @@ export default {
   /**
   * Get alarms for customer device
   *
-  * @param {}
   * @example
   *
   *     getAlarmsByMachine()
@@ -35,7 +34,7 @@ export default {
   getAlarmsByCompanyId(company_id) {
     return api.$get(`/alarms/alarms-by-company-id/${company_id}`)
   },
-  
+
   /**
   * Get severity by company id
   *

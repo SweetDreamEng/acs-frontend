@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet v-if="$route.name !== 'product-details'" color="surface2" class="my-n8 py-8">
+    <v-sheet v-if="$route.name !== 'product-details'" color="surface2" class="my-n10 py-9">
       <v-container class="pb-0" fluid>
         <div v-if="$route.name === 'product-acs-dashboard'" class="d-flex mt-2 align-center">
           <v-breadcrumbs :items="acsBreadcrumbItems"></v-breadcrumbs>
@@ -14,9 +14,9 @@
       </v-container>
     </v-sheet>
     <v-container fluid>
-      <div v-if="loadingDeviceConfig" class="d-flex flex-column flex-grow-1 align-center justify-center mt-6">
+      <div v-if="loadingDeviceConfig" class="text-center mt-10">
         <v-progress-circular indeterminate color="primary"></v-progress-circular>
-        Loading configuration...
+        <div class="mt-1">Loading configuration...</div>
       </div>
       <div v-else>
         <v-alert
@@ -56,7 +56,7 @@
                   </alarm-table>
                 </v-col>
                 <v-col cols="12">
-                  <div class="display-1">Parameters & Points</div>
+                  <div class="text-h4 my-2">Parameters & Points</div>
                   <product-parameters-chart
                     :machine-id="deviceConfiguration.plcMachineId"
                     :serial-number="parseInt(deviceConfiguration.plcSerialNumber)"
@@ -87,7 +87,7 @@
                   </alarm-table>
                 </v-col>
                 <v-col cols="12">
-                  <div class="display-1">Parameters & Points</div>
+                  <div class="text-h4">Parameters & Points</div>
                 </v-col>
                 <v-col cols="12">
                   <product-parameters-chart
@@ -101,7 +101,7 @@
               </v-row>
             </v-tab-item>
           </v-tabs-items>
-          <v-row>
+          <v-row dense>
             <v-col cols="12" md="5">
               <note-form
                 :device-id="parseInt($route.params.productId)"
@@ -231,11 +231,11 @@ export default {
     this.getZones()
 
     await this.getDeviceConfiguration(this.$route.params.productId)
-    
+
     if (!this.error) {
       this.getProductAlarms(this.$route.params.productId)
       this.getNotes(this.$route.params.productId)
-      
+
       this.$channel.bind('alarm.created', (data) => {
         if (parseInt(this.$route.params.productId) === data.deviceId) {
           this.onNewAlarms(data)

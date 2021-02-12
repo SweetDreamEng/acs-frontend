@@ -270,7 +270,7 @@ const module = {
         commit('SUSPEND_BTN_CLEAR')
       }
     },
-    
+
     async remoteWeb({
       commit, dispatch
     }, device_id) {
@@ -285,6 +285,8 @@ const module = {
       } finally {
         commit('REMOTE_WEB_BTN_CLEAR')
       }
+
+      return null
     },
 
     async remoteCli({
@@ -301,6 +303,8 @@ const module = {
       } finally {
         commit('REMOTE_CLI_BTN_CLEAR')
       }
+
+      return null
     },
     async getDowntimePlans({
       commit
