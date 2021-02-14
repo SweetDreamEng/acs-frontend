@@ -17,7 +17,6 @@ import './plugins/apexcharts'
 import './plugins/animate'
 import './plugins/clipboard'
 import './plugins/rules'
-import './plugins/channel'
 import './plugins/sentry'
 
 // FILTERS

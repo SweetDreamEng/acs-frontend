@@ -1,18 +1,6 @@
 import api from '@/api.js'
 export default {
   /**
-  * Get alarms of specified device
-  *
-  * @param {string} productId The serial number of device
-  * @example
-  *
-  *     getProductAlarms('1106338390')
-  */
-  getProductAlarms(productId) {
-    return api.$post(`/alarms/${productId}`)
-  },
-
-  /**
   * Get alarms for customer device
   *
   * @param {}

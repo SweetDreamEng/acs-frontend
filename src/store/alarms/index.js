@@ -4,8 +4,6 @@ const now = new Date('YYYY-MM-DD')
 const module = {
   namespaced: true,
   state: {
-    alarmTypes: [],
-    alarms: [],
     severity: [],
     alarmsPerType: [],
     alarmsDistribution: [],
@@ -55,8 +53,6 @@ const module = {
       }
     ],
     
-    loadingAlarmsTable: false,
-
     loadingAlarmsPerMachine: false,
     alamrsPerMachine: [],
 
@@ -70,39 +66,6 @@ const module = {
   },
 
   actions: {
-    /*
-      get alarms for product
-    */
-    async getProductAlarms({ commit }, productId) {
-      commit('SET_LOADING_ALARMS', true)
-
-      try {
-        const response = await alarmAPI.getProductAlarms(productId)
-
-        commit('SET_ALARMS', response.alarms)
-        commit('SET_ALARM_TYPES', response.alarm_types)
-      } catch (error) {
-        console.log(error)
-      }
-
-      commit('SET_LOADING_ALARMS', false)
-    },
-
-    async onNewAlarms({ state, commit }, data) {
-      const alarmTypesForTag = state.alarmTypes.filter((alarmType) => {
-        return alarmType.tag_id === data.tagId
-      })
-
-      alarmTypesForTag.forEach((alarmType) => {
-        for (let i = state.alarms.length - 1; i >= 0; i--) {
-          if (state.alarms[i].type_id === alarmType.id) {
-            commit('UPDATE_ALARMS', { i, data, alarmType })
-            break
-          }
-        }
-      })
-    },
-
     /*
       Get alarms by machine
     */
@@ -234,15 +197,12 @@ const module = {
       state.alarms = alarms
     },
 
-    UPDATE_ALARMS(state, alarmData) {
-      const [value32] = alarmData.data.values
-
-      state.alarms[alarmData.i].timestamp = alarmData.data.timestamp * 1000
-      state.alarms[alarmData.i].active = alarmData.alarmType.bytes === 0 ? value32 : (value32 >> alarmData.alarmType.offset) & alarmData.alarmType.bytes
-    },
-
     SET_LOADING_ALARMS(state, data) {
       state.loadingAlarmsTable = data
+    },
+
+    SET_LOADING_TCU_ALARMS(state, data) {
+      state.loadingTcuAlarmsTable = data
     },
 
     SET_LOADING_ALARMS_PER_MACHINE(state, data) {

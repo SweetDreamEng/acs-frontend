@@ -48,13 +48,13 @@
                   </product-analytics>
                 </v-col>
                 <v-col cols="12">
-                  <alarm-table
-                    :loading="loadingAlarmsTable"
-                    :alarms="alarms"
-                    :alarm-types="alarmTypes"
-                    @reload="getProductAlarms($route.params.productId)"
+                  <alarms-table
+                    namespace="alarms-table-id1"
+                    :fetch="getProductAlarms"
+                    :machine-id="deviceConfiguration.plcMachineId"
+                    :serial-number="parseInt(deviceConfiguration.plcSerialNumber)"
                   >
-                  </alarm-table>
+                  </alarms-table>
                 </v-col>
                 <v-col cols="12">
                   <div class="display-1">Parameters & Points</div>
@@ -80,13 +80,13 @@
                   </product-analytics>
                 </v-col>
                 <v-col cols="12">
-                  <alarm-table
-                    :loading="loadingAlarmsTable"
-                    :alarms="alarms"
-                    :alarm-types="alarmTypes"
-                    @reload="getProductAlarms($route.params.productId)"
+                  <alarms-table
+                    namespace="alarms-table-id2"
+                    :fetch="getProductAlarms"
+                    :machine-id="11"
+                    :serial-number="parseInt(deviceConfiguration.plcSerialNumber)"
                   >
-                  </alarm-table>
+                  </alarms-table>
                 </v-col>
                 <v-col cols="12">
                   <div class="display-1">Parameters & Points</div>
@@ -136,7 +136,10 @@
 // import vuex helper functions
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import AlarmTable from '../../components/dashboard/product/AlarmTable'
+import commonApi from '../../components/dashboard/product/common/fetches/api'
+import AlarmsTable from '../../components/dashboard/product/common/alarms-table/AlarmsTable'
+
+// import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
 import ProductAnalytics from '../../components/dashboard/product/ProductAnalytics'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
@@ -150,7 +153,7 @@ export default {
     ProductAnalytics,
     NotesTimeline,
     NoteForm,
-    AlarmTable
+    AlarmsTable
   },
   props: {
   },
@@ -158,7 +161,8 @@ export default {
     return {
       tabModel: 0,
       selectedParameters: [],
-      selectedParametersForTcu: []
+      selectedParametersForTcu: [],
+      getProductAlarms: commonApi.getProductAlarms
     }
   },
   computed: {
@@ -235,14 +239,7 @@ export default {
     await this.getDeviceConfiguration(this.$route.params.productId)
     
     if (!this.error) {
-      this.getProductAlarms(this.$route.params.productId)
       this.getNotes(this.$route.params.productId)
-      
-      this.$channel.bind('alarm.created', (data) => {
-        if (parseInt(this.$route.params.productId) === data.deviceId) {
-          this.onNewAlarms(data)
-        }
-      })
     }
   },
 
@@ -252,8 +249,6 @@ export default {
       initAcsDashboard: 'machines/initAcsDashboard',
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
-      getProductAlarms: 'alarms/getProductAlarms',
-      onNewAlarms: 'alarms/onNewAlarms',
       getNotes: 'notes/getNotes'
     })
   }

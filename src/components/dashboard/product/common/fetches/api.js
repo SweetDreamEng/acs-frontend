@@ -10,5 +10,9 @@ export default {
 
   getEnergyConsumption(data) {
     return api.post('/analytics/product-energy-consumption', data)
+  },
+
+  getProductAlarms(data) {
+    return api.$post('/alarms', data)
   }
 }
