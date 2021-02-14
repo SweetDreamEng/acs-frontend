@@ -3,6 +3,14 @@
     <v-card-title>
       Recipe
       <div class="caption font-italic ml-1">({{ recipeMode }})</div>
+      <v-btn
+        icon
+        small
+        class="ml-auto"
+        @click="$emit('reload')"
+      >
+        <v-icon>mdi-refresh</v-icon>
+      </v-btn>
     </v-card-title>
     <v-card-text>
       <apexchart type="pie" height="360" :options="chartOptions" :series="recipeSeries"></apexchart>
@@ -53,6 +61,8 @@ export default {
       }
     },
     chartOptions() {
+      const { mode } = this
+
       return {
         chart: {
           type: 'pie',
@@ -60,14 +70,16 @@ export default {
         },
         labels: this.labels,
         dataLabels: {
-          formatter(val, opts) {
-            return [val.toFixed(2) + '%']
+          formatter: function (val, opts) {
+            if (mode === 1)
+              return opts.w.config.series[opts.seriesIndex]
+            else
+              return [val.toFixed(2) + '%']
           }
         },
         noData: {
           text: 'No Data From Devce'
         },
-        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary],
         legend: {
           show: true,
           position: 'bottom',

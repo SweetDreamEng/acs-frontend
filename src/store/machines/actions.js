@@ -92,6 +92,7 @@ const initMachinesTable = async ({ commit }, zone) => {
 
 const getDashboardMachinesTable = async ({ commit }, data) => {
   commit('SET_LOADING_MACHINES_TABLE', true)
+  commit('devices/SET_DATA', [], { root: true })
 
   try {
     const response = await machineAPI.getDashboardMachinesTable(data)

@@ -8,7 +8,8 @@
           unit="kgs/hr"
           :height="300"
           :fetch="getProcessRate"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Process Rate']"
         >
         </area-graph>
@@ -20,7 +21,8 @@
           unit="kgs/hr"
           :height="300"
           :fetch="getFeederCalibrationFactors"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Calibration Factor']"
         >
         </area-graph>
@@ -38,7 +40,8 @@
           title="Station Conveying"
           :height="320"
           :fetch="getStationConveyings"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :categories="conveyingCategories"
         >
         </bar-graph>
@@ -62,9 +65,13 @@ export default {
     HopperStable
   },
   props: {
-    productId: {
-      type: String,
-      default: ''
+    machineId: {
+      type: Number,
+      default: 0
+    },
+    serialNumber: {
+      type: Number,
+      default: 0
     },
     parameters: {
       type: Array,
@@ -89,13 +96,11 @@ export default {
     ])
   },
   mounted() {
-    this.getHopperStables(this.productId)
-    this.getLoadingCellBits(this.productId)
+    this.getHopperStables({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions('bdBlenderAnalytics', [
-      'getHopperStables',
-      'getLoadingCellBits'
+      'getHopperStables'
     ]),
     lineSeries(name, values) {
       return [{

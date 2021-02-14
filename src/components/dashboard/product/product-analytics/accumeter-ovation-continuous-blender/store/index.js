@@ -15,15 +15,12 @@ const module = {
   },
 
   actions: {
-    async getSystemStates({ commit }, { id, isAdditional }) {
+    async getSystemStates({ commit }, payload) {
       commit('SET_SYSTEM_STATES', {})
       commit('SET_LOADING_SYSTEM_STATES', true)
       
       try {
-        const response = await api.getSystemStates({
-          id,
-          isAdditional
-        })
+        const response = await api.getSystemStates(payload)
 
         commit('SET_SYSTEM_STATES', response.data.machine_states)
       } catch (error) {
@@ -32,12 +29,12 @@ const module = {
         commit('SET_LOADING_SYSTEM_STATES', false)
       }
     },
-    async getFeederStables({ commit }, id) {
+    async getFeederStables({ commit }, payload) {
       commit('SET_FEEDER_STABLES', [])
       commit('SET_LOADING_FEEDER_STABLES', true)
 
       try {
-        const response = await api.getFeederStables(id)
+        const response = await api.getFeederStables(payload)
 
         commit('SET_FEEDER_STABLES', response.data.feeders)
       } catch (error) {
@@ -46,13 +43,13 @@ const module = {
         commit('SET_LOADING_FEEDER_STABLES', false)
       }
     },
-    async getRecipe({ state, commit }, id) {
+    async getRecipe({ state, commit }, payload) {
       commit('SET_ACTUAL_RECIPE_TO_VALUES', [])
       commit('SET_TARGET_RECIPE_TO_VALUES', [])
       commit('SET_LOADING_RECIPE', true)
 
       try {
-        const response = await api.getRecipe(id)
+        const response = await api.getRecipe(payload)
 
         commit('SET_ACTUAL_RECIPE_TO_VALUES', response.data.actuals)
         commit('SET_TARGET_RECIPE_TO_VALUES', response.data.targets)

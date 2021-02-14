@@ -8,11 +8,18 @@
       <div>
         <div>{{ title }}</div>
         <div class="caption font-italic">({{ timeRangeLabel(timeRange) }})</div>
-        <!-- <div class="caption font-italic">(timeRangeLabel)</div> -->
       </div>
       <v-btn
         icon
+        small
         class="ml-auto"
+        @click="open()"
+      >
+        <v-icon>mdi-refresh</v-icon>
+      </v-btn>
+      <v-btn
+        icon
+        class=" ml-2"
         @click="showTimeRangeChooser = true"
       >
         <v-icon>mdi-filter</v-icon>
@@ -55,13 +62,13 @@ export default {
       type: Function,
       default: () => {}
     },
-    productId: {
+    machineId: {
       type: Number,
       default: 0
     },
-    isAdditional: {
-      type: Boolean,
-      default: false
+    serialNumber: {
+      type: Number,
+      default: 0
     },
     title: {
       type: String,
@@ -119,7 +126,7 @@ export default {
             show: false
           }
         },
-        colors: [this.$vuetify.theme.themes.light.primary],
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, '#00E396', '#FEB019', '#FF4560', '#775DD0'],
         noData: {
           text: 'No Data From Devce'
         },
@@ -147,11 +154,7 @@ export default {
     }
   },
   mounted() {
-    this.getSeries({
-      id: this.productId,
-      isAdditional: this.isAdditional,
-      timeRange: this.timeRange
-    })
+    this.open()
   },
   beforeDestroy() {
     if (!this.persist) this.$store.unregisterModule(this.namespace)
@@ -165,6 +168,13 @@ export default {
         return dispatch(this.namespace + '/updateTimeRange', payload)
       }
     }),
+    open () {
+      this.getSeries({
+        machineId: this.machineId,
+        serialNumber: this.serialNumber,
+        timeRange: this.timeRange
+      })
+    },
     isModuleCreated(path) {
       let m = this.$store._modules.root
 

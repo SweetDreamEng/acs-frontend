@@ -1,14 +1,14 @@
 import api from '@/api.js'
 export default {
-  async getMachineStates(id) {
-    return await api.get(`/analytics/product-system-states-3/${id}`)
+  getMachineStates(payload) {
+    return api.post('/analytics/product-system-states-3', payload)
   },
 
-  getHopperInventories(data) {
-    return api.post('/analytics/product-hopper-inventories', data)
+  getHopperInventories(payload) {
+    return api.post('/analytics/product-hopper-inventories', payload)
   },
 
-  getHauloffLengths(data) {
-    return api.post('/analytics/product-hauloff-lengths', data)
+  getHauloffLengths(payload) {
+    return api.post('/analytics/product-hauloff-lengths', payload)
   }
 }

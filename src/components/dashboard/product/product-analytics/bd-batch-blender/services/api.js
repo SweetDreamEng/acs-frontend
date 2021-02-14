@@ -1,30 +1,30 @@
 import api from '@/api.js'
 export default {
-  async getRecipe(id) {
-    return await api.get(`/analytics/product-current-recipe/${id}`)
+  getRecipe(payload) {
+    return api.post('/analytics/product-current-recipe', payload)
   },
 
-  getWeight(id) {
-    return api.get(`/analytics/product-weight/${id}`)
+  getWeight(payload) {
+    return api.post('/analytics/product-weight', payload)
   },
 
-  async getInventory(id) {
-    return await api.get(`/analytics/product-inventory/${id}`)
+  getInventory(payload) {
+    return api.post('/analytics/product-inventory', payload)
   },
 
-  getStationConveyings(id) {
-    return api.get(`/analytics/product-station-conveyings/${id}`)
+  getStationConveyings(payload) {
+    return api.post('/analytics/product-station-conveyings', payload)
   },
 
-  async getHopperStables(id) {
-    return await api.get(`/analytics/product-hopper-stables/${id}`)
+  getHopperStables(payload) {
+    return api.post('/analytics/product-hopper-stables', payload)
   },
 
-  async getFeederCalibrationFactors(data) {
-    return await api.post('/analytics/blender/calibration-factors', data)
+  getFeederCalibrationFactors(payload) {
+    return api.post('/analytics/blender/calibration-factors', payload)
   },
 
-  getProcessRate(data) {
-    return api.post('/analytics/blender/process-rate', data)
+  getProcessRate(payload) {
+    return api.post('/analytics/blender/process-rate', payload)
   }
 }

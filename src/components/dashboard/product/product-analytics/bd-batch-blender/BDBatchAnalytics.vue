@@ -4,7 +4,7 @@
       <v-col md="4" sm="12">
         <overview
           namespace="overview-id1"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
           :serial-number="serialNumber"
           :fetch="getOverview"
         >
@@ -17,8 +17,8 @@
           :height="220"
           unit="%"
           :fetch="getUtilization"
-          :product-id="parseInt(productId)"
-          :is-additional="isAdditional"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Utilization']"
         >
         </area-graph>
@@ -30,7 +30,8 @@
           :height="220"
           unit="kWH"
           :fetch="getEnergyConsumption"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Energy Consumption']"
         >
         </area-graph>
@@ -41,7 +42,8 @@
           title="Target Weights vs Actual Weights"
           :height="360"
           :fetch="getWeight"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Actual', 'Target']"
           :categories="['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6', 'Feeder 7', 'Feeder 8']"
         >
@@ -53,6 +55,7 @@
           :recipes="recipeValues"
           :ez-types="ezTypes"
           :mode="recipeMode"
+          @reload="getRecipe({ serialNumber })"
         >
         </recipe>
       </v-col>
@@ -87,17 +90,13 @@ export default {
     Inventory
   },
   props: {
-    productId: {
-      type: String,
-      default: ''
+    machineId: {
+      type: Number,
+      default: 0
     },
     serialNumber: {
       type: Number,
       default: 0
-    },
-    isAdditional: {
-      type: Boolean,
-      default: false
     },
     parameters: {
       type: Array,
@@ -123,8 +122,8 @@ export default {
     ])
   },
   mounted() {
-    this.getRecipe(this.productId)
-    this.getInventory(this.productId)
+    this.getRecipe({ serialNumber: this.serialNumber })
+    this.getInventory({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions('bdBlenderAnalytics', [

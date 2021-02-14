@@ -4,7 +4,7 @@
       <v-col md="4" sm="12">
         <overview
           namespace="overview-id11"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
           :serial-number="serialNumber"
           :fetch="getOverview"
         >
@@ -23,7 +23,8 @@
           :height="320"
           unit="ºC"
           :fetch="getActTgtTemperatures"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :categories="[['Actual Return', 'Temperature'], ['Actual Return', 'Temperature'], ['Target', 'Setpoint 1']]"
           :options="temperatureOptions"
         >
@@ -48,17 +49,13 @@ export default {
     BarGraph
   },
   props: {
-    productId: {
-      type: String,
-      default: ''
+    machineId: {
+      type: Number,
+      default: 0
     },
     serialNumber: {
       type: Number,
       default: 0
-    },
-    isAdditional: {
-      type: Boolean,
-      default: false
     },
     parameters: {
       type: Array,
@@ -99,8 +96,8 @@ export default {
   },
   mounted() {
     this.getSystemStates({
-      id: this.productId,
-      isAdditional: this.isAdditional
+      machineId: this.machineId,
+      serialNumber: this.serialNumber
     })
   },
   methods: {

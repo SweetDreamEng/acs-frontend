@@ -19,12 +19,12 @@ const module = {
   },
 
   actions: {
-    async getRecipe({ commit }, id) {
+    async getRecipe({ commit }, payload) {
       commit('SET_RECIPE_VALUES', [])
       commit('SET_LOADING_RECIPE', true)
       commit('SET_EZ_TYPES', [])
       try {
-        const response = await api.getRecipe(id)
+        const response = await api.getRecipe(payload)
 
         commit('SET_RECIPE_VALUES', response.data.recipe_values)
         commit('SET_RECIPE_MODE', response.data.mode)
@@ -36,12 +36,12 @@ const module = {
       }
     },
 
-    async getInventory({ commit }, id) {
+    async getInventory({ commit }, payload) {
       commit('SET_INVENTORIES', [])
       commit('SET_LOADING_INVENTORIES', true)
 
       try {
-        const response = await api.getInventory(id)
+        const response = await api.getInventory(payload)
 
         commit('SET_INVENTORIES', response.data.inventories)
       } catch (error) {
@@ -51,12 +51,12 @@ const module = {
       }
     },
 
-    async getHopperStables({ commit }, id) {
+    async getHopperStables({ commit }, payload) {
       commit('SET_HOPPER_STABLES', [])
       commit('SET_LOADING_HOPPER_STABLES', true)
 
       try {
-        const response = await api.getHopperStables(id)
+        const response = await api.getHopperStables(payload)
 
         commit('SET_HOPPER_STABLES', response.data.stables)
       } catch (error) {
@@ -64,23 +64,6 @@ const module = {
       } finally {
         commit('SET_LOADING_HOPPER_STABLES', false)
       }
-    },
-
-    async getLoadingCellBits({ commit }, id) {
-      // commit('SET_LOADING_CELL_BITS', true)
-
-      // try {
-      //   const response = await api.getUtilization({
-      //     id: id,
-      //     timeRange: state.utilizationTimeRange
-      //   })
-
-      //   commit('SET_UTILIZATION', response.data.utilizations)
-      // } catch (error) {
-      //   console.log(error)
-      // } finally {
-      //   commit('SET_LOADING_CELL_BITS', false)
-      // }
     }
   },
 

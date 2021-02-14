@@ -11,12 +11,12 @@ const module = {
   },
 
   actions: {
-    async getDryingHopperStats({ state, commit }, id) {
+    async getDryingHopperStats({ state, commit }, payload) {
       commit('SET_DRYING_HOPPERS', {})
       commit('SET_LOADING_DRYING_HOPPERS', true)
 
       try {
-        const response = await api.getDryingHopperStats(id)
+        const response = await api.getDryingHopperStats(payload)
 
         commit('SET_DRYING_HOPPERS', response.data.states)
       } catch (error) {
@@ -25,11 +25,11 @@ const module = {
         commit('SET_LOADING_DRYING_HOPPERS', false)
       }
     },
-    async getBedStates ({ state, commit }, id) {
+    async getBedStates ({ state, commit }, payload) {
       commit('SET_LOADING_BED_STATES', true)
 
       try {
-        const response = await api.getBedStates(id)
+        const response = await api.getBedStates(payload)
 
         commit('SET_SET_BED_STATES', response.data.states)
       } catch (error) {

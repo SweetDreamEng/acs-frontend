@@ -6,6 +6,14 @@
   >
     <v-card-title class="d-flex justify-space-between">
       {{ title }}
+      <v-btn
+        icon
+        small
+        class="ml-2"
+        @click="getSeries({ serialNumber })"
+      >
+        <v-icon>mdi-refresh</v-icon>
+      </v-btn>
     </v-card-title>
     <v-card-text>
       <apexchart
@@ -34,7 +42,11 @@ export default {
       type: Function,
       default: () => {}
     },
-    productId: {
+    machineId: {
+      type: Number,
+      default: 0
+    },
+    serialNumber: {
       type: Number,
       default: 0
     },
@@ -98,7 +110,8 @@ export default {
           text: 'No Data From Devce'
         },
         fill: {
-          colors: [this.$vuetify.theme.themes.light.primary, `${this.$vuetify.theme.themes.light.primary}90`, `${this.$vuetify.theme.themes.light.primary}50`],
+          // colors: [this.$vuetify.theme.themes.light.primary, `${this.$vuetify.theme.themes.light.primary}90`, `${this.$vuetify.theme.themes.light.primary}50`],
+          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, '#00E396', '#FEB019', '#FF4560', '#775DD0'],
           opacity: 0.9,
           type: 'solid'
         },
@@ -158,9 +171,7 @@ export default {
     }
   },
   mounted() {
-    this.getSeries({
-      productId: this.productId
-    })
+    this.getSeries({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions({

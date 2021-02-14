@@ -28,9 +28,9 @@
     </div>
     <component
       :is="analyticsComponent()" 
-      :product-id="$route.params.productId"
-      :parameters="selectedGraphs.map((graph) => graph.graph_id)"
+      :machine-id="machineId"
       :serial-number="serialNumber"
+      :parameters="selectedGraphs.map((graph) => graph.graph_id)"
     >
     </component>
   </div>

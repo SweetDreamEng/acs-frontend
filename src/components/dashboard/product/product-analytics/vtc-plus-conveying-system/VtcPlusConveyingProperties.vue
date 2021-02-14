@@ -33,9 +33,13 @@ export default {
     PumpBlowBacks
   },
   props: {
-    productId: {
-      type: String,
-      default: ''
+    machineId: {
+      type: Number,
+      default: 0
+    },
+    serialNumber: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -51,8 +55,8 @@ export default {
     ])
   },
   mounted() {
-    this.getPumpOnlines(this.productId)
-    this.getPumpBlowBacks(this.productId)
+    this.getPumpOnlines({ serialNumber: this.serialNumber })
+    this.getPumpBlowBacks({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions('vtcPlusConveying', [

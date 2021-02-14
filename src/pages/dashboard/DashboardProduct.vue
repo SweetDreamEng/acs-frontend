@@ -52,6 +52,7 @@
                     :loading="loadingAlarmsTable"
                     :alarms="alarms"
                     :alarm-types="alarmTypes"
+                    @reload="getProductAlarms($route.params.productId)"
                   >
                   </alarm-table>
                 </v-col>
@@ -83,6 +84,7 @@
                     :loading="loadingAlarmsTable"
                     :alarms="alarms"
                     :alarm-types="alarmTypes"
+                    @reload="getProductAlarms($route.params.productId)"
                   >
                   </alarm-table>
                 </v-col>

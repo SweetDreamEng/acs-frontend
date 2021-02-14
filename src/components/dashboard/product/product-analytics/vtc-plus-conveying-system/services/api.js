@@ -1,22 +1,22 @@
 import api from '@/api.js'
 export default {
-  getPumpHoursOil(id) {
-    return api.get(`/analytics/vtc-plus/pump-hours-oil/${id}`)
+  getPumpHoursOil(payload) {
+    return api.post('/analytics/vtc-plus/pump-hours-oil', payload)
   },
 
-  getPumpHours(id) {
-    return api.get(`/analytics/vtc-plus/pump-hours/${id}`)
+  getPumpHours(payload) {
+    return api.post('/analytics/vtc-plus/pump-hours', payload)
   },
 
-  getPumpOnlineLife(id) {
-    return api.get(`/analytics/vtc-plus/pump-online-life/${id}`)
+  getPumpOnlineLife(payload) {
+    return api.post('/analytics/vtc-plus/pump-online-life', payload)
   },
 
-  async getPumpOnlines(id) {
-    return await api.get(`/analytics/vtc-plus/pump-onlines/${id}`)
+  getPumpOnlines(payload) {
+    return api.post('/analytics/vtc-plus/pump-onlines', payload)
   },
 
-  async getPumpBlowBacks(id) {
-    return await api.get(`/analytics/vtc-plus/pump-blowbacks/${id}`)
+  getPumpBlowBacks(payload) {
+    return api.post('/analytics/vtc-plus/pump-blowbacks', payload)
   }
 }

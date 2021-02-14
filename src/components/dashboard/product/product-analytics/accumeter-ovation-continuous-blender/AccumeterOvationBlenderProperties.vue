@@ -7,7 +7,8 @@
           title="Blender Capability"
           unit="kgs/hr"
           :fetch="getBlenderCapabilities"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Blender Capability']"
         >
         </area-graph>
@@ -18,7 +19,8 @@
           title="Target Rate"
           unit="kgs/hr"
           :fetch="getTargetRates"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Target Rate']"
         >
         </area-graph>
@@ -28,7 +30,8 @@
           namespace="areaGraph-accumeterBlender-id3"
           title="Feeder Calibration"
           :fetch="getFeederCalibrations"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
         >
         </area-graph>
       </v-col>
@@ -37,7 +40,8 @@
           namespace="areaGraph-accumeterBlender-id4"
           title="Feeder Speed"
           :fetch="getFeederSpeeds"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
         >
         </area-graph>
       </v-col>
@@ -55,9 +59,13 @@ export default {
     AreaGraph
   },
   props: {
-    productId: {
-      type: String,
-      default: ''
+    machineId: {
+      type: Number,
+      default: 0
+    },
+    serialNumber: {
+      type: Number,
+      default: 0
     },
     parameters: {
       type: Array,

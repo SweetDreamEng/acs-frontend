@@ -29,7 +29,8 @@
 
     <component
       :is="propertiesComponent()" 
-      :product-id="$route.params.productId"
+      :machine-id="machineId"
+      :serial-number="serialNumber"
       :parameters="selectedGraphs.map((item) => item.graph_id)"
     >
     </component>

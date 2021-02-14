@@ -8,11 +8,11 @@ const module = {
   },
 
   actions: {
-    async getMachineStates ({ state, commit }, id) {
+    async getMachineStates ({ state, commit }, payload) {
       commit('SET_LOADING_SYSTEM_STATES', true)
 
       try {
-        const response = await api.getMachineStates(id)
+        const response = await api.getMachineStates(payload)
 
         commit('SET_SYSTEM_STATES', response.data.machine_states)
       } catch (error) {

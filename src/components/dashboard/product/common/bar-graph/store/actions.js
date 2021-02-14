@@ -1,9 +1,9 @@
 export default (fetch) => {
-  const getSeries = async ({ commit, dispatch, state }, { productId = 0 }) => {
+  const getSeries = async ({ commit, dispatch, state }, payload) => {
     commit('SET_LOADING', true)
 
     try {
-      const response = await fetch(productId)
+      const response = await fetch(payload)
 
       commit('LOADED', response.data.items)
     } catch (error) {

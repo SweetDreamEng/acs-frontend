@@ -54,7 +54,7 @@ export default {
       type: Function,
       default: () => {}
     },
-    productId: {
+    machineId: {
       type: Number,
       default: 0
     },
@@ -85,7 +85,7 @@ export default {
   },
   mounted() {
     this.getOverview({
-      productId: this.productId,
+      machineId: this.machineId,
       serialNumber: this.serialNumber
     })
   },

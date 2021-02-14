@@ -4,7 +4,7 @@
       <v-col md="4" sm="12">
         <overview
           namespace="overview-id6"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
           :serial-number="serialNumber"
           :fetch="getOverview"
         >
@@ -17,7 +17,8 @@
           :height="220"
           unit="%"
           :fetch="getUtilization"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Utilization']"
         >
         </area-graph>
@@ -29,7 +30,8 @@
           :height="220"
           unit="kWH"
           :fetch="getEnergyConsumption"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Energy Consumption']"
         >
         </area-graph>
@@ -49,7 +51,8 @@
           title="Hopper Air Temperatures"
           :height="320"
           :fetch="getHopperTemperatures"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Outlet Temperature', 'Inlet Temperature', 'Set Point']"
           :categories="hopperAirTemperatureCategories"
         >
@@ -64,7 +67,8 @@
           :height="220"
           unit="ºC"
           :fetch="getDewPointTemperature"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Dew Point Temperature']"
         >
         </area-graph>
@@ -91,9 +95,9 @@ export default {
     DryingHopperStates
   },
   props: {
-    productId: {
-      type: String,
-      default: ''
+    machineId: {
+      type: Number,
+      default: 0
     },
     serialNumber: {
       type: Number,
@@ -119,7 +123,7 @@ export default {
     }
   },
   mounted() {
-    this.getDryingHopperStats(this.productId)
+    this.getDryingHopperStats({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions('ngxDryer', [

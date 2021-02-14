@@ -6,6 +6,15 @@
     >
       <v-card-title color="primary">
         Alarms
+        <v-spacer></v-spacer>
+        <v-btn
+          icon
+          small
+          class="ml-2"
+          @click="$emit('reload')"
+        >
+          <v-icon>mdi-refresh</v-icon>
+        </v-btn>
       </v-card-title>
       <v-card-text>
         <v-data-table

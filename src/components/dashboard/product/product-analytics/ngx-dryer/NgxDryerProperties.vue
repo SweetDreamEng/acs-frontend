@@ -16,7 +16,8 @@
           title="DH Online Hours"
           unit="h"
           :fetch="getDhOnlineHours"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
         >
         </area-graph>
       </v-col>
@@ -26,7 +27,8 @@
           title="Dryer Online Hours"
           unit="h"
           :fetch="getDryerOnlineHours"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
         >
         </area-graph>
       </v-col>
@@ -38,7 +40,8 @@
           title="Blower Run Hours"
           unit="h"
           :fetch="getBlowerRunHours"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
         >
         </area-graph>
       </v-col>
@@ -58,9 +61,13 @@ export default {
     BedStates
   },
   props: {
-    productId: {
-      type: String,
-      default: ''
+    machineId: {
+      type: Number,
+      default: 0
+    },
+    serialNumber: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -77,7 +84,7 @@ export default {
     ])
   },
   mounted() {
-    this.getBedStates(this.productId)
+    this.getBedStates({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions('ngxDryer', [

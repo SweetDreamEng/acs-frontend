@@ -4,7 +4,7 @@
       <v-col md="4" sm="12">
         <overview
           namespace="overview-id2"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
           :serial-number="serialNumber"
           :fetch="getOverview"
         >
@@ -17,7 +17,8 @@
           :height="220"
           unit="%"
           :fetch="getUtilization"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Utilization']"
         >
         </area-graph>
@@ -29,7 +30,8 @@
           :height="220"
           unit="kWH"
           :fetch="getEnergyConsumption"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Energy Consumption']"
         >
         </area-graph>
@@ -47,7 +49,8 @@
           :height="220"
           unit="kgs/hr"
           :fetch="getProductionRate"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Process Rate']"
         >
         </area-graph>
@@ -59,7 +62,8 @@
           title="Actual Target Recipe"
           :height="360"
           :fetch="getRecipe"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Actual', 'Target']"
           :categories="['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6']"
         >
@@ -91,9 +95,9 @@ export default {
     FeederStable
   },
   props: {
-    productId: {
-      type: String,
-      default: ''
+    machineId: {
+      type: Number,
+      default: 0
     },
     serialNumber: {
       type: Number,
@@ -123,10 +127,10 @@ export default {
   },
   mounted() {
     this.getSystemStates({
-      id: this.productId,
-      isAdditional: false
+      machineId: this.machineId,
+      serialNumber: this.serialNumber
     })
-    this.getFeederStables(this.productId)
+    this.getFeederStables({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions('accumeterOvationBlender', [

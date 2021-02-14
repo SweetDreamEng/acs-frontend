@@ -1,15 +1,15 @@
 import api from '@/api.js'
 export default {
-  async getDryingHopperStats(id) {
-    return await api.get(`/analytics/product-drying-hopper-states/${id}`)
+  async getDryingHopperStats(payload) {
+    return await api.post('/analytics/product-drying-hopper-states', payload)
   },
 
-  getHopperTemperatures(id) {
-    return api.get(`/analytics/product-hopper-temperatures/${id}`)
+  getHopperTemperatures(payload) {
+    return api.post('/analytics/product-hopper-temperatures', payload)
   },
 
-  async getBedStates(id) {
-    return await api.get(`/analytics/ngx-dryer/bed-states/${id}`)
+  getBedStates(payload) {
+    return api.post('/analytics/ngx-dryer/bed-states', payload)
   },
 
   getDhOnlineHours(data) {

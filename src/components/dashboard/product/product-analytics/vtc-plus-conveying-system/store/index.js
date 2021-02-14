@@ -11,12 +11,12 @@ const module = {
   },
 
   actions: {
-    async getPumpOnlines({ state, commit }, id) {
+    async getPumpOnlines({ state, commit }, payload) {
       commit('SET_ONLINES', [])
       commit('SET_LOADING_PUMP_ONLINES', true)
 
       try {
-        const response = await api.getPumpOnlines(id)
+        const response = await api.getPumpOnlines(payload)
 
         commit('SET_ONLINES', response.data.onlines)
       } catch (error) {
@@ -26,12 +26,12 @@ const module = {
       }
     },
 
-    async getPumpBlowBacks({ state, commit }, id) {
+    async getPumpBlowBacks({ state, commit }, payload) {
       commit('SET_BLOWBACKS', [])
       commit('SET_LOADING_PUMP_BLOWBACKS', true)
 
       try {
-        const response = await api.getPumpBlowBacks(id)
+        const response = await api.getPumpBlowBacks(payload)
 
         commit('SET_BLOWBACKS', response.data.blowbacks)
       } catch (error) {

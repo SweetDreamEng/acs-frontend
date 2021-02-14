@@ -4,7 +4,7 @@
       <v-col md="4" sm="12">
         <overview
           namespace="overview-id3"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
           :serial-number="serialNumber"
           :fetch="getOverview"
         >
@@ -17,7 +17,8 @@
           :height="220"
           unit="%"
           :fetch="getUtilization"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Utilization']"
         >
         </area-graph>
@@ -29,7 +30,8 @@
           :height="220"
           unit="kWH"
           :fetch="getEnergyConsumption"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Energy Consumption']"
         >
         </area-graph>
@@ -45,7 +47,8 @@
           title="Accumulated Hopper Inventory"
           :height="220"
           :fetch="getHopperInventories"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Accumulated Hopper Inventory']"
         >
         </area-graph>
@@ -56,7 +59,8 @@
           title="Accumulated Hauloff Length"
           :height="220"
           :fetch="getHauloffLengths"
-          :product-id="parseInt(productId)"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
           :names="['Accumulated Hauloff Length']"
         >
         </area-graph>
@@ -81,9 +85,9 @@ export default {
     MachineStates
   },
   props: {
-    productId: {
-      type: String,
-      default: ''
+    machineId: {
+      type: Number,
+      default: 0
     },
     serialNumber: {
       type: Number,
@@ -106,7 +110,7 @@ export default {
     })
   },
   mounted() {
-    this.getMachineStates(this.productId)
+    this.getMachineStates({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions({
