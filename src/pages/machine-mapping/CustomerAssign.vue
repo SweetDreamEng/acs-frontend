@@ -115,7 +115,7 @@
         </template>
 
         <template v-slot:item.plc_serial_number="{ item }">
-          {{ item.teltonikaConfiguration.plc_serial_number }}
+          <div v-if="item.teltonikaConfiguration">{{ item.teltonikaConfiguration.plc_serial_number }}</div>
         </template>
 
         <template v-slot:item.data-table-expand="{ expand, isExpanded }">
