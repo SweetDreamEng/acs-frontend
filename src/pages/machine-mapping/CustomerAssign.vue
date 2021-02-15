@@ -114,38 +114,9 @@
           </div>
         </template>
 
-<!--         <template v-slot:item.registered_action="{ item }">
-          <div class="font-weight-bold d-flex align-center text-no-wrap">
-            <v-btn
-              :dark="item.machine_id !== null"
-              :disabled="!item.machine_id"
-              :color="item.registered ? 'red' : 'green'"
-              @click="onRegisterChange(item)"
-            >
-              {{ item.registered ? 'Revoke' : 'Register' }}
-            </v-btn>
-          </div>
-        </template> -->
-
         <template v-slot:item.plc_serial_number="{ item }">
           {{ item.teltonikaConfiguration.plc_serial_number }}
         </template>
-
-<!--         <template v-slot:item.plc_link="{ item }">
-          <v-icon
-            :color="item.plc_link ? 'green' : 'red'"
-          >
-            mdi-checkbox-blank-circle
-          </v-icon>
-        </template> -->
-
-<!--         <template v-slot:item.checkin="{ item }">
-          <v-icon
-            :color="item.checkin ? 'green' : 'red'"
-          >
-            {{ item.checkin ? 'mdi-check-circle-outline' : 'mdi-close-circle-outline' }}
-          </v-icon>
-        </template> -->
 
         <template v-slot:item.data-table-expand="{ expand, isExpanded }">
           <div class="d-flex align-center">
@@ -304,9 +275,6 @@ export default {
         { text: 'Company Name', value: 'company_id' },
         { text: 'Machine Configuration', value: 'machine_id' },
         { text: 'REG Status', align: 'center', value: 'registered_view' },
-        // { text: 'Device Registration', align: 'center', value: 'registered_action', sortable: false },
-        // { text: 'PLC Link', align: 'center', value: 'plc_link' },
-        // { text: 'Device checkin', align: 'center', value: 'checkin' },
         { text: 'Administration', value: 'data-table-expand', sortable: false }
       ],
       expanded: [],
