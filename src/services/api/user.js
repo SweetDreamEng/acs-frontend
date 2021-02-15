@@ -3,7 +3,6 @@ export default {
   /**
   * Get acs users or customer users depending on auth user.
   *
-  * @param {}
   * @example
   *
   *     getUsers()

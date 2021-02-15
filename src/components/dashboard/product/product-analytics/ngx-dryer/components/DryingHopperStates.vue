@@ -19,7 +19,7 @@
               class="font-weight-bold"
             >Drying Hopper 1</span>
           </v-col>
-          <v-col class="d-flex body-2">
+          <v-col class="d-flex text-body-2">
             <v-icon
               small
               left
@@ -42,7 +42,7 @@
               class="font-weight-bold"
             >Drying Hopper 2</span>
           </v-col>
-          <v-col class="d-flex body-2">
+          <v-col class="d-flex text-body-2">
             <v-icon
               small
               left
@@ -65,7 +65,7 @@
               class="font-weight-bold"
             >Drying Hopper 3</span>
           </v-col>
-          <v-col class="d-flex body-2">
+          <v-col class="d-flex text-body-2">
             <v-icon
               small
               left

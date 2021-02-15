@@ -13,7 +13,7 @@
       <div class="layout-content ma-auto w-full">
         <slot></slot>
       </div>
-      <div class="overline mt-4">{{ product.name }} - {{ product.version }}</div>
+      <div class="text-overline mt-4">{{ product.name }} - {{ product.version }}</div>
     </div>
   </div>
 </template>

@@ -1,5 +1,4 @@
 import store from '../store'
-import storeSettings from '../store/settings'
 import api from '../api'
 
 const elemLoading = document.getElementById('loading')

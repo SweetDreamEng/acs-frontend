@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card class="text-center pa-1">
-      <v-card-title class="justify-center display-1 mb-2">{{ $t('register.title') }}</v-card-title>
+      <v-card-title class="justify-center text-h4 mb-2">{{ $t('register.title') }}</v-card-title>
       <v-card-subtitle>Let's build amazing products</v-card-subtitle>
 
       <!-- sign up form -->
@@ -68,7 +68,7 @@
 
           <div v-if="errorProvider" class="error--text">{{ errorProviderMessages }}</div>
 
-          <div class="mt-5 overline">
+          <div class="mt-5 text-overline">
             {{ $t('register.agree') }}
             <br />
             <router-link to="">{{ $t('common.tos') }}</router-link>

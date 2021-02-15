@@ -27,7 +27,7 @@
 
             <v-list-item-content>
               <v-list-item-title v-text="item.title"></v-list-item-title>
-              <v-list-item-subtitle class="caption" v-text="item.subtitle"></v-list-item-subtitle>
+              <v-list-item-subtitle class="text-caption" v-text="item.subtitle"></v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action class="align-self-center">
               <v-list-item-action-text v-text="item.time"></v-list-item-action-text>

@@ -9,55 +9,40 @@
     "dev": "npm run serve"
   },
   "dependencies": {
-    "@sentry/tracing": "^5.29.2",
-    "@sentry/vue": "^5.29.2",
+    "@sentry/tracing": "^5.30.0",
+    "@sentry/vue": "^5.30.0",
     "animate.css": "^4.1.0",
-    "apexcharts": "^3.19.2",
-    "axios": "^0.21.0",
-    "css-loader": "^5.0.1",
-    "date-fns": "^2.16.1",
-    "date-fns-tz": "^1.0.12",
-    "laravel-echo": "^1.9.0",
+    "axios": "^0.21.1",
+    "date-fns": "^2.17.0",
+    "date-fns-tz": "^1.1.1",
+    "laravel-echo": "^1.10.0",
     "lodash": "^4.17.15",
-    "moment": "^2.26.0",
-    "moment-timezone": "^0.5.31",
-    "pusher-js": "^7.0.2",
-    "style-loader": "^2.0.0",
-    "stylus": "^0.54.8",
-    "stylus-loader": "^4.3.3",
-    "v-mask": "^2.2.3",
+    "pusher-js": "^7.0.3",
+    "v-mask": "^2.2.4",
     "vue": "^2.6.11",
-    "vue-apexcharts": "^1.5.3",
     "vue-drag-drop": "^1.1.4",
-    "vue-gtag": "^1.8.0",
-    "vue-head": "^2.2.0",
-    "vue-router": "^3.2.0",
-    "vuetify": "^2.3.9",
-    "vuex": "^3.4.0"
+    "vue-router": "^3.5.1",
+    "vuetify": "^2.4.4",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@indielayer/eslint-config-vue": "^1.0.0",
-    "@vue/cli-plugin-babel": "^4.3.0",
-    "@vue/cli-plugin-eslint": "^4.3.0",
-    "@vue/cli-service": "^4.3.0",
+    "@vue/cli-plugin-babel": "^4.5.11",
+    "@vue/cli-plugin-eslint": "^4.5.11",
+    "@vue/cli-service": "^4.5.11",
     "babel-eslint": "^10.1.0",
-    "core-js": "^3.6.4",
+    "core-js": "^3.8.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "raw-loader": "^4.0.1",
-    "sass": "^1.19.0",
-    "sass-loader": "^8.0.0",
-    "vue-cli-plugin-vuetify": "^2.0.7",
+    "sass": "^1.32.6",
+    "sass-loader": "^10.1.1",
+    "vue-cli-plugin-vuetify": "^2.1.0",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.7.1",
-    "webpack-bundle-analyzer": "^4.4.0"
+    "vuetify-loader": "^1.7.2"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead"
-  ],
-  "resolutions": {
-    "prosemirror-model": "1.9.1"
-  }
+  ]
 }

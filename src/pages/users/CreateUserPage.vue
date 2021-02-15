@@ -2,7 +2,7 @@
   <div class="flex-grow-1">
     <div class="d-flex align-center py-3">
       <div>
-        <div class="display-1">Add New User</div>
+        <div class="text-h4">Add New User</div>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
     </div>
@@ -22,7 +22,7 @@
                 color="primary"
                 size="68"
               >
-                <span class="white--text headline">{{ user.name | initials }}</span>
+                <span class="white--text text-h5">{{ user.name | initials }}</span>
               </v-avatar>
             </div>
             <v-form

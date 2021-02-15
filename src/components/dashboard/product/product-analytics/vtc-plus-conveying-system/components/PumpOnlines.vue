@@ -2,7 +2,7 @@
   <v-card height="100%" :loading="loading" :disabled="loading">
     <v-card-title>Pumps Online Status</v-card-title>
     <v-card-text>
-      <v-row dense v-if="onlines.length">
+      <v-row v-if="onlines.length" dense>
         <v-col cols="12" md="6">
           <v-list>
             <v-list-item v-for="(online, i) in onlines.slice(0, 6)" :key="i" style="min-height: 36px;">

@@ -1,6 +1,6 @@
 <template>
   <div class="py-3 min-w-0 w-full">
-    <div class="display-1">FAQ</div>
+    <div class="text-h4">FAQ</div>
     <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
 
     <!-- search card -->
@@ -45,8 +45,8 @@
       </v-col>
     </v-row>
 
-    <div class="caption mt-2 text-center">
-      Have other questions? Please reach out 
+    <div class="text-caption mt-2 text-center">
+      Have other questions? Please reach out
       <router-link to="">Contact Us</router-link>
     </div>
   </div>

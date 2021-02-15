@@ -1,7 +1,7 @@
 <template>
   <v-card class="pa-2">
-    <v-card-title class="justify-center display-1 mb-2">Set new password</v-card-title>
-    <div class="overline">{{ status }}</div>
+    <v-card-title class="justify-center text-h4 mb-2">Set new password</v-card-title>
+    <div class="text-overline">{{ status }}</div>
     <div class="error--text mt-2 mb-4">{{ error }}</div>
 
     <a v-if="error" href="/">Back to Sign In</a>

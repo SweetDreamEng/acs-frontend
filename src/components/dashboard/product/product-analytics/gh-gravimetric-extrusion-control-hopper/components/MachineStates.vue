@@ -19,7 +19,7 @@
               :class="{ 'red--text': !machineStates.system_steady }"
             >System steady</span>
           </v-col>
-          <v-col class="d-flex body-2" :class="{ 'red--text': !machineStates.system_steady }">
+          <v-col class="d-flex text-body-2" :class="{ 'red--text': !machineStates.system_steady }">
             <v-icon
               small
               left
@@ -42,7 +42,7 @@
               :class="{ 'red--text': !machineStates.wtp }"
             >WTP stable</span>
           </v-col>
-          <v-col class="d-flex body-2" :class="{ 'red--text': !machineStates.wtp }">
+          <v-col class="d-flex text-body-2" :class="{ 'red--text': !machineStates.wtp }">
             <v-icon
               small
               left
@@ -65,7 +65,7 @@
               :class="{ 'red--text': !machineStates.rpm }"
             >Extruder RPM stable</span>
           </v-col>
-          <v-col class="d-flex body-2" :class="{ 'red--text': !machineStates.rpm }">
+          <v-col class="d-flex text-body-2" :class="{ 'red--text': !machineStates.rpm }">
             <v-icon
               small
               left
@@ -88,7 +88,7 @@
               :class="{ 'red--text': !machineStates.halloff }"
             >Hauloff stable</span>
           </v-col>
-          <v-col class="d-flex body-2" :class="{ 'red--text': !machineStates.halloff }">
+          <v-col class="d-flex text-body-2" :class="{ 'red--text': !machineStates.halloff }">
             <v-icon
               small
               left

@@ -41,7 +41,7 @@
               <div class="font-weight-bold">
                 <trend-percent :color="$vuetify.theme.themes.light.primary" :value="percentage" />
               </div>
-              <div class="black--text caption">{{ percentageLabel }}</div>
+              <div class="black--text text-caption">{{ percentageLabel }}</div>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-grow-1 flex-column">
+  <div class="d-flex flex-grow-1 flex-column mt-1">
     <v-card>
       <v-card-title>Overview</v-card-title>
       <v-card-text>

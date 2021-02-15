@@ -1,9 +1,7 @@
 import Vue from 'vue'
 
-// For full framework
-import Vuetify from 'vuetify/lib/framework'
 // For a-la-carte components - https://vuetifyjs.com/en/customization/a-la-carte/
-// import Vuetify from 'vuetify/lib'
+import Vuetify from 'vuetify/lib'
 
 import * as directives from 'vuetify/lib/directives'
 import config from '../configs'

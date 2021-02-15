@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <v-toolbar 
+      <v-toolbar
         color="grey"
         flat
         dense
@@ -10,6 +10,8 @@
       </v-toolbar>
       <v-card
         outlined
+        style="border: 1px solid grey;"
+        tile
       >
         <v-icon>mdi-near-me</v-icon>{{ amount }}
       </v-card>

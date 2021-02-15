@@ -2,7 +2,7 @@
   <div class="flex-grow-1">
     <div class="d-flex align-center py-3">
       <div>
-        <div class="display-1">Add New Company</div>
+        <div class="text-h4">Add New Company</div>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
       <v-spacer></v-spacer>
@@ -185,7 +185,7 @@ export default {
           text: 'Add New Company'
         }
       ],
-      
+
       states,
 
       // need change(remove single quote)
@@ -199,7 +199,7 @@ export default {
         'country': 'US',
         'phone': ''
       },
-      
+
       isAccountFormValid: true,
       isProfileFormValid: true
     }

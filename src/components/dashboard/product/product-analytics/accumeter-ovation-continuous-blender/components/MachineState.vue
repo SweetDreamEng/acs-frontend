@@ -19,7 +19,7 @@
               :class="{ 'red--text': !systemStates.machine_running }"
             >Machine State</span>
           </v-col>
-          <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.machine_running }">
+          <v-col class="d-flex text-body-2" :class="{ 'red--text': !systemStates.machine_running }">
             <v-icon
               small
               left
@@ -42,7 +42,7 @@
               :class="{ 'red--text': !systemStates.system_steady }"
             >System</span>
           </v-col>
-          <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.system_steady }">
+          <v-col class="d-flex text-body-2" :class="{ 'red--text': !systemStates.system_steady }">
             <v-icon
               small
               left
@@ -65,7 +65,7 @@
               :class="{ 'red--text': !systemStates.mass_flow_hopper }"
             >Massflow</span>
           </v-col>
-          <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.mass_flow_hopper }">
+          <v-col class="d-flex text-body-2" :class="{ 'red--text': !systemStates.mass_flow_hopper }">
             <v-icon
               small
               left
@@ -88,7 +88,7 @@
               :class="{ 'red--text': !systemStates.rpm }"
             >Extrude WTP/RPM</span>
           </v-col>
-          <v-col class="d-flex body-2" :class="{ 'red--text': !systemStates.rpm }">
+          <v-col class="d-flex text-body-2" :class="{ 'red--text': !systemStates.rpm }">
             <v-icon
               small
               left

@@ -2,7 +2,7 @@
   <v-card height="100%" :loading="loading" :disabled="loading">
     <v-card-title>
       Recipe
-      <div class="caption font-italic ml-1">({{ recipeMode }})</div>
+      <div class="text-caption font-italic ml-1">({{ recipeMode }})</div>
       <v-btn
         icon
         small

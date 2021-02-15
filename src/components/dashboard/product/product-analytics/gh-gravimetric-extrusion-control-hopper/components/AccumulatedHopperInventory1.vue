@@ -1,12 +1,8 @@
 <template>
-  <v-card
-    height="100%"
-    :loading="loading"
-    :disabled="loading"
-  >
+  <v-card :loading="loading" :disabled="loading" height="100%">
     <v-card-title>
       <div>
-        <div>Load Cell Bits</div>
+        <div>Accumulated Hopper Inventory</div>
         <div class="text-caption font-italic">({{ timeRangeLabel }})</div>
       </div>
       <v-btn
@@ -20,9 +16,9 @@
     <v-card-text>
       <apexchart
         type="area"
-        height="220"
         :options="chartOptions"
         :series="series"
+        height="200"
       >
       </apexchart>
     </v-card-text>
@@ -30,9 +26,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
+  components: {
+  },
   props: {
     loading: {
       type: Boolean,
@@ -41,15 +37,23 @@ export default {
     timeRangeLabel: {
       type: String,
       default: ''
+    },
+    hopperInventories: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
-      chartOptions: {
+    }
+  },
+  computed: {
+    chartOptions() {
+      return {
         chart: {
           type: 'area',
-          animations: {
-            speed: 400
+          zoom: {
+            enabled: false
           },
           toolbar: {
             show: false
@@ -59,24 +63,18 @@ export default {
           enabled: false
         },
         stroke: {
-          curve: 'smooth',
+          curve: 'straight',
           width: 2
         },
         xaxis: {
           type: 'datetime'
         }
       }
-    }
-  },
-  computed: {
-    ...mapState({
-      utilizationSeries: (state) => state.machines.utilizationSeries
-    }),
+    },
     series() {
       return [{
-        id: 1,
-        name: 'utilization',
-        data: this.utilizationSeries
+        name: 'Inventory',
+        data: this.hopperInventories
       }]
     }
   }

@@ -1,7 +1,5 @@
 import maps from './maps'
-import icons from './icons'
 import theme from './theme'
-import analytics from './analytics'
 import currencies from './currencies'
 import navigation from './navigation'
 
@@ -15,13 +13,8 @@ export default {
   // google maps
   maps,
 
-  // icon libraries
-  icons,
-
   // theme configs
   theme,
-  // analytics configs
-  analytics,
 
   // currencies configs
   currencies,

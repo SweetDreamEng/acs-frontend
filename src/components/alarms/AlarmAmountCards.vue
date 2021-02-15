@@ -1,19 +1,15 @@
 <template>
-  <v-col> 
-    <v-row class="alarmIcon">
-      <v-icon :color="iconColor">{{ iconType }}</v-icon>
-    </v-row>
-    <v-spacer></v-spacer>
-    <v-row v-if="isAlarmInfo">
-      <div class="font-weight-bold mt-1 title">{{ amount }}</div>
-    </v-row>
-    <v-row v-else>
-      <div class="font-weight-bold mt-1 display-1">{{ amount }}</div>
-    </v-row>
-    <v-row>
-      <div class="mt-1 subtitle-1">{{ time }}</div>
-    </v-row>
-  </v-col>
+  <div>
+    <div class="mb-1">
+      <v-icon :color="iconColor" >{{ iconType }}</v-icon>
+    </div>
+    <div class="text-h4 font-weight-bold" :class="{ 'text-h6': isAlarmInfo }">
+      {{ amount }}
+    </div>
+    <div>
+      {{ time }}
+    </div>
+  </div>
 </template>
 
 <script>

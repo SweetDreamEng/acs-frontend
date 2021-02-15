@@ -53,12 +53,11 @@
               label="Input Website URL"
               outlined
               dense
-              class="mx-2"
               :rules="[$rules.required]"
             />
             <div class="text-right">
               <v-btn
-                class="mx-2 white--text"
+                class="white--text"
                 :loading="buttonLoading === 'SUBMIT'"
                 :disabled="buttonLoading === 'SUBMIT'"
                 color="primary"
@@ -93,7 +92,7 @@
                   :loading="buttonLoading === 'APPLY'"
                   :disabled="buttonLoading === 'APPLY'"
                   color="primary"
-                  @click="applyCustomColors"                          
+                  @click="applyCustomColors"
                 >
                   Apply Customization
                 </v-btn>
@@ -118,7 +117,7 @@
     </v-expansion-panels>
 
     <br>
-    
+
     <v-btn
       color="error"
       :loading="buttonLoading === 'RESET'"
@@ -217,7 +216,7 @@ export default {
       // if (this.customizationColor.hex) {
       //   this.customizationColor = this.customizationColor.hex
       // }
-      // this.$vuetify.theme.themes.light.primary = this.customizationColor      
+      // this.$vuetify.theme.themes.light.primary = this.customizationColor
       // let colors = [
       //   this.customizationColor
       // ]
@@ -282,6 +281,8 @@ export default {
         if (this.basicColors[item.key]) {
           item.color = this.basicColors[item.key]
         }
+
+        return item
       })
     }
   }

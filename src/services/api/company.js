@@ -3,7 +3,6 @@ export default {
   /**
   * Get company admins
   *
-  * @param {}
   * @example
   *
   *     getCompanyAdmins()
@@ -15,7 +14,6 @@ export default {
   /**
   * Get companies
   *
-  * @param {}
   * @example
   *
   *     getCompanies()
@@ -26,7 +24,7 @@ export default {
 
   /**
   * Add a new customer and/or company
-  * The company can be a new or an existing one 
+  * The company can be a new or an existing one
   *
   * @param {Object} data object for a new user
   * @param {string} data.company_name The name of company
