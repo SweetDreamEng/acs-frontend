@@ -88,6 +88,9 @@ export default {
             horizontal: 10,
             vertical: 10
           }
+        },
+        tooltip: {
+          enabled: false
         }
       }
     },
@@ -101,8 +104,11 @@ export default {
       }
     },
     labels() {
-      if (this.mode === 0 || this.mode === 1)
-        return ['Feed 1', 'Feed 2', 'Feed 3', 'Feed 4', 'Feed 5', 'Feed 6', 'Feed 7', 'Feed 8']
+      if (this.mode === 0 || this.mode === 1) {
+        return [0, 1, 2, 3, 4, 5, 6, 7].map((hop) => {
+          return `Hop[${hop + 1}]: ${this.recipes[hop]}`
+        })
+      }
       else if (this.mode === 2) {
         return [this.regridLabel, this.additiveLabel]
       } else {
@@ -114,7 +120,7 @@ export default {
 
       for (let i = 0; i < 8; i++) {
         if (this.ezTypes[i] === 2) {
-          ret += this.recipes[i] / 100
+          ret += this.recipes[i]
         }
       }
 
@@ -125,7 +131,7 @@ export default {
 
       for (let i = 0; i < 8; i++) {
         if (this.ezTypes[i] === 2) {
-          ret += `Hop ${i + 1} REG ${this.recipes[i] / 100}%&nbsp;&nbsp;`
+          ret += `Hop[${i + 1}] REG ${this.recipes[i]}%&nbsp;&nbsp;`
         }
       }
 
@@ -141,16 +147,16 @@ export default {
       }
 
       if (naturals.length === 1) {
-        ret = `Hop ${naturals[0]} AUTO&nbsp;&nbsp;`
+        ret = `Hop[${naturals[0]}] AUTO&nbsp;&nbsp;`
       } else {
         for (let i = 0; i < naturals.length; i++) {
-          ret += `Hop ${naturals[0]} ${100 / naturals.length}&nbsp;&nbsp;`
+          ret += `Hop[${naturals[0]}] ${100 / naturals.length}&nbsp;&nbsp;`
         }
       }
 
       for (let i = 0; i < 8; i++) {
         if (this.ezTypes[i] === 1) {
-          ret += `Hop ${i + 1} ADD ${this.recipes[i] / 100}%`
+          ret += `Hop[${i + 1}] ADD ${this.recipes[i]}%`
         }
         ret += '&nbsp;&nbsp;'
       }

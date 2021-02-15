@@ -57,7 +57,7 @@
       </v-col>
       <v-col v-if="parameters.includes(6)" md="8" sm="12">
         <bar-graph
-          namespace="barGraph-id1"
+          namespace="barGraph-accumeterBlender-recipe"
           :persist="false"
           title="Actual Target Recipe"
           :height="360"
