@@ -4,14 +4,14 @@
       <v-icon :color="iconColor">{{ iconType }}</v-icon>
     </v-row>
     <v-spacer></v-spacer>
-    <v-row v-if="isAlarmInfo" class="alarmAmount">
-      {{ amount }}
+    <v-row v-if="isAlarmInfo">
+      <div class="font-weight-bold mt-1 title">{{ amount }}</div>
     </v-row>
-    <v-row v-else class="totalAmount">
-      {{ amount }}
+    <v-row v-else>
+      <div class="font-weight-bold mt-1 display-1">{{ amount }}</div>
     </v-row>
-    <v-row class="alarmTitle">
-      {{ time }}
+    <v-row>
+      <div class="mt-1 subtitle-1">{{ time }}</div>
     </v-row>
   </v-col>
 </template>
@@ -42,23 +42,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.alarmIcon {
-  font-size: 5px;
-}
-.alarmAmount {
-  margin-top: 15px;
-  font-size: 20px;
-  font-weight: bold;
-}
-.totalAmount {
-  margin-top: 15px;
-  font-size: 30px;
-  font-weight: bold;
-}
-.alarmTitle {
-  margin-top: 10px;
-  font-size: 15px;
-}
-</style>

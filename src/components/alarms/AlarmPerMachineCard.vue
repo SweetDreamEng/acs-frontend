@@ -10,8 +10,6 @@
       </v-toolbar>
       <v-card
         outlined
-        style="border: 1px solid grey;"
-        tile
       >
         <v-icon>mdi-near-me</v-icon>{{ amount }}
       </v-card>
@@ -33,23 +31,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.alarmIcon {
-  font-size: 5px;
-}
-.alarmAmount {
-  margin-top: 15px;
-  font-size: 20px;
-  font-weight: bold;
-}
-.totalAmount {
-  margin-top: 15px;
-  font-size: 30px;
-  font-weight: bold;
-}
-.alarmTitle {
-  margin-top: 10px;
-  font-size: 15px;
-}
-</style>
