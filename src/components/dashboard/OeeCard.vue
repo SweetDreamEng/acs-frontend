@@ -84,6 +84,9 @@ export default {
         },
         grid: {
           show: false
+        },
+        tooltip: {
+          enabled: false
         }
       },
       viewOptions: [

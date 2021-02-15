@@ -114,7 +114,7 @@
           </div>
         </template>
 
-        <template v-slot:item.registered_action="{ item }">
+<!--         <template v-slot:item.registered_action="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <v-btn
               :dark="item.machine_id !== null"
@@ -125,23 +125,27 @@
               {{ item.registered ? 'Revoke' : 'Register' }}
             </v-btn>
           </div>
+        </template> -->
+
+        <template v-slot:item.plc_serial_number="{ item }">
+          {{ item.teltonikaConfiguration.plc_serial_number }}
         </template>
 
-        <template v-slot:item.plc_link="{ item }">
+<!--         <template v-slot:item.plc_link="{ item }">
           <v-icon
             :color="item.plc_link ? 'green' : 'red'"
           >
             mdi-checkbox-blank-circle
           </v-icon>
-        </template>
+        </template> -->
 
-        <template v-slot:item.checkin="{ item }">
+<!--         <template v-slot:item.checkin="{ item }">
           <v-icon
             :color="item.checkin ? 'green' : 'red'"
           >
             {{ item.checkin ? 'mdi-check-circle-outline' : 'mdi-close-circle-outline' }}
           </v-icon>
-        </template>
+        </template> -->
 
         <template v-slot:item.data-table-expand="{ expand, isExpanded }">
           <div class="d-flex align-center">
@@ -151,7 +155,7 @@
 
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length" class="px-4 py-2">
-            <sim-panel :item="item"></sim-panel>
+            <sim-panel :item="item" @click-register="onRegisterChange"></sim-panel>
           </td>
         </template>
 
@@ -293,15 +297,16 @@ export default {
   data() {
     return {
       tableHeaders: [
-        { text: 'Serial Number', value: 'serial_number' },
+        { text: 'Teltonika Serial', value: 'serial_number' },
+        { text: 'PLC Serial', value: 'plc_serial_number' },
         { text: 'Device Name', value: 'name' },
         { text: 'Edit', value: 'actions', sortable: false, align: 'center' },
         { text: 'Company Name', value: 'company_id' },
         { text: 'Machine Configuration', value: 'machine_id' },
         { text: 'REG Status', align: 'center', value: 'registered_view' },
-        { text: 'Device Registration', align: 'center', value: 'registered_action', sortable: false },
-        { text: 'PLC Link', align: 'center', value: 'plc_link' },
-        { text: 'Device checkin', align: 'center', value: 'checkin' },
+        // { text: 'Device Registration', align: 'center', value: 'registered_action', sortable: false },
+        // { text: 'PLC Link', align: 'center', value: 'plc_link' },
+        // { text: 'Device checkin', align: 'center', value: 'checkin' },
         { text: 'Administration', value: 'data-table-expand', sortable: false }
       ],
       expanded: [],

@@ -112,8 +112,7 @@ export default {
           type: 'datetime'
         },
         tooltip: {
-          followCursor: true,
-          theme: 'dark'
+          enabled: false
         },
         ...this.options
       }

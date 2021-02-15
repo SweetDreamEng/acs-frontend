@@ -9,7 +9,8 @@
         multiple
         item-text="graph_name"
         item-value="graph_id"
-        class="flex-grow-0 ml-auto"
+        class="flex-grow-0 ml-auto mb-1"
+        hide-details
         @input="onEnabledPropertiesChanged()"
       >
         <template v-slot:selection="{ attrs, item }">
@@ -26,6 +27,7 @@
         </template>
       </v-combobox>
     </div>
+
     <component
       :is="analyticsComponent()" 
       :machine-id="machineId"
