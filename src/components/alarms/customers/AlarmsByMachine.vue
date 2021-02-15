@@ -17,7 +17,32 @@ export default {
   },
   data() {
     return {
-      chartOptions: {
+      // chartOptions: {
+      //   chart: {
+      //     type: 'bar',
+      //     height: 350
+      //   },
+      //   plotOptions: {
+      //     bar: {
+      //     }
+      //   },
+      //   dataLabels: {
+      //     enabled: false
+      //   },
+      //   xaxis: {
+      //     categories: this.devices.map((device) => device.customer_assigned_name)
+      //   }
+      // }
+    }
+  },
+  computed: {
+    series() {
+      return [{
+        data: this.devices.map((device) => device.alarms_count)
+      }]
+    },
+    chartOptions() {
+      return {
         chart: {
           type: 'bar',
           height: 350
@@ -33,13 +58,6 @@ export default {
           categories: this.devices.map((device) => device.customer_assigned_name)
         }
       }
-    }
-  },
-  computed: {
-    series() {
-      return [{
-        data: this.devices.map((device) => device.alarms_count)
-      }]
     }
   }
 }
