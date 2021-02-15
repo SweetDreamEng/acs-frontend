@@ -5,9 +5,9 @@
     :disabled="isLoading"
   >
     <template v-if="overview.machineId !== 11">
-      <v-card-title>{{ overview.customer_assigned_name }}</v-card-title>
+      <v-card-title v-if="overview.teltonikaDevice">{{ overview.teltonikaDevice.customer_assigned_name }}</v-card-title>
       <v-card-subtitle>
-        <div>{{ overview.name }}</div>
+        <div v-if="overview.teltonikaDevice">{{ overview.teltonikaDevice.name }}</div>
         <div>{{ overview.machineName }}</div>
       </v-card-subtitle>
       <v-img
