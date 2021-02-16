@@ -63,7 +63,8 @@ export default {
       isAppReady: (state) => state.auth.isAppReady
     }),
     isRouterLoaded: function() {
-      if (this.$route.name !== null) return true
+      if (this.$route.name !== null)
+        return true
 
       return false
     },
