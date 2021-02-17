@@ -47,7 +47,7 @@
           namespace="areaGraph-accumeterBlender-rate"
           title="Process Rate"
           :height="220"
-          unit="kgs/hr"
+          unit="imperial-metric"
           :fetch="getProductionRate"
           :machine-id="machineId"
           :serial-number="serialNumber"

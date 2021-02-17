@@ -5,7 +5,7 @@
         <area-graph
           namespace="areaGraph-accumeterBlender-id1"
           title="Blender Capability"
-          unit="kgs/hr"
+          unit="imperial-metric"
           :fetch="getBlenderCapabilities"
           :machine-id="machineId"
           :serial-number="serialNumber"
@@ -17,7 +17,7 @@
         <area-graph
           namespace="areaGraph-accumeterBlender-id2"
           title="Target Rate"
-          unit="kgs/hr"
+          unit="imperial-metric"
           :fetch="getTargetRates"
           :machine-id="machineId"
           :serial-number="serialNumber"

@@ -115,6 +115,10 @@ export default {
     serialNumber: {
       type: Number,
       default: 0
+    },
+    parameters: {
+      type: Array,
+      default: () => []
     }
   },
   data() {

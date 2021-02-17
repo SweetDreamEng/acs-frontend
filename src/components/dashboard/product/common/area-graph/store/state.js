@@ -11,5 +11,6 @@ function defaultTimeRange() {
 export default () => ({
   isLoading: false,
   items: [],
+  isImperial: false,
   timeRange: defaultTimeRange()
 })

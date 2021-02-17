@@ -102,6 +102,9 @@ export default {
     isLoading() {
       return this.$store.state[this.namespace]['isLoading']
     },
+    isImperial() {
+      return this.$store.state[this.namespace]['isImperial']
+    },
     timeRange() {
       return this.$store.state[this.namespace]['timeRange']
     },
@@ -115,6 +118,12 @@ export default {
         })
       else
         return (this.$store.state[this.namespace]['items']) ? (this.$store.state[this.namespace]['items']) : [[]]
+    },
+    graphUnit() {
+      if (this.unit === 'imperial-metric')
+        return this.isImperial ? 'lbs/hr' : 'kgs/hr'
+      else
+        return this.unit ? this.unit : ''
     },
     chartOptions() {
       return {
@@ -133,7 +142,7 @@ export default {
         },
         yaxis: {
           title: {
-            text: this.unit ? `${this.title} (${this.unit})` : `${this.title}`
+            text: this.unit ? `${this.title} (${this.graphUnit})` : `${this.title}`
           }
         },
         dataLabels: {
@@ -198,7 +207,8 @@ export default {
       this.showTimeRangeChooser = false
       this.getSeries({
         id: this.productId,
-        isAdditional: this.isAdditional,
+        machineId: this.machineId,
+        serialNumber: this.serialNumber,
         timeRange: this.timeRange
       })
     }
