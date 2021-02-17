@@ -148,6 +148,9 @@ export default {
             fillColors: [this.$vuetify.theme.themes.light.primary, `${this.$vuetify.theme.themes.light.primary}90`, `${this.$vuetify.theme.themes.light.primary}50`]
           }
         },
+        tooltip: {
+          enabled: false
+        },
         ...this.options
       }
     },

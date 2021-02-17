@@ -25,6 +25,7 @@ import ngxDryer from '../components/dashboard/product/product-analytics/ngx-drye
 import vtcPlusConveying from '../components/dashboard/product/product-analytics/vtc-plus-conveying-system/store'
 import ghGravimetricControlHopper from '../components/dashboard/product/product-analytics/gh-gravimetric-extrusion-control-hopper/store'
 import truetempTcu from '../components/dashboard/product/product-analytics/truetemp-tcu/store'
+import heChiller from '../components/dashboard/product/product-analytics/he-central-chiller/store'
 
 Vue.use(Vuex)
 
@@ -55,7 +56,8 @@ const store = new Vuex.Store({
     ghGravimetricControlHopper,
     ngxDryer,
     vtcPlusConveying,
-    truetempTcu
+    truetempTcu,
+    heChiller
   }
 })
 
