@@ -8,7 +8,6 @@
       <div>
         <div>{{ title }}</div>
         <div class="text-caption font-italic">({{ timeRangeLabel(timeRange) }})</div>
-        <!-- <div class="text-caption font-italic">(timeRangeLabel)</div> -->
       </div>
       <v-btn
         icon

@@ -9,6 +9,7 @@ export default {
       { icon: 'mdi-swap-horizontal', text: 'Customer Assign', link: '/customer-assign' },
       { icon: 'mdi-city', text: 'Companies', link: '/customers/list' },
       { icon: 'mdi-account-multiple', text: 'Users', link: '/acs-admin/users' },
+      { icon: 'mdi-equal-box', text: 'Materials & Locations', link: '/materials' },
       { icon: 'mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],

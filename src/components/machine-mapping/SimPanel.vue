@@ -121,6 +121,7 @@
           <v-form ref="editForm" v-model="isDeviceFormValid" lazy-validation @submit.prevent="_submitDeviceConfig">
             <v-row dense>
               <v-col cols="12" md="6">
+                <h4 class="mb-1">PLC Config</h4>
                 <v-text-field
                   v-model="deviceForm.plc_ip"
                   label="PLC IP"
@@ -149,6 +150,7 @@
                 </v-text-field>
               </v-col>
               <v-col cols="12" md="6">
+                <h4 class="mb-1">TCU Config</h4>
                 <v-text-field
                   v-model="deviceForm.tcu_serial_number"
                   label="Serial Number"
@@ -230,6 +232,13 @@
                 </v-text-field>
               </v-col>
             </v-row>
+            <div class="d-flex justify-content-center">
+              <v-checkbox
+                v-model="deviceForm.tcuAdded"
+                label="Include TCU Config(Only for PLCs that have a TCU attached)"
+                class="mx-auto"
+              ></v-checkbox>
+            </div>
             <div class="d-flex">
               <v-spacer></v-spacer>
               <v-btn
@@ -242,8 +251,8 @@
               <v-btn
                 color="primary"
                 type="submit"
-                :loading="loadingDeviceConfig"
-                :disabled="loadingDeviceConfig"
+                :loading="sendingDeviceConfig"
+                :disabled="sendingDeviceConfig"
               >
                 Submit
               </v-btn>
@@ -274,6 +283,7 @@ export default {
         plc_ip: '192.168.5.5',
         plc_modbus_tcp_port: 502,
         plc_serial_number: 0,
+        tcuAdded: false,
         tcu_serial_number: 0,
         tcu_port: '/dev/rs232',
         tcu_base_addr: 1,
@@ -295,7 +305,7 @@ export default {
       'refresh_btn_loading',
       'remote_web_btn_loading',
       'remote_cli_btn_loading',
-      'loadingDeviceConfig'
+      'sendingDeviceConfig'
     ])
   },
   methods: {

@@ -98,4 +98,11 @@ export default [{
   meta: {
     customerAdmin: true
   }
+}, {
+  path: '/materials',
+  name: 'materials',
+  component: () => import(/* webpackChunkName: "materials" */ '@/pages/materials/MaterialLocations.vue'),
+  meta: {
+    acsAdmin: true
+  }
 }]
