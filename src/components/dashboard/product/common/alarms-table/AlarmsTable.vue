@@ -19,6 +19,7 @@
       <v-data-table
         :headers="headers"
         :items="tableItems"
+        item-key="type_id"
         no-data-text="No current alarms"
       >
         <!-- custom table header -->
@@ -27,13 +28,17 @@
           {{ header.text }}
         </template>
         <template v-slot:header.createdAt="{ header }">
-          <v-icon color="primary">mdi-clock</v-icon>
+          <v-icon color="primary" left>mdi-clock</v-icon>
           <span v-text="header.text"></span>
         </template>
 
         <!-- custom table row -->
         <template v-slot:item.createdAt="{ item }">
           {{ lastActivated(item) }}
+        </template>
+
+        <template v-slot:item.name="{ item }">
+          {{ alarmTypeName(item) }}
         </template>
       </v-data-table>
     </v-card-text>
@@ -75,7 +80,7 @@ export default {
   data () {
     return {
       headers: [
-        { text: 'Alarm', align: 'start', value: 'name' },
+        { text: 'Alarm', align: 'start', value: 'name', sortable: false },
         { text: 'Alarm activated at', align: 'start', value: 'createdAt' },
         { text: '', value: 'data-table-expand' }
       ]
@@ -92,11 +97,7 @@ export default {
       return this.$store.state[this.namespace]['alarms']
     },
     tableItems() {
-      return this.alarmTypes.filter((alarmType) => {
-        const alarm = this.alarms.find((alarm) => alarm.type_id === alarmType.id)
-
-        return alarm && alarm.active
-      })
+      return this.alarms.filter((alarm) => alarm.active)
     }
   },
   created() {
@@ -136,27 +137,16 @@ export default {
         machineId: this.machineId
       })
     },
-    alarmsOfType(type) {
-      return this.alarms.filter((alarm) => {
-        return alarm.typeId === type.id
-      })
-    },
-    lastActivated(type) {
-      if (this.isAlarmActivated(type)) {
-        const alarm = this.alarms.find((alarm) => alarm.type_id === type.id)
+    alarmTypeName(alarm) {
+      const alarmType = this.alarmTypes.find((type) => type.id === alarm.type_id)
 
-        return this.$options.filters.formatDate(alarm.timestamp)
-      } else {
-        return 'No Alarm Detected'
-      }
+      return alarmType ? alarmType.name : ''
     },
-    isAlarmActivated(alarmType) {
-      const alarm = this.alarms.find((alarm) => alarm.type_id === alarmType.id)
-      
-      return (alarm) ? alarm.active : false
-    },
-    alarmsForType(alarmType) {
-      return this.alarms.filter((alarm) => alarm.type_id === alarmType.id)
+    lastActivated(alarm) {
+      const date = new Date(alarm.timestamp)
+      const isoDate = date.toISOString()
+
+      return `${isoDate.substr(0, 10)} ${isoDate.substr(11, 8)}`
     }
   }
 }
