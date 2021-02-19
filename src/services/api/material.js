@@ -49,5 +49,56 @@ export default {
   */
   deleteMaterial(payload) {
     return api.$delete(`/materials/${payload.id}`)
+  },
+
+  /**
+  * Get locations
+  *
+  * @example
+  *
+  *     getMaterialLocations({})
+  */
+  getMaterialLocations(payload) {
+    const queryString = Object.keys(payload).map((k) => {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(payload[k])
+    }).join('&')
+
+    return api.$get(`/material-locations?${queryString}`)
+  },
+
+  /**
+  * Add a new location
+  *
+  * @param {Object} data for a new location
+  * @example
+  *
+  *     addMaterialLocation(user)
+  */
+  addMaterialLocation(payload) {
+    return api.$post('/material-locations', payload)
+  },
+
+  /**
+  * Update selected location
+  *
+  * @param {Object} data for location
+  * @example
+  *
+  *     updateMaterialLocation(payload)
+  */
+  updateMaterialLocation(payload) {
+    return api.$put(`/material-locations/${payload.id}`, payload)
+  },
+
+  /**
+  * Delete selected location
+  *
+  * @param {Object} data for location
+  * @example
+  *
+  *     deleteMaterialLocation(payload)
+  */
+  deleteMaterialLocation(payload) {
+    return api.$delete(`/material-locations/${payload.id}`)
   }
 }
