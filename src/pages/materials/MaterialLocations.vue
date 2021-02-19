@@ -114,7 +114,7 @@
       <v-card-title>Locations</v-card-title>
       <v-data-table
         :headers="locationsTableHeaders"
-        :items="materialLoactions"
+        :items="materialLocations"
         class="flex-grow-1"
         :search="searchLocationText"
         :loading="loadingMaterialLocations"
@@ -286,7 +286,7 @@ export default {
 
       loadingMaterialLocations: (state) => state.materials.loadingMaterialLocations,
       savingMaterialLocation: (state) => state.materials.savingMaterialLocation,
-      materialLoactions: (state) => state.materials.materialLoactions
+      materialLocations: (state) => state.materials.materialLocations
       // pageCount: (state) => state.devices.pageCount,
       // page: (state) => state.devices.page
     }),
@@ -367,7 +367,7 @@ export default {
     },
 
     editLocationItem (item) {
-      this.editedLocationIndex = this.materialLoactions.indexOf(item)
+      this.editedLocationIndex = this.materialLocations.indexOf(item)
       this.editedLocationItem = Object.assign({}, item)
       this.editLocationDialog = true
       this.$nextTick(() => {

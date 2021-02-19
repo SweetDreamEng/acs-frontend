@@ -8,7 +8,7 @@ const module = {
     savingMaterial: false,
     savingMaterialLocation: false,
     data: [],
-    materialLoactions: []
+    materialLocations: []
   },
 
   actions: {
@@ -50,6 +50,7 @@ const module = {
       try {
         const response = await api.updateMaterial(payload)
 
+        console.log(response.data)
         dispatch('app/showSuccess', response.data, { root: true })
       } catch (error) {
         dispatch('app/showError', {
@@ -154,7 +155,7 @@ const module = {
     SET_LOADING_MATERIALS(state, loading) { state.loadingMaterials = loading },
     SET_SAVING_MATERIAL(state, saving) { state.savingMaterial = saving },
 
-    SET_MATERIAL_LOCATIONS(state, locations) { state.materialLoactions = locations },
+    SET_MATERIAL_LOCATIONS(state, locations) { state.materialLocations = locations },
     SET_LOADING_MATERIAL_LOCATIONS(state, loading) { state.loadingMaterialLocations = loading },
     SET_SAVING_MATERIAL_LOCATION(state, saving) { state.savingMaterialLocation = saving }
   }

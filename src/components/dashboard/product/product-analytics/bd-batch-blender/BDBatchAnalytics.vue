@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <overview
           namespace="overview-id1"
           :machine-id="machineId"
@@ -10,7 +10,7 @@
         >
         </overview>
       </v-col>
-      <v-col v-if="parameters.includes(1)" md="4" sm="12">
+      <v-col v-if="parameters.includes(1)" cols="12" md="4">
         <area-graph
           namespace="areaGraph-dbBlender-utilization"
           title="Capacity Utilization"
@@ -23,7 +23,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col v-if="parameters.includes(2)" md="4" sm="12">
+      <v-col v-if="parameters.includes(2)" cols="12" md="4">
         <area-graph
           namespace="areaGraph-dbBlender-consumption"
           title="Energy Consumption"
@@ -36,7 +36,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col v-if="parameters.includes(3)" md="8" sm="12">
+      <v-col v-if="parameters.includes(3)" cols="12" md="8">
         <bar-graph
           namespace="barGraph-dbBlender-id1"
           title="Target Weights vs Actual Weights"
@@ -49,7 +49,7 @@
         >
         </bar-graph>
       </v-col>
-      <v-col v-if="parameters.includes(5)" md="4" sm="12">
+      <v-col v-if="parameters.includes(5)" cols="12" md="4">
         <recipe
           :loading="loadingRecipe"
           :recipes="recipeValues"
