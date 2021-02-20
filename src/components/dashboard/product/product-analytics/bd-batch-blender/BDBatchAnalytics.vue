@@ -63,6 +63,8 @@
         <inventory
           :is-loading="loadingInventories"
           :inventories="inventories"
+          :serial-number="serialNumber"
+          @reload="getInventory({ serialNumber })"
         >
         </inventory>
       </v-col>

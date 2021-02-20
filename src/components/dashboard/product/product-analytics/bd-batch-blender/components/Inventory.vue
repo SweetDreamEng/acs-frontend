@@ -7,6 +7,14 @@
     >
       <v-card-title>
         Inventories
+        <v-btn
+          icon
+          small
+          class="ml-auto"
+          @click="$emit('reload')"
+        >
+          <v-icon>mdi-refresh</v-icon>
+        </v-btn>
       </v-card-title>
       <v-card-text>
         <div v-if="inventories.length" class="d-flex flex-wrap px-2">
@@ -28,8 +36,8 @@
                   <v-icon small>mdi-pencil</v-icon>
                 </v-btn>
               </div>
-              <div class="text-body-2" v-text="'Material ' + (i + 1)"></div>
-              <div class="text-body-2" v-text="'Location ' + (i + 1)"></div>
+              <div class="text-body-2">{{ materialText(i) }}</div>
+              <div class="text-body-2">{{ locationText(i) }}</div>
             </v-col>
           </v-row>
         </div>
@@ -109,6 +117,10 @@ export default {
     inventories: {
       type: Array,
       default: () => []
+    },
+    serialNumber: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -116,20 +128,23 @@ export default {
       editDialog: false,
       isEditFormValid: true,
 
+      editedIndex: -1,
+
       editItem: {
-        material: '',
-        location: ''
+        material: -1,
+        location: -1
       }
     }
   },
   computed: {
     ...mapState({
-      savingMaterial: (state) => state.materials.savingMaterial,
+      savingMaterial: (state) => state.bdBlenderAnalytics.savingMaterial,
       materials: (state) => state.materials.data,
-      locations: (state) => state.materials.materialLocations
+      locations: (state) => state.materials.materialLocations,
+      inventoryMaterial: (state) => state.bdBlenderAnalytics.inventoryMaterial
     }),
     dialogText () {
-      return 'Feeder 1'
+      return `Feeder ${this.editedIndex + 1}`
     }
   },
   mounted() {
@@ -139,23 +154,155 @@ export default {
   methods: {
     ...mapActions({
       getMaterials: 'materials/getMaterials',
-      getMaterialLocations: 'materials/getMaterialLocations'
+      updateInventoryMaterial: 'bdBlenderAnalytics/updateInventoryMaterial',
+      getMaterialLocations: 'materials/getMaterialLocations',      
+      getInventory: 'bdBlenderAnalytics/getInventory'
     }),
 
     editMaterial(item) {
-      console.log(item)
-      // this.editedIndex = this.materials.indexOf(item)
-      // this.editItem = Object.assign({}, item)
+      this.editedIndex = item
+
+      switch (item) {
+      case 0:
+        this.editItem.material = this.inventoryMaterial.material1_id
+        this.editItem.location = this.inventoryMaterial.location1_id
+        break
+      case 1:
+        this.editItem.material = this.inventoryMaterial.material2_id
+        this.editItem.location = this.inventoryMaterial.location2_id
+        break
+      case 2:
+        this.editItem.material = this.inventoryMaterial.material3_id
+        this.editItem.location = this.inventoryMaterial.location3_id
+        break
+      case 3:
+        this.editItem.material = this.inventoryMaterial.material4_id
+        this.editItem.location = this.inventoryMaterial.location4_id
+        break
+      case 4:
+        this.editItem.material = this.inventoryMaterial.material5_id
+        this.editItem.location = this.inventoryMaterial.location5_id
+        break
+      case 5:
+        this.editItem.material = this.inventoryMaterial.material6_id
+        this.editItem.location = this.inventoryMaterial.location6_id
+        break
+      case 6:
+        this.editItem.material = this.inventoryMaterial.material7_id
+        this.editItem.location = this.inventoryMaterial.location7_id
+        break
+      case 7:
+        this.editItem.material = this.inventoryMaterial.material8_id
+        this.editItem.location = this.inventoryMaterial.location8_id
+        break
+      default:
+        break
+      }
+
       this.editDialog = true
-      // this.$nextTick(() => {
-      //   this.$refs.editForm.resetValidation()
-      // })
+      this.$nextTick(() => {
+        this.$refs.editForm.resetValidation()
+      })
     },
     close () {
       this.editDialog = false
     },
-    submit () {
+    async submit () {
+      if (this.$refs.editForm.validate()) {
+        try {
+          await this.updateInventoryMaterial({
+            id: this.editedIndex,
+            serialNumber: this.serialNumber,
+            location: this.editItem.location,
+            material: this.editItem.material
+          })
 
+          this.getInventory({ serialNumber: this.serialNumber })
+          this.close()
+        } catch (err) {
+          console.log(err)
+        }
+      }
+    },
+    materialText(ind) {
+      let m = null
+
+      switch (ind) {
+      case 0:
+        m = this.materials.find((material) => material.id === this.inventoryMaterial.material1_id)
+
+        return m ? m.material : 'Not Selected'
+      case 1:
+        m = this.materials.find((material) => material.id === this.inventoryMaterial.material2_id)
+
+        return m ? m.material : 'Not Selected'
+      case 2:
+        m = this.materials.find((material) => material.id === this.inventoryMaterial.material3_id)
+
+        return m ? m.material : 'Not Selected'
+      case 3:
+        m = this.materials.find((material) => material.id === this.inventoryMaterial.material4_id)
+
+        return m ? m.material : 'Not Selected'
+      case 4:
+        m = this.materials.find((material) => material.id === this.inventoryMaterial.material5_id)
+
+        return m ? m.material : 'Not Selected'
+      case 5:
+        m = this.materials.find((material) => material.id === this.inventoryMaterial.material6_id)
+
+        return m ? m.material : 'Not Selected'
+      case 6:
+        m = this.materials.find((material) => material.id === this.inventoryMaterial.material7_id)
+
+        return m ? m.material : 'Not Selected'
+      case 7:
+        m = this.materials.find((material) => material.id === this.inventoryMaterial.material8_id)
+
+        return m ? m.material : 'Not Selected'
+      default:
+        break
+      }
+    },
+    locationText(ind) {
+      let m = null
+
+      switch (ind) {
+      case 0:
+        m = this.locations.find((location) => location.id === this.inventoryMaterial.location1_id)
+
+        return m ? m.location : 'Not Selected'
+      case 1:
+        m = this.locations.find((location) => location.id === this.inventoryMaterial.location2_id)
+
+        return m ? m.location : 'Not Selected'
+      case 2:
+        m = this.locations.find((location) => location.id === this.inventoryMaterial.location3_id)
+
+        return m ? m.location : 'Not Selected'
+      case 3:
+        m = this.locations.find((location) => location.id === this.inventoryMaterial.location4_id)
+
+        return m ? m.location : 'Not Selected'
+      case 4:
+        m = this.locations.find((location) => location.id === this.inventoryMaterial.location5_id)
+
+        return m ? m.location : 'Not Selected'
+      case 5:
+        m = this.locations.find((location) => location.id === this.inventoryMaterial.location6_id)
+
+        return m ? m.location : 'Not Selected'
+      case 6:
+        m = this.locations.find((location) => location.id === this.inventoryMaterial.location7_id)
+
+        return m ? m.location : 'Not Selected'
+      case 7:
+        m = this.locations.find((location) => location.id === this.inventoryMaterial.location8_id)
+
+        return m ? m.location : 'Not Selected'
+      default:
+        break
+      }
     }
   }
 }
