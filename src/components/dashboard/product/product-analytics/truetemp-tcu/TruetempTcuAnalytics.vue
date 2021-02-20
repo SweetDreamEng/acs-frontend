@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <overview
           namespace="overview-id11"
           :machine-id="machineId"
@@ -10,13 +10,13 @@
         >
         </overview>
       </v-col>
-      <v-col v-if="parameters.includes(1)" md="4" sm="12">
+      <v-col v-if="parameters.includes(1)" cols="12" md="4">
         <machine-state
           :loading="loadingMachineState"
           :machine="machineState"
         ></machine-state>
       </v-col>
-      <v-col v-if="parameters.includes(2)" md="4" sm="12">
+      <v-col v-if="parameters.includes(2)" cols="12" md="4">
         <bar-graph
           namespace="barGraph-id1"
           title="TCU Temperature"

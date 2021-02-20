@@ -9,7 +9,7 @@
 
     <v-snackbar
       v-model="toast.show"
-      :timeout="toast.timeout"
+      :timeout="3000"
       :color="toast.color"
       top
       right
@@ -18,14 +18,8 @@
         <v-icon class="mr-2">{{ toast.icon }}</v-icon>
         <span>{{ toast.message }}</span>
       </div>
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          icon
-          v-bind="attrs"
-          @click="toast.show = false"
-        >
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
+      <template v-slot:action>
+        <v-icon @click="toast.show = false">mdi-close</v-icon>
       </template>
     </v-snackbar>
   </v-app>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <overview
           namespace="overview-id6"
           :machine-id="machineId"
@@ -10,7 +10,7 @@
         >
         </overview>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <area-graph
           namespace="areaGraph-ngxDryer-utilization"
           title="Capacity Utilization"
@@ -23,7 +23,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <area-graph
           namespace="areaGraph-ngxDryer-consumption"
           title="Energy Consumption"
@@ -36,8 +36,6 @@
         >
         </area-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
       <v-col cols="12" md="4">
         <drying-hopper-states
           :loading="loadingDryingHoppers"
@@ -58,8 +56,6 @@
         >
         </bar-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
       <v-col cols="12" md="4">
         <area-graph
           namespace="areaGraph-ngxDryer-dew-temperature"

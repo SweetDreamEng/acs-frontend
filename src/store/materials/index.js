@@ -32,7 +32,7 @@ const module = {
       try {
         const response = await api.addMaterial(payload)
 
-        dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
         dispatch('app/showError', {
           error
@@ -50,8 +50,7 @@ const module = {
       try {
         const response = await api.updateMaterial(payload)
 
-        console.log(response.data)
-        dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
         dispatch('app/showError', {
           error
@@ -69,7 +68,7 @@ const module = {
       try {
         const response = await api.deleteMaterial(payload)
 
-        dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
         dispatch('app/showError', {
           error
@@ -101,7 +100,7 @@ const module = {
       try {
         const response = await api.addMaterialLocation(payload)
 
-        dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
         dispatch('app/showError', {
           error
@@ -119,7 +118,7 @@ const module = {
       try {
         const response = await api.updateMaterialLocation(payload)
 
-        dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
         dispatch('app/showError', {
           error
@@ -137,7 +136,7 @@ const module = {
       try {
         const response = await api.deleteMaterialLocation(payload)
 
-        dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
         dispatch('app/showError', {
           error

@@ -8,8 +8,6 @@
         >
         </bed-states>
       </v-col>
-    </v-row>
-    <v-row dense>
       <v-col cols="12" md="6">
         <area-graph
           namespace="areaGraph-ngxDryer-id1"
@@ -32,8 +30,6 @@
         >
         </area-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
       <v-col cols="12" md="6">
         <area-graph
           namespace="areaGraph-ngxDryer-id3"

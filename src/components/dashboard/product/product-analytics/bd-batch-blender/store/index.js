@@ -39,7 +39,6 @@ const module = {
     },
 
     async getInventory({ commit }, payload) {
-      commit('SET_INVENTORIES', [])
       commit('SET_LOADING_INVENTORIES', true)
 
       try {

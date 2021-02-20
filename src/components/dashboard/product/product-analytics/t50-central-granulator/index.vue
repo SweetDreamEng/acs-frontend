@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <overview
           namespace="overview-id8"
           :machine-id="machineId"
@@ -10,7 +10,7 @@
         >
         </overview>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <area-graph
           namespace="areaGraph-t50-utilization"
           title="Capacity Utilization"
@@ -23,7 +23,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <area-graph
           namespace="areaGraph-t50-consumption"
           title="Energy Consumption"
@@ -36,11 +36,9 @@
         >
         </area-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="8" sm="12">
+      <v-col cols="12" md="8">
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
       </v-col>
     </v-row>
   </div>

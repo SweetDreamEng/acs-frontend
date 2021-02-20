@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <overview
           namespace="overview-id3"
           :machine-id="machineId"
@@ -10,7 +10,7 @@
         >
         </overview>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <area-graph
           namespace="areaGraph-gh-utilization"
           title="Capacity Utilization"
@@ -23,7 +23,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <area-graph
           namespace="areaGraph-gh-consumption"
           title="Energy Consumption"
@@ -36,12 +36,10 @@
         >
         </area-graph>
       </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <machine-states :loading="loadingMachineStates" :machine-states="machineStates"></machine-states>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <area-graph
           namespace="areaGraph-gh-inventory"
           title="Accumulated Hopper Inventory"
@@ -53,7 +51,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col cols="12" md="4">
         <area-graph
           namespace="areaGraph-gh-hauloff-length"
           title="Accumulated Hauloff Length"
