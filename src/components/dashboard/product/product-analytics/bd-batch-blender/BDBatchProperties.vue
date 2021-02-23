@@ -5,7 +5,7 @@
         <area-graph
           namespace="areaGraph-dbBlender-process-rate"
           title="Process Rate"
-          unit="kgs/hr"
+          unit="imperial-metric"
           :height="300"
           :fetch="getProcessRate"
           :machine-id="machineId"
@@ -18,7 +18,7 @@
         <area-graph
           namespace="areaGraph-dbBlender-capability"
           title="Blender Capability"
-          unit="kgs/hr"
+          unit="imperial-metric"
           :height="300"
           :fetch="getBlenderCapability"
           :machine-id="machineId"
@@ -31,7 +31,7 @@
         <area-graph
           namespace="areaGraph-dbBlender-calibration"
           title="Calibration Factor"
-          unit="kgs/hr"
+          unit="imperial-metric"
           :height="300"
           :fetch="getFeederCalibrationFactors"
           :machine-id="machineId"
