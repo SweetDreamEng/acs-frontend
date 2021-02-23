@@ -14,6 +14,19 @@
         >
         </area-graph>
       </v-col>
+      <v-col cols="12" md="4">
+        <area-graph
+          namespace="areaGraph-dbBlender-capability"
+          title="Blender Capability"
+          unit="kgs/hr"
+          :height="300"
+          :fetch="getBlenderCapability"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
+          :names="['Blender Capability']"
+        >
+        </area-graph>
+      </v-col>
       <v-col v-if="parameters.includes(102)" cols="12" md="4">
         <area-graph
           namespace="areaGraph-dbBlender-calibration"
@@ -83,6 +96,7 @@ export default {
       showTimeRangeChooser: false,
       conveyingCategories: ['Loader 1', 'Loader 2', 'Loader 3', 'Loader 4', 'Loader 5', 'Loader 6', 'Loader 7', 'Loader 8', 'Loader 9'],
       getStationConveyings: api.getStationConveyings,
+      getBlenderCapability: api.getBlenderCapability,
       getProcessRate: api.getProcessRate,
       getFeederCalibrationFactors: api.getFeederCalibrationFactors
     }

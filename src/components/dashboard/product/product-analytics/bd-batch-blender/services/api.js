@@ -27,6 +27,11 @@ export default {
   getProcessRate(payload) {
     return api.post('/analytics/blender/process-rate', payload)
   },
+
+  getBlenderCapability(payload) {
+    return api.post('/analytics/blender/capability', payload)
+  },
+
   updateInventoryMaterial(payload) {
     return api.$post('/analytics/blender/inventory-material', payload)
   }
