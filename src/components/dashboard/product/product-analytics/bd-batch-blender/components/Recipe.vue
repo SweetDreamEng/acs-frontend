@@ -156,7 +156,7 @@ export default {
 
       for (let i = 0; i < 8; i++) {
         if (this.ezTypes[i] === 1) {
-          ret += `Hopper[${i + 1}] ADD ${this.recipes[i]}%`
+          ret += this.recipes[i] ? `Hopper[${i + 1}] ADD ${this.recipes[i]}%` : ''
         }
         ret += '&nbsp;&nbsp;'
       }

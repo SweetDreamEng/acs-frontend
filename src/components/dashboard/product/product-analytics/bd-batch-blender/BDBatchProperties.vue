@@ -28,17 +28,16 @@
         </area-graph>
       </v-col>
       <v-col v-if="parameters.includes(102)" cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-dbBlender-calibration"
+        <bar-graph
+          namespace="barGraph-dbBlender-calibration"
           title="Calibration Factor"
-          unit="imperial-metric"
           :height="300"
           :fetch="getFeederCalibrationFactors"
           :machine-id="machineId"
           :serial-number="serialNumber"
-          :names="['Calibration Factor']"
+          :categories="calibrationFactorCategories"
         >
-        </area-graph>
+        </bar-graph>
       </v-col>
       <v-col v-if="parameters.includes(103)" cols="12" md="4">
         <hopper-stable
@@ -95,6 +94,7 @@ export default {
     return {
       showTimeRangeChooser: false,
       conveyingCategories: ['Loader 1', 'Loader 2', 'Loader 3', 'Loader 4', 'Loader 5', 'Loader 6', 'Loader 7', 'Loader 8', 'Loader 9'],
+      calibrationFactorCategories: ['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6', 'Feeder 7', 'Feeder 8'],
       getStationConveyings: api.getStationConveyings,
       getBlenderCapability: api.getBlenderCapability,
       getProcessRate: api.getProcessRate,
