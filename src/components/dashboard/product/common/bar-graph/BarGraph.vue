@@ -110,7 +110,7 @@ export default {
         },
         fill: {
           // colors: [this.$vuetify.theme.themes.light.primary, `${this.$vuetify.theme.themes.light.primary}90`, `${this.$vuetify.theme.themes.light.primary}50`],
-          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, '#00E396', '#FEB019', '#FF4560', '#775DD0'],
+          // colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, '#00E396', '#FEB019', '#FF4560', '#775DD0'],
           opacity: 0.9,
           type: 'solid'
         },
@@ -140,10 +140,10 @@ export default {
           max: (this.seriesMax + 2) * 1.1
         },
         legend: {
-          show: true,
-          markers: {
-            fillColors: [this.$vuetify.theme.themes.light.primary, `${this.$vuetify.theme.themes.light.primary}90`, `${this.$vuetify.theme.themes.light.primary}50`]
-          }
+          show: true
+          // markers: {
+          //   fillColors: [this.$vuetify.theme.themes.light.primary, `${this.$vuetify.theme.themes.light.primary}90`, `${this.$vuetify.theme.themes.light.primary}50`]
+          // }
         },
         tooltip: {
           enabled: false

@@ -69,6 +69,18 @@
         >
         </area-graph>
       </v-col>
+      <v-col cols="12" md="4">
+        <area-graph
+          namespace="areaGraph-ngxDryer-region-temperature"
+          title="Region Air Temperature"
+          :height="220"
+          unit="ºC"
+          :fetch="getRegionAirTemperature"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
+        >
+        </area-graph>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -104,6 +116,7 @@ export default {
     return {
       getHopperTemperatures: api.getHopperTemperatures,
       getDewPointTemperature: api.getDewPointTemperature,
+      getRegionAirTemperature: api.getRegionAirTemperature,
       getOverview: commonApi.getOverview,
       getUtilization: commonApi.getUtilization,
       getEnergyConsumption: commonApi.getEnergyConsumption

@@ -97,7 +97,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('machines', ['timeRangeLabel']),
+    ...mapGetters('machines', ['timeRangeLabel', 'timeRangeFromTo']),
     isLoading() {
       return this.$store.state[this.namespace]['isLoading']
     },
@@ -152,7 +152,9 @@ export default {
           width: 2
         },
         xaxis: {
-          type: 'datetime'
+          type: 'datetime',
+          min: this.timeRangeFromTo(this.timeRange).from,
+          max: this.timeRangeFromTo(this.timeRange).to
         }
       }
     }

@@ -26,5 +26,9 @@ export default {
 
   getBlowerRunHours(data) {
     return api.post('/analytics/ngx-dryer/blower-run-hours', data)
+  },
+
+  getRegionAirTemperature(data) {
+    return api.post('/analytics/ngx-dryer/region-air-temperature', data)
   }
 }
