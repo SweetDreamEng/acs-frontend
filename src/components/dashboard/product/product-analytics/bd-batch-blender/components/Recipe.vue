@@ -135,7 +135,7 @@ export default {
         }
       }
 
-      return ret
+      return ret ? ret : 'No Regrind'
     },
     additiveLabel() {
       const naturals = []
@@ -150,7 +150,7 @@ export default {
         ret = `Hopper[${naturals[0]}] AUTO&nbsp;&nbsp;`
       } else {
         for (let i = 0; i < naturals.length; i++) {
-          ret += `Hopper[${naturals[0]}] ${100 / naturals.length}&nbsp;&nbsp;`
+          ret += `Hopper[${naturals[i] + 1}] NAT ${this.recipes[i]}%&nbsp;&nbsp;`
         }
       }
 
