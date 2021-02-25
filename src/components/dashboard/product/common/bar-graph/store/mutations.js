@@ -2,8 +2,9 @@ export default () => ({
   SET_LOADING: (state, loading) => {
     state.isLoading = loading
   },
-  LOADED: (state, items) => {
-    state.items = items
+  LOADED: (state, data) => {
+    state.items = data.items
+    state.unit = data.unit
     state.isLoading = false
   }
 })

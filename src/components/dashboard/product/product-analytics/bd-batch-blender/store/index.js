@@ -4,9 +4,8 @@ const module = {
   namespaced: true,
   state: {
     loadingInventories: false,
-    inventories: [],
+    inventory: [],
     savingMaterial: false,
-    inventoryMaterial: {},
 
     loadingRecipe: false,
     recipeValues: [],
@@ -58,7 +57,7 @@ const module = {
       try {
         const response = await api.updateInventoryMaterial(payload)
 
-        dispatch('app/showSuccess', response.data, { root: true })
+        dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
         dispatch('app/showError', {
           error: 'Failed to save material'
@@ -96,8 +95,7 @@ const module = {
     SET_RECIPE_MODE(state, mode) { state.recipeMode = mode },
     SET_EZ_TYPES(state, types) { state.ezTypes = types },
     SET_INVENTORIES(state, data) {
-      state.inventories = data.inventories
-      state.inventoryMaterial = data.inventory_material
+      state.inventory = data.data
     },
     SET_LOADING_MATERIAL_INVENTORY(state, loading) { state.savingMaterial = loading },
     SET_HOPPER_STABLES(state, stables) { state.hopperStables = stables }

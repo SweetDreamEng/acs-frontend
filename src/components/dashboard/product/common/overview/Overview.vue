@@ -20,6 +20,7 @@
           <div>PLC Software Version: <small>{{ overview.version }}</small></div>
           <div>PLC Software Build: <small>{{ overview.software_build }}</small></div>
           <div>Serial Number: <small>{{ overview.serial }}</small></div>
+          <div>{{ overview.running ? 'Running' : 'Not Running' }}</div>
         </div>
       </v-card-text>
     </template>

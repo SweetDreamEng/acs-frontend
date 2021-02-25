@@ -5,7 +5,7 @@ export default (fetch) => {
     try {
       const response = await fetch(payload)
 
-      commit('LOADED', response.data.items)
+      commit('LOADED', response.data)
     } catch (error) {
       console.log(error)
       commit('SET_LOADING', false)

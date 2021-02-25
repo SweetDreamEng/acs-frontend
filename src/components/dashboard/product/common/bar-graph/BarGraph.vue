@@ -58,10 +58,6 @@ export default {
       type: Number,
       default: 300
     },
-    unit: {
-      type: String,
-      default: ''
-    },
     names: {
       type: Array,
       default: () => []
@@ -95,6 +91,9 @@ export default {
         return [{
           data: (this.$store.state[this.namespace]['items']) ? (this.$store.state[this.namespace]['items']) : []
         }]
+    },
+    graphUnit() {
+      return this.$store.state[this.namespace]['unit'] ? this.$store.state[this.namespace]['unit'] : ''
     },
     chartOptions() {
       return {
@@ -133,9 +132,7 @@ export default {
             colors: ['#000']
           },
           formatter: (value, { seriesIndex, dataPointIndex, w }) => {
-            const unit = this.unit ? this.unit : ''
-
-            return value + unit
+            return `${value} ${this.graphUnit}`
           }
         },
         xaxis: {

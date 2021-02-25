@@ -61,8 +61,6 @@
       </v-col>
       <v-col v-if="parameters.includes(4)" cols="12">
         <inventory
-          :is-loading="loadingInventories"
-          :inventories="inventories"
           :serial-number="serialNumber"
           @reload="getInventory({ serialNumber })"
         >
@@ -115,9 +113,7 @@ export default {
   },
   computed: {
     ...mapState('bdBlenderAnalytics', [
-      'loadingInventories',
       'loadingRecipe',
-      'inventories',
       'recipeValues',
       'ezTypes',
       'recipeMode'
@@ -125,12 +121,11 @@ export default {
   },
   mounted() {
     this.getRecipe({ serialNumber: this.serialNumber })
-    this.getInventory({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions('bdBlenderAnalytics', [
-      'getInventory',
-      'getRecipe'
+      'getRecipe',
+      'getInventory'
     ])
   }
 }
