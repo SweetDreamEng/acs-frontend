@@ -45,7 +45,7 @@
           :machine-id="machineId"
           :serial-number="serialNumber"
           :names="['Actual', 'Target']"
-          :categories="['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6', 'Feeder 7', 'Feeder 8']"
+          :categories="['Hopper 1', 'Hopper 2', 'Hopper 3', 'Hopper 4', 'Hopper 5', 'Hopper 6', 'Hopper 7', 'Hopper 8']"
         >
         </bar-graph>
       </v-col>

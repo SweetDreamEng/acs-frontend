@@ -5,7 +5,7 @@
       <v-list v-if="stables.length">
         <v-list-item v-for="(stable, i) in stables" :key="i" style="min-height: 36px;">
           <v-list-item-content class="py-1">
-            {{ `Feeder ${i + 1}` }}
+            {{ `Hopper ${i + 1}` }}
           </v-list-item-content>
 
           <v-list-item-action class="my-1">

@@ -94,7 +94,7 @@ export default {
     return {
       showTimeRangeChooser: false,
       conveyingCategories: ['Loader 1', 'Loader 2', 'Loader 3', 'Loader 4', 'Loader 5', 'Loader 6', 'Loader 7', 'Loader 8', 'Loader 9'],
-      calibrationFactorCategories: ['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6', 'Feeder 7', 'Feeder 8'],
+      calibrationFactorCategories: ['Hopper 1', 'Hopper 2', 'Hopper 3', 'Hopper 4', 'Hopper 5', 'Hopper 6', 'Hopper 7', 'Hopper 8'],
       getStationConveyings: api.getStationConveyings,
       getBlenderCapability: api.getBlenderCapability,
       getProcessRate: api.getProcessRate,

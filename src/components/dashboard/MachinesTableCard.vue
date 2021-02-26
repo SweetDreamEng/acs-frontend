@@ -61,16 +61,7 @@
 
         <!-- -->
         <template v-slot:item.status="{ item }">
-          <v-icon v-if="item.status" :color="getColor(item)" :style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
-          <v-badge
-            v-else
-            bordered
-            color="error"
-            icon="mdi-lan-disconnect"
-            overlap
-          >
-            <v-icon :color="getColor(item)" :style="{ fontSize:'30px' }">{{ getIcon(item) }}</v-icon>
-          </v-badge>
+          <v-icon :color="getColor(item)">{{ getIcon(item) }}</v-icon>
         </template>
         <template v-slot:item.location_id="{ item }">
           {{ locationName(item.location_id) }}
@@ -162,7 +153,7 @@ export default {
       // else return 'green'
       // if (item.status) return 'green'
       // else return 'primary'
-      return 'primary'
+      return item.status ? 'primary' : 'red'
     },
     getIcon(item) {
       // if (item.status === 'Warning') return 'mdi-alert'
@@ -170,7 +161,7 @@ export default {
       // else if (item.status === 'Not') return 'mdi-bell-circle'
       // else return 'mdi-check-circle-outline'
       if (item.status) return 'mdi-check-circle-outline'
-      else return 'mdi-bell-circle'
+      else return 'mdi-lan-disconnect'
     },
     productView(item) {
       this.$router.push({
