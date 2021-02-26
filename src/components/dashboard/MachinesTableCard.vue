@@ -164,13 +164,25 @@ export default {
       else return 'mdi-lan-disconnect'
     },
     productView(item) {
-      this.$router.push({
-        name: 'product-details',
-        params: {
-          configurationId: item.machine_id,
-          productId: item.serial_number
-        }
-      })
+      if (item.location_id && item.zone_id) {
+        this.$router.push({
+          name: 'product-acs-dashboard',
+          params: {
+            location: item.location_id,
+            zone: item.zone_id,
+            configurationId: item.machine_id,
+            productId: item.serial_number
+          }
+        })
+      } else {
+        this.$router.push({
+          name: 'product-details',
+          params: {
+            configurationId: item.machine_id,
+            productId: item.serial_number
+          }
+        })
+      }
     },
     remove (item) {
       this.headerColumnValues.splice(this.headerColumnValues.indexOf(item), 1)
