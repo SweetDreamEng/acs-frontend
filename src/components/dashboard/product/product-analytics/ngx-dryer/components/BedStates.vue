@@ -3,7 +3,7 @@
     <v-card-title>Bed States</v-card-title>
     <v-card-text class="px-2">
       <v-list v-if="states.length">
-        <v-list-item v-for="(state, i) in states" :key="i" style="min-height: 36px;">
+        <v-list-item v-for="(state, i) in states" :key="i">
           <v-list-item-content class="py-1">
             {{ state.name }}
           </v-list-item-content>

@@ -5,9 +5,11 @@ const module = {
   state: {
     loadingDryingHoppers: false,
     loadingBedStates: false,
+    loadingOnlineHours: false,
 
     dryingHoppers: {},
-    bedStates: []
+    bedStates: [],
+    onlineHours: []
   },
 
   actions: {
@@ -37,15 +39,30 @@ const module = {
       } finally {
         commit('SET_LOADING_BED_STATES', false)
       }
+    },
+    async getOnlineHours ({ state, commit }, payload) {
+      commit('SET_LOADING_ONLINE_HOURS', true)
+
+      try {
+        const response = await api.getOnlineHours(payload)
+
+        commit('SET_SET_ONLINE_HOURS', response.data.hours)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_ONLINE_HOURS', false)
+      }
     }
   },
 
   mutations: {
     SET_LOADING_DRYING_HOPPERS(state, isLoading) { state.loadingDryingHoppers = isLoading },
     SET_LOADING_BED_STATES(state, isLoading) { state.loadingBedStates = isLoading },
+    SET_LOADING_ONLINE_HOURS(state, isLoading) { state.loadingOnlineHours = isLoading },
 
     SET_DRYING_HOPPERS(state, values) { state.dryingHoppers = values },
-    SET_SET_BED_STATES(state, values) { state.bedStates = values }
+    SET_SET_BED_STATES(state, values) { state.bedStates = values },
+    SET_SET_ONLINE_HOURS(state, values) { state.onlineHours = values }
   }
 }
 
