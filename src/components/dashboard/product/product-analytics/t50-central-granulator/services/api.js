@@ -10,5 +10,9 @@ export default {
 
   getT50BearingTemp(payload) {
     return api.post('/analytics/t50-granulator/bearing-temp', payload)
+  },
+
+  getAmps(payload) {
+    return api.post('/analytics/t50-granulator/amps', payload)
   }
 }

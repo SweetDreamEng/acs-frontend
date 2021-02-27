@@ -13,7 +13,7 @@
       </v-btn>
     </v-card-title>
     <v-card-text>
-      <apexchart type="pie" height="360" :options="chartOptions" :series="recipeSeries"></apexchart>
+      <apexchart type="pie" height="420" :options="chartOptions" :series="recipeSeries"></apexchart>
     </v-card-text>
   </v-card>
 </template>
@@ -75,6 +75,14 @@ export default {
               return opts.w.config.series[opts.seriesIndex]
             else
               return [val.toFixed(2) + '%']
+          },
+          offset: 30
+        },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              offset: -30
+            }
           }
         },
         noData: {
@@ -85,8 +93,8 @@ export default {
           position: 'bottom',
           horizontalAlign: 'left',
           itemMargin: {
-            horizontal: 10,
-            vertical: 10
+            horizontal: 2,
+            vertical: 4
           }
         },
         tooltip: {
@@ -131,7 +139,7 @@ export default {
 
       for (let i = 0; i < 8; i++) {
         if (this.ezTypes[i] === 2) {
-          ret += `Hopper[${i + 1}] REG ${this.recipes[i]}%&nbsp;&nbsp;`
+          ret += `Hopper[${i + 1}] REG ${this.recipes[i]}%&nbsp;`
         }
       }
 
@@ -150,7 +158,7 @@ export default {
         ret = `Hopper[${naturals[0]}] AUTO&nbsp;&nbsp;`
       } else {
         for (let i = 0; i < naturals.length; i++) {
-          ret += `Hopper[${naturals[i] + 1}] NAT ${this.recipes[i]}%&nbsp;&nbsp;`
+          ret += `Hopper[${naturals[i] + 1}] NAT ${this.recipes[i]}%&nbsp;`
         }
       }
 
@@ -158,7 +166,7 @@ export default {
         if (this.ezTypes[i] === 1) {
           ret += this.recipes[i] ? `Hopper[${i + 1}] ADD ${this.recipes[i]}%` : ''
         }
-        ret += '&nbsp;&nbsp;'
+        ret += '&nbsp;;'
       }
 
       return ret

@@ -64,6 +64,13 @@
         >
         </bar-graph>
       </v-col>
+<!--       <v-col cols="12" md="4">
+        <t50-amp
+          :loading="loadingT50Amps"
+          :amps="t50Amps"
+        >
+        </t50-amp>
+      </v-col> -->
     </v-row>
   </div>
 </template>
@@ -76,6 +83,7 @@ import BarGraph from '../../common/bar-graph/BarGraph'
 import Overview from '../../common/overview/Overview'
 import T50Running from './components/T50Running'
 import T50Hours from './components/T50Hours'
+// import T50Amp from './components/T50Amp'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -86,6 +94,7 @@ export default {
     Overview,
     T50Running,
     T50Hours
+    // T50Amp
   },
   props: {
     machineId: {
@@ -121,18 +130,22 @@ export default {
     ...mapState('t50', [
       'loadingT50Runnings',
       'loadingT50Hours',
+      'loadingT50Amps',
       't50Runnings',
-      't50Hours'
+      't50Hours',
+      't50Amps'
     ])
   },
   mounted() {
     this.getRunnings({ serialNumber: this.serialNumber })
     this.getHours({ serialNumber: this.serialNumber })
+    // this.getAmps({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions('t50', [
       'getRunnings',
-      'getHours'
+      'getHours',
+      'getAmps'
     ])
   }
 }
