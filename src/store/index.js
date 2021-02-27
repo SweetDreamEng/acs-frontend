@@ -27,6 +27,7 @@ import vtcPlusConveying from '../components/dashboard/product/product-analytics/
 import ghGravimetricControlHopper from '../components/dashboard/product/product-analytics/gh-gravimetric-extrusion-control-hopper/store'
 import truetempTcu from '../components/dashboard/product/product-analytics/truetemp-tcu/store'
 import heChiller from '../components/dashboard/product/product-analytics/he-central-chiller/store'
+import t50 from '../components/dashboard/product/product-analytics/t50-central-granulator/store'
 
 Vue.use(Vuex)
 
@@ -52,14 +53,15 @@ const store = new Vuex.Store({
 
     barGraph,
     overviewCard,
-    
+
     bdBlenderAnalytics,
     accumeterOvationBlender,
     ghGravimetricControlHopper,
     ngxDryer,
     vtcPlusConveying,
     truetempTcu,
-    heChiller
+    heChiller,
+    t50
   }
 })
 
