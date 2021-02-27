@@ -56,7 +56,7 @@
         >
         </bar-graph>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="6">
         <area-graph
           namespace="areaGraph-ngxDryer-dew-temperature"
           title="Dew Point Temperature"
@@ -69,10 +69,10 @@
         >
         </area-graph>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="6">
         <area-graph
           namespace="areaGraph-ngxDryer-region-temperature"
-          title="Region Air Temperature"
+          title="Regen Temperatures"
           :height="220"
           unit="ºC"
           :fetch="getRegionAirTemperature"
