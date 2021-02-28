@@ -171,7 +171,7 @@ export default {
     }
   },
   mounted() {
-    this.getSeries({ serialNumber: this.serialNumber })
+    this.getSeries({ serialNumber: this.serialNumber, machineId: this.machineId })
   },
   methods: {
     ...mapActions({

@@ -55,6 +55,7 @@ import AccumeterOvationBlender from './product-analytics/accumeter-ovation-conti
 import GhGravimetricExtrusionControlHopper from './product-analytics/gh-gravimetric-extrusion-control-hopper/GhGravimetricProperties'
 import VtcPlusConveyingSystem from './product-analytics/vtc-plus-conveying-system/VtcPlusConveyingProperties'
 import NgxDryer from './product-analytics/ngx-dryer/NgxDryerProperties'
+import NgxNomadDryer from './product-analytics/ngx-nomad-dryer/NgxNomadDryerProperties'
 import TruetempTcu from './product-analytics/truetemp-tcu/TruetempTcuProperties'
 
 export default {
@@ -64,6 +65,7 @@ export default {
     GhGravimetricExtrusionControlHopper,
     VtcPlusConveyingSystem,
     NgxDryer,
+    NgxNomadDryer,
     TruetempTcu
   },
   props: {
@@ -100,7 +102,7 @@ export default {
       // case 4: return 'GhFGravimetricAdditiveFeeder'
       case 5: return 'VtcPlusConveyingSystem'
       case 6: return 'NgxDryer'
-      // case 7: return 'NgxNomadDryer'
+      case 7: return 'NgxNomadDryer'
       // case 8: return 'T50CentralGranulator'
       // case 9: return 'GpPortableChiller'
       case 11: return 'TruetempTcu'

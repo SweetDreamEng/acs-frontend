@@ -56,7 +56,7 @@ import GhGravimetricExtrusionControlHopper from './product-analytics/gh-gravimet
 import GhFGravimetricAdditiveFeeder from './product-analytics/gh-f-gravimetric-additive-feeder'
 import VtcPlusConveyingSystem from './product-analytics/vtc-plus-conveying-system/VtcPlusConveyingAnalytics'
 import NgxDryer from './product-analytics/ngx-dryer/NgxDryer'
-import NgxNomadDryer from './product-analytics/ngx-nomad-dryer'
+import NgxNomadDryer from './product-analytics/ngx-nomad-dryer/NgxNomadDryer.vue'
 import T50CentralGranulator from './product-analytics/t50-central-granulator/T50Analytics.vue'
 import GpPortableChiller from './product-analytics/gp-portable-chiller/PortableChillerAnalytics'
 import HeCentralChiller from './product-analytics/he-central-chiller/CentralChillerAnalytics'

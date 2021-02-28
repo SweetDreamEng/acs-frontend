@@ -23,6 +23,7 @@ import overviewCard from '../components/dashboard/product/common/overview/store'
 import bdBlenderAnalytics from '../components/dashboard/product/product-analytics/bd-batch-blender/store'
 import accumeterOvationBlender from '../components/dashboard/product/product-analytics/accumeter-ovation-continuous-blender/store'
 import ngxDryer from '../components/dashboard/product/product-analytics/ngx-dryer/store'
+import ngxNomadDryer from '../components/dashboard/product/product-analytics/ngx-nomad-dryer/store'
 import vtcPlusConveying from '../components/dashboard/product/product-analytics/vtc-plus-conveying-system/store'
 import ghGravimetricControlHopper from '../components/dashboard/product/product-analytics/gh-gravimetric-extrusion-control-hopper/store'
 import truetempTcu from '../components/dashboard/product/product-analytics/truetemp-tcu/store'
@@ -58,6 +59,7 @@ const store = new Vuex.Store({
     accumeterOvationBlender,
     ghGravimetricControlHopper,
     ngxDryer,
+    ngxNomadDryer,
     vtcPlusConveying,
     truetempTcu,
     heChiller,
