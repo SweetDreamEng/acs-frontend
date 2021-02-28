@@ -19,7 +19,7 @@
           </v-list-item-content>
 
           <v-list-item-action class="my-1">
-            <div class="align-center" style="width: 180px;">
+            <div class="align-center" style="width: 200px;">
               <v-icon left :color="circleColor(i, state.value)">mdi-circle</v-icon> {{ valueText(i, state.value) }}
             </div>
           </v-list-item-action>
