@@ -51,8 +51,8 @@ export default {
     ])
   },
   mounted() {
-    this.getBedStates({ serialNumber: this.serialNumber })
-    this.getOnlineHours({ serialNumber: this.serialNumber })
+    this.getBedStates({ serialNumber: this.serialNumber, machineId: this.machineId })
+    this.getOnlineHours({ serialNumber: this.serialNumber, machineId: this.machineId })
   },
   methods: {
     ...mapActions('ngxDryer', [

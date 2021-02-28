@@ -132,7 +132,7 @@ export default {
     }
   },
   mounted() {
-    this.getDryingHopperStats({ serialNumber: this.serialNumber })
+    this.getDryingHopperStats({ serialNumber: this.serialNumber, machineId: this.machineId })
   },
   methods: {
     ...mapActions('ngxDryer', [
