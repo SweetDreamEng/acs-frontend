@@ -10,7 +10,7 @@
         icon
         small
         class="ml-2"
-        @click="getSeries({ serialNumber })"
+        @click="getSeries({ serialNumber, machineId })"
       >
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
