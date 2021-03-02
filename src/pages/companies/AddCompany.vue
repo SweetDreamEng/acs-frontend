@@ -24,7 +24,7 @@
             <div class="flex-grow-1 pt-2 pa-sm-2">
               <v-form ref="accountForm" v-model="isAccountFormValid" lazy-validation @submit.prevent="submit">
                 <v-combobox
-                  v-model="customer.companyName"
+                  v-model="company.companyName"
                   :items="companies"
                   label="Company"
                   placeholder="Type in new company name or choose from existing for ex: Acme Inc"
@@ -36,7 +36,7 @@
                   @input="clearError"
                 ></v-combobox>
                 <v-text-field
-                  v-model="customer.administratorName"
+                  v-model="company.administratorName"
                   :rules="[$rules.required]"
                   :validate-on-blur="false"
                   label="Administrator Name"
@@ -46,7 +46,7 @@
                   @input="clearError"
                 ></v-text-field>
                 <v-text-field
-                  v-model="customer.administratorEmail"
+                  v-model="company.administratorEmail"
                   :rules="[$rules.required, $rules.emailFormat]"
                   :validate-on-blur="false"
                   label="Administrator Email"
@@ -78,7 +78,7 @@
             <v-row>
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="customer.address_1"
+                  v-model="company.address_1"
                   label="Address"
                   :rules="[$rules.required]"
                   outlined
@@ -86,7 +86,7 @@
                 >
                 </v-text-field>
                 <v-select
-                  v-model="customer.state"
+                  v-model="company.state"
                   label="State"
                   :items="states"
                   :rules="[$rules.required]"
@@ -96,8 +96,8 @@
                 >
                 </v-select>
                 <v-combobox
-                  v-if="customer.state"
-                  v-model="customer.city"
+                  v-if="company.state"
+                  v-model="company.city"
                   :items="cities"
                   label="City"
                   item-text="city"
@@ -112,14 +112,14 @@
                   :value="zipCode"
                   label="Zip Code"
                   :rules="[$rules.required]"
-                  :disabled="!customer.state || !customer.city"
+                  :disabled="!company.state || !company.city"
                   outlined
                   dense
                   readonly
                 >
                 </v-text-field>
                 <v-text-field
-                  v-model="customer.country"
+                  v-model="company.country"
                   :rules="[$rules.required]"
                   label="Country"
                   outlined
@@ -131,7 +131,7 @@
 
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="customer.phone"
+                  v-model="company.phone"
                   v-mask="'###-###-####'"
                   placeholder="123-456-7890"
                   :rules="[$rules.required, $rules.phoneFormat]"
@@ -156,11 +156,11 @@
 <script>
 /*
 |---------------------------------------------------------------------
-| Add Customer Page Component
-| url: /customers/add
+| Add Company Page Component
+| url: /companies/add
 |---------------------------------------------------------------------
 |
-| Create a new customer
+| Create a new company
 */
 import states from '../../services/data/states'
 import ErrorComponent from '../../components/common/ErrorComponent'
@@ -178,7 +178,7 @@ export default {
       breadcrumbs: [
         {
           text: 'Companies',
-          to: '/customers/list',
+          to: '/companies/list',
           exact: true
         },
         {
@@ -189,7 +189,7 @@ export default {
       states,
 
       // need change(remove single quote)
-      customer: {
+      company: {
         'companyName': '',
         'administratorName': '',
         'administratorEmail': '',
@@ -206,14 +206,14 @@ export default {
   },
   computed: {
     ...mapState({
-      button_loading: (state) => state.customers.button_loading,
+      button_loading: (state) => state.companies.button_loading,
       cities: (state) => state.cities.data,
-      errorMessages: (state) => state.customers.error,
-      companies: (state) => state.customers.companies,
+      errorMessages: (state) => state.companies.error,
+      companies: (state) => state.companies.companies,
       loadingCities: (state) => state.cities.loadingCities
     }),
     zipCode() {
-      const _zip = this.cities.find((city) => city.city === this.customer.city)
+      const _zip = this.cities.find((city) => city.city === this.company.city)
 
       return _zip ? _zip.zip : ''
     }
@@ -223,21 +223,21 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCompanies: 'customers/getCompanies',
-      addCustomer: 'customers/addCustomer',
+      getCompanies: 'companies/getCompanies',
+      addCompany: 'companies/addCompany',
       getCities: 'cities/getCities'
     }),
     onStateChange() {
-      this.getCities(this.customer.state)
+      this.getCities(this.company.state)
     },
     submit() {
       if (this.$refs.accountForm.validate()) {
         if (this.$refs.profileForm.validate()) {
-          const data = Object.assign(this.customer, {
+          const data = Object.assign(this.company, {
             zip: this.zipCode
           })
 
-          this.addCustomer(data)
+          this.addCompany(data)
         } else {
           this.tab = 1
         }
@@ -249,7 +249,7 @@ export default {
       }
     },
     clearError() {
-      this.$store.commit('customers/CLEAR_ERROR')
+      this.$store.commit('companies/CLEAR_ERROR')
     }
   }
 }

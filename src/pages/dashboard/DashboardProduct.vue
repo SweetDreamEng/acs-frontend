@@ -175,7 +175,7 @@ export default {
     ...mapState('devices', ['loadingDeviceConfig', 'error', 'deviceConfiguration']),
     ...mapState({
       notes: (state) => state.notes.data,
-      companies: (state) => state.customers.companies,
+      companies: (state) => state.companies.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
     ...mapState('alarms', ['loadingAlarmsTable', 'alarmTypes', 'alarms']),

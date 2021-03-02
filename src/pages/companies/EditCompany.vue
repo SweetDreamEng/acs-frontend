@@ -12,16 +12,16 @@
       <v-tab to="#tabs-information">Information</v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab" class="overflow-visible">
       <v-tab-item value="tabs-account">
         <account-tab
-          :customer-account="customerAccount"
+          :company-account="companyAccount"
           :companies="companies"
         ></account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
-        <information-tab :customer-profile="customerProfile"></information-tab>
+        <information-tab :company-profile="companyProfile"></information-tab>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -30,16 +30,16 @@
 <script>
 /*
 |---------------------------------------------------------------------
-| Edit Customer Page Component
-| url: /customers/edit/:id
+| Edit Company Page Component
+| url: /companies/edit/:id
 |---------------------------------------------------------------------
 |
-| Edit certain customer
+| Edit certain company
 */
 import { mapState, mapActions } from 'vuex'
 
-import AccountTab from '../../components/customers/edit/AccountTab'
-import InformationTab from '../../components/customers/edit/InformationTab'
+import AccountTab from '../../components/companies/edit/AccountTab'
+import InformationTab from '../../components/companies/edit/InformationTab'
 
 export default {
   components: {
@@ -52,7 +52,7 @@ export default {
       breadcrumbs: [
         {
           text: 'Companies',
-          to: '/customers/list',
+          to: '/companies/list',
           exact: true
         },
         {
@@ -63,9 +63,9 @@ export default {
   },
   computed: {
     ...mapState({
-      customerAccount: (state) => state.customers.customerAccount,
-      customerProfile: (state) => state.customers.customerProfile,
-      companies: (state) => state.customers.companies
+      companyAccount: (state) => state.companies.companyAccount,
+      companyProfile: (state) => state.companies.companyProfile,
+      companies: (state) => state.companies.companies
     })
   },
   mounted() {
@@ -73,12 +73,12 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCustomer: 'customers/getCustomer',
-      getCompanies: 'customers/getCompanies'
+      getCompany: 'companies/getCompany',
+      getCompanies: 'companies/getCompanies'
     }),
     open() {
       this.getCompanies()
-      this.getCustomer(this.$route.params.id)
+      this.getCompany(this.$route.params.id)
     }
   }
 }

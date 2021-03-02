@@ -324,7 +324,7 @@ export default {
       page: (state) => state.devices.page
     }),
     ...mapGetters({
-      companies: 'customers/extendedCompanies',
+      companies: 'companies/extendedCompanies',
       configurations: 'configurations/extendedConfigurations',
       canImportDevices: 'auth/canImportDevices',
       configurationName: 'configurations/configurationName'

@@ -78,7 +78,7 @@ import { mapState, mapActions } from 'vuex'
 import PieChart from '../../components/alarms/charts/PieChart'
 import LineChart from '../../components/alarms/charts/LineChart'
 import AlarmsPerMachine from './AlarmsPerMachine'
-import AlarmsByMachine from '../../components/alarms/customers/AlarmsByMachine'
+import AlarmsByMachine from '../../components/alarms/companies/AlarmsByMachine'
 
 export default {
   components: {

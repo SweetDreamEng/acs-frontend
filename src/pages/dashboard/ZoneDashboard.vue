@@ -44,7 +44,7 @@ export default {
   computed: {
     ...mapState({
       loadingMachinesTable: (state) => state.machines.loadingMachinesTable,
-      companies: (state) => state.customers.companies,
+      companies: (state) => state.companies.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
       devices: (state) => state.devices.data
     }),

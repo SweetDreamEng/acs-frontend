@@ -13,8 +13,8 @@ const module = {
     companyAdmins: [],
     companies: [],
 
-    customerAccount: null,
-    customerProfile: null
+    companyAccount: null,
+    companyProfile: null
   },
 
   actions: {
@@ -49,18 +49,18 @@ const module = {
       }
     },
 
-    async addCustomer({
+    async addCompany({
       commit, dispatch
     }, data) {
       commit('BUTTON_LOAD')
 
       try {
-        const response = await companyAPI.addCustomer(data)
+        const response = await companyAPI.addCompany(data)
 
         commit('CLEAR_ERROR')
         dispatch('app/showSuccess', response.data, { root: true })
         router.push({
-          name: 'customers-list'
+          name: 'companies-list'
         })
       } catch (error) {
         if (error.response.status === 422) {
@@ -81,14 +81,14 @@ const module = {
       commit('BUTTON_CLEAR')
     },
 
-    async getCustomer({
+    async getCompany({
       commit
     }, id) {
       try {
-        const response = await companyAPI.getCustomer(id)
+        const response = await companyAPI.getCompany(id)
 
-        commit('SET_CUSTOMER_ACCOUNT', response.data.customer)
-        commit('SET_CUSTOMER_PROFILE', response.data.profile)
+        commit('SET_COMPANY_ACCOUNT', response.data.customer)
+        commit('SET_COMPANY_PROFILE', response.data.profile)
         commit('cities/SET_DATA', response.data.cities, { root: true } )
       } catch (error) {
         console.log(error.response.data)
@@ -105,7 +105,7 @@ const module = {
 
         dispatch('app/showSuccess', response.data, { root: true })
         router.push({
-          name: 'customers-list'
+          name: 'companies-list'
         })
       } catch (error) {
         if (error.response.status === 422) {
@@ -136,7 +136,7 @@ const module = {
 
         dispatch('app/showSuccess', response.data, { root: true })
         router.push({
-          name: 'customers-list'
+          name: 'companies-list'
         })
       } finally {
         commit('BUTTON_CLEAR')
@@ -178,8 +178,8 @@ const module = {
     },
 
     SET_CUSTOMER_ADMINS(state, companyAdmins) { state.companyAdmins = companyAdmins },
-    SET_CUSTOMER_ACCOUNT(state, customerAccount) { state.customerAccount = customerAccount },
-    SET_CUSTOMER_PROFILE(state, customerProfile) { state.customerProfile = customerProfile }
+    SET_COMPANY_ACCOUNT(state, companyAccount) { state.companyAccount = companyAccount },
+    SET_COMPANY_PROFILE(state, companyProfile) { state.companyProfile = companyProfile }
   },
 
   getters: {

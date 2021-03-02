@@ -6,7 +6,7 @@
         <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
       </div>
       <v-spacer></v-spacer>
-      <v-btn v-if="canCreateCompanies" color="primary" to="/customers/add">
+      <v-btn v-if="canCreateCompanies" color="primary" to="/companies/add">
         <v-icon left>$mdi-plus</v-icon>
         Create Company
       </v-btn>
@@ -48,7 +48,7 @@
         </template>
         <template v-slot:item.action="{ item }">
           <div v-if="canCreateCompanies" class="actions">
-            <v-btn icon :to="`/customers/edit/${item.id}`">
+            <v-btn icon :to="`/companies/edit/${item.id}`">
               <v-icon small>$mdi-pencil</v-icon>
             </v-btn>
           </div>
@@ -61,11 +61,11 @@
 <script>
 /*
 |---------------------------------------------------------------------
-| Customers List Page Component
-| url: /customers/list
+| Companies List Page Component
+| url: /companies/list
 |---------------------------------------------------------------------
 |
-| List all customers and customer add/edit options
+| List all companies and company add/edit options
 */
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
@@ -91,8 +91,8 @@ export default {
   },
   computed: {
     ...mapState({
-      companyAdmins: (state) => state.customers.companyAdmins,
-      isTableLoading: (state) => state.customers.isTableLoading
+      companyAdmins: (state) => state.companies.companyAdmins,
+      isTableLoading: (state) => state.companies.isTableLoading
     }),
     ...mapGetters({
       canCreateCompanies: 'auth/canCreateCompanies'
@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCompanyAdmins: 'customers/getCompanyAdmins'
+      getCompanyAdmins: 'companies/getCompanyAdmins'
     }),
     open() {
       this.getCompanyAdmins()

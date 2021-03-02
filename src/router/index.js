@@ -9,7 +9,7 @@ import AppSettingsRoutes from './app-settings.routes'
 import ACSMachines from './acs-machines.routes'
 import PagesRoutes from './pages.routes'
 import UsersRoutes from './users.routes'
-import CustomersRoutes from './customers.routes'
+import CompaniesRoutes from './companies.routes'
 
 Vue.use(Router)
 
@@ -59,7 +59,7 @@ export const routes = [{
 ...ACSMachines,
 ...PagesRoutes,
 ...UsersRoutes,
-...CustomersRoutes,
+...CompaniesRoutes,
 {
   path: '/blank',
   name: 'blank',

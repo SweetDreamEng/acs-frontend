@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 // Global vuex
 import AppModule from './app'
 import auth from './auth'
-import customers from './customers'
+import companies from './companies'
 import machines from './machines'
 import settings from './settings'
 import users from './users'
@@ -44,7 +44,7 @@ const store = new Vuex.Store({
     zones,
     settings,
     locations,
-    customers,
+    companies,
     devices,
     cities,
     alarms,

@@ -14,7 +14,7 @@
     <br>
 
     <v-card>
-      <v-card-title>Alarm Per Customers</v-card-title>
+      <v-card-title>Alarm Per Companies</v-card-title>
       <v-card-text>
         <column-chart
           :series="columnSeries"

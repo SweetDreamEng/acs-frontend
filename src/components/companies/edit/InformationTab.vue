@@ -4,7 +4,7 @@
       <v-card-title>Account Information</v-card-title>
       <v-card-text>
         <v-form
-          v-if="customerProfile"
+          v-if="companyProfile"
           ref="profileForm"
           v-model="isProfileFormValid"
           lazy-validation
@@ -13,7 +13,7 @@
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
-                v-model="customerProfile.address_1"
+                v-model="companyProfile.address_1"
                 label="Address"
                 :rules="[$rules.required]"
                 outlined
@@ -21,7 +21,7 @@
               >
               </v-text-field>
               <v-select
-                v-model="customerProfile.state"
+                v-model="companyProfile.state"
                 label="State"
                 :items="states"
                 :rules="[$rules.required]"
@@ -31,13 +31,13 @@
               >
               </v-select>
               <v-combobox
-                v-model="customerProfile.city"
+                v-model="companyProfile.city"
                 :items="cities"
                 label="City"
                 item-text="city"
                 :return-object="false"
                 :rules="[$rules.required]"
-                :disabled="!customerProfile.state"
+                :disabled="!companyProfile.state"
                 outlined
                 dense
               ></v-combobox>
@@ -45,14 +45,14 @@
                 :value="zipCode"
                 label="Zip Code"
                 :rules="[$rules.required]"
-                :disabled="!customerProfile.state || !customerProfile.city"
+                :disabled="!companyProfile.state || !companyProfile.city"
                 outlined
                 dense
                 readonly
               >
               </v-text-field>
               <v-text-field
-                v-model="customerProfile.country"
+                v-model="companyProfile.country"
                 :rules="[$rules.required]"
                 label="Country"
                 outlined
@@ -63,7 +63,7 @@
 
             <v-col cols="12" md="6">
               <v-text-field
-                v-model="customerProfile.phone"
+                v-model="companyProfile.phone"
                 v-mask="'###-###-####'"
                 placeholder="123-456-7890"
                 :rules="[$rules.required, $rules.phoneFormat]"
@@ -90,13 +90,13 @@
 | Information Tab Component
 |---------------------------------------------------------------------
 |
-| Information tab in customer edit page
+| Information tab in company edit page
 */
 import states from '../../../services/data/states'
 import { mapState, mapActions } from 'vuex'
 export default {
   props: {
-    customerProfile: {
+    companyProfile: {
       type: Object,
       default: () => ({
         address_1: '',
@@ -115,26 +115,26 @@ export default {
   }),
   computed: {
     ...mapState({
-      isLoading: (state) => state.customers.button_loading,
+      isLoading: (state) => state.companies.button_loading,
       cities: (state) => state.cities.data
     }),
     zipCode() {
-      const _zip = this.cities.find((city) => city.city === this.customerProfile.city)
+      const _zip = this.cities.find((city) => city.city === this.companyProfile.city)
 
       return _zip ? _zip.zip : ''
     }
   },
   methods: {
     ...mapActions({
-      updateProfile: 'customers/updateProfile',
+      updateProfile: 'companies/updateProfile',
       getCities: 'cities/getCities'
     }),
     onStateChange() {
-      this.getCities(this.customerProfile.state)
+      this.getCities(this.companyProfile.state)
     },
     submit() {
       if (this.$refs.profileForm.validate()) {
-        const data = Object.assign(this.customerProfile, {
+        const data = Object.assign(this.companyProfile, {
           zip: this.zipCode
         })
 

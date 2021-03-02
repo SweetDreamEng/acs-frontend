@@ -6,14 +6,14 @@
         <div class="d-flex flex-column flex-sm-row">
           <div class="flex-grow-1 pt-2 pa-sm-2">
             <v-form
-              v-if="customerAccount"
+              v-if="companyAccount"
               ref="accountForm"
               v-model="isAccountFormValid"
               lazy-validation
               @submit.prevent="submit"
             >
               <v-combobox
-                v-model="customerAccount.companyName"
+                v-model="companyAccount.companyName"
                 :items="companies"
                 label="Company"
                 placeholder="Type in new company name or choose from existing for ex: Acme Inc"
@@ -25,7 +25,7 @@
                 @input="resetErrors"
               ></v-combobox>
               <v-text-field
-                v-model="customerAccount.name"
+                v-model="companyAccount.name"
                 :rules="[$rules.required]"
                 :validate-on-blur="false"
                 dense
@@ -34,7 +34,7 @@
                 @input="resetErrors"
               ></v-text-field>
               <v-text-field
-                v-model="customerAccount.email"
+                v-model="companyAccount.email"
                 :rules="[$rules.required, $rules.emailFormat]"
                 :validate-on-blur="false"
                 dense
@@ -115,7 +115,7 @@
 | Account Tab Component
 |---------------------------------------------------------------------
 |
-| Account tab in customer edit page
+| Account tab in company edit page
 */
 import { mapState, mapActions } from 'vuex'
 import ErrorComponent from '../../common/ErrorComponent'
@@ -125,7 +125,7 @@ export default {
     ErrorComponent
   },
   props: {
-    customerAccount: {
+    companyAccount: {
       type: Object,
       default: () => {}
     },
@@ -148,8 +148,8 @@ export default {
   },
   computed: {
     ...mapState({
-      isLoading: (state) => state.customers.button_loading,
-      error: (state) => state.customers.error
+      isLoading: (state) => state.companies.button_loading,
+      error: (state) => state.companies.error
     })
   },
   destroyed() {
@@ -157,11 +157,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      updateAccount: 'customers/updateAccount'
+      updateAccount: 'companies/updateAccount'
     }),
     submit() {
       if (this.$refs.accountForm.validate()) {
-        this.updateAccount(this.customerAccount)
+        this.updateAccount(this.companyAccount)
       }
     },
     resetErrors() {

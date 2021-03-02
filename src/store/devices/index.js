@@ -57,7 +57,7 @@ const module = {
         commit('SET_PAGINATION_DATA', {
           pageCount: response.data.last_page
         })
-        commit('customers/SET_CUSTOMERS', response.data.companies, { root: true })
+        commit('companies/SET_CUSTOMERS', response.data.companies, { root: true })
         commit('SET_CUSTOMER_DATA', response.data)
       } catch (error) {
         console.log(error)
