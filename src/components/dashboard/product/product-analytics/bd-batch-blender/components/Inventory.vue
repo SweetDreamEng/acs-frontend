@@ -159,36 +159,36 @@ export default {
 
       switch (item) {
       case 0:
-        this.editItem.material = this.inventoryMaterial.material1_id
-        this.editItem.location = this.inventoryMaterial.location1_id
+        this.editItem.material = this.inventory.inventory_material.material1_id
+        this.editItem.location = this.inventory.inventory_material.location1_id
         break
       case 1:
-        this.editItem.material = this.inventoryMaterial.material2_id
-        this.editItem.location = this.inventoryMaterial.location2_id
+        this.editItem.material = this.inventory.inventory_material.material2_id
+        this.editItem.location = this.inventory.inventory_material.location2_id
         break
       case 2:
-        this.editItem.material = this.inventoryMaterial.material3_id
-        this.editItem.location = this.inventoryMaterial.location3_id
+        this.editItem.material = this.inventory.inventory_material.material3_id
+        this.editItem.location = this.inventory.inventory_material.location3_id
         break
       case 3:
-        this.editItem.material = this.inventoryMaterial.material4_id
-        this.editItem.location = this.inventoryMaterial.location4_id
+        this.editItem.material = this.inventory.inventory_material.material4_id
+        this.editItem.location = this.inventory.inventory_material.location4_id
         break
       case 4:
-        this.editItem.material = this.inventoryMaterial.material5_id
-        this.editItem.location = this.inventoryMaterial.location5_id
+        this.editItem.material = this.inventory.inventory_material.material5_id
+        this.editItem.location = this.inventory.inventory_material.location5_id
         break
       case 5:
-        this.editItem.material = this.inventoryMaterial.material6_id
-        this.editItem.location = this.inventoryMaterial.location6_id
+        this.editItem.material = this.inventory.inventory_material.material6_id
+        this.editItem.location = this.inventory.inventory_material.location6_id
         break
       case 6:
-        this.editItem.material = this.inventoryMaterial.material7_id
-        this.editItem.location = this.inventoryMaterial.location7_id
+        this.editItem.material = this.inventory.inventory_material.material7_id
+        this.editItem.location = this.inventory.inventory_material.location7_id
         break
       case 7:
-        this.editItem.material = this.inventoryMaterial.material8_id
-        this.editItem.location = this.inventoryMaterial.location8_id
+        this.editItem.material = this.inventory.inventory_material.material8_id
+        this.editItem.location = this.inventory.inventory_material.location8_id
         break
       default:
         break
