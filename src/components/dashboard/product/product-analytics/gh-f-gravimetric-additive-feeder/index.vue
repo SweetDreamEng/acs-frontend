@@ -46,8 +46,8 @@
 <script>
 import commonApi from '../../common/fetches/api'
 
-import AreaGraph from '../../common/area-graph/AreaGraph'
-import Overview from '../../common/overview/Overview'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
+import Overview from '../../common/overview/ProductOverview'
 
 import { mapState, mapActions } from 'vuex'
 

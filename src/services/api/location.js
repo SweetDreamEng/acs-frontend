@@ -12,7 +12,7 @@ export default {
   },
 
   /**
-  * Add a new customer location
+  * Add a new Company location
   *
   * @param {Object} data New location object
   * @param {string} data.name Location name

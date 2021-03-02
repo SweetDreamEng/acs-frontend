@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     ...mapState({
-      companies: (state) => state.customers.companies,
+      companies: (state) => state.companies.companies,
       configurations: (state) => state.configurations.configurations,
       alarmsPerCustomerAndMachine: (state) => state.alarms.alarmsPerCustomerAndMachine
     }),
@@ -151,7 +151,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCompanies: 'customers/getCompanies',
+      getCompanies: 'companies/getCompanies',
       getConfigurations: 'configurations/getConfigurations',
       getAlarmsByCustomerAndConfiguration: 'alarms/getAlarmsByCustomerAndConfiguration'
     }),

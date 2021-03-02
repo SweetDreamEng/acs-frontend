@@ -51,7 +51,7 @@
 <script>
 import api from './services/api'
 
-import AreaGraph from '../../common/area-graph/AreaGraph'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {

@@ -5,7 +5,7 @@
       :disabled="loading"
     >
       <v-card-title>Overview</v-card-title>
-      <v-card-text>
+      <v-card-text v-if="alarmsOverview">
         <v-row dense>
           <v-col cols="12" md="4">
 <!--             <apexchart

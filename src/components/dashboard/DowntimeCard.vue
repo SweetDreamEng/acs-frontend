@@ -14,7 +14,7 @@
             class="ml-auto"
             v-on="on"
           >
-            <v-icon>mdi-dots-horizontal</v-icon>
+            <v-icon>$mdi-dots-horizontal</v-icon>
           </v-btn>
         </template>
 
@@ -49,7 +49,7 @@
           color="primary"
         >
           View Report
-          <v-icon right>mdi-chart-bar</v-icon>
+          <v-icon right>$mdi-chart-bar</v-icon>
         </v-btn>
       </v-card-actions>
     </div>

@@ -13,7 +13,7 @@
           class="ml-auto"
           @click="$emit('reload')"
         >
-          <v-icon>mdi-refresh</v-icon>
+          <v-icon>$mdi-refresh</v-icon>
         </v-btn>
       </v-card-title>
       <v-card-text>
@@ -33,7 +33,7 @@
                   class="ml-auto"
                   @click="editMaterial(i)"
                 >
-                  <v-icon small>mdi-pencil</v-icon>
+                  <v-icon small>$mdi-pencil</v-icon>
                 </v-btn>
               </div>
               <div class=""><span class="display-1">{{ inv }}</span><span>{{ inventory.unit }}</span></div>
@@ -256,7 +256,7 @@ export default {
 
         return m ? m.material : 'Not Selected'
       default:
-        break
+        return -1
       }
     },
     locationText(ind) {
@@ -296,7 +296,7 @@ export default {
 
         return m ? m.location : 'Not Selected'
       default:
-        break
+        return -1
       }
     }
   }

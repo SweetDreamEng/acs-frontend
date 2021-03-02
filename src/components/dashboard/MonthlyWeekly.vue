@@ -8,7 +8,7 @@
           class="ml-auto"
           v-on="on"
         >
-          <v-icon>mdi-dots-horizontal</v-icon>
+          <v-icon>$mdi-dots-horizontal</v-icon>
         </v-btn>
       </template>
 

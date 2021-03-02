@@ -57,8 +57,8 @@
 <script>
 
 import ProductionRateChart from '../charts/ProductionRateChart'
-import NoDowntime from './NoDowntime'
-import DowntimeLegend from './DowntimeLegend'
+import NoDowntime from './DashboardTableNoDowntime'
+import DowntimeLegend from './DashboardTableDowntimeLegend'
 
 export default {
   components: {

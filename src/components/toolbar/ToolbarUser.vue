@@ -37,7 +37,7 @@
 
         <v-list-item @click="signOut">
           <v-list-item-icon>
-            <v-icon small>mdi-logout-variant</v-icon>
+            <v-icon small>$mdi-logout-variant</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>Logout</v-list-item-title>
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       menu: [
-        { icon: 'mdi-account-box-outline', key: 'menu.profile', text: 'Profile', link: '/profile' }
+        { icon: '$mdi-account-box-outline', key: 'menu.profile', text: 'Profile', link: '/profile' }
       ]
     }
   },

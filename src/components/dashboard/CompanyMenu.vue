@@ -4,7 +4,7 @@
   >
     <template v-slot:activator="{ attrs, on }">
       <v-btn text dark v-on="on">
-        <v-icon left>mdi-menu</v-icon> Companies
+        <v-icon left>$mdi-menu</v-icon> Companies
       </v-btn>
     </template>
 

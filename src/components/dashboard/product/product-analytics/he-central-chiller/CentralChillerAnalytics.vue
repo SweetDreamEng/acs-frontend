@@ -2,8 +2,8 @@
   <div>
     <div class="">
       <v-select
-        :items="circuits"
         v-model="circuitId"
+        :items="circuits"
         item-text="text"
         item-value="id"
         placeholder="Select Circuit"
@@ -73,9 +73,9 @@
 import commonApi from '../../common/fetches/api'
 import api from './services/api'
 
-import Overview from '../../common/overview/Overview'
-import BarGraph from '../../common/bar-graph/BarGraph'
-import AreaGraph from '../../common/area-graph/AreaGraph'
+import Overview from '../../common/overview/ProductOverview'
+import BarGraph from '../../common/bar-graph/ProductBarGraph'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 

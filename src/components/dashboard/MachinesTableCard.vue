@@ -39,23 +39,23 @@
         @click:row="productView"
       >
         <template v-slot:header.status="{ header }">
-          <v-icon color="primary">mdi-chevron-double-right</v-icon>
+          <v-icon color="primary">$mdi-chevron-double-right</v-icon>
           {{ header.text }}
         </template>
         <template v-slot:header.name="{ header }">
-          <v-icon small color="primary">mdi-wrench</v-icon>
+          <v-icon small color="primary">$mdi-wrench</v-icon>
           {{ header.text }}
         </template>
         <template v-slot:header.capacity="{ header }">
-          <v-icon color="primary">mdi-trending-up</v-icon>
+          <v-icon color="primary">$mdi-trending-up</v-icon>
           {{ header.text | percentageLabel }}
         </template>
         <template v-slot:header.consumption="{ header }">
-          <v-icon class="mdi-rotate-90" color="primary">mdi-battery-30</v-icon>
+          <v-icon class="mdi-rotate-90" color="primary">$mdi-battery-30</v-icon>
           {{ header.text }}
         </template>
         <template v-slot:header.location_id="{ header }">
-          <v-icon small color="primary">mdi-factory</v-icon>
+          <v-icon small color="primary">$mdi-factory</v-icon>
           {{ header.text }}
         </template>
 
@@ -156,12 +156,12 @@ export default {
       return item.status ? 'primary' : 'red'
     },
     getIcon(item) {
-      // if (item.status === 'Warning') return 'mdi-alert'
-      // else if (item.status === 'Alarm') return 'mdi-check-circle-outline'
-      // else if (item.status === 'Not') return 'mdi-bell-circle'
-      // else return 'mdi-check-circle-outline'
-      if (item.status) return 'mdi-check-circle-outline'
-      else return 'mdi-lan-disconnect'
+      // if (item.status === 'Warning') return '$mdi-alert'
+      // else if (item.status === 'Alarm') return '$mdi-check-circle-outline'
+      // else if (item.status === 'Not') return '$mdi-bell-circle'
+      // else return '$mdi-check-circle-outline'
+      if (item.status) return '$mdi-check-circle-outline'
+      else return '$mdi-lan-disconnect'
     },
     productView(item) {
       if (item.location_id && item.zone_id) {

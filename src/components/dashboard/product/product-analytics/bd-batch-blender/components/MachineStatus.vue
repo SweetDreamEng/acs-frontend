@@ -6,7 +6,7 @@
         icon
         small
       >
-        <v-icon>mdi-dots-horizontal</v-icon>
+        <v-icon>$mdi-dots-horizontal</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-text>
