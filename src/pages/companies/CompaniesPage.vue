@@ -62,7 +62,7 @@
 /*
 |---------------------------------------------------------------------
 | Companies List Page Component
-| url: /companies/list
+| url: /companies
 |---------------------------------------------------------------------
 |
 | List all companies and company add/edit options
