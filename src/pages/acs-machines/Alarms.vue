@@ -1,29 +1,10 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column mt-1">
-    <v-card>
-      <v-card-title>Overview</v-card-title>
-      <v-card-text>
-        <pie-chart
-          :series="pieSeries"
-          :hours="pieHours"
-        >
-        </pie-chart>
-      </v-card-text>
-    </v-card>
+    <alarms-overview></alarms-overview>
 
     <br>
 
-    <v-card>
-      <v-card-title>Alarm Per Customers</v-card-title>
-      <v-card-text>
-        <column-chart
-          :series="columnSeries"
-          :drop-down-list="devices"
-          :categories="categories"
-        >
-        </column-chart>
-      </v-card-text>
-    </v-card>
+    <alarms-per-customer></alarms-per-customer>
 
     <br>
 
@@ -68,17 +49,17 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import ColumnChart from '../../components/alarms/charts/ColumnChart'
-import PieChart from '../../components/alarms/charts/PieChart'
 import LineChart from '../../components/alarms/charts/LineChart'
 import AlarmsPerMachine from './AlarmsPerMachine'
+import AlarmsOverview from '../../components/dashboard/alarms/AlarmsOverview'
+import AlarmsPerCustomer from '../../components/dashboard/alarms/AlarmsPerCustomer'
 
 export default {
   components: {
-    ColumnChart,
-    PieChart,
     LineChart,
-    AlarmsPerMachine
+    AlarmsPerMachine,
+    AlarmsOverview,
+    AlarmsPerCustomer
   },
 
   data() {
@@ -135,15 +116,18 @@ export default {
   },
   computed: {
     ...mapState({
-      devices: (state) => state.devices.data
+      devices: (state) => state.devices.data,
+      companies: (state) => state.customers.companies
     })
   },
   mounted() {
     this.getAllDevices()
+    this.getCompanies()
   },
   methods: {
     ...mapActions({
-      'getAllDevices': 'devices/getAllDevices'
+      'getAllDevices': 'devices/getAllDevices',
+      'getCompanies': 'customers/getCompanies'
     })
   }
 }
