@@ -33,7 +33,7 @@ export default [{
 }, {
   path: '/auth/forgot-password',
   name: 'auth-forgot',
-  component: () => import(/* webpackChunkName: "auth-forgot" */ '@/pages/auth/ForgotPage.vue'),
+  component: () => import(/* webpackChunkName: "auth-forgot" */ '@/pages/auth/AuthForgotPasswordPage.vue'),
   meta: {
     layout: 'auth',
     userNotAuth: true
@@ -41,7 +41,7 @@ export default [{
 }, {
   path: '/auth/reset-password',
   name: 'auth-reset',
-  component: () => import(/* webpackChunkName: "auth-reset" */ '@/pages/auth/ResetPage.vue'),
+  component: () => import(/* webpackChunkName: "auth-reset" */ '@/pages/auth/AuthPasswordResetPage.vue'),
   meta: {
     layout: 'auth'
   }

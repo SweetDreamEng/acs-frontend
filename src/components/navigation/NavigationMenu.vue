@@ -30,7 +30,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import NavMenuItem from './NavMenuItem'
+import NavMenuItem from './NavigationMenuItem'
 
 /*
 |---------------------------------------------------------------------

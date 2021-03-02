@@ -101,8 +101,8 @@
 |---------------------------------------------------------------------
 |
 */
-import Locations from '../../components/locations-zones/Locations.vue'
-import DowntimePlans from '../../components/locations-zones/DowntimePlans.vue'
+import Locations from '../../components/locations-zones/LocationZones.vue'
+import DowntimePlans from '../../components/locations-zones/LocationZonesDowntimePlans.vue'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 

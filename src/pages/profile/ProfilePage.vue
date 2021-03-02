@@ -48,10 +48,10 @@
   </div>
 </template>
 <script>
-import PersonalInfo from '../../components/profile/PersonalInfo'
-import PasswordReset from '../../components/profile/PasswordReset'
-import Overview from '../../components/profile/Overview'
-import TimeZone from '../../components/profile/TimeZone'
+import PersonalInfo from '../../components/profile/ProfilePersonalInfo'
+import PasswordReset from '../../components/profile/ProfilePasswordReset'
+import Overview from '../../components/profile/ProfileOverview'
+import TimeZone from '../../components/profile/ProfileTimeZone'
 
 import { mapState, mapActions } from 'vuex'
 

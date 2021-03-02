@@ -10,7 +10,7 @@ export default [
   }, {
     path: '/acs-machines/alarms',
     name: 'acs-machines-alarms',
-    component: () => import(/* webpackChunkName: "acs-machines-alarms" */ '@/pages/acs-machines/Alarms.vue'),
+    component: () => import(/* webpackChunkName: "acs-machines-alarms" */ '@/pages/acs-machines/AscMachineAlarms.vue'),
     meta: {
       acsAdmin: true
     }

@@ -59,9 +59,9 @@
 import commonApi from '../../common/fetches/api'
 import api from './services/api'
 
-import AreaGraph from '../../common/area-graph/AreaGraph'
-import BarGraph from '../../common/bar-graph/BarGraph'
-import Overview from '../../common/overview/Overview'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
+import BarGraph from '../../common/bar-graph/ProductBarGraph'
+import Overview from '../../common/overview/ProductOverview'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 

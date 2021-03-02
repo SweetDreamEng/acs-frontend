@@ -66,8 +66,8 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import api from './services/api'
-import BarGraph from '../../common/bar-graph/BarGraph'
-import AreaGraph from '../../common/area-graph/AreaGraph'
+import BarGraph from '../../common/bar-graph/ProductBarGraph'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import HopperStable from './components/HopperStable'
 
 export default {

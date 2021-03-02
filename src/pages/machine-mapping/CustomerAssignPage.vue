@@ -257,8 +257,8 @@
 */
 
 import { mapState, mapGetters, mapActions } from 'vuex'
-import DeviceImport from '../../components/machine-mapping/DeviceImport'
-import SimPanel from '../../components/machine-mapping/SimPanel'
+import DeviceImport from '../../components/machine-mapping/MachineMappingDeviceImport'
+import SimPanel from '../../components/machine-mapping/MachineMappingSimPanel'
 
 export default {
   components: {

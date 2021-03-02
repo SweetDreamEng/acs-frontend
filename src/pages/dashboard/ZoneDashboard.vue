@@ -27,7 +27,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
-import MachinesTable from '../../components/dashboard/dashboard-tables/MachinesTable'
+import MachinesTable from '../../components/dashboard/dashboard-tables/DashboardTableMachinesTable'
 import SalesCard from '../../components/dashboard/SalesCard'
 import TopCard from '../../components/dashboard/TopCard'
 
