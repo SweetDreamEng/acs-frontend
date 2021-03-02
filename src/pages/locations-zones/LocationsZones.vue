@@ -82,7 +82,7 @@
           </template>
           <template v-slot:item.actions="{ item }">
             <v-btn icon @click="editZone(item)">
-              <v-icon small>mdi-pencil</v-icon>
+              <v-icon small>$mdi-pencil</v-icon>
             </v-btn>
           </template>
         </v-data-table>

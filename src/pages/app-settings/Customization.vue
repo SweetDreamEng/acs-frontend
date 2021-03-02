@@ -24,7 +24,7 @@
                 label="New Logo Image"
                 outlined
                 dense
-                prepend-icon="mdi-camera"
+                prepend-icon="$mdi-camera"
                 @change="prepareLogo"
               ></v-file-input>
               <div class="text-right">
@@ -35,7 +35,7 @@
                   @click="handleUpload"
                 >
                   <v-icon left>
-                    mdi-cloud-upload
+                    $mdi-cloud-upload
                   </v-icon>
                   Upload Logo
                 </v-btn>

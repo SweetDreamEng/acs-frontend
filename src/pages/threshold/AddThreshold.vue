@@ -68,7 +68,7 @@
           <v-btn
             @click="addFilter"
           >
-            <v-icon left>mdi-plus</v-icon>Condition
+            <v-icon left>$mdi-plus</v-icon>Condition
           </v-btn>
         </div>
         <div>

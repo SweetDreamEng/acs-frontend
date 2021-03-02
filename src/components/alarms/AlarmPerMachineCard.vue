@@ -13,7 +13,7 @@
         style="border: 1px solid grey;"
         tile
       >
-        <v-icon>mdi-near-me</v-icon>{{ amount }}
+        <v-icon>$mdi-near-me</v-icon>{{ amount }}
       </v-card>
     </v-col>
   </v-row>

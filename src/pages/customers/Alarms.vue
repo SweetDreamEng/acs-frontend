@@ -21,7 +21,7 @@
           class="ml-auto"
           @click="$emit('showTimeRange')"
         >
-          <v-icon>mdi-filter</v-icon>
+          <v-icon>$mdi-filter</v-icon>
         </v-btn>
       </v-card-title>
       <v-card-text>

@@ -12,7 +12,7 @@
         @click:row="(item) => $router.push({ path: item.machine_id + '/' + item.serial_number, append: true })"
       >
         <template v-slot:header.customer_assigned_name="{ header }">
-          <v-icon small color="primary">mdi-wrench</v-icon>
+          <v-icon small color="primary">$mdi-wrench</v-icon>
           {{ header.text }}
         </template>
         <template v-slot:item.customer_assigned_name="{ item }">
@@ -21,7 +21,7 @@
             v-else
             bordered
             color="error"
-            icon="mdi-lan-disconnect"
+            icon="$mdi-lan-disconnect"
             overlap
           >
             <span class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>

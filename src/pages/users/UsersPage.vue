@@ -20,7 +20,7 @@
               <transition name="slide-fade" mode="out-in">
                 <v-btn v-show="selectedUsers.length > 0" v-on="on">
                   Actions
-                  <v-icon right>mdi-menu-down</v-icon>
+                  <v-icon right>$mdi-menu-down</v-icon>
                 </v-btn>
               </transition>
             </template>
@@ -39,7 +39,7 @@
         <v-col cols="6" class="d-flex text-right align-center">
           <v-text-field
             v-model="searchQuery"
-            append-icon="mdi-magnify"
+            append-icon="$mdi-magnify"
             class="flex-grow-1 mr-md-2"
             solo
             hide-details
@@ -54,7 +54,7 @@
             class="ml-2"
             @click="getUsers"
           >
-            <v-icon>mdi-refresh</v-icon>
+            <v-icon>$mdi-refresh</v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -101,7 +101,7 @@
         <template v-slot:item.action="{ item }">
           <div v-if="canCreateCustomerUser || canCreateAcsUser" class="actions">
             <v-btn icon :to="`edit/${item.id}`" :append="true">
-              <v-icon small>mdi-pencil</v-icon>
+              <v-icon small>$mdi-pencil</v-icon>
             </v-btn>
           </div>
         </template>

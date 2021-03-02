@@ -25,7 +25,7 @@
           @click="alarmReports=true"
         >
           Alarms reported
-          <v-icon right>mdi-bell</v-icon>
+          <v-icon right>$mdi-bell</v-icon>
         </v-btn>
       </v-card-actions>
     </div>

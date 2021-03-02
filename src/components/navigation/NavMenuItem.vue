@@ -11,7 +11,7 @@
     >
       <v-list-item-icon>
         <v-icon :small="small" :class="{ 'grey--text': menuItem.disabled }">
-          {{ menuItem.icon || 'mdi-circle-medium' }}
+          {{ menuItem.icon || '$mdi-circle-medium' }}
         </v-icon>
       </v-list-item-icon>
       <v-list-item-content>
@@ -32,7 +32,7 @@
 
       <template v-slot:activator>
         <v-list-item-icon v-if="!subgroup">
-          <v-icon :small="small">{{ menuItem.icon || 'mdi-circle-medium' }}</v-icon>
+          <v-icon :small="small">{{ menuItem.icon || '$mdi-circle-medium' }}</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>

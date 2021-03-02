@@ -11,7 +11,7 @@
       <v-text-field
         v-model="dateRangeText"
         label="Select Date Range"
-        prepend-icon="mdi-calendar"
+        prepend-icon="$mdi-calendar"
         readonly
         v-bind="attrs"
         v-on="on"

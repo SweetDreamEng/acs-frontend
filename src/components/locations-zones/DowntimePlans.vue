@@ -48,7 +48,7 @@
                     <v-text-field
                       v-model="editedItem.dateFrom"
                       label="From Date"
-                      prepend-icon="mdi-calendar"
+                      prepend-icon="$mdi-calendar"
                       readonly
                       outlined
                       dense
@@ -77,7 +77,7 @@
                     <v-text-field
                       v-model="editedItem.timeFrom"
                       label="From Time"
-                      prepend-icon="mdi-clock-time-four-outline"
+                      prepend-icon="$mdi-clock-time-four-outline"
                       readonly
                       outlined
                       dense
@@ -108,7 +108,7 @@
                     <v-text-field
                       v-model="editedItem.dateTo"
                       label="To Date"
-                      prepend-icon="mdi-calendar"
+                      prepend-icon="$mdi-calendar"
                       readonly
                       outlined
                       dense
@@ -137,7 +137,7 @@
                     <v-text-field
                       v-model="editedItem.timeTo"
                       label="To Time"
-                      prepend-icon="mdi-clock-time-four-outline"
+                      prepend-icon="$mdi-clock-time-four-outline"
                       readonly
                       outlined
                       dense
@@ -210,7 +210,7 @@
 
         <template v-slot:item.actions="{ item }">
           <v-btn icon @click="editPlan(item)">
-            <v-icon small>mdi-pencil</v-icon>
+            <v-icon small>$mdi-pencil</v-icon>
           </v-btn>
         </template>
       </v-data-table>

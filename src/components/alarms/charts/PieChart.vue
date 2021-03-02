@@ -13,14 +13,14 @@
         <v-row>
           <v-col cols="6">
             <alarm-amount-cards
-              :icon-type="'mdi-bell'"
+              :icon-type="'$mdi-bell'"
               :amount="totalAmount"
               :time="'Total Alarms'"
             />
           </v-col>
           <v-col cols="6">
             <alarm-amount-cards 
-              :icon-type="'mdi-clock-outline'"
+              :icon-type="'$mdi-clock-outline'"
               :amount="totalTime"
               :time="'Total Times'"
             />
@@ -36,7 +36,7 @@
           >
             <alarm-amount-cards
               :icon-color="colors[idx]"
-              :icon-type="'mdi-near-me'"
+              :icon-type="'$mdi-near-me'"
               :amount="series[idx]"
               :time="alarmTimes[idx]"
               :is-alarm-info="true"

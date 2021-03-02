@@ -13,7 +13,7 @@
           </div>
         </v-col>
         <v-col cols="12" style="max-height: 5px; font-size: 20px;">
-          All Machines <v-icon>mdi-near-me</v-icon>{{ totalAmount }}
+          All Machines <v-icon>$mdi-near-me</v-icon>{{ totalAmount }}
         </v-col>
         <v-col cols="12">
           <v-row>

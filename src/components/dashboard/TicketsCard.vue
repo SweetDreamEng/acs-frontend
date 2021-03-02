@@ -34,11 +34,11 @@
       <template v-slot:item.status="{ item }">
         <div class="font-weight-bold d-flex align-center">
           <div v-if="item.status === 'CLOSED'" class="secondary--text">
-            <v-icon small color="secondary">mdi-circle-medium</v-icon>
+            <v-icon small color="secondary">$mdi-circle-medium</v-icon>
             <span>Closed</span>
           </div>
           <div v-if="item.status === 'OPEN'" class="success--text">
-            <v-icon small color="success">mdi-circle-medium</v-icon>
+            <v-icon small color="success">$mdi-circle-medium</v-icon>
             <span>Open</span>
           </div>
         </div>

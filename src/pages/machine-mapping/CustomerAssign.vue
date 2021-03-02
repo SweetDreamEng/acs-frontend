@@ -69,7 +69,7 @@
                 <div class="d-flex align-center">
                   <v-text-field
                     v-model="filterForm.searchQuery"
-                    append-icon="mdi-magnify"
+                    append-icon="$mdi-magnify"
                     class="flex-grow-1 mr-md-2 elevation-4 rounded-xl"
                     solo
                     hide-details
@@ -85,7 +85,7 @@
                     class="mr-2"
                     @click="filterDevices"
                   >
-                    <v-icon>mdi-refresh</v-icon>
+                    <v-icon>$mdi-refresh</v-icon>
                   </v-btn>
                 </div>
               </v-col>
@@ -109,7 +109,7 @@
               left
               :color="item.registered ? 'green' : 'red'"
             >
-              mdi-checkbox-blank-circle
+              $mdi-checkbox-blank-circle
             </v-icon>
           </div>
         </template>
@@ -120,7 +120,7 @@
 
         <template v-slot:item.data-table-expand="{ expand, isExpanded }">
           <div class="d-flex align-center">
-            <span class="text-no-wrap">Actions</span><v-icon class="ml-1" @click="expand(!isExpanded)" v-text="isExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"></v-icon>
+            <span class="text-no-wrap">Actions</span><v-icon class="ml-1" @click="expand(!isExpanded)" v-text="isExpanded ? '$mdi-chevron-up' : '$mdi-chevron-down'"></v-icon>
           </div>
         </template>
 
@@ -132,7 +132,7 @@
 
         <template v-slot:item.actions="{ item }">
           <v-btn icon @click="editItem(item)">
-            <v-icon small>mdi-pencil</v-icon>
+            <v-icon small>$mdi-pencil</v-icon>
           </v-btn>
         </template>
       </v-data-table>

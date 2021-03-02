@@ -8,7 +8,7 @@
 
     <v-text-field
       v-model="newPassword"
-      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+      :append-icon="showPassword ? '$mdi-eye' : '$mdi-eye-off'"
       :rules="[$rules.required]"
       :type="showPassword ? 'text' : 'password'"
       :error="errorNewPassword"

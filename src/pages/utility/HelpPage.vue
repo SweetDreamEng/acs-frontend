@@ -10,7 +10,7 @@
           v-model="search"
           solo
           hide-details
-          append-icon="mdi-magnify"
+          append-icon="$mdi-magnify"
           placeholder="Search"
         ></v-text-field>
       </div>

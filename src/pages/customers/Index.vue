@@ -7,7 +7,7 @@
       </div>
       <v-spacer></v-spacer>
       <v-btn v-if="canCreateCompanies" color="primary" to="/customers/add">
-        <v-icon left>mdi-plus</v-icon>
+        <v-icon left>$mdi-plus</v-icon>
         Create Company
       </v-btn>
     </div>
@@ -17,7 +17,7 @@
         <v-col sm="12" md="6" class="d-flex text-right align-center">
           <v-text-field
             v-model="searchQuery"
-            append-icon="mdi-magnify"
+            append-icon="$mdi-magnify"
             class="flex-grow-1 mr-md-2"
             solo
             hide-details
@@ -31,7 +31,7 @@
             class="ml-2"
             @click="getCompanyAdmins"
           >
-            <v-icon>mdi-refresh</v-icon>
+            <v-icon>$mdi-refresh</v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -49,7 +49,7 @@
         <template v-slot:item.action="{ item }">
           <div v-if="canCreateCompanies" class="actions">
             <v-btn icon :to="`/customers/edit/${item.id}`">
-              <v-icon small>mdi-pencil</v-icon>
+              <v-icon small>$mdi-pencil</v-icon>
             </v-btn>
           </div>
         </template>

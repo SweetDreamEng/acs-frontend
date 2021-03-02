@@ -12,7 +12,7 @@
         class="ml-2"
         @click="open()"
       >
-        <v-icon>mdi-refresh</v-icon>
+        <v-icon>$mdi-refresh</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-text>
@@ -24,11 +24,11 @@
       >
         <!-- custom table header -->
         <template v-slot:header.alarm="{ header }">
-          <v-icon color="primary">mdi-message-alert</v-icon>
+          <v-icon color="primary">$mdi-message-alert</v-icon>
           {{ header.text }}
         </template>
         <template v-slot:header.createdAt="{ header }">
-          <v-icon color="primary" left>mdi-clock</v-icon>
+          <v-icon color="primary" left>$mdi-clock</v-icon>
           <span v-text="header.text"></span>
         </template>
 

@@ -44,7 +44,7 @@
         <template v-slot:item.action="{ }">
           <div class="actions">
             <v-btn icon to="/threshold/edit">
-              <v-icon small>mdi-pencil</v-icon>
+              <v-icon small>$mdi-pencil</v-icon>
             </v-btn>
           </div>
         </template>

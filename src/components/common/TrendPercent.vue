@@ -4,10 +4,10 @@
       {{ value }}%
     </span>
     <span v-else-if="value > 0" :style="textColor">
-      <v-icon small :style="textColor">mdi-arrow-top-right</v-icon> {{ value }}%
+      <v-icon small :style="textColor">$mdi-arrow-top-right</v-icon> {{ value }}%
     </span>
     <span v-else class="error--text">
-      <v-icon small color="error">mdi-arrow-bottom-right</v-icon> {{ Math.abs(value) }}%
+      <v-icon small color="error">$mdi-arrow-bottom-right</v-icon> {{ Math.abs(value) }}%
     </span>
   </span>
 </template>

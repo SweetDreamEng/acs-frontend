@@ -19,7 +19,7 @@
         <span>{{ toast.message }}</span>
       </div>
       <template v-slot:action>
-        <v-icon @click="toast.show = false">mdi-close</v-icon>
+        <v-icon @click="toast.show = false">$mdi-close</v-icon>
       </template>
     </v-snackbar>
   </v-app>

@@ -7,7 +7,7 @@
       </div>
       <v-spacer></v-spacer>
       <v-btn icon @click>
-        <v-icon>mdi-refresh</v-icon>
+        <v-icon>$mdi-refresh</v-icon>
       </v-btn>
     </div>
 

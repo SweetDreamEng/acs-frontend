@@ -24,7 +24,7 @@
               small
               left
               :color="circleColor(dryingHoppers.hopper1)"
-            >mdi-checkbox-blank-circle</v-icon>
+            >$mdi-checkbox-blank-circle</v-icon>
             {{ valueText(dryingHoppers.hopper1) }}
           </v-col>
         </v-row>
@@ -47,7 +47,7 @@
               small
               left
               :color="circleColor(dryingHoppers.hopper2)"
-            >mdi-checkbox-blank-circle</v-icon>
+            >$mdi-checkbox-blank-circle</v-icon>
             {{ valueText(dryingHoppers.hopper2) }}
           </v-col>
         </v-row>
@@ -70,7 +70,7 @@
               small
               left
               :color="circleColor(dryingHoppers.hopper3)"
-            >mdi-checkbox-blank-circle</v-icon>
+            >$mdi-checkbox-blank-circle</v-icon>
             {{ valueText(dryingHoppers.hopper3) }}
           </v-col>
         </v-row>

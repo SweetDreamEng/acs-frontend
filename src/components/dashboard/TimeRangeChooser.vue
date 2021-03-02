@@ -45,7 +45,7 @@
                   <v-text-field
                     v-model="locDateFrom"
                     label="From Date"
-                    prepend-icon="mdi-calendar"
+                    prepend-icon="$mdi-calendar"
                     readonly
                     v-bind="attrs"
                     v-on="on"
@@ -72,7 +72,7 @@
                   <v-text-field
                     v-model="locTimeFrom"
                     label="From Time"
-                    prepend-icon="mdi-clock-time-four-outline"
+                    prepend-icon="$mdi-clock-time-four-outline"
                     readonly
                     v-bind="attrs"
                     v-on="on"
@@ -99,7 +99,7 @@
                   <v-text-field
                     v-model="locDateTo"
                     label="To Date"
-                    prepend-icon="mdi-calendar"
+                    prepend-icon="$mdi-calendar"
                     readonly
                     v-bind="attrs"
                     v-on="on"
@@ -126,7 +126,7 @@
                   <v-text-field
                     v-model="locTimeTo"
                     label="To Time"
-                    prepend-icon="mdi-clock-time-four-outline"
+                    prepend-icon="$mdi-clock-time-four-outline"
                     readonly
                     v-bind="attrs"
                     v-on="on"

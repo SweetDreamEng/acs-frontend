@@ -18,7 +18,7 @@
         :disabled="refresh_btn_loading"
         @click="querySIM(item.iccid)"
       >
-        <v-icon left>mdi-refresh</v-icon>
+        <v-icon left>$mdi-refresh</v-icon>
         Refresh SIM Status
       </v-btn>
       <v-btn
@@ -68,7 +68,7 @@
           :color="item.checkin ? 'green' : 'red'"
           left
         >
-          {{ item.checkin ? 'mdi-check-circle-outline' : 'mdi-close-circle-outline' }}
+          {{ item.checkin ? '$mdi-check-circle-outline' : '$mdi-close-circle-outline' }}
         </v-icon>
         Device Checkin
       </v-btn>
@@ -82,7 +82,7 @@
           :color="item.plc_link ? 'green' : 'red'"
           left
         >
-          {{ item.plc_link ? 'mdi-check-circle-outline' : 'mdi-close-circle-outline' }}
+          {{ item.plc_link ? '$mdi-check-circle-outline' : '$mdi-close-circle-outline' }}
         </v-icon>
         PLC Link
       </v-btn>

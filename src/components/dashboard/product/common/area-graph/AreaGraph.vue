@@ -15,14 +15,14 @@
         class="ml-auto"
         @click="open()"
       >
-        <v-icon>mdi-refresh</v-icon>
+        <v-icon>$mdi-refresh</v-icon>
       </v-btn>
       <v-btn
         icon
         class=" ml-2"
         @click="showTimeRangeChooser = true"
       >
-        <v-icon>mdi-filter</v-icon>
+        <v-icon>$mdi-filter</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-text>

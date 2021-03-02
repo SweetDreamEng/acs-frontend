@@ -66,7 +66,7 @@
               class="mb-2"
               @click
             >
-              <v-icon left small>mdi-email</v-icon>Send Reset Password Email
+              <v-icon left small>$mdi-email</v-icon>Send Reset Password Email
             </v-btn>
           </div>
 
@@ -85,14 +85,14 @@
                 color="warning"
                 @click="user.disabled = false"
               >
-                <v-icon left small>mdi-account-check</v-icon>Enable User
+                <v-icon left small>$mdi-account-check</v-icon>Enable User
               </v-btn>
               <v-btn
                 v-else
                 color="warning"
                 @click="disableDialog = true"
               >
-                <v-icon left small>mdi-cancel</v-icon>Disable User
+                <v-icon left small>$mdi-cancel</v-icon>Disable User
               </v-btn>
             </div>
 
@@ -101,7 +101,7 @@
               class="subtitle mt-3 mb-2"
             >To delete the user please transfer ownership or delete user's subscriptions.</div>
             <v-btn color="error" @click="deleteDialog = true">
-              <v-icon left small>mdi-delete</v-icon>Delete User
+              <v-icon left small>$mdi-delete</v-icon>Delete User
             </v-btn>
           </div>
         </v-expansion-panel-content>

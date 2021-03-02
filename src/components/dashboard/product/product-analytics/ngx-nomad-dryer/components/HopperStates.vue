@@ -8,7 +8,7 @@
         class="ml-auto"
         @click="$emit('reload')"
       >
-        <v-icon>mdi-refresh</v-icon>
+        <v-icon>$mdi-refresh</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-text class="px-2">
@@ -20,7 +20,7 @@
 
           <v-list-item-action class="my-1">
             <div class="align-center" style="width: 200px;">
-              <v-icon left :color="circleColor(i, state.value)">mdi-circle</v-icon> {{ valueText(i, state.value) }}
+              <v-icon left :color="circleColor(i, state.value)">$mdi-circle</v-icon> {{ valueText(i, state.value) }}
             </div>
           </v-list-item-action>
         </v-list-item>

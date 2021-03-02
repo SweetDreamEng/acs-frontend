@@ -35,7 +35,7 @@
                   v-bind="attrs"
                   v-on="on"
                 >
-                  <v-icon left>mdi-plus</v-icon>
+                  <v-icon left>$mdi-plus</v-icon>
                   Add Material
                 </v-btn>
               </template>
@@ -87,14 +87,14 @@
             class="mr-2"
             @click="editItem(item)"
           >
-            <v-icon small>mdi-pencil</v-icon>
+            <v-icon small>$mdi-pencil</v-icon>
           </v-btn>
           <v-btn
             icon
             small
             @click="deleteItem(item)"
           >
-            <v-icon small>mdi-delete</v-icon>
+            <v-icon small>$mdi-delete</v-icon>
           </v-btn>
         </template>
       </v-data-table>
@@ -145,7 +145,7 @@
                   v-bind="attrs"
                   v-on="on"
                 >
-                  <v-icon left>mdi-plus</v-icon>
+                  <v-icon left>$mdi-plus</v-icon>
                   Add Location
                 </v-btn>
               </template>
@@ -197,14 +197,14 @@
             class="mr-2"
             @click="editLocationItem(item)"
           >
-            <v-icon small>mdi-pencil</v-icon>
+            <v-icon small>$mdi-pencil</v-icon>
           </v-btn>
           <v-btn
             icon
             small
             @click="deleteLocationItem(item)"
           >
-            <v-icon small>mdi-delete</v-icon>
+            <v-icon small>$mdi-delete</v-icon>
           </v-btn>
         </template>
       </v-data-table>

@@ -15,7 +15,7 @@
           <template v-slot:top>
             <v-text-field
               v-model="searchQuery"
-              append-icon="mdi-magnify"
+              append-icon="$mdi-magnify"
               solo
               hide-details
               dense
@@ -34,7 +34,7 @@
 
           <template v-slot:item.actions="{ item }">
             <v-btn icon @click="editItem(item)">
-              <v-icon small>mdi-pencil</v-icon>
+              <v-icon small>$mdi-pencil</v-icon>
             </v-btn>
           </template>
         </v-data-table>
