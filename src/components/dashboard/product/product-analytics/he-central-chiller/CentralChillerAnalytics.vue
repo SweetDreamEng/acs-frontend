@@ -2,8 +2,8 @@
   <div>
     <div class="">
       <v-select
-        :items="circuits"
         v-model="circuitId"
+        :items="circuits"
         item-text="text"
         item-value="id"
         placeholder="Select Circuit"

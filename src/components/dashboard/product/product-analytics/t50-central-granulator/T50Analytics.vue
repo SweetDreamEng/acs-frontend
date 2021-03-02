@@ -64,7 +64,7 @@
         >
         </bar-graph>
       </v-col>
-<!--       <v-col cols="12" md="4">
+      <!-- <v-col cols="12" md="4">
         <t50-amp
           :loading="loadingT50Amps"
           :amps="t50Amps"

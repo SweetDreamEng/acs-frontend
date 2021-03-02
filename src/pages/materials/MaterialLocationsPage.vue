@@ -98,7 +98,7 @@
           </v-btn>
         </template>
       </v-data-table>
-<!--       <div class="text-center py-2">
+      <!-- <div class="text-center py-2">
         <v-pagination
           v-model="loc_page"
           :length="pageCount"
@@ -208,7 +208,7 @@
           </v-btn>
         </template>
       </v-data-table>
-<!--       <div class="text-center py-2">
+      <!-- <div class="text-center py-2">
         <v-pagination
           v-model="loc_page"
           :length="pageCount"

@@ -256,7 +256,7 @@ export default {
 
         return m ? m.material : 'Not Selected'
       default:
-        break
+        return -1
       }
     },
     locationText(ind) {
@@ -296,7 +296,7 @@ export default {
 
         return m ? m.location : 'Not Selected'
       default:
-        break
+        return -1
       }
     }
   }
