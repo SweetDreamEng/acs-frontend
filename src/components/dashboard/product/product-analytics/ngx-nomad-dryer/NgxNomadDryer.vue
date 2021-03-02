@@ -90,9 +90,9 @@
 import api from '../ngx-dryer/services/api'
 import commonApi from '../../common/fetches/api'
 
-import BarGraph from '../../common/bar-graph/BarGraph'
-import AreaGraph from '../../common/area-graph/AreaGraph'
-import Overview from '../../common/overview/Overview'
+import BarGraph from '../../common/bar-graph/ProductBarGraph'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
+import Overview from '../../common/overview/ProductOverview'
 import HopperStates from '../ngx-nomad-dryer/components/HopperStates'
 
 import { mapState, mapActions } from 'vuex'

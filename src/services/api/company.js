@@ -38,7 +38,7 @@ export default {
   * @param {string} data.phone The phone number
   * @example
   *
-  *     addCustomer({
+  *     addCompany({
   *       company_name: 'Microsoft'
   *       administrator_name: 'Al Mesri'
   *       administrator_email: 'almesri@machinecdn.com'
@@ -50,7 +50,7 @@ export default {
   *       phone: '123-456-6789'
   *     })
   */
-  addCustomer(data) {
+  addCompany(data) {
 
     Object.assign(data, {
       company_name: data.companyName,
@@ -62,14 +62,14 @@ export default {
   },
 
   /**
-  * Get customer user and his company
+  * Get company user and his company
   *
-  * @param {number} id The id of customer
+  * @param {number} id The id of company
   * @example
   *
-  *     getCustomer(2)
+  *     getCompany(2)
   */
-  getCustomer(id) {
+  getCompany(id) {
     return api.get(`/customers/${id}`)
   },
 
@@ -98,17 +98,17 @@ export default {
   },
 
   /**
-  * Update an existing customer profile info
+  * Update an existing company profile info
   *
   * @param {Object} data object data for new profile
   * @param {string} data.id The id of profile
-  * @param {string} data.address_1 The address of customer
-  * @param {string} data.address_2 The address of customer
-  * @param {string} data.zip The zip code of customer
-  * @param {string} data.state The state name of customer
-  * @param {string} data.city The city name of customer
-  * @param {string} data.country The country name of customer
-  * @param {string} data.phone The phone number of customer
+  * @param {string} data.address_1 The address of company
+  * @param {string} data.address_2 The address of company
+  * @param {string} data.zip The zip code of company
+  * @param {string} data.state The state name of company
+  * @param {string} data.city The city name of company
+  * @param {string} data.country The country name of company
+  * @param {string} data.phone The phone number of company
   * @example
   *
   *     updateProfile({

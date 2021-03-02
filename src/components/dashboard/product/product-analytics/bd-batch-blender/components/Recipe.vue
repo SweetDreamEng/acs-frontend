@@ -9,7 +9,7 @@
         class="ml-auto"
         @click="$emit('reload')"
       >
-        <v-icon>mdi-refresh</v-icon>
+        <v-icon>$mdi-refresh</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-text>

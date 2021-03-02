@@ -26,7 +26,7 @@
             @click="note = ''"
           >
             <v-icon dark>
-              mdi-minus
+              $mdi-minus
             </v-icon>
             Reset
           </v-btn>
@@ -38,7 +38,7 @@
             @click="_addNote"
           >
             <v-icon dark>
-              mdi-plus
+              $mdi-plus
             </v-icon>
             Add
           </v-btn>

@@ -70,8 +70,8 @@
 import api from './services/api'
 import commonApi from '../../common/fetches/api'
 
-import AreaGraph from '../../common/area-graph/AreaGraph'
-import Overview from '../../common/overview/Overview'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
+import Overview from '../../common/overview/ProductOverview'
 import MachineStates from './components/MachineStates'
 
 import { mapState, mapGetters, mapActions } from 'vuex'

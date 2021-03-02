@@ -78,9 +78,9 @@
 import api from './services/api'
 import commonApi from '../../common/fetches/api'
 
-import Overview from '../../common/overview/Overview'
-import AreaGraph from '../../common/area-graph/AreaGraph'
-import BarGraph from '../../common/bar-graph/BarGraph'
+import Overview from '../../common/overview/ProductOverview'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
+import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import MachineState from './components/MachineState'
 import FeederStable from './components/FeederStable'
 

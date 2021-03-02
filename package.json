@@ -9,6 +9,7 @@
     "dev": "npm run serve"
   },
   "dependencies": {
+    "@mdi/js": "^5.9.55",
     "@sentry/tracing": "^5.30.0",
     "@sentry/vue": "^5.30.0",
     "animate.css": "^4.1.0",

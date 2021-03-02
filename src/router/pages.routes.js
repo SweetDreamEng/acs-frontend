@@ -19,7 +19,7 @@ export default [{
 {
   path: '/profile',
   name: 'profile',
-  component: () => import(/* webpackChunkName: "profile" */ '@/pages/profile/Index.vue'),
+  component: () => import(/* webpackChunkName: "profile" */ '@/pages/profile/ProfilePage.vue'),
   meta: {
     userAuth: true
   }
@@ -33,7 +33,7 @@ export default [{
 }, {
   path: '/auth/forgot-password',
   name: 'auth-forgot',
-  component: () => import(/* webpackChunkName: "auth-forgot" */ '@/pages/auth/ForgotPage.vue'),
+  component: () => import(/* webpackChunkName: "auth-forgot" */ '@/pages/auth/AuthForgotPasswordPage.vue'),
   meta: {
     layout: 'auth',
     userNotAuth: true
@@ -41,7 +41,7 @@ export default [{
 }, {
   path: '/auth/reset-password',
   name: 'auth-reset',
-  component: () => import(/* webpackChunkName: "auth-reset" */ '@/pages/auth/ResetPage.vue'),
+  component: () => import(/* webpackChunkName: "auth-reset" */ '@/pages/auth/AuthPasswordResetPage.vue'),
   meta: {
     layout: 'auth'
   }
@@ -80,28 +80,28 @@ export default [{
 }, {
   path: '/machine-mapping',
   name: 'machine-mapping',
-  component: () => import(/* webpackChunkName: "machine-mapping" */ '@/pages/machine-mapping/index.vue'),
+  component: () => import(/* webpackChunkName: "machine-mapping" */ '@/pages/machine-mapping/MachineMappingPage.vue'),
   meta: {
     customerAdmin: true
   }
 }, {
   path: '/customer-assign',
   name: 'customer-assign',
-  component: () => import(/* webpackChunkName: "customer-assign" */ '@/pages/machine-mapping/CustomerAssign.vue'),
+  component: () => import(/* webpackChunkName: "customer-assign" */ '@/pages/machine-mapping/CustomerAssignPage.vue'),
   meta: {
     acsAdmin: true
   }
 }, {
   path: '/locations-zones',
   name: 'locations-zones',
-  component: () => import(/* webpackChunkName: "locations-zones" */ '@/pages/locations-zones/LocationsZones.vue'),
+  component: () => import(/* webpackChunkName: "locations-zones" */ '@/pages/locations-zones/LocationsZonesPage.vue'),
   meta: {
     customerAdmin: true
   }
 }, {
   path: '/materials',
   name: 'materials',
-  component: () => import(/* webpackChunkName: "materials" */ '@/pages/materials/MaterialLocations.vue'),
+  component: () => import(/* webpackChunkName: "materials" */ '@/pages/materials/MaterialLocationsPage.vue'),
   meta: {
     acsAdmin: true
   }

@@ -12,7 +12,7 @@
 
               <v-list-item-action class="my-1">
                 <div class="align-center" style="width: 100px;">
-                  <v-icon left :color="online ? 'green' : 'grey'">mdi-circle</v-icon> {{ online ? 'Online' : 'Offline' }}
+                  <v-icon left :color="online ? 'green' : 'grey'">$mdi-circle</v-icon> {{ online ? 'Online' : 'Offline' }}
                 </div>
               </v-list-item-action>
             </v-list-item>
@@ -27,7 +27,7 @@
 
               <v-list-item-action class="my-1">
                 <div class="align-center" style="width: 100px;">
-                  <v-icon left :color="online ? 'green' : 'grey'">mdi-circle</v-icon> {{ online ? 'Online' : 'Offline' }}
+                  <v-icon left :color="online ? 'green' : 'grey'">$mdi-circle</v-icon> {{ online ? 'Online' : 'Offline' }}
                 </div>
               </v-list-item-action>
             </v-list-item>

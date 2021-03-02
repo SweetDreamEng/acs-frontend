@@ -119,7 +119,7 @@ export default {
 
       zones: (state) => state.zones.data,
 
-      companies: (state) => state.customers.companies,
+      companies: (state) => state.companies.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
     ...mapGetters({

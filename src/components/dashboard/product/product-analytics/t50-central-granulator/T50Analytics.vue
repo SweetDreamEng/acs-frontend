@@ -64,7 +64,7 @@
         >
         </bar-graph>
       </v-col>
-<!--       <v-col cols="12" md="4">
+      <!-- <v-col cols="12" md="4">
         <t50-amp
           :loading="loadingT50Amps"
           :amps="t50Amps"
@@ -78,9 +78,9 @@
 import commonApi from '../../common/fetches/api'
 import api from './services/api'
 
-import AreaGraph from '../../common/area-graph/AreaGraph'
-import BarGraph from '../../common/bar-graph/BarGraph'
-import Overview from '../../common/overview/Overview'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
+import BarGraph from '../../common/bar-graph/ProductBarGraph'
+import Overview from '../../common/overview/ProductOverview'
 import T50Running from './components/T50Running'
 import T50Hours from './components/T50Hours'
 // import T50Amp from './components/T50Amp'

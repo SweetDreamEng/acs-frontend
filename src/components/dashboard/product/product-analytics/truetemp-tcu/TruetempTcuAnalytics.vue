@@ -37,8 +37,8 @@
 import api from './services/api'
 import commonApi from '../../common/fetches/api'
 
-import BarGraph from '../../common/bar-graph/BarGraph'
-import Overview from '../../common/overview/Overview'
+import BarGraph from '../../common/bar-graph/ProductBarGraph'
+import Overview from '../../common/overview/ProductOverview'
 import MachineState from './components/MachineState'
 
 import { mapState, mapGetters, mapActions } from 'vuex'

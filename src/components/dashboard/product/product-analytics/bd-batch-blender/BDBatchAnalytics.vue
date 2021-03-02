@@ -73,9 +73,9 @@
 import api from './services/api'
 import commonApi from '../../common/fetches/api'
 
-import BarGraph from '../../common/bar-graph/BarGraph'
-import AreaGraph from '../../common/area-graph/AreaGraph'
-import Overview from '../../common/overview/Overview'
+import BarGraph from '../../common/bar-graph/ProductBarGraph'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
+import Overview from '../../common/overview/ProductOverview'
 import Recipe from './components/Recipe'
 import Inventory from './components/Inventory'
 

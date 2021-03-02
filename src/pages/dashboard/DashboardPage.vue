@@ -190,7 +190,7 @@ export default {
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
 
       locations: (state) => state.locations.data,
-      companies: (state) => state.customers.companies,
+      companies: (state) => state.companies.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
     }),
     ...mapGetters('auth', ['canViewCompanies']),

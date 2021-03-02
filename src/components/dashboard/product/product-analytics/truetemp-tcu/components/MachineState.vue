@@ -24,7 +24,7 @@
               small
               left
               :color="machine.pump_status === 0 ? 'grey' : 'green'"
-            >mdi-checkbox-blank-circle</v-icon>
+            >$mdi-checkbox-blank-circle</v-icon>
             {{ machine.pump_status === 0 ? 'Off' : 'On' }}
           </v-col>
         </v-row>
@@ -47,7 +47,7 @@
               small
               left
               :color="circleColor(machine.heater_status)"
-            >mdi-checkbox-blank-circle</v-icon>
+            >$mdi-checkbox-blank-circle</v-icon>
             {{ valueText(machine.heater_status) }}
           </v-col>
         </v-row>
@@ -70,7 +70,7 @@
               small
               left
               :color="machine.vent_status === 0 ? 'grey' : 'green'"
-            >mdi-checkbox-blank-circle</v-icon>
+            >$mdi-checkbox-blank-circle</v-icon>
             {{ machine.vent_status === 0 ? 'Off' : 'On' }}
           </v-col>
         </v-row>
