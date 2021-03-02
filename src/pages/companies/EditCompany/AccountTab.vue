@@ -118,7 +118,7 @@
 | Account tab in company edit page
 */
 import { mapState, mapActions } from 'vuex'
-import ErrorComponent from '../../common/ErrorComponent'
+import ErrorComponent from '../../../components/common/ErrorComponent'
 
 export default {
   components: {

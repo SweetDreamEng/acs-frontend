@@ -33,7 +33,7 @@ export default [
   }, {
     path: '/acs-machines/:location/:zone/:configurationId/:productId',
     name: 'product-acs-dashboard',
-    component: () => import(/* webpackChunkName: "product-acs-dashboard" */ '@/pages/dashboard/DashboardProduct.vue'),
+    component: () => import(/* webpackChunkName: "product-acs-dashboard" */ '@/pages/dashboard/ProductDashboard.vue'),
     meta: {
       layout: 'dashboard',
       acsAdmin: true

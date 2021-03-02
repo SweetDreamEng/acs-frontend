@@ -38,8 +38,8 @@
 */
 import { mapState, mapActions } from 'vuex'
 
-import AccountTab from '../../components/companies/edit/AccountTab'
-import InformationTab from '../../components/companies/edit/InformationTab'
+import AccountTab from './EditCompany/AccountTab'
+import InformationTab from './EditCompany/InformationTab'
 
 export default {
   components: {

@@ -27,7 +27,7 @@ export const routes = [{
 }, {
   path: '/dashboard/analytics/:location/:zone/:configurationId/:productId',
   name: 'dashboard-product',
-  component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/DashboardProduct.vue'),
+  component: () => import(/* webpackChunkName: "dashboard-product" */ '@/pages/dashboard/ProductDashboard.vue'),
   meta: {
     layout: 'dashboard',
     userAuth: true
@@ -51,7 +51,7 @@ export const routes = [{
 }, {
   path: '/products/:configurationId/:productId',
   name: 'product-details',
-  component: () => import(/* webpackChunkName: "product-details" */ '@/pages/dashboard/DashboardProduct.vue'),
+  component: () => import(/* webpackChunkName: "product-details" */ '@/pages/dashboard/ProductDashboard.vue'),
   meta: {
   }
 },
