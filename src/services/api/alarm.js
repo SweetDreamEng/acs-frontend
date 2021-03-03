@@ -1,5 +1,13 @@
 import api from '@/api.js'
 export default {
+  getAlarmsOverview(payload) {
+    return api.$post('/alarms/overview', payload)
+  },
+
+  getAlarmsByCustomerAndConfiguration(payload) {
+    return api.$post('/alarms/per-company-configuration', payload)
+  },
+
   /**
   * Get alarms for customer device
   *

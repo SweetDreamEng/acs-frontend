@@ -51,7 +51,7 @@
           :fetch="getHopperTemperatures"
           :machine-id="machineId"
           :serial-number="serialNumber"
-          :names="['Outlet Temperature', 'Inlet Temperature', 'Set Point']"
+          :names="['Inlet Temperature', 'Outlet Temperature', 'Set Point']"
           :categories="hopperAirTemperatureCategories"
         >
         </bar-graph>

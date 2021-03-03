@@ -52,7 +52,10 @@ const module = {
         value: 'custom'
       }
     ],
-    
+
+    alarmsPerCustomerAndMachine: [],
+    alarmsOverview: null,
+
     loadingAlarmsPerMachine: false,
     alamrsPerMachine: [],
 
@@ -66,9 +69,28 @@ const module = {
   },
 
   actions: {
-    /*
-      Get alarms by machine
-    */
+    async getAlarmsOverview({ commit }, data) {
+      try {
+        const response = await alarmAPI.getAlarmsOverview(data)
+
+        commit('SET_ALARMS_OVERVIEW', response)
+      } catch (error) {
+        console.log(error)
+        throw error
+      }
+    },
+
+    async getAlarmsByCustomerAndConfiguration({ commit }, data) {
+      try {
+        const response = await alarmAPI.getAlarmsByCustomerAndConfiguration(data)
+
+        commit('SET_ALARMS_PER_CUSTOMER_CONFIGURATION', response.alarm_types)
+      } catch (error) {
+        console.log(error)
+        throw error
+      }
+    },
+
     async getAlarmsByMachine({ commit }) {
       commit('SET_LOADING_ALARMS_PER_MACHINE', true)
       
@@ -183,6 +205,10 @@ const module = {
   },
 
   mutations: {
+    SET_ALARMS_OVERVIEW(state, data) {
+      state.alarmsOverview = data
+    },
+
     SET_ALARMS_PER_MACHINE(state, alamrsPerMachine) {
       state.alamrsPerMachine = alamrsPerMachine
     },
@@ -246,7 +272,9 @@ const module = {
     },
     ALARMS_LOADED(state) {
       state.isLoading = false
-    }
+    },
+
+    SET_ALARMS_PER_CUSTOMER_CONFIGURATION(state, types) { state.alarmsPerCustomerAndMachine = types }
   },
 
   getters: {
