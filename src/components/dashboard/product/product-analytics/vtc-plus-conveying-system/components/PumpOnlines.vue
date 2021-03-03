@@ -22,7 +22,7 @@
           <v-list>
             <v-list-item v-for="(online, i) in onlines.slice(6)" :key="i" style="min-height: 36px;">
               <v-list-item-content class="py-1">
-                {{ `Pump ${i + 1}` }}
+                {{ `Pump ${i + 7}` }}
               </v-list-item-content>
 
               <v-list-item-action class="my-1">

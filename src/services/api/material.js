@@ -103,14 +103,14 @@ export default {
   },
 
   /**
-  * Get all blender tracks for a company
+  * Get all blenders
   *
   * @example
   *
-  *     getTracks(payload)
+  *     getBlenders(payload)
   */
-  getTracks(payload) {
-    return api.$post('/materials/tracks', payload)
+  getBlenders(payload) {
+    return api.$post('/materials/blenders', payload)
   },
 
   /**
