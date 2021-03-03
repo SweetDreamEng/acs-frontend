@@ -123,5 +123,16 @@ export default {
   */
   getReport(payload) {
     return api.$post('/materials/report', payload)
+  },
+
+  /**
+  * Delete report
+  *
+  * @example
+  *
+  *     deleteReport(payload)
+  */
+  deleteReport(payload) {
+    return api.$delete(`/materials/report/${payload.id}`, payload)
   }
 }

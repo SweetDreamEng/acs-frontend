@@ -46,7 +46,8 @@ export default {
       { icon: '$mdi-equal-box', text: 'Materials', regex: /^\/materials/,
         items: [
           { text: 'Materials', link: '/materials' },
-          { text: 'Report', link: '/materials/report' }
+          { text: 'Job Inventory Report', link: '/materials/job-inventory-report' },
+          { text: 'System Inventory Report', link: '/materials/system-inventory-report' }
         ]
       },
       { icon: '$mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }

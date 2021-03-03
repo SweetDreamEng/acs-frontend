@@ -106,10 +106,17 @@ export default [{
     acsAdmin: true
   }
 }, {
-  path: '/materials/report',
-  name: 'materials-report',
-  component: () => import(/* webpackChunkName: "materials-report" */ '@/pages/materials/Report.vue'),
+  path: '/materials/job-inventory-report',
+  name: 'materials-job-inventory-report',
+  component: () => import(/* webpackChunkName: "materials-report" */ '@/pages/materials/JobInventoryReport.vue'),
   meta: {
-    acsAdmin: true
+    customerAdmin: true
+  }
+}, {
+  path: '/materials/system-inventory-report',
+  name: 'materials-system-inventory-report',
+  component: () => import(/* webpackChunkName: "materials-report" */ '@/pages/materials/SystemInventoryReport.vue'),
+  meta: {
+    customerAdmin: true
   }
 }]

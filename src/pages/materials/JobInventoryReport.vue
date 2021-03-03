@@ -22,24 +22,42 @@
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
 
-        <v-expansion-panels v-else>
-          <v-expansion-panel
-            v-for="(report, i) in reports"
-            :key="i"
-          >
-            <v-expansion-panel-header>
-              {{ reportTitle(report) }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <v-data-table
-                :headers="tableHeaders"
-                :items="report.reportItems"
-                class="flex-grow-1"
-              >
-              </v-data-table>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
+        <div v-else>
+          <v-expansion-panels v-if="reports.length > 0">
+            <v-expansion-panel
+              v-for="(report, i) in reports"
+              :key="i"
+            >
+              <v-expansion-panel-header>
+                {{ reportTitle(report) }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-data-table
+                  :headers="tableHeaders"
+                  :items="report.reportItems"
+                  class="flex-grow-1"
+                >
+                  <template v-slot:top>
+                    <div class="text-right">
+                      <v-btn
+                        color="red"
+                        :dark="!deletingReport"
+                        :loading="deletingReport"
+                        :disabled="deletingReport"
+                        @click="_deleteReport(report)"
+                      >
+                        Delete
+                      </v-btn>
+                    </div>
+                  </template>
+                </v-data-table>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+          <div v-else class="text-center">
+            No report
+          </div>
+        </div>
       </v-card-text>
     </v-card>
   </div>
@@ -66,6 +84,7 @@ export default {
     ...mapState({
       loadingReports: (state) => state.materials.loadingReports,
       loadingBlenders: (state) => state.materials.loadingBlenders,
+      deletingReport: (state) => state.materials.deletingReport,
 
       reports: (state) => state.materials.reports,
       blenders: (state) => state.materials.blenders
@@ -77,7 +96,8 @@ export default {
   methods: {
     ...mapActions({
       getReport: 'materials/getReport',
-      getBlenders: 'materials/getBlenders'
+      getBlenders: 'materials/getBlenders',
+      deleteReport: 'materials/deleteReport'
     }),
     reportTitle(track) {
       const blender = this.blenders.find((b) => b.serial_number === this.blenderId)
@@ -85,6 +105,16 @@ export default {
       const dateStop = new Date(track.stop * 1000).toISOString()
 
       return blender ? `${blender.customer_assigned_name} - ${dateStart.substr(0, 10)} ${dateStart.substr(11, 8)} - ${dateStop.substr(0, 10)} ${dateStop.substr(11, 8)}` : ''
+    },
+
+    async _deleteReport(report) {
+      try {
+        await this.deleteReport({ id: report.id })
+
+        this.getReport({ blenderId: this.blenderId })
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }

@@ -16,7 +16,7 @@
           color="primary"
           @click="startClicked()"
         >
-          {{ inventory.inventory_material.in_progress ? 'Stop' : 'Start' }}
+          {{ inventory.inventory_material.in_progress ? 'Stop System Inventory' : 'Start System Inventory' }}
         </v-btn>
         <v-btn
           icon
@@ -40,11 +40,12 @@
               <div class="d-flex">
                 <div class="subtitle-1 black--text mb-1 font-italic">{{ `Hopper ${i + 1}` }}</div>
                 <v-btn
-                  icon
-                  class="ml-auto"
+                  class="ml-2"
+                  small
+                  outlined
                   @click="editMaterial(i)"
                 >
-                  <v-icon small>$mdi-pencil</v-icon>
+                  Add Material/Location
                 </v-btn>
               </div>
               <div class=""><span class="display-1">{{ inv }}</span><span>{{ inventory.unit }}</span></div>
@@ -246,35 +247,35 @@ export default {
       case 0:
         m = this.materials.find((material) => material.id === this.inventory.inventory_material.material1_id)
 
-        return m ? m.material : 'Not Selected'
+        return m ? m.material : 'Material Not Selected'
       case 1:
         m = this.materials.find((material) => material.id === this.inventory.inventory_material.material2_id)
 
-        return m ? m.material : 'Not Selected'
+        return m ? m.material : 'Material Not Selected'
       case 2:
         m = this.materials.find((material) => material.id === this.inventory.inventory_material.material3_id)
 
-        return m ? m.material : 'Not Selected'
+        return m ? m.material : 'Material Not Selected'
       case 3:
         m = this.materials.find((material) => material.id === this.inventory.inventory_material.material4_id)
 
-        return m ? m.material : 'Not Selected'
+        return m ? m.material : 'Material Not Selected'
       case 4:
         m = this.materials.find((material) => material.id === this.inventory.inventory_material.material5_id)
 
-        return m ? m.material : 'Not Selected'
+        return m ? m.material : 'Material Not Selected'
       case 5:
         m = this.materials.find((material) => material.id === this.inventory.inventory_material.material6_id)
 
-        return m ? m.material : 'Not Selected'
+        return m ? m.material : 'Material Not Selected'
       case 6:
         m = this.materials.find((material) => material.id === this.inventory.inventory_material.material7_id)
 
-        return m ? m.material : 'Not Selected'
+        return m ? m.material : 'Material Not Selected'
       case 7:
         m = this.materials.find((material) => material.id === this.inventory.inventory_material.material8_id)
 
-        return m ? m.material : 'Not Selected'
+        return m ? m.material : 'Material Not Selected'
       default:
         return -1
       }
@@ -286,35 +287,35 @@ export default {
       case 0:
         m = this.locations.find((location) => location.id === this.inventory.inventory_material.location1_id)
 
-        return m ? m.location : 'Not Selected'
+        return m ? m.location : 'Location Not Selected'
       case 1:
         m = this.locations.find((location) => location.id === this.inventory.inventory_material.location2_id)
 
-        return m ? m.location : 'Not Selected'
+        return m ? m.location : 'Location Not Selected'
       case 2:
         m = this.locations.find((location) => location.id === this.inventory.inventory_material.location3_id)
 
-        return m ? m.location : 'Not Selected'
+        return m ? m.location : 'Location Not Selected'
       case 3:
         m = this.locations.find((location) => location.id === this.inventory.inventory_material.location4_id)
 
-        return m ? m.location : 'Not Selected'
+        return m ? m.location : 'Location Not Selected'
       case 4:
         m = this.locations.find((location) => location.id === this.inventory.inventory_material.location5_id)
 
-        return m ? m.location : 'Not Selected'
+        return m ? m.location : 'Location Not Selected'
       case 5:
         m = this.locations.find((location) => location.id === this.inventory.inventory_material.location6_id)
 
-        return m ? m.location : 'Not Selected'
+        return m ? m.location : 'Location Not Selected'
       case 6:
         m = this.locations.find((location) => location.id === this.inventory.inventory_material.location7_id)
 
-        return m ? m.location : 'Not Selected'
+        return m ? m.location : 'Location Not Selected'
       case 7:
         m = this.locations.find((location) => location.id === this.inventory.inventory_material.location8_id)
 
-        return m ? m.location : 'Not Selected'
+        return m ? m.location : 'Location Not Selected'
       default:
         return -1
       }
