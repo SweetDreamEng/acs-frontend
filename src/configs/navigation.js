@@ -9,7 +9,6 @@ export default {
       { icon: '$mdi-swap-horizontal', text: 'Customer Assign', link: '/customer-assign' },
       { icon: '$mdi-city', text: 'Companies', link: '/companies/list' },
       { icon: '$mdi-account-multiple', text: 'Users', link: '/acs-admin/users' },
-      { icon: '$mdi-equal-box', text: 'Materials & Locations', link: '/materials' },
       { icon: '$mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],
@@ -44,6 +43,12 @@ export default {
       { icon: '$mdi-account-multiple', text: 'User Access', link: '/users' },
       { icon: '$mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
       { icon: '$mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' },
+      { icon: '$mdi-equal-box', text: 'Materials', regex: /^\/materials/,
+        items: [
+          { text: 'Materials', link: '/materials' },
+          { text: 'Report', link: '/materials/report' }
+        ]
+      },
       { icon: '$mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],

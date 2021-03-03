@@ -105,4 +105,11 @@ export default [{
   meta: {
     acsAdmin: true
   }
+}, {
+  path: '/materials/report',
+  name: 'materials-report',
+  component: () => import(/* webpackChunkName: "materials-report" */ '@/pages/materials/Report.vue'),
+  meta: {
+    acsAdmin: true
+  }
 }]

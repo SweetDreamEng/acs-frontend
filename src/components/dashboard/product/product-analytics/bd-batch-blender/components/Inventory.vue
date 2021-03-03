@@ -8,9 +8,20 @@
       <v-card-title>
         Inventories
         <v-btn
-          icon
+          v-if="inventory.inventory_material"
           small
           class="ml-auto"
+          :loading="togglingInventoryTrack"
+          :disabled="togglingInventoryTrack"
+          color="primary"
+          @click="startClicked()"
+        >
+          {{ inventory.inventory_material.in_progress ? 'Stop' : 'Start' }}
+        </v-btn>
+        <v-btn
+          icon
+          small
+          class="ml-1"
           @click="$emit('reload')"
         >
           <v-icon>$mdi-refresh</v-icon>
@@ -132,6 +143,7 @@ export default {
   computed: {
     ...mapState({
       loadingInventories: (state) => state.bdBlenderAnalytics.loadingInventories,
+      togglingInventoryTrack: (state) => state.bdBlenderAnalytics.togglingInventoryTrack,
       inventory: (state) => state.bdBlenderAnalytics.inventory,
       savingMaterial: (state) => state.bdBlenderAnalytics.savingMaterial,
       materials: (state) => state.materials.data,
@@ -151,7 +163,8 @@ export default {
       getMaterials: 'materials/getMaterials',
       updateInventoryMaterial: 'bdBlenderAnalytics/updateInventoryMaterial',
       getMaterialLocations: 'materials/getMaterialLocations',      
-      getInventory: 'bdBlenderAnalytics/getInventory'
+      getInventory: 'bdBlenderAnalytics/getInventory',
+      toggleInventoryTracking: 'bdBlenderAnalytics/toggleInventoryTracking'
     }),
 
     editMaterial(item) {
@@ -219,6 +232,13 @@ export default {
         }
       }
     },
+
+    startClicked() {
+      this.toggleInventoryTracking({
+        serialNumber: this.serialNumber
+      })
+    },
+
     materialText(ind) {
       let m = null
 

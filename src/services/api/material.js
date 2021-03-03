@@ -100,5 +100,28 @@ export default {
   */
   deleteMaterialLocation(payload) {
     return api.$delete(`/material-locations/${payload.id}`)
+  },
+
+  /**
+  * Get all blender tracks for a company
+  *
+  * @example
+  *
+  *     getTracks(payload)
+  */
+  getTracks(payload) {
+    return api.$post('/materials/tracks', payload)
+  },
+
+  /**
+  * Get material report
+  *
+  * @param {Object} data for location
+  * @example
+  *
+  *     getReport(payload)
+  */
+  getReport(payload) {
+    return api.$post('/materials/report', payload)
   }
 }

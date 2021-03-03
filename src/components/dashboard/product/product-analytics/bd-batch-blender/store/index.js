@@ -6,6 +6,7 @@ const module = {
     loadingInventories: false,
     inventory: [],
     savingMaterial: false,
+    togglingInventoryTrack: false,
 
     loadingRecipe: false,
     recipeValues: [],
@@ -82,6 +83,20 @@ const module = {
       } finally {
         commit('SET_LOADING_HOPPER_STABLES', false)
       }
+    },
+
+    async toggleInventoryTracking({ commit }, payload) {
+      commit('SET_LOADING_INVENTORY_TRACK', true)
+
+      try {
+        const response = await api.toggleInventoryTracking(payload)
+
+        commit('SET_TARCKING_STATUS', response.data.in_progress)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_INVENTORY_TRACK', false)
+      }
     }
   },
 
@@ -98,7 +113,10 @@ const module = {
       state.inventory = data.data
     },
     SET_LOADING_MATERIAL_INVENTORY(state, loading) { state.savingMaterial = loading },
-    SET_HOPPER_STABLES(state, stables) { state.hopperStables = stables }
+    SET_HOPPER_STABLES(state, stables) { state.hopperStables = stables },
+
+    SET_LOADING_INVENTORY_TRACK(state, isLoading) { state.togglingInventoryTrack = isLoading },
+    SET_TARCKING_STATUS(state, in_progress) { state.inventory.inventory_material.in_progress = in_progress }
   },
 
   getters: {

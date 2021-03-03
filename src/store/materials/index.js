@@ -8,7 +8,18 @@ const module = {
     savingMaterial: false,
     savingMaterialLocation: false,
     data: [],
-    materialLocations: []
+    materialLocations: [],
+
+    loadingReport: false,
+    report: {
+      start: 0,
+      stop: 0,
+      reportItems: []
+    },
+
+    loadingTrack: false,
+    blenders: [],
+    tracks: []
   },
 
   actions: {
@@ -146,6 +157,36 @@ const module = {
       } finally {
         commit('SET_SAVING_MATERIAL_LOCATION', false)
       }
+    },
+
+    async getTracks ({ commit, dispatch }, payload) {
+      commit('SET_LOADING_TRACKS', true)
+
+      try {
+        const response = await api.getTracks(payload)
+
+        commit('SET_TRACKS', response)
+      } catch (error) {
+        console.log(error)
+        throw error
+      } finally {
+        commit('SET_LOADING_TRACKS', false)
+      }
+    },
+
+    async getReport ({ commit, dispatch }, payload) {
+      commit('SET_LOADING_REPORT', true)
+
+      try {
+        const response = await api.getReport(payload)
+
+        commit('SET_REPORT', response.report)
+      } catch (error) {
+        console.log(error)
+        throw error
+      } finally {
+        commit('SET_LOADING_REPORT', false)
+      }
     }
   },
 
@@ -153,10 +194,17 @@ const module = {
     SET_DATA(state, materials) { state.data = materials },
     SET_LOADING_MATERIALS(state, loading) { state.loadingMaterials = loading },
     SET_SAVING_MATERIAL(state, saving) { state.savingMaterial = saving },
+    SET_LOADING_REPORT(state, loading) { state.loadingReport = loading },
+    SET_LOADING_TRACKS(state, loading) { state.loadingTrack = loading },
 
     SET_MATERIAL_LOCATIONS(state, locations) { state.materialLocations = locations },
     SET_LOADING_MATERIAL_LOCATIONS(state, loading) { state.loadingMaterialLocations = loading },
-    SET_SAVING_MATERIAL_LOCATION(state, saving) { state.savingMaterialLocation = saving }
+    SET_SAVING_MATERIAL_LOCATION(state, saving) { state.savingMaterialLocation = saving },
+    SET_REPORT(state, report) { state.report = report },
+    SET_TRACKS(state, data) {
+      state.tracks = data.tracks
+      state.blenders = data.devices
+    }
   }
 }
 
