@@ -133,7 +133,7 @@ export default {
         const response = await this.exportReport({ id: report.id })
 
         const anchor = document.createElement('a')
-        const filename = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + response.filename
+        const filename = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + 'assets/app/reports/' + response.filename
 
         anchor.setAttribute('download', response.filename)
         anchor.setAttribute('href', filename)
