@@ -189,6 +189,7 @@ const module = {
       commit
     }) {
       commit('SET_LOADING_TABLE_MACHINE_MAPPING', true)
+      commit('SET_DATA', [])
 
       try {
         const response = await deviceAPI.getCustomerDevices()

@@ -145,5 +145,27 @@ export default {
   */
   exportReport(payload) {
     return api.$post('/materials/export', payload)
+  },
+
+  /**
+  * Get system inventory report
+  *
+  * @example
+  *
+  *     getSystemInventoryReport(payload)
+  */
+  getSystemInventoryReport(payload) {
+    return api.$post('/materials/system-inventory-report', payload)
+  },
+
+  /**
+  * Export system inventory report
+  *
+  * @example
+  *
+  *     exportSystemInventoryReport(payload)
+  */
+  exportSystemInventoryReport(payload) {
+    return api.$post('/materials/system-inventory-report/export', payload)
   }
 }

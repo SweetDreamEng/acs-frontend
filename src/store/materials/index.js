@@ -13,6 +13,8 @@ const module = {
     loadingReports: false,
     reports: [],
 
+    systemInventoryReports: [],
+
     loadingBlenders: false,
     blenders: [],
 
@@ -218,6 +220,36 @@ const module = {
       } finally {
         commit('SET_EXPORTING_REPORT', false)
       }
+    },
+
+    async getSystemInventoryReport ({ commit, dispatch }, payload) {
+      commit('SET_LOADING_REPORTS', true)
+
+      try {
+        const response = await api.getSystemInventoryReport(payload)
+
+        commit('SET_SYSTEM_INVENTORY_REPORTS', Object.keys(response.keyed_materials).map((r) => response.keyed_materials[r]))
+      } catch (error) {
+        console.log(error)
+        throw error
+      } finally {
+        commit('SET_LOADING_REPORTS', false)
+      }
+    },
+
+    async exportSystemInventoryReport ({ commit, dispatch }, payload) {
+      commit('SET_EXPORTING_REPORT', true)
+
+      try {
+        const response = await api.exportSystemInventoryReport(payload)
+
+        return response
+      } catch (error) {
+        console.log(error)
+        throw error
+      } finally {
+        commit('SET_EXPORTING_REPORT', false)
+      }
     }
   },
 
@@ -234,6 +266,7 @@ const module = {
     SET_LOADING_MATERIAL_LOCATIONS(state, loading) { state.loadingMaterialLocations = loading },
     SET_SAVING_MATERIAL_LOCATION(state, saving) { state.savingMaterialLocation = saving },
     SET_REPORTS(state, reports) { state.reports = reports },
+    SET_SYSTEM_INVENTORY_REPORTS(state, reports) { state.systemInventoryReports = reports },
     SET_BLENDERS(state, data) {
       state.blenders = data.blenders
     }
