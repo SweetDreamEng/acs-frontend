@@ -6,10 +6,10 @@
       <v-card-text>
         <div class="d-flex">
           <v-select
+            v-model="blenderId"
             :items="blenders"
             item-text="customer_assigned_name"
             item-value="serial_number"
-            v-model="blenderId"
             dense
             outlined
             label="Please select Blender"
@@ -40,10 +40,19 @@
                   <template v-slot:top>
                     <div class="text-right">
                       <v-btn
+                        color="primary"
+                        :loading="exportingReport"
+                        :disabled="exportingReport"
+                        @click="_exportReport(report)"
+                      >
+                        Export
+                      </v-btn>
+                      <v-btn
                         color="red"
                         :dark="!deletingReport"
                         :loading="deletingReport"
                         :disabled="deletingReport"
+                        class="ml-2"
                         @click="_deleteReport(report)"
                       >
                         Delete
@@ -85,6 +94,7 @@ export default {
       loadingReports: (state) => state.materials.loadingReports,
       loadingBlenders: (state) => state.materials.loadingBlenders,
       deletingReport: (state) => state.materials.deletingReport,
+      exportingReport: (state) => state.materials.exportingReport,
 
       reports: (state) => state.materials.reports,
       blenders: (state) => state.materials.blenders
@@ -97,7 +107,8 @@ export default {
     ...mapActions({
       getReport: 'materials/getReport',
       getBlenders: 'materials/getBlenders',
-      deleteReport: 'materials/deleteReport'
+      deleteReport: 'materials/deleteReport',
+      exportReport: 'materials/exportReport'
     }),
     reportTitle(track) {
       const blender = this.blenders.find((b) => b.serial_number === this.blenderId)
@@ -112,6 +123,23 @@ export default {
         await this.deleteReport({ id: report.id })
 
         this.getReport({ blenderId: this.blenderId })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    async _exportReport(report) {
+      try {
+        const response = await this.exportReport({ id: report.id })
+
+        const anchor = document.createElement('a')
+        const filename = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + response.filename
+
+        anchor.setAttribute('download', response.filename)
+        anchor.setAttribute('href', filename)
+        document.body.appendChild(anchor)
+        anchor.click()
+        document.body.removeChild(anchor)
       } catch (err) {
         console.log(err)
       }

@@ -4,7 +4,6 @@ import router from './router'
 
 const API = axios.create({
   baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
-  // baseURL: 'http://localhost/acs-api/public/api',
   timeout: 15000
 })
 

@@ -16,7 +16,8 @@ const module = {
     loadingBlenders: false,
     blenders: [],
 
-    deletingReport: false
+    deletingReport: false,
+    exportingReport: false
   },
 
   actions: {
@@ -199,6 +200,24 @@ const module = {
       } finally {
         commit('SET_DELETING_REPORT', false)
       }
+    },
+
+    async exportReport ({ commit, dispatch }, payload) {
+      commit('SET_EXPORTING_REPORT', true)
+
+      try {
+        const response = await api.exportReport(payload)
+
+        return response
+      } catch (error) {
+        dispatch('app/showError', {
+          'message': 'Exporting report failed'
+        }, { root: true })
+
+        throw error
+      } finally {
+        commit('SET_EXPORTING_REPORT', false)
+      }
     }
   },
 
@@ -209,6 +228,7 @@ const module = {
     SET_LOADING_REPORTS(state, loading) { state.loadingReports = loading },
     SET_LOADING_BLENDERS(state, loading) { state.loadingBlenders = loading },
     SET_DELETING_REPORT(state, deleting) { state.deletingReport = deleting },
+    SET_EXPORTING_REPORT(state, exporting) { state.exportingReport = exporting },
 
     SET_MATERIAL_LOCATIONS(state, locations) { state.materialLocations = locations },
     SET_LOADING_MATERIAL_LOCATIONS(state, loading) { state.loadingMaterialLocations = loading },

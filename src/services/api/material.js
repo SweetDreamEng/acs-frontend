@@ -134,5 +134,16 @@ export default {
   */
   deleteReport(payload) {
     return api.$delete(`/materials/report/${payload.id}`, payload)
+  },
+
+  /**
+  * Export report
+  *
+  * @example
+  *
+  *     exportReport(payload)
+  */
+  exportReport(payload) {
+    return api.$post('/materials/export', payload)
   }
 }
