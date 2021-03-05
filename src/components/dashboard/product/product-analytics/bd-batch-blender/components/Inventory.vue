@@ -12,7 +12,7 @@
           small
           class="ml-auto"
           :loading="togglingInventoryTrack"
-          :disabled="togglingInventoryTrack"
+          :disabled="togglingInventoryTrack || userRole === 'acs_admin'"
           color="primary"
           @click="startClicked()"
         >
@@ -43,6 +43,7 @@
                   class="ml-2"
                   small
                   outlined
+                  :disabled="userRole === 'acs_admin'"
                   @click="editMaterial(i)"
                 >
                   Add Material/Location
@@ -143,6 +144,7 @@ export default {
   },
   computed: {
     ...mapState({
+      userRole: (state) => state.auth.user.role,
       loadingInventories: (state) => state.bdBlenderAnalytics.loadingInventories,
       togglingInventoryTrack: (state) => state.bdBlenderAnalytics.togglingInventoryTrack,
       inventory: (state) => state.bdBlenderAnalytics.inventory,
