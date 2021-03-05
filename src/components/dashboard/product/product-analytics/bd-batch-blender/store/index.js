@@ -16,8 +16,8 @@ const module = {
     loadingHopperStables: false,
     hopperStables: [],
 
-    loadingCellBits: false,
-    cellBits: []
+    loadingLoadCell: false,
+    loadCells: []
   },
 
   actions: {
@@ -85,6 +85,20 @@ const module = {
       }
     },
 
+    async getLoadCells({ commit }, payload) {
+      commit('SET_LOADING_LOAD_CELLS', true)
+
+      try {
+        const response = await api.getLoadCells(payload)
+
+        commit('SET_LOAD_CELLS', response.data.loadCells)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_LOAD_CELLS', false)
+      }
+    },
+
     async toggleInventoryTracking({ commit }, payload) {
       commit('SET_LOADING_INVENTORY_TRACK', true)
 
@@ -104,7 +118,7 @@ const module = {
     SET_LOADING_RECIPE(state, isLoading) { state.loadingRecipe = isLoading },
     SET_LOADING_INVENTORIES(state, isLoading) { state.loadingInventories = isLoading },
     SET_LOADING_HOPPER_STABLES(state, isLoading) { state.loadingHopperStables = isLoading },
-    SET_LOADING_CELL_BITS(state, isLoading) { state.loadingCellBits = isLoading },
+    SET_LOADING_LOAD_CELLS(state, isLoading) { state.loadingLoadCell = isLoading },
 
     SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
     SET_RECIPE_MODE(state, mode) { state.recipeMode = mode },
@@ -116,6 +130,7 @@ const module = {
     SET_HOPPER_STABLES(state, stables) { state.hopperStables = stables },
 
     SET_LOADING_INVENTORY_TRACK(state, isLoading) { state.togglingInventoryTrack = isLoading },
+    SET_LOAD_CELLS(state, loadCells) { state.loadCells = loadCells },
     SET_TARCKING_STATUS(state, in_progress) { state.inventory.inventory_material.in_progress = in_progress }
   },
 

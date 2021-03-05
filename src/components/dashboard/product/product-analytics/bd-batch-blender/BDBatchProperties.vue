@@ -46,6 +46,13 @@
         >
         </hopper-stable>
       </v-col>
+      <v-col cols="12" md="4">
+        <load-cell
+          :loading="loadingLoadCell"
+          :items="loadCells"
+        >
+        </load-cell>
+      </v-col>
       <v-col v-if="parameters.includes(104)" cols="12" md="4">
         <bar-graph
           namespace="barGraph-dbBlender-id2"
@@ -69,12 +76,14 @@ import api from './services/api'
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import HopperStable from './components/HopperStable'
+import LoadCell from './components/BatchAndLoadCell'
 
 export default {
   components: {
     BarGraph,
     AreaGraph,
-    HopperStable
+    HopperStable,
+    LoadCell
   },
   props: {
     machineId: {
@@ -104,24 +113,20 @@ export default {
   computed: {
     ...mapState('bdBlenderAnalytics', [
       'loadingHopperStables',
-      'loadingCellBits',
+      'loadingLoadCell',
       'hopperStables',
-      'cellBits'
+      'loadCells'
     ])
   },
   mounted() {
     this.getHopperStables({ serialNumber: this.serialNumber })
+    this.getLoadCells({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions('bdBlenderAnalytics', [
-      'getHopperStables'
-    ]),
-    lineSeries(name, values) {
-      return [{
-        name: name,
-        data: values
-      }]
-    }
+      'getHopperStables',
+      'getLoadCells'
+    ])
   }
 }
 </script>

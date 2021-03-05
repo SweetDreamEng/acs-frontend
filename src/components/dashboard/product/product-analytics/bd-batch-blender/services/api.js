@@ -36,6 +36,10 @@ export default {
     return api.post('/analytics/blender/capability', payload)
   },
 
+  getLoadCells(payload) {
+    return api.post('/analytics/blender/load-cells', payload)
+  },
+
   updateInventoryMaterial(payload) {
     return api.$post('/analytics/blender/inventory-material', payload)
   }
