@@ -76,8 +76,8 @@ import commonApi from '../../common/fetches/api'
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import Overview from '../../common/overview/ProductOverview'
-import Recipe from './components/Recipe'
-import Inventory from './components/Inventory'
+import Recipe from './components/BatchBlenderRecipe'
+import Inventory from './components/BatchBlenderInventory'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 

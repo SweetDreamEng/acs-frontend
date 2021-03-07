@@ -75,7 +75,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import api from './services/api'
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
-import HopperStable from './components/HopperStable'
+import HopperStable from './components/BatchBlenderHopperStable'
 import LoadCell from './components/BatchAndLoadCell'
 
 export default {
