@@ -278,7 +278,9 @@ const module = {
     canCreateCompanies: (state) => ['acs_admin', 'acs_manager'].includes(state.user.role),
     canViewCompanies: (state) => ['acs_admin', 'acs_manager', 'acs_viewer'].includes(state.user.role),
     canImportDevices: (state) => ['acs_admin', 'acs_manager'].includes(state.user.role),
-    canCreateCustomerUser: (state) => state.user.role === 'customer_admin'
+    canCreateCustomerUser: (state) => state.user.role === 'customer_admin',
+    canViewInventory: (state) => state.user.role !== 'acs_admin',
+    canGetMaterialsAndLocations: (state) => state.user.role === 'customer_manager'
   }
 }
 

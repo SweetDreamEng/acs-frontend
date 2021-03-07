@@ -12,7 +12,7 @@
           small
           class="ml-auto"
           :loading="togglingInventoryTrack"
-          :disabled="togglingInventoryTrack || userRole === 'acs_admin'"
+          :disabled="togglingInventoryTrack || !canViewInventory"
           color="primary"
           @click="startClicked()"
         >
@@ -43,7 +43,7 @@
                   class="ml-2"
                   small
                   outlined
-                  :disabled="userRole === 'acs_admin'"
+                  :disabled="!canViewInventory"
                   @click="editMaterial(i)"
                 >
                   Add Material/Location
@@ -151,6 +151,9 @@ export default {
       savingMaterial: (state) => state.bdBlenderAnalytics.savingMaterial,
       materials: (state) => state.materials.data,
       locations: (state) => state.materials.materialLocations
+    }),
+    ...mapGetters({
+      canViewInventory: 'auth/canViewInventory'
     }),
     dialogText () {
       return `Feeder ${this.editedIndex + 1}`
