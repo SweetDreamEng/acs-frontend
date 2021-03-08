@@ -158,7 +158,7 @@ export default {
   },
   mounted() {
     this.getInventory({ serialNumber: this.serialNumber })
-    if (this.userRole === 'customer_manager') {
+    if (this.userRole === 'customer_admin' || this.userRole === 'customer_manager') {
       this.getMaterials()
       this.getMaterialLocations()
     }
