@@ -19,6 +19,9 @@
           :items="systemInventoryReports"
           class="flex-grow-1"
         >
+          <template v-slot:item.value="{ item }">
+            {{ item.value.toFixed(3) }}
+          </template>
         </v-data-table>
       </v-card-text>
     </v-card>

@@ -12,7 +12,7 @@
           small
           class="ml-auto"
           :loading="togglingInventoryTrack"
-          :disabled="togglingInventoryTrack || userRole === 'acs_admin'"
+          :disabled="togglingInventoryTrack || !canViewInventory"
           color="primary"
           @click="startClicked()"
         >
@@ -145,20 +145,18 @@ export default {
   computed: {
     ...mapState({
       userRole: (state) => state.auth.user.role,
-      loadingInventories: (state) => state.bdBlenderAnalytics.loadingInventories,
-      togglingInventoryTrack: (state) => state.bdBlenderAnalytics.togglingInventoryTrack,
-      inventory: (state) => state.bdBlenderAnalytics.inventory,
-      savingMaterial: (state) => state.bdBlenderAnalytics.savingMaterial,
       materials: (state) => state.materials.data,
       locations: (state) => state.materials.materialLocations
     }),
+    ...mapState('bdBlenderAnalytics', ['loadingInventories', 'togglingInventoryTrack', 'inventory', 'savingMaterial']),
+    ...mapGetters('auth', ['canViewInventory']),
     dialogText () {
       return `Feeder ${this.editedIndex + 1}`
     }
   },
   mounted() {
     this.getInventory({ serialNumber: this.serialNumber })
-    if (this.userRole === 'customer_admin' || this.userRole === 'customer_manager') {
+    if (this.canViewInventory) {
       this.getMaterials()
       this.getMaterialLocations()
     }
@@ -174,43 +172,8 @@ export default {
 
     editMaterial(item) {
       this.editedIndex = item
-
-      switch (item) {
-      case 0:
-        this.editItem.material = this.inventory.inventory_material.material1_id
-        this.editItem.location = this.inventory.inventory_material.location1_id
-        break
-      case 1:
-        this.editItem.material = this.inventory.inventory_material.material2_id
-        this.editItem.location = this.inventory.inventory_material.location2_id
-        break
-      case 2:
-        this.editItem.material = this.inventory.inventory_material.material3_id
-        this.editItem.location = this.inventory.inventory_material.location3_id
-        break
-      case 3:
-        this.editItem.material = this.inventory.inventory_material.material4_id
-        this.editItem.location = this.inventory.inventory_material.location4_id
-        break
-      case 4:
-        this.editItem.material = this.inventory.inventory_material.material5_id
-        this.editItem.location = this.inventory.inventory_material.location5_id
-        break
-      case 5:
-        this.editItem.material = this.inventory.inventory_material.material6_id
-        this.editItem.location = this.inventory.inventory_material.location6_id
-        break
-      case 6:
-        this.editItem.material = this.inventory.inventory_material.material7_id
-        this.editItem.location = this.inventory.inventory_material.location7_id
-        break
-      case 7:
-        this.editItem.material = this.inventory.inventory_material.material8_id
-        this.editItem.location = this.inventory.inventory_material.location8_id
-        break
-      default:
-        break
-      }
+      this.editItem.material = this.inventory.inventory_material[`material${item + 1}_id`]
+      this.editItem.location = this.inventory.inventory_material[`location${item + 1}_id`]
 
       this.editDialog = true
       this.$nextTick(() => {
@@ -245,84 +208,14 @@ export default {
     },
 
     materialText(ind) {
-      let m = null
+      const m = this.materials.find((material) => material.id === this.inventory.inventory_material[`material${ind + 1}_id`])
 
-      switch (ind) {
-      case 0:
-        m = this.materials.find((material) => material.id === this.inventory.inventory_material.material1_id)
-
-        return m ? m.material : 'Material Not Selected'
-      case 1:
-        m = this.materials.find((material) => material.id === this.inventory.inventory_material.material2_id)
-
-        return m ? m.material : 'Material Not Selected'
-      case 2:
-        m = this.materials.find((material) => material.id === this.inventory.inventory_material.material3_id)
-
-        return m ? m.material : 'Material Not Selected'
-      case 3:
-        m = this.materials.find((material) => material.id === this.inventory.inventory_material.material4_id)
-
-        return m ? m.material : 'Material Not Selected'
-      case 4:
-        m = this.materials.find((material) => material.id === this.inventory.inventory_material.material5_id)
-
-        return m ? m.material : 'Material Not Selected'
-      case 5:
-        m = this.materials.find((material) => material.id === this.inventory.inventory_material.material6_id)
-
-        return m ? m.material : 'Material Not Selected'
-      case 6:
-        m = this.materials.find((material) => material.id === this.inventory.inventory_material.material7_id)
-
-        return m ? m.material : 'Material Not Selected'
-      case 7:
-        m = this.materials.find((material) => material.id === this.inventory.inventory_material.material8_id)
-
-        return m ? m.material : 'Material Not Selected'
-      default:
-        return -1
-      }
+      return m ? m.material : 'Material Not Selected'
     },
     locationText(ind) {
-      let m = null
+      const m = this.locations.find((location) => location.id === this.inventory.inventory_material[`location${ind + 1}_id`])
 
-      switch (ind) {
-      case 0:
-        m = this.locations.find((location) => location.id === this.inventory.inventory_material.location1_id)
-
-        return m ? m.location : 'Location Not Selected'
-      case 1:
-        m = this.locations.find((location) => location.id === this.inventory.inventory_material.location2_id)
-
-        return m ? m.location : 'Location Not Selected'
-      case 2:
-        m = this.locations.find((location) => location.id === this.inventory.inventory_material.location3_id)
-
-        return m ? m.location : 'Location Not Selected'
-      case 3:
-        m = this.locations.find((location) => location.id === this.inventory.inventory_material.location4_id)
-
-        return m ? m.location : 'Location Not Selected'
-      case 4:
-        m = this.locations.find((location) => location.id === this.inventory.inventory_material.location5_id)
-
-        return m ? m.location : 'Location Not Selected'
-      case 5:
-        m = this.locations.find((location) => location.id === this.inventory.inventory_material.location6_id)
-
-        return m ? m.location : 'Location Not Selected'
-      case 6:
-        m = this.locations.find((location) => location.id === this.inventory.inventory_material.location7_id)
-
-        return m ? m.location : 'Location Not Selected'
-      case 7:
-        m = this.locations.find((location) => location.id === this.inventory.inventory_material.location8_id)
-
-        return m ? m.location : 'Location Not Selected'
-      default:
-        return -1
-      }
+      return m ? m.location : 'Location Not Selected'
     }
   }
 }

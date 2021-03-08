@@ -40,18 +40,18 @@
         </bar-graph>
       </v-col>
       <v-col v-if="parameters.includes(103)" cols="12" md="4">
-        <hopper-stable
+        <batch-blender-hopper-stable
           :loading="loadingHopperStables"
           :stables="hopperStables"
         >
-        </hopper-stable>
+        </batch-blender-hopper-stable>
       </v-col>
       <v-col cols="12" md="4">
-        <load-cell
+        <batch-blender-load-cells
           :loading="loadingLoadCell"
           :items="loadCells"
         >
-        </load-cell>
+        </batch-blender-load-cells>
       </v-col>
       <v-col v-if="parameters.includes(104)" cols="12" md="4">
         <bar-graph
@@ -75,15 +75,15 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import api from './services/api'
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
-import HopperStable from './components/HopperStable'
-import LoadCell from './components/BatchAndLoadCell'
+import BatchBlenderHopperStable from './components/BatchBlenderHopperStable'
+import BatchBlenderLoadCells from './components/BatchBlenderLoadCells'
 
 export default {
   components: {
     BarGraph,
     AreaGraph,
-    HopperStable,
-    LoadCell
+    BatchBlenderHopperStable,
+    BatchBlenderLoadCells
   },
   props: {
     machineId: {

@@ -50,21 +50,21 @@
         </bar-graph>
       </v-col>
       <v-col v-if="parameters.includes(5)" cols="12" md="4">
-        <recipe
+        <batch-blender-recipe
           :loading="loadingRecipe"
           :recipes="recipeValues"
           :ez-types="ezTypes"
           :mode="recipeMode"
           @reload="getRecipe({ serialNumber })"
         >
-        </recipe>
+        </batch-blender-recipe>
       </v-col>
       <v-col v-if="parameters.includes(4)" cols="12">
-        <inventory
+        <batch-blender-inventory
           :serial-number="serialNumber"
           @reload="getInventory({ serialNumber })"
         >
-        </inventory>
+        </batch-blender-inventory>
       </v-col>
     </v-row>
   </div>
@@ -76,8 +76,8 @@ import commonApi from '../../common/fetches/api'
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import Overview from '../../common/overview/ProductOverview'
-import Recipe from './components/Recipe'
-import Inventory from './components/Inventory'
+import BatchBlenderRecipe from './components/BatchBlenderRecipe'
+import BatchBlenderInventory from './components/BatchBlenderInventory'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -86,8 +86,8 @@ export default {
     BarGraph,
     AreaGraph,
     Overview,
-    Recipe,
-    Inventory
+    BatchBlenderRecipe,
+    BatchBlenderInventory
   },
   props: {
     machineId: {
