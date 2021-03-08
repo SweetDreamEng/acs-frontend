@@ -39,7 +39,7 @@ import commonApi from '../../common/fetches/api'
 
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import Overview from '../../common/overview/ProductOverview'
-import MachineState from './components/MachineState'
+import MachineState from './components/TruetempTcuMachineState'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
