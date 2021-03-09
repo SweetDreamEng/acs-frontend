@@ -35,7 +35,7 @@
             >
             </v-select>
           </v-col>
-<!--           <time-range-chooser
+          <!-- <time-range-chooser
             :dlg="showTimeRangeChooser"
             :time-range="timeRange"
             @close="showTimeRangeChooser = false"

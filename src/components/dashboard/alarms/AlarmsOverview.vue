@@ -8,7 +8,7 @@
       <v-card-text v-if="alarmsOverview">
         <v-row dense>
           <v-col cols="12" md="4">
-<!--             <apexchart
+            <!-- <apexchart
               height="200"
               :options="chartOptions"
               :series="series"

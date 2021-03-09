@@ -3,8 +3,8 @@
     <div class="text-right">
       <v-btn
         color="primary"
-        :loading="import_btn_loading"
-        :disabled="import_btn_loading"
+        :loading="importBtnLoading"
+        :disabled="importBtnLoading"
         @click="submit"
       >
         Retrieve devices from Teltonika RMS
@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     ...mapState({
-      import_btn_loading: (state) => state.devices.import_btn_loading,
+      importBtnLoading: (state) => state.devices.importBtnLoading,
       numAdded: (state) => state.devices.numAdded,
       numDuplicates: (state) => state.devices.numDuplicates
     })

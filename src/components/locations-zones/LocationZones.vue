@@ -77,8 +77,8 @@
                 <v-btn
                   color="primary"
                   type="submit"
-                  :loading="btn_loading"
-                  :disabled="btn_loading"
+                  :loading="btnLoading"
+                  :disabled="btnLoading"
                 >
                   Save
                 </v-btn>
@@ -93,7 +93,7 @@
         :headers="headers"
         :items="locations"
         class="flex-grow-1"
-        :loading="table_loading"
+        :loading="tableLoading"
         hide-default-footer
       >
         <template v-slot:item.location_id="{ item }">
@@ -163,8 +163,8 @@ export default {
   },
   computed: {
     ...mapState({
-      btn_loading: (state) => state.locations.btn_loading,
-      table_loading: (state) => state.locations.table_loading,
+      btnLoading: (state) => state.locations.btnLoading,
+      tableLoading: (state) => state.locations.tableLoading,
       cities: (state) => state.cities.data,
       loadingCities: (state) => state.cities.loadingCities
     }),

@@ -8,7 +8,7 @@ const module = {
     user: null,
     error: null,
     isUsersTableLoading: false,
-    button_loading: false
+    buttonLoading: false
   },
 
   actions: {
@@ -108,10 +108,10 @@ const module = {
     },
     TABLE_LOAD(state, loading) { state.isUsersTableLoading = loading },
     BUTTON_LOAD(state) {
-      state.button_loading = true
+      state.buttonLoading = true
     },
     BUTTON_CLEAR(state) {
-      state.button_loading = false
+      state.buttonLoading = false
     }
   },
 

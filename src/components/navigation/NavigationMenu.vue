@@ -67,15 +67,15 @@ export default {
       role: (state) => state.auth.user.role
     }),
     menuForRoles() {
-      return this.menu.filter((menu_item) => {
-        return menu_item.visibleFor ? menu_item.visibleFor.includes(this.role) : true
+      return this.menu.filter((menuItem) => {
+        return menuItem.visibleFor ? menuItem.visibleFor.includes(this.role) : true
       })
     }
   },
   methods: {
     submenuForRoles(items) {
-      return items.filter((menu_item) => {
-        return menu_item.visibleFor ? menu_item.visibleFor.includes(this.role) : true
+      return items.filter((menuItem) => {
+        return menuItem.visibleFor ? menuItem.visibleFor.includes(this.role) : true
       })
     }
   }

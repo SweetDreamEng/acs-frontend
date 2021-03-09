@@ -30,8 +30,8 @@ export default {
   computed: {
     ...mapState('app', ['product']),
     ...mapState({
-      authBackgroundFile: (state) => state.settings.auth_background_file,
-      logoFile: (state) => state.settings.logo_file
+      authBackgroundFile: (state) => state.settings.authBackgroundFile,
+      logoFile: (state) => state.settings.logoFile
     }),
     authBackground() {
       return {

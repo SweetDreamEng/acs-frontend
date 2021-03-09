@@ -34,7 +34,7 @@
           :roles="availableRoles"
           :locations="locations"
           :zones="zones"
-          :button-loading="button_loading"
+          :button-loading="buttonLoading"
           @submit="submitAccount"
         >
         </account-tab>
@@ -43,7 +43,7 @@
       <v-tab-item value="tabs-information">
         <information-tab
           :user="user"
-          :button-loading="button_loading"
+          :button-loading="buttonLoading"
           @submit="submitAccount"
         >
         </information-tab>
@@ -83,7 +83,7 @@ export default {
     ...mapState({
       userRole: (state) => state.auth.user.role,
       user: (state) => state.users.user,
-      button_loading: (state) => state.users.button_loading,
+      buttonLoading: (state) => state.users.buttonLoading,
       roles: (state) => state.auth.roles,
       locations: (state) => state.locations.data,
       zones: (state) => state.zones.data

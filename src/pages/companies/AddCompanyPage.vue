@@ -62,7 +62,7 @@
                   <v-btn
                     type="submit"
                     color="primary"
-                    :loading="button_loading"
+                    :loading="buttonLoading"
                   >Save</v-btn>
                 </div>
               </v-form>
@@ -206,7 +206,7 @@ export default {
   },
   computed: {
     ...mapState({
-      button_loading: (state) => state.companies.button_loading,
+      buttonLoading: (state) => state.companies.buttonLoading,
       cities: (state) => state.cities.data,
       errorMessages: (state) => state.companies.error,
       companies: (state) => state.companies.companies,

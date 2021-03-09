@@ -16,10 +16,10 @@
         hide-default-footer
         :expanded.sync="expanded"
         :single-expand="true"
-        :loading="table_loading"
+        :loading="tableLoading"
       >
         <template v-slot:top>
-          <div v-if="!table_loading" class="px-2 text-right">
+          <div v-if="!tableLoading" class="px-2 text-right">
             <v-btn
               color="primary"
               :loading="loadingToggleActiveDevices"
@@ -199,8 +199,8 @@
               <v-btn
                 color="primary"
                 type="submit"
-                :loading="assign_loading"
-                :disabled="assign_loading"
+                :loading="assignLoading"
+                :disabled="assignLoading"
               >
                 Save
               </v-btn>
@@ -234,7 +234,7 @@
             <v-btn
               :color="confirmBtnColor()"
               dark
-              :loading="register_button_loading"
+              :loading="registerButtonLoading"
               @click="onConfirmClicked()"
             >
               {{ confirmBtnText() }}
@@ -309,11 +309,11 @@ export default {
   },
   computed: {
     ...mapState({
-      table_loading: (state) => state.devices.table_loading,
-      assign_loading: (state) => state.devices.assign_loading,
-      activate_button_loading: (state) => state.devices.activate_button_loading,
-      deactivate_button_loading: (state) => state.devices.deactivate_button_loading,
-      register_button_loading: (state) => state.devices.register_button_loading,
+      tableLoading: (state) => state.devices.tableLoading,
+      assignLoading: (state) => state.devices.assignLoading,
+      activateButtonLoading: (state) => state.devices.activateButtonLoading,
+      deactivateButtonLoading: (state) => state.devices.deactivateButtonLoading,
+      registerButtonLoading: (state) => state.devices.registerButtonLoading,
       loadingToggleActiveDevices: (state) => state.devices.loadingToggleActiveDevices,
 
       devices: (state) => state.devices.data,
