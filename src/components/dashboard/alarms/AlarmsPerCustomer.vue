@@ -125,12 +125,10 @@ export default {
     this.loading = true
 
     try {
-      const promises = []
-
-      promises.push(this.getCompanies())
-      promises.push(this.getConfigurations())
-
-      await Promise.all(promises)
+      await Promise.all([
+        this.getCompanies(),
+        this.getConfigurations()
+      ])
 
       this.selectedCompany = this.companies[0].id
       // this.selectedConfiguration = this.configurations[0].id
