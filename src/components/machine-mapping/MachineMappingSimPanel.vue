@@ -14,8 +14,8 @@
         small
         color="primary"
         class="mr-2 mb-1"
-        :loading="refresh_btn_loading"
-        :disabled="refresh_btn_loading"
+        :loading="refreshBtnLoading"
+        :disabled="refreshBtnLoading"
         @click="querySIM(item.iccid)"
       >
         <v-icon left>$mdi-refresh</v-icon>
@@ -25,31 +25,31 @@
         small
         color="primary"
         class="mr-2 mb-1"
-        :loading="activate_btn_loading"
-        :disabled="activate_btn_loading"
+        :loading="activateBtnLoading"
+        :disabled="activateBtnLoading"
       >Activate SIM</v-btn>
       <v-btn
         small
         color="primary"
         class="mr-2 mb-1"
-        :loading="suspend_btn_loading"
-        :disabled="suspend_btn_loading"
+        :loading="suspendBtnLoading"
+        :disabled="suspendBtnLoading"
         @click="suspendSIM(item.iccid)"
       >Suspend SIM</v-btn>
       <v-btn
         small
         color="primary"
         class="mr-2 mb-1"
-        :loading="remote_web_btn_loading"
-        :disabled="remote_web_btn_loading"
+        :loading="remoteWebBtnLoading"
+        :disabled="remoteWebBtnLoading"
         @click="onRemoteWeb(item.device_id)"
       >Remote WebUI</v-btn>
       <v-btn
         small
         color="primary"
         class="mr-2 mb-1"
-        :loading="remote_cli_btn_loading"
-        :disabled="remote_cli_btn_loading"
+        :loading="remoteCliBtnLoading"
+        :disabled="remoteCliBtnLoading"
         @click="onRemoteCli(item.device_id)"
       >Remote CLI</v-btn>
       <v-btn
@@ -300,11 +300,11 @@ export default {
   computed: {
     ...mapState('devices', [
       'sim_statuses',
-      'activate_btn_loading',
-      'suspend_btn_loading',
-      'refresh_btn_loading',
-      'remote_web_btn_loading',
-      'remote_cli_btn_loading',
+      'activateBtnLoading',
+      'suspendBtnLoading',
+      'refreshBtnLoading',
+      'remoteWebBtnLoading',
+      'remoteCliBtnLoading',
       'sendingDeviceConfig'
     ])
   },

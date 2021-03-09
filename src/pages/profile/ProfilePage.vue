@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     ...mapState({
-      isBtnLoading: (state) => state.auth.button_loading,
+      isBtnLoading: (state) => state.auth.buttonLoading,
       user: (state) => state.auth.user,
       error: (state) => state.auth.error
     })

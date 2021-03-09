@@ -55,7 +55,7 @@ const module = {
 
     error: null,
     loading: true,
-    button_loading: false
+    buttonLoading: false
   },
 
   actions: {
@@ -255,11 +255,11 @@ const module = {
       state.user.companyId = null
     },
     BUTTON_LOAD(state) {
-      state.button_loading = true
+      state.buttonLoading = true
     },
 
     BUTTON_CLEAR(state) {
-      state.button_loading = false
+      state.buttonLoading = false
     },
 
     SET_LOADING_TIME_ZONE(state, loading) { state.loadingTimezone = loading },

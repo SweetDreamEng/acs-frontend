@@ -115,7 +115,7 @@ export default {
   }),
   computed: {
     ...mapState({
-      isLoading: (state) => state.companies.button_loading,
+      isLoading: (state) => state.companies.buttonLoading,
       cities: (state) => state.cities.data
     }),
     zipCode() {

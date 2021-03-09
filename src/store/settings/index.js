@@ -4,14 +4,14 @@ import vuetify from '../../plugins/vuetify'
 const module = {
   namespaced: true,
   state: {
-    private_colors: null,
+    privateColors: null,
     colors: [],
     basicColors: {},
     error: null,
     loading: true,
-    button_loading: null,
-    logo_file: null,
-    auth_background_file: null,
+    buttonLoading: null,
+    logoFile: null,
+    authBackgroundFile: null,
 
     logoFilePath: '',
     uploadingLogo: false
@@ -54,13 +54,13 @@ const module = {
 
         response = response.value
 
-        // const private_colors = response.filter((data) => data.type.includes('private_color'))
+        // const privateColors = response.filter((data) => data.type.includes('private_color'))
 
-        // if (private_colors.length) {
+        // if (privateColors.length) {
         //   const colors = []
 
-        //   for (let i = 0; i < private_colors.length; i++) {
-        //     colors.push(private_colors[i]['value'])
+        //   for (let i = 0; i < privateColors.length; i++) {
+        //     colors.push(privateColors[i]['value'])
         //   }
         //   commit('SET_PRIVATE_COLORS', colors)
         // } else {
@@ -86,20 +86,20 @@ const module = {
         vuetify.framework.theme.themes.light.accent = accentColor ? accentColor.value : '#ffffff'
         vuetify.framework.theme.themes.light.surface = surfaceColor ? surfaceColor.value : '#ffffff'
 
-        let auth_background_file = response.filter((data) => data.type.includes('auth_background_filepath'))
+        let authBackgroundFile = response.filter((data) => data.type.includes('auth_background_filepath'))
 
-        if (auth_background_file.length) {
-          auth_background_file = auth_background_file[0]['value']
-          commit('SET_AUTH_BACKGROUND_FILE', auth_background_file)
+        if (authBackgroundFile.length) {
+          authBackgroundFile = authBackgroundFile[0]['value']
+          commit('SET_AUTH_BACKGROUND_FILE', authBackgroundFile)
         } else {
           commit('SET_AUTH_BACKGROUND_FILE', false)
         }
 
-        let logo_file = response.filter((data) => data.type.includes('logo_filepath'))
+        let logoFile = response.filter((data) => data.type.includes('logo_filepath'))
 
-        if (logo_file.length) {
-          logo_file = logo_file[0]['value']
-          commit('SET_LOGO_FILE', logo_file)
+        if (logoFile.length) {
+          logoFile = logoFile[0]['value']
+          commit('SET_LOGO_FILE', logoFile)
         } else {
           commit('SET_LOGO_FILE', false)
         }
@@ -167,25 +167,25 @@ const module = {
     },
 
     BUTTON_LOAD(state, button) {
-      state.button_loading = button
+      state.buttonLoading = button
     },
     BUTTON_CLEAR(state) {
-      state.button_loading = false
+      state.buttonLoading = false
     },
     SET_COLORS(state, colors) {
       state.colors = colors
     },
-    SET_PRIVATE_COLORS(state, private_colors) {
-      state.private_colors = private_colors
+    SET_PRIVATE_COLORS(state, privateColors) {
+      state.privateColors = privateColors
     },
     SET_COLOR_SETTINGS(state, colors) {
       state.basicColors = colors
     },
     SET_LOGO_FILE(state, filepath) {
-      state.logo_file = filepath
+      state.logoFile = filepath
     },
     SET_AUTH_BACKGROUND_FILE(state, filepath) {
-      state.auth_background_file = filepath
+      state.authBackgroundFile = filepath
     },
     SET_LOGO_UPLOADING(state, value) {
       state.uploadingLogo = value

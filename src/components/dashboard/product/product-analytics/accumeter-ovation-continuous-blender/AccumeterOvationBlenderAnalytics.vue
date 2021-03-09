@@ -81,7 +81,7 @@ import commonApi from '../../common/fetches/api'
 import Overview from '../../common/overview/ProductOverview'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
-import MachineState from './components/MachineState'
+import MachineState from './components/AccumeterOvationBlenderMachineState'
 import FeederStable from './components/FeederStable'
 
 import { mapState, mapGetters, mapActions } from 'vuex'

@@ -148,7 +148,7 @@ export default {
   },
   computed: {
     ...mapState({
-      isLoading: (state) => state.companies.button_loading,
+      isLoading: (state) => state.companies.buttonLoading,
       error: (state) => state.companies.error
     })
   },

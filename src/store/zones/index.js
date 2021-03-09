@@ -5,8 +5,8 @@ const module = {
   state: {
     data: [],
 
-    table_loading: false,
-    btn_loading: false
+    tableLoading: false,
+    btnLoading: false
   },
 
   actions: {
@@ -55,16 +55,16 @@ const module = {
 
   mutations: {
     TABLE_LOAD(state) {
-      state.table_loading = true
+      state.tableLoading = true
     },
     TABLE_LOADED(state) {
-      state.table_loading = false
+      state.tableLoading = false
     },
     BTN_LOAD(state) {
-      state.btn_loading = true
+      state.btnLoading = true
     },
     BTN_LOADED(state) {
-      state.btn_loading = false
+      state.btnLoading = false
     },
     SET_DATA(state, zones) {
       state.data = zones

@@ -17,6 +17,7 @@ import './plugins/animate'
 import './plugins/clipboard'
 import './plugins/rules'
 import './plugins/sentry'
+import './plugins/download'
 
 // FILTERS
 import './filters/initials'

@@ -181,11 +181,11 @@ export default {
     ...mapState({
       uploadingLogo: (state) => state.settings.uploadingLogo,
 
-      logoFile: (state) => state.settings.logo_file,
+      logoFile: (state) => state.settings.logoFile,
       colors: (state) => state.settings.colors,
-      privateColors: (state) => state.settings.private_colors,
+      privateColors: (state) => state.settings.privateColors,
       basicColors: (state) => state.settings.basicColors,
-      buttonLoading: (state) => state.settings.button_loading
+      buttonLoading: (state) => state.settings.buttonLoading
     }),
     logoFilePath() {
       return this.logoFile ? this.logoFile : require('../../assets/imgs/logo-aec.png')

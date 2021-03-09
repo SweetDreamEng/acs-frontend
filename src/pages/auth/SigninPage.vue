@@ -88,9 +88,9 @@ export default {
   },
   computed: {
     ...mapState({
-      isLoading: (state) => state.auth.button_loading,
+      isLoading: (state) => state.auth.buttonLoading,
       errorMessages: (state) => state.auth.error,
-      privateColors: (state) => state.settings.private_colors
+      privateColors: (state) => state.settings.privateColors
     })
   },
   mounted() {

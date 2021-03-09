@@ -93,7 +93,7 @@ export default {
     ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
     ...mapState({
       userRole: (state) => state.auth.user.role,
-      logoFile: (state) => state.settings.logo_file
+      logoFile: (state) => state.settings.logoFile
     }),
     userMenu() {
       switch (this.userRole) {

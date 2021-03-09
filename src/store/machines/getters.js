@@ -33,57 +33,58 @@ const timeRangeFromTo = (state) => (timeRange) => {
   if (timeRange.timeRangeOption !== 'custom') {
     const tr = state.timeRageOptions.find((item) => item.value === timeRange.timeRangeOption)
     const trOption = tr ? tr.value : 'last24Hours'
+    const dateGetTime = new Date().getTime()
 
     switch (trOption) {
     case 'last30Min':
       return {
-        from: new Date().getTime() - (30 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (30 * 60 * 1000),
+        to: dateGetTime
       }
     case 'lastHour':
       return {
-        from: new Date().getTime() - (60 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (60 * 60 * 1000),
+        to: dateGetTime
       }
     case 'last4Hours':
       return {
-        from: new Date().getTime() - (4 * 60 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (4 * 60 * 60 * 1000),
+        to: dateGetTime
       }
     case 'last12Hours':
       return {
-        from: new Date().getTime() - (12 * 60 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (12 * 60 * 60 * 1000),
+        to: dateGetTime
       }
     case 'last24Hours':
       return {
-        from: new Date().getTime() - (24 * 60 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (24 * 60 * 60 * 1000),
+        to: dateGetTime
       }
     case 'last48Hours':
       return {
-        from: new Date().getTime() - (48 * 60 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (48 * 60 * 60 * 1000),
+        to: dateGetTime
       }
     case 'last3Days':
       return {
-        from: new Date().getTime() - (3 * 24 * 60 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (3 * 24 * 60 * 60 * 1000),
+        to: dateGetTime
       }
     case 'last7Days':
       return {
-        from: new Date().getTime() - (7 * 24 * 60 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (7 * 24 * 60 * 60 * 1000),
+        to: dateGetTime
       }
     case 'last24Days':
       return {
-        from: new Date().getTime() - (24 * 24 * 60 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (24 * 24 * 60 * 60 * 1000),
+        to: dateGetTime
       }
     default:
       return {
-        from: new Date().getTime() - (24 * 60 * 60 * 1000),
-        to: new Date().getTime()
+        from: dateGetTime - (24 * 60 * 60 * 1000),
+        to: dateGetTime
       }
     }
   } else {

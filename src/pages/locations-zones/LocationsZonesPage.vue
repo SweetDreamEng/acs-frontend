@@ -59,7 +59,7 @@
                   <v-btn
                     color="primary"
                     type="submit"
-                    :loading="btn_loading"
+                    :loading="btnLoading"
                   >
                     Save
                   </v-btn>
@@ -74,7 +74,7 @@
           :headers="zonesHeader"
           :items="zones"
           class="flex-grow-1"
-          :loading="table_loading"
+          :loading="tableLoading"
           hide-default-footer
         >
           <template v-slot:item.location_id="{ item }">
@@ -137,8 +137,8 @@ export default {
   },
   computed: {
     ...mapState({
-      btn_loading: (state) => state.zones.btn_loading,
-      table_loading: (state) => state.zones.table_loading,
+      btnLoading: (state) => state.zones.btnLoading,
+      tableLoading: (state) => state.zones.tableLoading,
       locations: (state) => state.locations.data,
       zones: (state) => state.zones.data
     }),

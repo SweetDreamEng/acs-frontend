@@ -129,7 +129,7 @@ export default {
   },
   computed: {
     ...mapState({
-      isLoading: (state) => state.auth.button_loading,
+      isLoading: (state) => state.auth.buttonLoading,
       errorMessages: (state) => state.auth.error
     })
   },
