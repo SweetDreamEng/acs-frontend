@@ -228,6 +228,8 @@ import states from '../../services/data/states'
 
 import { mapState, mapActions } from 'vuex'
 
+const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+
 export default {
   components: {
   },
@@ -260,16 +262,16 @@ export default {
 
       editedItem: {
         machine: 0,
-        dateFrom: new Date().toISOString().substr(0, 10),
-        dateTo: new Date().toISOString().substr(0, 10),
+        dateFrom: dateTimeIsoString,
+        dateTo: dateTimeIsoString,
         timeFrom: '00:00',
         timeTo: '00:00',
         reason: ''
       },
       defaultItem: {
         machine: 0,
-        dateFrom: new Date().toISOString().substr(0, 10),
-        dateTo: new Date().toISOString().substr(0, 10),
+        dateFrom: dateTimeIsoString,
+        dateTo: dateTimeIsoString,
         timeFrom: '00:00',
         timeTo: '00:00',
         reason: ''

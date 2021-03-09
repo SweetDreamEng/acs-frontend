@@ -1,8 +1,10 @@
 function defaultTimeRange() {
+  const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+
   return {
     timeRangeOption: 'last24Hours',
-    dateFrom: new Date().toISOString().substr(0, 10),
-    dateTo: new Date().toISOString().substr(0, 10),
+    dateFrom: dateTimeIsoString,
+    dateTo: dateTimeIsoString,
     timeFrom: '00:00',
     timeTo: '00:00'
   }
