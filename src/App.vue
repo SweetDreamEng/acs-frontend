@@ -22,6 +22,7 @@
         <v-icon @click="toast.show = false">$mdi-close</v-icon>
       </template>
     </v-snackbar>
+    <user-role-speed-dial v-if="isDevelopment" />
   </v-app>
 </template>
 
@@ -29,6 +30,7 @@
 import { mapState } from 'vuex'
 
 import config from './configs'
+import UserRoleSpeedDial from './components/user-role-speed-dial/UserRoleSpeedDial'
 
 // Layouts
 import defaultLayout from './layouts/DefaultLayout'
@@ -49,7 +51,8 @@ export default {
     defaultLayout,
     simpleLayout,
     authLayout,
-    errorLayout
+    errorLayout,
+    UserRoleSpeedDial
   },
   computed: {
     ...mapState({
@@ -67,6 +70,13 @@ export default {
         return 'defaultLayout'
       } else {
         return (this.$route.meta.layout || 'default') + 'Layout'
+      }
+    },
+    isDevelopment: function () {
+      if (process.env.NODE_ENV === 'development') {
+        return true
+      } else {
+        return false
       }
     }
   }
