@@ -322,7 +322,7 @@ export default {
     },
     async handlePageTitleSubmit() {
       if (this.$refs.pageTitleForm.validate()) {
-        this.setPageTitle(this.pageTitle)
+        this.setPageTitle({ pageTitle: this.pageTitle })
       }
     },
     async handleProductInfoSubmit() {

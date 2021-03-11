@@ -15,7 +15,10 @@ const module = {
 
     logoFilePath: '',
     uploadingLogo: false,
-    uploadingImage: false
+    uploadingImage: false,
+    productName: '',
+    productVersion: '',
+    pageTitle: ''
   },
 
   actions: {
@@ -97,7 +100,6 @@ const module = {
         }
 
         let logoFile = response.filter((data) => data.type.includes('logo_filepath'))
-        let imageFile = response.filter((data) => data.type.includes('image_filepath'))
 
         if (logoFile.length) {
           logoFile = logoFile[0]['value']
@@ -106,12 +108,35 @@ const module = {
           commit('SET_LOGO_FILE', false)
         }
 
-        if (imageFile.length) {
-          imageFile = imageFile[0]['value']
-          commit('SET_IMAGE_FILE', imageFile)
+        let pageTitle = response.filter((data) => data.type.includes('page_title'))
+
+        if (pageTitle.length) {
+          pageTitle = pageTitle[0]['value']
+          commit('SET_PAGE_TITLE', pageTitle)
         } else {
-          commit('SET_IMAGE_FILE', false)
+          commit('SET_PAGE_TITLE', false)
         }
+
+        document.title = pageTitle
+
+        let productName = response.filter((data) => data.type.includes('product_name'))
+
+        if (productName.length) {
+          productName = productName[0]['value']
+          commit('SET_PRODUCT_NAME', productName)
+        } else {
+          commit('SET_PRODUCT_NAME', 'ACS Group')
+        }
+
+        let productVersion = response.filter((data) => data.type.includes('product_version'))
+
+        if (productVersion.length) {
+          productVersion = productVersion[0]['value']
+          commit('SET_PRODUCT_VERSION', productVersion)
+        } else {
+          commit('SET_PRODUCT_VERSION', '1.0.0')
+        }
+
       } catch (error) {
         console.log(error)
       }
@@ -176,22 +201,33 @@ const module = {
       commit
     }, pageTitle
     ) {
-      // commit('BUTTON_LOAD', 'PAGE_TITLE')
-      console.log(pageTitle)
-      // try {
-      //   const response = await settingAPI.setPageTitle({ pageTitle })
+      commit('BUTTON_LOAD', 'PAGE_TITLE')
+      try {
+        const response = await settingAPI.setPageTitle(pageTitle)
 
-      // } catch (error) {
-      //   console.log(error.response)
-      // } finally {
-      //   commit('BUTTON_CLEAR')
-      // }
+        commit('SET_PAGE_TITLE', response.page_title)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('BUTTON_CLEAR')
+      }
     },
     async setProductInfo({
       commit
     }, { productName, productVersion }
     ) {
-      console.log(productName, productVersion)
+      commit('BUTTON_LOAD', 'PRODUCT_VERSION')
+
+      try {
+        const response = await settingAPI.setProductInfo({ productName, productVersion })
+
+        commit('SET_PRODUCT_NAME', response.productName)
+        commit('SET_PRODUCT_VERSION', response.productVersion)
+      } catch (error) {
+        console.log(error.response)
+      } finally {
+        commit('BUTTON_CLEAR')
+      }
     },
 
     async updateAuthBackground({
@@ -242,6 +278,15 @@ const module = {
     },
     SET_IMAGE_UPLOADING(state, value) {
       state.uploadingImage = value
+    },
+    SET_PRODUCT_NAME(state, value) {
+      state.productName = value
+    },
+    SET_PRODUCT_VERSION(state, value) {
+      state.productVersion = value
+    },
+    SET_PAGE_TITLE(state, value) {
+      state.pageTitle = value
     }
   }
 }

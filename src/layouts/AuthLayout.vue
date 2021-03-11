@@ -13,7 +13,7 @@
       <div class="layout-content ma-auto w-full">
         <slot></slot>
       </div>
-      <div class="text-overline mt-4">{{ product.name }} - {{ product.version }}</div>
+      <div class="text-overline mt-4">{{ productName }} - {{ productVersion }}</div>
     </div>
   </div>
 </template>
@@ -28,10 +28,11 @@ export default {
     }
   },
   computed: {
-    ...mapState('app', ['product']),
     ...mapState({
       authBackgroundFile: (state) => state.settings.authBackgroundFile,
-      logoFile: (state) => state.settings.logoFile
+      logoFile: (state) => state.settings.logoFile,
+      productName: (state) => state.settings.productName,
+      productVersion: (state) => state.settings.productVersion
     }),
     authBackground() {
       return {

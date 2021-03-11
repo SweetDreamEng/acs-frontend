@@ -87,5 +87,33 @@ export default {
   */
   resetSettings() {
     return api.$post('/app-settings/reset')
+  },
+
+  /**
+  * Set product information
+  * @param {Object} data Data of product information
+  *
+  * @example
+  *
+  *     setProductInfo({
+  *       data
+  *     })
+  */
+  setProductInfo(data) {
+    return api.$post('/app-settings/set-product-info', data)
+  },
+
+  /**
+  * Set product information
+  * @param {Object} data Data of product information
+  *
+  * @example
+  *
+  *     setProductInfo({
+  *       data
+  *     })
+  */
+  setPageTitle(data) {
+    return api.$post('/app-settings/set-page-title', data)
   }
 }
