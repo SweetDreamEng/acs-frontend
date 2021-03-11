@@ -54,11 +54,6 @@ export default {
 </script>
 
 <style scoped>
-.logo {
-  max-width: 356px;
-  max-height: 88px;
-}
-
 .layout-side {
   width: 420px;
 }
