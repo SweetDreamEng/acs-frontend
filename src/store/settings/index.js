@@ -182,7 +182,7 @@ const module = {
       commit('SET_LOGO_UPLOADING', false)
     },
     async uploadImage({
-      commit
+      commit, dispatch
     }, {
       formData
     }) {
@@ -200,7 +200,7 @@ const module = {
       commit('SET_IMAGE_UPLOADING', false)
     },
     async setPageTitle({
-      commit
+      commit, dispatch
     }, pageTitle
     ) {
       commit('BUTTON_LOAD', 'PAGE_TITLE')
@@ -217,7 +217,7 @@ const module = {
       }
     },
     async setProductInfo({
-      commit
+      commit, dispatch
     }, { productName, productVersion }
     ) {
       commit('BUTTON_LOAD', 'PRODUCT_VERSION')
