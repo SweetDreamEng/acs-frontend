@@ -207,7 +207,7 @@ const module = {
       try {
         const response = await settingAPI.setPageTitle(pageTitle)
 
-        document.title = pageTitle
+        document.title = response.page_title
         dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_PAGE_TITLE', response.page_title)
       } catch (error) {
@@ -226,8 +226,8 @@ const module = {
         const response = await settingAPI.setProductInfo({ productName, productVersion })
 
         dispatch('app/showSuccess', response.message, { root: true })
-        commit('SET_PRODUCT_NAME', response.productName)
-        commit('SET_PRODUCT_VERSION', response.productVersion)
+        commit('SET_PRODUCT_NAME', response.product_name)
+        commit('SET_PRODUCT_VERSION', response.product_version)
       } catch (error) {
         console.log(error.response)
       } finally {
