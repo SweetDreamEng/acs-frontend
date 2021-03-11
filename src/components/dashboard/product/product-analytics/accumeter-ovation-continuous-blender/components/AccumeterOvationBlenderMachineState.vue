@@ -53,7 +53,7 @@
         </v-row>
       </v-alert>
       <v-alert
-        :color="systemStates.mass_flow_hopper ? 'green lighten-4' : 'red lighten-4'"
+        :color="systemStates.massflow_hopper_stable ? 'green lighten-4' : 'red lighten-4'"
       >
         <v-row
           align="center"
@@ -62,16 +62,16 @@
           <v-col cols="7">
             <span
               class="font-weight-bold"
-              :class="{ 'red--text': !systemStates.mass_flow_hopper }"
+              :class="{ 'red--text': !systemStates.massflow_hopper_stable }"
             >Massflow</span>
           </v-col>
-          <v-col class="d-flex text-body-2" :class="{ 'red--text': !systemStates.mass_flow_hopper }">
+          <v-col class="d-flex text-body-2" :class="{ 'red--text': !systemStates.massflow_hopper_stable }">
             <v-icon
               small
               left
-              :color="systemStates.mass_flow_hopper ? 'green' : 'red'"
+              :color="systemStates.massflow_hopper_stable ? 'green' : 'red'"
             >$mdi-checkbox-blank-circle</v-icon>
-            {{ systemStates.mass_flow_hopper ? 'Stable' : 'Waiting for Stable' }}
+            {{ systemStates.massflow_hopper_stable ? 'Stable' : 'Waiting for Stable' }}
           </v-col>
         </v-row>
       </v-alert>
