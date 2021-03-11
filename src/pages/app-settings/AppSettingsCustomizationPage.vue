@@ -286,6 +286,8 @@ export default {
     ...mapState({
       uploadingLogo: (state) => state.settings.uploadingLogo,
       uploadingImage: (state) => state.settings.uploadingImage,
+      productNameSetting: (state) => state.settings.productName,
+      productVersionSetting: (state) => state.settings.productVersion,
 
       logoFile: (state) => state.settings.logoFile,
       colors: (state) => state.settings.colors,

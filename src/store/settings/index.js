@@ -173,6 +173,7 @@ const module = {
       try {
         const response = await settingAPI.uploadLogo(formData)
 
+        dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_LOGO_FILE', response.filepath)
       } catch (error) {
         console.log(error.response)
@@ -190,6 +191,7 @@ const module = {
       try {
         const response = await settingAPI.uploadImage(formData)
 
+        dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_IMAGE_FILE', response.filepath)
       } catch (error) {
         console.log(error.response)
@@ -205,6 +207,8 @@ const module = {
       try {
         const response = await settingAPI.setPageTitle(pageTitle)
 
+        document.title = pageTitle
+        dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_PAGE_TITLE', response.page_title)
       } catch (error) {
         console.log(error.response)
@@ -221,6 +225,7 @@ const module = {
       try {
         const response = await settingAPI.setProductInfo({ productName, productVersion })
 
+        dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_PRODUCT_NAME', response.productName)
         commit('SET_PRODUCT_VERSION', response.productVersion)
       } catch (error) {
