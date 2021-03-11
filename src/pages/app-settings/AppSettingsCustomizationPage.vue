@@ -244,9 +244,6 @@ export default {
       imageFileSrc: '',
 
       url: '',
-      pageTitle: '',
-      productName: '',
-      productVersion: '',
       tab: null,
       // customizationColor: this.privateColors[0],
       customizationColor: null,
@@ -286,9 +283,7 @@ export default {
     ...mapState({
       uploadingLogo: (state) => state.settings.uploadingLogo,
       uploadingImage: (state) => state.settings.uploadingImage,
-      productNameSetting: (state) => state.settings.productName,
-      productVersionSetting: (state) => state.settings.productVersion,
-
+      
       logoFile: (state) => state.settings.logoFile,
       colors: (state) => state.settings.colors,
       privateColors: (state) => state.settings.privateColors,
@@ -297,6 +292,30 @@ export default {
     }),
     logoFilePath() {
       return this.logoFile ? this.logoFile : require('../../assets/imgs/logo-aec.png')
+    },
+    productName: {
+      get () {
+        return this.$store.state.settings.productName
+      },
+      set (value) {
+        this.$store.commit('settings/SET_PRODUCT_NAME', value)
+      }
+    },
+    productVersion: {
+      get () {
+        return this.$store.state.settings.productVersion
+      },
+      set (value) {
+        this.$store.commit('settings/SET_PRODUCT_VERSION', value)
+      }
+    },
+    pageTitle: {
+      get () {
+        return this.$store.state.settings.pageTitle
+      },
+      set (value) {
+        this.$store.commit('settings/SET_PAGE_TITLE', value)
+      }
     }
   },
   mounted() {
