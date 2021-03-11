@@ -45,6 +45,106 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
       <v-expansion-panel>
+        <v-expansion-panel-header class="title">Image</v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-row dense>
+            <v-col cols="12">
+              <v-img
+                contain
+                width="260"
+                height="160"
+                :eager="true"
+                :src="imageFileSrc"
+                class="mx-auto"
+                style="border: 1px dashed #ccc;"
+              >
+              </v-img>
+            </v-col>
+            <v-col cols="12">
+              <v-file-input
+                v-model="imageFileInput"
+                accept="image/*"
+                label="New Image File"
+                outlined
+                dense
+                prepend-icon="$mdi-camera"
+                @change="prepareImage"
+              ></v-file-input>
+              <div class="text-right">
+                <v-btn
+                  color="primary"
+                  :loading="uploadingImage"
+                  :disabled="uploadingImage || !imageFileInput"
+                  @click="handleImageUpload"
+                >
+                  <v-icon left>
+                    $mdi-cloud-upload
+                  </v-icon>
+                  Upload Image
+                </v-btn>
+              </div>
+            </v-col>
+          </v-row>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+      <v-expansion-panel>
+        <v-expansion-panel-header class="title">Page Title Customization</v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-form ref="pageTitleForm" lazy-validation @submit.prevent="handlePageTitleSubmit">
+            <v-text-field
+              v-model="pageTitle"
+              label="Input Page Title"
+              outlined
+              dense
+              :rules="[$rules.required]"
+            />
+            <div class="text-right">
+              <v-btn
+                class="white--text"
+                :loading="buttonLoading === 'PAGE_TITLE'"
+                :disabled="buttonLoading === 'PAGE_TITLE'"
+                color="primary"
+                @click="handlePageTitleSubmit"
+              >
+                SUBMIT
+              </v-btn>
+            </div>
+          </v-form>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+      <v-expansion-panel>
+        <v-expansion-panel-header class="title">Product Information Customization</v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-form ref="productInfoForm" lazy-validation @submit.prevent="handleProductInfoSubmit">
+            <v-text-field
+              v-model="productName"
+              label="Input Product Name"
+              outlined
+              dense
+              :rules="[$rules.required]"
+            />
+            <v-text-field
+              v-model="productVersion"
+              label="Input Product Version"
+              outlined
+              dense
+              :rules="[$rules.required]"
+            />
+            <div class="text-right">
+              <v-btn
+                class="white--text"
+                :loading="buttonLoading === 'PRODUCT_VERSION'"
+                :disabled="buttonLoading === 'PRODUCT_VERSION'"
+                color="primary"
+                @click="handleProductInfoSubmit"
+              >
+                SUBMIT
+              </v-btn>
+            </div>
+          </v-form>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+      <v-expansion-panel>
         <v-expansion-panel-header class="title">Application Customization</v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-form ref="form" lazy-validation @submit.prevent="submit">
@@ -137,11 +237,16 @@ export default {
   components: { Drag, Drop },
   data () {
     return {
-      panel: [1],
+      panel: [3],
       logoFileInput: undefined,
+      imageFileInput: undefined,
       logoFileSrc: '',
+      imageFileSrc: '',
 
       url: '',
+      pageTitle: '',
+      productName: '',
+      productVersion: '',
       tab: null,
       // customizationColor: this.privateColors[0],
       customizationColor: null,
@@ -180,6 +285,7 @@ export default {
   computed: {
     ...mapState({
       uploadingLogo: (state) => state.settings.uploadingLogo,
+      uploadingImage: (state) => state.settings.uploadingImage,
 
       logoFile: (state) => state.settings.logoFile,
       colors: (state) => state.settings.colors,
@@ -201,6 +307,9 @@ export default {
       'setInitialSetting': 'settings/setInitialSetting',
       'applyWebsiteColors': 'settings/applyWebsiteColors',
       'uploadLogo': 'settings/uploadLogo',
+      'uploadImage': 'settings/uploadImage',
+      'setPageTitle': 'settings/setPageTitle',
+      'setProductInfo': 'settings/setProductInfo',
       'updateAuthBackground': 'settings/updateAuthBackground'
     }),
     async submit () {
@@ -209,6 +318,16 @@ export default {
 
         //-- Generic Random Images --//
         this.updateAuthBackground()
+      }
+    },
+    async handlePageTitleSubmit() {
+      if (this.$refs.pageTitleForm.validate()) {
+        this.setPageTitle({ pageTitle: this.pageTitle })
+      }
+    },
+    async handleProductInfoSubmit() {
+      if (this.$refs.productInfoForm.validate()) {
+        this.setProductInfo({ productName: this.productName, productVersion: this.productVersion })
       }
     },
     applyCustomColors () {
@@ -260,11 +379,29 @@ export default {
         }
       }
     },
+    prepareImage(file) {
+      if (file) {
+        const reader = new FileReader()
+
+        reader.readAsDataURL(file)
+        reader.onload = () => {
+          this.imageFileSrc = reader.result
+        }
+      }
+    },
     handleUpload() {
       const formData = new FormData()
 
       formData.append('logo', this.logoFileInput)
       this.uploadLogo({
+        formData
+      })
+    },
+    handleImageUpload() {
+      const formData = new FormData()
+
+      formData.append('image', this.imageFileInput)
+      this.uploadImage({
         formData
       })
     },
