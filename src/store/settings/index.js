@@ -164,7 +164,7 @@ const module = {
       }
     },
     async uploadLogo({
-      commit
+      commit, dispatch
     }, {
       formData
     }) {
