@@ -14,7 +14,8 @@ const module = {
     authBackgroundFile: null,
 
     logoFilePath: '',
-    uploadingLogo: false
+    uploadingLogo: false,
+    uploadingImage: false
   },
 
   actions: {
@@ -96,12 +97,20 @@ const module = {
         }
 
         let logoFile = response.filter((data) => data.type.includes('logo_filepath'))
+        let imageFile = response.filter((data) => data.type.includes('image_filepath'))
 
         if (logoFile.length) {
           logoFile = logoFile[0]['value']
           commit('SET_LOGO_FILE', logoFile)
         } else {
           commit('SET_LOGO_FILE', false)
+        }
+
+        if (imageFile.length) {
+          imageFile = imageFile[0]['value']
+          commit('SET_IMAGE_FILE', imageFile)
+        } else {
+          commit('SET_IMAGE_FILE', false)
         }
       } catch (error) {
         console.log(error)
@@ -146,6 +155,44 @@ const module = {
 
       commit('SET_LOGO_UPLOADING', false)
     },
+    async uploadImage({
+      commit
+    }, {
+      formData
+    }) {
+      commit('SET_IMAGE_UPLOADING', true)
+
+      try {
+        const response = await settingAPI.uploadImage(formData)
+
+        commit('SET_IMAGE_FILE', response.filepath)
+      } catch (error) {
+        console.log(error.response)
+      }
+
+      commit('SET_IMAGE_UPLOADING', false)
+    },
+    async setPageTitle({
+      commit
+    }, pageTitle
+    ) {
+      // commit('BUTTON_LOAD', 'PAGE_TITLE')
+      console.log(pageTitle)
+      // try {
+      //   const response = await settingAPI.setPageTitle({ pageTitle })
+
+      // } catch (error) {
+      //   console.log(error.response)
+      // } finally {
+      //   commit('BUTTON_CLEAR')
+      // }
+    },
+    async setProductInfo({
+      commit
+    }, { productName, productVersion }
+    ) {
+      console.log(productName, productVersion)
+    },
 
     async updateAuthBackground({
       commit
@@ -184,11 +231,17 @@ const module = {
     SET_LOGO_FILE(state, filepath) {
       state.logoFile = filepath
     },
+    SET_IMAGE_FILE(state, filepath) {
+      state.imageFile = filepath
+    },
     SET_AUTH_BACKGROUND_FILE(state, filepath) {
       state.authBackgroundFile = filepath
     },
     SET_LOGO_UPLOADING(state, value) {
       state.uploadingLogo = value
+    },
+    SET_IMAGE_UPLOADING(state, value) {
+      state.uploadingImage = value
     }
   }
 }
