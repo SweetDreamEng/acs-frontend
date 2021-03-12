@@ -4,13 +4,14 @@
       :dlg="showTimeRangeChooser"
       :time-range="dataToolTimeRange"
       :tags="tags"
+      :selected-tags="selectedTags"
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"
     >
     </time-range-chooser2>
     <v-card
-      :loading="loadingDataToolSeries"
-      :disabled="loadingDataToolSeries"
+      :loading="loading"
+      :disabled="loading"
     >
       <v-card-title>
         <span>Data Tool</span>
@@ -55,27 +56,31 @@ export default {
   data() {
     return {
       showTimeRangeChooser: false,
-      selectedTags: []
+      loading: false,
+      colors: ['#008ffb', '#00e396', '#feb019', '#ff4560', '#775dd0', '#adbcc9']
     }
   },
 
   computed: {
-    ...mapState('machines', ['tags', 'dataToolSeries', 'dataToolTimeRange', 'loadingDataToolSeries']),
+    ...mapState('machines', ['tags', 'dataToolSeries', 'dataToolTimeRange', 'selectedTags']),
     ...mapGetters('machines', ['timeRangeLabel', 'timeRangeFromTo']),
     yaxis() {
-      return this.selectedTags.map((t) => {
+      return this.selectedTags.map((t, i) => {
         return {
-          axisTicks: {
-            show: true
+          labels: {
+            style: {
+              colors: this.colors[i]
+            }
           },
           axisBorder: {
-            show: true
+            show: true,
+            color: this.colors[i]
           },
           title: {
-            text: t.name
-          },
-          tooltip: {
-            enabled: true
+            text: t.name,
+            style: {
+              color: this.colors[i]
+            }
           }
         }
       })
@@ -112,21 +117,28 @@ export default {
     }
   },
 
-  mounted() {
-    this.getTags(this.machineId)
-    this.getDataToolSeries({
-      machineId: this.machineId,
-      serialNumber: this.serialNumber,
-      selectedTags: this.selectedTags,
-      timeRange: this.dataToolTimeRange
-    })
+  async mounted() {
+    this.loading = true
+
+    try {
+      await this.getTags(this.machineId)
+      await this.getDataToolSeries({
+        machineId: this.machineId,
+        serialNumber: this.serialNumber,
+        selectedTags: this.selectedTags,
+        timeRange: this.dataToolTimeRange
+      })
+    } catch (err) {
+      console.log(err)
+    }
+
+    this.loading = false
   },
 
   methods: {
-    ...mapActions('machines', ['getDataToolSeries', 'getTags', 'updateDataToolTimeRange']),
+    ...mapActions('machines', ['getDataToolSeries', 'getTags', 'updateDataToolOptions']),
     onTimeRangeChanged(options) {
-      this.selectedTags = options.selectedTags
-      this.updateDataToolTimeRange(options.timeRange)
+      this.updateDataToolOptions(options)
       this.showTimeRangeChooser = false
       this.getDataToolSeries({
         machineId: this.machineId,

@@ -131,8 +131,8 @@ const getDataToolSeries = async ({ state, commit }, payload) => {
   }
 }
 
-const updateDataToolTimeRange = async ({ commit }, payload) => {
-  commit('SET_DATA_TOOL_TIME_RANGE', payload)
+const updateDataToolOptions = async ({ commit }, payload) => {
+  commit('SET_DATA_TOOL_OPTIONS', payload)
 }
 
 export default {
@@ -146,5 +146,5 @@ export default {
   getWeeklyRunningHours,
   getTags,
   getDataToolSeries,
-  updateDataToolTimeRange
+  updateDataToolOptions
 }

@@ -4,7 +4,7 @@
       <v-card-title class="primary white--text">Select Options</v-card-title>
       <v-card-text>
         <v-autocomplete
-          v-model="selectedTags"
+          v-model="locSelectedTags"
           chips
           dense
           multiple
@@ -69,6 +69,10 @@ export default {
         }
       }
     },
+    selectedTags: {
+      type: Array,
+      default: () => []
+    },
     tags: {
       type: Array,
       default: () => []
@@ -78,7 +82,7 @@ export default {
     return {
       locTimeRangeOption: this.timeRange.timeRangeOption,
       dates: this.timeRange.dates,
-      selectedTags: []
+      locSelectedTags: this.selectedTags
     }
   },
   computed: {
@@ -86,6 +90,9 @@ export default {
     ...mapGetters('machines', ['timeRangeFromTo'])
   },
   watch: {
+    selectedTags(newValue) {
+      this.locSelectedTags = newValue
+    },
     timeRange (newValue) {
       this.locTimeRangeOption = newValue.timeRangeOption
     },
@@ -113,7 +120,7 @@ export default {
           timeRangeOption: this.locTimeRangeOption,
           dates: this.dates
         },
-        selectedTags: this.selectedTags
+        selectedTags: this.locSelectedTags
       })
     }
   }

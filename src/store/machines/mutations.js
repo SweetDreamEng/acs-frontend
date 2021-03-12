@@ -65,6 +65,12 @@ export default {
 
   SET_LOADING_DATA_TOOL_SERIES(state, loading) { state.loadingDataToolSeries = loading },
   SET_DATA_TOOL_SERIES(state, series) { state.dataToolSeries = series },
-  SET_TAGS(state, tags) { state.tags = tags },
-  SET_DATA_TOOL_TIME_RANGE(state, timeRange) { state.dataToolTimeRange = timeRange }
+  SET_TAGS(state, tags) {
+    state.tags = tags
+    state.selectedTags = tags.slice(0, 6)
+  },
+  SET_DATA_TOOL_OPTIONS(state, option) {
+    state.dataToolTimeRange = option.timeRange
+    state.selectedTags = option.selectedTags
+  }
 }
