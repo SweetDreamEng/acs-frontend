@@ -107,6 +107,34 @@ const getDashboardMachinesTable = async ({ commit }, data) => {
   }
 }
 
+const getTags = async ({ state, commit }, machineId) => {
+  try {
+    const response = await machineAPI.getTags(machineId)
+
+    commit('SET_TAGS', response.tags)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getDataToolSeries = async ({ state, commit }, payload) => {
+  commit('SET_LOADING_DATA_TOOL_SERIES', true)
+  
+  try {
+    const response = await machineAPI.getDataToolSeries(payload)
+
+    commit('SET_DATA_TOOL_SERIES', response.series)
+  } catch (error) {
+    throw new Error(error)
+  } finally {
+    commit('SET_LOADING_DATA_TOOL_SERIES', false)
+  }
+}
+
+const updateDataToolTimeRange = async ({ commit }, payload) => {
+  commit('SET_DATA_TOOL_TIME_RANGE', payload)
+}
+
 export default {
   initAcsDashboard,
   initLocationsTable,
@@ -115,5 +143,8 @@ export default {
   getDashboardMachinesTable,
   changeSelectedCompany,
   getSystemStates,
-  getWeeklyRunningHours
+  getWeeklyRunningHours,
+  getTags,
+  getDataToolSeries,
+  updateDataToolTimeRange
 }

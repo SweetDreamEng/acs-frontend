@@ -81,7 +81,16 @@ const state = {
   totalRunningPercentage: 0,
 
   loadingEnabledProperties: false,
-  enabledProperties: []
+  enabledProperties: [],
+
+  loadingDataToolSeries: false,
+  dataToolSeries: [],
+  tags: [],
+  selectedTags: [],
+  dataToolTimeRange: {
+    timeRangeOption: 'last24Hours',
+    dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
+  }
 }
 
 export default {

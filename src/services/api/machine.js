@@ -21,5 +21,11 @@ export default {
   },
   getWeeklyRunningHours(id) {
     return api.$get(`/analytics/weekly-running-hours/${id}`)
+  },
+  getTags(id) {
+    return api.$get(`/machine-tags/${id}`)
+  },
+  getDataToolSeries(data) {
+    return api.$post('/analytics/data-tool-series', data)
   }
 }

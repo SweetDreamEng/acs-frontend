@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-row dense>
-      <v-col v-if="parameters.includes(101)" cols="12" md="4">
+      <v-col cols="12">
         <area-graph
           namespace="areaGraph-dbBlender-process-rate"
-          title="Process Rate"
+          title=""
           unit="imperial-metric"
           :height="300"
           :fetch="getProcessRate"
@@ -14,57 +14,6 @@
         >
         </area-graph>
       </v-col>
-      <v-col cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-dbBlender-capability"
-          title="Blender Capability"
-          unit="imperial-metric"
-          :height="300"
-          :fetch="getBlenderCapability"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Blender Capability']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(102)" cols="12" md="4">
-        <bar-graph
-          namespace="barGraph-dbBlender-calibration"
-          title="Calibration Factor"
-          :height="300"
-          :fetch="getFeederCalibrationFactors"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :categories="calibrationFactorCategories"
-        >
-        </bar-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(103)" cols="12" md="4">
-        <batch-blender-hopper-stable
-          :loading="loadingHopperStables"
-          :stables="hopperStables"
-        >
-        </batch-blender-hopper-stable>
-      </v-col>
-      <v-col cols="12" md="4">
-        <batch-blender-load-cells
-          :loading="loadingLoadCell"
-          :items="loadCells"
-        >
-        </batch-blender-load-cells>
-      </v-col>
-      <v-col v-if="parameters.includes(104)" cols="12" md="4">
-        <bar-graph
-          namespace="barGraph-dbBlender-id2"
-          title="Station Conveying"
-          :height="320"
-          :fetch="getStationConveyings"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :categories="conveyingCategories"
-        >
-        </bar-graph>
-      </v-col>
     </v-row>
   </div>
 </template>
@@ -73,17 +22,11 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import api from './services/api'
-import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
-import BatchBlenderHopperStable from './components/BatchBlenderHopperStable'
-import BatchBlenderLoadCells from './components/BatchBlenderLoadCells'
 
 export default {
   components: {
-    BarGraph,
-    AreaGraph,
-    BatchBlenderHopperStable,
-    BatchBlenderLoadCells
+    AreaGraph
   },
   props: {
     machineId: {

@@ -61,5 +61,10 @@ export default {
   SET_RUNNING_PERCENTAGE(state, totalRunningPercentage) { state.totalRunningPercentage = totalRunningPercentage },
   SET_RECIPE_VALUES(state, recipeValues) { state.recipeValues = recipeValues },
 
-  SET_DOWNTIME_DISTRIBUTION(state, data) { state.downtimeDistribution = data }
+  SET_DOWNTIME_DISTRIBUTION(state, data) { state.downtimeDistribution = data },
+
+  SET_LOADING_DATA_TOOL_SERIES(state, loading) { state.loadingDataToolSeries = loading },
+  SET_DATA_TOOL_SERIES(state, series) { state.dataToolSeries = series },
+  SET_TAGS(state, tags) { state.tags = tags },
+  SET_DATA_TOOL_TIME_RANGE(state, timeRange) { state.dataToolTimeRange = timeRange }
 }

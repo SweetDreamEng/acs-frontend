@@ -60,7 +60,6 @@
                   </alarms-table>
                 </v-col>
                 <v-col cols="12">
-                  <div class="text-h4 my-2">Parameters & Points</div>
                   <product-parameters-chart
                     :machine-id="deviceConfiguration.plcMachineId"
                     :serial-number="parseInt(deviceConfiguration.plcSerialNumber)"
