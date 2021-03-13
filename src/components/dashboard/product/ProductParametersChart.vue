@@ -83,7 +83,8 @@ export default {
             style: {
               color: this.colors[i]
             }
-          }
+          },
+          decimalsInFloat: 0
         }
       })
     },
