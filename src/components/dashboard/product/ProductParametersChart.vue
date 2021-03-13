@@ -143,7 +143,7 @@ export default {
       this.showTimeRangeChooser = false
 
       try {
-        this.getDataToolSeries({
+        await this.getDataToolSeries({
           machineId: this.machineId,
           serialNumber: this.serialNumber,
           selectedTags: this.selectedTags,
