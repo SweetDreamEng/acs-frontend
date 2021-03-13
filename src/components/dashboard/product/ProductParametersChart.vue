@@ -69,6 +69,7 @@ export default {
     yaxis() {
       return this.selectedTags.map((t, i) => {
         return {
+          opposite: i % 2,
           labels: {
             style: {
               colors: this.colors[i]
@@ -84,7 +85,7 @@ export default {
               color: this.colors[i]
             }
           },
-          decimalsInFloat: 0
+          decimalsInFloat: 2
         }
       })
     },
@@ -92,7 +93,7 @@ export default {
       return {
         chart: {
           height: 350,
-          type: 'line',
+          type: 'area',
           stacked: false,
           toolbar: {
             show: false
