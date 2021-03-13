@@ -138,14 +138,22 @@ export default {
   methods: {
     ...mapActions('machines', ['getDataToolSeries', 'getTags', 'updateDataToolOptions']),
     onTimeRangeChanged(options) {
+      this.loading = true
       this.updateDataToolOptions(options)
       this.showTimeRangeChooser = false
-      this.getDataToolSeries({
-        machineId: this.machineId,
-        serialNumber: this.serialNumber,
-        selectedTags: this.selectedTags,
-        timeRange: this.dataToolTimeRange
-      })
+
+      try {
+        this.getDataToolSeries({
+          machineId: this.machineId,
+          serialNumber: this.serialNumber,
+          selectedTags: this.selectedTags,
+          timeRange: this.dataToolTimeRange
+        })
+      } catch (err) {
+        console.log(err)
+      }
+
+      this.loading = false
     }
   }
 }
