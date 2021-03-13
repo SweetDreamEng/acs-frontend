@@ -15,9 +15,11 @@
     >
       <v-card-title>
         <span>Data Tool</span>
+        <v-spacer></v-spacer>
+        {{ timeRangeDataToolLabel(dataToolTimeRange) }}
         <v-btn
           icon
-          class="ml-auto"
+          class="ml-2"
           @click="showTimeRangeChooser = true"
         >
           <v-icon>$mdi-filter</v-icon>
@@ -63,7 +65,7 @@ export default {
 
   computed: {
     ...mapState('machines', ['tags', 'dataToolSeries', 'dataToolTimeRange', 'selectedTags']),
-    ...mapGetters('machines', ['timeRangeLabel', 'timeRangeFromTo']),
+    ...mapGetters('machines', ['timeRangeDataToolLabel', 'timeRangeFromTo']),
     yaxis() {
       return this.selectedTags.map((t, i) => {
         return {

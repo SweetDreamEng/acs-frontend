@@ -29,6 +29,16 @@ const timeRangeLabel = (state) => (timeRange) => {
   }
 }
 
+const timeRangeDataToolLabel = (state) => (timeRange) => {
+  if (timeRange.timeRangeOption !== 'custom') {
+    const tr = state.timeRageOptions.find((item) => item.value === timeRange.timeRangeOption)
+
+    return tr ? tr.label : ''
+  } else {
+    return timeRange.dates[0] + ' ~ ' + timeRange.dates[1]
+  }
+}
+
 const timeRangeFromTo = (state) => (timeRange) => {
   if (timeRange.timeRangeOption !== 'custom') {
     const tr = state.timeRageOptions.find((item) => item.value === timeRange.timeRangeOption)
@@ -99,5 +109,6 @@ export default {
   selectedMachine,
   extendedMachines,
   timeRangeLabel,
+  timeRangeDataToolLabel,
   timeRangeFromTo
 }
