@@ -137,7 +137,7 @@ export default {
 
   methods: {
     ...mapActions('machines', ['getDataToolSeries', 'getTags', 'updateDataToolOptions']),
-    onTimeRangeChanged(options) {
+    async onTimeRangeChanged(options) {
       this.loading = true
       this.updateDataToolOptions(options)
       this.showTimeRangeChooser = false
