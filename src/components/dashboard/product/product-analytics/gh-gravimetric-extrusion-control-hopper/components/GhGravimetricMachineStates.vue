@@ -7,7 +7,7 @@
     <v-card-title>System States</v-card-title>
     <v-card-text>
       <v-alert
-        :color="machineStates.system_steady ? 'green lighten-4' : 'red lighten-4'"
+        :color="machineStates.system_steady ? 'acs-system-steady lighten-4' : 'acs-system-not-steady lighten-4'"
       >
         <v-row
           align="center"
@@ -23,14 +23,14 @@
             <v-icon
               small
               left
-              :color="machineStates.system_steady ? 'green' : 'red'"
+              :color="machineStates.system_steady ? 'acs-system-steady' : 'acs-system-not-steady'"
             >$mdi-checkbox-blank-circle</v-icon>
             {{ machineStates.system_steady ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>
       <v-alert
-        :color="machineStates.wtp ? 'green lighten-4' : 'red lighten-4'"
+        :color="machineStates.wtp ? 'acs-system-steady lighten-4' : 'acs-system-not-steady lighten-4'"
       >
         <v-row
           align="center"
@@ -46,14 +46,14 @@
             <v-icon
               small
               left
-              :color="machineStates.wtp ? 'green' : 'red'"
+              :color="machineStates.wtp ? 'acs-system-steady' : 'acs-system-not-steady'"
             >$mdi-checkbox-blank-circle</v-icon>
             {{ machineStates.wtp ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>
       <v-alert
-        :color="machineStates.rpm ? 'green lighten-4' : 'red lighten-4'"
+        :color="machineStates.rpm ? 'acs-system-steady lighten-4' : 'acs-system-not-steady lighten-4'"
       >
         <v-row
           align="center"
@@ -69,14 +69,14 @@
             <v-icon
               small
               left
-              :color="machineStates.rpm ? 'green' : 'red'"
+              :color="machineStates.rpm ? 'acs-system-steady' : 'acs-system-not-steady'"
             >$mdi-checkbox-blank-circle</v-icon>
             {{ machineStates.rpm ? 'Steady' : 'Not steady' }}
           </v-col>
         </v-row>
       </v-alert>
       <v-alert
-        :color="machineStates.halloff ? 'green lighten-4' : 'red lighten-4'"
+        :color="machineStates.halloff ? 'acs-system-steady lighten-4' : 'acs-system-not-steady lighten-4'"
       >
         <v-row
           align="center"
@@ -92,7 +92,7 @@
             <v-icon
               small
               left
-              :color="machineStates.halloff ? 'green' : 'red'"
+              :color="machineStates.halloff ? 'acs-system-steady' : 'acs-system-not-steady'"
             >$mdi-checkbox-blank-circle</v-icon>
             {{ machineStates.halloff ? 'Steady' : 'Not steady' }}
           </v-col>

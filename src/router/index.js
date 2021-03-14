@@ -109,11 +109,15 @@ router.beforeEach(async (to, from, next) => {
     if (role) {
       if (to.matched.some((record) => record.meta.userAuth)) {
         return next()
-      } else if (role !== 'acs_admin' && to.matched.some((record) => record.meta.userAuth)) {
+      } else if (role !== 'acs_admin' && role !== 'acs_manager' && role !== 'acs_viewer' && to.matched.some((record) => record.meta.acsAdmin)) {
         return next({
           name: 'auth-signin'
         })
-      } else if (role !== 'customer_admin' && to.matched.some((record) => record.meta.userAuth)) {
+      } else if (role !== 'customer_admin' && role !== 'customer_manager' && role !== 'customer_operator' && to.matched.some((record) => record.meta.customerAdmin)) {
+        return next({
+          name: 'auth-signin'
+        })
+      } else if (role !== 'super_admin' && to.matched.some((record) => record.meta.superAdmin)) {
         return next({
           name: 'auth-signin'
         })
@@ -127,13 +131,17 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     if (role && (to.matched.some((record) => record.meta.userNotAuth))) {
-      if (role === 'acs_admin') {
+      if (role === 'acs_admin' || role === 'acs_manager' || role === 'acs_viewer') {
         return next({
           name: 'acs-machines'
         })
-      } else if (role === 'customer_admin' && role === 'customer_manager' || role === 'customer_operator') {
+      } else if (role === 'customer_admin' || role === 'customer_manager' || role === 'customer_operator') {
         return next({
           name: 'dashboard-analytics'
+        })
+      } else if (role === 'super_admin') {
+        return next({
+          name: 'app-settings-customize-application'
         })
       }
     }

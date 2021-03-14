@@ -39,6 +39,25 @@ export default {
     error: '#ea344e',
     info: '#2196F3',
     success: '#06d6a0',
-    warning: '#ffd166'
+    warning: '#ffd166',
+    // custom colors
+    'acs-online': '#06d6a0',
+    'acs-offline': '#eeeeee',
+    'acs-machine-running': '#00e396',
+    'acs-machine-not-running': '#ff4560',
+    'acs-system-steady': '#00e396',
+    'acs-system-not-stedy': '#ff4560',
+    'acs-stable': '#06d6a0',
+    'acs-stable-waiting': '#ff4560',
+    'acs-unstable': '#ff4560',
+    'acs-hopper-disabled': '#eeeeee',
+    'acs-hopper-setback': '#008ffb',
+    'acs-hopper-autotune': '#feb019',
+    'acs-hopper-alarmed': '#ff4560',
+    'acs-hopper-enabled': '#00e396',
+    'acs-checkin': '#00e396',
+    'acs-not-checkin': '#ff4560',
+    'acs-plc-link': '#00e396',
+    'acs-plc-not-link': '#ff4560'
   }
 }

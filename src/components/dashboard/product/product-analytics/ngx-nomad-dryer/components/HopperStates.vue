@@ -41,6 +41,75 @@
 // 4 AUTOTUNE YELLOW
 // 5 ALARMED RED
 
+const DRYING_HOPPER_STATES = {
+  DISABLED: {
+    color: 'acs-hopper-disabled',
+    label: 'Disabled'
+  },
+  ENABLED: {
+    color: 'acs-hopper-enabled',
+    label: 'Enabled'
+  },
+  ONLINE: {
+    color: 'acs-online',
+    label: 'Online'
+  },
+  SETBACK: {
+    color: 'acs-hopper-setback',
+    label: 'Setback'
+  },
+  AUTOTUNE: {
+    color: 'acs-hopper-autotune',
+    label: 'Autotune'
+  },
+  ALARMED: {
+    color: 'acs-hopper-alarmed',
+    label: 'Alarmed'
+  }
+}
+
+const CONVEY_STATES = {
+  OFFLINE: {
+    color: 'acs-offline',
+    label: 'Offline'
+  },
+  ONLINE: {
+    color: 'acs-online',
+    label: 'Online'
+  },
+  SHUTDOWN: {
+    color: 'black',
+    label: 'Shutdown'
+  }
+}
+
+const LOADER_STATES = {
+  OFFLINE: {
+    color: 'acs-offline',
+    label: 'Offline/Not enabled'
+  },
+  ENABLED: {
+    color: 'green',
+    label: 'Enabled'
+  },
+  IN_DEMAND: {
+    color: 'yellow',
+    label: 'In Demand'
+  },
+  LOADING: {
+    color: 'blue',
+    label: 'Loading'
+  },
+  ALARMED: {
+    color: 'red',
+    label: 'Alarmed'
+  },
+  FILTER_CLEAN: {
+    color: 'yellow',
+    label: 'Filter clean/Dump delay'
+  }
+}
+
 export default {
   props: {
     loading: {
@@ -53,51 +122,42 @@ export default {
     }
   },
   methods: {
-    circleColor(i, value) {
-      if (i === 0) {
-        if (value === 0) return 'grey'
-        else if (value === 1) return '#DDD'
-        else if (value === 2) return 'green'
-        else if (value === 3) return 'blue'
-        else if (value === 4) return 'yellow'
-        else if (value === 5) return 'red'
-      } else if (i === 1) {
-        if (value === 0) return 'grey'
-        else if (value === 1) return 'green'
-        else if (value === 2) return 'black'
-      } else if (i > 1) {
-        if (value === 0) return 'grey'
-        else if (value === 1) return 'green'
-        else if (value === 2) return 'yellow'
-        else if (value === 3) return 'blue'
-        else if (value === 4) return 'red'
-        else if (value === 5) return 'yellow'
+    getHopperState(hopperType, value) {
+      // get states for drying hopper
+      if (hopperType === 0) {
+        if (value === 0) return DRYING_HOPPER_STATES['DISABLED']
+        else if (value === 1) return DRYING_HOPPER_STATES['ENABLED']
+        else if (value === 2) return DRYING_HOPPER_STATES['ONLINE']
+        else if (value === 3) return DRYING_HOPPER_STATES['SETBACK']
+        else if (value === 4) return DRYING_HOPPER_STATES['AUTOTUNE']
+        else if (value === 5) return DRYING_HOPPER_STATES['ALARMED']
+      } // get states for convey
+      else if (hopperType === 1) {
+        if (value === 0) return CONVEY_STATES['OFFLINE']
+        else if (value === 1) return CONVEY_STATES['ONLINE']
+        else if (value === 2) return CONVEY_STATES['SHUTDOWN']
+      } // get states for loaders
+      else if (hopperType > 1) {
+        if (value === 0) return LOADER_STATES['OFFLINE']
+        else if (value === 1) return LOADER_STATES['ENABLED']
+        else if (value === 2) return LOADER_STATES['IN_DEMAND']
+        else if (value === 3) return LOADER_STATES['LOADING']
+        else if (value === 4) return LOADER_STATES['ALARMED']
+        else if (value === 5) return LOADER_STATES['FILTER_CLEAN']
       }
 
       return ''
     },
-    valueText(i, value) {
-      if (i === 0) {
-        if (value === 0) return 'Disabled'
-        else if (value === 1) return 'Enabled'
-        else if (value === 2) return 'Online'
-        else if (value === 3) return 'Setback'
-        else if (value === 4) return 'Autotune'
-        else if (value === 5) return 'Alarmed'
-      } else if (i === 1) {
-        if (value === 0) return 'Offline'
-        else if (value === 1) return 'Online'
-        else if (value === 2) return 'Shutdown'
-      } else if (i > 1) {
-        if (value === 0) return 'Offline/Not enabled'
-        else if (value === 1) return 'Enabled'
-        else if (value === 2) return 'In demand'
-        else if (value === 3) return 'Loading'
-        else if (value === 4) return 'Alarmed'
-        else if (value === 5) return 'Filter Clean/Dump delay'
-      }
+    circleColor(hopperType, value) {
+      const state = this.getHopperState(hopperType, value)
 
-      return ''
+      return state ? state.color : ''
+    },
+
+    valueText(hopperType, value) {
+      const state = this.getHopperState(hopperType, value)
+
+      return state ? state.label : ''
     }
   }
 }

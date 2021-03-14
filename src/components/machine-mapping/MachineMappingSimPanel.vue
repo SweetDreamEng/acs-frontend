@@ -60,12 +60,12 @@
       >Device Config</v-btn>
       <v-btn
         small
-        :color="item.checkin ? 'green' : 'red'"
+        :color="item.checkin ? 'acs-checkin' : 'acs-not-checkin'"
         class="mr-2 mb-1"
         outlined
       >
         <v-icon
-          :color="item.checkin ? 'green' : 'red'"
+          :color="item.checkin ? 'acs-checkin' : 'acs-not-checkin'"
           left
         >
           {{ item.checkin ? '$mdi-check-circle-outline' : '$mdi-close-circle-outline' }}
@@ -74,12 +74,12 @@
       </v-btn>
       <v-btn
         small
-        :color="item.plc_link ? 'green' : 'red'"
+        :color="item.plc_link ? 'acs-plc-link' : 'acs-plc-not-link'"
         class="mr-2 mb-1"
         outlined
       >
         <v-icon
-          :color="item.plc_link ? 'green' : 'red'"
+          :color="item.plc_link ? 'acs-plc-link' : 'acs-plc-not-link'"
           left
         >
           {{ item.plc_link ? '$mdi-check-circle-outline' : '$mdi-close-circle-outline' }}

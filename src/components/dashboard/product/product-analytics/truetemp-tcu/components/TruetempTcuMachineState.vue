@@ -7,7 +7,7 @@
     <v-card-title>Machine States</v-card-title>
     <v-card-text>
       <v-alert
-        :color="machine.pump_status === 0 ? 'grey lighten-4' : 'green lighten-4'"
+        :color="machine.pump_status === 0 ? 'acs-offline lighten-4' : 'acs-online lighten-4'"
         :style="`color: ${textColor(machine.pump_status)}`"
       >
         <v-row
@@ -23,7 +23,7 @@
             <v-icon
               small
               left
-              :color="machine.pump_status === 0 ? 'grey' : 'green'"
+              :color="machine.pump_status === 0 ? 'acs-offline' : 'acs-online'"
             >$mdi-checkbox-blank-circle</v-icon>
             {{ machine.pump_status === 0 ? 'Off' : 'On' }}
           </v-col>
@@ -53,7 +53,7 @@
         </v-row>
       </v-alert>
       <v-alert
-        :color="machine.vent_status === 0 ? 'grey lighten-4' : 'green lighten-4'"
+        :color="machine.vent_status === 0 ? 'acs-offline lighten-4' : 'acs-online lighten-4'"
         :style="`color: ${textColor(machine.vent_status)}`"
       >
         <v-row
@@ -69,7 +69,7 @@
             <v-icon
               small
               left
-              :color="machine.vent_status === 0 ? 'grey' : 'green'"
+              :color="machine.vent_status === 0 ? 'acs-offline' : 'acs-online'"
             >$mdi-checkbox-blank-circle</v-icon>
             {{ machine.vent_status === 0 ? 'Off' : 'On' }}
           </v-col>
@@ -83,6 +83,29 @@
 // Heater Status 0=off 1=low 2=high 3=auto heat
 // Vent Status 0=off 1=on
 
+const HEATER_STATES = {
+  OFF: {
+    backgroundColor: 'grey lighten-4',
+    circleColor: 'grey',
+    value: 'Off'
+  },
+  LOW: {
+    backgroundColor: 'blue lighten-4',
+    circleColor: 'blue',
+    value: 'Low'
+  },
+  HIGH: {
+    backgroundColor: 'yellow lighten-4',
+    circleColor: 'yellow',
+    value: 'High'
+  },
+  AUTO_HEAT: {
+    backgroundColor: 'green lighten-4',
+    circleColor: 'green',
+    value: 'Auto heat'
+  }
+}
+
 export default {
   props: {
     loading: {
@@ -95,39 +118,32 @@ export default {
     }
   },
   methods: {
-    backgroundColor(value) {
-      if (value === 0) return 'grey lighten-4'
-      else if (value === 1) return 'blue lighten-4'
-      else if (value === 2) return 'yellow lighten-4'
-      else if (value === 3) return 'green lighten-4'
-
+    getHeaterState(value) {
+      if (value === 0) return HEATER_STATES['OFF']
+      else if (value === 1) return HEATER_STATES['LOW']
+      else if (value === 2) return HEATER_STATES['HIGH']
+      else if (value === 3) return HEATER_STATES['AUTO_HEAT']
+      
       return ''
     },
-    circleColor(value) {
-      if (value === 0) return 'grey'
-      else if (value === 1) return 'blue'
-      else if (value === 2) return 'yellow'
-      else if (value === 3) return 'green'
+    backgroundColor(value) {
+      const state = this.getHeaterState(value)
 
-      return ''
+      return state ? state.backgroundColor : ''
+    },
+    circleColor(value) {
+      const state = this.getHeaterState(value)
+
+      return state ? state.circleColor : ''
     },
     textColor(value) {
       if (value === 0) return '#9e9e9e'
       else return '#193d66'
     },
     valueText(value) {
-      switch (value) {
-      case 0:
-        return 'Off'
-      case 1:
-        return 'Low'
-      case 2:
-        return 'High'
-      case 3:
-        return 'Auto heat'
-      default:
-        return ''
-      }
+      const state = this.getHeaterState(value)
+
+      return state ? state.value : ''
     }
   }
 }
