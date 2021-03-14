@@ -54,7 +54,8 @@ export default {
   computed: {
     ...mapState({
       toast: (state) => state.app.toast,
-      isAppReady: (state) => state.auth.isAppReady
+      isAppReady: (state) => state.auth.isAppReady,
+      pageTitle: (state) => state.settings.pageTitle
     }),
     isRouterLoaded: function() {
       if (this.$route.name !== null)
