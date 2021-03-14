@@ -18,7 +18,7 @@
           <v-col cols="12" md="2">
             <div>
               <div class="mb-1">
-                <v-icon>mdi-bell</v-icon>
+                <v-icon>$mdi-bell</v-icon>
               </div>
               <div class="text-h4 font-weight-bold">
                 {{ alarmsOverview.total }}
