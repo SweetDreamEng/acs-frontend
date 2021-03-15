@@ -11,13 +11,14 @@
           rounded
           small-chips
           solo
-          :items="tags"
+          :items="groupedTags"
           placeholder="Tags"
           item-text="name"
           item-value="id"
           :return-object="true"
           class="my-2"
-        ></v-autocomplete>
+        >
+        </v-autocomplete>
         <v-row>
           <v-col cols="5">
             <v-radio-group
@@ -87,7 +88,16 @@ export default {
   },
   computed: {
     ...mapState('machines', ['timeRageOptions']),
-    ...mapGetters('machines', ['timeRangeFromTo'])
+    ...mapGetters('machines', ['timeRangeFromTo']),
+    groupedTags() {
+      const ts = this.tags
+      const importantTags = this.tags.filter((t) => t.divided_by)
+      
+      ts.splice(importantTags.length, 0, { divider: true })
+      ts.splice(importantTags.length + 1, 0, { header: 'Alarms' })
+
+      return ts
+    }
   },
   watch: {
     selectedTags(newValue) {
