@@ -102,7 +102,12 @@ export default {
         xaxis: {
           type: 'datetime',
           min: this.timeRangeFromTo(this.dataToolTimeRange).from,
-          max: this.timeRangeFromTo(this.dataToolTimeRange).to
+          max: this.timeRangeFromTo(this.dataToolTimeRange).to,
+          labels: {
+            formatter: (value, timestamp, opts) => {
+              return [this.$options.filters.formatDate(value, 'yyyy-MM-dd'), this.$options.filters.formatDate(value, ' HH:mm:ss')]
+            }
+          }
         },
         yaxis: this.yaxis,
         tooltip: {
