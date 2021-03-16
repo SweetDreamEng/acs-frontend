@@ -3,8 +3,8 @@ import store from './store'
 import router from './router'
 
 const API = axios.create({
-  baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
-  // baseURL: 'http://staging.acsgroupds.com/api',
+  // baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
+  baseURL: 'http://staging.acsgroupds.com/api',
   timeout: 15000
 })
 

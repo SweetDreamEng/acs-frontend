@@ -18,7 +18,7 @@
           <v-col cols="12" md="2">
             <div>
               <div class="mb-1">
-                <v-icon>mdi-bell</v-icon>
+                <v-icon>$mdi-bell</v-icon>
               </div>
               <div class="text-h4 font-weight-bold">
                 {{ alarmsOverview.total }}
@@ -31,7 +31,7 @@
           <v-col cols="12" md="2">
             <div>
               <div class="mb-1">
-                <v-icon color="red">mdi-near-me</v-icon>
+                <v-icon color="red">$mdi-near-me</v-icon>
               </div>
               <div class="text-h6 font-weight-bold">
                 {{ alarmsOverview.top_alarms[0].count }}
@@ -49,7 +49,7 @@
           <v-col cols="12" md="2">
             <div>
               <div class="mb-1">
-                <v-icon color="yellow">mdi-near-me</v-icon>
+                <v-icon color="yellow">$mdi-near-me</v-icon>
               </div>
               <div class="text-h6 font-weight-bold">
                 {{ alarmsOverview.top_alarms[1].count }}
@@ -67,7 +67,7 @@
           <v-col cols="12" md="2">
             <div>
               <div class="mb-1">
-                <v-icon color="blue">mdi-near-me</v-icon>
+                <v-icon color="blue">$mdi-near-me</v-icon>
               </div>
               <div class="text-h6 font-weight-bold">
                 {{ alarmsOverview.top_alarms[1].count }}
