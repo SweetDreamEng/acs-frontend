@@ -114,7 +114,7 @@ export default {
     labels() {
       if (this.mode === 0 || this.mode === 1) {
         return [0, 1, 2, 3, 4, 5, 6, 7].map((hop) => {
-          return `Hopper[${hop + 1}]: ${this.recipes[hop]}`
+          return `Hopper${hop + 1}: ${this.recipes[hop]}`
         })
       }
       else if (this.mode === 2) {
@@ -139,7 +139,7 @@ export default {
 
       for (let i = 0; i < 8; i++) {
         if (this.ezTypes[i] === 2) {
-          ret += `Hopper[${i + 1}] REG ${this.recipes[i]}%&nbsp;`
+          ret += `Hopper${i + 1} REG ${this.recipes[i]}%&nbsp;`
         }
       }
 
@@ -155,16 +155,16 @@ export default {
       }
 
       if (naturals.length === 1) {
-        ret = `Hopper[${naturals[0]}] AUTO&nbsp;&nbsp;`
+        ret = `Hopper${naturals[0]} AUTO&nbsp;&nbsp;`
       } else {
         for (let i = 0; i < naturals.length; i++) {
-          ret += `Hopper[${naturals[i] + 1}] NAT ${this.recipes[i]}%&nbsp;`
+          ret += `Hopper${naturals[i] + 1} NAT ${this.recipes[i]}%&nbsp;`
         }
       }
 
       for (let i = 0; i < 8; i++) {
         if (this.ezTypes[i] === 1) {
-          ret += this.recipes[i] ? `Hopper[${i + 1}] ADD ${this.recipes[i]}%` : ''
+          ret += this.recipes[i] ? `Hopper${i + 1} ADD ${this.recipes[i]}%` : ''
         }
         ret += '&nbsp;;'
       }

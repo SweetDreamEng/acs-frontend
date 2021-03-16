@@ -1,7 +1,7 @@
 <template>
   <v-card :disabled="loadingDashboardDevicesTable">
     <v-card-title>
-      Report
+      Machine Status
       <v-combobox
         v-model="headerColumnValues"
         :items="headerColumns"
@@ -32,7 +32,7 @@
         :items="devices"
         :search="searchQuery"
         :loading="loadingDashboardDevicesTable"
-        :items-per-page="5"
+        :items-per-page="50"
         :page.sync="page"
         class="link-table"
         hide-default-footer
@@ -62,6 +62,9 @@
         <!-- -->
         <template v-slot:item.status="{ item }">
           <v-icon :color="getColor(item)">{{ getIcon(item) }}</v-icon>
+        </template>
+        <template v-slot:item.configuration="{ item }">
+          <span v-if="item.configuration">{{ item.configuration.name }}</span>
         </template>
         <template v-slot:item.location_id="{ item }">
           {{ locationName(item.location_id) }}
@@ -104,6 +107,7 @@ export default {
       headers: [
         { text: 'Running', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'name' },
+        { text: 'Machine Type', align: 'start', value: 'configuration' },
         { text: 'Capacity Utilization', align: 'center', value: 'capacity' },
         { text: 'Consumption', align: 'center', value: 'consumption' },
         { text: 'Locations', align: 'center', value: 'location_id' },
@@ -113,7 +117,15 @@ export default {
       hours: 8,
       searchQuery: '',
       row: '',
-      headerColumnValues: ['Running', 'Machine Name', 'Capacity Utilization', 'Consumption', 'Locations', 'Zones']
+      headerColumnValues: [
+        'Running',
+        'Machine Name',
+        'Machine Type',
+        'Capacity Utilization',
+        'Consumption',
+        'Locations',
+        'Zones'
+      ]
     }
   },
   computed: {

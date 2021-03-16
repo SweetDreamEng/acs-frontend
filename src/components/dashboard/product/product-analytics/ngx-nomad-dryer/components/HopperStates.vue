@@ -1,7 +1,7 @@
 <template>
   <v-card height="100%" :loading="loading" :disabled="loading">
     <v-card-title>
-      Drying Hopper States
+      Hopper States
       <v-btn
         icon
         small

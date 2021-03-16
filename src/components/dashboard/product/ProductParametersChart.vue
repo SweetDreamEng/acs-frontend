@@ -115,7 +115,10 @@ export default {
         },
         legend: {
           horizontalAlign: 'left',
-          offsetX: 40
+          offsetX: 40,
+          markers: {
+            fillColors: this.colors
+          }
         }
       }
     }

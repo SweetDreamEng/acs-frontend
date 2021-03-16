@@ -203,7 +203,7 @@ const module = {
     },
 
     // Get devices with analytics in dashboard page
-    async getDevicesAnalytics({ commit }, { page = 1, location_id = 0, itemsPerPage = 5 }) {
+    async getDevicesAnalytics({ commit }, { page = 1, location_id = 0, itemsPerPage = 50 }) {
       commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', true)
       commit('SET_DATA', [])
 

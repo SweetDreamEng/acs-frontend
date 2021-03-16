@@ -1,5 +1,6 @@
 <template>
   <v-card :disabled="loading">
+    <v-card-title>Machine Status</v-card-title>
     <v-card-text>
       <v-data-table
         :loading="loading"
@@ -26,6 +27,9 @@
           >
             <span class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
           </v-badge>
+        </template>
+        <template v-slot:item.configuration="{ item }">
+          <span v-if="item.configuration">{{ item.configuration.name }}</span>
         </template>
         <template v-slot:item.rate="{ item }">
           <production-rate-chart
@@ -95,6 +99,7 @@ export default {
     return {
       headers: [
         { text: 'Machines', value: 'customer_assigned_name' },
+        { text: 'Machine Type', value: 'configuration' },
         { text: 'Utilization', align: 'center', value: 'utilization' },
         { text: 'OEE', align: 'start', value: 'oee' },
         { text: 'Actual Performance', align: 'center', value: 'performance' },
