@@ -28,56 +28,20 @@
               </div>
             </div>
           </v-col>
-          <v-col cols="12" md="2">
+          <v-col v-for="(alarm, index) in alarmsOverview.top_alarms" :key="index" cols="12" md="2">
             <div>
               <div class="mb-1">
-                <v-icon color="red">$mdi-near-me</v-icon>
+                <v-icon :color="getColorByIndex(index)">$mdi-near-me</v-icon>
               </div>
               <div class="text-h6 font-weight-bold">
-                {{ alarmsOverview.top_alarms[0].count }}
+                {{ alarmsOverview.top_alarms[index].count }}
               </div>
               <div>
                 <div>
-                  {{ alarmsOverview.top_alarms[0].machine_name }}
+                  {{ alarmsOverview.top_alarms[index].machine_name }}
                 </div>
                 <div>
-                  {{ alarmsOverview.top_alarms[0].name }}
-                </div>
-              </div>
-            </div>
-          </v-col>
-          <v-col cols="12" md="2">
-            <div>
-              <div class="mb-1">
-                <v-icon color="yellow">$mdi-near-me</v-icon>
-              </div>
-              <div class="text-h6 font-weight-bold">
-                {{ alarmsOverview.top_alarms[1].count }}
-              </div>
-              <div>
-                <div>
-                  {{ alarmsOverview.top_alarms[1].machine_name }}
-                </div>
-                <div>
-                  {{ alarmsOverview.top_alarms[1].name }}
-                </div>
-              </div>
-            </div>
-          </v-col>
-          <v-col cols="12" md="2">
-            <div>
-              <div class="mb-1">
-                <v-icon color="blue">$mdi-near-me</v-icon>
-              </div>
-              <div class="text-h6 font-weight-bold">
-                {{ alarmsOverview.top_alarms[1].count }}
-              </div>
-              <div>
-                <div>
-                  {{ alarmsOverview.top_alarms[2].machine_name }}
-                </div>
-                <div>
-                  {{ alarmsOverview.top_alarms[2].name }}
+                  {{ alarmsOverview.top_alarms[index].name }}
                 </div>
               </div>
             </div>
@@ -124,7 +88,16 @@ export default {
   methods: {
     ...mapActions({
       getAlarmsOverview: 'alarms/getAlarmsOverview'
-    })
+    }),
+    getColorByIndex(index) {
+      const colors = {
+        0: 'red',
+        1: 'yellow',
+        2: 'blue'
+      }
+
+      return colors[index] || 'blue'
+    }
   }
 }
 </script>

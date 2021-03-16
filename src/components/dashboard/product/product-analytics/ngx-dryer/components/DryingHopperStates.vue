@@ -7,8 +7,10 @@
     <v-card-title>Drying Hopper States</v-card-title>
     <v-card-text>
       <v-alert
-        :color="backgroundColor(dryingHoppers.hopper1)"
-        :style="`color: ${textColor(dryingHoppers.hopper1)}`"
+        v-for="(num, index) in 3"
+        :key="index"
+        :color="backgroundColor(dryingHoppers[`hopper${num}`])"
+        :style="`color: ${textColor(dryingHoppers[`hopper${num}`])}`"
       >
         <v-row
           align="center"
@@ -17,61 +19,15 @@
           <v-col cols="7">
             <span
               class="font-weight-bold"
-            >Drying Hopper 1</span>
+            >Drying Hopper {{ num }}</span>
           </v-col>
           <v-col class="d-flex text-body-2">
             <v-icon
               small
               left
-              :color="circleColor(dryingHoppers.hopper1)"
+              :color="circleColor(dryingHoppers[`hopper${num}`])"
             >$mdi-checkbox-blank-circle</v-icon>
-            {{ valueText(dryingHoppers.hopper1) }}
-          </v-col>
-        </v-row>
-      </v-alert>
-      <v-alert
-        :color="backgroundColor(dryingHoppers.hopper2)"
-        :style="`color: ${textColor(dryingHoppers.hopper2)}`"
-      >
-        <v-row
-          align="center"
-          no-gutters
-        >
-          <v-col cols="7">
-            <span
-              class="font-weight-bold"
-            >Drying Hopper 2</span>
-          </v-col>
-          <v-col class="d-flex text-body-2">
-            <v-icon
-              small
-              left
-              :color="circleColor(dryingHoppers.hopper2)"
-            >$mdi-checkbox-blank-circle</v-icon>
-            {{ valueText(dryingHoppers.hopper2) }}
-          </v-col>
-        </v-row>
-      </v-alert>
-      <v-alert
-        :color="backgroundColor(dryingHoppers.hopper3)"
-        :style="`color: ${textColor(dryingHoppers.hopper3)}`"
-      >
-        <v-row
-          align="center"
-          no-gutters
-        >
-          <v-col cols="7">
-            <span
-              class="font-weight-bold"
-            >Drying Hopper 3</span>
-          </v-col>
-          <v-col class="d-flex text-body-2">
-            <v-icon
-              small
-              left
-              :color="circleColor(dryingHoppers.hopper3)"
-            >$mdi-checkbox-blank-circle</v-icon>
-            {{ valueText(dryingHoppers.hopper3) }}
+            {{ valueText(dryingHoppers[`hopper${num}`]) }}
           </v-col>
         </v-row>
       </v-alert>
@@ -87,6 +43,39 @@
 // 4 AUTOTUNE YELLOW
 // 5 ALARMED RED
 
+const DRYING_HOPPER_STATES = {
+  DISABLED: {
+    backgroundColor: 'acs-hopper-disabled lighten-4',
+    circleColor: 'acs-hopper-disabled',
+    valueText: 'Disabled'
+  },
+  ENABLED: {
+    backgroundColor: 'white lighten-4',
+    circleColor: 'acs-hopper-enabled',
+    valueText: 'Enabled'
+  },
+  ONLINE: {
+    backgroundColor: 'acs-online lighten-4',  
+    circleColor: 'acs-online',
+    valueText: 'Online'
+  },
+  SETBACK: {
+    backgroundColor: 'acs-hopper-setback lighten-4',
+    circleColor: 'acs-hopper-setback',
+    valueText: 'Setback'
+  },
+  AUTOTUNE: {
+    backgroundColor: 'acs-hopper-autotune lighten-4',
+    circleColor: 'acs-hopper-autotune',
+    valueText: 'Autotune'
+  },
+  ALARMED: {
+    backgroundColor: 'acs-hopper-alarmed lighten-4',
+    circleColor: 'acs-hopper-alarmed',
+    valueText: 'Alarmed'
+  }
+}
+
 export default {
   props: {
     loading: {
@@ -99,37 +88,43 @@ export default {
     }
   },
   methods: {
-    backgroundColor(value) {
-      if (value === 0) return 'grey lighten-4'
-      else if (value === 2) return 'green lighten-4'
-      else if (value === 3) return 'blue lighten-4'
-      else if (value === 4) return 'yellow lighten-4'
-      else if (value === 5) return 'red lighten-4'
+    getHopperByIndex(index) {
+      const hoppers = {
+        0: 'hopper1',
+        1: 'hopper2',
+        3: 'hopper3'
+      }
+
+      return hoppers[index] || ''
+    },
+    getHopperState(value) {
+      if (value === 0) return DRYING_HOPPER_STATES['DISABLED']
+      else if (value === 1) return DRYING_HOPPER_STATES['ENABLED']
+      else if (value === 2) return DRYING_HOPPER_STATES['ONLINE']
+      else if (value === 3) return DRYING_HOPPER_STATES['SETBACK']
+      else if (value === 4) return DRYING_HOPPER_STATES['AUTOTUNE']
+      else if (value === 5) return DRYING_HOPPER_STATES['ALARMED']
 
       return ''
     },
-    circleColor(value) {
-      if (value === 0) return 'grey'
-      else if (value === 2) return 'green'
-      else if (value === 3) return 'blue'
-      else if (value === 4) return 'yellow'
-      else if (value === 5) return 'red'
+    backgroundColor(value) {
+      const state = this.getHopperState(value)
 
-      return ''
+      return state ? state.backgroundColor : ''
+    },
+    circleColor(value) {
+      const state = this.getHopperState(value)
+
+      return state ? state.circleColor : ''
     },
     textColor(value) {
       if (value === 0) return '#9e9e9e'
       else return '#193d66'
     },
     valueText(value) {
-      if (value === 0) return 'Disabled'
-      else if (value === 1) return 'Enabled'
-      else if (value === 2) return 'Online'
-      else if (value === 3) return 'Setback'
-      else if (value === 4) return 'Autotune'
-      else if (value === 5) return 'Alarmed'
+      const state = this.getHopperState(value)
 
-      return ''
+      return state ? state.valueText : ''
     }
   }
 }

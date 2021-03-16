@@ -103,7 +103,7 @@ export default [{
   name: 'materials',
   component: () => import(/* webpackChunkName: "materials" */ '@/pages/materials/MaterialLocationsPage.vue'),
   meta: {
-    acsAdmin: true
+    customerAdmin: true
   }
 }, {
   path: '/materials/job-inventory-report',

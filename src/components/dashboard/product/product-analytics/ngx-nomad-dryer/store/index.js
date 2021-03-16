@@ -5,7 +5,7 @@ const module = {
   state: {
     loadingStates: false,
 
-    hopperStates: {}
+    hopperStates: []
   },
 
   actions: {

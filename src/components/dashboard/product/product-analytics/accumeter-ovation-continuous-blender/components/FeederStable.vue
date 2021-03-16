@@ -14,9 +14,9 @@
             label
             class="ml-auto"
             :class="{ 'red--text': !feeder }"
-            :color="feeder ? 'green lighten-4' : 'red lighten-4'"
+            :color="feeder ? 'acs-stable lighten-4' : 'acs-unstable lighten-4'"
           >
-            <v-icon small left :color="feeder ? 'green' : 'red'">
+            <v-icon small left :color="feeder ? 'acs-stable' : 'acs-unstable'">
               $mdi-checkbox-blank-circle
             </v-icon>
             {{ feeder ? 'Stable' : 'Unstable' }}

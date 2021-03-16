@@ -10,7 +10,7 @@
 
           <v-list-item-action class="my-1">
             <div class="align-center" style="width: 100px;">
-              <v-icon left :color="state.value ? 'green' : 'grey'">$mdi-circle</v-icon> {{ state.value ? 'On' : 'Off' }}
+              <v-icon left :color="state.value ? 'acs-online' : 'acs-offline'">$mdi-circle</v-icon> {{ state.value ? 'On' : 'Off' }}
             </div>
           </v-list-item-action>
         </v-list-item>
