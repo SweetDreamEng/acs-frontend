@@ -61,6 +61,8 @@
 | Template to show frequently asked questions to your users
 |
 */
+
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
