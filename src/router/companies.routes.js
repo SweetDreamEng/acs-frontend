@@ -24,6 +24,6 @@ export default [{
   name: 'companies-alarms',
   component: () => import(/* webpackChunkName: "companies-alarms" */ '@/pages/companies/Alarms.vue'),
   meta: {
-    acsAdmin: true
+    acsCustomer: true
   }
 }]
