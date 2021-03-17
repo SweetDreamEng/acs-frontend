@@ -3,3 +3,8 @@
 
 // Custom Vuetify Style Overrides
 @import './vuetify/overrides.scss';
+
+// Prevent scroll margins
+html {
+    overflow-y: auto !important;
+}
