@@ -1,5 +1,5 @@
 export default [{
-  path: '/companies',
+  path: '/companies/list',
   name: 'companies-list',
   component: () => import(/* webpackChunkName: "companies-list" */ '@/pages/companies/CompaniesPage.vue'),
   meta: {

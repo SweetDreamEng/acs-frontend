@@ -178,7 +178,7 @@ export default {
       breadcrumbs: [
         {
           text: 'Companies',
-          to: '/companies',
+          to: '/companies/list',
           exact: true
         },
         {
