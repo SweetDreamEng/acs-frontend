@@ -92,7 +92,7 @@ export default {
       return [
         {
           text: 'Users',
-          to: '/users',
+          to: this.isAcsUser ? '/acs-admin/users' : '/users',
           exact: true
         },
         {
