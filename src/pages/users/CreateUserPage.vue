@@ -263,7 +263,7 @@ export default {
       return [
         {
           text: 'Users',
-          to: this.isAcsUser ? '/acs-admin/users/list' : '/users/list',
+          to: this.isAcsUser ? '/acs-admin/users' : '/users',
           exact: true
         },
         {
