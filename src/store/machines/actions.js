@@ -135,6 +135,10 @@ const updateDataToolOptions = async ({ commit }, payload) => {
   commit('SET_DATA_TOOL_OPTIONS', payload)
 }
 
+const requestService = async ({ commit }, payload) => {
+  const response = await machineAPI.requestService(payload)
+}
+
 export default {
   initAcsDashboard,
   initLocationsTable,
@@ -146,5 +150,6 @@ export default {
   getWeeklyRunningHours,
   getTags,
   getDataToolSeries,
-  updateDataToolOptions
+  updateDataToolOptions,
+  requestService
 }

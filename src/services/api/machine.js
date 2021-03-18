@@ -27,5 +27,8 @@ export default {
   },
   getDataToolSeries(data) {
     return api.$post('/analytics/data-tool-series', data)
+  },
+  requestService(data) {
+    return api.$post('/analytics/request-service', data)
   }
 }
