@@ -38,7 +38,7 @@ export default {
     text: '',
     key: '',
     items: [
-      { icon: '$mdi-view-dashboard-outline', text: 'Machines', link: '/dashboard/analytics' },
+      { icon: '$mdi-view-dashboard-outline', text: 'Machines', exact: true, link: '/dashboard/analytics' },
       { icon: '$mdi-near-me', text: 'Alarms', link: '/companies/alarms' },
       { icon: '$mdi-account-multiple', text: 'User Access', link: '/users' },
       { icon: '$mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
