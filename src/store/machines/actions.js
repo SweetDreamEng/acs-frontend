@@ -135,8 +135,14 @@ const updateDataToolOptions = async ({ commit }, payload) => {
   commit('SET_DATA_TOOL_OPTIONS', payload)
 }
 
-const requestService = async ({ commit }, payload) => {
-  const response = await machineAPI.requestService(payload)
+const requestService = async ({ commit, dispatch }, payload) => {
+  try {
+    const response = await machineAPI.requestService(payload)
+
+    dispatch('app/showSuccess', response.message, { root: true })
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 export default {
