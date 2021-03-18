@@ -178,7 +178,7 @@ export default {
     productView(item) {
       if (item.location_id && item.zone_id) {
         this.$router.push({
-          name: 'product-acs-dashboard',
+          name: 'dashboard-product',
           params: {
             location: item.location_id,
             zone: item.zone_id,
