@@ -4,7 +4,7 @@
     <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs>
 
     <!-- search card -->
-    <v-card img="/images/demo/cards/material2.jpg" class="mb-5">
+    <v-card :img="authBackgroundFile" class="mb-5">
       <div class="pa-4 py-8">
         <v-text-field
           v-model="search"
@@ -61,6 +61,8 @@
 | Template to show frequently asked questions to your users
 |
 */
+
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -114,6 +116,11 @@ export default {
         }]
       }]
     }
+  },
+  computed: {
+    ...mapState({
+      authBackgroundFile: (state) => state.settings.auth_background_file
+    })
   }
 }
 </script>

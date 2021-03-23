@@ -58,44 +58,6 @@
         class="mr-2 mb-1"
         @click="deviceConfigDialog = true"
       >Device Config</v-btn>
-      <v-btn
-        small
-        :color="item.checkin ? 'acs-checkin' : 'acs-not-checkin'"
-        class="mr-2 mb-1"
-        outlined
-      >
-        <v-icon
-          :color="item.checkin ? 'acs-checkin' : 'acs-not-checkin'"
-          left
-        >
-          {{ item.checkin ? '$mdi-check-circle-outline' : '$mdi-close-circle-outline' }}
-        </v-icon>
-        Device Checkin
-      </v-btn>
-      <v-btn
-        small
-        :color="item.plc_link ? 'acs-plc-link' : 'acs-plc-not-link'"
-        class="mr-2 mb-1"
-        outlined
-      >
-        <v-icon
-          :color="item.plc_link ? 'acs-plc-link' : 'acs-plc-not-link'"
-          left
-        >
-          {{ item.plc_link ? '$mdi-check-circle-outline' : '$mdi-close-circle-outline' }}
-        </v-icon>
-        PLC Link
-      </v-btn>
-      <v-btn
-        small
-        :dark="item.machine_id !== null"
-        :disabled="!item.machine_id"
-        :color="item.registered ? 'red' : 'green'"
-        class="mr-2 mb-1"
-        @click="$emit('click-register', item)"
-      >
-        {{ item.registered ? 'Revoke' : 'Register' }}
-      </v-btn>
     </div>
     <v-bottom-sheet v-model="isRemote">
       <v-sheet class="text-center" height="200px">
