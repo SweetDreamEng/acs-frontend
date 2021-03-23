@@ -58,16 +58,6 @@
         class="mr-2 mb-1"
         @click="deviceConfigDialog = true"
       >Device Config</v-btn>
-      <v-btn
-        small
-        :dark="item.machine_id !== null"
-        :disabled="!item.machine_id"
-        :color="item.registered ? 'red' : 'green'"
-        class="mr-2 mb-1"
-        @click="$emit('click-register', item)"
-      >
-        {{ item.registered ? 'Revoke' : 'Register' }}
-      </v-btn>
     </div>
     <v-bottom-sheet v-model="isRemote">
       <v-sheet class="text-center" height="200px">
