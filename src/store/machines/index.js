@@ -7,8 +7,6 @@ const state = {
   selectedId: 0,
 
   selectedCompany: null,
-
-  isSavedMachine: false,
   
   // Accumeter Ovation Continuous Blender
   actualRecipe2Values: [],

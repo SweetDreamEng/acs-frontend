@@ -98,6 +98,23 @@ export default {
   },
 
   /**
+  * Register device and simulate iothub message to device
+  *
+  * @param {Object} data object
+  * @param {Boolean} data.register Value deciding if registered
+  * @param {number} data.device_id The id of device
+  * @example
+  *
+  *     updateRegistered({
+  *       register: true,
+  *       device_id: 1,
+  *     })
+  */
+  updateRegistered(data) {
+    return api.post('/devices/device-register-update', data)
+  },
+
+  /**
   * Simulate device configuration from iot hub to device
   *
   * @param {Object} data object
@@ -200,22 +217,6 @@ export default {
   */
   getDevicesAnalytics(data) {
     return api.post('/devices/devices-analytics', data)
-  },
-
-  /**
-  * Get devices with analytics for saved machines table in dashboard
-  *
-  * @param {Object} data object
-  * @param {number} data.itemsPerPage The limit num per page
-  * @example
-  *
-  *     getDevicesAnalytics({
-  *       itemsPerPage: 10
-  *     })
-  */
-
-  getSavedMachines(data) {
-    return api.post('devices/saved-machines', data)
   },
 
   /**
