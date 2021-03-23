@@ -19,8 +19,8 @@
   </div>
 </template>
 <script>
-import BedStates from '../ngx-dryer/components/BedStates'
-import OnlineHours from '../ngx-dryer/components/OnlineHours'
+import BedStates from '../../common/ngx-dryer/BedStates'
+import OnlineHours from '../../common/ngx-dryer/OnlineHours'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {

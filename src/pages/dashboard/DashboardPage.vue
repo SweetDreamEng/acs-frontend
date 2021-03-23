@@ -34,7 +34,8 @@
       </dashboard-table>
 
       <br>
-
+      <saved-machines-table-card></saved-machines-table-card>
+      <br>
       <machines-table-card></machines-table-card>
     </v-container>
   </div>
@@ -57,6 +58,7 @@ import TopCard from '../../components/dashboard/TopCard'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
 import DashboardTable from '../../components/dashboard/dashboard-tables/DashboardTable'
 import OeeContainer from '../../components/dashboard/OeeContainer'
+import SavedMachinesTableCard from '../../components/dashboard/SavedMachinesTableCard'
 
 export default {
   components: {
@@ -64,7 +66,8 @@ export default {
     MachinesTableCard,
     DashboardTable,
     TopCard,
-    OeeContainer
+    OeeContainer,
+    SavedMachinesTableCard
   },
   data() {
     return {
