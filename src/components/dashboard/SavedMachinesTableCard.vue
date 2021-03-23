@@ -1,7 +1,7 @@
 <template>
-  <v-card :disabled="loadingDashboardDevicesTable">
+  <v-card :disabled="loadingDashboardSavedMachinesTable">
     <v-card-title>
-      Machine Status
+      Saved Machines
       <br />
       <br />
       <v-combobox
@@ -29,12 +29,12 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
-        id="machines-table"
+        id="saved-machines-table"
         :headers="filtedHeaders"
-        :items="devices"
+        :items="savedMachines"
         :search="searchQuery"
-        :loading="loadingDashboardDevicesTable"
-        :items-per-page="50"
+        :loading="loadingDashboardSavedMachinesTable"
+        :items-per-page="10"
         :page.sync="page"
         class="link-table"
         hide-default-footer
@@ -77,9 +77,9 @@
       </v-data-table>
       <v-pagination
         v-model="page"
-        :length="pageCountReport"
+        :length="savedMachinesPageCountReport"
         :total-visible="7"
-        @input="getDevicesAnalytics({ page: page, location_id: location })"
+        @input="getSavedMachines({ page: page })"
       ></v-pagination>
     </v-card-text>
   </v-card>
@@ -132,9 +132,9 @@ export default {
   },
   computed: {
     ...mapState({
-      devices: (state) => state.devices.data,
-      loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
-      pageCountReport: (state) => state.devices.pageCountReport
+      savedMachines: (state) => state.devices.savedMachines,
+      loadingDashboardSavedMachinesTable: (state) => state.devices.loadingDashboardSavedMachinesTable,
+      savedMachinesPageCountReport: (state) => state.devices.savedMachinesPageCountReport
     }),
     ...mapGetters({
       locationName: 'locations/locationName',
@@ -150,30 +150,19 @@ export default {
     }
   },
   mounted() {
-    this.getDevicesAnalytics({
-      page: this.page,
-      location_id: this.location
+    this.getSavedMachines({
+      page: this.page
     })
   },
   methods: {
     ...mapActions({
-      getDevicesAnalytics: 'devices/getDevicesAnalytics'
+      getSavedMachines: 'devices/getSavedMachines'
     }),
     open(item) { },
     getColor (item) {
-      // if (item.status === 'Warning') return 'orange'
-      // else if (item.status === 'Alarm') return 'green'
-      // else if (item.status === 'Not') return 'red'
-      // else return 'green'
-      // if (item.status) return 'green'
-      // else return 'primary'
       return item.status ? 'primary' : 'red'
     },
     getIcon(item) {
-      // if (item.status === 'Warning') return '$mdi-alert'
-      // else if (item.status === 'Alarm') return '$mdi-check-circle-outline'
-      // else if (item.status === 'Not') return '$mdi-bell-circle'
-      // else return '$mdi-check-circle-outline'
       if (item.status) return '$mdi-check-circle-outline'
       else return '$mdi-lan-disconnect'
     },
