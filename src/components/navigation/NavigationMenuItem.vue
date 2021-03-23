@@ -4,6 +4,7 @@
       v-if="!menuItem.items"
       :input-value="menuItem.value"
       :to="menuItem.link"
+      :exact="true"
       :disabled="menuItem.disabled"
       active-class="primary--text"
       link

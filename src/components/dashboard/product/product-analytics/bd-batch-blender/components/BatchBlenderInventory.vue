@@ -43,7 +43,7 @@
                   class="ml-2"
                   small
                   outlined
-                  :disabled="!canViewInventory"
+                  :disabled="userRole === 'acs_admin'"
                   @click="editMaterial(i)"
                 >
                   Add Material/Location
@@ -149,9 +149,7 @@ export default {
       locations: (state) => state.materials.materialLocations
     }),
     ...mapState('bdBlenderAnalytics', ['loadingInventories', 'togglingInventoryTrack', 'inventory', 'savingMaterial']),
-    ...mapGetters({
-      canViewInventory: 'auth/canViewInventory'
-    }),
+    ...mapGetters('auth', ['canViewInventory']),
     dialogText () {
       return `Feeder ${this.editedIndex + 1}`
     }
@@ -210,16 +208,12 @@ export default {
     },
 
     materialText(ind) {
-      let m = null
-
-      m = this.materials.find((material) => material.id === this.inventory.inventory_material.[`material${ind + 1}_id`])
+      const m = this.materials.find((material) => material.id === this.inventory.inventory_material[`material${ind + 1}_id`])
 
       return m ? m.material : 'Material Not Selected'
     },
     locationText(ind) {
-      let m = null
-
-      m = this.locations.find((location) => location.id === this.inventory.inventory_material.[`location${ind + 1}_id`])
+      const m = this.locations.find((location) => location.id === this.inventory.inventory_material[`location${ind + 1}_id`])
 
       return m ? m.location : 'Location Not Selected'
     }

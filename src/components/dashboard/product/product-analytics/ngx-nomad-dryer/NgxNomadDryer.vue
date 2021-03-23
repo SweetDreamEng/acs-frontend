@@ -93,7 +93,7 @@ import commonApi from '../../common/fetches/api'
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import Overview from '../../common/overview/ProductOverview'
-import HopperStates from './components/NgxNomadDryerHopperStates'
+import HopperStates from '../ngx-nomad-dryer/components/HopperStates'
 
 import { mapState, mapActions } from 'vuex'
 

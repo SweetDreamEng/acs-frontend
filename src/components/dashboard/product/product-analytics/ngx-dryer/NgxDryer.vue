@@ -91,7 +91,7 @@ import commonApi from '../../common/fetches/api'
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import Overview from '../../common/overview/ProductOverview'
-import DryingHopperStates from './components/NgxDryerDryingHopperStates'
+import DryingHopperStates from './components/DryingHopperStates'
 
 import { mapState, mapActions } from 'vuex'
 

@@ -44,11 +44,11 @@ const module = {
         dispatch('app/showSuccess', response.data, { root: true })
         if (rootState.auth.user.role === 'acs_admin')
           router.push({
-            name: 'acs-users'
+            name: 'acs-users-list'
           })
         else if (rootState.auth.user.role === 'customer_admin')
           router.push({
-            name: 'users'
+            name: 'users-list'
           })
       } catch (error) {
         if (error.response.status === 422) {

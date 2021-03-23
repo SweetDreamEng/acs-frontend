@@ -135,41 +135,6 @@ const updateDataToolOptions = async ({ commit }, payload) => {
   commit('SET_DATA_TOOL_OPTIONS', payload)
 }
 
-const requestService = async ({ commit, dispatch }, payload) => {
-  try {
-    const response = await machineAPI.requestService(payload)
-
-    dispatch('app/showSuccess', response.message, { root: true })
-  } catch (error) {
-    throw new Error(error)
-  }
-}
-
-const saveMachine = async ({ commit, dispatch }, payload) => {
-  try {
-    const response = await machineAPI.saveMachine(payload)
-
-    commit('SET_SAVED_MACHINE_STATUS', response.status)
-    dispatch('app/showSuccess', response.message, { root: true })
-  } catch (error) {
-    throw new Error(error)
-  }
-}
-
-const getSavedStatus = async ({ commit, dispatch }, payload) => {
-  try {
-    const response = await machineAPI.getSavedStatus(payload)
-
-    commit('SET_SAVED_MACHINE_STATUS', response.status)
-  } catch (error) {
-    throw new Error(error)
-  }
-}
-
-const setSavedMachineStatus = ({ commit }, status) => {
-  commit('SET_SAVED_MACHINES_STATUS', status)
-}
-
 export default {
   initAcsDashboard,
   initLocationsTable,
@@ -181,9 +146,5 @@ export default {
   getWeeklyRunningHours,
   getTags,
   getDataToolSeries,
-  updateDataToolOptions,
-  requestService,
-  saveMachine,
-  getSavedStatus,
-  setSavedMachineStatus
+  updateDataToolOptions
 }

@@ -32,9 +32,6 @@ const module = {
     loadingTableMachineMapping: false,
     loadingBtnAssignZoneToMachine: false,
     loadingDashboardDevicesTable: false,    //Devices table loading value in ACS dashboard and user dashboard pages
-    loadingDashboardSavedMachinesTable: false,
-    savedMachines: [],
-    savedMachinesPageCountReport: 0,
 
     downtimePlanBtnLoading: false,
     downtimePlansTableLoading: false,
@@ -149,6 +146,25 @@ const module = {
         commit('ASSIGN_CLEAR')
       }
     },
+    async updateRegistered({
+      commit, dispatch
+    }, data) {
+      commit('REGISTER_BTN_LOAD')
+
+      try {
+        const response = await deviceAPI.updateRegistered(data)
+
+        commit('SET_REGISTERED', data)
+        dispatch('app/showSuccess', response.data, { root: true })
+      } catch (error) {
+        console.log(error)
+        dispatch('app/showError', {
+          error: error.response.data
+        }, { root: true })
+      } finally {
+        commit('REGISTER_BTN_CLEAR')
+      }
+    },
 
     async submitDeviceConfig({
       commit, dispatch
@@ -205,26 +221,6 @@ const module = {
         console.log(error)
       } finally {
         commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', false)
-      }
-    },
-
-    async getSavedMachines({ commit }, { page = 1, location_id = 0, itemsPerPage = 10 }) {
-      commit('SET_LOADING_SAVED_MACHINES', true)
-      commit('SET_SAVED_MACHINES', [])
-
-      try {
-        const data = {
-          itemsPerPage,
-          page
-        }
-        const response = await deviceAPI.getSavedMachines(data)
-
-        commit('SET_SAVED_MACHINES', response.data.devices.data)
-        commit('SET_REPORT_SAVED_MACHINES_PAGINATION', response.data.devices.last_page)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        commit('SET_LOADING_SAVED_MACHINES', false)
       }
     },
 
@@ -505,14 +501,7 @@ const module = {
     },
     SET_REPORT_PAGINATION(state, count) { state.pageCountReport = count },
     SET_DOWNTIME_PLANS(state, plans) { state.downtimePlans = plans },
-    SET_LOADING_ACTIVE_DEVICES(state, isLoading) { state.loadingToggleActiveDevices = isLoading },
-    SET_LOADING_SAVED_MACHINES(state, isLoading) { state.loadingDashboardSavedMachinesTable = isLoading },
-    SET_SAVED_MACHINES(state, data) {
-      state.savedMachines = data
-    },
-    SET_REPORT_SAVED_MACHINES_PAGINATION(state, count) {
-      state.savedMachinesPageCountReport = count
-    }
+    SET_LOADING_ACTIVE_DEVICES(state, isLoading) { state.loadingToggleActiveDevices = isLoading }
   },
 
   getters: {

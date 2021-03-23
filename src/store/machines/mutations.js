@@ -4,15 +4,9 @@ export default {
   SET_MACHINES(state, machines) {
     state.machines = machines
   },
-
-  SET_SAVED_MACHINE_STATUS(state, status) {
-    state.isSavedMachine = status
-  },
-
   SET_SELECTED_COMPANY(state, company) {
     state.selectedCompany = company
   },
-
   SET_LOADING_RECIPE(state, data) {
     state.loadingRecipe = data
   },

@@ -60,7 +60,7 @@ const module = {
         commit('CLEAR_ERROR')
         dispatch('app/showSuccess', response.data, { root: true })
         router.push({
-          name: 'companies'
+          name: 'companies-list'
         })
       } catch (error) {
         if (error.response.status === 422) {
