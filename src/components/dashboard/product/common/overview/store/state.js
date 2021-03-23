@@ -1,4 +1,6 @@
 export default () => ({
   overview: {},
-  isLoading: false
+  isLoading: false,
+  isSavedMachine: false,
+  isSaveMachineLoading: false
 })

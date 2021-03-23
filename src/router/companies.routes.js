@@ -1,5 +1,5 @@
 export default [{
-  path: '/companies/list',
+  path: '/companies',
   name: 'companies-list',
   component: () => import(/* webpackChunkName: "companies-list" */ '@/pages/companies/CompaniesPage.vue'),
   meta: {
@@ -24,6 +24,6 @@ export default [{
   name: 'companies-alarms',
   component: () => import(/* webpackChunkName: "companies-alarms" */ '@/pages/companies/Alarms.vue'),
   meta: {
-    acsAdmin: true
+    customerAdmin: true
   }
 }]

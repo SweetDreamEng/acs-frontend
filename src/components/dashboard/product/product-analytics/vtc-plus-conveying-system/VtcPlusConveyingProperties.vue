@@ -24,8 +24,8 @@
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import PumpOnlines from './components/PumpOnlines'
-import PumpBlowBacks from './components/PumpBlowBacks'
+import PumpOnlines from './components/VtcPlusConveyingPumpOnlines'
+import PumpBlowBacks from './components/VtcPlusConveyingPumpBlowBacks'
 
 export default {
   components: {
