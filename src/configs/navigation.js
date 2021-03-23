@@ -45,7 +45,7 @@ export default {
       { icon: '$mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' },
       { icon: '$mdi-equal-box', text: 'Materials', regex: /^\/materials/,
         items: [
-          { text: 'Materials', link: '/materials' },
+          { text: 'Materials', exact: true, link: '/materials/material-locations' },
           { text: 'Job Inventory Report', link: '/materials/job-inventory-report' },
           { text: 'System Inventory Report', link: '/materials/system-inventory-report' }
         ]
