@@ -126,7 +126,7 @@
 
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length" class="px-4 py-2">
-            <sim-panel :item="item"></sim-panel>
+            <sim-panel :item="item" @click-register="onRegisterChange"></sim-panel>
           </td>
         </template>
 
@@ -167,21 +167,13 @@
             <v-select
               v-model="editedItem.machine_id"
               :items="configurations"
-              label="Choose Machine Type"
+              label="Choose Configuration"
               item-text="name"
               item-value="id"
               outlined
               dense
             >
             </v-select>
-            <v-text-field
-              v-model="editedItem.name"
-              label="Device Name"
-              :rules="[$rules.required]"
-              outlined
-              dense
-            >
-            </v-text-field>
             <v-text-field
               v-model="editedItem.plc_ip"
               label="PLC IP"
@@ -218,6 +210,39 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog
+      v-model="confirmDialog"
+      max-width="400px"
+      persistent
+    >
+      <v-card>
+        <v-card-title class="primary white--text">
+          Confirm
+        </v-card-title>
+        <v-card-text class="mt-2">
+          <v-alert
+            border="top"
+            outlined
+            type="info"
+            elevation="2"
+            color="primary"
+          >
+            <small v-html="confirmationMessage()"></small>
+          </v-alert>
+          <div class="d-flex justify-end">
+            <v-btn color="primary" text @click="confirmDialog = false">Cancel</v-btn>
+            <v-btn
+              :color="confirmBtnColor()"
+              dark
+              :loading="registerButtonLoading"
+              @click="onConfirmClicked()"
+            >
+              {{ confirmBtnText() }}
+            </v-btn>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -315,6 +340,7 @@ export default {
       getConfigurations: 'configurations/getConfigurations',
       getDevices: 'devices/getDevices',
       deviceAssigned: 'devices/deviceAssigned',
+      updateRegistered: 'devices/updateRegistered',
       getDevicesStatus: 'devices/getDevicesStatus',
       deactivateSIM: 'devices/deactivateSIM',
       toggleActiveDevices: 'devices/toggleActiveDevices'
@@ -341,14 +367,56 @@ export default {
           company_id: this.editedItem.company_id,
           machine_id: this.editedItem.machine_id,
           tcu_added: this.editedItem.tcu_added,
-          plc_ip: this.editedItem.plc_ip,
-          device_name: this.editedItem.name
+          plc_ip: this.editedItem.plc_ip
         })
           .then((response) => {
             this.filterDevices()
             this.close()
           })
       }
+    },
+    confirmBtnText() {
+      if (this.selectedItem) {
+        if (!this.selectedItem.registered)
+          return 'Confirm Registration'
+        else
+          return 'Confirm Revocation'
+      } else {
+        return ''
+      }
+    },
+    confirmBtnColor() {
+      if (this.selectedItem) {
+        if (!this.selectedItem.registered)
+          return 'green'
+        else
+          return 'red'
+      } else {
+        return ''
+      }
+    },
+    confirmationMessage() {
+      if (this.selectedItem) {
+        if (!this.selectedItem.registered)
+          return `Device ${this.selectedItem.serial_number} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be configured with product <strong><i>${this.configurationName(this.selectedItem.machine_id)}</i></strong>. Please confirm registration`
+        else
+          return `Device ${this.selectedItem.id} assigned to company <strong><i>${this.companyName(this.selectedItem.company_id)}</i></strong> will be reset and product <strong><i>${this.configurationName(this.selectedItem.machine_id)}</i></strong> configuration will be removed. The device will no longer send PLC data. Please confirm revocation`
+      } else {
+        return ''
+      }
+    },
+    onRegisterChange(item) {
+      this.selectedItem = item
+      this.confirmDialog = true
+    },
+    onConfirmClicked() {
+      this.updateRegistered({
+        device_id: this.selectedItem.id,
+        register: !this.selectedItem.registered
+      })
+        .then((response) => {
+          this.confirmDialog = false
+        })
     },
     onPageChange() {
       this.filterDevices(this.loc_page)

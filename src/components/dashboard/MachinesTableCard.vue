@@ -2,8 +2,6 @@
   <v-card :disabled="loadingDashboardDevicesTable">
     <v-card-title>
       Machine Status
-      <br />
-      <br />
       <v-combobox
         v-model="headerColumnValues"
         :items="headerColumns"
@@ -180,7 +178,7 @@ export default {
     productView(item) {
       if (item.location_id && item.zone_id) {
         this.$router.push({
-          name: 'dashboard-product',
+          name: 'product-acs-dashboard',
           params: {
             location: item.location_id,
             zone: item.zone_id,

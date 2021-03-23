@@ -61,6 +61,5 @@ export {
   mdiChevronUp,
   mdiChevronDown,
   mdiMenuDown,
-  mdiCheckCircle,
-  mdiStar
+  mdiCheckCircle
 } from '@mdi/js'
