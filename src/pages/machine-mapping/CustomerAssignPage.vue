@@ -175,8 +175,8 @@
             >
             </v-select>
             <v-text-field
-              v-model="editedItem.customer_assigned_name"
-              label="Customer Assinged Device Name"
+              v-model="editedItem.name"
+              label="Device Name"
               :rules="[$rules.required]"
               outlined
               dense
@@ -342,7 +342,7 @@ export default {
           machine_id: this.editedItem.machine_id,
           tcu_added: this.editedItem.tcu_added,
           plc_ip: this.editedItem.plc_ip,
-          customer_assigned_name: this.editedItem.customer_assigned_name
+          device_name: this.editedItem.name
         })
           .then((response) => {
             this.filterDevices()
