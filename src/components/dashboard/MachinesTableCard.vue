@@ -2,6 +2,8 @@
   <v-card :disabled="loadingDashboardDevicesTable">
     <v-card-title>
       Machine Status
+      <br />
+      <br />
       <v-combobox
         v-model="headerColumnValues"
         :items="headerColumns"

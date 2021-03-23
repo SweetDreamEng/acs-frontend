@@ -99,7 +99,7 @@ export default [{
     customerAdmin: true
   }
 }, {
-  path: '/materials',
+  path: '/materials/material-locations',
   name: 'materials',
   component: () => import(/* webpackChunkName: "materials" */ '@/pages/materials/MaterialLocationsPage.vue'),
   meta: {

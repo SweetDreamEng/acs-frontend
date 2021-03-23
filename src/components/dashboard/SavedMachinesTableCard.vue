@@ -2,6 +2,8 @@
   <v-card :disabled="loadingDashboardSavedMachinesTable">
     <v-card-title>
       Saved Machines
+      <br />
+      <br />
       <v-combobox
         v-model="headerColumnValues"
         :items="headerColumns"

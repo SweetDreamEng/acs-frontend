@@ -29,7 +29,7 @@
               <v-btn color="primary" @click="requestDialog = true">
                 Request Service
               </v-btn>
-              <v-btn icon @click="saveMachine({ deviceId: overview.teltonikaDevice.id })">
+              <v-btn icon :loading="isSaveMachineLoading" @click="saveMachine({ deviceId: overview.teltonikaDevice.id })">
                 <v-icon :color="isSavedMachine ? 'green' : 'grey'">$mdi-star</v-icon>
               </v-btn>
             </v-card-actions>
@@ -52,16 +52,8 @@
     </v-card>
     <v-dialog v-model="requestDialog" max-width="290">
       <v-card>
-        <v-card-title class="text-h5">Request Service</v-card-title>
-        <v-card-text>Are you sure you want to place a service request?</v-card-text>
-        <v-text-field
-          v-model="sendEmail"
-          label="Email"
-          placeholder="email"
-          outlined
-          dense
-        >
-        </v-text-field>
+        <v-card-title class="primary white--text">Request Service</v-card-title>
+        <v-card-text class="mt-2">Are you sure you want to place a service request?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="requestDialog = false">Cancel</v-btn>
@@ -98,8 +90,7 @@ export default {
   },
   data() {
     return {
-      requestDialog: false,
-      sendEmail: ''
+      requestDialog: false
     }
   },
   computed: {
@@ -117,6 +108,9 @@ export default {
     },
     isSavedMachine() {
       return this.$store.state[this.namespace]['isSavedMachine']
+    },
+    isSaveMachineLoading() {
+      return this.$store.state[this.namespace]['isSaveMachineLoading']
     }
   },
   created() {
@@ -158,9 +152,11 @@ export default {
       })
     },
     handleRequestService() {
+      const sendEmail = process.env.VUE_APP_SERVICE_REQUEST_SEND_EMAIL
+
       this.requestDialog = false
       const data = {
-        email: this.sendEmail,
+        email: sendEmail,
         user: this.user,
         overview: this.overview
       }
