@@ -24,9 +24,15 @@
             <div>{{ overview.running ? 'Running' : 'Not Running' }}</div>
           </div>
           <div class="ml-2 mt-2">
-            <v-btn color="primary" @click="requestDialog = true">
-              Request Service
-            </v-btn>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" @click="requestDialog = true">
+                Request Service
+              </v-btn>
+              <v-btn icon @click="saveMachine({ deviceId: overview.teltonikaDevice.id })">
+                <v-icon :color="isSavedMachine ? 'green' : 'grey'">$mdi-star</v-icon>
+              </v-btn>
+            </v-card-actions>
           </div>
         </v-card-text>
       </template>
@@ -108,6 +114,9 @@ export default {
     },
     machineImage() {
       return this.overview.machineId ? require(`@/assets/imgs/${this.overview.machineId}.png`) : ''
+    },
+    isSavedMachine() {
+      return this.$store.state[this.namespace]['isSavedMachine']
     }
   },
   created() {
@@ -126,7 +135,10 @@ export default {
       getOverview(dispatch, payload) {
         return dispatch(this.namespace + '/getOverview', payload)
       },
-      requestService: 'machines/requestService'
+      requestService: 'machines/requestService',
+      saveMachine(dispatch, payload) {
+        return dispatch(this.namespace + '/saveMachine', payload)
+      }
     }),
     isModuleCreated(path) {
       let m = this.$store._modules.root
