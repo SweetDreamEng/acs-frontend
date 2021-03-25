@@ -99,8 +99,8 @@ const timeRangeFromTo = (state) => (timeRange) => {
     }
   } else {
     return {
-      from: new Date(timeRange.dateFrom + ' ' + timeRange.timeFrom).getTime(),
-      to: new Date(timeRange.dateTo + ' ' + timeRange.timeTo).getTime()
+      from: new Date(timeRange.dates[0]).getTime(),
+      to: new Date(timeRange.dates[1]).getTime()
     }
   }
 }
