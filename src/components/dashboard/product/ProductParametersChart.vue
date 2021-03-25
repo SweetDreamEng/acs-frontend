@@ -10,8 +10,8 @@
     >
     </time-range-chooser2>
     <v-card
-      :loading="loading"
-      :disabled="loading"
+      :loading="loadingDataToolSeries"
+      :disabled="loadingDataToolSeries"
     >
       <v-card-title>
         <span>Data Tool</span>
@@ -30,7 +30,8 @@
           type="line"
           height="450"
           :options="chartOptions"
-          :series="dataToolSeries">
+          :series="dataToolSeries"
+        >
         </apexchart>
       </v-card-text>
     </v-card>
@@ -64,25 +65,29 @@ export default {
   },
 
   computed: {
-    ...mapState('machines', ['tags', 'dataToolSeries', 'dataToolTimeRange', 'selectedTags']),
+    ...mapState('machines', ['tags', 'dataToolSeries', 'dataToolTimeRange', 'selectedTags', 'loadingDataToolSeries']),
     ...mapGetters('machines', ['timeRangeDataToolLabel', 'timeRangeFromTo']),
     yaxis() {
       return this.selectedTags.map((t, i) => {
         return {
+          seriesName: t.name,
           opposite: i % 2,
           labels: {
             style: {
-              colors: this.colors[i]
+              colors: this.colors[i % 6]
             }
+          },
+          axisTicks: {
+            show: true
           },
           axisBorder: {
             show: true,
-            color: this.colors[i]
+            color: this.colors[i % 6]
           },
           title: {
             text: t.name,
             style: {
-              color: this.colors[i]
+              color: this.colors[i % 6]
             }
           },
           decimalsInFloat: 2
@@ -99,6 +104,9 @@ export default {
             show: false
           }
         },
+        dataLabels: {
+          enabled: false
+        },
         xaxis: {
           type: 'datetime',
           min: this.timeRangeFromTo(this.dataToolTimeRange).from,
@@ -114,8 +122,8 @@ export default {
           fixed: {
             enabled: true,
             position: 'topLeft',
-            offsetY: 30,
-            offsetX: 60
+            offsetY: 60,
+            offsetX: 30
           }
         },
         legend: {
