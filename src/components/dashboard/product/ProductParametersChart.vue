@@ -98,7 +98,7 @@ export default {
       return {
         chart: {
           height: 350,
-          type: 'area',
+          type: 'line',
           stacked: false,
           toolbar: {
             show: false
@@ -127,6 +127,7 @@ export default {
           }
         },
         legend: {
+          show: true,
           horizontalAlign: 'left',
           offsetX: 40,
           markers: {
