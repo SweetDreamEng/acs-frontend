@@ -80,17 +80,40 @@ export default {
       return this.$store.state[this.namespace]['isLoading']
     },
     series() {
-      if (this.names.length) 
-        return this.names.map((name, index) => {
-          return {
-            name,
-            data: (this.$store.state[this.namespace]['items'].length) ? (this.$store.state[this.namespace]['items'][index]) : []
+      if (this.categories[0] === 'Hopper 1') {
+        const arr = [[], []]
+
+        this.$store.state[this.namespace]['items'][0].forEach((item, index) => {
+          if (item !== 0 || this.$store.state[this.namespace]['items'][1][index] !== 0) {
+            arr[0].push(item)
+            arr[1].push(this.$store.state[this.namespace]['items'][1][index])
           }
         })
-      else
-        return [{
-          data: (this.$store.state[this.namespace]['items']) ? (this.$store.state[this.namespace]['items']) : []
-        }]
+
+        if (this.names.length)
+          return this.names.map((name, index) => {
+            return {
+              name,
+              data: (arr.length) ? (arr[index]) : []
+            }
+          })
+        else
+          return [{
+            data: arr ? arr : []
+          }] 
+      } else {
+        if (this.names.length) 
+          return this.names.map((name, index) => {
+            return {
+              name,
+              data: (this.$store.state[this.namespace]['items'].length) ? (this.$store.state[this.namespace]['items'][index]) : []
+            }
+          })
+        else
+          return [{
+            data: (this.$store.state[this.namespace]['items']) ? (this.$store.state[this.namespace]['items']) : []
+          }]
+      }
     },
     graphUnit() {
       return this.$store.state[this.namespace]['unit'] ? this.$store.state[this.namespace]['unit'] : ''
@@ -136,7 +159,7 @@ export default {
           }
         },
         xaxis: {
-          categories: this.categories,
+          categories: this.categories[0] !== 'Hopper 1' ? this.categories : this.hopperCategories,
           max: (this.seriesMax + 2) * 1.1
         },
         legend: {
@@ -150,6 +173,17 @@ export default {
         },
         ...this.options
       }
+    },
+    hopperCategories() {
+      const category = []
+
+      this.$store.state[this.namespace]['items'][0].forEach((item, index) => {
+        if (item !== 0 || this.$store.state[this.namespace]['items'][1][index] !== 0) {
+          category.push(`Hopper ${index + 1}`)
+        }
+      })
+
+      return category
     },
     seriesMax() {
       let max = 0
