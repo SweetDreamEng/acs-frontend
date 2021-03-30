@@ -137,7 +137,6 @@ export default {
       }, {
         text: 'List'
       }],
-
       searchQuery: '',
       selectedUsers: [],
       headers: [
