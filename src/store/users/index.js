@@ -21,9 +21,9 @@ const module = {
         commit('SET_DATA', response.data.users)
       } catch (error) {
         console.log(error)
+      } finally {
+        commit('TABLE_LOAD', false)
       }
-
-      commit('TABLE_LOAD', false)
     },
     async openEditUser({ commit }, id) {
       try {
@@ -106,7 +106,9 @@ const module = {
     CLEAR_ERROR(state) {
       state.error = null
     },
-    TABLE_LOAD(state, loading) { state.isUsersTableLoading = loading },
+    TABLE_LOAD(state, loading) {
+      state.isUsersTableLoading = loading
+    },
     BUTTON_LOAD(state) {
       state.buttonLoading = true
     },

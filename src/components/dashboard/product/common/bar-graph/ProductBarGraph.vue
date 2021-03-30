@@ -83,12 +83,14 @@ export default {
       if (this.categories[0] === 'Hopper 1') {
         const arr = [[], []]
 
-        this.$store.state[this.namespace]['items'][0].forEach((item, index) => {
-          if (item !== 0 || this.$store.state[this.namespace]['items'][1][index] !== 0) {
-            arr[0].push(item)
-            arr[1].push(this.$store.state[this.namespace]['items'][1][index])
-          }
-        })
+        if (this.$store.state[this.namespace]['items'][0]) {
+          this.$store.state[this.namespace]['items'][0].forEach((item, index) => {
+            if (item !== 0 || this.$store.state[this.namespace]['items'][1][index] !== 0) {
+              arr[0].push(item)
+              arr[1].push(this.$store.state[this.namespace]['items'][1][index])
+            }
+          })
+        }
 
         if (this.names.length)
           return this.names.map((name, index) => {
@@ -177,11 +179,13 @@ export default {
     hopperCategories() {
       const category = []
 
-      this.$store.state[this.namespace]['items'][0].forEach((item, index) => {
-        if (item !== 0 || this.$store.state[this.namespace]['items'][1][index] !== 0) {
-          category.push(`Hopper ${index + 1}`)
-        }
-      })
+      if (this.$store.state[this.namespace]['items'][0]) {
+        this.$store.state[this.namespace]['items'][0].forEach((item, index) => {
+          if (item !== 0 || this.$store.state[this.namespace]['items'][1][index] !== 0) {
+            category.push(`Hopper ${index + 1}`)
+          }
+        })
+      }
 
       return category
     },
