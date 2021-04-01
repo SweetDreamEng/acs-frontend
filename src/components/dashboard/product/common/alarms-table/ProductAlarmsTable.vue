@@ -144,7 +144,7 @@ export default {
     },
     lastActivated(alarm) {
       const date = new Date(alarm.timestamp)
-      const isoDate = date.toISOString()
+      const isoDate = date.toLocaleString()
 
       return `${isoDate.substr(0, 10)} ${isoDate.substr(11, 8)}`
     }
