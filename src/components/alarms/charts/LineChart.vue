@@ -55,6 +55,14 @@ export default {
             show: false
           }
         },
+        xaxis: {
+          type: 'datetime',
+          labels: {
+            formatter: (value, timestamp, opts) => {
+              return [this.$options.filters.formatDate(value, 'yyyy-MM-dd'), this.$options.filters.formatDate(value, ' HH:mm:ss')]
+            }
+          }
+        },
         maintainAspectRatio: true,
         dataLabels: {
           enabled: false
