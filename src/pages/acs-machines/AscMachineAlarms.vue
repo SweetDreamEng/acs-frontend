@@ -61,9 +61,6 @@ export default {
     }),
     handleAlarmDistribution (machineName) {
       this.getAlarmsDistributionByMachine({ machine_name: machineName })
-    },
-    handleAlarmResponseTime () {
-      console.log('responese time')
     }
   }
 }
