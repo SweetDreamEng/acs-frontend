@@ -6,7 +6,7 @@
       :disabled="loadingInventories"
     >
       <v-card-title>
-        Inventories
+        Inventories Reports
         <v-btn
           v-if="inventory.inventory_material"
           small
@@ -34,24 +34,35 @@
               v-for="(inv, i) in inventory.inventories"
               :key="i"
               cols="12"
-              sm="3"
+              md="3"
+              sm="6"
               class="py-1"
             >
-              <div class="d-flex">
-                <div class="subtitle-1 black--text mb-1 font-italic">{{ `Hopper ${i + 1}` }}</div>
-                <v-btn
-                  class="ml-2"
-                  small
-                  outlined
-                  :disabled="!canViewInventory"
-                  @click="editMaterial(i)"
-                >
-                  Add Material/Location
-                </v-btn>
-              </div>
-              <div class=""><span class="display-1">{{ inv }}</span><span>{{ inventory.unit }}</span></div>
-              <div class="text-body-2">{{ materialText(i) }}</div>
-              <div class="text-body-2">{{ locationText(i) }}</div>
+              <v-card>
+                <div class="overline ml-2">{{ `Hopper ${i + 1}` }}</div>
+                <v-card-title class="text--primary">{{ inv }} {{ inventory.unit }}</v-card-title>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>
+                      {{ materialText(i) }}
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                      {{ locationText(i) }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-card-actions>
+                  <v-btn
+                    small
+                    block
+                    color="primary"
+                    :disabled="!canViewInventory"
+                    @click="editMaterial(i)"
+                  >
+                    Add Material/Location
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
             </v-col>
           </v-row>
         </div>

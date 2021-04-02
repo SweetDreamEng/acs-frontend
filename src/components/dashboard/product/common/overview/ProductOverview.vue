@@ -6,10 +6,30 @@
       :disabled="isLoading"
     >
       <template v-if="overview.machineId !== 11">
-        <v-card-title v-if="overview.teltonikaDevice">{{ overview.teltonikaDevice.customer_assigned_name }}</v-card-title>
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline">
+              {{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}
+            </v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-avatar class="mt-3" color="grey lighten-3">
+            <v-btn icon :loading="isSaveMachineLoading" @click="saveMachine({ deviceId: overview.teltonikaDevice.id })">
+              <v-icon :color="isSavedMachine ? 'primary' : 'grey'">$mdi-star</v-icon>
+            </v-btn>
+          </v-list-item-avatar>
+        </v-list-item>
+        
         <v-card-subtitle>
           <div v-if="overview.teltonikaDevice">{{ overview.teltonikaDevice.name }}</div>
           <div>{{ overview.machineName }}</div>
+          <v-chip :color="overview.running ? 'green lighten-4' : 'red lighten-4'">
+            <v-list-item-avatar class="mr-1" :color="overview.running ? 'green' : 'red'">
+              <v-icon small>
+                {{ overview.running ? '$mdi-check-circle-outline' : '$mdi-block-helper' }}
+              </v-icon>
+            </v-list-item-avatar>
+            {{ overview.running ? 'Running' : 'Not Running' }}
+          </v-chip>
         </v-card-subtitle>
         <v-img
           height="150"
@@ -21,16 +41,11 @@
             <div>PLC Software Version: <small>{{ overview.version }}</small></div>
             <div>PLC Software Build: <small>{{ overview.software_build }}</small></div>
             <div>Serial Number: <small>{{ overview.serial }}</small></div>
-            <div>{{ overview.running ? 'Running' : 'Not Running' }}</div>
           </div>
-          <div class="ml-2 mt-2">
+          <div class="mt-2">
             <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="requestDialog = true">
+              <v-btn color="primary" block @click="requestDialog = true">
                 Request Service
-              </v-btn>
-              <v-btn icon :loading="isSaveMachineLoading" @click="saveMachine({ deviceId: overview.teltonikaDevice.id })">
-                <v-icon :color="isSavedMachine ? 'green' : 'grey'">$mdi-star</v-icon>
               </v-btn>
             </v-card-actions>
           </div>
@@ -50,15 +65,19 @@
         </v-card-text>
       </template>
     </v-card>
-    <v-dialog v-model="requestDialog" max-width="290">
+    <v-dialog v-model="requestDialog" max-width="500">
       <v-card>
-        <v-card-title class="primary white--text">Request Service</v-card-title>
-        <v-card-text class="mt-2">Are you sure you want to place a service request?</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="requestDialog = false">Cancel</v-btn>
-          <v-btn color="primary" @click="handleRequestService">Confirm</v-btn>
-        </v-card-actions>
+        <v-card-text class="text-center">
+          <v-avatar class="text-center mt-5" color="grey lighten-2" size="100">
+            <v-icon color="primary" x-large>$mdi-cog</v-icon>
+          </v-avatar>
+        </v-card-text>
+        <v-card-title class="mt-1 headline justify-center">You just requested a service request.</v-card-title>
+        <v-card-text class="pb-0 text-center">Are you sure you want to place a service request?</v-card-text>
+        <div class="mt-2 pb-3 text-center">
+          <v-btn color="grey lighten-2" depressed @click="requestDialog = false">Cancel</v-btn>
+          <v-btn class="ml-2" depressed color="primary" @click="handleRequestService">Confirm</v-btn>
+        </div>
       </v-card>
     </v-dialog>
   </div>
