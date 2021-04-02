@@ -63,7 +63,11 @@
 
         <!-- -->
         <template v-slot:item.status="{ item }">
-          <v-icon :color="getColor(item)">{{ getIcon(item) }}</v-icon>
+          <v-list-item-avatar class="mr-1" :color="getColor(item)" size="25">
+            <v-icon small>
+              {{ getIcon(item) }}
+            </v-icon>
+          </v-list-item-avatar>
         </template>
         <template v-slot:item.configuration="{ item }">
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
@@ -167,7 +171,7 @@ export default {
       // else return 'green'
       // if (item.status) return 'green'
       // else return 'primary'
-      return item.status ? 'primary' : 'red'
+      return item.status ? 'green' : 'red'
     },
     getIcon(item) {
       // if (item.status === 'Warning') return '$mdi-alert'
@@ -175,7 +179,7 @@ export default {
       // else if (item.status === 'Not') return '$mdi-bell-circle'
       // else return '$mdi-check-circle-outline'
       if (item.status) return '$mdi-check-circle-outline'
-      else return '$mdi-lan-disconnect'
+      else return '$mdi-block-helper'
     },
     productView(item) {
       if (item.location_id && item.zone_id) {
