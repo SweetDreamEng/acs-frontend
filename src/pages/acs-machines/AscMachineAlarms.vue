@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-grow-1 flex-column mt-1">
+  <div class="flex-grow-1">
 
     <br>
 

@@ -38,7 +38,7 @@
 
           <br>
           
-          <v-tabs-items v-model="tabModel">
+          <v-tabs-items v-model="tabModel" class="overflow-visible">
             <v-tab-item>
               <v-row class="flex-grow-0" dense>
                 <v-col cols="12">

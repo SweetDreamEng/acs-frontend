@@ -140,4 +140,8 @@ export default {
   #picker2 .v-picker__title {
     display: none
   }
+
+  .v-autocomplete:not(.v-input--is-focused).v-select--chips input {
+    max-height: 25px !important
+  }
 </style>
