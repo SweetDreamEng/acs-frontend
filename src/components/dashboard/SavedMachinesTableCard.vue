@@ -164,7 +164,7 @@ export default {
     }),
     open(item) { },
     getColor (item) {
-      return item.status ? 'green lighten' : 'red'
+      return item.status ? 'green' : 'red'
     },
     getIcon(item) {
       if (item.status) return '$mdi-check-circle-outline'

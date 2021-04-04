@@ -24,7 +24,6 @@ import './filters/initials'
 import './filters/capitalize'
 import './filters/lowercase'
 import './filters/uppercase'
-import './filters/formatCurrency'
 import './filters/formatDate'
 import './filters/percentableLabel'
 

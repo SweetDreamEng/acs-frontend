@@ -9,6 +9,7 @@
     <template v-slot:activator>
       <v-btn
         v-model="fab"
+        :loading="buttonLoading"
         color="blue darken-2"
         dark
         fab
@@ -104,6 +105,9 @@ export default {
       left: false,
       transition: 'slide-y-reverse-transition'
     }
+  },
+  computed: {
+    ...mapState('auth', ['buttonLoading'])
   },
   methods: {
     ...mapActions({

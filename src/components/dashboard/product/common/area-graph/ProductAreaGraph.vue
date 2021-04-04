@@ -47,7 +47,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import areaGraphStore from './store'
-import TimeRangeChooser from '../../../TimeRangeChooser1'
+import TimeRangeChooser from '../../../TimeRangeChooser'
 export default {
   name: 'AreaGraph',
   components: {
