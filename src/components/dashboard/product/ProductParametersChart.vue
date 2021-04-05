@@ -90,7 +90,7 @@ export default {
               color: this.colors[i % 6]
             }
           },
-          decimalsInFloat: 2
+          decimalsInFloat: 3
         }
       })
     },
