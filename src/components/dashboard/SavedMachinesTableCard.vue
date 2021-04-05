@@ -63,7 +63,11 @@
 
         <!-- -->
         <template v-slot:item.status="{ item }">
-          <v-icon :color="getColor(item)">{{ getIcon(item) }}</v-icon>
+          <v-list-item-avatar class="mr-1" :color="getColor(item)" size="25">
+            <v-icon small>
+              {{ getIcon(item) }}
+            </v-icon>
+          </v-list-item-avatar>
         </template>
         <template v-slot:item.configuration="{ item }">
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
@@ -160,7 +164,7 @@ export default {
     }),
     open(item) { },
     getColor (item) {
-      return item.status ? 'primary' : 'red'
+      return item.status ? 'green' : 'red'
     },
     getIcon(item) {
       if (item.status) return '$mdi-check-circle-outline'

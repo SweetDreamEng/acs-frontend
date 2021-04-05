@@ -60,11 +60,18 @@
         </batch-blender-recipe>
       </v-col>
       <v-col v-if="parameters.includes(4)" cols="12">
-        <batch-blender-inventory
+        <batch-blender-inventory-hoppers
           :serial-number="serialNumber"
           @reload="getInventory({ serialNumber })"
         >
-        </batch-blender-inventory>
+        </batch-blender-inventory-hoppers>
+      </v-col>
+      <v-col v-if="parameters.includes(4)" cols="12">
+        <batch-blender-inventory-reports
+          :serial-number="serialNumber"
+          @reload="getInventory({ serialNumber })"
+        >
+        </batch-blender-inventory-reports>
       </v-col>
     </v-row>
   </div>
@@ -77,7 +84,8 @@ import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import Overview from '../../common/overview/ProductOverview'
 import BatchBlenderRecipe from './components/BatchBlenderRecipe'
-import BatchBlenderInventory from './components/BatchBlenderInventory'
+import BatchBlenderInventoryReports from './components/BatchBlenderInventoryReports'
+import BatchBlenderInventoryHoppers from './components/BatchBlenderInventoryHoppers'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -87,7 +95,8 @@ export default {
     AreaGraph,
     Overview,
     BatchBlenderRecipe,
-    BatchBlenderInventory
+    BatchBlenderInventoryReports,
+    BatchBlenderInventoryHoppers
   },
   props: {
     machineId: {

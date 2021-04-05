@@ -1,6 +1,5 @@
 import maps from './maps'
 import theme from './theme'
-import currencies from './currencies'
 import navigation from './navigation'
 
 export default {
@@ -15,9 +14,6 @@ export default {
 
   // theme configs
   theme,
-
-  // currencies configs
-  currencies,
 
   // navigation configs
   navigation
