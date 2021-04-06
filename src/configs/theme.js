@@ -46,7 +46,7 @@ export default {
     'acs-machine-running': '#00e396',
     'acs-machine-not-running': '#ff4560',
     'acs-system-steady': '#00e396',
-    'acs-system-not-stedy': '#ff4560',
+    'acs-system-not-steady': '#ff4560',
     'acs-stable': '#06d6a0',
     'acs-stable-waiting': '#ff4560',
     'acs-unstable': '#ff4560',
