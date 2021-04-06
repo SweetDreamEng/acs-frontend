@@ -3,6 +3,7 @@
     class="d-flex flex-column justify-space-between"
     height="100%"
     light
+    :loading="isAlarmsReportLoading"
   >
     <v-card-title class="mb-n4">
       Operational Efficiency (OEE)
@@ -22,7 +23,8 @@
         <v-btn
           text
           color="red"
-          @click="alarmReports=true"
+          :disabled="!alarmsReports.alarms"
+          @click="showAlarmReports"
         >
           Alarms reported
           <v-icon right>$mdi-bell</v-icon>
@@ -30,12 +32,14 @@
       </v-card-actions>
     </div>
     <v-dialog v-model="alarmReports" max-width="400">
-      <alarm-reports @close="alarmReports=false"></alarm-reports>
+      <alarm-reports :alarms-reports="alarmsReports.alarm_types" :active-alarms="activeAlarms" @close="alarmReports=false"></alarm-reports>
     </v-dialog>
   </v-card>
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex'
+
 import AlarmReports from './AlarmReports'
 export default {
   components: {
@@ -96,8 +100,23 @@ export default {
       alarmReports: false
     }
   },
+  computed: {
+    ...mapState('alarms', ['isAlarmsReportLoading', 'alarmsReports']),
+    activeAlarms() {
+      return this.alarmsReports.alarms ? this.alarmsReports.alarms.filter((alarm) => alarm.active) : []
+    }
+  },
   mounted() {
     this.showChart = true
+    this.getAlarmsReports()
+  },
+  methods: {
+    ...mapActions({
+      'getAlarmsReports': 'alarms/getAlarmsReports'
+    }),
+    showAlarmReports() {
+      this.alarmReports = true
+    }
   }
 }
 </script>

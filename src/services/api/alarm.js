@@ -77,5 +77,9 @@ export default {
   */
   getAlarmsAmountPerMachineByCompanyId(data) {
     return api.$post('/alarms/alarms-amount-per-machine-by-company-id', data)
+  },
+
+  getAlarmsReports() {
+    return api.$post('/alarms/alarms-reports')
   }
 }
