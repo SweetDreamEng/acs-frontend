@@ -11,6 +11,8 @@ const module = {
     alarmsAmountPerMachine: [],
     dateRange: {},
     selectedMachineName: {},
+    isAlarmsReportLoading: false,
+    alarmsReports: {},
     timeRageOptions: [
       {
         label: 'Last 30 minutes',
@@ -197,6 +199,19 @@ const module = {
       }
     },
 
+    async getAlarmsReports({ commit }) {
+      commit('SET_ALARMS_REPORTS_LOADING', true)
+      try {
+        const response = await alarmAPI.getAlarmsReports()
+
+        commit('SET_ALARMS_REPORTS', response)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_ALARMS_REPORTS_LOADING', false)
+      }
+    },
+
     setDateRange({ commit }, { type, dates }) {
       return commit('SET_DATE_RANGE', {
         type,
@@ -275,7 +290,15 @@ const module = {
       state.isLoading = false
     },
 
-    SET_ALARMS_PER_CUSTOMER_CONFIGURATION(state, types) { state.alarmsPerCustomerAndMachine = types }
+    SET_ALARMS_PER_CUSTOMER_CONFIGURATION(state, types) { state.alarmsPerCustomerAndMachine = types },
+
+    SET_ALARMS_REPORTS_LOADING(state, status) {
+      state.isAlarmsReportLoading = status
+    },
+
+    SET_ALARMS_REPORTS(state, data) {
+      state.alarmsReports = data
+    }
   },
 
   getters: {
