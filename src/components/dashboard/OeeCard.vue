@@ -26,7 +26,7 @@
           :disabled="!alarmsReports.alarms"
           @click="showAlarmReports"
         >
-          Alarms reported
+          {{ alarmsReports.alarms ? 'Alarms Reported' : 'No Alarms Reported' }}
           <v-icon right>$mdi-bell</v-icon>
         </v-btn>
       </v-card-actions>
