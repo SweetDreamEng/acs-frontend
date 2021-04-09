@@ -65,9 +65,15 @@ export default {
       alarmsDistribution: (state) => state.alarms.alarmsDistribution
     })
   },
-  mounted() {
-    this.getCustomerDevices()
-    this.getAlarmsByMachine()
+  async mounted() {
+    try {
+      await this.getAllDevices()
+      await this.getCompanies()
+    } catch (err) {
+      console.log(err)
+    }
+    
+    this.handleAlarmDistribution(this.devices[0].name)
   },
   methods: {
     ...mapActions({
