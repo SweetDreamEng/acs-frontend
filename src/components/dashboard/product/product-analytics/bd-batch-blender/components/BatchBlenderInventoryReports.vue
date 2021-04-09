@@ -12,7 +12,7 @@
           small
           class="ml-auto"
           :loading="togglingInventoryTrack"
-          :disabled="togglingInventoryTrack || !canViewInventory"
+          :disabled="togglingInventoryTrack"
           color="primary"
           @click="startClicked()"
         >
@@ -56,7 +56,6 @@
                     small
                     block
                     color="primary"
-                    :disabled="!canViewInventory"
                     @click="editMaterial(i)"
                   >
                     Add Material/Location
@@ -160,19 +159,14 @@ export default {
       locations: (state) => state.materials.materialLocations
     }),
     ...mapState('bdBlenderAnalytics', ['loadingInventories', 'togglingInventoryTrack', 'inventory', 'savingMaterial']),
-    ...mapGetters({
-      canViewInventory: 'auth/canViewInventory'
-    }),
     dialogText () {
       return `Feeder ${this.editedIndex + 1}`
     }
   },
   mounted() {
     this.getInventory({ serialNumber: this.serialNumber })
-    if (this.canViewInventory) {
-      this.getMaterials()
-      this.getMaterialLocations()
-    }
+    this.getMaterials()
+    this.getMaterialLocations()
   },
   methods: {
     ...mapActions({

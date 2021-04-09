@@ -60,10 +60,7 @@ export default {
     ...mapState({
       userRole: (state) => state.auth.user.role
     }),
-    ...mapState('bdBlenderAnalytics', ['loadingInventories', 'inventory']),
-    ...mapGetters({
-      canViewInventory: 'auth/canViewInventory'
-    })
+    ...mapState('bdBlenderAnalytics', ['loadingInventories', 'inventory'])
   },
   mounted() {
     this.getInventory({ serialNumber: this.serialNumber })

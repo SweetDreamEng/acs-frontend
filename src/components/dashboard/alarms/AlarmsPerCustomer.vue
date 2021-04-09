@@ -99,6 +99,9 @@ export default {
         },
         xaxis: {
           categories: this.alarmsPerCustomerAndMachine.map((a) => a.name),
+          labels: {
+            hideOverlappingLabels: false
+          },
           axisBorder: {
             show: false
           },
