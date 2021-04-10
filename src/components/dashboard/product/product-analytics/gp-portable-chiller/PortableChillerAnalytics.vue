@@ -107,7 +107,7 @@ export default {
             colors: ['#000']
           },
           formatter: (value, { seriesIndex, dataPointIndex, w }) => {
-            return value + 'ºC'
+            return value / 10 + 'ºC'
           }
         }
       }
