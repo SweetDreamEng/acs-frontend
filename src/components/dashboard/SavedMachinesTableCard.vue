@@ -131,7 +131,29 @@ export default {
         'Consumption',
         'Locations',
         'Zones'
-      ]
+      ],
+      deviceStatus: {
+        running: {
+          color: 'green',
+          text: 'Running',
+          icon: '$mdi-check-circle-outline'
+        },
+        routerNotConnected: {
+          color: 'yellow',
+          text: 'Router Not Connected',
+          icon: '$mdi-wifi-off'
+        },
+        shutOff: {
+          color: 'red',
+          text: 'Shut Off',
+          icon: '$mdi-block-helper'
+        },
+        plcNotConnected: {
+          color: 'orange',
+          text: 'PLC Not Connected',
+          icon: '$mdi-database-remove'
+        }
+      }
     }
   },
   computed: {
@@ -164,11 +186,10 @@ export default {
     }),
     open(item) { },
     getColor (item) {
-      return item.status ? 'green' : 'red'
+      return this.deviceStatus[item.status].color
     },
     getIcon(item) {
-      if (item.status) return '$mdi-check-circle-outline'
-      else return '$mdi-lan-disconnect'
+      return this.deviceStatus[item.status].icon
     },
     productView(item) {
       if (item.location_id && item.zone_id) {
