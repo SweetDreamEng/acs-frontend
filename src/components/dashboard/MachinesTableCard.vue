@@ -131,7 +131,29 @@ export default {
         'Consumption',
         'Locations',
         'Zones'
-      ]
+      ],
+      deviceStatus: {
+        running: {
+          color: 'green',
+          text: 'Running',
+          icon: '$mdi-check-circle-outline'
+        },
+        routerNotConnected: {
+          color: 'yellow',
+          text: 'Router Not Connected',
+          icon: '$mdi-wifi-off'
+        },
+        shutOff: {
+          color: 'red',
+          text: 'Shut Off',
+          icon: '$mdi-block-helper'
+        },
+        plcNotConnected: {
+          color: 'orange',
+          text: 'PLC Not Connected',
+          icon: '$mdi-database-remove'
+        }
+      }
     }
   },
   computed: {
@@ -165,21 +187,10 @@ export default {
     }),
     open(item) { },
     getColor (item) {
-      // if (item.status === 'Warning') return 'orange'
-      // else if (item.status === 'Alarm') return 'green'
-      // else if (item.status === 'Not') return 'red'
-      // else return 'green'
-      // if (item.status) return 'green'
-      // else return 'primary'
-      return item.status ? 'green' : 'red'
+      return this.deviceStatus[item.status].color
     },
     getIcon(item) {
-      // if (item.status === 'Warning') return '$mdi-alert'
-      // else if (item.status === 'Alarm') return '$mdi-check-circle-outline'
-      // else if (item.status === 'Not') return '$mdi-bell-circle'
-      // else return '$mdi-check-circle-outline'
-      if (item.status) return '$mdi-check-circle-outline'
-      else return '$mdi-block-helper'
+      return this.deviceStatus[item.status].icon
     },
     productView(item) {
       if (item.location_id && item.zone_id) {

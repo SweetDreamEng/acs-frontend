@@ -64,5 +64,7 @@ export {
   mdiCheckCircle,
   mdiStar,
   mdiBlockHelper,
-  mdiCog
+  mdiCog,
+  mdiDatabaseRemove,
+  mdiWifiOff
 } from '@mdi/js'
