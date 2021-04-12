@@ -128,6 +128,9 @@ export default {
         },
         legend: {
           show: true,
+          showForSingleSeries: true,
+          showForNullSeries: true,
+          showForZeroSeries: true,
           horizontalAlign: 'left',
           offsetX: 40,
           markers: {

@@ -22,13 +22,13 @@
         <v-card-subtitle>
           <div v-if="overview.teltonikaDevice">{{ overview.teltonikaDevice.name }}</div>
           <div>{{ overview.machineName }}</div>
-          <v-chip :color="overview.running ? 'green lighten-4' : 'red lighten-4'">
-            <v-list-item-avatar class="mr-1" :color="overview.running ? 'green' : 'red'">
+          <v-chip :color="`${getColor(overview.status)} lighten-4`">
+            <v-list-item-avatar class="mr-1" :color="getColor(overview.status)">
               <v-icon small>
-                {{ overview.running ? '$mdi-check-circle-outline' : '$mdi-block-helper' }}
+                {{ getIcon(overview.status) }}
               </v-icon>
             </v-list-item-avatar>
-            {{ overview.running ? 'Running' : 'Not Running' }}
+            {{ getText(overview.status) }}
           </v-chip>
         </v-card-subtitle>
         <v-img
@@ -109,7 +109,29 @@ export default {
   },
   data() {
     return {
-      requestDialog: false
+      requestDialog: false,
+      deviceStatus: {
+        running: {
+          color: 'green',
+          text: 'Running',
+          icon: '$mdi-check-circle-outline'
+        },
+        routerNotConnected: {
+          color: 'yellow',
+          text: 'Router Not Connected',
+          icon: '$mdi-wifi-off'
+        },
+        shutOff: {
+          color: 'red',
+          text: 'Shut Off',
+          icon: '$mdi-block-helper'
+        },
+        plcNotConnected: {
+          color: 'orange',
+          text: 'PLC Not Connected',
+          icon: '$mdi-database-remove'
+        }
+      }
     }
   },
   computed: {
@@ -181,6 +203,15 @@ export default {
       }
 
       this.requestService(data)
+    },
+    getIcon(item) {
+      return this.deviceStatus[item] ? this.deviceStatus[item].icon : ''
+    },
+    getText(item) {
+      return this.deviceStatus[item] ? this.deviceStatus[item].text : ''
+    },
+    getColor(item) {
+      return this.deviceStatus[item] ? this.deviceStatus[item].color : ''
     }
   }
 }
