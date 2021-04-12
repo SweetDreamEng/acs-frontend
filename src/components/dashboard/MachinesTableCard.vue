@@ -62,13 +62,26 @@
         </template>
 
         <!-- -->
+        
         <template v-slot:item.status="{ item }">
-          <v-list-item-avatar class="mr-1" :color="getColor(item)" size="25">
-            <v-icon small>
-              {{ getIcon(item) }}
-            </v-icon>
-          </v-list-item-avatar>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-avatar
+                class="mr-1"
+                :color="getColor(item)"
+                size="25"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon small>
+                  {{ getIcon(item) }}
+                </v-icon>
+              </v-list-item-avatar>
+            </template>
+            <span>{{ getText(item) }}</span>
+          </v-tooltip>
         </template>
+        
         <template v-slot:item.configuration="{ item }">
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
         </template>
@@ -186,11 +199,14 @@ export default {
       getDevicesAnalytics: 'devices/getDevicesAnalytics'
     }),
     open(item) { },
-    getColor (item) {
+    getColor(item) {
       return this.deviceStatus[item.status].color
     },
     getIcon(item) {
       return this.deviceStatus[item.status].icon
+    },
+    getText(item) {
+      return this.deviceStatus[item.status].text
     },
     productView(item) {
       if (item.location_id && item.zone_id) {
