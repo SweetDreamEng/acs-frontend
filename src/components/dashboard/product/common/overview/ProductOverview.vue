@@ -205,13 +205,13 @@ export default {
       this.requestService(data)
     },
     getIcon(item) {
-      return this.deviceStatus[item].icon
+      return this.deviceStatus[item] ? this.deviceStatus[item].icon : ''
     },
     getText(item) {
-      return this.deviceStatus[item].text
+      return this.deviceStatus[item] ? this.deviceStatus[item].text : ''
     },
     getColor(item) {
-      return this.deviceStatus[item].color
+      return this.deviceStatus[item] ? this.deviceStatus[item].color : ''
     }
   }
 }

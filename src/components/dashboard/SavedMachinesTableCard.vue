@@ -197,13 +197,13 @@ export default {
     }),
     open(item) { },
     getColor (item) {
-      return this.deviceStatus[item.status].color
+      return this.deviceStatus[item.status] ? this.deviceStatus[item.status].color : ''
     },
     getText(item) {
-      return this.deviceStatus[item.status].text
+      return this.deviceStatus[item.status] ? this.deviceStatus[item.status].text : ''
     },
     getIcon(item) {
-      return this.deviceStatus[item.status].icon
+      return this.deviceStatus[item.status] ? this.deviceStatus[item.status].icon : ''
     },
     productView(item) {
       if (item.location_id && item.zone_id) {
