@@ -12,21 +12,34 @@
         hide-default-footer
         @click:row="(item) => $router.push({ path: item.machine_id + '/' + item.serial_number, append: true })"
       >
+        <template v-slot:header.status="{ header }">
+          <v-icon color="primary">$mdi-chevron-double-right</v-icon>
+          {{ header.text }}
+        </template>
+        <template v-slot:item.status="{ item }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-avatar
+                class="mr-1"
+                :color="getColor(item)"
+                size="25"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon small>
+                  {{ getIcon(item) }}
+                </v-icon>
+              </v-list-item-avatar>
+            </template>
+            <span>{{ getText(item) }}</span>
+          </v-tooltip>
+        </template>
         <template v-slot:header.customer_assigned_name="{ header }">
           <v-icon small color="primary">$mdi-wrench</v-icon>
           {{ header.text }}
         </template>
         <template v-slot:item.customer_assigned_name="{ item }">
-          <span v-if="item.teltonika_configuration" class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
-          <v-badge
-            v-else
-            bordered
-            color="error"
-            icon="$mdi-lan-disconnect"
-            overlap
-          >
-            <span class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
-          </v-badge>
+          <span class="primary--text font-weight-bold">{{ item.customer_assigned_name }}</span>
         </template>
         <template v-slot:item.configuration="{ item }">
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
@@ -98,6 +111,7 @@ export default {
   data () {
     return {
       headers: [
+        { text: 'Running', value: 'status' },
         { text: 'Machines', value: 'customer_assigned_name' },
         { text: 'Machine Type', value: 'configuration' },
         { text: 'Utilization', align: 'center', value: 'utilization' },
@@ -106,6 +120,28 @@ export default {
         { text: 'Prod Rate', value: 'rate', align: 'center', width: '1%', class: 'prod-rate-header' },
         { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false, width: '1%' }
       ],
+      deviceStatus: {
+        running: {
+          color: 'green',
+          text: 'Running',
+          icon: '$mdi-check-circle-outline'
+        },
+        routerNotConnected: {
+          color: 'yellow',
+          text: 'Router Not Connected',
+          icon: '$mdi-wifi-off'
+        },
+        shutOff: {
+          color: 'red',
+          text: 'Shut Off',
+          icon: '$mdi-block-helper'
+        },
+        plcNotConnected: {
+          color: 'orange',
+          text: 'PLC Not Connected',
+          icon: '$mdi-database-remove'
+        }
+      },
       searchQuery: '',
       page: 1,
       itemsPerPage: 5,
@@ -266,6 +302,15 @@ export default {
           data: [distribution[2]]
         }
       ]
+    },
+    getColor(item) {
+      return this.deviceStatus[item.status] ? this.deviceStatus[item.status].color : ''
+    },
+    getIcon(item) {
+      return this.deviceStatus[item.status] ? this.deviceStatus[item.status].icon : ''
+    },
+    getText(item) {
+      return this.deviceStatus[item.status] ? this.deviceStatus[item.status].text : ''
     }
   }
 }
