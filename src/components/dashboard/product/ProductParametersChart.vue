@@ -74,7 +74,8 @@ export default {
           opposite: i % 2,
           labels: {
             style: {
-              colors: this.colors[i % 6]
+              colors: this.colors[i % 6],
+              fontWeight: 500
             }
           },
           axisTicks: {
@@ -87,7 +88,8 @@ export default {
           title: {
             text: t.name,
             style: {
-              color: this.colors[i % 6]
+              color: this.colors[i % 6],
+              fontWeight: 500
             }
           },
           decimalsInFloat: 3
@@ -106,6 +108,9 @@ export default {
         },
         dataLabels: {
           enabled: false
+        },
+        stroke: {
+          width: 2
         },
         xaxis: {
           type: 'datetime',
