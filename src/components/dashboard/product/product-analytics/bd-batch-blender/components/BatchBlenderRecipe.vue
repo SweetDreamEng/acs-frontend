@@ -103,9 +103,17 @@ export default {
       }
     },
     recipeSeries() {
-      if (this.mode === 0 || this.mode === 1)
-        return this.recipes
-      else if (this.mode === 2) {
+      if (this.mode === 0 || this.mode === 1) {
+        const filteredRecipes = []
+        
+        this.recipes.forEach((recipe) => {
+          if (recipe !== 0) {
+            filteredRecipes.push(recipe)
+          }
+        })
+
+        return filteredRecipes
+      } else if (this.mode === 2) {
         return [this.totalRegrid, 100 - this.totalRegrid]
       } else {
         return []
@@ -113,8 +121,18 @@ export default {
     },
     labels() {
       if (this.mode === 0 || this.mode === 1) {
-        return [0, 1, 2, 3, 4, 5, 6, 7].map((hop) => {
-          return `Hopper${hop + 1}: ${this.recipes[hop]}`
+        const filteredHopperIds = []
+
+        this.recipes.map((recipe, index) => {
+          if (recipe !== 0) {
+            filteredHopperIds.push(index)
+          }
+
+          return 0
+        })
+
+        return filteredHopperIds.map((id) => {
+          return `Hopper${id + 1}: ${this.recipes[id]}`
         })
       }
       else if (this.mode === 2) {
