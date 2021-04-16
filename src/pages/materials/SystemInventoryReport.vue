@@ -62,9 +62,9 @@ export default {
       try {
         const response = await this.exportSystemInventoryReport()
 
-        const filename = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + 'assets/app/reports/' + response.filename
+        const filepath = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + 'assets/app/reports/' + response.filename
 
-        this.$download(filename)
+        this.$download(filepath, response.filename)
       } catch (err) {
         console.log(err)
       }
