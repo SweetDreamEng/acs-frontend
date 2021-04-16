@@ -11,7 +11,7 @@
             :disabled="exportingReport"
             @click="_exportSystemInventoryReport()"
           >
-            Export
+            Save
           </v-btn>
         </div>
         <v-data-table
