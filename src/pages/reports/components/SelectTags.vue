@@ -50,11 +50,14 @@ export default {
     machineIds: {
       type: Array,
       default: () => []
+    },
+    selectedTags: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
     return {
-      selectedTags: {}
     }
   },
   computed: {

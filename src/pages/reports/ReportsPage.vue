@@ -57,6 +57,7 @@
         <v-stepper-content step="4">
           <select-tags
             :machine-ids="machineIds"
+            :selected-tags="selectedTags"
             @setMachineTags="handleSetMachineTags"
             @cancel="handeCancel"
           >
@@ -151,6 +152,7 @@ export default {
       }
     },
     handleSetReportMachines(data) {
+      this.selectedTags = {}
       this.machineIds = data
       this.stepNumber = 4
       try {
