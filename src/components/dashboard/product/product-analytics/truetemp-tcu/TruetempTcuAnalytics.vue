@@ -25,7 +25,7 @@
           :fetch="getActTgtTemperatures"
           :machine-id="machineId"
           :serial-number="serialNumber"
-          :categories="[['Actual Return', 'Temperature'], ['Actual Return', 'Temperature'], ['Target', 'Setpoint 1']]"
+          :categories="['Actual Return Temperature', 'Actual Return Temperature', 'Target Setpoint 1']"
           :options="temperatureOptions"
         >
         </bar-graph>

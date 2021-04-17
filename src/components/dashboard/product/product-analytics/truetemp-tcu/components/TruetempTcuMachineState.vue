@@ -16,10 +16,10 @@
         >
           <v-col cols="7">
             <span
-              class="font-weight-bold"
+              :class="`font-weight-bold ${machine.vent_status === 0 ? 'red--text' : 'primary--text'}`"
             >Pump Status</span>
           </v-col>
-          <v-col class="d-flex text-body-2">
+          <v-col :class="`d-flex text-body-2 ${machine.vent_status === 0 ? 'red--text' : 'primary--text'}`">
             <v-icon
               small
               left
@@ -62,10 +62,10 @@
         >
           <v-col cols="7">
             <span
-              class="font-weight-bold"
+              :class="`font-weight-bold ${machine.vent_status === 0 ? 'red--text' : 'primary--text'}`"
             >Vent Status</span>
           </v-col>
-          <v-col class="d-flex text-body-2">
+          <v-col :class="`d-flex text-body-2 ${machine.vent_status === 0 ? 'red--text' : 'primary--text'}`">
             <v-icon
               small
               left
