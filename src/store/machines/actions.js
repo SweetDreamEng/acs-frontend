@@ -206,7 +206,6 @@ const generateMachinesReport = async ({ commit, dispatch }, payload) => {
 
     commit('REPORT_GENERATE_COMPLETED', true)
     commit('SET_REPORT_NAME', response.filename)
-
   } catch (error) {
     throw new Error(error)
   } finally {

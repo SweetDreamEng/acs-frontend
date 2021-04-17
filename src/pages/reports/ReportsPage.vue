@@ -131,7 +131,8 @@ export default {
       getMachineTags: 'machines/getMachineTags',
       generateMachinesReport: 'machines/generateMachinesReport',
       initZonesTable: 'machines/initZonesTable',
-      getMachines: 'machines/getMachines'
+      getMachines: 'machines/getMachines',
+      getReportsList: 'machines/getReportsList'
     }),
     handleSetLocation(locationId) {
       this.locationId = locationId
@@ -171,13 +172,20 @@ export default {
       this.selectedTimeRange = data
       this.stepNumber = 6
     },
-    handleGenerateReport(data, title) {
+    async handleGenerateReport(data, title) {
       this.timeRange = data
-      this.generateMachinesReport({
-        machineTags: this.selectedTags,
-        timeRange: this.timeRange,
-        reportTitle: title
-      })
+      try {
+        await this.generateMachinesReport({
+          machineTags: this.selectedTags,
+          timeRange: this.timeRange,
+          reportTitle: title
+        })
+
+        this.getReportsList()
+      } catch (error) {
+        console.log(error)
+      }
+      
     },
     handeCancel() {
       this.stepNumber -= 1

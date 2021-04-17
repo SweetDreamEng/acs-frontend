@@ -243,8 +243,6 @@ const module = {
       try {
         const response = await api.exportSystemInventoryReport(payload)
 
-        dispatch('app/showSuccess', 'Request success', { root: true })
-
         return response
       } catch (error) {
         console.log(error)

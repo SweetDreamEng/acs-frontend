@@ -159,9 +159,12 @@ export default {
       }
     },
     handleExportReport() {
-      const filepath = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + 'assets/app/reports/' + this.reportName
+      const filepath = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + 'assets/app/reports/' + this.reportName + '.xlsx'
+
+      const filename = this.reportName + '.xlsx'
 
       this.$download(filepath, this.reportName)
+      this.generateCompleted = false
       this.$emit('handleResetCreating')
     },
     handleCancelExport() {
