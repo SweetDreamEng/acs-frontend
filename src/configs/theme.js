@@ -42,7 +42,7 @@ export default {
     warning: '#ffd166',
     // custom colors
     'acs-online': '#06d6a0',
-    'acs-offline': '#eeeeee',
+    'acs-offline': '#ff4560',
     'acs-machine-running': '#00e396',
     'acs-machine-not-running': '#ff4560',
     'acs-system-steady': '#00e396',

@@ -52,6 +52,18 @@
         </v-card-text>
       </template>
       <template v-else>
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline">
+              {{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}
+            </v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-avatar class="mt-3" color="grey lighten-3">
+            <v-btn icon :loading="isSaveMachineLoading" @click="saveMachine({ deviceId: overview.teltonikaDevice.id })">
+              <v-icon :color="isSavedMachine ? 'primary' : 'grey'">$mdi-star</v-icon>
+            </v-btn>
+          </v-list-item-avatar>
+        </v-list-item>
         <v-card-title>{{ overview.machineName }}</v-card-title>
         <v-img
           height="150"
@@ -61,6 +73,13 @@
         <v-card-text>
           <div class="ml-2">
             <div>PLC Software Version: <small>{{ overview.version }}</small></div>
+          </div>
+          <div class="mt-2">
+            <v-card-actions>
+              <v-btn color="primary" block @click="requestDialog = true">
+                Request Service
+              </v-btn>
+            </v-card-actions>
           </div>
         </v-card-text>
       </template>
