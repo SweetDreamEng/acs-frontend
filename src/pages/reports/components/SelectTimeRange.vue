@@ -47,6 +47,8 @@ import { mapState, mapActions } from 'vuex'
 
 import ReportTimeRangeChooser from './ReportTimeRangeChooser'
 
+const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+
 export default {
   components: {
     ReportTimeRangeChooser
@@ -59,7 +61,13 @@ export default {
   },
   data() {
     return {
-      timeRange: {}
+      timeRange: {
+        timeRangeOption: 'last24Hours',
+        dateFrom: dateTimeIsoString,
+        dateTo: dateTimeIsoString,
+        timeFrom: '00:00',
+        timeTo: '00:00'
+      }
     }
   },
   computed: {
@@ -79,7 +87,7 @@ export default {
       this.timeRange['dateTo'] = this.$refs.timeRange.locDateTo
       this.timeRange['timeFrom'] = this.$refs.timeRange.locTimeFrom
       this.timeRange['timeTo'] = this.$refs.timeRange.locTimeTo
-      
+
       this.$emit('setSelectedTimeRange', this.timeRange)
     }
   }
