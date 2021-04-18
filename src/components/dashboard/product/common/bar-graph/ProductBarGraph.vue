@@ -147,7 +147,7 @@ export default {
         },
         dataLabels: {
           enabled: true,
-          offsetX: 20,
+          offsetX: 25,
           textAnchor: 'start',
           style: {
             fontSize: '10px',
