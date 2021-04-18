@@ -76,7 +76,7 @@
           </div>
           <div class="mt-2">
             <v-card-actions>
-              <v-btn color="primary" block @click="requestDialog = true">
+              <v-btn color="primary" disabled block @click="requestDialog = true">
                 Request Service
               </v-btn>
             </v-card-actions>
