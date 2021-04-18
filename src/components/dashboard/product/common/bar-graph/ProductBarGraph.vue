@@ -85,8 +85,6 @@ export default {
           data: this.$store.state[this.namespace]['items']
         }
 
-        console.log('series', series)
-
         return [series]
         
       } else {
@@ -175,8 +173,6 @@ export default {
     },
     filteredCategories() {
       if (this.namespace === 'barGraph-id1') {
-        console.log('herhe')
-
         return this.categories
       } else {
         const category = []
