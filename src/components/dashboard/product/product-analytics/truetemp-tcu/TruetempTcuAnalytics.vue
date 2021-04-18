@@ -97,13 +97,6 @@ export default {
         fill: {
           colors: ['#1c526b', '#cf5717', '#b5880d']
         },
-        dataLabels: {
-          textAnchor: 'middle',
-          offsetY: -20,
-          style: {
-            colors: ['#000']
-          }
-        },
         xaxis: {
           categories: ['Actual Delivery Temperature', 'Actual Return Temperature', 'Target Setpoint 1'],
           labels: {

@@ -113,6 +113,8 @@ export default {
       }
     },
     graphUnit() {
+      console.log(this.$store.state[this.namespace])
+
       return this.$store.state[this.namespace]['unit'] ? this.$store.state[this.namespace]['unit'] : ''
     },
     chartOptions() {
