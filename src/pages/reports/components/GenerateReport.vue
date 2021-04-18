@@ -142,7 +142,7 @@ export default {
   },
   methods: {
     getMachineName(id) {
-      const machine =  this.reportMachines.find((machine) => machine.id === Number(id))
+      const machine =  this.reportMachines.find((machine) => machine.device_id === id)
 
       return machine ? machine.name : ''
     },

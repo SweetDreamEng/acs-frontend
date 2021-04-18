@@ -5,7 +5,7 @@
       <v-card-text class="mt-0">Select machine Tags you want to include in your report</v-card-text>
       <v-card-text>
         <v-row
-          v-for="(id, key) in machineIds"
+          v-for="(id, key) in deviceIds"
           :key="key"
           dense
           align="center"
@@ -47,7 +47,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   props: {
-    machineIds: {
+    deviceIds: {
       type: Array,
       default: () => []
     },
@@ -72,12 +72,12 @@ export default {
       
     }),
     getMachineName(id) {
-      const machine =  this.reportMachines.find((machine) => machine.id === id)
+      const machine =  this.reportMachines.find((machine) => machine.device_id === id)
 
       return machine ? machine.name : ''
     },
     getMachineTags(id) {
-      const machineInfo = this.reportMachineTags.find((item) => item.machine_id === id)
+      const machineInfo = this.reportMachineTags.find((item) => item.device_id === id)
       const tags = machineInfo ? [...machineInfo.tags] : []
       const importantTags = machineInfo ? [...machineInfo.tags].filter((t) => t.divided_by) : []
 
