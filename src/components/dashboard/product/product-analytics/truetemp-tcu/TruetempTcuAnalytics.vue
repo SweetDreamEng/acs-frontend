@@ -10,6 +10,19 @@
         >
         </overview>
       </v-col>
+      <v-col v-if="parameters.includes(3)" cols="12" md="4">
+        <area-graph
+          namespace="areaGraph-trueTemp-utilization"
+          title="Capacity Utilization"
+          :height="220"
+          unit="%"
+          :fetch="getUtilization"
+          :machine-id="machineId"
+          :serial-number="serialNumber"
+          :names="['Utilization']"
+        >
+        </area-graph>
+      </v-col>
       <v-col v-if="parameters.includes(1)" cols="12" md="4">
         <machine-state
           :loading="loadingMachineState"
@@ -25,7 +38,7 @@
           :fetch="getActTgtTemperatures"
           :machine-id="machineId"
           :serial-number="serialNumber"
-          :categories="['Actual Return Temperature', 'Actual Return Temperature', 'Target Setpoint 1']"
+          :categories="['Actual Delivery Temperature', 'Actual Return Temperature', 'Target Setpoint 1']"
           :options="temperatureOptions"
         >
         </bar-graph>
@@ -38,6 +51,7 @@ import api from './services/api'
 import commonApi from '../../common/fetches/api'
 
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
+import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import Overview from '../../common/overview/ProductOverview'
 import MachineState from './components/TruetempTcuMachineState'
 
@@ -46,7 +60,8 @@ export default {
   components: {
     Overview,
     MachineState,
-    BarGraph
+    BarGraph,
+    AreaGraph
   },
   props: {
     machineId: {
@@ -69,13 +84,18 @@ export default {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '20%',
+            columnWidth: '40%',
             dataLabels: {
               position: 'top'
             },
+            distributed: true,
             space: 0.25,
             endingShape: 'rounded'
           }
+        },
+        colors: ['#1c526b', '#cf5717', '#b5880d'],
+        fill: {
+          colors: ['#1c526b', '#cf5717', '#b5880d']
         },
         dataLabels: {
           textAnchor: 'middle',
@@ -83,9 +103,16 @@ export default {
           style: {
             colors: ['#000']
           }
+        },
+        xaxis: {
+          categories: ['Actual Delivery Temperature', 'Actual Return Temperature', 'Target Setpoint 1'],
+          labels: {
+            show: false
+          }
         }
       },
-      getActTgtTemperatures: api.getActTgtTemperatures
+      getActTgtTemperatures: api.getActTgtTemperatures,
+      getUtilization: commonApi.getUtilization
     }
   },
   computed: {
