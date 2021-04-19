@@ -45,7 +45,7 @@
           :fetch="getProcessOutTemperature"
           :machine-id="machineId"
           :serial-number="serialNumber"
-          :categories="[['Actual', 'Temperature'], ['Target', 'Temperature']]"
+          :categories="['Chiller set point', 'Chiller out temperature']"
           :options="temperatureOptions"
         >
         </bar-graph>
@@ -92,22 +92,23 @@ export default {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '20%',
+            columnWidth: '30%',
             dataLabels: {
               position: 'top'
             },
+            distributed: true,
             space: 0.25,
             endingShape: 'rounded'
           }
         },
-        dataLabels: {
-          textAnchor: 'middle',
-          offsetY: -20,
-          style: {
-            colors: ['#000']
-          },
-          formatter: (value, { seriesIndex, dataPointIndex, w }) => {
-            return value / 10 + 'ºC'
+        colors: ['#1c526b', '#cf5717'],
+        fill: {
+          colors: ['#1c526b', '#cf5717']
+        },
+        xaxis: {
+          categories: ['Chiller set point', 'Chiller out temperature'],
+          labels: {
+            show: false
           }
         }
       }
