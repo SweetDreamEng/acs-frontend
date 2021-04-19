@@ -119,4 +119,13 @@ export default [{
   meta: {
     customerAdmin: true
   }
-}]
+}
+// {
+//   path: '/reports',
+//   name: 'machines-report',
+//   component: () => import(/* webpackChunkName: "machines-report" */ '@/pages/reports/ReportsPage.vue'),
+//   meta: {
+//     customerAdmin: true
+//   }
+// }
+]
