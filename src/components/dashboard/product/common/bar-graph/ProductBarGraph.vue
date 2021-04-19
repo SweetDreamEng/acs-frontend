@@ -80,7 +80,7 @@ export default {
       return this.$store.state[this.namespace]['isLoading']
     },
     series() {
-      if (this.namespace === 'barGraph-id1') {
+      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1') {
         const series = {
           data: this.$store.state[this.namespace]['items']
         }
@@ -174,7 +174,7 @@ export default {
       }
     },
     filteredCategories() {
-      if (this.namespace === 'barGraph-id1') {
+      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1') {
         return this.categories
       } else {
         const category = []
