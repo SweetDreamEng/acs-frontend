@@ -78,6 +78,27 @@ export default [{
   name: 'utility-help',
   component: () => import(/* webpackChunkName: "utility-help" */ '@/pages/utility/HelpPage.vue')
 }, {
+  path: '/threshold/list',
+  name: 'threshold-list',
+  component: () => import(/* webpackChunkName: "threshold-list" */ '@/pages/threshold/ThresholdsPage.vue'),
+  meta: {
+    userAuth: true
+  }
+}, {
+  path: '/threshold/add',
+  name: 'threshold-add',
+  component: () => import(/* webpackChunkName: "threshold-add" */ '@/pages/threshold/AddThresholdPage.vue'),
+  meta: {
+    userAuth: true
+  }
+}, {
+  path: '/threshold/edit',
+  name: 'threshold-edit',
+  component: () => import(/* webpackChunkName: "threshold-edit" */ '@/pages/threshold/EditThresholdPage.vue'),
+  meta: {
+    userAuth: true
+  }
+}, {
   path: '/machine-mapping',
   name: 'machine-mapping',
   component: () => import(/* webpackChunkName: "machine-mapping" */ '@/pages/machine-mapping/MachineMappingPage.vue'),

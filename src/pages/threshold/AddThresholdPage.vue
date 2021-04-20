@@ -18,7 +18,7 @@
         </div>
         <div>
           <h2 class="my-3">Conditions</h2>
-          <div class="">Conditions define when you rule is triggered. Aggregation is optional - use it to cluster your data and trigger rules based on a time window.</div>
+          <div class="">Conditions define when your rule is triggered. Aggregation is optional - use it to cluster your data and trigger rules based on a time window.</div>
           <br>
           <v-form>
             <v-row
@@ -65,6 +65,7 @@
               </v-col>
             </v-row>
           </v-form>
+          <br>
           <v-btn
             @click="addFilter"
           >
