@@ -66,6 +66,7 @@
               </v-col>
             </v-row>
           </v-form>
+          <br>
           <v-btn
             @click="addFilter"
           >
