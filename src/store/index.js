@@ -16,6 +16,7 @@ import alarms from './alarms'
 import notes from './notes'
 import configurations from './configurations'
 import materials from './materials'
+import thresholds from './thresholds'
 
 import barGraph from '../components/dashboard/product/common/bar-graph/store'
 import overviewCard from '../components/dashboard/product/common/overview/store'
@@ -51,6 +52,7 @@ const store = new Vuex.Store({
     notes,
     configurations,
     materials,
+    thresholds,
 
     barGraph,
     overviewCard,
