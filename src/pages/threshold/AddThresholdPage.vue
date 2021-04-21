@@ -314,11 +314,13 @@ export default {
       addThreshold: 'thresholds/addThreshold'
     }),
     addFilter() {
-      this.filters.push({
-        telemetry: '',
-        operator: '',
-        value: null
-      })
+      if (this.filters.length < 3) {
+        this.filters.push({
+          telemetry: '',
+          operator: '',
+          value: null
+        })
+      }
     },
     handleLocationChange() {
       this.selectedZone = false

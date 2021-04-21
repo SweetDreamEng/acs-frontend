@@ -5,7 +5,9 @@ import getters from './getters'
 const state = {
   isLoadingMachineTags: false,
   machineTags: [],
-  loading: false
+  loading: false,
+  thresholds: [],
+  buttonLoading: false
 }
 
 export default {

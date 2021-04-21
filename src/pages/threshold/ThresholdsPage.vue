@@ -9,34 +9,34 @@
     <v-card>
       <v-data-table
         :headers="headers"
-        :items="items"
+        :items="thresholds"
+        :loading="loading"
         hide-default-footer
       >
+        <template v-slot:item.condition="{ item }">
+          {{ item.option }}
+        </template>
+
         <template v-slot:item.date="{ item }">
-          <div>{{ item.date | formatDate }}</div>
+          <div>{{ item.updated_at.split('T')[0] }}</div>
         </template>
 
         <template v-slot:item.companyMail="{ item }">
-          {{ item.companyMail.email }}
+          {{ item.email }}
         </template>
 
         <template v-slot:item.sms="{ item }">
-          {{ item.sms.sms }}
+          {{ item.sms }}
         </template>
 
         <template v-slot:item.status="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
-            <div v-if="item.status" class="warning--text">
+            <div class="warning--text">
               <v-btn
-                color="success"
-                @click="item.status = !item.status"
-              >Enabled</v-btn>
-            </div>
-            <div v-else class="success--text">
-              <v-btn
-                color="warning"
-                @click="item.status = !item.status"
-              >Disabled</v-btn>
+                :color="item.status ? 'success' : 'warning'"
+                :loading="buttonLoading"
+                @click="handleChangeStatus(item.id)"
+              >{{ item.status ? 'Enabled' : 'Disabled' }}</v-btn>
             </div>
           </div>
         </template>
@@ -63,6 +63,8 @@
 |
 | List thresholds
 */
+import { mapActions, mapState } from 'vuex'
+
 export default {
   components: {
   },
@@ -81,87 +83,32 @@ export default {
         { text: 'SMS', value: 'sms' },
         { text: 'Status', value: 'status' },
         { text: '', sortable: false, align: 'center', value: 'action' }
-      ],
-      items: [
-        {
-          id: '2837',
-          condition: 'Threshold condition name',
-          companyMail: {
-            email: 'johnsimon@blobhill.com',
-            status: true
-          },
-          date: '2020-05-10',
-          company: 'BlobHill',
-          sms: {
-            sms: '528-122-4377',
-            status: true
-          },
-          status: 'true'
-        },
-        {
-          id: '2838',
-          condition: 'Threshold condition name',
-          companyMail: {
-            email: 'cool@caprimooner.com',
-            status: false
-          },
-          date: '2020-05-11',
-          company: 'Caprimooner',
-          sms: {
-            sms: '212-122-4331',
-            status: false
-          },
-          status: 'true'
-        },
-        {
-          id: '2839',
-          condition: 'Threshold condition name',
-          companyMail: {
-            email: 'bush@catloveisstilllove.com',
-            status: false
-          },
-          date: '2020-05-11',
-          company: 'CatLovers',
-          sms: {
-            sms: '123-122-4313',
-            status: false
-          },
-          status: 'true'
-        },
-        {
-          id: '2840',
-          condition: 'Threshold condition name',
-          companyMail: {
-            email: 'ben@indiecoolers.com',
-            status: false
-          },
-          date: '2020-05-12',
-          company: 'IndieCoolers',
-          sms: {
-            sms: '987-122-4338',
-            status: true
-          },
-          status: 'true'
-        },
-        {
-          id: '2841',
-          condition: 'Threshold condition name',
-          companyMail: {
-            email: 'jack@candylooove.com',
-            status: true
-          },
-          date: '2020-05-13',
-          company: 'CandyLooove',
-          sms: {
-            sms: '295-122-4373',
-            status: true
-          },
-          status: 'true'
-        }
       ]
     }
   },
+  computed: {
+    ...mapState({
+      loading: (state) => state.thresholds.loading,
+      thresholds: (state) => state.thresholds.thresholds,
+      buttonLoading: (state) => state.thresholds.buttonLoading
+    })
+  },
+  mounted() {
+    this.getThresholds()
+  },
   methods: {
+    ...mapActions({
+      getThresholds: 'thresholds/getThresholds',
+      changeThresholdStatus: 'thresholds/changeThresholdStatus'
+    }),
+    async handleChangeStatus(id) {
+      try {
+        await this.changeThresholdStatus(id)
+      } catch (error) {
+        console.log(error)
+      }
+      this.getThresholds()
+    }
   }
 }
 </script>
