@@ -9,5 +9,11 @@ export default {
   },
   changeThresholdStatus(id) {
     return api.$post(`/thresholds/change-status/${id}`)
+  },
+  deleteThreshold(id) {
+    return api.$delete(`/thresholds/${id}`)
+  },
+  updateThreshold(data) {
+    return api.$put(`/thresholds/${data.id}`, data)
   }
 }

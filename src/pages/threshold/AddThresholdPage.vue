@@ -62,7 +62,7 @@
                   v-model="filter.telemetry"
                   :items="machineTags"
                   item-text="name"
-                  item-value="tag_id"
+                  item-value="id"
                   label="Select a telemetry"
                   :rules="conditionRules"
                   required
