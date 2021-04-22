@@ -180,7 +180,7 @@
             :loading="isAddingThreshold"
             @click="handleSubmit"
           >
-            Submit
+            Add Threshold
           </v-btn>
         </div>
       </v-card-text>
@@ -349,14 +349,33 @@ export default {
     resetFilters() {
       this.filters = this.initFilter
     },
-    handleSubmit() {
+    async handleSubmit() {
       if ((this.$refs.sms && this.$refs.sms.validate()) || (this.$refs.email && this.$refs.email.validate())) {
-        this.addThreshold({
+        await this.addThreshold({
           deviceId: this.selectedProduct,
           conditions: this.filters,
           smsForm: this.smsForm,
           emailForm: this.emailForm
         })
+
+        this.selectedLocation = ''
+        this.selectedZone = ''
+        this.selectedProduct = ''
+        this.filters = [{
+          telemetry: '',
+          operator: '',
+          value: null
+        }]
+        this.smsForm = {
+          name: null,
+          to: null,
+          note: null
+        }
+        this.emailForm = {
+          name: null,
+          to: null,
+          note: null
+        }
       }
     }
   }

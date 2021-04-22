@@ -326,9 +326,6 @@ export default {
             emailInfo: this.emailForm
           })
 
-          this.$refs.sms.resetValidation()
-          this.$refs.email.resetValidation()
-
           this.editDialog = false
 
           this.getThresholds()
