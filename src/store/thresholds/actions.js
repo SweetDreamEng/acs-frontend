@@ -19,7 +19,13 @@ const addThreshold = async({ commit, dispatch }, payload) => {
   try {
     const response = await thresholdAPI.addThreshold(payload)
 
-    dispatch('app/showSuccess', response.message, { root: true })
+    if (response.status === 'success') {
+      dispatch('app/showSuccess', response.message, { root: true })
+    } 
+
+    if (response.status === 'fail') {
+      dispatch('app/showError', response.message, { root: true })
+    }
 
   } catch (error) {
     throw new Error(error)
@@ -52,9 +58,42 @@ const changeThresholdStatus = async({ commit }, payload) => {
   }
 }
 
+const deleteThreshold = async({ commit, dispatch }, payload) => {
+  commit('SET_DELETE_LOADING', true)
+  try {
+    const response = await thresholdAPI.deleteThreshold(payload)
+
+    if (response.status) {
+      dispatch('app/showSuccess', response.message, { root: true })
+    } else {
+      dispatch('app/showError', response.message, { root: true })
+    }
+  } catch (error) {
+    throw new Error(error)
+  } finally {
+    commit('SET_DELETE_LOADING', false)
+  }
+}
+
+const updateThreshold = async({ commit, dispatch }, payload) => {
+  commit('SET_UPDATE_LOADING', true)
+  try {
+    const response = await thresholdAPI.updateThreshold(payload)
+
+    dispatch('app/showSuccess', response.message, { root: true })
+
+  } catch (error) {
+    throw new Error(error)
+  } finally {
+    commit('SET_UPDATE_LOADING', false)
+  }
+}
+
 export default {
   getMachineTags,
   addThreshold,
   getThresholds,
-  changeThresholdStatus
+  changeThresholdStatus,
+  deleteThreshold,
+  updateThreshold
 }
