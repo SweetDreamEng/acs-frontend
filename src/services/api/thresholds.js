@@ -4,6 +4,9 @@ export default {
   addThreshold(data) {
     return api.$post('/thresholds/add', data)
   },
+  getActiveThresholds() {
+    return api.$get('/thresholds/active')
+  },
   getThresholds() {
     return api.$get('/thresholds')
   },
@@ -15,5 +18,8 @@ export default {
   },
   updateThreshold(data) {
     return api.$put(`/thresholds/${data.id}`, data)
+  },
+  clearThresholds(data) {
+    return api.$post('/thresholds/clear', data)
   }
 }

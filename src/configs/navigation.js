@@ -43,8 +43,9 @@ export default {
       { icon: '$mdi-account-multiple', text: 'User Access', link: '/users' },
       { icon: '$mdi-speedometer', text: 'Threshold', regex: /^\/threshold/,
         items: [
-          { text: 'Thresholds', link: '/threshold/list' },
-          { text: 'Add Threshold', link: '/threshold/add' }
+          { text: 'Thresholds', exact: true, link: '/threshold/list' },
+          { text: 'Add Threshold', link: '/threshold/add' },
+          { text: 'Active Thresholds', link: '/threshold/active' }
         ]
       },
       { icon: '$mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },

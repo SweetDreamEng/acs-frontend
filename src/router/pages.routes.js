@@ -92,9 +92,9 @@ export default [{
     userAuth: true
   }
 }, {
-  path: '/threshold/edit',
-  name: 'threshold-edit',
-  component: () => import(/* webpackChunkName: "threshold-edit" */ '@/pages/threshold/EditThresholdPage.vue'),
+  path: '/threshold/active',
+  name: 'threshold-active',
+  component: () => import(/* webpackChunkName: "threshold-active" */ '@/pages/threshold/ActiveThresholdsPage.vue'),
   meta: {
     userAuth: true
   }
