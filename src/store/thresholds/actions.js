@@ -89,11 +89,39 @@ const updateThreshold = async({ commit, dispatch }, payload) => {
   }
 }
 
+const getActiveThresholds = async({ commit }) => {
+  commit('SET_LOADING', true)
+  try {
+    const response = await thresholdAPI.getActiveThresholds()
+
+    commit('SET_THRESHOLDS', response.conditions)
+  } catch (error) {
+    throw new Error(error)
+  } finally {
+    commit('SET_LOADING', false)
+  }
+}
+
+const clearThresholds = async({ commit, dispatch }, payload) => {
+  commit('SET_UPDATE_LOADING', true)
+  try {
+    const response = await thresholdAPI.clearThresholds(payload)
+
+    dispatch('app/showSuccess', response.message, { root: true })
+  } catch (error) {
+    throw new Error(error)
+  } finally {
+    commit('SET_UPDATE_LOADING', false)
+  }
+}
+
 export default {
   getMachineTags,
   addThreshold,
   getThresholds,
   changeThresholdStatus,
   deleteThreshold,
-  updateThreshold
+  updateThreshold,
+  getActiveThresholds,
+  clearThresholds
 }

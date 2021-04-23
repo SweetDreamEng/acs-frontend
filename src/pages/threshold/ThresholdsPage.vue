@@ -11,7 +11,6 @@
         :headers="headers"
         :items="thresholds"
         :loading="loading"
-        hide-default-footer
       >
         <template v-slot:item.condition="{ item }">
           {{ item.option }}
