@@ -78,9 +78,9 @@ export default [{
   name: 'utility-help',
   component: () => import(/* webpackChunkName: "utility-help" */ '@/pages/utility/HelpPage.vue')
 }, {
-  path: '/threshold/list',
-  name: 'threshold-list',
-  component: () => import(/* webpackChunkName: "threshold-list" */ '@/pages/threshold/ThresholdsPage.vue'),
+  path: '/threshold',
+  name: 'threshold',
+  component: () => import(/* webpackChunkName: "threshold-list" */ '@/pages/threshold/Threshold.vue'),
   meta: {
     userAuth: true
   }

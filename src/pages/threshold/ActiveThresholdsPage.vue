@@ -1,10 +1,5 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
-    <div class="d-flex align-center py-3">
-      <div>
-        <div class="text-h4">Active Thresholds</div>
-      </div>
-    </div>
     <v-card :disabled="loading">
       <v-row dense class="pa-2 align-center">
         <v-col cols="6" class="d-flex text-right align-center">
