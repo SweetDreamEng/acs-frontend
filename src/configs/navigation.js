@@ -41,13 +41,7 @@ export default {
       { icon: '$mdi-view-dashboard-outline', text: 'Machines', exact: true, link: '/dashboard/analytics' },
       { icon: '$mdi-near-me', text: 'Alarms', link: '/companies/alarms' },
       { icon: '$mdi-account-multiple', text: 'User Access', link: '/users' },
-      { icon: '$mdi-speedometer', text: 'Threshold', regex: /^\/threshold/,
-        items: [
-          { text: 'Thresholds', exact: true, link: '/threshold/list' },
-          { text: 'Add Threshold', link: '/threshold/add' },
-          { text: 'Active Thresholds', link: '/threshold/active' }
-        ]
-      },
+      { icon: '$mdi-speedometer', text: 'Threshold', regex: /^\/threshold/, link: '/threshold' },
       { icon: '$mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
       { icon: '$mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' },
       { icon: '$mdi-equal-box', text: 'Materials', regex: /^\/materials/,

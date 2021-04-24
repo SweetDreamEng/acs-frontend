@@ -1,11 +1,5 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
-    <div class="d-flex align-center py-3">
-      <div>
-        <div class="text-h4">Thresholds</div>
-        <!-- <v-breadcrumbs :items="breadcrumbs" class="pa-0 py-2"></v-breadcrumbs> -->
-      </div>
-    </div>
     <v-card :disabled="loading">
       <v-data-table
         :headers="headers"
@@ -326,6 +320,9 @@ export default {
           })
 
           this.editDialog = false
+
+          this.$refs.sms && this.$refs.sms.resetValidation()
+          this.$refs.email && this.$refs.email.resetValidation()
 
           this.getThresholds()
         } catch (error) {

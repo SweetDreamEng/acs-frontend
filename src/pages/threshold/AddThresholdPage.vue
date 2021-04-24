@@ -1,10 +1,5 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
-    <div class="d-flex align-center py-3">
-      <div>
-        <div class="text-h4">Threshold</div>
-      </div>
-    </div>
     <v-card>
       <v-card-text>
         <div>
@@ -376,6 +371,8 @@ export default {
           to: null,
           note: null
         }
+        this.$refs.sms && this.$refs.sms.resetValidation()
+        this.$refs.email && this.$refs.email.resetValidation()
       }
     }
   }
