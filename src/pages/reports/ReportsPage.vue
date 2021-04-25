@@ -87,7 +87,15 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
-
+    <v-alert
+      v-if="errorMessage !== ''"
+      dense
+      outlined
+      type="error"
+      class="text-left"
+    >
+      {{ errorMessage }}
+    </v-alert>
     <reports-list-page></reports-list-page>
   </div>
 </template>
@@ -124,7 +132,8 @@ export default {
       selectedTimeRange: {},
       timeRange: {},
       reportTitle: '',
-      stepNumber: 1
+      stepNumber: 1,
+      errorMessage: ''
     }
   },
   methods: {
@@ -180,6 +189,7 @@ export default {
     async handleGenerateReport(data, title) {
       this.timeRange = data
       try {
+        this.errorMessage = ''
         await this.generateMachinesReport({
           machineTags: this.selectedTags,
           timeRange: this.timeRange,
@@ -188,14 +198,19 @@ export default {
 
         this.getReportsList()
       } catch (error) {
+
+        this.errorMessage = 'Failed to export report. Try to choose less date period or less devices'
+
         console.log(error)
       }
-      
+
     },
     handeCancel() {
+      this.errorMessage = ''
       this.stepNumber -= 1
     },
     handleReset() {
+      this.errorMessage = ''
       this.creatingReport = false
       this.stepNumber = 1
     }
