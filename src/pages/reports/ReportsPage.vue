@@ -199,7 +199,7 @@ export default {
         this.getReportsList()
       } catch (error) {
 
-        this.errorMessage = 'Failed to export report. Try to choose less date period or less devices'
+        this.errorMessage = 'Failed to export report due to selected data size. Please choose a smaller timeframe and a smaller selection of devices and data points.'
 
         console.log(error)
       }
