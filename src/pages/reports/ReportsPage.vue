@@ -87,15 +87,6 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
-    <v-alert
-      v-if="errorMessage !== ''"
-      dense
-      outlined
-      type="error"
-      class="text-left"
-    >
-      {{ errorMessage }}
-    </v-alert>
     <reports-list-page></reports-list-page>
   </div>
 </template>
@@ -142,7 +133,10 @@ export default {
       generateMachinesReport: 'machines/generateMachinesReport',
       initZonesTable: 'machines/initZonesTable',
       getMachines: 'machines/getMachines',
-      getReportsList: 'machines/getReportsList'
+      getReportsList: 'machines/getReportsList',
+      showErrorMessage(dispatch, message) {
+        return dispatch('app/showError', message, { root: true })
+      }
     }),
     handleSetLocation(locationId) {
       this.locationId = locationId
@@ -201,6 +195,7 @@ export default {
 
         this.errorMessage = 'Failed to export report due to selected data size. Please choose a smaller timeframe and a smaller selection of devices and data points.'
 
+        this.$store.dispatch('app/showError', { message: 'Error: ', error: { message: this.errorMessage } }, { root: true })
         console.log(error)
       }
 
