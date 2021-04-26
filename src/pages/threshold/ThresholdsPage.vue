@@ -25,11 +25,12 @@
         <template v-slot:item.status="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <div class="warning--text">
-              <v-btn
-                :color="item.status ? 'success' : 'warning'"
-                :loading="buttonLoading"
+              <v-switch
+                v-model="item.status"
+                class="custom-red"
+                color="success"
                 @click="handleChangeStatus(item.id)"
-              >{{ item.status ? 'Enabled' : 'Disabled' }}</v-btn>
+              ></v-switch>
             </div>
           </div>
         </template>
@@ -195,7 +196,7 @@
 /*
 |---------------------------------------------------------------------
 | Threshold List Page Component
-| url: /threshold/list
+| url: /threshold
 |---------------------------------------------------------------------
 |
 | List thresholds
@@ -220,7 +221,7 @@ export default {
         { text: 'Email', value: 'companyMail' },
         { text: 'Date', value: 'date' },
         { text: 'SMS', value: 'sms' },
-        { text: 'Status', value: 'status' },
+        { text: 'Enabled', value: 'status' },
         { text: 'Actions', sortable: false, align: 'center', value: 'action' }
       ],
       isDeleteThreshold: false,
@@ -333,3 +334,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.custom-red .v-input__control .v-input__slot .v-input--selection-controls__input div {
+  color: red;
+}
+</style>

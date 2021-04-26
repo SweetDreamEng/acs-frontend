@@ -72,7 +72,7 @@ export default {
         { text: 'Id', sortable: false, value: 'id' },
         { text: 'Device name', sortable: false, value: 'device_name' },
         { text: 'Condition', sortable: false, value: 'option' },
-        { text: 'Last Triggered at', value: 'last_triggered_at' }
+        { text: 'Last Triggered at (EST)', value: 'last_triggered_at' }
       ],
       searchQuery: '',
       selectedThresholds: []
