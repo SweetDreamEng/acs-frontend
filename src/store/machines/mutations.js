@@ -79,6 +79,16 @@ export default {
     state.dataToolTimeRange = option.timeRange
     state.selectedTags = option.selectedTags
   },
+  SET_HOPPER_SETTING(state, option) {
+    state.hopperSettingTimeRange = option.timeRange
+    state.selectedHoppers = option.selectedTags
+  },
+  SET_HOPPER_WEIGHTS_LOADING(state, status) {
+    state.hopperWeightLoading = status
+  },
+  SET_HOPPER_WEIGHT_SERIES(state, series) {
+    state.hopperWeightSeries = series
+  },
   SET_REPORT_MACHINES(state, machines) {
     state.reportMachines = machines
   },

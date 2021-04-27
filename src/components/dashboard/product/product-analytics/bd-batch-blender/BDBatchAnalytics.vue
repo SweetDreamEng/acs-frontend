@@ -37,17 +37,15 @@
         </area-graph>
       </v-col>
       <v-col v-if="parameters.includes(3)" cols="12" md="8">
-        <bar-graph
-          namespace="barGraph-dbBlender-id1"
-          title="Target Weights vs Actual Weights"
-          :height="360"
-          :fetch="getWeight"
+        <batch-blender-weight
           :machine-id="machineId"
           :serial-number="serialNumber"
-          :names="['Actual', 'Target']"
-          :categories="['Hopper 1', 'Hopper 2', 'Hopper 3', 'Hopper 4', 'Hopper 5', 'Hopper 6', 'Hopper 7', 'Hopper 8']"
         >
-        </bar-graph>
+        </batch-blender-weight>
+      </v-col>
+      <v-col v-if="parameters.includes(3)" cols="12" md="4">
+        <batch-blender-standard-deviation>
+        </batch-blender-standard-deviation>
       </v-col>
       <v-col v-if="parameters.includes(5)" cols="12" md="4">
         <batch-blender-recipe
@@ -86,17 +84,20 @@ import Overview from '../../common/overview/ProductOverview'
 import BatchBlenderRecipe from './components/BatchBlenderRecipe'
 import BatchBlenderInventoryReports from './components/BatchBlenderInventoryReports'
 import BatchBlenderInventoryHoppers from './components/BatchBlenderInventoryHoppers'
+import BatchBlenderWeight from './components/BatchBlenderWeight'
+import BatchBlenderStandardDeviation from './components/BatchBlenderStandardDeviation'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
-    BarGraph,
     AreaGraph,
     Overview,
     BatchBlenderRecipe,
     BatchBlenderInventoryReports,
-    BatchBlenderInventoryHoppers
+    BatchBlenderInventoryHoppers,
+    BatchBlenderWeight,
+    BatchBlenderStandardDeviation
   },
   props: {
     machineId: {

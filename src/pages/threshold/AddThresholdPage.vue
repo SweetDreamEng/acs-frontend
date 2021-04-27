@@ -102,75 +102,9 @@
           </v-btn>
         </div>
         <div>
-          <h2 class="mt-4 mb-2">Actions</h2>
-          <div class="">Send an email when your rule is triggered. Emails will only be sent to users who have been added to this application and have signed-in at least once.</div>
-          <v-tabs v-model="tab" :show-arrows="false" background-color="transparent">
-            <v-tab to="#tabs-sms">SMS</v-tab>
-            <v-tab to="#tabs-email">Email</v-tab>
-          </v-tabs>
-
-          <v-tabs-items v-model="tab">
-            <v-tab-item value="tabs-sms">
-              <v-form
-                ref="sms"
-                v-model="smsValid"
-                lazy-validation
-              >
-                <v-text-field
-                  v-model="smsForm.name"
-                  label="Display name"
-                  :rules="nameRules"
-                  required
-                ></v-text-field>
-                <v-text-field
-                  v-model="smsForm.to"
-                  label="To"
-                  placeholder="123-456-7890"
-                  :rules="phoneRules"
-                  required
-                ></v-text-field>
-                <v-textarea
-                  v-model="smsForm.note"
-                  label="Note"
-                  required
-                  :rules="noteRules"
-                  placeholder="Add a note to include in the sms."
-                ></v-textarea>
-              </v-form>
-            </v-tab-item>
-
-            <v-tab-item value="tabs-email">
-              <v-form
-                ref="email"
-                v-model="emailValid"
-                lazy-validation
-              >
-                <v-text-field
-                  v-model="emailForm.name"
-                  label="Display name"
-                  :rules="nameRules"
-                  required
-                ></v-text-field>
-                <v-text-field
-                  v-model="emailForm.to"
-                  label="To"
-                  placeholder="ex: msft@microsoft.com"
-                  :rules="emailRules"
-                  required
-                ></v-text-field>
-                <v-textarea
-                  v-model="emailForm.note"
-                  label="Note"
-                  required
-                  :rules="noteRules"
-                  placeholder="Add a note to include in the email."
-                ></v-textarea>
-              </v-form>
-            </v-tab-item>
-          </v-tabs-items>
-
           <v-btn
-            color="primary mt-2"
+            color="primary"
+            class="mt-2"
             :disabled="!selectedLocation || !selectedZone || !selectedProduct || !conditionValid"
             :loading="isAddingThreshold"
             @click="handleSubmit"
@@ -226,37 +160,10 @@ export default {
         }
       ],
 
-      emailForm: {
-        name: null,
-        to: null,
-        note: null
-      },
-      smsForm: {
-        name: null,
-        to: null,
-        note: null
-      },
-
       tab: null,
 
-      emailValid: false,
-      smsValid: false,
       conditionValid: true,
 
-      nameRules: [
-        (v) => !!v || 'Name is required'
-      ],
-      emailRules: [
-        (v) => !!v || 'Email is required',
-        (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
-      ],
-      phoneRules: [
-        (v) => !!v || 'Phone number is required',
-        (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
-      ],
-      noteRules: [
-        (v) => !!v || 'Note is required'
-      ],
       conditionRules: [
         (v) => !!v || 'This field is required'
       ]
@@ -345,35 +252,19 @@ export default {
       this.filters = this.initFilter
     },
     async handleSubmit() {
-      if ((this.$refs.sms && this.$refs.sms.validate()) || (this.$refs.email && this.$refs.email.validate())) {
-        await this.addThreshold({
-          deviceId: this.selectedProduct,
-          conditions: this.filters,
-          smsForm: this.smsForm,
-          emailForm: this.emailForm
-        })
+      await this.addThreshold({
+        deviceId: this.selectedProduct,
+        conditions: this.filters
+      })
 
-        this.selectedLocation = ''
-        this.selectedZone = ''
-        this.selectedProduct = ''
-        this.filters = [{
-          telemetry: '',
-          operator: '',
-          value: null
-        }]
-        this.smsForm = {
-          name: null,
-          to: null,
-          note: null
-        }
-        this.emailForm = {
-          name: null,
-          to: null,
-          note: null
-        }
-        this.$refs.sms && this.$refs.sms.resetValidation()
-        this.$refs.email && this.$refs.email.resetValidation()
-      }
+      this.selectedLocation = ''
+      this.selectedZone = ''
+      this.selectedProduct = ''
+      this.filters = [{
+        telemetry: '',
+        operator: '',
+        value: null
+      }]
     }
   }
 }

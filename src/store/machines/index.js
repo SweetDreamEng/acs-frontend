@@ -99,7 +99,20 @@ const state = {
   dataToolTimeRange: {
     timeRangeOption: 'last24Hours',
     dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
-  }
+  },
+  hopperSettingTimeRange: {
+    timeRangeOption: 'last24Hours',
+    dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
+  },
+  selectedHoppers: [{
+    id: 0, name: 'Hopper 1'
+  }, {
+    id: 1, name: 'Hopper 2'
+  }, {
+    id: 2, name: 'Hopper 3'
+  }],
+  hopperWeightLoading: false,
+  hopperWeightSeries: []
 }
 
 export default {
