@@ -77,6 +77,10 @@ export default {
     tags: {
       type: Array,
       default: () => []
+    },
+    noAlarms: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -90,13 +94,18 @@ export default {
     ...mapState('machines', ['timeRageOptions']),
     ...mapGetters('machines', ['timeRangeFromTo']),
     groupedTags() {
-      const ts = this.tags
-      const importantTags = this.tags.filter((t) => t.divided_by)
+      if (this.noAlarms) {
+        return this.tags
+      } else {
+        const ts = this.tags
+        const importantTags = this.tags.filter((t) => t.divided_by)
       
-      ts.splice(importantTags.length, 0, { divider: true })
-      ts.splice(importantTags.length + 1, 0, { header: 'Alarms' })
+        ts.splice(importantTags.length, 0, { divider: true })
+        ts.splice(importantTags.length + 1, 0, { header: 'Alarms' })
 
-      return ts
+        return ts
+      }
+      
     }
   },
   watch: {

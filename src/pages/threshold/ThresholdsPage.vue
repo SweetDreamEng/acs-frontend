@@ -107,83 +107,16 @@
           </v-form>
         </v-card-text>
         <v-card-text>
-          <div>
-            <h2 class="mb-2">Actions</h2>
-            <v-tabs v-model="tab" :show-arrows="false" background-color="transparent">
-              <v-tab to="#tabs-sms">SMS</v-tab>
-              <v-tab to="#tabs-email">Email</v-tab>
-            </v-tabs>
-
-            <v-tabs-items v-model="tab">
-              <v-tab-item value="tabs-sms">
-                <v-form
-                  ref="sms"
-                  v-model="smsValid"
-                  lazy-validation
-                >
-                  <v-text-field
-                    v-model="smsForm.name"
-                    label="Display name"
-                    :rules="nameRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    v-model="smsForm.to"
-                    label="To"
-                    placeholder="123-456-7890"
-                    :rules="phoneRules"
-                    required
-                  ></v-text-field>
-                  <v-textarea
-                    v-model="smsForm.note"
-                    label="Note"
-                    required
-                    :rules="noteRules"
-                    placeholder="Add a note to include in the sms."
-                  ></v-textarea>
-                </v-form>
-              </v-tab-item>
-
-              <v-tab-item value="tabs-email">
-                <v-form
-                  ref="email"
-                  v-model="emailValid"
-                  lazy-validation
-                >
-                  <v-text-field
-                    v-model="emailForm.name"
-                    label="Display name"
-                    :rules="nameRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    v-model="emailForm.to"
-                    label="To"
-                    placeholder="ex: msft@microsoft.com"
-                    :rules="emailRules"
-                    required
-                  ></v-text-field>
-                  <v-textarea
-                    v-model="emailForm.note"
-                    label="Note"
-                    required
-                    :rules="noteRules"
-                    placeholder="Add a note to include in the email."
-                  ></v-textarea>
-                </v-form>
-              </v-tab-item>
-            </v-tabs-items>
-            <div>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="primary"
-                :disabled="!isEditFormValid"
-                :loading="isThresholdUpdating"
-                @click="handleSubmit"
-              >
-                Submit
-              </v-btn>
-            </div>
+          <div align="right">
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              :disabled="!isEditFormValid"
+              :loading="isThresholdUpdating"
+              @click="handleSubmit"
+            >
+              Submit
+            </v-btn>
           </div>
         </v-card-text>
       </v-card>
@@ -218,9 +151,7 @@ export default {
     return {
       headers: [
         { text: 'Condition', sortable: false, value: 'condition' },
-        { text: 'Email', value: 'companyMail' },
         { text: 'Date', value: 'date' },
-        { text: 'SMS', value: 'sms' },
         { text: 'Enabled', value: 'status' },
         { text: 'Actions', sortable: false, align: 'center', value: 'action' }
       ],
@@ -232,32 +163,6 @@ export default {
       isEditFormValid: false,
       operators,
       tab: null,
-      emailValid: false,
-      smsValid: false,
-      emailForm: {
-        name: null,
-        to: null,
-        note: null
-      },
-      smsForm: {
-        name: null,
-        to: null,
-        note: null
-      },
-      nameRules: [
-        (v) => !!v || 'Name is required'
-      ],
-      emailRules: [
-        (v) => !!v || 'Email is required',
-        (v) => /.+@.+\..+/.test(v) || 'Email must be valid'
-      ],
-      phoneRules: [
-        (v) => !!v || 'Phone number is required',
-        (v) => /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/.test(v) || 'Phone number must be valid'
-      ],
-      noteRules: [
-        (v) => !!v || 'Note is required'
-      ],
       conditionRules: [
         (v) => !!v || 'This field is required'
       ]
@@ -306,29 +211,20 @@ export default {
     handleEdit(item) {
       this.selectedThresholdId = item.id
       this.editedItem = item
-      this.smsForm = JSON.parse(item.sms_info)
-      this.emailForm = JSON.parse(item.email_info)
       this.editDialog = true
     },
     async handleSubmit() {
-      if (this.$refs.sms.validate() || this.$refs.email.validate()) {
-        try {
-          await this.updateThreshold({
-            id: this.selectedThresholdId,
-            condition: this.editedItem,
-            smsInfo: this.smsForm,
-            emailInfo: this.emailForm
-          })
+      try {
+        await this.updateThreshold({
+          id: this.selectedThresholdId,
+          condition: this.editedItem
+        })
 
-          this.editDialog = false
+        this.editDialog = false
 
-          this.$refs.sms && this.$refs.sms.resetValidation()
-          this.$refs.email && this.$refs.email.resetValidation()
-
-          this.getThresholds()
-        } catch (error) {
-          console.log(error)
-        }
+        this.getThresholds()
+      } catch (error) {
+        console.log(error)
       }
     }
   }

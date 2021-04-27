@@ -135,6 +135,10 @@ const updateDataToolOptions = async ({ commit }, payload) => {
   commit('SET_DATA_TOOL_OPTIONS', payload)
 }
 
+const updateHopperSetting = async ({ commit }, payload) => {
+  commit('SET_HOPPER_SETTING', payload)
+}
+
 const requestService = async ({ commit, dispatch }, payload) => {
   try {
     const response = await machineAPI.requestService(payload)
@@ -245,6 +249,19 @@ const deleteReport = async ({ commit, dispatch }, payload) => {
   }
 }
 
+const getBlenderWeights = async ({ commit, dispatch }, payload) => {
+  commit('SET_HOPPER_WEIGHTS_LOADING', true)
+  try {
+    const response = await machineAPI.getBlenderWeights(payload)
+
+    commit('SET_HOPPER_WEIGHT_SERIES', response.series)
+  } catch (error) {
+    throw new Error(error)
+  } finally {
+    commit('SET_HOPPER_WEIGHTS_LOADING', false)
+  }
+}
+
 export default {
   initAcsDashboard,
   initLocationsTable,
@@ -265,5 +282,7 @@ export default {
   getMachineTags,
   generateMachinesReport,
   getReportsList,
-  deleteReport
+  deleteReport,
+  getBlenderWeights,
+  updateHopperSetting
 }
