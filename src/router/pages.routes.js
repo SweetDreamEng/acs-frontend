@@ -78,6 +78,27 @@ export default [{
   name: 'utility-help',
   component: () => import(/* webpackChunkName: "utility-help" */ '@/pages/utility/HelpPage.vue')
 }, {
+  path: '/threshold',
+  name: 'threshold',
+  component: () => import(/* webpackChunkName: "threshold-list" */ '@/pages/threshold/Threshold.vue'),
+  meta: {
+    userAuth: true
+  }
+}, {
+  path: '/threshold/add',
+  name: 'threshold-add',
+  component: () => import(/* webpackChunkName: "threshold-add" */ '@/pages/threshold/AddThresholdPage.vue'),
+  meta: {
+    userAuth: true
+  }
+}, {
+  path: '/threshold/active',
+  name: 'threshold-active',
+  component: () => import(/* webpackChunkName: "threshold-active" */ '@/pages/threshold/ActiveThresholdsPage.vue'),
+  meta: {
+    userAuth: true
+  }
+}, {
   path: '/machine-mapping',
   name: 'machine-mapping',
   component: () => import(/* webpackChunkName: "machine-mapping" */ '@/pages/machine-mapping/MachineMappingPage.vue'),
@@ -119,13 +140,12 @@ export default [{
   meta: {
     customerAdmin: true
   }
+}, {
+  path: '/reports',
+  name: 'machines-report',
+  component: () => import(/* webpackChunkName: "machines-report" */ '@/pages/reports/ReportsPage.vue'),
+  meta: {
+    customerAdmin: true
+  }
 }
-// {
-//   path: '/reports',
-//   name: 'machines-report',
-//   component: () => import(/* webpackChunkName: "machines-report" */ '@/pages/reports/ReportsPage.vue'),
-//   meta: {
-//     customerAdmin: true
-//   }
-// }
 ]

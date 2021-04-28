@@ -51,5 +51,8 @@ export default {
   },
   deleteMachinesReport(id) {
     return api.$delete(`/machines/report/${id}`)
+  },
+  getBlenderWeights(data) {
+    return api.$post('/machines/get-blender-weights', data)
   }
 }

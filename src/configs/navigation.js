@@ -41,6 +41,7 @@ export default {
       { icon: '$mdi-view-dashboard-outline', text: 'Machines', exact: true, link: '/dashboard/analytics' },
       { icon: '$mdi-near-me', text: 'Alarms', link: '/companies/alarms' },
       { icon: '$mdi-account-multiple', text: 'User Access', link: '/users' },
+      { icon: '$mdi-speedometer', text: 'Threshold', regex: /^\/threshold/, link: '/threshold' },
       { icon: '$mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
       { icon: '$mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' },
       { icon: '$mdi-equal-box', text: 'Materials', regex: /^\/materials/,
@@ -50,7 +51,7 @@ export default {
           { text: 'System Inventory Report', link: '/materials/system-inventory-report' }
         ]
       },
-      // { icon: '$mdi-file-outline', text: 'Reports', link: '/reports' },
+      { icon: '$mdi-file-outline', text: 'Reports', link: '/reports' },
       { icon: '$mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],

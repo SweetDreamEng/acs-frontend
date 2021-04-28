@@ -156,7 +156,7 @@ export default {
       let ret = ''
 
       for (let i = 0; i < 8; i++) {
-        if (this.ezTypes[i] === 2) {
+        if (this.ezTypes[i] === 2 && this.recipes[i] !== 0) {
           ret += `Hopper ${i + 1} REG ${this.recipes[i]}%&nbsp;`
         }
       }
@@ -173,18 +173,21 @@ export default {
       }
 
       if (naturals.length === 1) {
-        ret = `Hopper ${naturals[0]} AUTO&nbsp;&nbsp;`
+        ret = `Hopper ${naturals[0] + 1} AUTO `
       } else {
         for (let i = 0; i < naturals.length; i++) {
-          ret += `Hopper ${naturals[i] + 1} NAT ${this.recipes[i]}%&nbsp;`
+          if (this.recipes[naturals[i]] !== 0) {
+            ret += `Hopper ${naturals[i] + 1} NAT ${this.recipes[i]}% `
+          }
         }
       }
 
       for (let i = 0; i < 8; i++) {
         if (this.ezTypes[i] === 1) {
-          ret += this.recipes[i] ? `Hopper ${i + 1} ADD ${this.recipes[i]}%` : ''
+          if (this.recipes[i] !== 0) {
+            ret += this.recipes[i] ? `Hopper ${i + 1} ADD ${this.recipes[i]}%` : ''
+          }
         }
-        ret += '&nbsp;;'
       }
 
       return ret
