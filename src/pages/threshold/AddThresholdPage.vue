@@ -50,7 +50,7 @@
             >
               <v-col
                 cols="12"
-                sm="4"
+                sm="3"
                 class="py-0"
               >
                 <v-select
@@ -66,7 +66,7 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="4"
+                sm="3"
                 class="py-0"
               >
                 <v-select
@@ -80,7 +80,7 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="4"
+                sm="3"
                 class="py-0"
               >
                 <v-text-field
@@ -89,6 +89,17 @@
                   label="Select or enter a value"
                   required
                   :rules="conditionRules"
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="3"
+                class="py-0"
+              >
+                <v-text-field
+                  v-model="filter.approachingValue"
+                  type="number"
+                  label="Enter a approaching value"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -156,7 +167,8 @@ export default {
         {
           telemetry: '',
           operator: '',
-          value: null
+          value: null,
+          approachingValue: null
         }
       ],
 
@@ -220,7 +232,8 @@ export default {
         this.filters.push({
           telemetry: '',
           operator: '',
-          value: null
+          value: null,
+          approachingValue: null
         })
       }
     },
@@ -241,15 +254,13 @@ export default {
         {
           telemetry: '',
           operator: '',
-          value: null
+          value: null,
+          approachingValue: null
         }
       ]
       this.getMachineTags({
         deviceIds: [this.selectedProduct]
       })
-    },
-    resetFilters() {
-      this.filters = this.initFilter
     },
     async handleSubmit() {
       await this.addThreshold({
@@ -263,7 +274,8 @@ export default {
       this.filters = [{
         telemetry: '',
         operator: '',
-        value: null
+        value: null,
+        approachingValue: null
       }]
     }
   }

@@ -9,6 +9,7 @@
       <v-tab to="#tabs-add">Add Threshold</v-tab>
       <v-tab to="#tabs-list">Thresholds List</v-tab>
       <v-tab to="#tabs-active">Active Thresholds</v-tab>
+      <v-tab to="#tabs-approaching">Approaching Thresholds</v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item value="tabs-add">
@@ -20,6 +21,9 @@
       <v-tab-item value="tabs-active">
         <active-threshold></active-threshold>
       </v-tab-item>
+      <v-tab-item value="tabs-approaching">
+        <approaching-thresholds></approaching-thresholds>
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
@@ -28,6 +32,7 @@
 import AddThreshold from './AddThresholdPage'
 import ThresholdsList from './ThresholdsPage'
 import ActiveThreshold from './ActiveThresholdsPage'
+import ApproachingThresholds from './ApproachingThresholdsPage'
 
 import { mapActions } from 'vuex'
 
@@ -35,7 +40,8 @@ export default {
   components: {
     AddThreshold,
     ThresholdsList,
-    ActiveThreshold
+    ActiveThreshold,
+    ApproachingThresholds
   },
   data() {
     return {
@@ -45,7 +51,8 @@ export default {
   methods: {
     ...mapActions({
       getThresholds: 'thresholds/getThresholds',
-      getActiveThresholds: 'thresholds/getActiveThresholds'
+      getActiveThresholds: 'thresholds/getActiveThresholds',
+      getApproachingThresholds: 'thresholds/getApproachingThresholds'
     }),
     handleTagChange(tab) {
       if (tab === 'tabs-list') {
@@ -53,6 +60,9 @@ export default {
       }
       if (tab === 'tabs-active') {
         this.getActiveThresholds()
+      }
+      if (tab === 'tabs-approaching') {
+        this.getApproachingThresholds()
       }
     }
   }

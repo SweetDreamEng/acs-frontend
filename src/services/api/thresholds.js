@@ -21,5 +21,11 @@ export default {
   },
   clearThresholds(data) {
     return api.$post('/thresholds/clear', data)
+  },
+  getApproachingThresholds() {
+    return api.$get('/thresholds/approaching')
+  },
+  clearApproachingThresholds(data) {
+    return api.$post('/thresholds/clear-approaching', data)
   }
 }
