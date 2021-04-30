@@ -49,6 +49,15 @@
       <v-card class="flex-grow-1 d-flex" :class="[isToolbarDetached ? 'pa-1 mt-3 mx-1' : 'pa-0 ma-0']" :flat="!isToolbarDetached">
         <div class="d-flex flex-grow-1 align-center">
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+          <div v-if="!drawer" class="toolbar-image">
+            <v-img
+              v-if="logoFile"
+              :src="logoFilePath"
+              contain
+              @error="onLogoImgError()"
+            > </v-img>
+            <v-img v-else-if="logoFile === false" contain :src="require('../assets/imgs/logo-aec.png')" > </v-img>
+          </div>
           <toolbar-user />
         </div>
       </v-card>
@@ -124,3 +133,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.toolbar-image {
+  width: 100px
+}
+</style>
