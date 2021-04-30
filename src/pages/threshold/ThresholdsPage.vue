@@ -104,6 +104,14 @@
               dense
             >
             </v-text-field>
+            <v-text-field
+              v-model="editedItem.approaching"
+              type="number"
+              label="Enter a approaching value"
+              outlined
+              dense
+            >
+            </v-text-field>
           </v-form>
         </v-card-text>
         <v-card-text>
@@ -151,6 +159,7 @@ export default {
     return {
       headers: [
         { text: 'Condition', sortable: false, value: 'condition' },
+        { text: 'Approaching Value', value: 'approaching' },
         { text: 'Date', value: 'date' },
         { text: 'Enabled', value: 'status' },
         { text: 'Actions', sortable: false, align: 'center', value: 'action' }
@@ -210,7 +219,7 @@ export default {
     },
     handleEdit(item) {
       this.selectedThresholdId = item.id
-      this.editedItem = item
+      this.editedItem = Object.assign({}, this.editedItem, item)
       this.editDialog = true
     },
     async handleSubmit() {

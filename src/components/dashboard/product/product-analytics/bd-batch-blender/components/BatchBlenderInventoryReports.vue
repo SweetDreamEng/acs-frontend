@@ -6,18 +6,8 @@
       :disabled="loadingInventories"
     >
       <v-card-title>
-        Inventories Reports
-        <v-btn
-          v-if="inventory.inventory_material"
-          small
-          class="ml-auto"
-          :loading="togglingInventoryTrack"
-          :disabled="togglingInventoryTrack"
-          color="primary"
-          @click="startClicked()"
-        >
-          {{ inventory.inventory_material.in_progress ? 'Stop System Inventory' : 'Start System Inventory' }}
-        </v-btn>
+        Material Assignment
+        <v-spacer></v-spacer>
         <v-btn
           icon
           small

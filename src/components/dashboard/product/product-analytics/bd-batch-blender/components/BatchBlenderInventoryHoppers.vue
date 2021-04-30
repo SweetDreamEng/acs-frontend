@@ -6,7 +6,10 @@
       :disabled="loadingInventories"
     >
       <v-card-title>
-        Hoppers Reports
+        Material Used
+        <v-card-title v-if="inventory.last_cleared_time !== ''" class="overline">
+          Since Cleared On {{ inventory.last_cleared_time }}
+        </v-card-title>
         <v-btn
           icon
           small
@@ -61,9 +64,6 @@ export default {
       userRole: (state) => state.auth.user.role
     }),
     ...mapState('bdBlenderAnalytics', ['loadingInventories', 'inventory'])
-  },
-  mounted() {
-    this.getInventory({ serialNumber: this.serialNumber })
   },
   methods: {
     ...mapActions({

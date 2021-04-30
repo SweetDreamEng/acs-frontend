@@ -48,6 +48,10 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      materials: (state) => state.materials.data
+    }),
+    ...mapState('bdBlenderAnalytics', ['inventory']),
     recipeMode() {
       switch (this.mode) {
       case 0:
@@ -132,7 +136,7 @@ export default {
         })
 
         return filteredHopperIds.map((id) => {
-          return `Hopper ${id + 1}: ${this.recipes[id]}`
+          return `Hopper ${id + 1}(${this.materialText(id)}): ${this.recipes[id]}`
         })
       }
       else if (this.mode === 2) {
@@ -191,6 +195,15 @@ export default {
       }
 
       return ret
+    }
+  },
+  methods: {
+    materialText(ind) {
+      let m = null
+
+      m = this.materials.find((material) => material.id === this.inventory.inventory_material.[`material${ind + 1}_id`])
+
+      return m ? m.material : '#'
     }
   }
 }

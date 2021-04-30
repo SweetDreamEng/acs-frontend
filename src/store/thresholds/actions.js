@@ -102,10 +102,36 @@ const getActiveThresholds = async({ commit }) => {
   }
 }
 
+const getApproachingThresholds = async({ commit }) => {
+  commit('SET_LOADING', true)
+  try {
+    const response = await thresholdAPI.getApproachingThresholds()
+
+    commit('SET_APPROACHING_THRESHOLDS', response.conditions)
+  } catch (error) {
+    throw new Error(error)
+  } finally {
+    commit('SET_LOADING', false)
+  }
+}
+
 const clearThresholds = async({ commit, dispatch }, payload) => {
   commit('SET_UPDATE_LOADING', true)
   try {
     const response = await thresholdAPI.clearThresholds(payload)
+
+    dispatch('app/showSuccess', response.message, { root: true })
+  } catch (error) {
+    throw new Error(error)
+  } finally {
+    commit('SET_UPDATE_LOADING', false)
+  }
+}
+
+const clearApproachingThresholds = async({ commit, dispatch }, payload) => {
+  commit('SET_UPDATE_LOADING', true)
+  try {
+    const response = await thresholdAPI.clearApproachingThresholds(payload)
 
     dispatch('app/showSuccess', response.message, { root: true })
   } catch (error) {
@@ -123,5 +149,7 @@ export default {
   deleteThreshold,
   updateThreshold,
   getActiveThresholds,
-  clearThresholds
+  clearThresholds,
+  getApproachingThresholds,
+  clearApproachingThresholds
 }
