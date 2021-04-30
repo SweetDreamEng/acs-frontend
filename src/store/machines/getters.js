@@ -41,7 +41,7 @@ const timeRangeDataToolLabel = (state) => (timeRange) => {
 
 const timeRangeFromTo = (state) => (timeRange) => {
   if (timeRange.timeRangeOption !== 'custom') {
-    const tr = state.timeRageOptions.find((item) => item.value === timeRange.timeRangeOption)
+    const tr = state.timeRangeOptions.find((item) => item.value === timeRange.timeRangeOption)
     const trOption = tr ? tr.value : 'last24Hours'
     const dateGetTime = new Date().getTime()
 
@@ -84,6 +84,11 @@ const timeRangeFromTo = (state) => (timeRange) => {
     case 'last7Days':
       return {
         from: dateGetTime - (7 * 24 * 60 * 60 * 1000),
+        to: dateGetTime
+      }
+    case 'last14Days':
+      return {
+        from: dateGetTime - (14 * 24 * 60 * 60 * 1000),
         to: dateGetTime
       }
     case 'last24Days':
