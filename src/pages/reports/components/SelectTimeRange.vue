@@ -82,13 +82,26 @@ export default {
       return machine ? machine.name : ''
     },
     handleNext() {
+      let customRange = 0
+
       this.timeRange['timeRangeOption'] = this.$refs.timeRange.locTimeRangeOption
       this.timeRange['dateFrom'] = this.$refs.timeRange.locDateFrom
       this.timeRange['dateTo'] = this.$refs.timeRange.locDateTo
       this.timeRange['timeFrom'] = this.$refs.timeRange.locTimeFrom
       this.timeRange['timeTo'] = this.$refs.timeRange.locTimeTo
 
-      this.$emit('setSelectedTimeRange', this.timeRange)
+      if (this.timeRange.timeRangeOption === 'custom') {
+        customRange = new Date(`${this.timeRange.dateTo} ${this.timeRange.timeTo}`).getTime() - new Date(`${this.timeRange.dateFrom} ${this.timeRange.timeFrom}`).getTime()
+        
+      }
+
+      if (customRange < 0) {
+        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Please check your time range selection' } }, { root: true })
+      } else if (customRange > 60 * 60 * 24 * 14 * 1000) {
+        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Time range selection is limited to two weeks' } }, { root: true })
+      } else {
+        this.$emit('setSelectedTimeRange', this.timeRange)
+      }
     }
   }
 }
