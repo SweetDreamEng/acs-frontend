@@ -155,7 +155,7 @@ export default {
   *     getSystemInventoryReport(payload)
   */
   getSystemInventoryReport(payload) {
-    return api.$post('/materials/system-inventory-report', payload)
+    return api.$post('/materials/system-inventory-report-data', payload)
   },
 
   /**
@@ -166,6 +166,6 @@ export default {
   *     exportSystemInventoryReport(payload)
   */
   exportSystemInventoryReport(payload) {
-    return api.$post('/materials/system-inventory-report/export', payload)
+    return api.$post('/materials/system-inventory-report-data/export', payload)
   }
 }
