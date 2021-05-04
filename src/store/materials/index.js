@@ -230,6 +230,11 @@ const module = {
 
         commit('SET_SYSTEM_INVENTORY_REPORTS', Object.keys(response.keyed_materials).map((r) => response.keyed_materials[r]))
       } catch (error) {
+        dispatch('app/showError', {
+          message: 'Failed: ',
+          error: { message: error }
+        }, { root: true })
+
         console.log(error)
         throw error
       } finally {
