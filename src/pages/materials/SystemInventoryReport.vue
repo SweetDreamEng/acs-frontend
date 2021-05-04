@@ -23,7 +23,7 @@
 
         <v-stepper-content step="2">
           <select-time-range
-            :locationId="locationId"
+            :location-id="locationId"
             @setSelectedTimeRange="handleSetTimeRange"
             @cancel="handeCancel"
           >
@@ -32,7 +32,7 @@
 
         <v-stepper-content step="3">
           <generate-report
-            :locationId="locationId"
+            :location-id="locationId"
             :selected-time-range="selectedTimeRange"
             @generateReport="handleGenerateReport"
             @search="handleSearch"
@@ -139,7 +139,7 @@ export default {
           timeRange: this.timeRange
         })
       } catch (error) {
-         console.log('error:', error);
+        console.log('error:', error)
       }
     },
     handeCancel() {
