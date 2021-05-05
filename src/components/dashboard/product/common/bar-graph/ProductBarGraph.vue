@@ -80,7 +80,7 @@ export default {
       return this.$store.state[this.namespace]['isLoading']
     },
     series() {
-      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1') {
+      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1' || this.namespace === 'barGraph-t50-id1') {
         const series = {
           data: this.$store.state[this.namespace]['items']
         }
@@ -169,7 +169,7 @@ export default {
             colors: ['#000']
           },
           formatter: (value, { seriesIndex, dataPointIndex, w }) => {
-            return `${value} ${this.graphUnit}`
+            return this.namespace === 'barGraph-t50-id1' ? `${value.toFixed(3)} ${this.graphUnit}` : `${value} ${this.graphUnit}`
           }
         },
         xaxis: {
@@ -189,7 +189,7 @@ export default {
       }
     },
     filteredCategories() {
-      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1') {
+      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1' || this.namespace === 'barGraph-t50-id1') {
         return this.categories
       } else if (this.namespace === 'barGraph-ngxDryer-id1') {
         const hopperCategories = []
