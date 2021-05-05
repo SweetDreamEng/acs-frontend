@@ -7,6 +7,7 @@ const state = {
   machineTags: [],
   loading: false,
   thresholds: [],
+  approachingThresholds: [],
   buttonLoading: false,
   isThresholdDeleting: false,
   isThresholdUpdating: false

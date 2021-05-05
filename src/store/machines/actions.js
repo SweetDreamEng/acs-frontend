@@ -238,7 +238,7 @@ const deleteReport = async ({ commit, dispatch }, payload) => {
     if (response.status) {
       dispatch('app/showSuccess', response.message, { root: true })
     } else {
-      dispatch('app/showError', response.message, { root: true })
+      this.$store.dispatch('app/showError', { message: 'Error: ', error: { message: response.message } }, { root: true })
     }
     
     commit('SET_REPORT_LIST', response.reports)
