@@ -60,7 +60,7 @@
           :options="tempOptions"
           :machine-id="machineId"
           :serial-number="serialNumber"
-          :categories="[['Bearing', 'Temp 1'], ['Bearing', 'Temp 2']]"
+          :categories="['Bearing Temp 1', 'Bearing Temp 2']"
         >
         </bar-graph>
       </v-col>
@@ -115,14 +115,35 @@ export default {
       tempOptions: {
         plotOptions: {
           bar: {
-            horizontal: true,
-            barHeight: '30%',
+            horizontal: false,
+            columnWidth: '30%',
             dataLabels: {
               position: 'top'
             },
+            distributed: true,
+            space: 0.25,
             endingShape: 'rounded'
           }
-        }
+        },
+        colors: ['#1c526b', '#cf5717'],
+        fill: {
+          colors: ['#1c526b', '#cf5717']
+        },
+        xaxis: {
+          categories: ['Bearing Temp 1', 'Bearing Temp 2'],
+          labels: {
+            show: false
+          }
+        },
+        yaxis: [
+          {
+            labels: {
+              formatter: function(val) {
+                return val.toFixed(2)
+              }
+            }
+          }
+        ]
       }
     }
   },
