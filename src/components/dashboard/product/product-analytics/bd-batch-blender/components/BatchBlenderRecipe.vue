@@ -201,7 +201,7 @@ export default {
     materialText(ind) {
       let m = null
 
-      m = this.materials.find((material) => material.id === this.inventory.inventory_material.[`material${ind + 1}_id`])
+      m = this.materials.find((material) => material.id === this.inventory.inventory_material[`material${ind + 1}_id`])
 
       return m ? m.material : '#'
     }

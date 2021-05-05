@@ -87,6 +87,23 @@ export default {
 
         return [series]
         
+      } else if (this.namespace === 'barGraph-ngxDryer-id1') {
+        const hopperCategories = []
+
+        for (let i = 0; i < this.$store.state[this.namespace]['hopperCount']; i ++) {
+          hopperCategories.push(`Hopper ${i + 1}`)
+        }
+        const tempSeries = this.names.map((name, index) => {
+          return {
+            name,
+            data: hopperCategories.map((category, id) => {
+              return this.$store.state[this.namespace]['items'][index] ? 
+                this.$store.state[this.namespace]['items'][index][Number(category.split(' ')[1]) - 1] : []
+            })
+          }
+        })
+
+        return tempSeries
       } else {
         const arr = [[], []]
 
@@ -113,8 +130,6 @@ export default {
       }
     },
     graphUnit() {
-      console.log(this.$store.state[this.namespace])
-
       return this.$store.state[this.namespace]['unit'] ? this.$store.state[this.namespace]['unit'] : ''
     },
     chartOptions() {
@@ -176,6 +191,14 @@ export default {
     filteredCategories() {
       if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1') {
         return this.categories
+      } else if (this.namespace === 'barGraph-ngxDryer-id1') {
+        const hopperCategories = []
+
+        for (let i = 0; i < this.$store.state[this.namespace]['hopperCount']; i ++) {
+          hopperCategories.push(`Hopper ${i + 1}`)
+        }
+
+        return hopperCategories
       } else {
         const category = []
 
