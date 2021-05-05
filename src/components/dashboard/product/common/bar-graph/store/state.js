@@ -1,5 +1,6 @@
 export default () => ({
   items: [],
   unit: '',
-  isLoading: false
+  isLoading: false,
+  hopperCount: 0
 })
