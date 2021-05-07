@@ -54,5 +54,8 @@ export default {
   },
   getBlenderWeights(data) {
     return api.$post('/machines/get-blender-weights', data)
+  },
+  getAlarmHistory(data) {
+    return api.$post('/machines/get-alarm-history', data)
   }
 }

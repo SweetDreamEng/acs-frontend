@@ -43,6 +43,10 @@ const state = {
 
   loadingMachinesTable: false,
 
+  // Alarm history
+  alarmHistoryLoading: false,
+  alarmHistory: [],
+
   timeRageOptions: [
     {
       label: 'Last 30 minutes',
