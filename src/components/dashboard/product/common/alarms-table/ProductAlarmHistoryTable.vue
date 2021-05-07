@@ -1,5 +1,8 @@
 <template>
-  <v-card>
+  <v-card
+    :loading="alarmHistoryLoading"
+    :disabled="alarmHistoryLoading"
+  >
     <v-card-title color="primary">
       Alarms History
       <v-spacer></v-spacer>
@@ -99,7 +102,9 @@ export default {
   },
   computed: {
     ...mapState({
-      alarmHistory: (state) => state.machines.alarmHistory
+      alarmHistory: (state) => state.machines.alarmHistory,
+      alarmHistoryLoading: (state) => state.machines.alarmHistoryLoading
+
     }),
     ...mapGetters('machines', ['timeRangeFromTo']),
     getTimeRange() {
@@ -165,6 +170,8 @@ export default {
           from,
           to
         })
+
+        this.showTimeRangeChooser = false
       }
     }
   }
