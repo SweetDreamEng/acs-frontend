@@ -74,5 +74,6 @@ export {
   mdiPrinter,
   mdiTrashCanOutline,
   mdiStandardDefinition,
-  mdiContrast
+  mdiContrast,
+  mdiInformation
 } from '@mdi/js'
