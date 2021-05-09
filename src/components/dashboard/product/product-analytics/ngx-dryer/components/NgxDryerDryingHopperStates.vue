@@ -13,6 +13,7 @@
         :style="`color: ${textColor(dryingHoppers[`hopper${num}`])}`"
       >
         <v-row
+          v-if="dryingHoppers[`hopper${num}`]"
           align="center"
           no-gutters
         >
