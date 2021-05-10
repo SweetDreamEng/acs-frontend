@@ -142,7 +142,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import commonApi from '../../components/dashboard/product/common/fetches/api'
-import AlarmsTable from '../../components/dashboard/product/common/alarms-table/ProductAlarmsTable'
+import AlarmsTable from '../../components/dashboard/product/common/alarms-table/ProductAlarms'
 
 // import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'

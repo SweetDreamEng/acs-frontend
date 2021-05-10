@@ -136,6 +136,6 @@ export default {
 
 <style>
 .toolbar-image {
-  width: 100px
+  width: 150px
 }
 </style>

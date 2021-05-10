@@ -262,6 +262,19 @@ const getBlenderWeights = async ({ commit, dispatch }, payload) => {
   }
 }
 
+const getAlarmHistory = async ({ commit }, payload) => {
+  commit('SET_ALARM_HISTORY_LOADING', true)
+  try {
+    const response = await machineAPI.getAlarmHistory(payload)
+
+    commit('SET_ALARM_HISTORY', response.alarms)
+  } catch (error) {
+    throw new Error(error)
+  } finally {
+    commit('SET_ALARM_HISTORY_LOADING', false)
+  }
+}
+
 export default {
   initAcsDashboard,
   initLocationsTable,
@@ -284,5 +297,6 @@ export default {
   getReportsList,
   deleteReport,
   getBlenderWeights,
-  updateHopperSetting
+  updateHopperSetting,
+  getAlarmHistory
 }

@@ -109,5 +109,11 @@ export default {
   },
   SET_REPORT_LIST(state, data) {
     state.reportsList = data
+  },
+  SET_ALARM_HISTORY_LOADING(state, status) {
+    state.alarmHistoryLoading = status
+  },
+  SET_ALARM_HISTORY(state, data) {
+    state.alarmHistory = data
   }
 }
