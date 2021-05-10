@@ -17,7 +17,7 @@
             <v-list-item-title v-text="alarm.machine_name"></v-list-item-title>
   
             <v-list-item-subtitle class="text--primary" v-text="alarm.machine_info ? alarm.machine_info.name : ''"></v-list-item-subtitle>
-            <v-list-item-subtitle v-text="alarm.alarm_name"></v-list-item-subtitle>
+            <v-list-item-subtitle class="red--text" v-text="alarm.alarm_name"></v-list-item-subtitle>
           </v-list-item-content>
   
           <v-list-item-action>
