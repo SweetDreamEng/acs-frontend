@@ -44,7 +44,7 @@ const module = {
         dispatch('app/showSuccess', response.data, { root: true })
         if (rootState.auth.user.role === 'acs_admin')
           router.push({
-            name: 'acs-users'
+            name: '/acs-admin/users'
           })
         else if (rootState.auth.user.role === 'customer_admin')
           router.push({
@@ -71,11 +71,11 @@ const module = {
         dispatch('app/showSuccess', response.data, { root: true })
         if (rootState.auth.user.role === 'acs_admin')
           router.push({
-            name: 'acs-users-list'
+            name: '/acs-admin/users'
           })
         else if (rootState.auth.user.role === 'customer_admin')
           router.push({
-            name: 'users-list'
+            name: 'users'
           })
       } catch (error) {
         console.log(error)
