@@ -45,5 +45,17 @@ export default {
   */
   updateUserAccount(data) {
     return api.put(`/users/${data.id}`, data)
+  },
+
+  /**
+  * Delete a user
+  *
+  * @param {Object} user object
+  * @example
+  *
+  *     updateUserAccount(user)
+  */
+  deleteUser(data) {
+    return api.$post('/users/delete', data)
   }
 }
