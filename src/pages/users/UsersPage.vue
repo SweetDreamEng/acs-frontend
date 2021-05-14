@@ -100,7 +100,12 @@
 
         <template v-slot:item.action="{ item }">
           <div v-if="canCreateCustomerUser || canCreateAcsUser" class="actions">
-            <v-btn icon :to="`edit/${item.id}`" :append="true">
+            <v-btn
+              icon
+              :to="`edit/${item.id}`"
+              :append="true"
+              :disabled="canEditCustomerUser(item)"
+            >
               <v-icon small>$mdi-pencil</v-icon>
             </v-btn>
           </div>
@@ -143,6 +148,7 @@ export default {
         { text: 'Id', align: 'left', value: 'id' },
         { text: 'Email', value: 'email' },
         { text: 'Name', align: 'left', value: 'name' },
+        { text: 'Company', value: 'company_name' },
         { text: 'Role', value: 'role' },
         { text: 'Created', value: 'created_at' },
         { text: '', sortable: false, align: 'right', value: 'action' }
@@ -180,6 +186,13 @@ export default {
       else if (role.key === 'customer_manager') return '#4CAF50'
       else if (role.key === 'acs_manager') return '#4CAF50'
       else return '#F79803'
+    },
+    canEditCustomerUser(item) {
+      if (this.isAcsUser) {
+        return ['customer_admin', 'customer_manager', 'customer_operator'].includes(item.role.key) ? true : false
+      } else {
+        return false
+      }
     }
   }
 }

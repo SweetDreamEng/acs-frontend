@@ -44,11 +44,11 @@ const module = {
         dispatch('app/showSuccess', response.data, { root: true })
         if (rootState.auth.user.role === 'acs_admin')
           router.push({
-            name: '/acs-admin/users'
+            name: 'acs-users-list'
           })
         else if (rootState.auth.user.role === 'customer_admin')
           router.push({
-            name: 'users'
+            name: 'users-list'
           })
       } catch (error) {
         if (error.response.status === 422) {
@@ -71,11 +71,11 @@ const module = {
         dispatch('app/showSuccess', response.data, { root: true })
         if (rootState.auth.user.role === 'acs_admin')
           router.push({
-            name: '/acs-admin/users'
+            name: 'acs-users-list'
           })
         else if (rootState.auth.user.role === 'customer_admin')
           router.push({
-            name: 'users'
+            name: 'users-list'
           })
       } catch (error) {
         console.log(error)
@@ -87,6 +87,27 @@ const module = {
             'error': errors[0]
           })
         }
+      } finally {
+        commit('BUTTON_CLEAR')
+      }
+    },
+    async deleteUser({ commit, rootState, dispatch }, data) {
+      commit('BUTTON_LOAD')
+
+      try {
+        const response = await userAPI.deleteUser(data)
+
+        dispatch('app/showSuccess', response, { root: true })
+        if (rootState.auth.user.role === 'acs_admin')
+          router.push({
+            name: 'acs-users-list'
+          })
+        else if (rootState.auth.user.role === 'customer_admin')
+          router.push({
+            name: 'users-list'
+          })
+      } catch (error) {
+        console.log(error)
       } finally {
         commit('BUTTON_CLEAR')
       }

@@ -125,7 +125,9 @@
               <div class="subtitle mb-2">Sends a reset password email to the user.</div>
               <v-btn
                 class="mb-2"
-                @click
+                :loading="isLoading"
+                :disabled="isLoading"
+                @click="handleResetPassword"
               >
                 <v-icon left small>$mdi-email</v-icon>Send Reset Password Email
               </v-btn>
@@ -139,25 +141,6 @@
 
               <v-divider></v-divider>
 
-              <div class="subtitle mt-3 mb-2">Prevent the user from signing in on the platform.</div>
-              <div class="my-2">
-                <v-btn
-                  v-if="user.disabled"
-                  color="warning"
-                  @click="user.disabled = false"
-                >
-                  <v-icon left small>$mdi-account-check</v-icon>Enable User
-                </v-btn>
-                <v-btn
-                  v-else
-                  color="warning"
-                  @click="disableDialog = true"
-                >
-                  <v-icon left small>$mdi-cancel</v-icon>Disable User
-                </v-btn>
-              </div>
-
-              <v-divider></v-divider>
               <div
                 class="subtitle mt-3 mb-2"
               >To delete the user please transfer ownership or delete user's subscriptions.</div>
@@ -180,19 +163,6 @@
       </v-expansion-panels>
     </div>
 
-    <!-- disable modal -->
-    <v-dialog v-model="disableDialog" max-width="290">
-      <v-card>
-        <v-card-title class="text-h5">Disable User</v-card-title>
-        <v-card-text>Are you sure you want to disable this user?</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="disableDialog = false">Cancel</v-btn>
-          <v-btn color="warning" @click="user.disabled = true; disableDialog = false">Disable</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
     <!-- delete modal -->
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
@@ -201,7 +171,12 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="deleteDialog = false">Cancel</v-btn>
-          <v-btn color="error" @click="deleteDialog = false">Delete</v-btn>
+          <v-btn
+            color="error"
+            :loading="buttonLoading"
+            :disabled="buttonLoading"
+            @click="handleDeleteUser"
+          >Delete</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -211,7 +186,7 @@
 <script>
 import ErrorComponent from '../../../components/common/ErrorComponent'
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -253,7 +228,8 @@ export default {
   },
   computed: {
     ...mapState({
-      errorMessages: (state) => state.users.error
+      errorMessages: (state) => state.users.error,
+      isLoading: (state) => state.auth.buttonLoading
     })
   },
   watch: {
@@ -265,6 +241,10 @@ export default {
   mounted() {
   },
   methods: {
+    ...mapActions({
+      deleteUser: 'users/deleteUser',
+      requestForgotPassword: 'auth/requestForgotPassword'
+    }),
     save() {
       if (this.$refs.form.validate()) {
         const data = {
@@ -284,6 +264,20 @@ export default {
     },
     clearError() {
       this.$store.commit('users/CLEAR_ERROR')
+    },
+    async handleDeleteUser() {
+      try {
+        await this.deleteUser({
+          email: this.user.email
+        })
+
+        this.deleteDialog = false
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    handleResetPassword() {
+      this.requestForgotPassword(this.user.email)
     }
   }
 }
