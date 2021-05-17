@@ -174,7 +174,7 @@ const module = {
     },
 
     SET_COMPANIES(state, companies) {
-      state.companies = companies
+      state.companies = [{ id: 0, name: 'All' }, ...companies]
     },
 
     SET_CUSTOMER_ADMINS(state, companyAdmins) { state.companyAdmins = companyAdmins },
