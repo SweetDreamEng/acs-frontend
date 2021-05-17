@@ -1,7 +1,7 @@
 import api from '@/api.js'
 export default {
-  initLocationsTable() {
-    return api.$get('/dashboard/init-locations-table')
+  initLocationsTable(data) {
+    return api.$post('/dashboard/init-locations-table', data)
   },
 
   initZonesTable(location_id) {

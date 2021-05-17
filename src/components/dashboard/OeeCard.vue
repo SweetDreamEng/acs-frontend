@@ -23,10 +23,10 @@
         <v-btn
           text
           color="red"
-          :disabled="!alarmsReports.alarms"
+          :disabled="alarmsReports.alarms && alarmsReports.alarms.length === 0"
           @click="showAlarmReports"
         >
-          {{ alarmsReports.alarms ? 'Alarms Reported' : 'No Alarms Reported' }}
+          {{ alarmsReports.alarms && alarmsReports.alarms.length !== 0 ? 'Alarms Reported' : 'No Alarms Reported' }}
           <v-icon right>$mdi-bell</v-icon>
         </v-btn>
       </v-card-actions>
