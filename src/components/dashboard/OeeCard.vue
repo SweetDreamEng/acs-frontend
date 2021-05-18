@@ -23,10 +23,10 @@
         <v-btn
           text
           color="red"
-          :disabled="!alarmsReports.alarms"
+          :disabled="alarmsReports.alarms && alarmsReports.alarms.length === 0"
           @click="showAlarmReports"
         >
-          {{ alarmsReports.alarms ? 'Alarms Reported' : 'No Alarms Reported' }}
+          {{ alarmsReports.alarms && alarmsReports.alarms.length !== 0 ? 'Alarms Reported' : 'No Alarms Reported' }}
           <v-icon right>$mdi-bell</v-icon>
         </v-btn>
       </v-card-actions>
@@ -102,13 +102,18 @@ export default {
   },
   computed: {
     ...mapState('alarms', ['isAlarmsReportLoading', 'alarmsReports']),
+    ...mapState({
+      companyId: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.id : 0
+    }),
     activeAlarms() {
       return this.alarmsReports.alarms ? this.alarmsReports.alarms.filter((alarm) => alarm.active) : []
     }
   },
   mounted() {
     this.showChart = true
-    this.getAlarmsReports()
+    this.getAlarmsReports({
+      companyId: this.companyId
+    })
   },
   methods: {
     ...mapActions({

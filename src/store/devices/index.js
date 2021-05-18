@@ -187,7 +187,7 @@ const module = {
     },
 
     // Get devices with analytics in dashboard page
-    async getDevicesAnalytics({ commit }, { page = 1, location_id = 0, itemsPerPage = 50 }) {
+    async getDevicesAnalytics({ commit }, { page = 1, location_id = 0, itemsPerPage = 50, company_id = 0 }) {
       commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', true)
       commit('SET_DATA', [])
 
@@ -195,7 +195,8 @@ const module = {
         const data = {
           itemsPerPage,
           page,
-          location_id
+          location_id,
+          company_id
         }
         const response = await deviceAPI.getDevicesAnalytics(data)
 

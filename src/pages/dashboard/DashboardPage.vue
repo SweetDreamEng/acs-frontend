@@ -194,7 +194,8 @@ export default {
 
       locations: (state) => state.locations.data,
       companies: (state) => state.companies.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
+      selectedCompany: (state) => state.machines.selectedCompany
     }),
     ...mapGetters('auth', ['canViewCompanies']),
     breadcrumbItems() {
@@ -213,17 +214,33 @@ export default {
     if (this.canViewCompanies)
       this.initAcsDashboard()
     this.getZones()
-    this.initLocationsTable()
+    this.initLocationsTable({ companyId: 0 })
   },
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
       initLocationsTable: 'machines/initLocationsTable',
       getZones: 'zones/getZones',
-      changeSelectedCompany: 'machines/changeSelectedCompany'
+      changeSelectedCompany: 'machines/changeSelectedCompany',
+      getDevicesAnalytics: 'devices/getDevicesAnalytics',
+      getAlarmsReports: 'alarms/getAlarmsReports'
     }),
     onCompanyChanged(company) {
       this.changeSelectedCompany(company)
+
+      this.initLocationsTable({
+        companyId: this.selectedCompany.id
+      })
+
+      this.getDevicesAnalytics({
+        page: 1,
+        location_id: this.location,
+        company_id: this.selectedCompany.id
+      })
+
+      this.getAlarmsReports({
+        companyId: this.selectedCompany.id
+      })
     }
   }
 }

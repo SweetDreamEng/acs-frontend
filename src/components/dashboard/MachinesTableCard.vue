@@ -96,7 +96,7 @@
         v-model="page"
         :length="pageCountReport"
         :total-visible="7"
-        @input="getDevicesAnalytics({ page: page, location_id: location })"
+        @input="getDevicesAnalytics({ page: page, location_id: location, company_id: companyId })"
       ></v-pagination>
     </v-card-text>
   </v-card>
@@ -173,7 +173,8 @@ export default {
     ...mapState({
       devices: (state) => state.devices.data,
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
-      pageCountReport: (state) => state.devices.pageCountReport
+      pageCountReport: (state) => state.devices.pageCountReport,
+      companyId: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.id : 0
     }),
     ...mapGetters({
       locationName: 'locations/locationName',
@@ -191,7 +192,8 @@ export default {
   mounted() {
     this.getDevicesAnalytics({
       page: this.page,
-      location_id: this.location
+      location_id: this.location,
+      company_id: this.companyId
     })
   },
   methods: {

@@ -7,7 +7,7 @@ const initAcsDashboard = async ({ commit, state }) => {
 
     commit('companies/SET_COMPANIES', response.data.companies, { root: true })
     if (!state.selectedCompany) {
-      commit('SET_SELECTED_COMPANY', response.data.companies[0])
+      commit('SET_SELECTED_COMPANY', { id: 0, name: 'All' })
     }
   } catch (error) {
     console.log(error)
@@ -45,12 +45,12 @@ const getWeeklyRunningHours = async ({ commit }, id) => {
   }
 }
 
-const initLocationsTable = async ({ commit }) => {
+const initLocationsTable = async ({ commit }, data) => {
   commit('SET_LOADING_LOCATIONS_TABLE', true)
   commit('locations/SET_DATA', [], { root: true })
 
   try {
-    const response = await machineAPI.initLocationsTable()
+    const response = await machineAPI.initLocationsTable(data)
 
     commit('locations/SET_DATA', response.locations, { root: true })
   } catch (error) {

@@ -156,6 +156,16 @@
               </div>
 
               <v-combobox
+                v-model="editedItem.type"
+                :items="types"
+                label="Type"
+                placeholder="Type of downtime plan"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              ></v-combobox>
+
+              <v-combobox
                 v-model="editedItem.reason"
                 :items="reasons"
                 label="Reason"
@@ -164,6 +174,13 @@
                 outlined
                 dense
               ></v-combobox>
+
+              <v-text-field
+                v-model="editedItem.comment"
+                label="Comment"
+                dense
+                outlined
+              ></v-text-field>
 
               <div class="d-flex">
                 <v-spacer></v-spacer>
@@ -190,8 +207,8 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
-        :headers="headers"
-        :items="downtimePlans"
+        :headers="testHeaders"
+        :items="testItems"
         class="flex-grow-1"
         :loading="tableLoading"
         hide-default-footer
@@ -237,9 +254,25 @@ export default {
     return {
       headers: [
         { text: 'Machine', value: 'machine_id' },
+        { text: 'Location', value: 'location' },
+        { text: 'Zone', value: 'zone' },
         { text: 'Start Time', value: 'from', align: 'center' },
         { text: 'End Time', value: 'to', align: 'center' },
+        { text: 'Type', value: 'type', align: 'center' },
         { text: 'Reason', value: 'reason', align: 'center' },
+        { text: 'Comment', value: 'comment', align: 'center' },
+        { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
+      ],
+
+      testHeaders: [
+        { text: 'Machine', value: 'machine_id' },
+        { text: 'Location', value: 'location' },
+        { text: 'Zone', value: 'zone' },
+        { text: 'Start Time', value: 'start', align: 'center' },
+        { text: 'End Time', value: 'end', align: 'center' },
+        { text: 'Type', value: 'type', align: 'center' },
+        { text: 'Reason', value: 'reason', align: 'center' },
+        { text: 'Comment', value: 'comment', align: 'center' },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
 
@@ -249,6 +282,12 @@ export default {
         'Machine Failure',
         'Power Outage',
         'Idle'
+      ],
+
+      types: [
+        'Idle',
+        'Unplanned',
+        'Planned'
       ],
 
       editedIndex: -1,
@@ -276,7 +315,79 @@ export default {
         timeTo: '00:00',
         reason: ''
       },
-      isFormValid: true
+      isFormValid: true,
+      testItems: [
+        {
+          machine_id: 1,
+          location: 'Texas',
+          zone: 'Zone 1',
+          start: '2020-05-11 00:00',
+          end: '2020-05-11 12:00',
+          type: 'Idle',
+          reason: 'No Demand',
+          comment: 'Material'
+        },
+        {
+          machine_id: 1,
+          location: 'Texas',
+          zone: 'Zone 1',
+          start: '2020-05-11 00:00',
+          end: '2020-05-11 12:00',
+          type: 'Unplanned',
+          reason: 'Prevent Maint',
+          comment: 'Bearing'
+        },
+        {
+          machine_id: 1,
+          location: 'Texas',
+          zone: 'Zone 1',
+          start: '2020-05-11 00:00',
+          end: '2020-05-11 12:00',
+          type: 'Planned',
+          reason: 'Machine Failure',
+          comment: 'Prox switch'
+        },
+        {
+          machine_id: 1,
+          location: 'Texas',
+          zone: 'Zone 1',
+          start: '2020-05-11 00:00',
+          end: '2020-05-11 12:00',
+          type: 'Idle',
+          reason: 'No Demand',
+          comment: 'Material'
+        },
+        {
+          machine_id: 1,
+          location: 'Texas',
+          zone: 'Zone 1',
+          start: '2020-05-11 00:00',
+          end: '2020-05-11 12:00',
+          type: 'Planned',
+          reason: 'Power Outage',
+          comment: 'Utility'
+        },
+        {
+          machine_id: 1,
+          location: 'Texas',
+          zone: 'Zone 1',
+          start: '2020-05-11 00:00',
+          end: '2020-05-11 12:00',
+          type: 'Unplanned',
+          reason: 'Other',
+          comment: '?'
+        },
+        {
+          machine_id: 1,
+          location: 'Texas',
+          zone: 'Zone 1',
+          start: '2020-05-11 00:00',
+          end: '2020-05-11 12:00',
+          type: 'Planned',
+          reason: 'Other',
+          comment: 'Break'
+        }
+      ]
     }
   },
   computed: {
@@ -301,16 +412,25 @@ export default {
     }),
     editPlan(item) {
       this.editedIndex = item.id
+      // Object.assign(this.editedItem, {
+      //   'dateFrom': item.date_from,
+      //   'dateTo': item.date_to,
+      //   'timeFrom': item.time_from,
+      //   'timeTo': item.time_to,
+      //   'reason': item.reason,
+      //   'machine': item.machine_id
+      // })
+
       Object.assign(this.editedItem, {
-        'dateFrom': item.date_from,
-        'dateTo': item.date_to,
-        'timeFrom': item.time_from,
-        'timeTo': item.time_to,
+        'dateFrom': item.start.split(' ')[0],
+        'dateTo': item.end.split(' ')[0],
+        'timeFrom': item.start.split(' ')[1],
+        'timeTo': item.end.split(' ')[1],
         'reason': item.reason,
+        'type': item.type,
+        'comment': item.comment,
         'machine': item.machine_id
       })
-
-      console.log(this.editedItem)
 
       this.dialog = true
       this.$nextTick(() => {
@@ -325,22 +445,23 @@ export default {
       })
     },
     submit() {
-      if (this.$refs.editForm.validate()) {
-        if (this.editedIndex > -1) {
-          this.updateDowntimePlan({
-            'data': this.editedItem,
-            'id': this.editedIndex
-          }).then(() => {
-            this.getDowntimePlans()
-            this.closeDialog()
-          })
-        } else {
-          this.addDowntimePlan(this.editedItem).then(() => {
-            this.getDowntimePlans()
-            this.closeDialog()
-          })
-        }
-      }
+      // if (this.$refs.editForm.validate()) {
+      //   if (this.editedIndex > -1) {
+      //     this.updateDowntimePlan({
+      //       'data': this.editedItem,
+      //       'id': this.editedIndex
+      //     }).then(() => {
+      //       this.getDowntimePlans()
+      //       this.closeDialog()
+      //     })
+      //   } else {
+      //     this.addDowntimePlan(this.editedItem).then(() => {
+      //       this.getDowntimePlans()
+      //       this.closeDialog()
+      //     })
+      //   }
+      // }
+      this.closeDialog()
     },
     machineName(item) {
       const _machine = this.machines.find((machine) => {
