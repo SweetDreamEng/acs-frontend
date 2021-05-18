@@ -109,6 +109,7 @@ export default {
         dataLabels: {
           enabled: false
         },
+        colors: this.colors,
         stroke: {
           width: 2
         },
