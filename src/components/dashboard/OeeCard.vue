@@ -102,13 +102,18 @@ export default {
   },
   computed: {
     ...mapState('alarms', ['isAlarmsReportLoading', 'alarmsReports']),
+    ...mapState({
+      companyId: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.id : 0
+    }),
     activeAlarms() {
       return this.alarmsReports.alarms ? this.alarmsReports.alarms.filter((alarm) => alarm.active) : []
     }
   },
   mounted() {
     this.showChart = true
-    this.getAlarmsReports()
+    this.getAlarmsReports({
+      companyId: this.companyId
+    })
   },
   methods: {
     ...mapActions({

@@ -87,7 +87,7 @@ export default {
 
         return [series]
         
-      } else if (this.namespace === 'barGraph-ngxDryer-id1') {
+      } else if (this.namespace === 'barGraph-ngxDryer-id1' || this.namespace === 'barGraph-ngxDryer-id1') {
         const hopperCategories = []
 
         for (let i = 0; i < this.$store.state[this.namespace]['hopperCount']; i ++) {

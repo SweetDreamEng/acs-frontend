@@ -199,10 +199,10 @@ const module = {
       }
     },
 
-    async getAlarmsReports({ commit }) {
+    async getAlarmsReports({ commit }, data) {
       commit('SET_ALARMS_REPORTS_LOADING', true)
       try {
-        const response = await alarmAPI.getAlarmsReports()
+        const response = await alarmAPI.getAlarmsReports(data)
 
         commit('SET_ALARMS_REPORTS', response)
       } catch (error) {

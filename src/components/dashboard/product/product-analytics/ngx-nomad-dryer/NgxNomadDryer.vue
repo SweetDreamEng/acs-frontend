@@ -10,7 +10,7 @@
         >
         </overview>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col v-if="parameters.includes(1)" cols="12" md="4">
         <area-graph
           namespace="areaGraph-ngxDryer-utilization"
           title="Capacity Utilization"
@@ -53,7 +53,7 @@
           :machine-id="machineId"
           :serial-number="serialNumber"
           :options="temperatureOptions"
-          :names="['Outlet Temperature', 'Inlet Temperature', 'Set Point']"
+          :names="['Process', 'Process Set Point', 'Outlet']"
           :categories="hopperAirTemperatureCategories"
         >
         </bar-graph>
@@ -112,6 +112,10 @@ export default {
     serialNumber: {
       type: Number,
       default: 0
+    },
+    parameters: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -149,7 +153,7 @@ export default {
       'loadingStates'
     ]),
     hopperAirTemperatureCategories() {
-      return ['']
+      return ['Hopper']
     }
   },
   mounted() {

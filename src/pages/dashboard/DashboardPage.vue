@@ -222,7 +222,8 @@ export default {
       initLocationsTable: 'machines/initLocationsTable',
       getZones: 'zones/getZones',
       changeSelectedCompany: 'machines/changeSelectedCompany',
-      getDevicesAnalytics: 'devices/getDevicesAnalytics'
+      getDevicesAnalytics: 'devices/getDevicesAnalytics',
+      getAlarmsReports: 'alarms/getAlarmsReports'
     }),
     onCompanyChanged(company) {
       this.changeSelectedCompany(company)
@@ -235,6 +236,10 @@ export default {
         page: 1,
         location_id: this.location,
         company_id: this.selectedCompany.id
+      })
+
+      this.getAlarmsReports({
+        companyId: this.selectedCompany.id
       })
     }
   }

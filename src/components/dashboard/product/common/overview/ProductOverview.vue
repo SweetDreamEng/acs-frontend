@@ -13,9 +13,20 @@
             </v-list-item-title>
           </v-list-item-content>
           <v-list-item-avatar class="mt-3" color="grey lighten-3">
-            <v-btn icon :loading="isSaveMachineLoading" @click="saveMachine({ deviceId: overview.teltonikaDevice.id })">
-              <v-icon :color="isSavedMachine ? 'primary' : 'grey'">$mdi-star</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  :loading="isSaveMachineLoading"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="saveMachine({ deviceId: overview.teltonikaDevice.id })"
+                >
+                  <v-icon :color="isSavedMachine ? 'primary' : 'grey'">$mdi-star</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ isSavedMachine ? 'Remove from Favorites' : 'Add to Favorites' }}</span>
+            </v-tooltip>
           </v-list-item-avatar>
         </v-list-item>
         
@@ -59,9 +70,20 @@
             </v-list-item-title>
           </v-list-item-content>
           <v-list-item-avatar class="mt-3" color="grey lighten-3">
-            <v-btn icon :loading="isSaveMachineLoading" @click="saveMachine({ deviceId: overview.teltonikaDevice.id })">
-              <v-icon :color="isSavedMachine ? 'primary' : 'grey'">$mdi-star</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  :loading="isSaveMachineLoading"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="saveMachine({ deviceId: overview.teltonikaDevice.id })"
+                >
+                  <v-icon :color="isSavedMachine ? 'primary' : 'grey'">$mdi-star</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ isSavedMachine ? 'Remove from Favorites' : 'Add to Favorites' }}</span>
+            </v-tooltip>
           </v-list-item-avatar>
         </v-list-item>
         <v-card-title>{{ overview.machineName }}</v-card-title>

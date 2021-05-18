@@ -10,7 +10,7 @@
         >
         </overview>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col v-if="parameters.includes(1)" cols="12" md="4">
         <area-graph
           namespace="areaGraph-ngxDryer-utilization"
           title="Capacity Utilization"
@@ -23,27 +23,14 @@
         >
         </area-graph>
       </v-col>
-      <v-col cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-ngxDryer-consumption"
-          title="Energy Consumption"
-          :height="220"
-          unit="kWH"
-          :fetch="getEnergyConsumption"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Energy Consumption']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col cols="12" md="4">
+      <v-col v-if="parameters.includes(3)" cols="12" md="4">
         <drying-hopper-states
           :loading="loadingDryingHoppers"
           :drying-hoppers="dryingHoppers"
         >
         </drying-hopper-states>
       </v-col>
-      <v-col cols="12" md="8">
+      <v-col v-if="parameters.includes(4)" cols="12" md="8">
         <bar-graph
           namespace="barGraph-ngxDryer-id1"
           title="Hopper Air Temperatures"
@@ -51,7 +38,8 @@
           :fetch="getHopperTemperatures"
           :machine-id="machineId"
           :serial-number="serialNumber"
-          :names="['Inlet Temperature', 'Outlet Temperature', 'Set Point']"
+          :options="temperatureOptions"
+          :names="['Process', 'Process Set Point', 'Outlet']"
           :categories="hopperAirTemperatureCategories"
         >
         </bar-graph>
@@ -110,6 +98,10 @@ export default {
     serialNumber: {
       type: Number,
       default: 0
+    },
+    parameters: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -119,7 +111,26 @@ export default {
       getRegionAirTemperature: api.getRegionAirTemperature,
       getOverview: commonApi.getOverview,
       getUtilization: commonApi.getUtilization,
-      getEnergyConsumption: commonApi.getEnergyConsumption
+      getEnergyConsumption: commonApi.getEnergyConsumption,
+
+      temperatureOptions: {
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            columnWidth: '10%',
+            dataLabels: {
+              position: 'top'
+            },
+            space: 0.25,
+            endingShape: 'rounded'
+          }
+        },
+        stroke: {
+          show: true,
+          width: 6,
+          colors: ['#fff']
+        }
+      }
     }
   },
   computed: {
