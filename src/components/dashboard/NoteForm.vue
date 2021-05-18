@@ -16,14 +16,14 @@
             label="Note"
             outlined
             required
-            :rules="[$rules.required]"
+            :rules="noteRules"
           ></v-textarea>
 
           <v-btn
             :disabled="!valid"
             color="grey"
             class="mr-4"
-            @click="note = ''"
+            @click="handleResetNote"
           >
             <v-icon dark>
               $mdi-minus
@@ -61,7 +61,8 @@ export default {
   data() {
     return {
       valid: true,
-      note: ''
+      note: '',
+      noteRules: []
     }
   },
   computed: {
@@ -69,27 +70,41 @@ export default {
       isLoading: (state) => state.notes.isNoteAdding
     })
   },
+  watch: {
+    'note' (val) {
+      this.noteRules = []
+    }
+  },
   methods: {
     ...mapActions({
       addNote: 'notes/addNote',
       getNotes: 'notes/getNotes'
     }),
-    async _addNote() {
-      if (this.$refs.form.validate()) {
-        try {
-          await this.addNote({
-            deviceId: this.deviceId,
-            note: this.note
-          })
+    handleResetNote() {
+      this.note = ''
 
-          this.note = ''
-          this.$refs.form.resetValidation()
+      this.$refs.form.resetValidation()
+    },
+    _addNote() {
+      this.noteRules = [(v) => !!v || 'Field is required']
 
-          await this.getNotes(this.deviceId)
-        } catch (error) {
-          console.log(error)
+      setTimeout(async () => {
+        if (this.$refs.form.validate()) {
+          try {
+            await this.addNote({
+              deviceId: this.deviceId,
+              note: this.note
+            })
+
+            this.note = ''
+            this.$refs.form.resetValidation()
+
+            await this.getNotes(this.deviceId)
+          } catch (error) {
+            console.log(error)
+          }
         }
-      }
+      })
     }
   }
 }
