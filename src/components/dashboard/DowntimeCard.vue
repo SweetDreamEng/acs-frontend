@@ -1,7 +1,7 @@
 <template>
   <v-card
     class="d-flex flex-column justify-space-between"
-    height="100%"
+    height="600px"
     light
     :loading="isDowntimeGraphLoading"
     :disabled="isDowntimeGraphLoading"
@@ -72,7 +72,7 @@ export default {
         series: this.downtimeGraphData,
         chart: {
           type: 'bar',
-          height: '100%',
+          height: '500px',
           stacked: true,
           toolbar: {
             show: false
@@ -86,7 +86,6 @@ export default {
           options: {
             legend: {
               position: 'top',
-              offsetX: -10,
               offsetY: 0
             }
           }
@@ -109,8 +108,7 @@ export default {
           categories: this.downtimeGraphDate
         },
         legend: {
-          position: 'bottom',
-          offsetY: 10
+          position: 'bottom'
         },
         fill: {
           opacity: 1
