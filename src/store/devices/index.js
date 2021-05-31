@@ -42,7 +42,15 @@ const module = {
 
     loadingDeviceConfig: false,
     sendingDeviceConfig: false,
-    deviceConfiguration: {}
+    deviceConfiguration: {},
+
+    isDowntimeGraphLoading: false,
+    downtimeGraphData: [],
+    downtimeGraphDate: [],
+    downtimeByTypeGraphSeries: [],
+    isDowntimeByTypeGraphLoading: false,
+    downtimeByReasonGraphSeries: [],
+    isDowntimeByReasonGraphLoading: false
   },
 
   actions: {
@@ -382,6 +390,48 @@ const module = {
       } finally {
         commit('SET_LOADING_ACTIVE_DEVICES', false)
       }
+    },
+
+    async getDowntimeGraphData({ commit }, data) {
+      commit('SET_LOADING_DOWNTIME_GRAPH', true)
+
+      try {
+        const response = await deviceAPI.getDowntimeGraphData(data)
+
+        commit('SET_DOWNTIME_GRAPH_DATA', response.data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_DOWNTIME_GRAPH', false)
+      }
+    },
+
+    async getDowntimeByTypeGraphSeries({ commit }, data) {
+      commit('SET_LOADING_DOWNTIME_BY_TYPE_GRAPH', true)
+
+      try {
+        const response = await deviceAPI.getDowntimeByTypeGraphSeries(data)
+
+        commit('SET_DOWNTIME_BY_TYPE_GRAPH_SERIES', response.data.series)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_DOWNTIME_BY_TYPE_GRAPH', false)
+      }
+    },
+
+    async getDowntimeByReasonGraphSeries({ commit }, data) {
+      commit('SET_LOADING_DOWNTIM_BY_REASON_GRAPH', true)
+
+      try {
+        const response = await deviceAPI.getDowntimeByReasonGraphSeries(data)
+
+        commit('SET_DOWNTIME_BY_REASON_GRAPH_SERIES', response.data.series)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_DOWNTIM_BY_REASON_GRAPH', false)
+      }
     }
   },
 
@@ -513,6 +563,25 @@ const module = {
     },
     SET_REPORT_SAVED_MACHINES_PAGINATION(state, count) {
       state.savedMachinesPageCountReport = count
+    },
+    SET_LOADING_DOWNTIME_GRAPH(state, status) {
+      state.isDowntimeGraphLoading = status
+    },
+    SET_DOWNTIME_GRAPH_DATA(state, data) {
+      state.downtimeGraphData = data.series
+      state.downtimeGraphDate = data.dates
+    },
+    SET_LOADING_DOWNTIME_BY_TYPE_GRAPH(state, status) {
+      state.isDowntimeByTypeGraphLoading = status
+    },
+    SET_DOWNTIME_BY_TYPE_GRAPH_SERIES(state, data) {
+      state.downtimeByTypeGraphSeries = data
+    },
+    SET_LOADING_DOWNTIM_BY_REASON_GRAPH(state, status) {
+      state.isDowntimeByReasonGraphLoading = status
+    },
+    SET_DOWNTIME_BY_REASON_GRAPH_SERIES(state, data) {
+      state.downtimeByReasonGraphSeries = data
     }
   },
 

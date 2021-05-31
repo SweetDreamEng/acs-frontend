@@ -3,11 +3,11 @@
     class="d-flex flex-column justify-space-between"
     height="100%"
     light
-    :loading="isDowntimeGraphLoading"
-    :disabled="isDowntimeGraphLoading"
+    :loading="isDowntimeByReasonGraphLoading"
+    :disabled="isDowntimeByReasonGraphLoading"
   >
     <v-card-title>
-      Downtime
+      Downtime by Reason
       <v-spacer></v-spacer>
       <v-btn
         icon
@@ -19,8 +19,8 @@
     </v-card-title>
     <v-card-text>
       <apexchart
-        :series="chartOptions2.series"
-        :options="chartOptions2"
+        :options="chartOptions"
+        :series="getDowntimeByReasonSeries"
       ></apexchart>
     </v-card-text>
     <time-range-chooser
@@ -62,61 +62,10 @@ export default {
   },
   computed: {
     ...mapState({
-      downtimeGraphData: (state) => state.devices.downtimeGraphData,
-      downtimeGraphDate: (state) => state.devices.downtimeGraphDate,
-      isDowntimeGraphLoading: (state) => state.devices.isDowntimeGraphLoading
+      downtimeByReasonGraphSeries: (state) => state.devices.downtimeByReasonGraphSeries,
+      isDowntimeByReasonGraphLoading: (state) => state.devices.isDowntimeByReasonGraphLoading
     }),
     ...mapGetters('machines', ['timeRangeFromTo']),
-    chartOptions2() {
-      return {
-        series: this.downtimeGraphData,
-        chart: {
-          type: 'bar',
-          height: '100%',
-          stacked: true,
-          toolbar: {
-            show: false
-          },
-          zoom: {
-            enabled: true
-          }
-        },
-        responsive: [{
-          breakpoint: 480,
-          options: {
-            legend: {
-              position: 'top',
-              offsetX: -10,
-              offsetY: 0
-            }
-          }
-        }],
-        plotOptions: {
-          bar: {
-            borderRadius: 0,
-            columnWidth: '70%',
-            horizontal: false
-          }
-        },
-        dataLabels: {
-          style: {
-            fontSize: '10px',
-            colors: ['#fff']
-          }
-        },
-        xaxis: {
-          type: 'date',
-          categories: this.downtimeGraphDate
-        },
-        legend: {
-          position: 'bottom',
-          offsetY: 10
-        },
-        fill: {
-          opacity: 1
-        }
-      }
-    },
     getTimeRange() {
       if (this.selectedTimeRange && this.selectedTimeRange.timeRangeOption !== 'custom') {
         const tR = {
@@ -145,6 +94,61 @@ export default {
 
         return timeRange
       }
+    },
+    chartOptions() {
+      return {
+        chart: {
+          type: 'bar',
+          horizontal: false,
+          stacked: true,
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: true
+          }
+        },
+        stroke: {
+          show: false
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '80%',
+            dataLabels: {
+              enabled: false,
+              position: 'top',
+              offsetX: -80
+            },
+            distributed: true,
+            space: 0.25
+          }
+        },
+        xaxis: {
+          categories: this.downtimeByReasonGraphSeries.map((item) => item.name),
+          labels: {
+            show: false
+          }
+        },
+        legend: {
+          position: 'bottom',
+          offsetY: 10
+        },
+        fill: {
+          opacity: 1
+        }
+      }
+    },
+    getDowntimeByReasonSeries() {
+      const series = [{ data: [] }]
+
+      this.downtimeByReasonGraphSeries.map((item) => {
+        series[0].data.push(item.data)
+
+        return 0
+      })
+
+      return series
     }
   },
   mounted() {
@@ -152,9 +156,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      getDowntimeGraphData: 'devices/getDowntimeGraphData'
+      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
     }),
-    async onTimeRangeChanged(newTimeRange) {
+    onTimeRangeChanged(newTimeRange) {
       this.selectedTimeRange = newTimeRange
       const to = new Date(`${this.getTimeRange.dateTo} ${this.getTimeRange.timeTo}`).getTime()
       const from = new Date(`${this.getTimeRange.dateFrom} ${this.getTimeRange.timeFrom}`).getTime()
@@ -166,13 +170,10 @@ export default {
       } else if (customRange > 60 * 60 * 24 * 14 * 1000) {
         this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Time range selection is limited to two weeks' } }, { root: true })
       } else {
-        try {
-          this.getDowntimeGraphData({
-            to,
-            from
-          })} catch (error) {
-          console.log(error)
-        }
+        this.getDowntimeByReasonGraphSeries({
+          to,
+          from
+        })
 
         this.showTimeRangeChooser = false
       }
@@ -180,3 +181,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .v-card__title {
+    word-break: break-word;
+  }
+</style>
