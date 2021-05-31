@@ -137,7 +137,7 @@ export default {
       }
     },
     getDowntimeByTypeSeries() {
-      const series = [{ data: [] }]
+      const series = [{ name: 'Hours', data: [] }]
 
       this.downtimeByTypeGraphSeries.map((item) => {
         series[0].data.push(item.data)

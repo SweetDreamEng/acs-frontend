@@ -140,7 +140,7 @@ export default {
       }
     },
     getDowntimeByReasonSeries() {
-      const series = [{ data: [] }]
+      const series = [{ name: 'Hours', data: [] }]
 
       this.downtimeByReasonGraphSeries.map((item) => {
         series[0].data.push(item.data)
