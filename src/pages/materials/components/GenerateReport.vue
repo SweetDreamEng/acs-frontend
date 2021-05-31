@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card :disabled="isReportLoading">
-      <v-card-text class="mt-0">Confirm data selected and generate your report</v-card-text>
+      <v-card-title class="mt-0">Location: {{ getLocationName() }}</v-card-title>
       <v-card-text>
         <v-row class="grey lighten-3 rounded mb-3" dense>
           <v-col cols="3" class="d-flex flex-column">
@@ -24,13 +24,6 @@
           :loading="isReportLoading"
           @click="handleGenerateReport"
         >Export</v-btn>
-        <v-btn
-          class="ml-2"
-          depressed
-          color="primary"
-          :loading="isReportLoading"
-          @click="handleSearch"
-        >Search</v-btn>
       </div>
     </v-card>
   </div>
@@ -47,6 +40,10 @@ export default {
     selectedTimeRange: {
       type: Object,
       default: () => {}
+    },
+    locationId:{
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -61,7 +58,8 @@ export default {
     ...mapState({
       reportMachines: (state) => state.machines.reportMachines,
       isReportLoading: (state) => state.machines.isReportLoading,
-      reportName: (state) => state.machines.reportName
+      reportName: (state) => state.machines.reportName,
+      locations: (state) => state.locations.data
     }),
     ...mapGetters('machines', ['timeRangeFromTo']),
     getTimeRange() {
@@ -98,8 +96,12 @@ export default {
     handleGenerateReport() {
       this.$emit('generateReport', this.getTimeRange)
     },
-    handleSearch() {
-      this.$emit('search', this.getTimeRange)
+    getLocationName() {
+      const location = this.locations.find((location) => {
+        return location.id === this.locationId
+      })
+
+      return location ? location.name : ''
     }
   }
 }
