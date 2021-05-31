@@ -43,8 +43,8 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
-    <v-card :disabled="loadingReports" :loading="loadingReports">
-      <v-card-title>System Inventory Report</v-card-title>
+    <v-card v-if="stepNumber > 2" class="mt-2" :disabled="loadingReports" :loading="loadingReports">
+      <v-card-title>Material Usage Report</v-card-title>
 
       <v-card-text>
         <v-data-table
@@ -82,7 +82,7 @@ export default {
       errorMessage: '',
       tableHeaders: [
         { text: 'Material', value: 'material' },
-        { text: 'Value', value: 'value' }
+        { text: 'Material Used(lbs)', value: 'value' }
       ]
     }
   },
@@ -92,7 +92,8 @@ export default {
       exportingReport: (state) => state.materials.exportingReport,
 
       systemInventoryReports: (state) => state.materials.systemInventoryReports
-    })
+    }),
+    ...mapGetters('machines', ['timeRangeFromTo'])
   },
   methods: {
     ...mapActions({
@@ -111,6 +112,7 @@ export default {
     },
     handleSetTimeRange(data) {
       this.selectedTimeRange = data
+      this.handleSearch(this.getTimeRange())
       this.stepNumber = 3
     },
     async handleGenerateReport(data) {
@@ -149,6 +151,35 @@ export default {
     handleReset() {
       this.errorMessage = ''
       this.stepNumber = 1
+    },
+    getTimeRange() {
+      if (this.selectedTimeRange && this.selectedTimeRange.timeRangeOption !== 'custom') {
+        const tR = {
+          timeRangeOption: this.selectedTimeRange.timeRangeOption,
+          dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
+        }
+
+        const from = new Date(this.timeRangeFromTo(tR).from).toISOString()
+        const to =  new Date(this.timeRangeFromTo(tR).to).toISOString()
+
+        const timeRange = {
+          dateFrom: from.substr(0, 10),
+          dateTo: to.substr(0, 10),
+          timeFrom: from.substr(11, 8),
+          timeTo: to.substr(11, 8)
+        }
+
+        return timeRange
+      } else {
+        const timeRange = {
+          dateFrom: this.selectedTimeRange.dateFrom,
+          dateTo: this.selectedTimeRange.dateTo,
+          timeFrom: this.selectedTimeRange.timeFrom,
+          timeTo: this.selectedTimeRange.timeTo
+        }
+
+        return timeRange
+      }
     }
   }
 }
