@@ -296,5 +296,27 @@ export default {
    */
   getDowntimeByReasonGraphSeries(data) {
     return api.post('devices/get-downtime-by-reason-graph-data', data)
+  },
+
+  /**
+   * Get data for the downtime table
+   * 
+   * @example
+   * 
+   *    getDowntimeTableData()
+   */
+  getDowntimeTableData() {
+    return api.get('devices/get-downtime-table-data')
+  },
+
+  /**
+   * Update downtime
+   * 
+   * @example
+   * 
+   *    updateDowntime()
+   */
+  updateDowntime(data) {
+    return api.put(`devices/update-downtime/${data.id}`, data)
   }
 }

@@ -1,163 +1,27 @@
 <template>
-  <v-card class="mt-2">
+  <v-card
+    class="mt-2"
+    :loading="isDowntimeTableLoading"
+    :disabled="isDowntimeTableLoading"
+  >
     <v-card-title>
-      Device Downtime Plans
+      Device Downtimes
       <v-dialog
         v-model="dialog"
         max-width="400px"
       >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="primary"
-            class="ml-auto"
-            v-bind="attrs"
-            v-on="on"
-          >
-            Add
-          </v-btn>
-        </template>
         <v-card>
           <v-card-title class="primary white--text">
-            <span class="text-h5">{{ editTitle }}</span>
+            <span class="text-h5">Edit Downtime</span>
           </v-card-title>
 
           <v-card-text class="mt-4">
             <v-form ref="editForm" v-model="isFormValid" lazy-validation @submit.prevent="submit">
-              <v-select
-                v-model="editedItem.machine"
-                label="Machine"
-                :items="machines"
-                item-text="name"
-                item-value="id"
-                :rules="[$rules.required]"
-                outlined
-                dense
-              >
-              </v-select>
-
-              <div class="d-flex">
-                <v-menu
-                  ref="dateFrom"
-                  v-model="dateFromMenu"
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                  width="250px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="editedItem.dateFrom"
-                      label="From Date"
-                      prepend-icon="$mdi-calendar"
-                      readonly
-                      outlined
-                      dense
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="editedItem.dateFrom"
-                    no-title
-                    scrollable
-                    @input="dateFromMenu = false"
-                  >
-                  </v-date-picker>
-                </v-menu>
-                <v-menu
-                  ref="timeFrom"
-                  v-model="timeFromMenu"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  :return-value.sync="editedItem.timeFrom"
-                  transition="scale-transition"
-                  offset-y
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="editedItem.timeFrom"
-                      label="From Time"
-                      prepend-icon="$mdi-clock-time-four-outline"
-                      readonly
-                      outlined
-                      dense
-                      v-bind="attrs"
-                      class="ml-2"
-                      v-on="on"
-                    >
-                    </v-text-field>
-                  </template>
-                  <v-time-picker
-                    v-if="timeFromMenu"
-                    v-model="editedItem.timeFrom"
-                    @click:minute="$refs.timeFrom.save(editedItem.timeFrom)"
-                  ></v-time-picker>
-                </v-menu>
-              </div>
-
-              <div class="d-flex">
-                <v-menu
-                  ref="dateTo"
-                  v-model="dateToMenu"
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                  width="250px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="editedItem.dateTo"
-                      label="To Date"
-                      prepend-icon="$mdi-calendar"
-                      readonly
-                      outlined
-                      dense
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="editedItem.dateTo"
-                    no-title
-                    scrollable
-                    @input="dateToMenu = false"
-                  >
-                  </v-date-picker>
-                </v-menu>
-                <v-menu
-                  ref="timeTo"
-                  v-model="timeToMenu"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  :return-value.sync="editedItem.timeTo"
-                  transition="scale-transition"
-                  offset-y
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="editedItem.timeTo"
-                      label="To Time"
-                      prepend-icon="$mdi-clock-time-four-outline"
-                      readonly
-                      outlined
-                      dense
-                      v-bind="attrs"
-                      class="ml-2"
-                      v-on="on"
-                    >
-                    </v-text-field>
-                  </template>
-                  <v-time-picker
-                    v-if="timeToMenu"
-                    v-model="editedItem.timeTo"
-                    @click:minute="$refs.timeTo.save(editedItem.timeTo)"
-                  ></v-time-picker>
-                </v-menu>
-              </div>
-
               <v-combobox
                 v-model="editedItem.type"
-                :items="types"
+                :items="downtimeTypes"
+                item-text="name"
+                item-value="id"
                 label="Type"
                 placeholder="Type of downtime plan"
                 :rules="[$rules.required]"
@@ -166,8 +30,10 @@
               ></v-combobox>
 
               <v-combobox
-                v-model="editedItem.reason"
-                :items="reasons"
+                v-model="editedItem.reason "
+                :items="downtimeReasons"
+                item-text="name"
+                item-value="id"
                 label="Reason"
                 placeholder="Type in reason or choose from existing for ex: No Demand"
                 :rules="[$rules.required]"
@@ -175,12 +41,11 @@
                 dense
               ></v-combobox>
 
-              <v-text-field
+              <v-textarea
                 v-model="editedItem.comment"
                 label="Comment"
-                dense
                 outlined
-              ></v-text-field>
+              ></v-textarea>
 
               <div class="d-flex">
                 <v-spacer></v-spacer>
@@ -194,8 +59,7 @@
                 <v-btn
                   color="primary"
                   type="submit"
-                  :loading="btnLoading"
-                  :disabled="btnLoading"
+                  :loading="isUpdatingDowntime"
                 >
                   Save
                 </v-btn>
@@ -207,22 +71,40 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
-        :headers="testHeaders"
-        :items="testItems"
+        :headers="headers"
+        :items="downtimeTableData"
         class="flex-grow-1"
-        :loading="tableLoading"
-        hide-default-footer
       >
-        <template v-slot:item.machine_id="{ item }">
+        <template v-slot:item.device_id="{ item }">
           <span>{{ machineName(item) }}</span>
         </template>
 
-        <template v-slot:item.from="{ item }">
-          <span>{{ item.date_from + ' ' + item.time_from }}</span>
+        <template v-slot:item.location="{ item }">
+          <span>{{ getLocation(item) }}</span>
         </template>
 
-        <template v-slot:item.to="{ item }">
-          <span>{{ item.date_to + ' ' + item.time_to }}</span>
+        <template v-slot:item.zone="{ item }">
+          <span>{{ getZone(item) }}</span>
+        </template>
+
+        <template v-slot:item.start_time="{ item }">
+          <span>{{ getTimeFromTimestamp(item.start_time) }}</span>
+        </template>
+
+        <template v-slot:item.end_time="{ item }">
+          <span>{{ getTimeFromTimestamp(item.end_time) }}</span>
+        </template>
+
+        <template v-slot:item.type="{ item }">
+          <span>{{ getDowntimeType(item) }}</span>
+        </template>
+
+        <template v-slot:item.reason_id="{ item }">
+          <span>{{ getDowntimeReason(item) }}</span>
+        </template>
+
+        <template v-slot:item.comment="{ item }">
+          <span>{{ printComment(item) }}</span>
         </template>
 
         <template v-slot:item.actions="{ item }">
@@ -253,183 +135,58 @@ export default {
   data() {
     return {
       headers: [
-        { text: 'Machine', value: 'machine_id' },
+        { text: 'Machine', value: 'device_id' },
         { text: 'Location', value: 'location' },
         { text: 'Zone', value: 'zone' },
-        { text: 'Start Time', value: 'from', align: 'center' },
-        { text: 'End Time', value: 'to', align: 'center' },
+        { text: 'Start Time', value: 'start_time', align: 'center' },
+        { text: 'End Time', value: 'end_time', align: 'center' },
         { text: 'Type', value: 'type', align: 'center' },
-        { text: 'Reason', value: 'reason', align: 'center' },
+        { text: 'Reason', value: 'reason_id', align: 'center' },
         { text: 'Comment', value: 'comment', align: 'center' },
         { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
       ],
-
-      testHeaders: [
-        { text: 'Machine', value: 'machine_id' },
-        { text: 'Location', value: 'location' },
-        { text: 'Zone', value: 'zone' },
-        { text: 'Start Time', value: 'start', align: 'center' },
-        { text: 'End Time', value: 'end', align: 'center' },
-        { text: 'Type', value: 'type', align: 'center' },
-        { text: 'Reason', value: 'reason', align: 'center' },
-        { text: 'Comment', value: 'comment', align: 'center' },
-        { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
-      ],
-
-      reasons: [
-        'No Demand',
-        'Preventative Maintenance',
-        'Machine Failure',
-        'Power Outage',
-        'Idle'
-      ],
-
-      types: [
-        'Idle',
-        'Unplanned',
-        'Planned'
-      ],
-
-      editedIndex: -1,
 
       dialog: false,
 
-      timeFromMenu: false,
-      timeToMenu: false,
-      dateFromMenu: false,
-      dateToMenu: false,
-
-      editedItem: {
-        machine: 0,
-        dateFrom: dateTimeIsoString,
-        dateTo: dateTimeIsoString,
-        timeFrom: '00:00',
-        timeTo: '00:00',
-        reason: ''
-      },
-      defaultItem: {
-        machine: 0,
-        dateFrom: dateTimeIsoString,
-        dateTo: dateTimeIsoString,
-        timeFrom: '00:00',
-        timeTo: '00:00',
-        reason: ''
-      },
-      isFormValid: true,
-      testItems: [
-        {
-          machine_id: 1,
-          location: 'Texas',
-          zone: 'Zone 1',
-          start: '2020-05-11 00:00',
-          end: '2020-05-11 12:00',
-          type: 'Idle',
-          reason: 'No Demand',
-          comment: 'Material'
-        },
-        {
-          machine_id: 1,
-          location: 'Texas',
-          zone: 'Zone 1',
-          start: '2020-05-11 00:00',
-          end: '2020-05-11 12:00',
-          type: 'Unplanned',
-          reason: 'Prevent Maint',
-          comment: 'Bearing'
-        },
-        {
-          machine_id: 1,
-          location: 'Texas',
-          zone: 'Zone 1',
-          start: '2020-05-11 00:00',
-          end: '2020-05-11 12:00',
-          type: 'Planned',
-          reason: 'Machine Failure',
-          comment: 'Prox switch'
-        },
-        {
-          machine_id: 1,
-          location: 'Texas',
-          zone: 'Zone 1',
-          start: '2020-05-11 00:00',
-          end: '2020-05-11 12:00',
-          type: 'Idle',
-          reason: 'No Demand',
-          comment: 'Material'
-        },
-        {
-          machine_id: 1,
-          location: 'Texas',
-          zone: 'Zone 1',
-          start: '2020-05-11 00:00',
-          end: '2020-05-11 12:00',
-          type: 'Planned',
-          reason: 'Power Outage',
-          comment: 'Utility'
-        },
-        {
-          machine_id: 1,
-          location: 'Texas',
-          zone: 'Zone 1',
-          start: '2020-05-11 00:00',
-          end: '2020-05-11 12:00',
-          type: 'Unplanned',
-          reason: 'Other',
-          comment: '?'
-        },
-        {
-          machine_id: 1,
-          location: 'Texas',
-          zone: 'Zone 1',
-          start: '2020-05-11 00:00',
-          end: '2020-05-11 12:00',
-          type: 'Planned',
-          reason: 'Other',
-          comment: 'Break'
-        }
-      ]
+      editedItem: {},
+      defaultItem: {},
+      isFormValid: true
     }
   },
   computed: {
     ...mapState({
-      btnLoading: (state) => state.devices.downtimePlanBtnLoading,
-      tableLoading: (state) => state.devices.downtimePlansTableLoading,
-      machines: (state) => state.machines.machines,
-      downtimePlans: (state) => state.devices.downtimePlans
-    }),
-    editTitle() {
-      return this.editedIndex === -1 ? 'Add' : 'Edit'
-    }
+      downtimeTableData: (state) => state.devices.downtimeTableData,
+      isDowntimeTableLoading: (state) => state.devices.isDowntimeTableLoading,
+      deviceInfo: (state) => state.devices.deviceInfo,
+      downtimeTypes: (state) => state.devices.downtimeTypes,
+      locations: (state) => state.devices.locations,
+      zones: (state) => state.devices.zones,
+      downtimeReasons: (state) => state.devices.downtimeReasons,
+      isUpdatingDowntime: (state) => state.devices.isUpdatingDowntime
+    })
   },
-  created() {
-    this.getDowntimePlans()
+  mounted() {
+    this.getDowntimeTableData()
   },
   methods: {
     ...mapActions({
-      getDowntimePlans: 'devices/getDowntimePlans',
-      addDowntimePlan: 'devices/addDowntimePlan',
-      updateDowntimePlan: 'devices/updateDowntimePlan'
+      getDowntimeTableData: 'devices/getDowntimeTableData',
+      updateDowntime: 'devices/updateDowntime'
     }),
     editPlan(item) {
-      this.editedIndex = item.id
-      // Object.assign(this.editedItem, {
-      //   'dateFrom': item.date_from,
-      //   'dateTo': item.date_to,
-      //   'timeFrom': item.time_from,
-      //   'timeTo': item.time_to,
-      //   'reason': item.reason,
-      //   'machine': item.machine_id
-      // })
+      const editType = this.downtimeTypes.find((type) => {
+        return type.id === item.type
+      })
+
+      const editReason = this.downtimeReasons.find((reason) => {
+        return reason.id === item.reason_id
+      })
 
       Object.assign(this.editedItem, {
-        'dateFrom': item.start.split(' ')[0],
-        'dateTo': item.end.split(' ')[0],
-        'timeFrom': item.start.split(' ')[1],
-        'timeTo': item.end.split(' ')[1],
-        'reason': item.reason,
-        'type': item.type,
+        'reason': editReason,
+        'type': editType,
         'comment': item.comment,
-        'machine': item.machine_id
+        'id': item.id
       })
 
       this.dialog = true
@@ -441,34 +198,67 @@ export default {
       this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
       })
     },
     submit() {
-      // if (this.$refs.editForm.validate()) {
-      //   if (this.editedIndex > -1) {
-      //     this.updateDowntimePlan({
-      //       'data': this.editedItem,
-      //       'id': this.editedIndex
-      //     }).then(() => {
-      //       this.getDowntimePlans()
-      //       this.closeDialog()
-      //     })
-      //   } else {
-      //     this.addDowntimePlan(this.editedItem).then(() => {
-      //       this.getDowntimePlans()
-      //       this.closeDialog()
-      //     })
-      //   }
-      // }
-      this.closeDialog()
+      if (this.$refs.editForm.validate()) {
+        this.updateDowntime(this.editedItem)
+          .then(() => {
+            this.dialog = false
+            this.getDowntimeTableData()
+          })
+      }
     },
     machineName(item) {
-      const _machine = this.machines.find((machine) => {
-        return machine.id === item.machine_id
+      const _machine = this.deviceInfo.find((device) => {
+        return Number(device.serial_number) === item.device_id
       })
 
-      return _machine.name
+      return _machine.configuration.name || ''
+    },
+    getLocation(item) {
+      const _device = this.deviceInfo.find((device) => {
+        return Number(device.serial_number) === item.device_id
+      })
+
+      const _location = this.locations.find((location) => {
+        return location.id === _device.location_id
+      })
+
+      return _location ? _location.name : ''
+    },
+    getZone(item) {
+      const _device = this.deviceInfo.find((device) => {
+        return Number(device.serial_number) === item.device_id
+      })
+
+      const _zone = this.zones.find((zone) => {
+        return zone.id === _device.zone_id
+      })
+
+      return _zone ? _zone.name : ''
+    },
+    getTimeFromTimestamp(timestamp) {
+      const date = timestamp !== -1 ? new Date(timestamp * 1000) : ''
+
+      return date !== '' ? `${date.toLocaleDateString()} ${date.toLocaleTimeString()}` : ''
+    },
+    getDowntimeType(item) {
+      const _type = this.downtimeTypes.find((type) => {
+        return type.id === item.type
+      })
+
+      return _type ? _type.name : ''
+    },
+    getDowntimeReason(item) {
+      const _reason = this.downtimeReasons.find((reason) => {
+        return reason.id === item.reason_id
+      })
+
+      return _reason ? _reason.name : ''
+    },
+    printComment(item) {
+      return item.comment ? item.comment : '?'
     }
   }
 }
