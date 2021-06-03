@@ -114,18 +114,23 @@ export default {
   },
   computed: {
     ...mapState({
+      userRole: (state) => state.auth.user.role,
       loadingZonesTable: (state) => state.machines.loadingZonesTable,
       loadingDashboardDevicesTable: (state) => state.devices.loadingDashboardDevicesTable,
 
       zones: (state) => state.zones.data,
 
       companies: (state) => state.companies.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
+      selectedCompany: (state) => state.machines.selectedCompany
     }),
     ...mapGetters({
       locationName: 'locations/locationName',
       canViewCompanies: 'auth/canViewCompanies'
     }),
+    isAcsUser() {
+      return ['acs_admin', 'acs_manager', 'acs_viewer'].includes(this.userRole)
+    },
     breadcrumbItems() {
       return  [
         {
@@ -157,21 +162,52 @@ export default {
       ]
     }
   },
-  mounted() {
+  async mounted() {
     if (this.canViewCompanies)
-      this.initAcsDashboard()
+      await this.initAcsDashboard()
     this.getLocations()
     this.initZonesTable(this.$route.params.location)
+    this.getDowntimeGraphData({
+      company_id: this.selectedCompany.id,
+      location_id: this.$route.params.location,
+      zone_id: 0,
+      to: new Date().getTime(),
+      from: new Date().getTime() - 60 * 60 * 24 * 1000
+    })
+
+    this.getDowntimeByTypeGraphSeries({
+      company_id: this.selectedCompany.id,
+      location_id: this.$route.params.location,
+      zone_id: 0,
+      to: new Date().getTime(),
+      from: new Date().getTime() - 60 * 60 * 24 * 1000
+    })
+
+    this.getDowntimeByReasonGraphSeries({
+      company_id: this.selectedCompany.id,
+      location_id: this.$route.params.location,
+      zone_id: 0,
+      to: new Date().getTime(),
+      from: new Date().getTime() - 60 * 60 * 24 * 1000
+    })
   },
   methods: {
     ...mapActions({
       initAcsDashboard: 'machines/initAcsDashboard',
       initZonesTable: 'machines/initZonesTable',
       getLocations: 'locations/getLocations',
-      changeSelectedCompany: 'machines/changeSelectedCompany'
+      changeSelectedCompany: 'machines/changeSelectedCompany',
+      getDowntimeGraphData: 'devices/getDowntimeGraphData',
+      getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
+      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
     }),
     onCompanyChanged(company) {
       this.changeSelectedCompany(company)
+
+      this.$router.push({
+        name: 'acs-machines'
+      })
+      
     }
   }
 }

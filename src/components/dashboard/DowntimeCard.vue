@@ -7,7 +7,7 @@
     :disabled="isDowntimeGraphLoading"
   >
     <v-card-title>
-      Downtime
+      Downtime History
       <v-spacer></v-spacer>
       <v-btn
         icon
@@ -39,6 +39,29 @@ import TimeRangeChooser from './TimeRangeChooser4'
 
 const dateTimeIsoString = new Date().toISOString().substr(0, 10)
 
+const seriesColors = [{
+  name: 'No Demand',
+  color: '#a4bcbb'
+}, {
+  name: 'Preventative Maintenance',
+  color: '#508FF0'
+}, {
+  name: 'Machine Failure',
+  color: '#06d6a0'
+}, {
+  name: 'Power Outage',
+  color: '#505554'
+}, {
+  name: 'Other',
+  color: '#ffd166'
+}, {
+  name: 'Change Over',
+  color: '#ea344e'
+}, {
+  name: 'Average Downtime',
+  color: '#ba7d55'
+}]
+
 export default {
   components: {
     TimeRangeChooser
@@ -64,22 +87,27 @@ export default {
     ...mapState({
       downtimeGraphData: (state) => state.devices.downtimeGraphData,
       downtimeGraphDate: (state) => state.devices.downtimeGraphDate,
-      isDowntimeGraphLoading: (state) => state.devices.isDowntimeGraphLoading
+      isDowntimeGraphLoading: (state) => state.devices.isDowntimeGraphLoading,
+      selectedCompany: (state) => state.machines.selectedCompany
     }),
     ...mapGetters('machines', ['timeRangeFromTo']),
     chartOptions2() {
       return {
         series: this.downtimeGraphData,
         chart: {
-          type: 'bar',
+          type: 'line',
           height: '500px',
           stacked: true,
           toolbar: {
             show: false
           },
           zoom: {
-            enabled: true
+            enabled: false
           }
+        },
+        stroke: {
+          width: this.getStrokeWidth,
+          curve: 'smooth'
         },
         responsive: [{
           breakpoint: 480,
@@ -110,7 +138,9 @@ export default {
         legend: {
           position: 'bottom'
         },
+        colors: this.getSeriesColors,
         fill: {
+          colors: this.getSeriesColors,
           opacity: 1
         }
       }
@@ -143,19 +173,53 @@ export default {
 
         return timeRange
       }
+    },
+    getSeriesColors() {
+      const _colors = []
+
+      this.downtimeGraphData.map((item) => {
+        const seriesColor = seriesColors.find((data) => {
+          return data.name === item.name
+        })
+
+        _colors.push(seriesColor ? seriesColor.color : '#fff')
+
+        return _colors
+      })
+
+      return _colors
+    },
+    getStrokeWidth() {
+      const _widths = []
+
+      this.downtimeGraphData.map((item) => {
+        if (item.name === 'Average Downtime') {
+          _widths.push(3)
+        } else {
+          _widths.push(0)
+        }
+
+        return _widths
+      })
+
+      return _widths
     }
-  },
-  mounted() {
-    this.onTimeRangeChanged(this.timeRange)
   },
   methods: {
     ...mapActions({
-      getDowntimeGraphData: 'devices/getDowntimeGraphData'
+      getDowntimeGraphData: 'devices/getDowntimeGraphData',
+      getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
+      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
     }),
-    async onTimeRangeChanged(newTimeRange) {
+    onTimeRangeChanged(newTimeRange) {
       this.selectedTimeRange = newTimeRange
-      const to = new Date(`${this.getTimeRange.dateTo} ${this.getTimeRange.timeTo}`).getTime()
-      const from = new Date(`${this.getTimeRange.dateFrom} ${this.getTimeRange.timeFrom}`).getTime()
+      let to = new Date(`${this.getTimeRange.dateTo} ${this.getTimeRange.timeTo}`).getTime()
+      let from = new Date(`${this.getTimeRange.dateFrom} ${this.getTimeRange.timeFrom}`).getTime()
+
+      if (this.selectedTimeRange.timeRangeOption === 'custom') {
+        to = new Date(`${this.getTimeRange.dateTo} ${this.getTimeRange.timeTo} GMT+00:00`).getTime() + 60 * 60 * 24 * 1000
+        from = new Date(`${this.getTimeRange.dateFrom} ${this.getTimeRange.timeFrom} GMT+00:00`).getTime()
+      }
 
       const customRange = to - from
 
@@ -164,14 +228,12 @@ export default {
       } else if (customRange > 60 * 60 * 24 * 14 * 1000) {
         this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Time range selection is limited to two weeks' } }, { root: true })
       } else {
-        try {
-          this.getDowntimeGraphData({
-            to,
-            from
-          })} catch (error) {
-          console.log(error)
-        }
+        const location_id = this.$route.params.location ? this.$route.params.location : 0
+        const zone_id = this.$route.params.zone ? this.$route.params.zone : 0
 
+        this.getDowntimeGraphData({ to, from, company_id: this.selectedCompany.id, location_id, zone_id })
+        this.getDowntimeByTypeGraphSeries({ to, from, company_id: this.selectedCompany.id, location_id, zone_id })
+        this.getDowntimeByReasonGraphSeries({ to, from, company_id: this.selectedCompany.id, location_id, zone_id })
         this.showTimeRangeChooser = false
       }
     }

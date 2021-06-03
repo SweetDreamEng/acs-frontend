@@ -8,14 +8,6 @@
   >
     <v-card-title>
       Downtime by Reason
-      <v-spacer></v-spacer>
-      <v-btn
-        icon
-        class=" ml-2"
-        @click="showTimeRangeChooser = true"
-      >
-        <v-icon>$mdi-filter</v-icon>
-      </v-btn>
     </v-card-title>
     <v-card-text>
       <apexchart
@@ -23,41 +15,38 @@
         :series="getDowntimeByReasonSeries"
       ></apexchart>
     </v-card-text>
-    <time-range-chooser
-      :dlg="showTimeRangeChooser"
-      :time-range="timeRange"
-      @close="showTimeRangeChooser = false"
-      @submit="onTimeRangeChanged"
-    >
-    </time-range-chooser>
   </v-card>
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-import TimeRangeChooser from './TimeRangeChooser4'
 
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+const seriesColors = [{
+  name: 'No Demand',
+  color: '#a4bcbb'
+}, {
+  name: 'Preventative Maintenance',
+  color: '#508FF0'
+}, {
+  name: 'Machine Failure',
+  color: '#06d6a0'
+}, {
+  name: 'Power Outage',
+  color: '#505554'
+}, {
+  name: 'Other',
+  color: '#ffd166'
+}, {
+  name: 'Change Over',
+  color: '#ea344e'
+}]
 
 export default {
-  components: {
-    TimeRangeChooser
-  },
   data() {
     return {
       showTimeRangeChooser: false,
       selectedTimeRange: {},
-      timeRange: {
-        timeRangeOption: 'last24Hours',
-        dateFrom: dateTimeIsoString,
-        dateTo: dateTimeIsoString,
-        timeFrom: '00:00',
-        timeTo: '00:00'
-      },
-      showChart: true,
-      viewOptions: [
-        'Daily', 'Weekly', 'Monthly'
-      ]
+      showChart: true
     }
   },
   computed: {
@@ -65,36 +54,6 @@ export default {
       downtimeByReasonGraphSeries: (state) => state.devices.downtimeByReasonGraphSeries,
       isDowntimeByReasonGraphLoading: (state) => state.devices.isDowntimeByReasonGraphLoading
     }),
-    ...mapGetters('machines', ['timeRangeFromTo']),
-    getTimeRange() {
-      if (this.selectedTimeRange && this.selectedTimeRange.timeRangeOption !== 'custom') {
-        const tR = {
-          timeRangeOption: this.selectedTimeRange.timeRangeOption,
-          dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
-        }
-
-        const from = new Date(this.timeRangeFromTo(tR).from)
-        const to = new Date(this.timeRangeFromTo(tR).to)
-
-        const timeRange = {
-          dateFrom: from.toLocaleDateString(),
-          dateTo: to.toLocaleDateString(),
-          timeFrom: from.toLocaleTimeString(),
-          timeTo: to.toLocaleTimeString()
-        }
-
-        return timeRange
-      } else {
-        const timeRange = {
-          dateFrom: this.selectedTimeRange.dateFrom,
-          dateTo: this.selectedTimeRange.dateTo,
-          timeFrom: this.selectedTimeRange.timeFrom,
-          timeTo: this.selectedTimeRange.timeTo
-        }
-
-        return timeRange
-      }
-    },
     chartOptions() {
       return {
         chart: {
@@ -130,6 +89,7 @@ export default {
             show: false
           }
         },
+        colors: this.getSeriesColors,
         legend: {
           position: 'bottom',
           offsetY: 10
@@ -149,34 +109,21 @@ export default {
       })
 
       return series
-    }
-  },
-  mounted() {
-    this.onTimeRangeChanged(this.timeRange)
-  },
-  methods: {
-    ...mapActions({
-      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
-    }),
-    onTimeRangeChanged(newTimeRange) {
-      this.selectedTimeRange = newTimeRange
-      const to = new Date(`${this.getTimeRange.dateTo} ${this.getTimeRange.timeTo}`).getTime()
-      const from = new Date(`${this.getTimeRange.dateFrom} ${this.getTimeRange.timeFrom}`).getTime()
+    },
+    getSeriesColors() {
+      const _colors = []
 
-      const customRange = to - from
-
-      if (customRange < 0) {
-        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Please check your time range selection' } }, { root: true })
-      } else if (customRange > 60 * 60 * 24 * 14 * 1000) {
-        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Time range selection is limited to two weeks' } }, { root: true })
-      } else {
-        this.getDowntimeByReasonGraphSeries({
-          to,
-          from
+      this.downtimeByReasonGraphSeries.map((item) => {
+        const seriesColor = seriesColors.find((data) => {
+          return data.name === item.name
         })
 
-        this.showTimeRangeChooser = false
-      }
+        _colors.push(seriesColor.color)
+
+        return _colors
+      })
+
+      return _colors
     }
   }
 }

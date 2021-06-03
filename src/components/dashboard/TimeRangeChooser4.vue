@@ -21,7 +21,7 @@
               v-model="locTimeRangeOption"
             >
               <v-radio
-                v-for="(item, i) in timeRageOptions.slice(3, 5)"
+                v-for="(item, i) in timeRageOptions.slice(3, 6)"
                 :key="i"
                 :label="item.label"
                 :value="item.value"
@@ -29,6 +29,68 @@
             </v-radio-group>
           </v-col>
         </v-row>
+
+        <v-expand-transition>
+          <div v-show="locTimeRangeOption==='custom'">
+            <div class="d-flex">
+              <v-menu
+                ref="dateFrom"
+                v-model="dateFromMenu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                width="250px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="locDateFrom"
+                    label="From Date"
+                    prepend-icon="$mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="locDateFrom"
+                  no-title
+                  scrollable
+                  @input="dateFromMenu = false"
+                >
+                </v-date-picker>
+              </v-menu>
+            </div>
+
+            <div class="d-flex">
+              <v-menu
+                ref="dateTo"
+                v-model="dateToMenu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                width="250px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="locDateTo"
+                    label="To Date"
+                    prepend-icon="$mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="locDateTo"
+                  no-title
+                  scrollable
+                  @input="dateToMenu = false"
+                >
+                </v-date-picker>
+              </v-menu>
+            </div>
+          </div>
+        </v-expand-transition>
 
         <div class="text-right">
           <v-btn color="primary" text @click="$emit('close')">Cancel</v-btn>
@@ -93,6 +155,10 @@ export default {
         {
           label: 'Last 14 days',
           value: 'last14Days'
+        },
+        {
+          label: 'Custom',
+          value: 'custom'
         }
       ]
     }
