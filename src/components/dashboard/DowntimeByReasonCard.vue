@@ -118,7 +118,7 @@ export default {
           return data.name === item.name
         })
 
-        _colors.push(seriesColor.color)
+        _colors.push(seriesColor ? seriesColor.color : '#fff')
 
         return _colors
       })
