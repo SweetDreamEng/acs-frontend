@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-card-title>{{ getLocationName() }}</v-card-title>
     <report-time-range-chooser ref="timeRange"></report-time-range-chooser>
     <v-card>
       <v-card-title class="pb-0">Date and Time</v-card-title>
@@ -27,6 +28,10 @@ export default {
     selectedTags: {
       type: Object,
       default: () => {}
+    },
+    locationId:{
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -40,6 +45,11 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      locations: (state) => state.locations.data
+    })
+  },
   methods: {
     handleNext() {
       this.timeRange['timeRangeOption'] = this.$refs.timeRange.locTimeRangeOption
@@ -49,6 +59,13 @@ export default {
       this.timeRange['timeTo'] = this.$refs.timeRange.locTimeTo
 
       this.$emit('setSelectedTimeRange', this.timeRange)
+    },
+    getLocationName() {
+      const location = this.locations.find((location) => {
+        return location.id === this.locationId
+      })
+
+      return location ? location.name : ''
     }
   }
 }

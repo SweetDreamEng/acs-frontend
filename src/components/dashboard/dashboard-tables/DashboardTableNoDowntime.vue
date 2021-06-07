@@ -17,6 +17,7 @@ export default {
         chart: {
           type: 'bar',
           stacked: true,
+          stackType: '100%',
           toolbar: {
             show: false
           }

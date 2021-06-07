@@ -42,7 +42,24 @@ const module = {
 
     loadingDeviceConfig: false,
     sendingDeviceConfig: false,
-    deviceConfiguration: {}
+    deviceConfiguration: {},
+
+    isDowntimeGraphLoading: false,
+    downtimeGraphData: [],
+    downtimeGraphDate: [],
+    downtimeByTypeGraphSeries: [],
+    isDowntimeByTypeGraphLoading: false,
+    downtimeByReasonGraphSeries: [],
+    isDowntimeByReasonGraphLoading: false,
+
+    isDowntimeTableLoading: false,
+    downtimeTableData: [],
+    deviceInfo: [],
+    downtimeTypes: [],
+    locations: [],
+    zones: [],
+    downtimeReasons: [],
+    isUpdatingDowntime: false
   },
 
   actions: {
@@ -382,6 +399,85 @@ const module = {
       } finally {
         commit('SET_LOADING_ACTIVE_DEVICES', false)
       }
+    },
+
+    async getDowntimeGraphData({ commit }, data) {
+      commit('SET_LOADING_DOWNTIME_GRAPH', true)
+
+      try {
+        const response = await deviceAPI.getDowntimeGraphData(data)
+
+        commit('SET_DOWNTIME_GRAPH_DATA', response.data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_DOWNTIME_GRAPH', false)
+      }
+    },
+
+    async getDowntimeByTypeGraphSeries({ commit }, data) {
+      commit('SET_LOADING_DOWNTIME_BY_TYPE_GRAPH', true)
+
+      try {
+        const response = await deviceAPI.getDowntimeByTypeGraphSeries(data)
+
+        commit('SET_DOWNTIME_BY_TYPE_GRAPH_SERIES', response.data.series)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_DOWNTIME_BY_TYPE_GRAPH', false)
+      }
+    },
+
+    async getDowntimeByReasonGraphSeries({ commit }, data) {
+      commit('SET_LOADING_DOWNTIM_BY_REASON_GRAPH', true)
+
+      try {
+        const response = await deviceAPI.getDowntimeByReasonGraphSeries(data)
+
+        commit('SET_DOWNTIME_BY_REASON_GRAPH_SERIES', response.data.series)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_DOWNTIM_BY_REASON_GRAPH', false)
+      }
+    },
+
+    async getDowntimeTableData({ commit }) {
+      commit('SET_LOADING_DOWNTIMES_TABLE', true)
+
+      try {
+        const response = await deviceAPI.getDowntimeTableData()
+
+        commit('SET_DEVICE_INFO', response.data.devices)
+        commit('SET_LOCATIONS', response.data.locations)
+        commit('SET_ZONES', response.data.zones)
+        commit('SET_DOWNTIME_TYPES', response.data.downtimeTypes)
+        commit('SET_DONWTIME_TABLE_DATA', response.data.downtimes)
+        commit('SET_DOWNTIME_REASONS', response.data.reasons)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_LOADING_DOWNTIMES_TABLE', false)
+      }
+    },
+
+    async updateDowntime({ commit, dispatch }, data) {
+      commit ('SET_UPDATING_DOWNTIME', true)
+
+      try {
+        const response = await deviceAPI.updateDowntime(data)
+
+        if (response.data.status === 'success') {
+          dispatch('app/showSuccess', response.data.message, { root: true })
+        } else {
+          dispatch('app/showError', { message: 'Failed: ', error: { message: response.data.message } }, { root: true })
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_UPDATING_DOWNTIME', false)
+      }
     }
   },
 
@@ -513,7 +609,42 @@ const module = {
     },
     SET_REPORT_SAVED_MACHINES_PAGINATION(state, count) {
       state.savedMachinesPageCountReport = count
-    }
+    },
+    SET_LOADING_DOWNTIME_GRAPH(state, status) {
+      state.isDowntimeGraphLoading = status
+    },
+    SET_DOWNTIME_GRAPH_DATA(state, data) {
+      state.downtimeGraphData = data.series
+      state.downtimeGraphDate = data.dates
+    },
+    SET_LOADING_DOWNTIME_BY_TYPE_GRAPH(state, status) {
+      state.isDowntimeByTypeGraphLoading = status
+    },
+    SET_DOWNTIME_BY_TYPE_GRAPH_SERIES(state, data) {
+      state.downtimeByTypeGraphSeries = data
+    },
+    SET_LOADING_DOWNTIM_BY_REASON_GRAPH(state, status) {
+      state.isDowntimeByReasonGraphLoading = status
+    },
+    SET_DOWNTIME_BY_REASON_GRAPH_SERIES(state, data) {
+      state.downtimeByReasonGraphSeries = data
+    },
+    SET_LOADING_DOWNTIMES_TABLE(state, status) {
+      state.isDowntimeTableLoading = status
+    },
+    SET_DONWTIME_TABLE_DATA(state, data) {
+      state.downtimeTableData = data
+    },
+    SET_DEVICE_INFO(state, data) {
+      state.deviceInfo = data
+    },
+    SET_DOWNTIME_TYPES(state, data) {
+      state.downtimeTypes = data
+    },
+    SET_ZONES(state, data) { state.zones = data },
+    SET_LOCATIONS(state, data) { state.locations = data },
+    SET_DOWNTIME_REASONS(state, data) { state.downtimeReasons = data },
+    SET_UPDATING_DOWNTIME(state, status) { state.isUpdatingDowntime = status }
   },
 
   getters: {

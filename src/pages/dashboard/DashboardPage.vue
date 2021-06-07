@@ -210,11 +210,31 @@ export default {
       ]
     }
   },
-  mounted() {
+  async mounted() {
     if (this.canViewCompanies)
-      this.initAcsDashboard()
+      await this.initAcsDashboard()
     this.getZones()
-    this.initLocationsTable({ companyId: 0 })
+    this.initLocationsTable({ companyId: this.selectedCompany ? this.selectedCompany.id : 0 })
+    this.getDowntimeGraphData({
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+      location_id: 0,
+      to: new Date().getTime(),
+      from: new Date().getTime() - 60 * 60 * 24 * 1000
+    })
+
+    this.getDowntimeByTypeGraphSeries({
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+      location_id: 0,
+      to: new Date().getTime(),
+      from: new Date().getTime() - 60 * 60 * 24 * 1000
+    })
+
+    this.getDowntimeByReasonGraphSeries({
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+      location_id: 0,
+      to: new Date().getTime(),
+      from: new Date().getTime() - 60 * 60 * 24 * 1000
+    })
   },
   methods: {
     ...mapActions({
@@ -223,23 +243,50 @@ export default {
       getZones: 'zones/getZones',
       changeSelectedCompany: 'machines/changeSelectedCompany',
       getDevicesAnalytics: 'devices/getDevicesAnalytics',
-      getAlarmsReports: 'alarms/getAlarmsReports'
+      getAlarmsReports: 'alarms/getAlarmsReports',
+      getDowntimeGraphData: 'devices/getDowntimeGraphData',
+      getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
+      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
     }),
     onCompanyChanged(company) {
       this.changeSelectedCompany(company)
 
       this.initLocationsTable({
-        companyId: this.selectedCompany.id
+        companyId: this.selectedCompany ? this.selectedCompany.id : 0
       })
 
       this.getDevicesAnalytics({
         page: 1,
         location_id: this.location,
-        company_id: this.selectedCompany.id
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0
       })
 
       this.getAlarmsReports({
-        companyId: this.selectedCompany.id
+        companyId: this.selectedCompany ? this.selectedCompany.id : 0
+      })
+
+      this.getDowntimeGraphData({
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+        location_id: 0,
+        zone_id: 0,
+        to: new Date().getTime(),
+        from: new Date().getTime() - 60 * 60 * 24 * 1000
+      })
+
+      this.getDowntimeByTypeGraphSeries({
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+        location_id: 0,
+        zone_id: 0,
+        to: new Date().getTime(),
+        from: new Date().getTime() - 60 * 60 * 24 * 1000
+      })
+
+      this.getDowntimeByReasonGraphSeries({
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+        location_id: 0,
+        zone_id: 0,
+        to: new Date().getTime(),
+        from: new Date().getTime() - 60 * 60 * 24 * 1000
       })
     }
   }
