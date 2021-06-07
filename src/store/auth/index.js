@@ -70,6 +70,7 @@ const module = {
         const response = await authAPI.signIn(email, password)
         
         commit('SET_TOKEN', response.data.access_token)
+        commit('machines/SET_SELECTED_COMPANY', { id: 0, name: 'All' }, { root: true })
         
         localStorage.setItem('token', response.data.access_token)
         
