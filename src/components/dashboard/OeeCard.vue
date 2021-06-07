@@ -111,9 +111,9 @@ export default {
   },
   mounted() {
     this.showChart = true
-    this.getAlarmsReports({
-      companyId: this.companyId
-    })
+    // this.getAlarmsReports({
+    //   companyId: this.companyId
+    // })
   },
   methods: {
     ...mapActions({
