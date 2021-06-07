@@ -16,6 +16,12 @@
       >
         <v-icon>$mdi-filter</v-icon>
       </v-btn>
+      <v-btn
+        class="ml-1"
+        color="primary"
+      >
+        Equipment Availability
+      </v-btn>
     </v-card-title>
     <v-card-text>
       <apexchart
