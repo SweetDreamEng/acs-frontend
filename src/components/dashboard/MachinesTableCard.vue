@@ -52,7 +52,7 @@
           <v-icon color="primary">$mdi-trending-up</v-icon>
           {{ header.text | percentageLabel }}
         </template>
-        <template v-slot:header.consumption="{ header }">
+        <template v-slot:header.downtimeByReason="{ header }">
           <v-icon class="mdi-rotate-90" color="primary">$mdi-battery-30</v-icon>
           {{ header.text }}
         </template>
@@ -85,6 +85,19 @@
         <template v-slot:item.configuration="{ item }">
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
         </template>
+        <template v-slot:item.downtimeByReason="{ item }">
+          <div v-if="item && item.downtimeByReason" class="mx-auto">
+            <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
+            <apexchart
+              v-else
+              width="240"
+              height="80"
+              :options="getSeriesOptions(item.downtimeByReason)"
+              :series="getDowntimeSeries(item.downtimeByReason)"
+            >
+            </apexchart>
+          </div>
+        </template>
         <template v-slot:item.location_id="{ item }">
           {{ locationName(item.location_id) }}
         </template>
@@ -92,6 +105,9 @@
           {{ zoneName(item.zone_id) }}
         </template>
       </v-data-table>
+      <div class="d-flex justify-end mr-4">
+        <downtime-legend></downtime-legend>
+      </div>
       <v-pagination
         v-model="page"
         :length="pageCountReport"
@@ -104,6 +120,8 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import NoDowntime from './dashboard-tables/DashboardTableNoDowntime'
+import DowntimeLegend from './dashboard-tables/DashboardTableDowntimeLegend'
 /*
 |---------------------------------------------------------------------
 | Machines Table Card Component
@@ -112,8 +130,31 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 | Machines table card to list machines and their properties
 |
 */
+
+const seriesColors = [{
+  name: 'No Demand',
+  color: '#a4bcbb'
+}, {
+  name: 'Preventative Maintenance',
+  color: '#508FF0'
+}, {
+  name: 'Machine Failure',
+  color: '#06d6a0'
+}, {
+  name: 'Power Outage',
+  color: '#505554'
+}, {
+  name: 'Other',
+  color: '#ffd166'
+}, {
+  name: 'Change Over',
+  color: '#ea344e'
+}]
+
 export default {
   components: {
+    NoDowntime,
+    DowntimeLegend
   },
   props: {
     location: {
@@ -127,8 +168,8 @@ export default {
         { text: 'Running', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'name' },
         { text: 'Machine Type', align: 'start', value: 'configuration' },
+        { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Capacity Utilization', align: 'center', value: 'capacity' },
-        { text: 'Consumption', align: 'center', value: 'consumption' },
         { text: 'Locations', align: 'center', value: 'location_id' },
         { text: 'Zones', align: 'center', value: 'zone_id' }
       ],
@@ -141,7 +182,7 @@ export default {
         'Machine Name',
         'Machine Type',
         'Capacity Utilization',
-        'Consumption',
+        'Downtime By Reason',
         'Locations',
         'Zones'
       ],
@@ -165,6 +206,53 @@ export default {
           color: 'orange',
           text: 'PLC Not Connected',
           icon: '$mdi-database-remove'
+        }
+      },
+      chartOptions: {
+        chart: {
+          type: 'bar',
+          stacked: true,
+          stackType: '100%',
+          toolbar: {
+            show: false
+          }
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            dataLabels: {
+              enabled: false
+            }
+          }
+        },
+        stroke: {
+          width: 1,
+          colors: ['#fff']
+        },
+        xaxis: {
+          axisBorder: {
+            show: false
+          },
+          labels: {
+            show: false
+          }
+        },
+        yaxis: {
+          labels: {
+            show: false
+          },
+          title: {
+            text: undefined
+          }
+        },
+        tooltip: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        grid: {
+          show: false
         }
       }
     }
@@ -234,6 +322,57 @@ export default {
     remove (item) {
       this.headerColumnValues.splice(this.headerColumnValues.indexOf(item), 1)
       this.headerColumnValues = [...this.headerColumnValues]
+    },
+    getDowntimeSeries(data) {
+      const series = []
+
+      data.map((item) => {
+        const temp = {
+          name: item.name,
+          data: [item.data]
+        }
+
+        series.push(temp)
+
+        return 0
+      })
+
+      return series
+    },
+
+    getSeriesOptions(series) {
+      const _colors = []
+
+      series.map((item) => {
+        const seriesColor = seriesColors.find((data) => {
+          return data.name === item.name
+        })
+
+        _colors.push(seriesColor ? seriesColor.color : '#fff')
+
+        return _colors
+      })
+
+      return {
+        ...this.chartOptions,
+        colors: _colors,
+        fill: {
+          colors: _colors,
+          opacity: 1
+        }
+      }
+    },
+
+    hasNoDowntime(data) {
+      let sum = 0
+
+      data.map((item) => {
+        sum += item.data
+
+        return sum
+      })
+      
+      return sum === 0
     }
   }
 }
