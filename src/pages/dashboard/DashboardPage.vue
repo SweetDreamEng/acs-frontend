@@ -252,21 +252,21 @@ export default {
       this.changeSelectedCompany(company)
 
       this.initLocationsTable({
-        companyId: this.selectedCompany.id
+        companyId: this.selectedCompany ? this.selectedCompany.id : 0
       })
 
       this.getDevicesAnalytics({
         page: 1,
         location_id: this.location,
-        company_id: this.selectedCompany.id
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0
       })
 
       this.getAlarmsReports({
-        companyId: this.selectedCompany.id
+        companyId: this.selectedCompany ? this.selectedCompany.id : 0
       })
 
       this.getDowntimeGraphData({
-        company_id: this.selectedCompany.id,
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
         to: new Date().getTime(),
@@ -274,7 +274,7 @@ export default {
       })
 
       this.getDowntimeByTypeGraphSeries({
-        company_id: this.selectedCompany.id,
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
         to: new Date().getTime(),
@@ -282,7 +282,7 @@ export default {
       })
 
       this.getDowntimeByReasonGraphSeries({
-        company_id: this.selectedCompany.id,
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
         to: new Date().getTime(),

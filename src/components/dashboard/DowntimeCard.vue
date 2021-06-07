@@ -231,9 +231,9 @@ export default {
         const location_id = this.$route.params.location ? this.$route.params.location : 0
         const zone_id = this.$route.params.zone ? this.$route.params.zone : 0
 
-        this.getDowntimeGraphData({ to, from, company_id: this.selectedCompany.id, location_id, zone_id })
-        this.getDowntimeByTypeGraphSeries({ to, from, company_id: this.selectedCompany.id, location_id, zone_id })
-        this.getDowntimeByReasonGraphSeries({ to, from, company_id: this.selectedCompany.id, location_id, zone_id })
+        this.getDowntimeGraphData({ to, from, company_id: this.selectedCompany ? this.selectedCompany.id : 0, location_id, zone_id })
+        this.getDowntimeByTypeGraphSeries({ to, from, company_id: this.selectedCompany ? this.selectedCompany.id : 0, location_id, zone_id })
+        this.getDowntimeByReasonGraphSeries({ to, from, company_id: this.selectedCompany ? this.selectedCompany.id : 0, location_id, zone_id })
         this.showTimeRangeChooser = false
       }
     }
