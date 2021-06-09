@@ -9,6 +9,11 @@
         class="link-table"
         @click:row="rowClicked"
       >
+        <template v-slot:header.downtimeByReason="{ header }">
+          <v-icon class="mdi-rotate-90" color="primary">$mdi-battery-30</v-icon>
+          {{ header.text }}
+        </template>
+        
         <template v-slot:item.name="{ item }">
           <span class="primary--text font-weight-bold">{{ item.name }}</span>
         </template>
@@ -20,7 +25,7 @@
           </production-rate-chart>
         </template>
         <template v-slot:item.utilization="{ item }">
-          <div class="d-flex align-center mx-auto" style="width: 180px;">
+          <div class="d-flex justify-center align-center mx-auto" style="width: 180px;">
             <apexchart
               type="line"
               width="160"
@@ -32,7 +37,7 @@
           </div>
         </template>
         <template v-slot:item.downtimeByReason="{ item }">
-          <div v-if="item && item.downtimeByReason" class="mx-auto">
+          <div v-if="item && item.downtimeByReason" class="d-flex justify-center">
             <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
             <apexchart
               v-else
@@ -116,10 +121,6 @@ export default {
             }
           }
         },
-        stroke: {
-          width: 1,
-          colors: ['#fff']
-        },
         xaxis: {
           axisBorder: {
             show: false
@@ -129,6 +130,7 @@ export default {
           }
         },
         yaxis: {
+          floating: true,
           labels: {
             show: false
           },
@@ -217,7 +219,7 @@ export default {
       return [
         { text: this.headerLabel, value: 'name' },
         { text: 'Alarms', align: 'center', value: 'alarms' },
-        { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason' },
+        { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Availability', align: 'center', value: 'utilization' }
       ]
     },
@@ -245,23 +247,6 @@ export default {
       })
       
       return sum === 0
-    },
-
-    downtimeDistribution(distribution) {
-      return [
-        {
-          name: 'Name',
-          data: [distribution[1]]
-        },
-        {
-          name: 'Name',
-          data: [distribution[0]]
-        },
-        {
-          name: 'Name',
-          data: [distribution[2]]
-        }
-      ]
     },
 
     getDowntimeSeries(data) {

@@ -100,7 +100,7 @@ export default {
     this.getLocations()
     this.getZones()
     this.getDowntimeGraphData({
-      company_id: this.selectedCompany.id,
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: this.$route.params.location,
       zone_id: this.$route.params.zone,
       to: new Date().getTime(),
@@ -108,7 +108,7 @@ export default {
     })
 
     this.getDowntimeByTypeGraphSeries({
-      company_id: this.selectedCompany.id,
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: this.$route.params.location,
       zone_id: this.$route.params.zone,
       to: new Date().getTime(),
@@ -116,7 +116,7 @@ export default {
     })
 
     this.getDowntimeByReasonGraphSeries({
-      company_id: this.selectedCompany.id,
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: this.$route.params.location,
       zone_id: this.$route.params.zone,
       to: new Date().getTime(),

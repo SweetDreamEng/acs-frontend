@@ -80,7 +80,7 @@ export default {
       return this.$store.state[this.namespace]['isLoading']
     },
     series() {
-      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1' || this.namespace === 'barGraph-t50-id1') {
+      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1' || this.namespace === 'barGraph-t50-id1' || this.namespace === 'barGraph-vtc-id1' || this.namespace === 'barGraph-vtc-id3') {
         const series = {
           data: this.$store.state[this.namespace]['items']
         }
@@ -189,7 +189,7 @@ export default {
       }
     },
     filteredCategories() {
-      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1' || this.namespace === 'barGraph-t50-id1') {
+      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1' || this.namespace === 'barGraph-t50-id1' || this.namespace === 'barGraph-vtc-id1' || this.namespace === 'barGraph-vtc-id3') {
         return this.categories
       } else if (this.namespace === 'barGraph-ngxDryer-id1') {
         const hopperCategories = []

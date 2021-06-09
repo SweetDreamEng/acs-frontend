@@ -13,7 +13,6 @@
         </div>
         <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
         <top-card></top-card>
-        <oee-container class="mt-2" :oees="oees"></oee-container>
       </v-container>
     </v-sheet>
     <v-container>
@@ -40,76 +39,16 @@ import CompanyMenu from '../../components/dashboard/CompanyMenu'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
 import DashboardTable from '../../components/dashboard/dashboard-tables/DashboardTable'
 import TopCard from '../../components/dashboard/TopCard'
-import OeeContainer from '../../components/dashboard/OeeContainer'
 
 export default {
   components: {
     CompanyMenu,
     MachinesTableCard,
     DashboardTable,
-    TopCard,
-    OeeContainer
+    TopCard
   },
   data() {
     return {
-      oees: [
-        {
-          zone: 'Zone 1',
-          color: 'green',
-          value: 75,
-          series: [{
-            name: 'Avg FPY',
-            data: [
-              ['2020-02-02', 13],
-              ['2020-02-03', 16],
-              ['2020-02-04', 9],
-              ['2020-02-05', 12]
-            ]
-          }]
-        },
-        {
-          zone: 'Zone 2',
-          color: 'green',
-          value: 52,
-          series: [{
-            name: 'Avg FPY',
-            data: [
-              ['2020-02-02', 13],
-              ['2020-02-03', 11],
-              ['2020-02-04', 13],
-              ['2020-02-05', 12]
-            ]
-          }]
-        },
-        {
-          zone: 'Zone 3',
-          color: 'red',
-          value: 78,
-          series: [{
-            name: 'Avg FPY',
-            data: [
-              ['2020-02-02', 6],
-              ['2020-02-03', 18],
-              ['2020-02-04', 3],
-              ['2020-02-05', 22]
-            ]
-          }]
-        },
-        {
-          zone: 'Zone 4',
-          color: 'green',
-          value: 75,
-          series: [{
-            name: 'Avg FPY',
-            data: [
-              ['2020-02-02', 3],
-              ['2020-02-03', 21],
-              ['2020-02-04', 13],
-              ['2020-02-05', 32]
-            ]
-          }]
-        }
-      ]
     }
   },
   computed: {
@@ -168,7 +107,7 @@ export default {
     this.getLocations()
     this.initZonesTable(this.$route.params.location)
     this.getDowntimeGraphData({
-      company_id: this.selectedCompany.id,
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: this.$route.params.location,
       zone_id: 0,
       to: new Date().getTime(),
@@ -176,7 +115,7 @@ export default {
     })
 
     this.getDowntimeByTypeGraphSeries({
-      company_id: this.selectedCompany.id,
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: this.$route.params.location,
       zone_id: 0,
       to: new Date().getTime(),
@@ -184,7 +123,7 @@ export default {
     })
 
     this.getDowntimeByReasonGraphSeries({
-      company_id: this.selectedCompany.id,
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: this.$route.params.location,
       zone_id: 0,
       to: new Date().getTime(),

@@ -52,10 +52,6 @@
           <v-icon color="primary">$mdi-trending-up</v-icon>
           {{ header.text | percentageLabel }}
         </template>
-        <template v-slot:header.consumption="{ header }">
-          <v-icon class="mdi-rotate-90" color="primary">$mdi-battery-30</v-icon>
-          {{ header.text }}
-        </template>
         <template v-slot:header.location_id="{ header }">
           <v-icon small color="primary">$mdi-factory</v-icon>
           {{ header.text }}
@@ -126,7 +122,6 @@ export default {
         { text: 'Machine Name', align: 'start', value: 'name' },
         { text: 'Machine Type', align: 'start', value: 'configuration' },
         { text: 'Capacity Utilization', align: 'center', value: 'capacity' },
-        { text: 'Consumption', align: 'center', value: 'consumption' },
         { text: 'Locations', align: 'center', value: 'location_id' },
         { text: 'Zones', align: 'center', value: 'zone_id' }
       ],
@@ -139,7 +134,6 @@ export default {
         'Machine Name',
         'Machine Type',
         'Capacity Utilization',
-        'Consumption',
         'Locations',
         'Zones'
       ],

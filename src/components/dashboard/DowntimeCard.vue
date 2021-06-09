@@ -1,47 +1,87 @@
 <template>
   <v-card
     class="d-flex flex-column justify-space-between"
-    height="600px"
     light
     :loading="isDowntimeGraphLoading"
     :disabled="isDowntimeGraphLoading"
   >
-    <v-card-title>
-      Downtime History
-      <v-spacer></v-spacer>
-      <v-btn
-        icon
-        class=" ml-2"
-        @click="showTimeRangeChooser = true"
+    <div v-if="showDowntimeChart">
+      <v-card-title>
+        Downtime History
+        <v-spacer></v-spacer>
+        <v-btn
+          icon
+          class=" ml-2"
+          @click="showTimeRangeChooser = true"
+        >
+          <v-icon>$mdi-filter</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="canViewEquipmentAvailability || isNotOverrallOption"
+          class="ml-1"
+          color="primary"
+          @click="showDowntimeChart = false"
+        >
+          Equipment Availability
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <apexchart
+          key="downtimegraph"
+          :series="chartOptions1.series"
+          height="400"
+          :options="chartOptions1"
+        ></apexchart>
+      </v-card-text>
+      <time-range-chooser
+        :dlg="showTimeRangeChooser"
+        :time-range="selectedTimeRange"
+        @close="showTimeRangeChooser = false"
+        @submit="onTimeRangeChanged"
       >
-        <v-icon>$mdi-filter</v-icon>
-      </v-btn>
-      <v-btn
-        class="ml-1"
-        color="primary"
-      >
+      </time-range-chooser>
+    </div>
+    <div v-else>
+      <v-card-title>
         Equipment Availability
-      </v-btn>
-    </v-card-title>
-    <v-card-text>
-      <apexchart
-        :series="chartOptions2.series"
-        :options="chartOptions2"
-      ></apexchart>
-    </v-card-text>
-    <time-range-chooser
-      :dlg="showTimeRangeChooser"
-      :time-range="timeRange"
-      @close="showTimeRangeChooser = false"
-      @submit="onTimeRangeChanged"
-    >
-    </time-range-chooser>
+        <v-spacer></v-spacer>
+        <v-btn
+          class="ml-1"
+          color="primary"
+          @click="showDowntimeChart = true"
+        >
+          Downtime
+        </v-btn>
+        <v-btn
+          v-if="canAddAvailabilityPlanTime"
+          class="ml-1"
+          color="primary"
+          @click="showPlanTimeForm = true"
+        >
+          Set Plan Time
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <apexchart
+          key="availability-chart"
+          height="400"
+          :series="chartOptions2.series"
+          :options="chartOptions2"
+        ></apexchart>
+      </v-card-text>
+      <availability-plan-time-form
+        :dlg="showPlanTimeForm"
+        @close="showPlanTimeForm = false"
+        @submit="handleSetPlanTime"
+      ></availability-plan-time-form>
+    </div>
   </v-card>
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
 import TimeRangeChooser from './TimeRangeChooser4'
+import AvailabilityPlanTimeForm from './AvailabilityPlanTimeForm'
 
 const dateTimeIsoString = new Date().toISOString().substr(0, 10)
 
@@ -70,20 +110,21 @@ const seriesColors = [{
 
 export default {
   components: {
-    TimeRangeChooser
+    TimeRangeChooser,
+    AvailabilityPlanTimeForm
   },
   data() {
     return {
       showTimeRangeChooser: false,
-      selectedTimeRange: {},
-      timeRange: {
+      showPlanTimeForm: false,
+      selectedTimeRange: {
         timeRangeOption: 'last24Hours',
         dateFrom: dateTimeIsoString,
         dateTo: dateTimeIsoString,
         timeFrom: '00:00',
         timeTo: '00:00'
       },
-      showChart: true,
+      showDowntimeChart: true,
       viewOptions: [
         'Daily', 'Weekly', 'Monthly'
       ]
@@ -93,16 +134,17 @@ export default {
     ...mapState({
       downtimeGraphData: (state) => state.devices.downtimeGraphData,
       downtimeGraphDate: (state) => state.devices.downtimeGraphDate,
+      availabilityGraphData: (state) => state.devices.availabilityGraphData,
       isDowntimeGraphLoading: (state) => state.devices.isDowntimeGraphLoading,
       selectedCompany: (state) => state.machines.selectedCompany
     }),
     ...mapGetters('machines', ['timeRangeFromTo']),
-    chartOptions2() {
+    ...mapGetters('auth', ['canAddAvailabilityPlanTime', 'canViewEquipmentAvailability']),
+    chartOptions1() {
       return {
         series: this.downtimeGraphData,
         chart: {
           type: 'line',
-          height: '500px',
           stacked: true,
           toolbar: {
             show: false
@@ -148,6 +190,55 @@ export default {
         fill: {
           colors: this.getSeriesColors,
           opacity: 1
+        }
+      }
+    },
+    chartOptions2() {
+      return {
+        chart: {
+          type: 'line',
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: false
+          }
+        },
+        colors: ['#FF1654', '#247BA0'],
+        series: this.availabilityGraphData,
+        stroke: {
+          width: [4, 4]
+        },
+        plotOptions: {
+          bar: {
+            columnWidth: '20%'
+          }
+        },
+        xaxis: {
+          type: 'date',
+          categories: this.downtimeGraphDate
+        },
+        yaxis: {
+          forceNiceScale: true,
+          labels: {
+            offsetX: 10,
+            formatter: (value) => {
+              return (value * 100).toFixed(3) + '%'
+            }
+          },
+          title: {
+            text: 'Availability (%)'
+          }
+        },
+    
+        dataLabels: {
+          style: {
+            fontSize: '10px',
+            colors: ['#fff']
+          }
+        },
+        legend: {
+          position: 'bottom'
         }
       }
     },
@@ -209,13 +300,17 @@ export default {
       })
 
       return _widths
+    },
+    isNotOverrallOption() {
+      return this.selectedCompany && this.selectedCompany.id !== 0
     }
   },
   methods: {
     ...mapActions({
       getDowntimeGraphData: 'devices/getDowntimeGraphData',
       getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
-      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
+      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries',
+      setAvailabilityPlanTime: 'devices/setAvailabilityPlanTime'
     }),
     onTimeRangeChanged(newTimeRange) {
       this.selectedTimeRange = newTimeRange
@@ -242,6 +337,14 @@ export default {
         this.getDowntimeByReasonGraphSeries({ to, from, company_id: this.selectedCompany ? this.selectedCompany.id : 0, location_id, zone_id })
         this.showTimeRangeChooser = false
       }
+    },
+    handleSetPlanTime(data) {
+      const timestamp = new Date(`${data.dateFrom} 00:00:00 GMT+00:00`).getTime()
+
+      this.setAvailabilityPlanTime({
+        date: timestamp,
+        time: data.planTime
+      })
     }
   }
 }
