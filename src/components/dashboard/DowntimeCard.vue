@@ -35,7 +35,7 @@
       </v-card-text>
       <time-range-chooser
         :dlg="showTimeRangeChooser"
-        :time-range="timeRange"
+        :time-range="selectedTimeRange"
         @close="showTimeRangeChooser = false"
         @submit="onTimeRangeChanged"
       >
@@ -117,8 +117,7 @@ export default {
     return {
       showTimeRangeChooser: false,
       showPlanTimeForm: false,
-      selectedTimeRange: {},
-      timeRange: {
+      selectedTimeRange: {
         timeRangeOption: 'last24Hours',
         dateFrom: dateTimeIsoString,
         dateTo: dateTimeIsoString,
