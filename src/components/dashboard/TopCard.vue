@@ -36,7 +36,6 @@ import SalesCard from '../../components/dashboard/SalesCard'
 import DowntimeCard from '../../components/dashboard/DowntimeCard'
 import DowntimeByTypeCard from '../../components/dashboard/DowntimeByTypeCard'
 import DowntimeByReasonCard from '../../components/dashboard/DowntimeByReasonCard'
-import OeeCard from '../../components/dashboard/OeeCard'
 import TrackCard from '../../components/dashboard/TrackCard'
 
 export default {
