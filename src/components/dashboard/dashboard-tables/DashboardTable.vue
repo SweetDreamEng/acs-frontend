@@ -9,6 +9,11 @@
         class="link-table"
         @click:row="rowClicked"
       >
+        <template v-slot:header.downtimeByReason="{ header }">
+          <v-icon class="mdi-rotate-90" color="primary">$mdi-battery-30</v-icon>
+          {{ header.text }}
+        </template>
+        
         <template v-slot:item.name="{ item }">
           <span class="primary--text font-weight-bold">{{ item.name }}</span>
         </template>
@@ -32,7 +37,7 @@
           </div>
         </template>
         <template v-slot:item.downtimeByReason="{ item }">
-          <div v-if="item && item.downtimeByReason" class="mx-auto">
+          <div v-if="item && item.downtimeByReason">
             <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
             <apexchart
               v-else
@@ -217,7 +222,7 @@ export default {
       return [
         { text: this.headerLabel, value: 'name' },
         { text: 'Alarms', align: 'center', value: 'alarms' },
-        { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason' },
+        { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Availability', align: 'center', value: 'utilization' }
       ]
     },
@@ -245,23 +250,6 @@ export default {
       })
       
       return sum === 0
-    },
-
-    downtimeDistribution(distribution) {
-      return [
-        {
-          name: 'Name',
-          data: [distribution[1]]
-        },
-        {
-          name: 'Name',
-          data: [distribution[0]]
-        },
-        {
-          name: 'Name',
-          data: [distribution[2]]
-        }
-      ]
     },
 
     getDowntimeSeries(data) {

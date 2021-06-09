@@ -219,19 +219,19 @@ export default {
           type: 'date',
           categories: this.downtimeGraphDate
         },
-        yaxis: [
-          {
-            labels: {
-              formatter: (value) => {
-                return (value * 100).toFixed(3) + '%'
-              }
-            },
-            title: {
-              text: 'Availability (%)'
+        yaxis: {
+          forceNiceScale: true,
+          labels: {
+            offsetX: 10,
+            formatter: (value) => {
+              return (value * 100).toFixed(3) + '%'
             }
+          },
+          title: {
+            text: 'Availability (%)'
           }
+        },
     
-        ],
         dataLabels: {
           style: {
             fontSize: '10px',
