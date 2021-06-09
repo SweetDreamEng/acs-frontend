@@ -49,6 +49,7 @@ export default {
           }
         },
         yaxis: {
+          floating: true,
           labels: {
             show: false
           }

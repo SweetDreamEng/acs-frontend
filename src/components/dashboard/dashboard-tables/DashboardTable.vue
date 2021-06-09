@@ -25,7 +25,7 @@
           </production-rate-chart>
         </template>
         <template v-slot:item.utilization="{ item }">
-          <div class="d-flex align-center mx-auto" style="width: 180px;">
+          <div class="d-flex justify-center align-center mx-auto" style="width: 180px;">
             <apexchart
               type="line"
               width="160"
@@ -37,7 +37,7 @@
           </div>
         </template>
         <template v-slot:item.downtimeByReason="{ item }">
-          <div v-if="item && item.downtimeByReason">
+          <div v-if="item && item.downtimeByReason" class="d-flex justify-center">
             <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
             <apexchart
               v-else
@@ -121,10 +121,6 @@ export default {
             }
           }
         },
-        stroke: {
-          width: 1,
-          colors: ['#fff']
-        },
         xaxis: {
           axisBorder: {
             show: false
@@ -134,6 +130,7 @@ export default {
           }
         },
         yaxis: {
+          floating: true,
           labels: {
             show: false
           },
