@@ -68,12 +68,12 @@ const module = {
 
       try {
         const response = await authAPI.signIn(email, password)
-        
+
         commit('SET_TOKEN', response.data.access_token)
         commit('machines/SET_SELECTED_COMPANY', { id: 0, name: 'All' }, { root: true })
-        
+
         localStorage.setItem('token', response.data.access_token)
-        
+
         try {
           const checkResponse = await authAPI.check()
 
@@ -281,7 +281,9 @@ const module = {
     canImportDevices: (state) => ['acs_admin', 'acs_manager'].includes(state.user.role),
     canCreateCustomerUser: (state) => ['customer_admin', 'acs_manager'].includes(state.user.role),
     canViewInventory: (state) => state.user.role === 'acs_admin',
-    canGetMaterialsAndLocations: (state) => state.user.role === 'customer_manager'
+    canGetMaterialsAndLocations: (state) => state.user.role === 'customer_manager',
+    canAddAvailabilityPlanTime: (state) => state.user.role === 'customer_manager',
+    canViewEquipmentAvailability: (state) => ['customer_admin', 'customer_manager', 'customer_operator'].includes(state.user.role)
   }
 }
 
