@@ -47,6 +47,7 @@ const module = {
     isDowntimeGraphLoading: false,
     downtimeGraphData: [],
     downtimeGraphDate: [],
+    availabilityGraphData: [],
     downtimeByTypeGraphSeries: [],
     isDowntimeByTypeGraphLoading: false,
     downtimeByReasonGraphSeries: [],
@@ -463,7 +464,7 @@ const module = {
     },
 
     async updateDowntime({ commit, dispatch }, data) {
-      commit ('SET_UPDATING_DOWNTIME', true)
+      commit('SET_UPDATING_DOWNTIME', true)
 
       try {
         const response = await deviceAPI.updateDowntime(data)
@@ -477,6 +478,20 @@ const module = {
         console.log(error)
       } finally {
         commit('SET_UPDATING_DOWNTIME', false)
+      }
+    },
+
+    async setAvailabilityPlanTime({ commit, disptach }, data) {
+      commit('SET_ADDING_AVAILABILITY_PLAN_TIME', true)
+
+      try {
+        const response = await deviceAPI.setAvailabilityPlanTime(data)
+
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('SET_ADDING_AVAILABILITY_PLAN_TIME', false)
       }
     }
   },
@@ -616,6 +631,7 @@ const module = {
     SET_DOWNTIME_GRAPH_DATA(state, data) {
       state.downtimeGraphData = data.series
       state.downtimeGraphDate = data.dates
+      state.availabilityGraphData = data.availability_series
     },
     SET_LOADING_DOWNTIME_BY_TYPE_GRAPH(state, status) {
       state.isDowntimeByTypeGraphLoading = status
@@ -644,7 +660,8 @@ const module = {
     SET_ZONES(state, data) { state.zones = data },
     SET_LOCATIONS(state, data) { state.locations = data },
     SET_DOWNTIME_REASONS(state, data) { state.downtimeReasons = data },
-    SET_UPDATING_DOWNTIME(state, status) { state.isUpdatingDowntime = status }
+    SET_UPDATING_DOWNTIME(state, status) { state.isUpdatingDowntime = status },
+    SET_ADDING_AVAILABILITY_PLAN_TIME(state, status) { state.isAddingAvailabilityPlanTime = status }
   },
 
   getters: {

@@ -318,5 +318,19 @@ export default {
    */
   updateDowntime(data) {
     return api.put(`devices/update-downtime/${data.id}`, data)
+  },
+
+  /**
+   * Set availability plan time
+   * 
+   * @example
+   * 
+   *    setAvailabilityPlanTime({
+   *      date: '2021-06-21',
+   *      time: 18
+   *    })
+   */
+  setAvailabilityPlanTime(data) {
+    return api.post('devices/set-availability-plan-time', data)
   }
 }
