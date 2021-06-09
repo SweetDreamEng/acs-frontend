@@ -86,7 +86,7 @@
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
         </template>
         <template v-slot:item.downtimeByReason="{ item }">
-          <div v-if="item && item.downtimeByReason" class="mx-auto">
+          <div v-if="item && item.downtimeByReason" class="mx-auto d-flex justify-center">
             <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
             <apexchart
               v-else
@@ -225,10 +225,6 @@ export default {
             }
           }
         },
-        stroke: {
-          width: 1,
-          colors: ['#fff']
-        },
         xaxis: {
           axisBorder: {
             show: false
@@ -238,6 +234,7 @@ export default {
           }
         },
         yaxis: {
+          floating: true,
           labels: {
             show: false
           },
