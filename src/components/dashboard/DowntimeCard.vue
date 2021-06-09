@@ -1,7 +1,6 @@
 <template>
   <v-card
     class="d-flex flex-column justify-space-between"
-    height="600px"
     light
     :loading="isDowntimeGraphLoading"
     :disabled="isDowntimeGraphLoading"
@@ -30,6 +29,7 @@
         <apexchart
           key="downtimegraph"
           :series="chartOptions1.series"
+          height="400"
           :options="chartOptions1"
         ></apexchart>
       </v-card-text>
@@ -64,6 +64,7 @@
       <v-card-text>
         <apexchart
           key="availability-chart"
+          height="400"
           :series="chartOptions2.series"
           :options="chartOptions2"
         ></apexchart>
@@ -145,7 +146,6 @@ export default {
         series: this.downtimeGraphData,
         chart: {
           type: 'line',
-          height: '500px',
           stacked: true,
           toolbar: {
             show: false
@@ -197,7 +197,6 @@ export default {
     chartOptions2() {
       return {
         chart: {
-          height: '500px',
           type: 'line',
           toolbar: {
             show: false
