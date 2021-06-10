@@ -51,29 +51,28 @@
           >
           </production-rate-chart>
         </template>
-        <template v-slot:item.utilization="{ item }">
-          <div class="d-flex align-center mx-auto" style="width: 180px;">
+        <template v-slot:item.downtimeAvailability="{ item }">
+          <div class="d-flex justify-center mx-auto" style="width: 180px;">
             <apexchart
+              key="availability-chart"
               type="line"
-              width="100%"
-              height="100"
-              :options="utilizationChartOptions"
-              :series="utilizationSeries"
+              width="160"
+              :options="availabilityChartOptions"
+              :series="item.downtimeAvailability"
             >
             </apexchart>
-            {{ item.utilization }}
           </div>
         </template>
-        <template v-slot:item.downtimeDistribution="{ item }">
-          <div v-if="item && item.downtimeDistribution" class="d-flex align-end justify-end">
-            <no-downtime v-if="hasNoDowntime(item.downtimeDistribution)"></no-downtime>
+        <template v-slot:item.downtimeByReason="{ item }">
+          <div v-if="item && item.downtimeByReason" class="d-flex justify-center">
+            <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
             <apexchart
               v-else
-              type="bar"
+              key="downtime-chart"
               width="240"
               height="80"
-              :options="chartOptions"
-              :series="downtimeDistribution(item.downtimeDistribution)"
+              :options="getSeriesOptions(item.downtimeByReason)"
+              :series="getDowntimeSeries(item.downtimeByReason)"
             >
             </apexchart>
           </div>
@@ -102,6 +101,26 @@ import ProductionRateChart from '../charts/ProductionRateChart'
 import NoDowntime from './DashboardTableNoDowntime'
 import DowntimeLegend from './DashboardTableDowntimeLegend'
 
+const seriesColors = [{
+  name: 'No Demand',
+  color: '#a4bcbb'
+}, {
+  name: 'Preventative Maintenance',
+  color: '#508FF0'
+}, {
+  name: 'Machine Failure',
+  color: '#06d6a0'
+}, {
+  name: 'Power Outage',
+  color: '#505554'
+}, {
+  name: 'Other',
+  color: '#ffd166'
+}, {
+  name: 'Change Over',
+  color: '#ea344e'
+}]
+
 export default {
   components: {
     ProductionRateChart, NoDowntime, DowntimeLegend
@@ -114,11 +133,8 @@ export default {
         { text: 'Running', value: 'status' },
         { text: 'Machines', value: 'customer_assigned_name' },
         { text: 'Machine Type', value: 'configuration' },
-        { text: 'Utilization', align: 'center', value: 'utilization' },
-        { text: 'OEE', align: 'start', value: 'oee' },
-        { text: 'Actual Performance', align: 'center', value: 'performance' },
-        { text: 'Prod Rate', value: 'rate', align: 'center', width: '1%', class: 'prod-rate-header' },
-        { text: 'Downtime Distrubton', align: 'center', value: 'downtimeDistribution', sortable: false, width: '1%' }
+        { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
+        { text: 'Availability', align: 'center', value: 'downtimeAvailability' }
       ],
       deviceStatus: {
         running: {
@@ -163,10 +179,6 @@ export default {
             }
           }
         },
-        stroke: {
-          width: 1,
-          colors: ['#fff']
-        },
         xaxis: {
           axisBorder: {
             show: false
@@ -176,6 +188,7 @@ export default {
           }
         },
         yaxis: {
+          floating: true,
           labels: {
             show: false
           },
@@ -194,11 +207,7 @@ export default {
         }
       },
 
-      utilizationSeries: [{
-        name: 'OEE',
-        data: [10, 35, 41]
-      }],
-      utilizationChartOptions: {
+      availabilityChartOptions: {
         chart: {
           height: 350,
           type: 'line',
@@ -209,7 +218,7 @@ export default {
             show: false
           }
         },
-        colors: [this.$vuetify.theme.themes.light.primary],
+        colors: ['#FF1654', '#247BA0'],
         dataLabels: {
           enabled: false
         },
@@ -247,6 +256,9 @@ export default {
               borderColor: '#00E396'
             }
           ]
+        },
+        legend: {
+          show: false
         }
       }
     }
@@ -279,29 +291,54 @@ export default {
         itemsPerPage: this.itemsPerPage
       })
     },
-    hasNoDowntime(distribution) {
+    hasNoDowntime(data) {
       let sum = 0
 
-      sum += distribution.reduce((a, b) => a + b, 0)
+      data.map((item) => {
+        sum += item.data
+
+        return sum
+      })
       
       return sum === 0
     },
+    getDowntimeSeries(data) {
+      const series = []
 
-    downtimeDistribution(distribution) {
-      return [
-        {
-          name: 'Name',
-          data: [distribution[1]]
-        },
-        {
-          name: 'Name',
-          data: [distribution[0]]
-        },
-        {
-          name: 'Name',
-          data: [distribution[2]]
+      data.map((item) => {
+        const temp = {
+          name: item.name,
+          data: [item.data]
         }
-      ]
+
+        series.push(temp)
+
+        return 0
+      })
+
+      return series
+    },
+    getSeriesOptions(series) {
+      const _colors = []
+
+      series.map((item) => {
+        const seriesColor = seriesColors.find((data) => {
+          return data.name === item.name
+        })
+
+        _colors.push(seriesColor ? seriesColor.color : '#fff')
+
+        return _colors
+      })
+
+      return {
+        ...this.chartOptions,
+        colors: _colors,
+        fill: {
+          colors: _colors,
+          opacity: 1
+        }
+      }
     },
     getColor(item) {
       return this.deviceStatus[item.status] ? this.deviceStatus[item.status].color : ''
