@@ -136,8 +136,8 @@ export default {
     return {
       headers: [
         { text: 'Machine', value: 'device_id' },
-        { text: 'Location', value: 'location' },
-        { text: 'Zone', value: 'zone' },
+        { text: 'Location', value: 'location', sortable: true },
+        { text: 'Zone', value: 'zone', sortable: true },
         { text: 'Start Time', value: 'start_time', align: 'center' },
         { text: 'End Time', value: 'end_time', align: 'center' },
         { text: 'Type', value: 'type', align: 'center' },

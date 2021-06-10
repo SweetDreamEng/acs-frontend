@@ -8,6 +8,14 @@
   >
     <v-card-title>
       Downtime by Type
+      <v-spacer></v-spacer>
+      <v-btn
+        class="ml-1"
+        color="primary"
+        @click="handleDowntimeAdministration()"
+      >
+        Downtime Administration
+      </v-btn>
     </v-card-title>
     <v-card-text>
       <apexchart
@@ -85,6 +93,11 @@ export default {
       })
 
       return series
+    }
+  },
+  methods: {
+    handleDowntimeAdministration() {
+      this.$router.push('/locations-zones')
     }
   }
 }
