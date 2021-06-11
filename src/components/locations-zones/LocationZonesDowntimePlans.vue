@@ -1,5 +1,6 @@
 <template>
   <v-card
+    id="device-downtime"
     class="mt-2"
     :loading="isDowntimeTableLoading"
     :disabled="isDowntimeTableLoading"
