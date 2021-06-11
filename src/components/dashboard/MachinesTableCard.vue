@@ -121,7 +121,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import NoDowntime from './dashboard-tables/DashboardTableNoDowntime'
-import DowntimeLegend from './dashboard-tables/DashboardTableDowntimeLegend'
+import DowntimeLegend from './dashboard-tables/DashboardMachinesTableLegend'
 /*
 |---------------------------------------------------------------------
 | Machines Table Card Component
