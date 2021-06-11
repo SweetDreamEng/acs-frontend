@@ -17,6 +17,9 @@
         <template v-slot:item.name="{ item }">
           <span class="primary--text font-weight-bold">{{ item.name }}</span>
         </template>
+        <template v-slot:item.alarmsCount="{ item }">
+          <span class="font-weight-bold" :class="getAlarmsTextColor(item.alarmsCount)">{{ getAlarmsCount(item.alarmsCount) }}</span>
+        </template>
         <template v-slot:item.downtimeAvailability="{ item }">
           <div class="d-flex justify-center mx-auto" style="width: 180px;">
             <apexchart
@@ -210,7 +213,7 @@ export default {
     headers() {
       return [
         { text: this.headerLabel, value: 'name' },
-        { text: 'Alarms', align: 'center', value: 'alarms' },
+        { text: 'Alarms', align: 'center', value: 'alarmsCount' },
         { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Availability', align: 'center', value: 'downtimeAvailability' }
       ]
@@ -279,6 +282,14 @@ export default {
           opacity: 1
         }
       }
+    },
+
+    getAlarmsCount(data) {
+      return data ? data[0].sum === null ? 'No alarms reported' : `${data[0].sum} alarms reported` : 'No alarms reported'
+    },
+
+    getAlarmsTextColor(data) {
+      return data ? data[0].sum === null ? 'success--text' : 'error--text' : 'success--text'
     },
 
     rowClicked(item) {
