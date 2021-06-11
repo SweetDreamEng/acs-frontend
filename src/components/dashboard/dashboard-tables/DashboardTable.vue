@@ -285,11 +285,11 @@ export default {
     },
 
     getAlarmsCount(data) {
-      return data && data[0].sum === null ? 'No alarms reported' : `${data[0].sum} alarms reported`
+      return data ? data[0].sum === null ? 'No alarms reported' : `${data[0].sum} alarms reported` : 'No alarms reported'
     },
 
     getAlarmsTextColor(data) {
-      return data && data[0].sum === null ? 'success--text' : 'error--text'
+      return data ? data[0].sum === null ? 'success--text' : 'error--text' : 'success--text'
     },
 
     rowClicked(item) {
