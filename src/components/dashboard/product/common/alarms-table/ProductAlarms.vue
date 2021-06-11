@@ -5,11 +5,11 @@
       :show-arrows="false"
       background-color="transparent"
     >
-      <v-tab to="#tabs-alarms">Alarms</v-tab>
-      <v-tab to="#tabs-history">Alarm History</v-tab>
+      <v-tab>Alarms</v-tab>
+      <v-tab>Alarm History</v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
-      <v-tab-item value="tabs-alarms">
+      <v-tab-item>
         <product-alarms-table
           :namespace="namespace"
           :fetch="fetch"
@@ -18,7 +18,7 @@
         >
         </product-alarms-table>
       </v-tab-item>
-      <v-tab-item value="tabs-history">
+      <v-tab-item>
         <product-alarm-history-table
           :machine-id="machineId"
           :serial-number="serialNumber"
@@ -60,6 +60,9 @@ export default {
     }
   },
   methods: {
+    handleTabChange() {
+      console.log('here')
+    }
   }
 }
 </script>
