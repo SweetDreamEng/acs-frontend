@@ -50,7 +50,7 @@ export default {
     'acs-stable': '#06d6a0',
     'acs-stable-waiting': '#ff4560',
     'acs-unstable': '#ff4560',
-    'acs-hopper-disabled': '#eeeeee',
+    'acs-hopper-disabled': '#6c706d',
     'acs-hopper-setback': '#008ffb',
     'acs-hopper-autotune': '#feb019',
     'acs-hopper-alarmed': '#ff4560',

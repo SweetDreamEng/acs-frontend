@@ -6,32 +6,35 @@
   >
     <v-card-title>Drying Hopper States</v-card-title>
     <v-card-text>
-      <v-alert
+      <div
         v-for="(num, index) in 3"
         :key="index"
-        :color="backgroundColor(dryingHoppers[`hopper${num}`])"
-        :style="`color: ${textColor(dryingHoppers[`hopper${num}`])}`"
       >
-        <v-row
-          v-if="dryingHoppers[`hopper${num}`]"
-          align="center"
-          no-gutters
+        <v-alert
+          :color="backgroundColor(dryingHoppers[`hopper${num}`])"
+          :style="`color: ${textColor(dryingHoppers[`hopper${num}`])}`"
         >
-          <v-col cols="7">
-            <span
-              class="font-weight-bold"
-            >Drying Hopper {{ num }}</span>
-          </v-col>
-          <v-col class="d-flex text-body-2">
-            <v-icon
-              small
-              left
-              :color="circleColor(dryingHoppers[`hopper${num}`])"
-            >$mdi-checkbox-blank-circle</v-icon>
-            {{ valueText(dryingHoppers[`hopper${num}`]) }}
-          </v-col>
-        </v-row>
-      </v-alert>
+          <v-row
+            align="center"
+            no-gutters
+          >
+            <v-col cols="7">
+              <span
+                class="font-weight-bold"
+              >Drying Hopper {{ num }}</span>
+            </v-col>
+            <v-col class="d-flex text-body-2">
+              <v-icon
+                small
+                left
+                :color="circleColor(dryingHoppers[`hopper${num}`])"
+              >$mdi-checkbox-blank-circle</v-icon>
+              {{ valueText(dryingHoppers[`hopper${num}`]) }}
+            </v-col>
+          </v-row>
+        </v-alert>
+      </div>
+      
     </v-card-text>
   </v-card>
 </template>
@@ -88,6 +91,9 @@ export default {
       default: () => {}
     }
   },
+  mounted() {
+    console.log(this.dryingHoppers)
+  },
   methods: {
     getHopperByIndex(index) {
       const hoppers = {
@@ -119,7 +125,7 @@ export default {
       return state ? state.circleColor : ''
     },
     textColor(value) {
-      if (value === 0) return '#9e9e9e'
+      if (value === 0) return '#6c706d'
       else return '#193d66'
     },
     valueText(value) {
