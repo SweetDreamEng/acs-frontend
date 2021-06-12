@@ -11,7 +11,8 @@ const module = {
       role: null,
       email: null,
       username: null,
-      companyId: null
+      companyId: null,
+      companyName: null
     },
     profile: {
 
@@ -246,6 +247,7 @@ const module = {
         state.user.username = user.name
         state.user.role = user.role
         state.user.companyId = user.company_id
+        state.user.companyName = user.companyName
       }
     },
     SET_LOGOUT_AUTH(state) {

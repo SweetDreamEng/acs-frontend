@@ -3,7 +3,7 @@
     <v-sheet color="surface2" class="my-n8 pt-9 py-7">
       <v-container class="pb-0">
         <div v-if="$route.name === 'acs-machines'" class="d-flex mt-2 align-center">
-          <v-breadcrumbs :items="breadcrumbItems">
+          <v-breadcrumbs :items="acsBreadcrumbItems">
             <template v-slot:item="{ item }">
               <v-breadcrumbs-item
                 :disabled="item.disabled"
@@ -19,7 +19,7 @@
           >
           </company-menu>
         </div>
-
+        <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
         <top-card></top-card>
       </v-container>
     </v-sheet>
@@ -78,16 +78,22 @@ export default {
       locations: (state) => state.locations.data,
       companies: (state) => state.companies.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
-      selectedCompany: (state) => state.machines.selectedCompany
+      selectedCompany: (state) => state.machines.selectedCompany,
+      userCompanyName: (state) => state.auth.user.companyName
     }),
     ...mapGetters('auth', ['canViewCompanies']),
-    breadcrumbItems() {
+    acsBreadcrumbItems() {
       return [
         {
           text: this.selectedCompanyName,
           disabled: true
-        }, {
-          text: 'Dashboard',
+        }
+      ]
+    },
+    breadcrumbItems() {
+      return [
+        {
+          text: this.userCompanyName,
           disabled: true
         }
       ]
