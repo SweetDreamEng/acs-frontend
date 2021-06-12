@@ -61,7 +61,8 @@ export default {
 
       companies: (state) => state.companies.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
-      selectedCompany: (state) => state.machines.selectedCompany
+      selectedCompany: (state) => state.machines.selectedCompany,
+      userCompanyName: (state) => state.auth.user.companyName
     }),
     ...mapGetters({
       locationName: 'locations/locationName',
@@ -73,7 +74,7 @@ export default {
     breadcrumbItems() {
       return  [
         {
-          text: 'Dashboard',
+          text: this.userCompanyName,
           disabled: false,
           exact: true,
           to: '/dashboard/analytics'
@@ -88,9 +89,6 @@ export default {
       return [
         {
           text: this.selectedCompanyName,
-          disabled: true
-        }, {
-          text: 'Dashboard',
           disabled: false,
           exact: true,
           to: '/acs-machines'
