@@ -175,7 +175,8 @@ export default {
     ...mapState({
       notes: (state) => state.notes.data,
       companies: (state) => state.companies.companies,
-      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : ''
+      selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
+      userCompanyName: (state) => state.auth.user.companyName
     }),
     ...mapState('alarms', ['loadingAlarmsTable', 'alarmTypes', 'alarms']),
 
@@ -187,7 +188,7 @@ export default {
     breadcrumbItems() {
       return [
         {
-          text: 'Dashboard',
+          text: this.userCompanyName,
           disabled: false,
           exact: true,
           to: '/dashboard/analytics'
@@ -211,9 +212,6 @@ export default {
       return [
         {
           text: this.selectedCompanyName,
-          disabled: true
-        }, {
-          text: 'Dashboard',
           disabled: false,
           exact: true,
           to: '/acs-machines'
