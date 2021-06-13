@@ -48,7 +48,7 @@
           <v-icon small color="primary">$mdi-wrench</v-icon>
           {{ header.text }}
         </template>
-        <template v-slot:header.capacity="{ header }">
+        <template v-slot:header.capacityUtilization="{ header }">
           <v-icon color="primary">$mdi-trending-up</v-icon>
           {{ header.text | percentageLabel }}
         </template>
@@ -75,6 +75,19 @@
             </template>
             <span>{{ getText(item) }}</span>
           </v-tooltip>
+        </template>
+        <template v-slot:item.capacityUtilization="{ item }">
+          <div v-if="item && item.capacityUtilization" class="mx-auto d-flex justify-center">
+            <apexchart
+              key="uilization-chart"
+              width="240"
+              height="80"
+              type="area"
+              :options="utilizationOptions"
+              :series="getUtilizationSeries(item.capacityUtilization)"
+            >
+            </apexchart>
+          </div>
         </template>
         <template v-slot:item.configuration="{ item }">
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
@@ -121,7 +134,7 @@ export default {
         { text: 'Running', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'name' },
         { text: 'Machine Type', align: 'start', value: 'configuration' },
-        { text: 'Capacity Utilization', align: 'center', value: 'capacity' },
+        { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' },
         { text: 'Locations', align: 'center', value: 'location_id' },
         { text: 'Zones', align: 'center', value: 'zone_id' }
       ],
@@ -157,6 +170,52 @@ export default {
           color: 'orange',
           text: 'PLC Not Connected',
           icon: '$mdi-database-remove'
+        }
+      },
+      utilizationOptions: {
+        chart: {
+          type: 'area',
+          animations: {
+            speed: 400
+          },
+          toolbar: {
+            show: false
+          }
+        },
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, '#00E396', '#FEB019', '#FF4560', '#775DD0'],
+        noData: {
+          text: 'No Data From Devce'
+        },
+        yaxis: {
+          floating: true,
+          labels: {
+            show: false
+          },
+          title: {
+            text: undefined
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth',
+          width: 2
+        },
+        xaxis: {
+          type: 'datetime',
+          axisBorder: {
+            show: false
+          },
+          labels: {
+            show: false
+          }
+        },
+        legend: {
+          show: false
+        },
+        grid: {
+          show: false
         }
       }
     }
@@ -198,6 +257,17 @@ export default {
     },
     getIcon(item) {
       return this.deviceStatus[item.status] ? this.deviceStatus[item.status].icon : ''
+    },
+    getUtilizationSeries(item) {
+      const series = []
+
+      const temp = {
+        data: item[0]
+      }
+
+      series.push(temp)
+
+      return series
     },
     productView(item) {
       if (item.location_id && item.zone_id) {

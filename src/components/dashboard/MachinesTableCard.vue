@@ -48,7 +48,7 @@
           <v-icon small color="primary">$mdi-wrench</v-icon>
           {{ header.text }}
         </template>
-        <template v-slot:header.capacity="{ header }">
+        <template v-slot:header.capacityUtilization="{ header }">
           <v-icon color="primary">$mdi-trending-up</v-icon>
           {{ header.text | percentageLabel }}
         </template>
@@ -90,10 +90,24 @@
             <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
             <apexchart
               v-else
+              key="downtime-chart"
               width="240"
               height="80"
               :options="getSeriesOptions(item.downtimeByReason)"
               :series="getDowntimeSeries(item.downtimeByReason)"
+            >
+            </apexchart>
+          </div>
+        </template>
+        <template v-slot:item.capacityUtilization="{ item }">
+          <div v-if="item && item.capacityUtilization" class="mx-auto d-flex justify-center">
+            <apexchart
+              key="uilization-chart"
+              width="240"
+              height="80"
+              type="area"
+              :options="utilizationOptions"
+              :series="getUtilizationSeries(item.capacityUtilization)"
             >
             </apexchart>
           </div>
@@ -169,7 +183,7 @@ export default {
         { text: 'Machine Name', align: 'start', value: 'name' },
         { text: 'Machine Type', align: 'start', value: 'configuration' },
         { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
-        { text: 'Capacity Utilization', align: 'center', value: 'capacity' },
+        { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' },
         { text: 'Locations', align: 'center', value: 'location_id' },
         { text: 'Zones', align: 'center', value: 'zone_id' }
       ],
@@ -244,6 +258,52 @@ export default {
         },
         tooltip: {
           enabled: false
+        },
+        legend: {
+          show: false
+        },
+        grid: {
+          show: false
+        }
+      },
+      utilizationOptions: {
+        chart: {
+          type: 'area',
+          animations: {
+            speed: 400
+          },
+          toolbar: {
+            show: false
+          }
+        },
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, '#00E396', '#FEB019', '#FF4560', '#775DD0'],
+        noData: {
+          text: 'No Data From Devce'
+        },
+        yaxis: {
+          floating: true,
+          labels: {
+            show: false
+          },
+          title: {
+            text: undefined
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth',
+          width: 2
+        },
+        xaxis: {
+          type: 'datetime',
+          axisBorder: {
+            show: false
+          },
+          labels: {
+            show: false
+          }
         },
         legend: {
           show: false
@@ -333,6 +393,18 @@ export default {
 
         return 0
       })
+
+      return series
+    },
+
+    getUtilizationSeries(item) {
+      const series = []
+
+      const temp = {
+        data: item[0]
+      }
+
+      series.push(temp)
 
       return series
     },
