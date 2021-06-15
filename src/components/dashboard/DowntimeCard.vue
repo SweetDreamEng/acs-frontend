@@ -181,7 +181,12 @@ export default {
         },
         xaxis: {
           type: 'date',
-          categories: this.downtimeGraphDate
+          categories: this.downtimeGraphDate,
+          labels: {
+            formatter: (value) => {
+              return value ? value.slice(6, 10) : ''
+            }
+          }
         },
         legend: {
           position: 'bottom'
@@ -216,7 +221,12 @@ export default {
         },
         xaxis: {
           type: 'date',
-          categories: this.downtimeGraphDate
+          categories: this.downtimeGraphDate,
+          labels: {
+            formatter: (value) => {
+              return value ? value.slice(6, 10) : ''
+            }
+          }
         },
         yaxis: {
           forceNiceScale: true,
