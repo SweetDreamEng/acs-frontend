@@ -80,7 +80,7 @@
             <v-text-field
               v-model="editedItem.tag_name"
               :items="editedItem.tag_name"
-              label="Telemetry"
+              label="Parameter"
               outlined
               readonly
               dense
@@ -112,6 +112,16 @@
               dense
             >
             </v-text-field>
+            <v-select
+              v-model="editedItem.is_running"
+              :items="runningStatus"
+              item-text="name"
+              item-value="value"
+              label="Select a machine status"
+              outlined
+              dense
+            >
+            </v-select>
           </v-form>
         </v-card-text>
         <v-card-text>
@@ -162,6 +172,7 @@ export default {
         { text: 'Approaching Value', value: 'approaching' },
         { text: 'Date', value: 'date' },
         { text: 'Enabled', value: 'status' },
+        { text: 'Machine status', align: 'center', value: 'is_running' },
         { text: 'Actions', sortable: false, align: 'center', value: 'action' }
       ],
       isDeleteThreshold: false,
@@ -174,7 +185,14 @@ export default {
       tab: null,
       conditionRules: [
         (v) => !!v || 'This field is required'
-      ]
+      ],
+      runningStatus: [{
+        name: 'Running',
+        value: true
+      }, {
+        name: 'Not Running',
+        value: false
+      }]
     }
   },
   computed: {
