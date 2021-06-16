@@ -55,7 +55,6 @@ const module = {
 
     isDowntimeTableLoading: false,
     downtimeTableData: [],
-    deviceInfo: [],
     downtimeTypes: [],
     locations: [],
     zones: [],
@@ -444,13 +443,12 @@ const module = {
       }
     },
 
-    async getDowntimeTableData({ commit }) {
+    async getDowntimeTableData({ commit },data) {
       commit('SET_LOADING_DOWNTIMES_TABLE', true)
 
       try {
-        const response = await deviceAPI.getDowntimeTableData()
+        const response = await deviceAPI.getDowntimeTableData(data)
 
-        commit('SET_DEVICE_INFO', response.data.devices)
         commit('SET_LOCATIONS', response.data.locations)
         commit('SET_ZONES', response.data.zones)
         commit('SET_DOWNTIME_TYPES', response.data.downtimeTypes)
@@ -650,9 +648,6 @@ const module = {
     },
     SET_DONWTIME_TABLE_DATA(state, data) {
       state.downtimeTableData = data
-    },
-    SET_DEVICE_INFO(state, data) {
-      state.deviceInfo = data
     },
     SET_DOWNTIME_TYPES(state, data) {
       state.downtimeTypes = data
