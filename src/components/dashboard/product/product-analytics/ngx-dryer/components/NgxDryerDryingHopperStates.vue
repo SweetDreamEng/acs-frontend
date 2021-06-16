@@ -7,10 +7,11 @@
     <v-card-title>Drying Hopper States</v-card-title>
     <v-card-text>
       <div
-        v-for="(num, index) in 3"
+        v-for="(num, index) in ngxHopperCount"
         :key="index"
       >
         <v-alert
+          v-if="dryingHoppers[`hopper${num}`] !== 0"
           :color="backgroundColor(dryingHoppers[`hopper${num}`])"
           :style="`color: ${textColor(dryingHoppers[`hopper${num}`])}`"
         >
@@ -39,6 +40,7 @@
   </v-card>
 </template>
 <script>
+import { mapState } from 'vuex'
 // value meaning hopper color
 // 0 DISABLED GREY
 // 1 ENABLED WHITE
@@ -91,8 +93,10 @@ export default {
       default: () => {}
     }
   },
-  mounted() {
-    console.log(this.dryingHoppers)
+  computed: {
+    ...mapState('ngxDryer', [
+      'ngxHopperCount'
+    ])
   },
   methods: {
     getHopperByIndex(index) {

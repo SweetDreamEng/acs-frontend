@@ -157,7 +157,7 @@ export default {
           max: this.timeRangeFromTo(this.timeRange).to,
           labels: {
             formatter: (value, timestamp, opts) => {
-              return [this.$options.filters.formatDate(value, 'yyyy-MM-dd'), this.$options.filters.formatDate(value, ' HH:mm:ss')]
+              return [this.$options.filters.formatDate(value, 'MM-dd'), this.$options.filters.formatDate(value, ' HH:mm:ss')]
             }
           }
         }

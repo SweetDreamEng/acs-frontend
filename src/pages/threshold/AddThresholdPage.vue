@@ -41,7 +41,7 @@
         </div>
         <div>
           <h2 class="my-3">Conditions</h2>
-          <div class="">Conditions define when your rule is triggered. Aggregation is optional - use it to cluster your data and trigger rules based on a time window.</div>
+          <div class="">Conditions define when your rule is triggered.</div>
           <br>
           <v-form ref="conditionForm" v-model="conditionValid" :disabled="!selectedProduct || isLoadingMachineTags">
             <v-row
@@ -54,11 +54,11 @@
                 class="py-0"
               >
                 <v-select
-                  v-model="filter.telemetry"
+                  v-model="filter.parameter"
                   :items="machineTags"
                   item-text="name"
                   item-value="id"
-                  label="Select a telemetry"
+                  label="Select a parameter"
                   :rules="conditionRules"
                   required
                 >
@@ -80,7 +80,7 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="3"
+                sm="2"
                 class="py-0"
               >
                 <v-text-field
@@ -93,7 +93,7 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="3"
+                sm="2"
                 class="py-0"
               >
                 <v-text-field
@@ -101,6 +101,19 @@
                   type="number"
                   label="Enter a approaching value"
                 ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="2"
+                class="py-0"
+              >
+                <v-select
+                  v-model="filter.isRunning"
+                  label="Select a machine status"
+                  :items="runningStatus"
+                  item-text="name"
+                  item-value="value"
+                ></v-select>
               </v-col>
             </v-row>
           </v-form>
@@ -165,10 +178,11 @@ export default {
 
       filters: [
         {
-          telemetry: '',
+          parameter: '',
           operator: '',
           value: null,
-          approachingValue: null
+          approachingValue: null,
+          isRunning: true
         }
       ],
 
@@ -178,7 +192,15 @@ export default {
 
       conditionRules: [
         (v) => !!v || 'This field is required'
-      ]
+      ],
+
+      runningStatus: [{
+        name: 'Running',
+        value: true
+      }, {
+        name: 'Not Running',
+        value: false
+      }]
     }
   },
   computed: {
@@ -230,10 +252,11 @@ export default {
     addFilter() {
       if (this.filters.length < 3) {
         this.filters.push({
-          telemetry: '',
+          parameter: '',
           operator: '',
           value: null,
-          approachingValue: null
+          approachingValue: null,
+          isRunning: true
         })
       }
     },
@@ -252,10 +275,11 @@ export default {
     handleProductChange() {
       this.filters = [
         {
-          telemetry: '',
+          parameter: '',
           operator: '',
           value: null,
-          approachingValue: null
+          approachingValue: null,
+          isRunning: true
         }
       ]
       this.getMachineTags({
@@ -272,10 +296,11 @@ export default {
       this.selectedZone = ''
       this.selectedProduct = ''
       this.filters = [{
-        telemetry: '',
+        parameter: '',
         operator: '',
         value: null,
-        approachingValue: null
+        approachingValue: null,
+        isRunning: true
       }]
     }
   }

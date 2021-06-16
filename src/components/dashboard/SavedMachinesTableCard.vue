@@ -78,15 +78,7 @@
         </template>
         <template v-slot:item.capacityUtilization="{ item }">
           <div v-if="item && item.capacityUtilization" class="mx-auto d-flex justify-center">
-            <apexchart
-              key="uilization-chart"
-              width="240"
-              height="80"
-              type="area"
-              :options="utilizationOptions"
-              :series="getUtilizationSeries(item.capacityUtilization)"
-            >
-            </apexchart>
+            <span>{{ getCapacityUtilizationValue(item.capacityUtilization) }}</span>
           </div>
         </template>
         <template v-slot:item.configuration="{ item }">
@@ -258,16 +250,12 @@ export default {
     getIcon(item) {
       return this.deviceStatus[item.status] ? this.deviceStatus[item.status].icon : ''
     },
-    getUtilizationSeries(item) {
-      const series = []
-
-      const temp = {
-        data: item[0]
+    getCapacityUtilizationValue(item) {
+      if (item[0].length === 0) {
+        return 'No Data From Device'
+      } else {
+        return `${item[0][item[0].length - 1][1]} %`
       }
-
-      series.push(temp)
-
-      return series
     },
     productView(item) {
       if (item.location_id && item.zone_id) {
