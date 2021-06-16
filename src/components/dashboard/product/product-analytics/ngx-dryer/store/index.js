@@ -8,6 +8,7 @@ const module = {
     loadingOnlineHours: false,
 
     dryingHoppers: {},
+    ngxHopperCount: 0,
     bedStates: [],
     onlineHours: []
   },
@@ -15,12 +16,14 @@ const module = {
   actions: {
     async getDryingHopperStats({ state, commit }, payload) {
       commit('SET_DRYING_HOPPERS', {})
+      commit('SET_NGX_HOPPER_COUNT', 0)
       commit('SET_LOADING_DRYING_HOPPERS', true)
 
       try {
         const response = await api.getDryingHopperStats(payload)
 
         commit('SET_DRYING_HOPPERS', response.data.states)
+        commit('SET_NGX_HOPPER_COUNT', response.data.numberOfHoppers)
       } catch (error) {
         console.log(error)
       } finally {
@@ -61,6 +64,7 @@ const module = {
     SET_LOADING_ONLINE_HOURS(state, isLoading) { state.loadingOnlineHours = isLoading },
 
     SET_DRYING_HOPPERS(state, values) { state.dryingHoppers = values },
+    SET_NGX_HOPPER_COUNT(state, values) { state.ngxHopperCount = values },
     SET_SET_BED_STATES(state, values) { state.bedStates = values },
     SET_SET_ONLINE_HOURS(state, values) { state.onlineHours = values }
   }
