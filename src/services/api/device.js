@@ -267,20 +267,20 @@ export default {
 
   /**
    * Get data for the downtime graph
-   * 
+   *
    * @example
-   * 
+   *
    *    getDowntimeGraphData()
    */
   getDowntimeGraphData(data) {
     return api.post('devices/get-downtime-graph-data', data)
   },
-  
+
   /**
    * Get data for the downtime by type graph
-   * 
+   *
    * @example
-   * 
+   *
    *    getDowntimeByTypeSeries()
    */
   getDowntimeByTypeGraphSeries(data) {
@@ -289,9 +289,9 @@ export default {
 
   /**
    * Get data for the downtime by reason graph
-   * 
+   *
    * @example
-   * 
+   *
    *    getDowntimeByReasonGraphSeries()
    */
   getDowntimeByReasonGraphSeries(data) {
@@ -300,20 +300,20 @@ export default {
 
   /**
    * Get data for the downtime table
-   * 
+   *
    * @example
-   * 
+   *
    *    getDowntimeTableData()
    */
-  getDowntimeTableData() {
-    return api.get('devices/get-downtime-table-data')
+  getDowntimeTableData(data) {
+    return api.get('devices/get-downtime-table-data', data)
   },
 
   /**
    * Update downtime
-   * 
+   *
    * @example
-   * 
+   *
    *    updateDowntime()
    */
   updateDowntime(data) {
@@ -322,9 +322,9 @@ export default {
 
   /**
    * Set availability plan time
-   * 
+   *
    * @example
-   * 
+   *
    *    setAvailabilityPlanTime({
    *      date: '2021-06-21',
    *      time: 18
