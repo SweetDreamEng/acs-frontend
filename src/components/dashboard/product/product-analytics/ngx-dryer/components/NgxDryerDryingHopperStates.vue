@@ -11,6 +11,7 @@
         :key="index"
       >
         <v-alert
+          v-if="dryingHoppers[`hopper${num}`] !== 0"
           :color="backgroundColor(dryingHoppers[`hopper${num}`])"
           :style="`color: ${textColor(dryingHoppers[`hopper${num}`])}`"
         >
@@ -90,9 +91,6 @@ export default {
       type: Object,
       default: () => {}
     }
-  },
-  mounted() {
-    console.log(this.dryingHoppers)
   },
   methods: {
     getHopperByIndex(index) {
