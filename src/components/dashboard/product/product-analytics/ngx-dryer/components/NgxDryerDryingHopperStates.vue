@@ -11,7 +11,6 @@
         :key="index"
       >
         <v-alert
-          v-if="dryingHoppers[`hopper${num}`] !== 0"
           :color="backgroundColor(dryingHoppers[`hopper${num}`])"
           :style="`color: ${textColor(dryingHoppers[`hopper${num}`])}`"
         >
