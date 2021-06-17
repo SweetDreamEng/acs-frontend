@@ -120,6 +120,14 @@ export default [{
     customerAdmin: true
   }
 }, {
+  path: '/analytics/downtime',
+  name: 'downtime-details-filtered',
+  component: () => import(/* webpackChunkName: "downtime-details-filtered" */ '@/pages/locations-zones/LocationsZonesPage.vue'),
+  meta: {
+    customerAdmin: true
+  }
+},
+{
   path: '/materials/material-locations',
   name: 'materials',
   component: () => import(/* webpackChunkName: "materials" */ '@/pages/materials/MaterialLocationsPage.vue'),

@@ -179,7 +179,9 @@ export default {
     }
   },
   mounted() {
-    this.getDowntimeTableData()
+    this.getDowntimeTableData({
+      params:this.$route.query
+    })
   },
   methods: {
     ...mapActions({

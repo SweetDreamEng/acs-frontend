@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     handleDowntimeAdministration() {
-      this.$router.push('/locations-zones#device-downtime')
+      this.$router.push({ path:'/analytics/downtime/', query:this.$route.params })
     }
   }
 }
