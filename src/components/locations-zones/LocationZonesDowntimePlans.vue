@@ -79,6 +79,7 @@
         :options.sync="options"
         @update:page="updateDowntimeData"
         @update:sort-by="updateDowntimeData"
+        @update:items-per-page="updateDowntimeData"
       >
         <template v-slot:item.device_id="{ item }">
           <span>{{ item.machine_name }}</span>
@@ -178,7 +179,9 @@ export default {
     }
   },
   mounted() {
-    this.getDowntimeTableData()
+    this.getDowntimeTableData({
+      params:this.$route.query
+    })
   },
   methods: {
     ...mapActions({
