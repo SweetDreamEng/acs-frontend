@@ -77,9 +77,7 @@
         :items="downtimeTableData.data"
         :server-items-length="totalItems"
         :options.sync="options"
-        @update:page="updateDowntimeData"
-        @update:sort-by="updateDowntimeData"
-        @update:items-per-page="updateDowntimeData"
+        @update:options="updateDowntimeData"
       >
         <template v-slot:item.device_id="{ item }">
           <span>{{ item.machine_name }}</span>
@@ -194,7 +192,7 @@ export default {
           page:this.options.page,
           items:this.options.itemsPerPage,
           sort:this.options.sortBy.length ? this.options.sortBy[0] : null,
-          order:this.options.sortDesc[0] ? 'desc' : 'asc'
+          order:this.options.sortDesc.length && this.options.sortDesc[0] ? 'desc' : 'asc'
         }
       })
     },
