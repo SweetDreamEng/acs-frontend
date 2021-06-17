@@ -79,7 +79,6 @@
         :options.sync="options"
         @update:page="updateDowntimeData"
         @update:sort-by="updateDowntimeData"
-        @update:sort-desc="updateDowntimeData"
       >
         <template v-slot:item.device_id="{ item }">
           <span>{{ item.machine_name }}</span>
@@ -187,7 +186,6 @@ export default {
       updateDowntime: 'devices/updateDowntime'
     }),
     updateDowntimeData() {
-      console.log(this.options)
       this.getDowntimeTableData({
         params:{
           page:this.options.page,
