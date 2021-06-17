@@ -72,20 +72,24 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
-        :headers="headers"
-        :items="downtimeTableData"
         class="flex-grow-1"
+        :headers="headers"
+        :items="downtimeTableData.data"
+        :server-items-length="totalItems"
+        :options.sync="options"
+        @update:page="updateDowntimeData"
+        @update:sort-by="updateDowntimeData"
       >
         <template v-slot:item.device_id="{ item }">
-          <span>{{ machineName(item) }}</span>
+          <span>{{ item.machine_name }}</span>
         </template>
 
         <template v-slot:item.location="{ item }">
-          <span>{{ getLocation(item) }}</span>
+          <span>{{ item.location_name }}</span>
         </template>
 
         <template v-slot:item.zone="{ item }">
-          <span>{{ getZone(item) }}</span>
+          <span>{{ item.zone_name }}</span>
         </template>
 
         <template v-slot:item.start_time="{ item }">
@@ -97,7 +101,7 @@
         </template>
 
         <template v-slot:item.type="{ item }">
-          <span>{{ getDowntimeType(item) }}</span>
+          <span>{{ item.downtime_type_name }}</span>
         </template>
 
         <template v-slot:item.reason_id="{ item }">
@@ -137,7 +141,7 @@ export default {
     return {
       headers: [
         { text: 'Machine', value: 'device_id' },
-        { text: 'Location', value: 'location', sortable: true },
+        { text: 'Location', value: 'location' },
         { text: 'Zone', value: 'zone', sortable: true },
         { text: 'Start Time', value: 'start_time', align: 'center' },
         { text: 'End Time', value: 'end_time', align: 'center' },
@@ -148,23 +152,30 @@ export default {
       ],
 
       dialog: false,
-
       editedItem: {},
       defaultItem: {},
-      isFormValid: true
+      isFormValid: true,
+      options: {}
     }
   },
   computed: {
     ...mapState({
       downtimeTableData: (state) => state.devices.downtimeTableData,
       isDowntimeTableLoading: (state) => state.devices.isDowntimeTableLoading,
-      deviceInfo: (state) => state.devices.deviceInfo,
       downtimeTypes: (state) => state.devices.downtimeTypes,
       locations: (state) => state.devices.locations,
       zones: (state) => state.devices.zones,
       downtimeReasons: (state) => state.devices.downtimeReasons,
       isUpdatingDowntime: (state) => state.devices.isUpdatingDowntime
-    })
+    }),
+    totalItems () {
+      if (this.downtimeTableData.pagination) {
+        return this.downtimeTableData.pagination.totalItems
+      }
+      else {
+        return 0
+      }
+    }
   },
   mounted() {
     this.getDowntimeTableData()
@@ -174,6 +185,16 @@ export default {
       getDowntimeTableData: 'devices/getDowntimeTableData',
       updateDowntime: 'devices/updateDowntime'
     }),
+    updateDowntimeData() {
+      this.getDowntimeTableData({
+        params:{
+          page:this.options.page,
+          items:this.options.itemsPerPage,
+          sort:this.options.sortBy.length ? this.options.sortBy[0] : null,
+          order:this.options.sortDesc[0] ? 'desc' : 'asc'
+        }
+      })
+    },
     editPlan(item) {
       const editType = this.downtimeTypes.find((type) => {
         return type.id === item.type
