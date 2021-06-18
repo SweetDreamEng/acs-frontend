@@ -44,81 +44,93 @@
           <div class="">Conditions define when your rule is triggered.</div>
           <br>
           <v-form ref="conditionForm" v-model="conditionValid" :disabled="!selectedProduct || isLoadingMachineTags">
-            <v-row
-              v-for="(filter, i) in filters"
-              :key="i"
-            >
-              <v-col
-                cols="12"
-                sm="3"
-                class="py-0"
-              >
-                <v-select
-                  v-model="filter.parameter"
-                  :items="machineTags"
-                  item-text="name"
-                  item-value="id"
-                  label="Select a parameter"
-                  :rules="[$rules.required]"
-                  required
+            <div v-for="(filter, i) in filters" :key="i" class="d-flex align-center mb-5">
+              <div class="flex-grow-1">
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="3"
+                    class="py-0"
+                  >
+                    <v-select
+                      v-model="filter.parameter"
+                      :items="machineTags"
+                      item-text="name"
+                      item-value="id"
+                      label="Select a parameter"
+                      :rules="[$rules.required]"
+                      required
+                    >
+                    </v-select>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="3"
+                    class="py-0"
+                  >
+                    <v-select
+                      v-model="filter.operator"
+                      :items="operators"
+                      label="Select an operator"
+                      required
+                      :rules="[$rules.required]"
+                    >
+                    </v-select>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="2"
+                    class="py-0"
+                  >
+                    <v-text-field
+                      v-model="filter.value"
+                      type="number"
+                      label="Select or enter a value"
+                      required
+                      :rules="[$rules.required]"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="2"
+                    class="py-0"
+                  >
+                    <v-text-field
+                      v-model="filter.approachingValue"
+                      type="number"
+                      label="Enter a approaching value"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="2"
+                    class="py-0"
+                  >
+                    <v-select
+                      v-model="filter.isRunning"
+                      label="Select a machine status"
+                      :items="runningStatus"
+                      item-text="name"
+                      item-value="value"
+                    ></v-select>
+                  </v-col>
+                </v-row>
+              </div>
+              <div class="flex-shrink-0" style="width: 48px;">
+                <v-btn
+                  v-if="i !== 0"
+                  icon
+                  fab
+                  class="ml-2"
+                  elevation="2"
+                  x-small
+                  @click="filters.splice(i, 1)"
                 >
-                </v-select>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="3"
-                class="py-0"
-              >
-                <v-select
-                  v-model="filter.operator"
-                  :items="operators"
-                  label="Select an operator"
-                  required
-                  :rules="[$rules.required]"
-                >
-                </v-select>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="2"
-                class="py-0"
-              >
-                <v-text-field
-                  v-model="filter.value"
-                  type="number"
-                  label="Select or enter a value"
-                  required
-                  :rules="[$rules.required]"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="2"
-                class="py-0"
-              >
-                <v-text-field
-                  v-model="filter.approachingValue"
-                  type="number"
-                  label="Enter a approaching value"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="2"
-                class="py-0"
-              >
-                <v-select
-                  v-model="filter.isRunning"
-                  label="Select a machine status"
-                  :items="runningStatus"
-                  item-text="name"
-                  item-value="value"
-                ></v-select>
-              </v-col>
-            </v-row>
+                  <v-icon small>$mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </div>
           </v-form>
-          <br>
-          <br>
           <v-btn
             @click="addFilter"
           >
