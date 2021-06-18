@@ -23,7 +23,7 @@
             :disabled="!valid"
             color="grey"
             class="mr-4"
-            @click="handleResetNote"
+            @click="resetNote"
           >
             <v-icon dark>
               $mdi-minus
@@ -80,13 +80,12 @@ export default {
       addNote: 'notes/addNote',
       getNotes: 'notes/getNotes'
     }),
-    handleResetNote() {
+    resetNote() {
       this.note = ''
-
       this.$refs.form.resetValidation()
     },
     _addNote() {
-      this.noteRules = [(v) => !!v || 'Field is required']
+      this.noteRules = [this.$rules.required]
 
       setTimeout(async () => {
         if (this.$refs.form.validate()) {
@@ -96,8 +95,7 @@ export default {
               note: this.note
             })
 
-            this.note = ''
-            this.$refs.form.resetValidation()
+            this.resetNote()
 
             await this.getNotes(this.deviceId)
           } catch (error) {

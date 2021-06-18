@@ -131,10 +131,9 @@ export default {
     async _exportReport(report) {
       try {
         const response = await this.exportReport({ id: report.id })
+        const filepath = this.$REPORTS_URL + response.filename
 
-        const filename = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + 'assets/app/reports/' + response.filename
-
-        this.$download(filename)
+        this.$download(filepath, response.filename)
       } catch (err) {
         console.log(err)
       }

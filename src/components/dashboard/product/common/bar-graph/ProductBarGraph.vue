@@ -31,6 +31,8 @@
 import { mapActions } from 'vuex'
 import barGraphStore from './store'
 
+const COMMON_GRAPHS = ['barGraph-id1', 'barGraph-portableChiller-id1', 'barGraph-t50-id1', 'barGraph-vtc-id1', 'barGraph-vtc-id3']
+
 export default {
   name: 'BarGraph',
   props: {
@@ -71,66 +73,59 @@ export default {
       default: () => {}
     }
   },
-  data() {
-    return {
-    }
-  },
   computed: {
+    state() {
+      return this.$store.state[this.namespace]
+    },
     isLoading() {
-      return this.$store.state[this.namespace]['isLoading']
+      return this.state['isLoading']
     },
     series() {
-      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1' || this.namespace === 'barGraph-t50-id1' || this.namespace === 'barGraph-vtc-id1' || this.namespace === 'barGraph-vtc-id3') {
-        const series = {
-          data: this.$store.state[this.namespace]['items']
-        }
+
+      if (COMMON_GRAPHS.includes(this.namespace)) {
+        const series = { data: this.state['items'] }
 
         return [series]
-        
-      } else if (this.namespace === 'barGraph-ngxDryer-id1' || this.namespace === 'barGraph-ngxDryer-id1') {
+
+      }
+
+      if (this.namespace === 'barGraph-ngxDryer-id1') {
         const hopperCategories = []
 
-        for (let i = 0; i < this.$store.state[this.namespace]['hopperCount']; i ++) {
+        for (let i = 0; i < this.state['hopperCount']; i ++) {
           hopperCategories.push(`Hopper ${i + 1}`)
         }
+
         const tempSeries = this.names.map((name, index) => {
           return {
             name,
             data: hopperCategories.map((category, id) => {
-              return this.$store.state[this.namespace]['items'][index] ? 
-                this.$store.state[this.namespace]['items'][index][Number(category.split(' ')[1]) - 1] : []
+              return this.state['items'][index] ?
+                this.state['items'][index][Number(category.split(' ')[1]) - 1] : []
             })
           }
         })
 
         return tempSeries
-      } else {
-        const arr = [[], []]
-
-        if (this.$store.state[this.namespace]['items'][0]) {
-          this.$store.state[this.namespace]['items'][0].forEach((item, index) => {
-            if (item !== 0 || this.$store.state[this.namespace]['items'][1][index] !== 0) {
-              arr[0].push(item)
-              arr[1].push(this.$store.state[this.namespace]['items'][1][index])
-            }
-          })
-        }
-
-        if (this.names.length)
-          return this.names.map((name, index) => {
-            return {
-              name,
-              data: (arr.length) ? (arr[index]) : []
-            }
-          })
-        else
-          return [{
-            data: arr ? arr : []
-          }] 
       }
+
+      const arr = [[], []]
+
+      if (this.state['items'][0]) {
+        this.state['items'][0].forEach((item, index) => {
+          if (item !== 0 || this.state['items'][1][index] !== 0) {
+            arr[0].push(item)
+            arr[1].push(this.state['items'][1][index])
+          }
+        })
+      }
+
+      return this.names.length
+        ? this.names.map((name, index) => ({ name, data: (arr.length) ? (arr[index]) : [] }))
+        : [{ data: arr ? arr : [] }]
     },
     graphUnit() {
-      return this.$store.state[this.namespace]['unit'] ? this.$store.state[this.namespace]['unit'] : ''
+      return this.state['unit'] ? this.state['unit'] : ''
     },
     chartOptions() {
       return {
@@ -189,29 +184,29 @@ export default {
       }
     },
     filteredCategories() {
-      if (this.namespace === 'barGraph-id1' || this.namespace === 'barGraph-portableChiller-id1' || this.namespace === 'barGraph-t50-id1' || this.namespace === 'barGraph-vtc-id1' || this.namespace === 'barGraph-vtc-id3') {
-        return this.categories
-      } else if (this.namespace === 'barGraph-ngxDryer-id1') {
+      if (COMMON_GRAPHS.includes(this.namespace)) return this.categories
+
+      if (this.namespace === 'barGraph-ngxDryer-id1') {
         const hopperCategories = []
 
-        for (let i = 0; i < this.$store.state[this.namespace]['hopperCount']; i ++) {
+        for (let i = 0; i < this.state['hopperCount']; i ++) {
           hopperCategories.push(`Hopper ${i + 1}`)
         }
 
         return hopperCategories
-      } else {
-        const category = []
-
-        if (this.$store.state[this.namespace]['items'][0]) {
-          this.$store.state[this.namespace]['items'][0].forEach((item, index) => {
-            if (item !== 0 || this.$store.state[this.namespace]['items'][1][index] !== 0) {
-              category.push(this.categories[index])
-            }
-          })
-        }
-
-        return category
       }
+
+      const category = []
+
+      if (this.state['items'][0]) {
+        this.state['items'][0].forEach((item, index) => {
+          if (item !== 0 || this.state['items'][1][index] !== 0) {
+            category.push(this.categories[index])
+          }
+        })
+      }
+
+      return category
     },
     seriesMax() {
       let max = 0

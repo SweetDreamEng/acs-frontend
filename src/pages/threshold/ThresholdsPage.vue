@@ -99,7 +99,7 @@
               type="number"
               label="Select or enter a value"
               required
-              :rules="conditionRules"
+              :rules="[$rules.required]"
               outlined
               dense
             >
@@ -183,9 +183,6 @@ export default {
       isEditFormValid: false,
       operators,
       tab: null,
-      conditionRules: [
-        (v) => !!v || 'This field is required'
-      ],
       runningStatus: [{
         name: 'Running',
         value: true

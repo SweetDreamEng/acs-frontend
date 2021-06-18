@@ -50,14 +50,15 @@ export default {
     })
   },
   async mounted() {
+    this.getCompanies()
+
     try {
       await this.getAllDevices()
-      await this.getCompanies()
+
+      this.handleAlarmDistribution(this.devices[0].name)
     } catch (err) {
       console.log(err)
     }
-    
-    this.handleAlarmDistribution(this.devices[0].name)
   },
   methods: {
     ...mapActions({
