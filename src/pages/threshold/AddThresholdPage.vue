@@ -59,7 +59,7 @@
                   item-text="name"
                   item-value="id"
                   label="Select a parameter"
-                  :rules="conditionRules"
+                  :rules="[$rules.required]"
                   required
                 >
                 </v-select>
@@ -74,7 +74,7 @@
                   :items="operators"
                   label="Select an operator"
                   required
-                  :rules="conditionRules"
+                  :rules="[$rules.required]"
                 >
                 </v-select>
               </v-col>
@@ -88,7 +88,7 @@
                   type="number"
                   label="Select or enter a value"
                   required
-                  :rules="conditionRules"
+                  :rules="[$rules.required]"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -189,10 +189,6 @@ export default {
       tab: null,
 
       conditionValid: true,
-
-      conditionRules: [
-        (v) => !!v || 'This field is required'
-      ],
 
       runningStatus: [{
         name: 'Running',
