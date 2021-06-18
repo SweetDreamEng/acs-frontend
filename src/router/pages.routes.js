@@ -155,5 +155,4 @@ export default [{
   meta: {
     customerAdmin: true
   }
-}
-]
+}]

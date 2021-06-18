@@ -82,7 +82,7 @@ export default {
         { text: 'Report Name', align: 'center', value: 'filename' },
         { text: 'Date From', align: 'center', value: 'from' },
         { text: 'Date To', align: 'center', value: 'to' },
-        { text: 'Actions', align: 'center', value: 'actions' }
+        { text: 'Actions', align: 'center', value: 'actions', sortable: false }
       ],
       searchQuery: '',
       isEditingReport: false,
@@ -105,9 +105,8 @@ export default {
       deleteReport: 'machines/deleteReport'
     }),
     downloadReport(report) {
-      const filepath = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + 'assets/app/reports/' + report.filename + '.xlsx'
-
       const filename = report.filename + '.xlsx'
+      const filepath = this.$REPORTS_URL + filename
 
       this.$download(filepath, filename)
     },
@@ -126,7 +125,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      
+
     },
     refreshReportsList() {
       this.getReportsList()

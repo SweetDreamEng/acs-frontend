@@ -125,7 +125,7 @@ export default {
           timeRange: this.timeRange
         })
 
-        const filepath = process.env.VUE_APP_SERVER_API_ENDPOINT.slice(0, -3) + 'assets/app/reports/' + response.filename
+        const filepath = this.$REPORTS_URL + response.filename
 
         this.$download(filepath, response.filename)
       } catch (err) {
