@@ -5,7 +5,7 @@ import router from './router'
 const API = axios.create({
   baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
   // baseURL: 'http://staging.acsgroupds.com/api',
-  timeout: 25000
+  timeout: 35000
 })
 
 API.interceptors.request.use(async (config) => {

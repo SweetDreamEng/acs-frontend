@@ -81,7 +81,7 @@ export default {
       selectedCompany: (state) => state.machines.selectedCompany,
       userCompanyName: (state) => state.auth.user.companyName
     }),
-    ...mapGetters('auth', ['canViewCompanies']),
+    ...mapGetters('auth', ['canViewCompanies', 'isAcsUser']),
     acsBreadcrumbItems() {
       return [
         {
@@ -104,6 +104,14 @@ export default {
       await this.initAcsDashboard()
     this.getZones()
     this.initLocationsTable({ companyId: this.selectedCompany ? this.selectedCompany.id : 0 })
+
+    if (!(this.isAcsUser && this.selectedCompany && this.selectedCompany.id === 0)) {
+      console.log('here')
+      this.getAlarmsReports({
+        companyId: this.selectedCompany ? this.selectedCompany.id : 0
+      })
+    }
+
     this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
@@ -150,9 +158,11 @@ export default {
         company_id: this.selectedCompany ? this.selectedCompany.id : 0
       })
 
-      // this.getAlarmsReports({
-      //   companyId: this.selectedCompany ? this.selectedCompany.id : 0
-      // })
+      if (!(this.isAcsUser && this.selectedCompany && this.selectedCompany.id === 0)) {
+        this.getAlarmsReports({
+          companyId: this.selectedCompany ? this.selectedCompany.id : 0
+        })
+      }
 
       this.getDowntimeGraphData({
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
