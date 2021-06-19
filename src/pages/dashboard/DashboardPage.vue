@@ -106,7 +106,6 @@ export default {
     this.initLocationsTable({ companyId: this.selectedCompany ? this.selectedCompany.id : 0 })
 
     if (!(this.isAcsUser && this.selectedCompany && this.selectedCompany.id === 0)) {
-      console.log('here')
       this.getAlarmsReports({
         companyId: this.selectedCompany ? this.selectedCompany.id : 0
       })
