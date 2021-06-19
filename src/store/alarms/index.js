@@ -13,6 +13,7 @@ const module = {
     selectedMachineName: {},
     isAlarmsReportLoading: false,
     alarmsReports: {},
+    alarmsCount: 0,
     timeRageOptions: [
       {
         label: 'Last 30 minutes',
@@ -297,7 +298,8 @@ const module = {
     },
 
     SET_ALARMS_REPORTS(state, data) {
-      state.alarmsReports = data
+      state.alarmsReports = data.activeAlarms
+      state.alarmsCount = data.alarmsCount
     }
   },
 

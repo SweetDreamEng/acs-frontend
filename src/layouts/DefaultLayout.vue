@@ -59,6 +59,8 @@
             <v-img v-else-if="logoFile === false" contain :src="require('../assets/imgs/logo-aec.png')" > </v-img>
           </div>
           <toolbar-user />
+          <v-spacer></v-spacer>
+          <toolbar-alarms v-if="!(isAcsUser && selectedCompany && selectedCompany.id === 0)" />
         </div>
       </v-card>
     </v-app-bar>
@@ -77,18 +79,20 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 // navigation menu configurations
 import config from '../configs'
 
 import MainMenu from '../components/navigation/NavigationMainMenu'
 import ToolbarUser from '../components/toolbar/ToolbarUser'
+import ToolbarAlarms from '../components/toolbar/ToolbarAlarms'
 
 export default {
   components: {
     MainMenu,
-    ToolbarUser
+    ToolbarUser,
+    ToolbarAlarms
   },
   data() {
     return {
@@ -102,8 +106,10 @@ export default {
     ...mapState('app', ['product', 'isContentBoxed', 'menuTheme', 'toolbarTheme', 'isToolbarDetached']),
     ...mapState({
       userRole: (state) => state.auth.user.role,
-      logoFile: (state) => state.settings.logoFile
+      logoFile: (state) => state.settings.logoFile,
+      selectedCompany: (state) => state.machines.selectedCompany
     }),
+    ...mapGetters('auth', ['isAcsUser']),
     userMenu() {
       switch (this.userRole) {
       case 'super_admin':
