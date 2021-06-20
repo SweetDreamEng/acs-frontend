@@ -20,7 +20,7 @@
         v-model="showDowntimeTable"
         max-width="1200px"
       >
-        <downtime-data-table></downtime-data-table>
+        <downtime-data-table @closed="showDowntimeTable=false"></downtime-data-table>
       </v-dialog>
     </v-card-title>
     <v-card-text>

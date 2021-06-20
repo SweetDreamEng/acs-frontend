@@ -1,12 +1,18 @@
 <template>
   <v-card
     id="device-downtime"
-    class="mt-2"
     :loading="isDowntimeTableLoading"
     :disabled="isDowntimeTableLoading"
   >
     <v-card-title>
       Device Downtimes
+      <v-spacer></v-spacer>
+      <v-btn
+        class="ml-1"
+        color="primary"
+        @click="$emit('closed')"
+      >Close
+      </v-btn>
       <v-dialog
         v-model="dialog"
         max-width="400px"
@@ -133,8 +139,6 @@ import { mapState, mapActions } from 'vuex'
 const dateTimeIsoString = new Date().toISOString().substr(0, 10)
 
 export default {
-  components: {
-  },
   data() {
     return {
       headers: [
