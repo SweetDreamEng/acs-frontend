@@ -256,8 +256,8 @@ export default {
     this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      machine_id:this.$route.params.configurationId,
-      serial_number:this.$route.params.productId,
+      machine_id: this.$route.params.configurationId,
+      serial_number: this.$route.params.productId,
       to: new Date().getTime(),
       from: new Date().getTime() - 60 * 60 * 24 * 1000
     })
@@ -265,8 +265,8 @@ export default {
     this.getDowntimeByTypeGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      machine_id:this.$route.params.configurationId,
-      serial_number:this.$route.params.productId,
+      machine_id: this.$route.params.configurationId,
+      serial_number: this.$route.params.productId,
       to: new Date().getTime(),
       from: new Date().getTime() - 60 * 60 * 24 * 1000
     })
@@ -274,8 +274,8 @@ export default {
     this.getDowntimeByReasonGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      machine_id:this.$route.params.configurationId,
-      serial_number:this.$route.params.productId,
+      machine_id: this.$route.params.configurationId,
+      serial_number: this.$route.params.productId,
       to: new Date().getTime(),
       from: new Date().getTime() - 60 * 60 * 24 * 1000
     })
@@ -291,7 +291,10 @@ export default {
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
       getNotes: 'notes/getNotes',
-      getDowntimeTableData: 'devices/getDowntimeTableData'
+      getDowntimeTableData: 'devices/getDowntimeTableData',
+      getDowntimeGraphData: 'devices/getDowntimeGraphData',
+      getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
+      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
     }),
     updateDowntimeData() {
       this.getDowntimeTableData({
