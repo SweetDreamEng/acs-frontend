@@ -12,10 +12,16 @@
       <v-btn
         class="ml-1"
         color="primary"
-        @click="handleDowntimeAdministration()"
+        @click="showDowntimeTable=!showDowntimeTable"
       >
         Downtime Administration
       </v-btn>
+      <v-dialog
+        v-model="showDowntimeTable"
+        max-width="1200px"
+      >
+        <downtime-data-table></downtime-data-table>
+      </v-dialog>
     </v-card-title>
     <v-card-text>
       <apexchart
@@ -29,12 +35,16 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-
+import DowntimeDataTable from './product/DowntimeDataTable'
 export default {
+  components: {
+    DowntimeDataTable
+  },
   data() {
     return {
       selectedTimeRange: {},
-      showChart: true
+      showChart: true,
+      showDowntimeTable: false
     }
   },
   computed: {
@@ -94,11 +104,6 @@ export default {
       })
 
       return series
-    }
-  },
-  methods: {
-    handleDowntimeAdministration() {
-      this.$router.push({ path:'/analytics/downtime#device-downtime', query:this.$route.params })
     }
   }
 }

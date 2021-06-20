@@ -51,6 +51,12 @@
                   </product-analytics>
                 </v-col>
                 <v-col cols="12">
+                  <v-card-title>
+                    Downtime Data
+                  </v-card-title>
+                  <downtime-tables></downtime-tables>
+                </v-col>
+                <v-col cols="12">
                   <alarms-table
                     namespace="alarms-table-id1"
                     :fetch="getProductAlarms"
@@ -80,6 +86,12 @@
                     :graphs="deviceConfiguration.tcuAnalyticsGraphs"
                   >
                   </product-analytics>
+                </v-col>
+                <v-col cols="12">
+                  <v-card-title>
+                    Downtime Data
+                  </v-card-title>
+                  <downtime-tables></downtime-tables>
                 </v-col>
                 <v-col cols="12">
                   <alarms-table
@@ -150,6 +162,7 @@ import ProductAnalytics from '../../components/dashboard/product/ProductAnalytic
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
 import NoteForm from '../../components/dashboard/NoteForm'
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
+import DowntimeTables from '../../components/dashboard/product/DowntimeTables'
 
 export default {
   components: {
@@ -158,7 +171,11 @@ export default {
     ProductAnalytics,
     NotesTimeline,
     NoteForm,
-    AlarmsTable
+    AlarmsTable,
+    DowntimeTables
+  },
+  props:{
+
   },
   data() {
     return {
@@ -247,12 +264,7 @@ export default {
       this.initAcsDashboard()
     this.getLocations()
     this.getZones()
-
     await this.getDeviceConfiguration(this.$route.params.productId)
-
-    this.getDowntimeTableData({
-      params:this.routeParams
-    })
     this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
@@ -291,22 +303,10 @@ export default {
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
       getNotes: 'notes/getNotes',
-      getDowntimeTableData: 'devices/getDowntimeTableData',
       getDowntimeGraphData: 'devices/getDowntimeGraphData',
       getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
       getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
-    }),
-    updateDowntimeData() {
-      this.getDowntimeTableData({
-        params:{
-          page:this.options.page,
-          items:this.options.itemsPerPage,
-          sort:this.options.sortBy.length ? this.options.sortBy[0] : null,
-          order:this.options.sortDesc.length && this.options.sortDesc[0] ? 'desc' : 'asc',
-          ...this.routeParams
-        }
-      })
-    }
+    })
   }
 }
 </script>

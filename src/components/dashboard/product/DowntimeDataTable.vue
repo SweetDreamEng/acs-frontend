@@ -127,7 +127,6 @@
 |---------------------------------------------------------------------
 |
 */
-import states from '../../services/data/states'
 
 import { mapState, mapActions } from 'vuex'
 
@@ -162,8 +161,6 @@ export default {
       downtimeTableData: (state) => state.devices.downtimeTableData,
       isDowntimeTableLoading: (state) => state.devices.isDowntimeTableLoading,
       downtimeTypes: (state) => state.devices.downtimeTypes,
-      locations: (state) => state.devices.locations,
-      zones: (state) => state.devices.zones,
       downtimeReasons: (state) => state.devices.downtimeReasons,
       isUpdatingDowntime: (state) => state.devices.isUpdatingDowntime
     }),
@@ -174,11 +171,19 @@ export default {
       else {
         return 0
       }
+    },
+    routeParams() {
+      return {
+        location:this.$route.params.location,
+        zone:this.$route.params.zone,
+        machine_id:this.$route.params.configurationId,
+        serial_number:this.$route.params.productId
+      }
     }
   },
   mounted() {
     this.getDowntimeTableData({
-      params: this.$route.query
+      params:this.routeParams
     })
   },
   methods: {
@@ -193,7 +198,7 @@ export default {
           items:this.options.itemsPerPage,
           sort:this.options.sortBy.length ? this.options.sortBy[0] : null,
           order:this.options.sortDesc.length && this.options.sortDesc[0] ? 'desc' : 'asc',
-          ...this.$route.query
+          ...this.routeParams
         }
       })
     },
@@ -229,9 +234,7 @@ export default {
         this.updateDowntime(this.editedItem)
           .then(() => {
             this.dialog = false
-            this.getDowntimeTableData({
-              params: this.$route.query
-            })
+            this.getDowntimeTableData()
           })
       }
     },
