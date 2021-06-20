@@ -234,7 +234,9 @@ export default {
         this.updateDowntime(this.editedItem)
           .then(() => {
             this.dialog = false
-            this.getDowntimeTableData()
+            this.getDowntimeTableData({
+              params: this.routeParams
+            })
           })
       }
     },

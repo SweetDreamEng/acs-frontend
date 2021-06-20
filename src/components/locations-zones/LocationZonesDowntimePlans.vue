@@ -162,8 +162,6 @@ export default {
       downtimeTableData: (state) => state.devices.downtimeTableData,
       isDowntimeTableLoading: (state) => state.devices.isDowntimeTableLoading,
       downtimeTypes: (state) => state.devices.downtimeTypes,
-      locations: (state) => state.devices.locations,
-      zones: (state) => state.devices.zones,
       downtimeReasons: (state) => state.devices.downtimeReasons,
       isUpdatingDowntime: (state) => state.devices.isUpdatingDowntime
     }),
