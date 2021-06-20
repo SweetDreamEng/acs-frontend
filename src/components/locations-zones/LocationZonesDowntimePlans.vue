@@ -239,39 +239,10 @@ export default {
 
       return _machine.configuration.name || ''
     },
-    getLocation(item) {
-      const _device = this.deviceInfo.find((device) => {
-        return Number(device.serial_number) === item.device_id
-      })
-
-      const _location = this.locations.find((location) => {
-        return location.id === _device.location_id
-      })
-
-      return _location ? _location.name : ''
-    },
-    getZone(item) {
-      const _device = this.deviceInfo.find((device) => {
-        return Number(device.serial_number) === item.device_id
-      })
-
-      const _zone = this.zones.find((zone) => {
-        return zone.id === _device.zone_id
-      })
-
-      return _zone ? _zone.name : ''
-    },
     getTimeFromTimestamp(timestamp) {
       const date = timestamp !== -1 ? new Date(timestamp * 1000) : ''
 
       return date !== '' ? `${date.toLocaleDateString()} ${date.toLocaleTimeString()}` : ''
-    },
-    getDowntimeType(item) {
-      const _type = this.downtimeTypes.find((type) => {
-        return type.id === item.type
-      })
-
-      return _type ? _type.name : ''
     },
     getDowntimeReason(item) {
       const _reason = this.downtimeReasons.find((reason) => {

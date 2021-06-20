@@ -37,7 +37,7 @@
           </v-tabs>
 
           <br>
-          
+
           <v-tabs-items v-model="tabModel" class="overflow-visible">
             <v-tab-item>
               <v-row class="flex-grow-0" dense>
@@ -160,14 +160,13 @@ export default {
     NoteForm,
     AlarmsTable
   },
-  props: {
-  },
   data() {
     return {
       tabModel: 0,
       selectedParameters: [],
       selectedParametersForTcu: [],
-      getProductAlarms: commonApi.getProductAlarms
+      getProductAlarms: commonApi.getProductAlarms,
+      options: {}
     }
   },
   computed: {
@@ -176,7 +175,9 @@ export default {
       notes: (state) => state.notes.data,
       companies: (state) => state.companies.companies,
       selectedCompanyName: (state) => state.machines.selectedCompany ? state.machines.selectedCompany.name : '',
-      userCompanyName: (state) => state.auth.user.companyName
+      userCompanyName: (state) => state.auth.user.companyName,
+      downtimeTableData: (state) => state.devices.downtimeTableData,
+      selectedCompany: (state) => state.machines.selectedCompany
     }),
     ...mapState('alarms', ['loadingAlarmsTable', 'alarmTypes', 'alarms']),
 
@@ -230,6 +231,14 @@ export default {
           disabled: true
         }
       ]
+    },
+    routeParams() {
+      return {
+        location:this.$route.params.location,
+        zone:this.$route.params.zone,
+        machine_id:this.$route.params.configurationId,
+        serial_number:this.$route.params.productId
+      }
     }
   },
 
@@ -241,6 +250,35 @@ export default {
 
     await this.getDeviceConfiguration(this.$route.params.productId)
 
+    this.getDowntimeTableData({
+      params:this.routeParams
+    })
+    this.getDowntimeGraphData({
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+      location_id: 0,
+      machine_id:this.$route.params.configurationId,
+      serial_number:this.$route.params.productId,
+      to: new Date().getTime(),
+      from: new Date().getTime() - 60 * 60 * 24 * 1000
+    })
+
+    this.getDowntimeByTypeGraphSeries({
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+      location_id: 0,
+      machine_id:this.$route.params.configurationId,
+      serial_number:this.$route.params.productId,
+      to: new Date().getTime(),
+      from: new Date().getTime() - 60 * 60 * 24 * 1000
+    })
+
+    this.getDowntimeByReasonGraphSeries({
+      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+      location_id: 0,
+      machine_id:this.$route.params.configurationId,
+      serial_number:this.$route.params.productId,
+      to: new Date().getTime(),
+      from: new Date().getTime() - 60 * 60 * 24 * 1000
+    })
     if (!this.error) {
       this.getNotes(this.$route.params.productId)
     }
@@ -252,8 +290,20 @@ export default {
       initAcsDashboard: 'machines/initAcsDashboard',
       getLocations: 'locations/getLocations',
       getZones: 'zones/getZones',
-      getNotes: 'notes/getNotes'
-    })
+      getNotes: 'notes/getNotes',
+      getDowntimeTableData: 'devices/getDowntimeTableData'
+    }),
+    updateDowntimeData() {
+      this.getDowntimeTableData({
+        params:{
+          page:this.options.page,
+          items:this.options.itemsPerPage,
+          sort:this.options.sortBy.length ? this.options.sortBy[0] : null,
+          order:this.options.sortDesc.length && this.options.sortDesc[0] ? 'desc' : 'asc',
+          ...this.routeParams
+        }
+      })
+    }
   }
 }
 </script>
