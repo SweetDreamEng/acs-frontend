@@ -54,7 +54,17 @@
                   <v-card-title>
                     Downtime Data
                   </v-card-title>
-                  <downtime-tables></downtime-tables>
+                  <v-row class="flex-grow-0" dense>
+                    <v-col md="4" sm="12">
+                      <downtime-card></downtime-card>
+                    </v-col>
+                    <v-col md="4" sm="12">
+                      <downtime-by-type-card></downtime-by-type-card>
+                    </v-col>
+                    <v-col md="4" sm="12">
+                      <downtime-by-reason-card></downtime-by-reason-card>
+                    </v-col>
+                  </v-row>
                 </v-col>
                 <v-col cols="12">
                   <alarms-table
@@ -91,7 +101,17 @@
                   <v-card-title>
                     Downtime Data
                   </v-card-title>
-                  <downtime-tables></downtime-tables>
+                  <v-row class="flex-grow-0" dense>
+                    <v-col md="4" sm="12">
+                      <downtime-card></downtime-card>
+                    </v-col>
+                    <v-col md="4" sm="12">
+                      <downtime-by-type-card></downtime-by-type-card>
+                    </v-col>
+                    <v-col md="4" sm="12">
+                      <downtime-by-reason-card></downtime-by-reason-card>
+                    </v-col>
+                  </v-row>
                 </v-col>
                 <v-col cols="12">
                   <alarms-table
@@ -162,7 +182,9 @@ import ProductAnalytics from '../../components/dashboard/product/ProductAnalytic
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
 import NoteForm from '../../components/dashboard/NoteForm'
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
-import DowntimeTables from '../../components/dashboard/product/DowntimeTables'
+import DowntimeCard from '../../components/dashboard/DowntimeCard'
+import DowntimeByTypeCard from '../../components/dashboard/DowntimeByTypeCardForProduct'
+import DowntimeByReasonCard from '../../components/dashboard/DowntimeByReasonCard'
 
 export default {
   components: {
@@ -172,7 +194,9 @@ export default {
     NotesTimeline,
     NoteForm,
     AlarmsTable,
-    DowntimeTables
+    DowntimeCard,
+    DowntimeByTypeCard,
+    DowntimeByReasonCard
   },
   props:{
 
