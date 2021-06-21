@@ -1,12 +1,18 @@
 <template>
   <v-card
     id="device-downtime"
-    class="mt-2"
     :loading="isDowntimeTableLoading"
     :disabled="isDowntimeTableLoading"
   >
     <v-card-title>
       Device Downtimes
+      <v-spacer></v-spacer>
+      <v-btn
+        class="ml-1"
+        color="primary"
+        @click="$emit('closed')"
+      >Close
+      </v-btn>
       <v-dialog
         v-model="dialog"
         max-width="400px"
@@ -127,15 +133,12 @@
 |---------------------------------------------------------------------
 |
 */
-import states from '../../services/data/states'
 
 import { mapState, mapActions } from 'vuex'
 
 const dateTimeIsoString = new Date().toISOString().substr(0, 10)
 
 export default {
-  components: {
-  },
   data() {
     return {
       headers: [
@@ -172,11 +175,19 @@ export default {
       else {
         return 0
       }
+    },
+    routeParams() {
+      return {
+        location:this.$route.params.location,
+        zone:this.$route.params.zone,
+        machine_id:this.$route.params.configurationId,
+        serial_number:this.$route.params.productId
+      }
     }
   },
   mounted() {
     this.getDowntimeTableData({
-      params: this.$route.query
+      params:this.routeParams
     })
   },
   methods: {
@@ -191,7 +202,7 @@ export default {
           items:this.options.itemsPerPage,
           sort:this.options.sortBy.length ? this.options.sortBy[0] : null,
           order:this.options.sortDesc.length && this.options.sortDesc[0] ? 'desc' : 'asc',
-          ...this.$route.query
+          ...this.routeParams
         }
       })
     },
@@ -228,7 +239,7 @@ export default {
           .then(() => {
             this.dialog = false
             this.getDowntimeTableData({
-              params: this.$route.query
+              params: this.routeParams
             })
           })
       }

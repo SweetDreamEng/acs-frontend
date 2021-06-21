@@ -1,7 +1,6 @@
 <template>
   <v-card
     class="d-flex flex-column justify-space-between"
-    height="100%"
     light
     :loading="isDowntimeByReasonGraphLoading"
     :disabled="isDowntimeByReasonGraphLoading"
@@ -13,6 +12,7 @@
       <apexchart
         :options="chartOptions"
         :series="getDowntimeByReasonSeries"
+        height="400"
       ></apexchart>
     </v-card-text>
   </v-card>
