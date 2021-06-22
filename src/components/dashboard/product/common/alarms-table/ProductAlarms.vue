@@ -60,9 +60,6 @@ export default {
     }
   },
   methods: {
-    handleTabChange() {
-      console.log('here')
-    }
   }
 }
 </script>

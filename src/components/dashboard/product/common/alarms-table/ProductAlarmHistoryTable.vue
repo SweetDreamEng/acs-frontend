@@ -139,6 +139,7 @@ export default {
   },
   mounted() {
     this.getAlarmHistory({
+      serialNumber: this.serialNumber,
       machineId: this.machineId,
       from: new Date().getTime() - 24 * 60 * 60 * 1000,
       to: new Date().getTime()
@@ -166,6 +167,7 @@ export default {
         this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Time range selection is limited to two weeks' } }, { root: true })
       } else {
         this.getAlarmHistory({
+          serialNumber: this.serialNumber,
           machineId: this.machineId,
           from,
           to
