@@ -86,8 +86,6 @@
                       v-model="filter.value"
                       type="number"
                       label="Select or enter a value"
-                      required
-                      :rules="[$rules.required]"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -108,7 +106,7 @@
                   >
                     <v-select
                       v-model="filter.isRunning"
-                      label="Select a machine status"
+                      label="Select a parameter"
                       :items="runningStatus"
                       item-text="name"
                       item-value="value"
@@ -137,6 +135,10 @@
             <v-icon left>$mdi-plus</v-icon>Condition
           </v-btn>
         </div>
+        <div class="d-flex">
+          <v-checkbox v-model="isEmailChecked" class="mr-5" label="Notify by Email"></v-checkbox>
+          <v-checkbox v-model="isSmsChecked" label="Notify by SMS" :disabled="!isUserHasPhone"></v-checkbox>
+        </div>
         <div>
           <v-btn
             color="primary"
@@ -162,7 +164,7 @@
 |
 | Add a new threshold
 */
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 import telemetries from './content/telemetries'
 import operators from './content/operators'
@@ -194,7 +196,7 @@ export default {
           operator: '',
           value: null,
           approachingValue: null,
-          isRunning: true
+          isRunning: null
         }
       ],
 
@@ -203,12 +205,15 @@ export default {
       conditionValid: true,
 
       runningStatus: [{
-        name: 'Running',
+        name: 'True',
         value: true
       }, {
-        name: 'Not Running',
+        name: 'False',
         value: false
-      }]
+      }],
+
+      isEmailChecked: false,
+      isSmsChecked: false
     }
   },
   computed: {
@@ -221,6 +226,7 @@ export default {
       products: (state) => state.machines.reportMachines,
       isAddingThreshold: (state) => state.thresholds.loading
     }),
+    ...mapGetters('auth', ['isUserHasPhone']),
     machineTags: {
       get() {
         return this.$store.state.thresholds.machineTags
@@ -264,7 +270,7 @@ export default {
           operator: '',
           value: null,
           approachingValue: null,
-          isRunning: true
+          isRunning: null
         })
       }
     },
@@ -287,7 +293,7 @@ export default {
           operator: '',
           value: null,
           approachingValue: null,
-          isRunning: true
+          isRunning: null
         }
       ]
       this.getMachineTags({
@@ -297,7 +303,9 @@ export default {
     async handleSubmit() {
       await this.addThreshold({
         deviceId: this.selectedProduct,
-        conditions: this.filters
+        conditions: this.filters,
+        isEmailChecked: this.isEmailChecked,
+        isSmsChecked: this.isSmsChecked
       })
 
       this.selectedLocation = ''
@@ -308,8 +316,10 @@ export default {
         operator: '',
         value: null,
         approachingValue: null,
-        isRunning: true
+        isRunning: null
       }]
+
+      this.$refs.conditionForm.resetValidation()
     }
   }
 }

@@ -24,7 +24,7 @@ const addThreshold = async({ commit, dispatch }, payload) => {
     } 
 
     if (response.status === 'fail') {
-      dispatch('app/showError', response.message, { root: true })
+      dispatch('app/showError', { message: 'Failed: ', error: { message: response.message } }, { root: true })
     }
 
   } catch (error) {

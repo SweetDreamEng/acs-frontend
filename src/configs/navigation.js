@@ -60,12 +60,7 @@ export default {
     items: [
       { icon: '$mdi-view-dashboard-outline', text: 'Machines', link: '/dashboard/analytics' },
       { icon: '$mdi-account-multiple', text: 'User Access', link: '/users' },
-      { icon: '$mdi-speedometer', text: 'Threshold', regex: /^\/threshold/,
-        items: [
-          { text: 'Thresholds', link: '/threshold/list' },
-          { text: 'Add Threshold', link: '/threshold/add' }
-        ]
-      },
+      { icon: '$mdi-speedometer', text: 'Threshold', regex: /^\/threshold/, link: '/threshold' },
       { icon: '$mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
       { icon: '$mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]

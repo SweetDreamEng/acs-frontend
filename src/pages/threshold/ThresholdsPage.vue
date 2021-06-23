@@ -14,14 +14,6 @@
           <div>{{ item.updated_at.split('T')[0] }}</div>
         </template>
 
-        <template v-slot:item.companyMail="{ item }">
-          {{ item.email }}
-        </template>
-
-        <template v-slot:item.sms="{ item }">
-          {{ item.sms }}
-        </template>
-
         <template v-slot:item.status="{ item }">
           <div class="font-weight-bold d-flex align-center text-no-wrap">
             <div class="warning--text">
@@ -33,6 +25,10 @@
               ></v-switch>
             </div>
           </div>
+        </template>
+
+        <template v-slot:item.is_running="{ item }">
+          {{ getMachinesStatus(item.is_running) }}
         </template>
 
         <template v-slot:item.action="{ item }">
@@ -98,8 +94,6 @@
               v-model="editedItem.value"
               type="number"
               label="Select or enter a value"
-              required
-              :rules="[$rules.required]"
               outlined
               dense
             >
@@ -168,11 +162,13 @@ export default {
   data () {
     return {
       headers: [
-        { text: 'Condition', sortable: false, value: 'condition' },
+        { text: 'Condition', sortable: false, value: 'tag_name' },
+        { text: 'Operator', value: 'operator' },
+        { text: 'Value', value: 'value' },
         { text: 'Approaching Value', value: 'approaching' },
         { text: 'Date', value: 'date' },
         { text: 'Enabled', value: 'status' },
-        { text: 'Machine status', align: 'center', value: 'is_running' },
+        { text: 'Parameter', align: 'center', value: 'is_running' },
         { text: 'Actions', sortable: false, align: 'center', value: 'action' }
       ],
       isDeleteThreshold: false,
@@ -222,6 +218,9 @@ export default {
     handleRemove(id) {
       this.selectedThresholdId = id
       this.isDeleteThreshold = true
+    },
+    getMachinesStatus(status) {
+      return status ? 'True' : 'False'
     },
     async confirmDelete() {
       try {

@@ -12,7 +12,8 @@ const module = {
       email: null,
       username: null,
       companyId: null,
-      companyName: null
+      companyName: null,
+      phone: null
     },
     profile: {
 
@@ -80,6 +81,8 @@ const module = {
 
           commit('CLEAR_ERROR')
           commit('SET_AUTH_DATA', checkResponse.data)
+
+          console.log('debug ------------------ ', checkResponse.data)
 
           if (checkResponse.data.role === 'acs_admin' || checkResponse.data.role === 'acs_manager' || checkResponse.data.role === 'acs_viewer') {
             router.push({
@@ -248,6 +251,7 @@ const module = {
         state.user.role = user.role
         state.user.companyId = user.company_id
         state.user.companyName = user.companyName
+        state.user.phone = user.phoneNumber
       }
     },
     SET_LOGOUT_AUTH(state) {
@@ -286,7 +290,8 @@ const module = {
     canViewInventory: (state) => state.user.role === 'acs_admin',
     canGetMaterialsAndLocations: (state) => state.user.role === 'customer_manager',
     canAddAvailabilityPlanTime: (state) => state.user.role === 'customer_manager',
-    canViewEquipmentAvailability: (state) => ['customer_admin', 'customer_manager', 'customer_operator'].includes(state.user.role)
+    canViewEquipmentAvailability: (state) => ['customer_admin', 'customer_manager', 'customer_operator'].includes(state.user.role),
+    isUserHasPhone: (state) => state.user.phone !== null
   }
 }
 
