@@ -19,7 +19,7 @@
 
         <v-divider></v-divider>
 
-        <v-stepper-step :complete="stepNumber > 4" step="4">Select Tags</v-stepper-step>
+        <v-stepper-step :complete="stepNumber > 4" step="4">Select Parameters</v-stepper-step>
 
         <v-divider></v-divider>
 
