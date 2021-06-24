@@ -18,6 +18,7 @@
                     :is-btn-loading="isBtnLoading"
                     :user="user"
                     :error="error"
+                    :profile="profile"
                     @clearError="clearError"
                   >
                   </personal-info>
@@ -71,7 +72,8 @@ export default {
     ...mapState({
       isBtnLoading: (state) => state.auth.buttonLoading,
       user: (state) => state.auth.user,
-      error: (state) => state.auth.error
+      error: (state) => state.auth.error,
+      profile:(state) => state.auth.profile
     })
   },
   methods: {

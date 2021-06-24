@@ -107,7 +107,7 @@ const module = {
           })
         }
       }
-        
+
       commit('BUTTON_CLEAR')
     },
 
@@ -149,7 +149,7 @@ const module = {
       currentPassword, newPassword
     }) {
       commit('BUTTON_LOAD')
-      
+
       try {
         const response = await authAPI.updatePassword(currentPassword, newPassword)
 
@@ -167,10 +167,36 @@ const module = {
           })
         }
       }
-      
+
       commit('BUTTON_CLEAR')
     },
-    
+
+    async updateProfile({
+      commit, dispatch
+    }, data ) {
+      commit('BUTTON_LOAD')
+
+      try {
+        const response = await authAPI.updateProfile(data)
+
+        dispatch('app/showSuccess', response.data.message, { root: true })
+      } catch (error) {
+        if (error.response.status === 400) {
+          commit('SET_ERROR', {
+            'error': error.response.data.error
+          })
+        } else if (error.response.status === 422) {
+          const errors = Object.values(error.response.data.error).flat()
+
+          commit('SET_ERROR', {
+            'error': errors[0]
+          })
+        }
+      }
+
+      commit('BUTTON_CLEAR')
+    },
+
     async requestForgotPassword({
       commit
     }, email) {
@@ -185,7 +211,7 @@ const module = {
           })
         }
       }
-      
+
       commit('BUTTON_CLEAR')
     },
 
@@ -201,7 +227,7 @@ const module = {
       } catch (error) {
         console.log(error)
       }
-      
+
       commit('SET_LOADING_TIME_ZONE', false)
     },
 
@@ -217,7 +243,7 @@ const module = {
       } catch (error) {
         console.log(error)
       }
-      
+
       commit('SET_UPDATING_TIME_ZONE', false)
     }
   },
@@ -273,7 +299,9 @@ const module = {
     SET_UPDATING_TIME_ZONE(state, loading) { state.updatingTimezone = loading },
 
     SET_TIMEZONES(state, timezones) { state.timeZoneNames = timezones},
-    SET_AUTH_PROFILE(state, user) { state.profile = user }
+    SET_AUTH_PROFILE(state, user) {
+      state.profile = user
+    }
   },
   getters: {
     roleName: (state) => (role_key) => {
