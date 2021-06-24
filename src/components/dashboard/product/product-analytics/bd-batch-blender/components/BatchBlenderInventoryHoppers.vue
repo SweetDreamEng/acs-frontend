@@ -7,8 +7,8 @@
     >
       <v-card-title>
         Material Used
-        <v-card-title v-if="inventory.last_cleared_time !== ''" class="overline">
-          Since Cleared On {{ inventory.last_cleared_time }}
+        <v-card-title v-if="inventory.last_cleared_time !== 0" class="overline">
+          Since Cleared On {{ getClearedTime(inventory.last_cleared_time) }}
         </v-card-title>
         <v-btn
           icon
@@ -68,7 +68,12 @@ export default {
   methods: {
     ...mapActions({
       getInventory: 'bdBlenderAnalytics/getInventory'
-    })
+    }),
+    getClearedTime(timestamp) {
+      const date = new Date(timestamp)
+
+      return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+    }
   }
 }
 </script>
