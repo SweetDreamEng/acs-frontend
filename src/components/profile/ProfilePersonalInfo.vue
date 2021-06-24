@@ -74,14 +74,19 @@ export default {
     return {
       isAccountValidForm: true,
       userData:{
-        user:this.user,
-        phone:this.profile.profile ? this.profile.profile.phone : ''
+        user: this.user,
+        phone: ''
       }
     }
   },
   computed: {
     loading() {
       return !this.profile.profile
+    }
+  },
+  watch: {
+    profile(data) {
+      this.userData.phone = data.profile.phone
     }
   },
   methods: {
