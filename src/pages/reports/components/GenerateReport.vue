@@ -147,11 +147,7 @@ export default {
       return machine ? machine.name : ''
     },
     isValidate(str) {
-      if (str !== '') {
-        return true
-      } else {
-        return false
-      }
+      return str !== ''
     },
     handleNext() {
       if (this.isValidate(this.reportTitle)) {

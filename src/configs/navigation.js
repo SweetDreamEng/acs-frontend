@@ -5,7 +5,7 @@ export default {
     key: '',
     items: [
       { icon: '$mdi-view-dashboard-outline', text: 'ACS Machines', exact: true, link: '/acs-machines' },
-      { icon: '$mdi-near-me', text: 'Alarms', link: '/alarms' },
+      // { icon: '$mdi-near-me', text: 'Alarms', link: '/alarms' },
       { icon: '$mdi-swap-horizontal', text: 'Customer Assign', link: '/customer-assign' },
       { icon: '$mdi-city', text: 'Companies', link: '/companies' },
       { icon: '$mdi-account-multiple', text: 'Users', link: '/acs-admin/users' },
@@ -39,11 +39,11 @@ export default {
     key: '',
     items: [
       { icon: '$mdi-view-dashboard-outline', text: 'Machines', exact: true, link: '/dashboard/analytics' },
-      { icon: '$mdi-near-me', text: 'Alarms', link: '/companies/alarms' },
+      // { icon: '$mdi-near-me', text: 'Alarms', link: '/companies/alarms' },
       { icon: '$mdi-account-multiple', text: 'User Access', link: '/users' },
       { icon: '$mdi-speedometer', text: 'Threshold', regex: /^\/threshold/, link: '/threshold' },
       { icon: '$mdi-swap-horizontal', text: 'Machine Mapping', link: '/machine-mapping' },
-      // { icon: '$mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' },
+      { icon: '$mdi-shuffle-variant', text: 'Administration', link: '/locations-zones' },
       { icon: '$mdi-equal-box', text: 'Materials', regex: /^\/materials/,
         items: [
           { text: 'Materials', exact: true, link: '/materials/material-locations' },

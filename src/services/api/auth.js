@@ -97,5 +97,9 @@ export default {
   */
   check() {
     return api.post('/auth/check')
+  },
+
+  updateProfile(data) {
+    return api.post('/profile/update', { data })
   }
 }
