@@ -90,7 +90,11 @@ export default {
     }),
     submit() {
       if (this.$refs.accountForm.validate()) {
-        this.updateProfile(this.userData)
+        this.updateProfile({
+          name:this.userData.user.username,
+          email:this.userData.user.email,
+          phone:this.userData.phone
+        })
       }
     },
     resetErrors() {
