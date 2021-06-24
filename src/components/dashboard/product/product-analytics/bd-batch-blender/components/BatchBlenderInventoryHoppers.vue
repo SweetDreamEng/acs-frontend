@@ -7,7 +7,7 @@
     >
       <v-card-title>
         Material Used
-        <v-card-title v-if="inventory.last_cleared_time !== 0" class="overline">
+        <v-card-title v-if="inventory.last_cleared_time" class="overline">
           Since Cleared On {{ getClearedTime(inventory.last_cleared_time) }}
         </v-card-title>
         <v-btn

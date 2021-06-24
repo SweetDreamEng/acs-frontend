@@ -4,7 +4,7 @@ const module = {
   namespaced: true,
   state: {
     loadingInventories: false,
-    inventory: [],
+    inventory: {},
     savingMaterial: false,
     togglingInventoryTrack: false,
 
