@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-card :loading="isReportLoading" :disabled="isReportLoading">
-      <v-card-title class="pb-0">Select Tags</v-card-title>
-      <v-card-text class="mt-0">Select machine Tags you want to include in your report</v-card-text>
+      <v-card-title class="pb-0">Select Parameters</v-card-title>
+      <v-card-text class="mt-0">Select machine Parameters you want to include in your report</v-card-text>
       <v-card-text>
         <v-row
           v-for="(id, key) in deviceIds"
@@ -25,7 +25,7 @@
               small-chips
               required
               :items="getMachineTags(id)"
-              label="Choose tags for this machine"
+              label="Choose parameters for this machine"
               item-text="name"
               item-value="id"
               :return-object="true"
@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      
+
     }),
     getMachineName(id) {
       const machine =  this.reportMachines.find((machine) => machine.device_id === id)

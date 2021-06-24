@@ -18,7 +18,7 @@
             <div class="primary--text">{{ getMachineName(id) }}</div>
           </v-col>
           <v-col cols="8" class="d-flex flex-column">
-            <div class="pa-0 text-caption">Tags</div>
+            <div class="pa-0 text-caption">Parameters</div>
             <div class="primary--text">
               <v-chip
                 v-for="(tag, i) in selectedTags[id]"
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     getMachineName(id) {
-      const machine =  this.reportMachines.find((machine) => machine.device_id === id)
+      const machine =  this.reportMachines.find((machine) => machine.device_id === parseInt(id))
 
       return machine ? machine.name : ''
     },
@@ -92,7 +92,7 @@ export default {
 
       if (this.timeRange.timeRangeOption === 'custom') {
         customRange = new Date(`${this.timeRange.dateTo} ${this.timeRange.timeTo}`).getTime() - new Date(`${this.timeRange.dateFrom} ${this.timeRange.timeFrom}`).getTime()
-        
+
       }
 
       if (customRange < 0) {

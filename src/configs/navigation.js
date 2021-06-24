@@ -50,7 +50,7 @@ export default {
           { text: 'Material Usage Report', link: '/materials/system-inventory-report' }
         ]
       },
-      { icon: '$mdi-file-outline', text: 'Reports', link: '/reports' },
+      { icon: '$mdi-file-outline', text: 'Job Reports', link: '/reports' },
       { icon: '$mdi-file-outline', key: 'menu.utilityHelp', text: 'FAQs / Help', link: '/utility/help' }
     ]
   }],
