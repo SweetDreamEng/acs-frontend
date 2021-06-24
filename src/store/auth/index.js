@@ -82,8 +82,6 @@ const module = {
           commit('CLEAR_ERROR')
           commit('SET_AUTH_DATA', checkResponse.data)
 
-          console.log('debug ------------------ ', checkResponse.data)
-
           if (checkResponse.data.role === 'acs_admin' || checkResponse.data.role === 'acs_manager' || checkResponse.data.role === 'acs_viewer') {
             router.push({
               name: 'acs-machines'
