@@ -111,7 +111,7 @@
               :items="runningStatus"
               item-text="name"
               item-value="value"
-              label="Select a machine status"
+              label="Select a parameter"
               outlined
               dense
             >
@@ -180,10 +180,10 @@ export default {
       operators,
       tab: null,
       runningStatus: [{
-        name: 'Running',
+        name: 'True',
         value: true
       }, {
-        name: 'Not Running',
+        name: 'False',
         value: false
       }]
     }
