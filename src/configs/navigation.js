@@ -5,7 +5,7 @@ export default {
     key: '',
     items: [
       { icon: '$mdi-view-dashboard-outline', text: 'ACS Machines', exact: true, link: '/acs-machines' },
-      { icon: '$mdi-near-me', text: 'Alarms', link: '/alarms' },
+      // { icon: '$mdi-near-me', text: 'Alarms', link: '/alarms' },
       { icon: '$mdi-swap-horizontal', text: 'Customer Assign', link: '/customer-assign' },
       { icon: '$mdi-city', text: 'Companies', link: '/companies' },
       { icon: '$mdi-account-multiple', text: 'Users', link: '/acs-admin/users' },
