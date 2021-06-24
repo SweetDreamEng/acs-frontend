@@ -1,6 +1,7 @@
 <template>
   <v-card
     class="d-flex flex-column justify-space-between"
+    height="100%"
     light
     :loading="isDowntimeByReasonGraphLoading"
     :disabled="isDowntimeByReasonGraphLoading"
